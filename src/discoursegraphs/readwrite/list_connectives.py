@@ -1,5 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# Author: Arne Neumann
+
+"""
+This script parses a Conano XML file, extracts all connectives and
+writes them to an output file. You can choose between three output
+formats.
+
+- normal: one connective per line
+- relations: each line contains one connective and the type of relation
+  it belongs to (tab-separated)
+- units: prints the connective as well as its units, e.g.
+
+'''
+=====
+Aber
+
+Dass darunter einige wenige leiden müssen , ist leider unvermeidbar .
+
+Aber das muss irgendwann ein Ende haben .
+'''
+"""
 
 import os
 import sys
@@ -8,21 +29,54 @@ from lxml import etree
 import argparse
 import re
 
-
 REDUCE_WHITESPACE_RE = re.compile(' +')
 
 def get_connectives(tree):
-    connectives = OrderedDict()
-    connective_elements = tree.findall('//connective')
-    for element in connective_elements:
-        try:
-            connectives[int(element.attrib['id'])] = {'text': element.text, 
-                'relation': element.attrib['relation']}
-        except KeyError as e:
-            sys.stderr.write("Something's wrong in file {0}. {1}\n{2}\n".format(tree.docinfo.URL, e, etree.tostring(element)))
-    return connectives
+	"""
+	extracts connectives from a Conano XML file.
+
+	Parameters
+	----------
+	tree : lxml.etree._ElementTree
+		an element tree representing the Conano XML file to be parsed
+
+	Returns
+	-------
+	connectives : OrderedDict
+		an ordered dictionary which maps from a connective ID (int) to a
+		dictionary of two features ('text', which maps to the
+		connective (str) and 'relation', which maps to the relation
+		(str) the connective is part of
+	"""
+	connectives = OrderedDict()
+	connective_elements = tree.findall('//connective')
+	for element in connective_elements:
+		try:
+			connectives[int(element.attrib['id'])] = {'text': element.text,
+				'relation': element.attrib['relation']}
+		except KeyError as e:
+			sys.stderr.write("Something's wrong in file {0}. {1}\n{2}\n".format(tree.docinfo.URL, e, etree.tostring(element)))
+	return connectives
 
 def get_units(tree):
+	"""
+	extracts connectives and their internal and external units from a
+	Conano XML file.
+
+	Parameters
+	----------
+	tree : lxml.etree._ElementTree
+		an element tree representing the Conano XML file to be parsed
+
+	Returns
+	-------
+	ext_units : OrderedDict
+		an ordered dictionary which maps from a connective ID (int) to
+		the external unit (str) of that connective
+	int_units : OrderedDict
+		an ordered dictionary which maps from a connective ID (int) to
+		the internal unit (str) of that connective
+	"""
     ext_units = OrderedDict()
     int_units = OrderedDict()
     for unit in tree.findall('//unit'):
@@ -41,12 +95,12 @@ if __name__ == "__main__":
         " type, and int/ext-units) from Conano XML files."
     parser = argparse.ArgumentParser(description=desc)
     parser.add_argument('infile', nargs='?', type=argparse.FileType('r'),
-        default=sys.stdin)
+        default=sys.stdin, help='the Conano XML file to be parsed. If no filename is given: read from stdin.')
     parser.add_argument('outfile', nargs='?', type=argparse.FileType('w'),
-        default=sys.stdout)
+        default=sys.stdout, help='the output file that shall contain the connectives. If no filename is given: write to stdout.')
 
     parser.add_argument('-f', '--format', dest='outformat',
-        help="output file format: normal relations units" + \
+        help="output file format: 'normal', 'relations' or 'units'" + \
         "\nDefaults to normal, which just prints the connectives. ")
 
     args = parser.parse_args()
@@ -56,7 +110,7 @@ if __name__ == "__main__":
     try:
         tree = etree.parse(conano_file)
         connectives = get_connectives(tree)
-        
+
         if args.outformat in (None, 'normal'):
             with output_file:
                 for cid in connectives:
@@ -72,7 +126,6 @@ if __name__ == "__main__":
 
         elif args.outformat == 'units':
             ext_units, int_units = get_units(tree)
-            #pudb.set_trace()
             with output_file:
                 for cid in connectives:
                     connective = connectives[cid]['text'].encode('utf8')
