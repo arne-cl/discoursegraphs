@@ -103,12 +103,16 @@ def get_units(tree):
     return ext_units, int_units
 
 
-def get_modified_connective(connective_element):
+def get_connective_string(connective_element):
     """
+    given an etree element representing a connective, returns the
+    connective (str).
+
     Parameters
     ----------
     connective_element : lxml.etree._Element
-        An etree elements that contains a modified connective, e.g.
+        An etree elements that contains a connective, which might
+        additionally be modified, e.g.
         <connective id="5" relation="consequence">
             <modifier>auch</modifier>
             deshalb
@@ -117,8 +121,16 @@ def get_modified_connective(connective_element):
     Results
     -------
     result : str
-        a string representing the modified connective,
-        e.g. 'auch deshalb'
+        a string representing the (modified) connective,
+        e.g. 'und' or 'auch deshalb'
+    """
+    connective_string = connective_element.text.strip()
+    if connective_string:
+        return connective_string
+    else:
+        modifier = connective_element.getchildren()[0]
+        return ' '.join([modifier.text.strip(), modifier.tail.strip()])
+
     """
     modifier = connective_element.getchildren()[0]
     return modifier.text+modifier.tail
