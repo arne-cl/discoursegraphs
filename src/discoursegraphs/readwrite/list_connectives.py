@@ -131,9 +131,25 @@ def get_connective_string(connective_element):
         modifier = connective_element.getchildren()[0]
         return ' '.join([modifier.text.strip(), modifier.tail.strip()])
 
+def get_modifier(connective_element):
     """
-    modifier = connective_element.getchildren()[0]
-    return modifier.text+modifier.tail
+    returns the modifier (str) of a connective or None, if the
+    connective has none.
+
+    Parameters
+    ----------
+    connective_element : lxml.etree._Element
+        An etree elements that contains a connective
+
+    Results
+    -------
+    result : str or None
+        a string representing the modifier or None
+    """
+    if connective_element.xpath('modifier'):
+        return connective_element.getchildren()[0].text.strip()
+    else:
+        return None
 
 
 if __name__ == "__main__":
