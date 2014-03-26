@@ -28,6 +28,7 @@ from collections import OrderedDict
 from lxml import etree
 import argparse
 import re
+import pudb #TODO: rm debug
 
 REDUCE_WHITESPACE_RE = re.compile(' +')
 
@@ -172,6 +173,7 @@ if __name__ == "__main__":
 
     try:
         tree = etree.parse(conano_file)
+        #~ pudb.set_trace() #TODO: rm debug
         connectives = get_connectives(tree)
 
         if args.outformat in (None, 'normal'):
