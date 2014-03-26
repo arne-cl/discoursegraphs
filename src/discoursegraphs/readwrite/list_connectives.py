@@ -124,12 +124,13 @@ def get_connective_string(connective_element):
         a string representing the (modified) connective,
         e.g. 'und' or 'auch deshalb'
     """
-    connective_string = connective_element.text.strip()
-    if connective_string:
-        return connective_string
-    else:
+    if connective_element.text is None: # has a modifier
         modifier = connective_element.getchildren()[0]
         return ' '.join([modifier.text.strip(), modifier.tail.strip()])
+
+    else:
+        return connective_element.text.strip()
+
 
 def get_modifier(connective_element):
     """
