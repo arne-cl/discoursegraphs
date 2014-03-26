@@ -32,51 +32,61 @@ import re
 REDUCE_WHITESPACE_RE = re.compile(' +')
 
 def get_connectives(tree):
-	"""
-	extracts connectives from a Conano XML file.
+    """
+    extracts connectives from a Conano XML file.
 
-	Parameters
-	----------
-	tree : lxml.etree._ElementTree
-		an element tree representing the Conano XML file to be parsed
+    Parameters
+    ----------
+    tree : lxml.etree._ElementTree
+        an element tree representing the Conano XML file to be parsed
 
-	Returns
-	-------
-	connectives : OrderedDict
-		an ordered dictionary which maps from a connective ID (int) to a
-		dictionary of two features ('text', which maps to the
-		connective (str) and 'relation', which maps to the relation
-		(str) the connective is part of
-	"""
-	connectives = OrderedDict()
-	connective_elements = tree.findall('//connective')
-	for element in connective_elements:
-		try:
-			connectives[int(element.attrib['id'])] = {'text': element.text,
-				'relation': element.attrib['relation']}
-		except KeyError as e:
-			sys.stderr.write("Something's wrong in file {0}. {1}\n{2}\n".format(tree.docinfo.URL, e, etree.tostring(element)))
-	return connectives
+    Returns
+    -------
+    connectives : OrderedDict
+        an ordered dictionary which maps from a connective ID (int) to a
+        dictionary of features ('text' maps to the connective (str),
+        'relation' maps to the relation (str) the connective is part of
+        and 'modifier' maps to the modifier (str or None) of the
+        connective
+    """
+    connectives = OrderedDict()
+    connective_elements = tree.findall('//connective')
+    for element in connective_elements:
+        try:
+            if element.text:
+                connectives[int(element.attrib['id'])] = {'text': element.text,
+                    'relation': element.attrib['relation'],
+                    'modifier': None}
+            elif element.xpath('modifier'):
+                connective_str = get_modified_connective(element)
+                connectives[int(element.attrib['id'])] = {'text': connective_str,
+                    'relation': element.attrib['relation'],
+                    'modifier': element.getchildren()[0].text}
+            else:
+                raise ValueError("Can't parse connective with ID {0} in file {1}.\n".format(element.attrib['id'], tree.docinfo.URL))
+        except KeyError as e:
+            sys.stderr.write("Something's wrong in file {0}. {1}\n{2}\n".format(tree.docinfo.URL, e, etree.tostring(element)))
+    return connectives
 
 def get_units(tree):
-	"""
-	extracts connectives and their internal and external units from a
-	Conano XML file.
+    """
+    extracts connectives and their internal and external units from a
+    Conano XML file.
 
-	Parameters
-	----------
-	tree : lxml.etree._ElementTree
-		an element tree representing the Conano XML file to be parsed
+    Parameters
+    ----------
+    tree : lxml.etree._ElementTree
+        an element tree representing the Conano XML file to be parsed
 
-	Returns
-	-------
-	ext_units : OrderedDict
-		an ordered dictionary which maps from a connective ID (int) to
-		the external unit (str) of that connective
-	int_units : OrderedDict
-		an ordered dictionary which maps from a connective ID (int) to
-		the internal unit (str) of that connective
-	"""
+    Returns
+    -------
+    ext_units : OrderedDict
+        an ordered dictionary which maps from a connective ID (int) to
+        the external unit (str) of that connective
+    int_units : OrderedDict
+        an ordered dictionary which maps from a connective ID (int) to
+        the internal unit (str) of that connective
+    """
     ext_units = OrderedDict()
     int_units = OrderedDict()
     for unit in tree.findall('//unit'):
@@ -88,6 +98,27 @@ def get_units(tree):
         else:
             int_units[int(unit.attrib['id'])] = cleaned_str
     return ext_units, int_units
+
+
+def get_modified_connective(connective_element):
+    """
+    Parameters
+    ----------
+    connective_element : lxml.etree._Element
+        An etree elements that contains a modified connective, e.g.
+        <connective id="5" relation="consequence">
+            <modifier>auch</modifier>
+            deshalb
+        </connective>
+
+    Results
+    -------
+    result : str
+        a string representing the modified connective,
+        e.g. 'auch deshalb'
+    """
+    modifier = connective_element.getchildren()[0]
+    return modifier.text+modifier.tail
 
 
 if __name__ == "__main__":
