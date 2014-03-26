@@ -175,31 +175,34 @@ if __name__ == "__main__":
 
         if args.outformat in (None, 'normal'):
             with output_file:
-                for cid in connectives:
-                    connective = connectives[cid]['text'].encode('utf8')
-                    output_file.write(connective + '\n')
+                for cid, clist in connectives.items():
+                    for connective in clist:
+                        conn_str = connective['text'].encode('utf8')
+                        output_file.write(conn_str + '\n')
 
         elif args.outformat == 'relations':
             with output_file:
-                for cid in connectives:
-                    connective = connectives[cid]['text'].encode('utf8')
-                    relation = connectives[cid]['relation'].encode('utf8')
-                    output_file.write(connective + '\t' + relation + '\n')
+                for cid, clist in connectives.items():
+                    for connective in clist:
+                        conn_str = connective['text'].encode('utf8')
+                        relation = connective['relation'].encode('utf8')
+                        output_file.write(conn_str + '\t' + relation + '\n')
 
         elif args.outformat == 'units':
             ext_units, int_units = get_units(tree)
             with output_file:
-                for cid in connectives:
-                    connective = connectives[cid]['text'].encode('utf8')
-                    try:
-                        extunit = ext_units[cid]
-                    except KeyError as e:
-                        sys.stderr.write("{0} has no ext-unit with ID {1}\n".format(tree.docinfo.URL, cid))
-                    try:
-                        intunit = int_units[cid]
-                    except KeyError as e:
-                        sys.stderr.write("{0} has no int-unit with ID {1}\n".format(tree.docinfo.URL, cid))
-                    output_file.write('=====\n' + connective + '\n\n' + extunit + '\n\n' + intunit + '\n\n\n')
+                for cid, clist in connectives.items():
+                    for connective in clist:
+                        conn_str = connective['text'].encode('utf8')
+                        try:
+                            extunit = ext_units[cid]
+                        except KeyError as e:
+                            sys.stderr.write("{0} has no ext-unit with ID {1}\n".format(tree.docinfo.URL, cid))
+                        try:
+                            intunit = int_units[cid]
+                        except KeyError as e:
+                            sys.stderr.write("{0} has no int-unit with ID {1}\n".format(tree.docinfo.URL, cid))
+                        output_file.write('=====\n' + conn_str + '\n\nEXTERN: ' + extunit + '\n\nINTERN: ' + intunit + '\n\n\n')
 
         else:
             sys.stderr.write("Unsupported output format.\n")
