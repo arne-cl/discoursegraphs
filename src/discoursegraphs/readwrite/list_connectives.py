@@ -65,7 +65,7 @@ def get_connectives(tree):
             else:
                 raise ValueError("Can't parse connective with ID {0} in file {1}.\n".format(element.attrib['id'], tree.docinfo.URL))
         except KeyError as e:
-            sys.stderr.write("Something's wrong in file {0}. {1}\n{2}\n".format(tree.docinfo.URL, e, etree.tostring(element)))
+            sys.stderr.write("Something's wrong in file {0}.\nThere's no {1} attribute in element:\n{2}\n".format(tree.docinfo.URL, e, etree.tostring(element)))
     return connectives
 
 def get_units(tree):
