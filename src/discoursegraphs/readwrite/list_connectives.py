@@ -35,6 +35,9 @@ def get_connectives(tree):
     """
     extracts connectives from a Conano XML file.
 
+    Note: There can be more than one connective with the same ID (e.g.
+    'je' and 'desto')
+
     Parameters
     ----------
     tree : lxml.etree._ElementTree
@@ -44,26 +47,26 @@ def get_connectives(tree):
     -------
     connectives : OrderedDict
         an ordered dictionary which maps from a connective ID (int) to a
-        dictionary of features ('text' maps to the connective (str),
-        'relation' maps to the relation (str) the connective is part of
-        and 'modifier' maps to the modifier (str or None) of the
-        connective
+        list of dictionaries.
+        each dict represents one connective by its features ('text' maps
+        to the connective (str), 'relation' maps to the relation (str)
+        the connective is part of and 'modifier' maps to the modifier
+        (str or None) of the connective
     """
     connectives = OrderedDict()
     connective_elements = tree.findall('//connective')
     for element in connective_elements:
         try:
-            if element.text:
-                connectives[int(element.attrib['id'])] = {'text': element.text,
-                    'relation': element.attrib['relation'],
-                    'modifier': None}
-            elif element.xpath('modifier'):
-                connective_str = get_modified_connective(element)
-                connectives[int(element.attrib['id'])] = {'text': connective_str,
-                    'relation': element.attrib['relation'],
-                    'modifier': element.getchildren()[0].text}
+            conn_id = int(element.attrib['id'])
+            conn_feats = {'text': get_connective_string(element),
+                'relation': element.attrib['relation'],
+                'modifier': get_modifier(element)}
+
+            if conn_id in connectives:
+                connectives[conn_id].append(conn_feats)
             else:
-                raise ValueError("Can't parse connective with ID {0} in file {1}.\n".format(element.attrib['id'], tree.docinfo.URL))
+                connectives[conn_id] = [conn_feats]
+
         except KeyError as e:
             sys.stderr.write("Something's wrong in file {0}.\nThere's no {1} attribute in element:\n{2}\n".format(tree.docinfo.URL, e, etree.tostring(element)))
     return connectives
