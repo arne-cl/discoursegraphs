@@ -153,6 +153,17 @@ def get_modifier(connective_element):
     else:
         return None
 
+def get_ancestor_units(unit_element):
+    pudb.set_trace()
+    results = ["{0}-{1}".format(unit_element.attrib['type'], unit_element.attrib['id'])]
+    parent_element = unit_element.getparent()
+    if parent_element.tag == 'discourse':
+        return results
+    elif parent_element.tag == 'unit':
+        results.append(get_ancestor_units(parent_element))
+    else:
+        raise ValueError('Connective {0} embedded in unknown element {1}!'.format(results[0], parent_element.tag))
+
 
 if __name__ == "__main__":
     desc = "This script extracts connectives (and its relation" + \
