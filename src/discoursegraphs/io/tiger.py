@@ -6,13 +6,13 @@ import sys
 import os
 import re
 from lxml import etree, objectify
-from networkx import DiGraph, write_gpickle
+from networkx import MultiDiGraph, write_gpickle
 
 INTEGER_RE = re.compile('([0-9]+)')
 
-class TigerDocumentGraph(DiGraph):
+class TigerDocumentGraph(MultiDiGraph):
     """
-    A directed graph (networkx.DiGraph) that represents all the
+    A directed graph (networkx.MultiDiGraph) that represents all the
     sentences contained in a TigerXML file. A ``TigerDocumentGraph``
     contains a document root node (whose ID is stored in ``self.root``),
     which has an outgoing edge to the sentence root nodes of each
@@ -41,7 +41,7 @@ class TigerDocumentGraph(DiGraph):
         tiger_filepath : str
             absolute or relative path to the TigerXML file to be parsed
         """
-        # super calls __init__() of base class DiGraph
+        # super calls __init__() of base class MultiDiGraph
         super(TigerDocumentGraph, self).__init__()
 
         utf8_parser = etree.XMLParser(encoding="utf-8")
@@ -82,9 +82,9 @@ class TigerDocumentGraph(DiGraph):
         self.sentences.append(sentence_root_node_id)
 
 
-class TigerSentenceGraph(DiGraph):
+class TigerSentenceGraph(MultiDiGraph):
     """
-    A directed graph (networkx.DiGraph) that represents one syntax
+    A directed graph (networkx.MultiDiGraph) that represents one syntax
     annotated sentence extracted from a TigerXML file.
 
     Attributes
@@ -107,7 +107,7 @@ class TigerSentenceGraph(DiGraph):
         sentence : lxml.etree._Element
             a sentence from a TigerXML file in etree element format
         """
-        # super calls __init__() of base class DiGraph
+        # super calls __init__() of base class MultiDiGraph
         super(TigerSentenceGraph, self).__init__()
 
         graph_element = sentence.find('./graph')
@@ -321,7 +321,7 @@ def ensure_unicode(str_or_unicode):
     #~ """
     #~ @param sentence_graph: a directed graph containing a Tiger format
         #~ sentence structure and annotations (syntax and morphology)
-    #~ @type sentence_graph: DiGraph
+    #~ @type sentence_graph: MultiDiGraph
     #~ """
     #~ terminals, nonterminals = _get_terminals_and_nonterminals(sentence_graph)
     #~ sentence_root = objectify.Element('s', sentence_graph.metadata)
