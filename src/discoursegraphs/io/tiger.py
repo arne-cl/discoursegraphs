@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Author: Arne Neumann <arne-neumann@web.de>
+# Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 import sys
 import os
@@ -8,7 +8,7 @@ import re
 from lxml import etree, objectify
 from networkx import MultiDiGraph, write_gpickle
 
-INTEGER_RE = re.compile('([0-9]+)')
+from discoursegraphs.util import natural_sort_key, ensure_unicode
 
 class TigerDocumentGraph(MultiDiGraph):
     """
@@ -67,7 +67,7 @@ class TigerDocumentGraph(MultiDiGraph):
         self.sentences = []
         for sentence in tigerxml_root.iterfind('./body/s'):
             self.__add_sentence_to_document(sentence)
-        self.sentences = sorted(self.sentences, key=_natural_sort_key)
+        self.sentences = sorted(self.sentences, key=natural_sort_key)
 
     def __add_sentence_to_document(self, sentence):
         """
@@ -163,7 +163,7 @@ class TigerSentenceGraph(MultiDiGraph):
 
         # add sorted list of all token node IDs to sentence root node
         # for performance reasons
-        sorted_token_ids = sorted(token_ids, key=_natural_sort_key)
+        sorted_token_ids = sorted(token_ids, key=natural_sort_key)
         self.node[self.root].update({'tokens': sorted_token_ids})
 
         for nt in sentence.iterfind('./graph/nonterminals/nt'):
@@ -258,8 +258,8 @@ def _get_terminals_and_nonterminals(sentence_graph):
             nonterminals.add(node_id)
         else: # terminals
             terminals.add(node_id)
-    return sorted(list(terminals), key=_natural_sort_key), \
-            sorted(list(nonterminals), key=_natural_sort_key)
+    return sorted(list(terminals), key=natural_sort_key), \
+            sorted(list(nonterminals), key=natural_sort_key)
 
 
 def get_unconnected_nodes(sentence_graph):
@@ -285,46 +285,6 @@ def get_unconnected_nodes(sentence_graph):
     return [node for node in sentence_graph.nodes_iter()
                 if sentence_graph.degree(node) == 0 and
                    sentence_graph.number_of_nodes() > 1]
-
-
-def _natural_sort_key(s):
-    """
-    returns a key that can be used in sort functions.
-
-    Example:
-
-    >>> items = ['A99', 'a1', 'a2', 'a10', 'a24', 'a12', 'a100']
-
-    The normal sort function will ignore the natural order of the
-    integers in the string:
-
-    >>> print sorted(items)
-    ['A99', 'a1', 'a10', 'a100', 'a12', 'a2', 'a24']
-
-    When we use this function as a key to the sort function,
-    the natural order of the integer is considered.
-
-    >>> print sorted(items, key=natural_sort_key)
-    ['A99', 'a1', 'a2', 'a10', 'a12', 'a24', 'a100']
-    """
-    return [int(text) if text.isdigit() else text
-            for text in re.split(INTEGER_RE, s)]
-
-def ensure_unicode(str_or_unicode):
-    """
-    tests, if the input is ``str`` or ``unicode``. if it is ``str``, it
-    will be decoded from ``UTF-8`` to unicode.
-    """
-    if isinstance(str_or_unicode, str):
-        return str_or_unicode.decode('utf-8')
-    elif isinstance(str_or_unicode, unicode):
-        return str_or_unicode
-    else:
-        raise ValueError("Input '{0}' should be a string or unicode, "
-                        "but its of type {1}".format(str_or_unicode,
-                                                type(str_or_unicode)))
-
-
 
 #~ def graph2tigersentence(sentence_graph):
     #~ """
