@@ -149,7 +149,7 @@ class TigerSentenceGraph(MultiDiGraph):
             self.add_node(terminal_id, terminal_features)
             for secedge in t.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
-                self.add_edge(terminal_id, to_id, secedge.attrib,
+                self.add_edge(terminal_id, to_id, attr_dict=secedge.attrib,
                                 type='secedge')
 
         # add sorted list of all token node IDs to sentence root node
@@ -169,11 +169,11 @@ class TigerSentenceGraph(MultiDiGraph):
 
             for edge in nt.iterfind('./edge'):
                 to_id = edge.attrib['idref']
-                self.add_edge(from_id, to_id, edge.attrib, type='edge')
+                self.add_edge(from_id, to_id, attr_dict=edge.attrib, type='edge')
 
             for secedge in nt.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
-                self.add_edge(from_id, to_id, secedge.attrib,
+                self.add_edge(from_id, to_id, attr_dict=secedge.attrib,
                                 type='secedge')
 
 
