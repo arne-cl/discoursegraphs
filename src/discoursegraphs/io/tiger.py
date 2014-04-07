@@ -30,6 +30,15 @@ class TigerDocumentGraph(MultiDiGraph):
     sentences : list of str
         sorted list of all sentence root node IDs (of sentences
         contained in this document graph)
+
+    The attribute dict of each sentence root node contains a key
+    'tokens', which maps to a sorted list of token node IDs (str). To
+    print all tokens of a Tiger document, just do:
+
+    tdg = TigerDocumentGraph('/path/to/tiger.file')
+    for sentence_root_node in tdg.sentences:
+        for token_node_id in tdg.node[sentence_root_node]['tokens']:
+            print tdg.node[token_node_id]['word']
     """
     def __init__(self, tiger_filepath):
         """
