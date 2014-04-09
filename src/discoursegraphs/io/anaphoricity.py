@@ -95,10 +95,11 @@ class AnaphoraDocumentGraph(MultiDiGraph):
             unannotated_token = regex_match.group('token')
             annotation = regex_match.group('annotation')
             certainty = 1.0 if not regex_match.group('uncertain') else 0.5
-            self.add_node(token_id, token=unannotated_token,
-                annotation={'anaphoricity': ANNOTATION_TYPES[annotation],
-                    'certainty': certainty},
-                    layers={'anaphoricity', 'anaphoricity:token'})
+            self.add_node(token_id, attr_dict={
+                'anaphoricity:annotation': ANNOTATION_TYPES[annotation], 
+                'anaphoricity:certainty': certainty}, 
+                token=unannotated_token,
+                layers={'anaphoricity', 'anaphoricity:token'})
         else: # token is not annotated
             self.add_node(token_id, token=token,
                 layers={'anaphoricity', 'anaphoricity:token'})
