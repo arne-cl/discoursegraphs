@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Author: Arne Neumann <arne-neumann@web.de>
+# Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
+import sys
 import os
 import re
 from itertools import chain
-import networkx
+from networkx import MultiDiGraph, write_gpickle
 
 # The words 'das' and 'es were annotatated in the Potsdam Commentary
 # Corpus (PCC). Annotation options: '/n' (nominal), '/a' (abstract),
@@ -20,7 +21,7 @@ ANNOTATION_TYPES = {'n': 'nominal',
                     'r': 'relative',
                     'p': 'pleonastic'}
 
-class AnaphoraDocumentGraph(networkx.MultiDiGraph):
+class AnaphoraDocumentGraph(MultiDiGraph):
     """
     represents a text in which abstract anaphora were annotated
     as a graph.
@@ -78,4 +79,16 @@ class AnaphoraDocumentGraph(networkx.MultiDiGraph):
                         layers={'anaphoricity', 'anaphoricity:token'})
                 self.add_edge(root_node_name, i,
                     layers={'anaphoricity', 'anaphoricity:token'})
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        sys.stderr.write('Usage: {0} anaphoricity_input_file networkx_pickle_output_file\n'.format(sys.argv[0]))
+        sys.exit(1)
+    else:
+        anaphora_filepath = sys.argv[1]
+        pickle_filepath = sys.argv[2]
+        assert os.path.isfile(anaphora_filepath)
+        anaphora_docgraph = AnaphoraDocumentGraph(anaphora_filepath)
+        write_gpickle(anaphora_docgraph, pickle_filepath)
 
