@@ -31,7 +31,7 @@ class AnaphoraDocumentGraph(MultiDiGraph):
     tokens : list of int
         a list of node IDs (int) which represent the tokens in the
         order they occur in the text
-    root_node_name : str
+    root : str
         name of the document root node ID
         (default: 'anaphoricity:root_node')
     """
@@ -65,9 +65,10 @@ class AnaphoraDocumentGraph(MultiDiGraph):
         """
         # super calls __init__() of base class MultiDiGraph
         super(AnaphoraDocumentGraph, self).__init__()
-        self.name = os.path.basename(anaphora_filepath)
-        self.root_node_name = 'anaphoricity:root_node'
-        self.add_node(self.root_node_name, layers={'anaphoricity'})
+        if name is not None:
+            self.name = os.path.basename(anaphora_filepath)
+        self.root = 'anaphoricity:root_node'
+        self.add_node(self.root, layers={'anaphoricity'})
         self.tokens = []
 
         with open(anaphora_filepath, 'r') as anno_file:
@@ -103,7 +104,7 @@ class AnaphoraDocumentGraph(MultiDiGraph):
         else: # token is not annotated
             self.add_node(token_id, token=token,
                 layers={'anaphoricity', 'anaphoricity:token'})
-        self.add_edge(self.root_node_name, token_id,
+        self.add_edge(self.root, token_id,
             layers={'anaphoricity', 'anaphoricity:token'})
 
 
