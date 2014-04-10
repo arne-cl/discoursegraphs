@@ -20,6 +20,8 @@ class TigerDocumentGraph(MultiDiGraph):
 
     Attributes
     ----------
+    filename : str
+        filename of the TigerXML file that was parsed
     corpus_id : str
         ID of the TigerXML document specified in the 'id' attribute
         of the <corpus> element
@@ -38,7 +40,7 @@ class TigerDocumentGraph(MultiDiGraph):
         for token_node_id in tdg.node[sentence_root_node]['tokens']:
             print tdg.node[token_node_id]['word']
     """
-    def __init__(self, tiger_filepath, name=None):
+    def __init__(self, tiger_filepath):
         """
         Creates a directed graph that represents all syntax annotated
         sentences in the given TigerXML file.
@@ -47,9 +49,6 @@ class TigerDocumentGraph(MultiDiGraph):
         ----------
         tiger_filepath : str
             absolute or relative path to the TigerXML file to be parsed
-        name : str or None
-            the name or ID of the graph to be generated. If no name is
-            given, the basename of the input file is used.
         """
         # super calls __init__() of base class MultiDiGraph
         super(TigerDocumentGraph, self).__init__()
@@ -58,13 +57,12 @@ class TigerDocumentGraph(MultiDiGraph):
         tigerxml_tree = etree.parse(tiger_filepath, utf8_parser)
         tigerxml_root = tigerxml_tree.getroot()
 
-        if name is not None:
-            self.name = os.path.basename(tiger_filepath)
+        self.filename = os.path.basename(tiger_filepath)
         self.corpus_id = tigerxml_root.attrib['id']
 
         # add root node of TigerDocumentGraph
-        self.root = 'tiger:root_node'
-        self.add_node(self.root, layers={'tiger'})
+        self.root = 'tiger_root_node'
+        self.add_node(self.root, type='tiger_root_node')
 
         self.sentences = []
         for sentence in tigerxml_root.iterfind('./body/s'):
@@ -161,7 +159,7 @@ class TigerSentenceGraph(MultiDiGraph):
             for secedge in t.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
                 self.add_edge(terminal_id, to_id, attr_dict=secedge.attrib,
-                                layers={'tiger', 'tiger:secedge'})
+                                type='secedge')
 
         # add sorted list of all token node IDs to sentence root node
         # for performance reasons
@@ -180,13 +178,12 @@ class TigerSentenceGraph(MultiDiGraph):
 
             for edge in nt.iterfind('./edge'):
                 to_id = edge.attrib['idref']
-                self.add_edge(from_id, to_id, attr_dict=edge.attrib,
-                    layers={'tiger', 'tiger:edge'})
+                self.add_edge(from_id, to_id, attr_dict=edge.attrib, type='edge')
 
             for secedge in nt.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
                 self.add_edge(from_id, to_id, attr_dict=secedge.attrib,
-                                layers={'tiger', 'tiger:secedge'})
+                                type='secedge')
 
 
     def __add_vroot(self, sentence_root_id, sentence_attributes):
