@@ -158,5 +158,4 @@ if __name__ == '__main__':
         OUTPUT_PATH = sys.argv[2]
         assert os.path.isfile(INPUT_PATH)
         RST_GRAPH = RSTGraph(INPUT_PATH)
-        networkx.write_graphml(RST_GRAPH, OUTPUT_PATH, encoding='utf-8',
-                                prettyprint=True)
+        write_gpickle(RST_GRAPH, OUTPUT_PATH)
