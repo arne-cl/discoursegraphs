@@ -6,13 +6,15 @@ import sys
 import os
 import re
 from lxml import etree, objectify
-from networkx import MultiDiGraph, write_gpickle
+from networkx import write_gpickle
 
+from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.util import natural_sort_key, ensure_unicode
 
-class TigerDocumentGraph(MultiDiGraph):
+class TigerDocumentGraph(DiscourseDocumentGraph):
     """
-    A directed graph (networkx.MultiDiGraph) that represents all the
+    A directed graph with multiple edges (based on
+    networkx.MultiDiGraph) that represents all the
     sentences contained in a TigerXML file. A ``TigerDocumentGraph``
     contains a document root node (whose ID is stored in ``self.root``),
     which has an outgoing edge to the sentence root nodes of each
@@ -36,7 +38,7 @@ class TigerDocumentGraph(MultiDiGraph):
     tdg = TigerDocumentGraph('/path/to/tiger.file')
     for sentence_root_node in tdg.sentences:
         for token_node_id in tdg.node[sentence_root_node]['tokens']:
-            print tdg.node[token_node_id]['word']
+            print tdg.node[token_node_id]['tiger:word']
     """
     def __init__(self, tiger_filepath, name=None):
         """
@@ -51,7 +53,7 @@ class TigerDocumentGraph(MultiDiGraph):
             the name or ID of the graph to be generated. If no name is
             given, the basename of the input file is used.
         """
-        # super calls __init__() of base class MultiDiGraph
+        # super calls __init__() of base class DiscourseDocumentGraph
         super(TigerDocumentGraph, self).__init__()
 
         utf8_parser = etree.XMLParser(encoding="utf-8")
@@ -89,14 +91,15 @@ class TigerDocumentGraph(MultiDiGraph):
 
         self.add_nodes_from(sentence_graph.nodes(data=True))
         self.add_edges_from(sentence_graph.edges(data=True))
-        self.add_edge(self.root, sentence_root_node_id)
+        self.add_edge(self.root, sentence_root_node_id,
+            layers={'tiger', 'tiger:sentence'})
         self.sentences.append(sentence_root_node_id)
 
 
-class TigerSentenceGraph(MultiDiGraph):
+class TigerSentenceGraph(DiscourseDocumentGraph):
     """
-    A directed graph (networkx.MultiDiGraph) that represents one syntax
-    annotated sentence extracted from a TigerXML file.
+    A directed graph (based on a networkx.MultiDiGraph) that represents
+    one syntax annotated sentence extracted from a TigerXML file.
 
     Attributes
     ----------
@@ -118,7 +121,7 @@ class TigerSentenceGraph(MultiDiGraph):
         sentence : lxml.etree._Element
             a sentence from a TigerXML file in etree element format
         """
-        # super calls __init__() of base class MultiDiGraph
+        # super calls __init__() of base class DiscourseDocumentGraph
         super(TigerSentenceGraph, self).__init__()
 
         graph_element = sentence.find('./graph')
@@ -127,11 +130,11 @@ class TigerSentenceGraph(MultiDiGraph):
         # sentence.attrib is a lxml.etree._Attrib, which is 'dict-like'
         # but doesn't behave exactly like a dict (i.e. it threw an error
         # when I tried to update it)
-        sentence_attributes = dict(sentence.attrib)
+        sentence_attributes = add_prefix(sentence.attrib, 'tiger:')
 
         # some sentences in the Tiger corpus are marked as discontinuous
         if 'discontinuous' in graph_element.attrib:
-            sentence_attributes.update({'discontinuous': graph_element.attrib['discontinuous']})
+            sentence_attributes.update({'tiger:discontinuous': graph_element.attrib['discontinuous']})
 
         self.__add_vroot(sentence_root_id, sentence_attributes)
         self.__tigersentence2graph(sentence)
@@ -153,17 +156,19 @@ class TigerSentenceGraph(MultiDiGraph):
         for t in sentence.iterfind('./graph/terminals/t'):
             terminal_id = t.attrib['id']
             token_ids.append(terminal_id)
-            terminal_features = {key:t.attrib[key] for key in t.attrib
-                                                    if key != 'id'}
+            terminal_features = add_prefix(t.attrib, 'tiger:')
             # convert tokens to unicode
-            terminal_features['word'] = ensure_unicode(terminal_features['word'])
-            self.add_node(terminal_id, terminal_features)
+            terminal_features['tiger:word'] = ensure_unicode(terminal_features['tiger:word'])
+            self.add_node(terminal_id, layers={'tiger', 'tiger:token'},
+                attr_dict=terminal_features)
             for secedge in t.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
-                # typecast from etree._Attrib
-                secedge_attribs = dict(secedge.attrib)
-                self.add_edge(terminal_id, to_id, attr_dict=secedge_attribs,
-                                layers={'tiger', 'tiger:secedge'})
+                secedge_attribs =  add_prefix(secedge.attrib, 'tiger:')
+                if not to_id in self: # if graph doesn't contain to-node, yet
+                    self.add_node(to_id, layers={'tiger', 'tiger:secedge'})
+                self.add_edge(terminal_id, to_id,
+                    layers={'tiger', 'tiger:secedge'},
+                    attr_dict=secedge_attribs)
 
         # add sorted list of all token node IDs to sentence root node
         # for performance reasons
@@ -172,27 +177,31 @@ class TigerSentenceGraph(MultiDiGraph):
 
         for nt in sentence.iterfind('./graph/nonterminals/nt'):
             from_id = nt.attrib['id']
-            nt_feats = {key:nt.attrib[key] for key in nt.attrib
-                                            if key != 'id'}
-            if self.has_node(from_id): #root node already exists,
-                                       #but doesn't have a cat value
+            nt_feats = add_prefix(nt.attrib, 'tiger:')
+            if from_id in self: # root node already exists,
+                                # but doesn't have a cat value
                     self.node[from_id].update(nt_feats)
             else:
-                self.add_node(from_id, nt_feats)
+                self.add_node(from_id, layers={'tiger', 'tiger:syntax'},
+                    attr_dict=nt_feats)
 
             for edge in nt.iterfind('./edge'):
                 to_id = edge.attrib['idref']
-                # typecast from etree._Attrib
-                edge_attribs = dict(edge.attrib)
-                self.add_edge(from_id, to_id, attr_dict=edge_attribs,
-                    layers={'tiger', 'tiger:edge'})
+                if to_id not in self: # if graph doesn't contain to-node, yet
+                    self.add_node(to_id, layers={'tiger', 'tiger:secedge'})
+                edge_attribs = add_prefix(edge.attrib, 'tiger:')
+                self.add_edge(from_id, to_id,
+                    layers={'tiger', 'tiger:edge'},
+                    attr_dict=edge_attribs)
 
             for secedge in nt.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
-                # typecast from etree._Attrib
-                secedge_attribs = dict(secedge.attrib)
-                self.add_edge(from_id, to_id, attr_dict=secedge_attribs,
-                                layers={'tiger', 'tiger:secedge'})
+                if to_id not in self: # if graph doesn't contain to-node, yet
+                    self.add_node(to_id, layers={'tiger', 'tiger:secedge'})
+                secedge_attribs = add_prefix(secedge.attrib, 'tiger:')
+                self.add_edge(from_id, to_id,
+                    layers={'tiger', 'tiger:secedge'},
+                    attr_dict=secedge_attribs)
 
 
     def __add_vroot(self, sentence_root_id, sentence_attributes):
@@ -221,13 +230,19 @@ class TigerSentenceGraph(MultiDiGraph):
         sentence_attributes : dict of (str, str)
             a dictionary of sentence attributes extracted from the <s>
             element (corresponding to this sentence) of a TigerXML file.
-            contains the attributes ``id``, ``art_id`` and ``orig_id``.
+            contains the attributes ``tiger:id``, ``tiger:art_id`` and
+            ``tiger:orig_id``.
         """
         old_root_node_id = sentence_root_id
-        sentence_id = sentence_attributes['id']
+        sentence_id = sentence_attributes['tiger:id']
         new_root_node_id = 'VROOT-{0}'.format(sentence_id)
-        self.add_node(new_root_node_id, sentence_attributes)
-        self.add_edge(new_root_node_id, old_root_node_id)
+        self.add_node(old_root_node_id,
+            layers={'tiger', 'tiger:sentence', 'tiger:sentence:root'})
+        self.add_node(new_root_node_id,
+            layers={'tiger', 'tiger:sentence', 'tiger:sentence:vroot'},
+            attr_dict=sentence_attributes)
+        self.add_edge(new_root_node_id, old_root_node_id,
+            layers={'tiger', 'tiger:sentence', 'tiger:sentence:vroot'})
         self.root = new_root_node_id
 
     def __repair_unconnected_nodes(self):
@@ -239,7 +254,8 @@ class TigerSentenceGraph(MultiDiGraph):
         """
         unconnected_node_ids = get_unconnected_nodes(self)
         for unconnected_node_id in unconnected_node_ids:
-            self.add_edge(self.root, unconnected_node_id)
+            self.add_edge(self.root, unconnected_node_id,
+                layers={'tiger', 'tiger:sentence'})
 
 
 def _get_terminals_and_nonterminals(sentence_graph):
@@ -295,11 +311,36 @@ def get_unconnected_nodes(sentence_graph):
                 if sentence_graph.degree(node) == 0 and
                    sentence_graph.number_of_nodes() > 1]
 
+def add_prefix(dict_like, prefix):
+    """
+    takes a dict (or dict-like object, e.g. etree._Attrib) and adds the
+    given prefix to each key. Always returns a dict (via a typecast).
+    
+    Parameters
+    ----------
+    dict_like : dict (or similar)
+        a dictionary or a container that implements .items()
+    prefix : str
+        the prefix string to be prepended to each key in the input dict
+    
+    Returns
+    -------
+    prefixed_dict : dict
+        A dict, in which each key begins with the given prefix.
+    """
+    if not isinstance(dict_like, dict):
+        try:
+            dict_like = dict(dict_like)
+        except Error as e:
+            raise ValueError("{0}\nCan't convert container to dict: " \
+                "{1}".format(e, dict_like))
+    return {prefix+k:v  for (k,v) in dict_like.items()}
+
 #~ def graph2tigersentence(sentence_graph):
     #~ """
     #~ @param sentence_graph: a directed graph containing a Tiger format
         #~ sentence structure and annotations (syntax and morphology)
-    #~ @type sentence_graph: MultiDiGraph
+    #~ @type sentence_graph: DiscourseDocumentGraph
     #~ """
     #~ terminals, nonterminals = _get_terminals_and_nonterminals(sentence_graph)
     #~ sentence_root = objectify.Element('s', sentence_graph.metadata)
