@@ -38,7 +38,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
     tdg = TigerDocumentGraph('/path/to/tiger.file')
     for sentence_root_node in tdg.sentences:
         for token_node_id in tdg.node[sentence_root_node]['tokens']:
-            print tdg.node[token_node_id]['word']
+            print tdg.node[token_node_id]['tiger:word']
     """
     def __init__(self, tiger_filepath, name=None):
         """
@@ -130,11 +130,11 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         # sentence.attrib is a lxml.etree._Attrib, which is 'dict-like'
         # but doesn't behave exactly like a dict (i.e. it threw an error
         # when I tried to update it)
-        sentence_attributes = dict(sentence.attrib)
+        sentence_attributes = add_prefix(sentence.attrib, 'tiger:')
 
         # some sentences in the Tiger corpus are marked as discontinuous
         if 'discontinuous' in graph_element.attrib:
-            sentence_attributes.update({'discontinuous': graph_element.attrib['discontinuous']})
+            sentence_attributes.update({'tiger:discontinuous': graph_element.attrib['discontinuous']})
 
         self.__add_vroot(sentence_root_id, sentence_attributes)
         self.__tigersentence2graph(sentence)
@@ -156,16 +156,14 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         for t in sentence.iterfind('./graph/terminals/t'):
             terminal_id = t.attrib['id']
             token_ids.append(terminal_id)
-            terminal_features = {key:t.attrib[key] for key in t.attrib
-                                                    if key != 'id'}
+            terminal_features = add_prefix(t.attrib, 'tiger:')
             # convert tokens to unicode
-            terminal_features['word'] = ensure_unicode(terminal_features['word'])
+            terminal_features['tiger:word'] = ensure_unicode(terminal_features['tiger:word'])
             self.add_node(terminal_id, layers={'tiger', 'tiger:token'},
                 attr_dict=terminal_features)
             for secedge in t.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
-                # typecast from etree._Attrib
-                secedge_attribs = dict(secedge.attrib)
+                secedge_attribs =  add_prefix(secedge.attrib, 'tiger:')
                 if not to_id in self: # if graph doesn't contain to-node, yet
                     self.add_node(to_id, layers={'tiger', 'tiger:secedge'})
                 self.add_edge(terminal_id, to_id,
@@ -179,10 +177,9 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
 
         for nt in sentence.iterfind('./graph/nonterminals/nt'):
             from_id = nt.attrib['id']
-            nt_feats = {key:nt.attrib[key] for key in nt.attrib
-                                            if key != 'id'}
-            if self.has_node(from_id): #root node already exists,
-                                       #but doesn't have a cat value
+            nt_feats = add_prefix(nt.attrib, 'tiger:')
+            if from_id in self: # root node already exists,
+                                # but doesn't have a cat value
                     self.node[from_id].update(nt_feats)
             else:
                 self.add_node(from_id, layers={'tiger', 'tiger:syntax'},
@@ -190,20 +187,18 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
 
             for edge in nt.iterfind('./edge'):
                 to_id = edge.attrib['idref']
-                if not to_id in self: # if graph doesn't contain to-node, yet
+                if to_id not in self: # if graph doesn't contain to-node, yet
                     self.add_node(to_id, layers={'tiger', 'tiger:secedge'})
-                # typecast from etree._Attrib
-                edge_attribs = dict(edge.attrib)
+                edge_attribs = add_prefix(edge.attrib, 'tiger:')
                 self.add_edge(from_id, to_id,
                     layers={'tiger', 'tiger:edge'},
                     attr_dict=edge_attribs)
 
             for secedge in nt.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
-                if not to_id in self: # if graph doesn't contain to-node, yet
+                if to_id not in self: # if graph doesn't contain to-node, yet
                     self.add_node(to_id, layers={'tiger', 'tiger:secedge'})
-                # typecast from etree._Attrib
-                secedge_attribs = dict(secedge.attrib)
+                secedge_attribs = add_prefix(secedge.attrib, 'tiger:')
                 self.add_edge(from_id, to_id,
                     layers={'tiger', 'tiger:secedge'},
                     attr_dict=secedge_attribs)
@@ -235,10 +230,11 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         sentence_attributes : dict of (str, str)
             a dictionary of sentence attributes extracted from the <s>
             element (corresponding to this sentence) of a TigerXML file.
-            contains the attributes ``id``, ``art_id`` and ``orig_id``.
+            contains the attributes ``tiger:id``, ``tiger:art_id`` and
+            ``tiger:orig_id``.
         """
         old_root_node_id = sentence_root_id
-        sentence_id = sentence_attributes['id']
+        sentence_id = sentence_attributes['tiger:id']
         new_root_node_id = 'VROOT-{0}'.format(sentence_id)
         self.add_node(old_root_node_id,
             layers={'tiger', 'tiger:sentence', 'tiger:sentence:root'})
@@ -314,6 +310,31 @@ def get_unconnected_nodes(sentence_graph):
     return [node for node in sentence_graph.nodes_iter()
                 if sentence_graph.degree(node) == 0 and
                    sentence_graph.number_of_nodes() > 1]
+
+def add_prefix(dict_like, prefix):
+    """
+    takes a dict (or dict-like object, e.g. etree._Attrib) and adds the
+    given prefix to each key. Always returns a dict (via a typecast).
+    
+    Parameters
+    ----------
+    dict_like : dict (or similar)
+        a dictionary or a container that implements .items()
+    prefix : str
+        the prefix string to be prepended to each key in the input dict
+    
+    Returns
+    -------
+    prefixed_dict : dict
+        A dict, in which each key begins with the given prefix.
+    """
+    if not isinstance(dict_like, dict):
+        try:
+            dict_like = dict(dict_like)
+        except Error as e:
+            raise ValueError("{0}\nCan't convert container to dict: " \
+                "{1}".format(e, dict_like))
+    return {prefix+k:v  for (k,v) in dict_like.items()}
 
 #~ def graph2tigersentence(sentence_graph):
     #~ """
