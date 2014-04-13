@@ -11,13 +11,15 @@ from __future__ import print_function
 import os
 import sys
 from lxml import etree
-import networkx
+from networkx import write_gpickle
 
+from discoursegraphs import DiscourseDocumentGraph
 
-class RSTGraph(networkx.DiGraph):
+class RSTGraph(DiscourseDocumentGraph):
     """
-    A directed graph (networkx DiGraph) that represents the rhetorical
-    structure of a document.
+    A directed graph with multiple edges (based on a networkx
+    MultiDiGraph) that represents the rhetorical structure of a
+    document.
     """
     def __init__(self, rs3_filepath):
         """
@@ -47,7 +49,7 @@ class RSTGraph(networkx.DiGraph):
             imported from an RS3 file) and have outgoing edges to nodes
             representing tokens.
         """
-        # super calls __init__() of base class DiGraph
+        # super calls __init__() of base class DiscourseDocumentGraph
         super(RSTGraph, self).__init__()
         utf8_parser = etree.XMLParser(encoding="utf-8")
         rs3_xml_tree = etree.parse(rs3_filepath, utf8_parser)
@@ -77,31 +79,46 @@ class RSTGraph(networkx.DiGraph):
 
         for segment in rst_xml_root.iterfind('./body/segment'):
             segment_node_id = int(segment.attrib['id'])
-            self.add_node(segment_node_id, type='segment',
-                            text=sanitize_string(segment.text))
+            self.add_node(segment_node_id,
+                layers={'rst', 'rst:segment'},
+                attr_dict={'rst:text': sanitize_string(segment.text)})
+
             self.segments.append(segment_node_id)
             if 'parent' in segment.attrib:
                 # node has an outgoing edge,
                 # i.e. segment is in an RST relation
                 parent_node_id = int(segment.attrib['parent'])
+                if parent_node_id not in self: # node not in graph, yet
+                    self.add_node(parent_node_id,
+                        layers={'rst', 'rst:segment'})
                 self.add_edge(segment_node_id, parent_node_id,
-                                relname=segment.attrib['relname'])
+                    layers={'rst', 'rst:relation'},
+                    relname=segment.attrib['relname'])
 
         for group in rst_xml_root.iterfind('./body/group'):
             group_node_id = int(group.attrib['id'])
             node_type = group.attrib['type']
-            if group_node_id in self.nodes_iter():
-                # group node already exists
-                self.node[group_node_id].update({'type': node_type})
+            if group_node_id in self: # group node already exists
+                self.node[group_node_id].update({'rst:reltype': node_type})
             else:
-                self.add_node(parent_node_id, type=node_type)
+                self.add_node(group_node_id,
+                    layers={'rst', 'rst:segment'},
+                    attr_dict={'rst:reltype': node_type})
 
             if 'parent' in group.attrib:
                 # node has an outgoing edge, i.e. group is not the
                 # topmost element in an RST tree
                 parent_node_id = int(group.attrib['parent'])
+                if parent_node_id not in self: # node not in graph, yet
+                    self.add_node(parent_node_id,
+                        layers={'rst', 'rst:segment'})
                 self.add_edge(group_node_id, parent_node_id,
-                                relname=group.attrib['relname'])
+                    layers={'rst', 'rst:relation'},
+                    attr_dict={'rst:relname': group.attrib['relname']})
+            else: # group node is the root of an RST tree
+                existing_layers = self.node[group_node_id]['layers']
+                all_layers = existing_layers.union({'rst:root'})
+                self.node[group_node_id].update({'layers': all_layers})
 
     def __str__(self):
         """
