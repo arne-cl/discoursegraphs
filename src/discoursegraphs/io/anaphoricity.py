@@ -6,7 +6,9 @@ import sys
 import os
 import re
 from itertools import chain
-from networkx import MultiDiGraph, write_gpickle
+from networkx import write_gpickle
+
+from discoursegraphs import DiscourseDocumentGraph
 
 # The words 'das' and 'es were annotatated in the Potsdam Commentary
 # Corpus (PCC). Annotation options: '/n' (nominal), '/a' (abstract),
@@ -21,7 +23,7 @@ ANNOTATION_TYPES = {'n': 'nominal',
                     'r': 'relative',
                     'p': 'pleonastic'}
 
-class AnaphoraDocumentGraph(MultiDiGraph):
+class AnaphoraDocumentGraph(DiscourseDocumentGraph):
     """
     represents a text in which abstract anaphora were annotated
     as a graph.
@@ -63,7 +65,7 @@ class AnaphoraDocumentGraph(MultiDiGraph):
             the name or ID of the graph to be generated. If no name is
             given, the basename of the input file is used.
         """
-        # super calls __init__() of base class MultiDiGraph
+        # super calls __init__() of base class DiscourseDocumentGraph
         super(AnaphoraDocumentGraph, self).__init__()
         if name is not None:
             self.name = os.path.basename(anaphora_filepath)
@@ -96,14 +98,15 @@ class AnaphoraDocumentGraph(MultiDiGraph):
             unannotated_token = regex_match.group('token')
             annotation = regex_match.group('annotation')
             certainty = 1.0 if not regex_match.group('uncertain') else 0.5
-            self.add_node(token_id, attr_dict={
+            self.add_node(token_id, layers={'anaphoricity', 'anaphoricity:token'},
+                attr_dict={
                 'anaphoricity:annotation': ANNOTATION_TYPES[annotation], 
                 'anaphoricity:certainty': certainty}, 
-                token=unannotated_token,
-                layers={'anaphoricity', 'anaphoricity:token'})
+                token=unannotated_token)
         else: # token is not annotated
-            self.add_node(token_id, token=token,
-                layers={'anaphoricity', 'anaphoricity:token'})
+            self.add_node(token_id,
+                layers={'anaphoricity', 'anaphoricity:token'},
+                token=token)
         self.add_edge(self.root, token_id,
             layers={'anaphoricity', 'anaphoricity:token'})
 
