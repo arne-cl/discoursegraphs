@@ -46,10 +46,10 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         If a token is annotated, it will have an attribute 'annotation',
         which maps to a dict with the keys 'anaphoricity' (str) and
         'certainty' (float).
-        
-        'anaphoricity' is one of the following: 'abstract', 'nominal', 
+
+        'anaphoricity' is one of the following: 'abstract', 'nominal',
         'pleonastic' or 'relative'.
-        
+
         Parameters
         ----------
         anaphora_filepath : str
@@ -101,7 +101,7 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
             certainty = 1.0 if not regex_match.group('uncertain') else 0.5
             self.add_node(token_id, layers={'anaphoricity', 'anaphoricity:token'},
                 attr_dict={
-                'anaphoricity:annotation': ANNOTATION_TYPES[annotation], 
+                'anaphoricity:annotation': ANNOTATION_TYPES[annotation],
                 'anaphoricity:certainty': certainty,
                 'anaphoricity:token': ensure_unicode(unannotated_token)})
         else: # token is not annotated
