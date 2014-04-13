@@ -9,6 +9,7 @@ from itertools import chain
 from networkx import write_gpickle
 
 from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs.util import ensure_unicode
 
 # The words 'das' and 'es were annotatated in the Potsdam Commentary
 # Corpus (PCC). Annotation options: '/n' (nominal), '/a' (abstract),
@@ -101,12 +102,13 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
             self.add_node(token_id, layers={'anaphoricity', 'anaphoricity:token'},
                 attr_dict={
                 'anaphoricity:annotation': ANNOTATION_TYPES[annotation], 
-                'anaphoricity:certainty': certainty}, 
-                token=unannotated_token)
+                'anaphoricity:certainty': certainty,
+                'anaphoricity:token': ensure_unicode(unannotated_token)})
         else: # token is not annotated
             self.add_node(token_id,
                 layers={'anaphoricity', 'anaphoricity:token'},
-                token=token)
+                attr_dict={'anaphoricity:token': ensure_unicode(token)})
+
         self.add_edge(self.root, token_id,
             layers={'anaphoricity', 'anaphoricity:token'})
 
