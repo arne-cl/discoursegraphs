@@ -109,7 +109,8 @@ def _relabel_inplace(G, mapping):
         except KeyError:
             continue
         try:
-            G.add_node(new,attr_dict=G.node[old])
+            layers = G.node[old]['layers']
+            G.add_node(new, layers, attr_dict=G.node[old])
         except KeyError:
             raise KeyError("Node %s is not in the graph"%old)
         if multigraph:
