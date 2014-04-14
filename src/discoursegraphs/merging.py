@@ -42,22 +42,45 @@ def add_rst_to_tiger(tiger_docgraph, rst_graph):
                 "{0}\n{1}".format(tiger_filepath, rst_filepath))
 
 
+def add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph):
+    """
+    adds an AnaphoraDocumentGraph to a TigerDocumentGraph, thereby
+    adding information about the anaphoricity of words
+    (e.g. 'das', 'es') to the respective (Tiger) tokens.
+
+    Parameters
+    ----------
+    tiger_docgraph : TigerDocumentGraph
+        multidigraph representing a syntax annotated (TigerXML) document
+    anaphora_graph : AnaphoraDocumentGraph
+        multidigraph representing a anaphorcity annotated document
+        (ad-hoc format used in Christian Dittrich's diploma thesis)
+    """
+    pass
+
+
+
+
 if __name__ == '__main__':
-    if len(sys.argv) != 4:
-        sys.stderr.write('Usage: {0} tiger_file rst_file pickle_output_file\n'.format(sys.argv[0]))
+    if len(sys.argv) != 5:
+        sys.stderr.write('Usage: {0} tiger_file rst_file anaphoricity_file pickle_output_file\n'.format(sys.argv[0]))
         sys.exit(1)
     else:
         #~ pass
         tiger_filepath = sys.argv[1]
         rst_filepath = sys.argv[2]
-        pickle_filepath = sys.argv[3]
+        anaphora_filepath = sys.argv[3]
+        pickle_filepath = sys.argv[4]
 
         assert os.path.isfile(tiger_filepath)
         tiger_docgraph = TigerDocumentGraph(tiger_filepath)
         assert os.path.isfile(rst_filepath)
         rst_graph = RSTGraph(rst_filepath)
+        assert os.path.isfile(anaphora_filepath)
+        anaphora_graph = AnaphoraDocumentGraph(anaphora_filepath)
 
         add_rst_to_tiger(tiger_docgraph, rst_graph)
+        add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph)
 
         for i, node in tiger_docgraph.nodes(data=True):
             print i, node
