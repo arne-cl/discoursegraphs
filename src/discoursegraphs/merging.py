@@ -113,7 +113,7 @@ if __name__ == '__main__':
         pickle_filepath = sys.argv[4]
 
         for filepath in (tiger_filepath, rst_filepath, anaphora_filepath):
-            assert os.path.isfile(filepath)
+            assert os.path.isfile(filepath), "{} doesn't exist".format(filepath)
         tiger_docgraph = TigerDocumentGraph(tiger_filepath)
         rst_graph = RSTGraph(rst_filepath)
         anaphora_graph = AnaphoraDocumentGraph(anaphora_filepath)
