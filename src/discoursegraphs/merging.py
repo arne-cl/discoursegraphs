@@ -8,9 +8,9 @@ import re
 from networkx import write_gpickle
 
 from discoursegraphs import DiscourseDocumentGraph
-from discoursegraphs.io.anaphoricity import AnaphoraDocumentGraph
-from discoursegraphs.io.rst import RSTGraph, rst_tokenlist
-from discoursegraphs.io.tiger import TigerDocumentGraph, tiger_tokenlist
+from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
+from discoursegraphs.readwrite.rst import RSTGraph, rst_tokenlist
+from discoursegraphs.readwrite.tiger import TigerDocumentGraph, tiger_tokenlist
 
 
 if __name__ == '__main__':
