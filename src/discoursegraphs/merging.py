@@ -8,6 +8,8 @@ import re
 from networkx import write_gpickle
 
 from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs.relabel import relabel_nodes
+from discoursegraphs.util import ensure_unicode
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
 from discoursegraphs.readwrite.rst import RSTGraph, rst_tokenlist
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph, tiger_tokenlist
@@ -41,6 +43,38 @@ def add_rst_to_tiger(tiger_docgraph, rst_graph):
             raise ValueError("Tokenization mismatch between:\n" \
                 "{0}\n{1}".format(tiger_filepath, rst_filepath))
 
+def map_anaphoricity_tokens_to_tiger(tiger_docgraph, anaphora_graph):
+    """
+    creates a map from anaphoricity token node IDs to tiger token node
+    IDs.
+
+    Parameters
+    ----------
+    tiger_docgraph : TigerDocumentGraph
+        multidigraph representing a syntax annotated (TigerXML) document
+    anaphora_graph : AnaphoraDocumentGraph
+        multidigraph representing a anaphorcity annotated document
+        (ad-hoc format used in Christian Dittrich's diploma thesis)
+
+    Returns
+    -------
+    anaphora2tiger : dict
+        map from anaphoricity token node IDs (int) to tiger token node
+        IDs (str, e.g. 's23_5')
+    """
+    # list of (token unicode, tiger_sent_id str, tiger_token_id str)
+    tiger_tokens = tiger_tokenlist(tiger_docgraph)
+    
+    anaphora2tiger = {}
+    for i, anaphora_node_id in enumerate(anaphora_graph.tokens):
+        anaphora_token = anaphora_graph.node[anaphora_node_id]['anaphoricity:token']
+        tiger_token, tiger_sent_id, tiger_token_id = tiger_tokens[i]
+        
+        if anaphora_token == tiger_token:
+            anaphora2tiger[anaphora_node_id] = tiger_token_id 
+        else:
+            raise ValueError(u"tokens don't match: {0} (anaphoricity) vs. {1} (tiger)".format(anaphora_token, tiger_token))
+    return anaphora2tiger
 
 def add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph):
     """
@@ -55,8 +89,15 @@ def add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph):
     anaphora_graph : AnaphoraDocumentGraph
         multidigraph representing a anaphorcity annotated document
         (ad-hoc format used in Christian Dittrich's diploma thesis)
-    """
-    pass
+    """  
+    anaphora2tiger = map_anaphoricity_tokens_to_tiger(tiger_docgraph, anaphora_graph)
+    relabel_nodes(anaphora_graph, anaphora2tiger, copy=False)
+    tiger_docgraph.add_nodes_from(anaphora_graph.nodes(data=True))
+    # we don't need these edges. they just go from the anaphoricity:root
+    # to the tokens
+    #~ tiger_docgraph.add_edges_from(anaphora_graph.edges(data=True))
+
+
 
 
 
@@ -66,17 +107,15 @@ if __name__ == '__main__':
         sys.stderr.write('Usage: {0} tiger_file rst_file anaphoricity_file pickle_output_file\n'.format(sys.argv[0]))
         sys.exit(1)
     else:
-        #~ pass
         tiger_filepath = sys.argv[1]
         rst_filepath = sys.argv[2]
         anaphora_filepath = sys.argv[3]
         pickle_filepath = sys.argv[4]
 
-        assert os.path.isfile(tiger_filepath)
+        for filepath in (tiger_filepath, rst_filepath, anaphora_filepath):
+            assert os.path.isfile(filepath)
         tiger_docgraph = TigerDocumentGraph(tiger_filepath)
-        assert os.path.isfile(rst_filepath)
         rst_graph = RSTGraph(rst_filepath)
-        assert os.path.isfile(anaphora_filepath)
         anaphora_graph = AnaphoraDocumentGraph(anaphora_filepath)
 
         add_rst_to_tiger(tiger_docgraph, rst_graph)
@@ -84,4 +123,8 @@ if __name__ == '__main__':
 
         for i, node in tiger_docgraph.nodes(data=True):
             print i, node
+
+        for from_node, to_node, edge in tiger_docgraph.edges(data=True):
+            print from_node, to_node, edge
+
         write_gpickle(tiger_docgraph, pickle_filepath)
