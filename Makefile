@@ -19,7 +19,7 @@ install:
 	python setup.py install
 
 uninstall:
-	pip uninstall discoursegraphs
+	yes | pip uninstall discoursegraphs
 
 clean:
 	find . -name *.pyc -delete
