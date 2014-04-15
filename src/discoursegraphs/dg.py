@@ -4,11 +4,13 @@
 
 from networkx import MultiDiGraph
 
+
 class DiscourseDocumentGraph(MultiDiGraph):
+
     """
     Base class for representing annotated documents as directed graphs
     with multiple edges.
-    
+
     TODO: allow layers to be a single str or set of str
     TODO: allow adding a layer by including it in **attr
     TODO: add consistency check that would allow adding a node that
@@ -16,10 +18,11 @@ class DiscourseDocumentGraph(MultiDiGraph):
         different attributes (layers can be the same though)
     TODO: outsource layer assertions to method?
     """
+
     def __init__(self):
         """
         Initialized an empty directed graph which allows multiple edges.
-        """        
+        """
         # super calls __init__() of base class MultiDiGraph
         super(DiscourseDocumentGraph, self).__init__()
 
@@ -78,32 +81,32 @@ class DiscourseDocumentGraph(MultiDiGraph):
             "All elements of the 'layers' set must be strings."
         # add layers to keyword arguments dict
         attr.update({'layers': layers})
-        
+
         # set up attribute dict
         if attr_dict is None:
-            attr_dict=attr
+            attr_dict = attr
         else:
             try:
                 attr_dict.update(attr)
             except AttributeError as e:
-                raise AttributeError("The attr_dict argument must be " \
-                    "a dictionary: ".format(e))
-        
+                raise AttributeError("The attr_dict argument must be "
+                                     "a dictionary: ".format(e))
+
         # if there's no node with this ID in the graph, yet
         if n not in self.succ:
             self.succ[n] = {}
             self.pred[n] = {}
             self.node[n] = attr_dict
-        else: # update attr even if node already exists
+        else:  # update attr even if node already exists
             # if a node exists, its attributes will be updated, except
             # for the layers attribute. the value of 'layers' will
             # be the union of the existing layers set and the new one.
             existing_layers = self.node[n]['layers']
             all_layers = existing_layers.union(layers)
-            attrs_without_layers = {k:v for (k,v) in attr_dict.items()
-                                        if k != 'layers'}
+            attrs_without_layers = {k: v for (k, v) in attr_dict.items()
+                                    if k != 'layers'}
             self.node[n].update(attrs_without_layers)
-            self.node[n].update({'layers':all_layers})
+            self.node[n].update({'layers': all_layers})
 
     def add_nodes_from(self, nodes, **attr):
         """Add multiple nodes.
@@ -144,7 +147,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
         [(1, {'layers': {'tiger', 'token'}, 'size': 10, 'weight': 1.0, 'word': 'hello'}),
          (2, {'layers': {'token'}, 'weight': 1.0, 'word': 'world'})]
         """
-        additional_attribs = attr # will be added to each node
+        additional_attribs = attr  # will be added to each node
         for n in nodes:
             node_id, ndict = n
             assert 'layers' in ndict, \
@@ -154,20 +157,20 @@ class DiscourseDocumentGraph(MultiDiGraph):
                 "'layers' must be specified as a set of strings."
             assert all((isinstance(layer, str) for layer in layers)), \
                 "All elements of the 'layers' set must be strings."
-            
-            if node_id not in self.succ: # node doesn't exist, yet
+
+            if node_id not in self.succ:  # node doesn't exist, yet
                 self.succ[node_id] = {}
                 self.pred[node_id] = {}
                 newdict = additional_attribs.copy()
-                newdict.update(ndict) # all given attribs incl. layers
+                newdict.update(ndict)  # all given attribs incl. layers
                 self.node[node_id] = newdict
-            else: # node already exists
+            else:  # node already exists
                 existing_layers = self.node[node_id]['layers']
                 all_layers = existing_layers.union(layers)
-            
+
                 self.node[node_id].update(ndict)
                 self.node[node_id].update(additional_attribs)
-                self.node[node_id].update({'layers':all_layers})
+                self.node[node_id].update({'layers': all_layers})
 
     def add_edge(self, u, v, layers, key=None, attr_dict=None, **attr):
         """Add an edge between u and v.
@@ -249,42 +252,42 @@ class DiscourseDocumentGraph(MultiDiGraph):
             "All elements of the 'layers' set must be strings."
         # add layers to keyword arguments dict
         attr.update({'layers': layers})
-        
+
         # set up attribute dict
         if attr_dict is None:
-            attr_dict=attr
+            attr_dict = attr
         else:
             try:
                 attr_dict.update(attr)
             except AttributeError as e:
-                raise AttributeError("The attr_dict argument must be " \
-                    "a dictionary: ".format(e))
+                raise AttributeError("The attr_dict argument must be "
+                                     "a dictionary: ".format(e))
         assert u in self.succ, "from-node doesn't exist, yet"
         assert v in self.succ, "to-node doesn't exist, yet"
 
-        if v in self.succ[u]: # if there's already an edge from u to v
-            keydict=self.adj[u][v]
-            if key is None: # creating additional edge
+        if v in self.succ[u]:  # if there's already an edge from u to v
+            keydict = self.adj[u][v]
+            if key is None:  # creating additional edge
                 # find a unique integer key
                 # other methods might be better here?
-                key=len(keydict)
+                key = len(keydict)
                 while key in keydict:
-                    key+=1
-            datadict=keydict.get(key,{}) # works for existing & new edge
+                    key += 1
+            datadict = keydict.get(key, {})  # works for existing & new edge
             existing_layers = datadict.get('layers', set())
             all_layers = existing_layers.union(layers)
 
             datadict.update(attr_dict)
             datadict.update({'layers': all_layers})
-            keydict[key]=datadict
+            keydict[key] = datadict
 
-        else: # there's no edge between u and v, yet
+        else:  # there's no edge between u and v, yet
             # selfloops work this way without special treatment
             if key is None:
-                key=0
-            datadict={}
-            datadict.update(attr_dict) # includes layers
-            keydict={key:datadict}
+                key = 0
+            datadict = {}
+            datadict.update(attr_dict)  # includes layers
+            keydict = {key: datadict}
             self.succ[u][v] = keydict
             self.pred[v][u] = keydict
 
@@ -335,7 +338,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
         >>> d.add_edges_from([(1, 2, {'layers': {'int'}, 'weight': 23})])
         >>> d.add_edges_from([(1, 2, {'layers': {'int'}, 'weight': 42})])
-        
+
         >>> d.edges(data=True) # multiple edges between the same nodes
         [(1, 2, {'layers': {'int'}, 'weight': 23}),
          (1, 2, {'layers': {'int'}, 'weight': 42})]
@@ -351,13 +354,13 @@ class DiscourseDocumentGraph(MultiDiGraph):
         """
         # set up attribute dict
         if attr_dict is None:
-            attr_dict=attr
+            attr_dict = attr
         else:
             try:
                 attr_dict.update(attr)
             except AttributeError as e:
-                raise AttributeError("The attr_dict argument must be " \
-                    "a dictionary: ".format(e))
+                raise AttributeError("The attr_dict argument must be "
+                                     "a dictionary: ".format(e))
         # process ebunch
         for e in ebunch:
             ne = len(e)
@@ -367,48 +370,47 @@ class DiscourseDocumentGraph(MultiDiGraph):
                 u, v, dd = e
                 key = None
             else:
-                raise AttributeError(\
-                    "Edge tuple %s must be a 3-tuple (u,v,attribs) " \
-                    "or 4-tuple (u,v,key,attribs)." %(e,))
-            
+                raise AttributeError(
+                    "Edge tuple %s must be a 3-tuple (u,v,attribs) "
+                    "or 4-tuple (u,v,key,attribs)." % (e,))
+
             assert 'layers' in dd, \
                 "Every edge must have a 'layers' attribute."
             layers = dd['layers']
             assert isinstance(layers, set), \
                 "'layers' must be specified as a set of strings."
             assert all((isinstance(layer, str)
-                for layer in layers)), \
-                    "All elements of the 'layers' set must be strings."
+                        for layer in layers)), \
+                "All elements of the 'layers' set must be strings."
             additional_layers = attr_dict.get('layers', {})
             if additional_layers:
                 assert isinstance(additional_layers, set), \
                     "'layers' must be specified as a set of strings."
                 assert all((isinstance(layer, str)
-                    for layer in additional_layers)), \
-                        "'layers' set must only contain strings."
+                            for layer in additional_layers)), \
+                    "'layers' set must only contain strings."
             # union of layers specified in ebunch tuples,
             # attr_dict and **attr
             new_layers = layers.union(additional_layers)
 
-            if u in self.adj: # edge with u as source already exists
-                keydict=self.adj[u].get(v,{})
+            if u in self.adj:  # edge with u as source already exists
+                keydict = self.adj[u].get(v, {})
             else:
-                keydict={}
+                keydict = {}
             if key is None:
                 # find a unique integer key
                 # other methods might be better here?
-                key=len(keydict)
+                key = len(keydict)
                 while key in keydict:
-                    key+=1
-            datadict=keydict.get(key,{}) # existing edge attribs
+                    key += 1
+            datadict = keydict.get(key, {})  # existing edge attribs
             existing_layers = datadict.get('layers', set())
             datadict.update(attr_dict)
             datadict.update(dd)
-            updated_attrs = {k:v for (k,v) in datadict.items()
-                if k != 'layers'}
-            
+            updated_attrs = {k: v for (k, v) in datadict.items()
+                             if k != 'layers'}
+
             all_layers = existing_layers.union(new_layers)
             # add_edge() checks if u and v exist, so we don't need to
             self.add_edge(u, v, layers=all_layers, key=key,
-                attr_dict=updated_attrs)
-
+                          attr_dict=updated_attrs)

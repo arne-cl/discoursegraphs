@@ -11,7 +11,9 @@ from networkx import write_gpickle
 from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.util import natural_sort_key, ensure_unicode
 
+
 class TigerDocumentGraph(DiscourseDocumentGraph):
+
     """
     A directed graph with multiple edges (based on
     networkx.MultiDiGraph) that represents all the
@@ -40,6 +42,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         for token_node_id in tdg.node[sentence_root_node]['tokens']:
             print tdg.node[token_node_id]['tiger:word']
     """
+
     def __init__(self, tiger_filepath, name=None):
         """
         Creates a directed graph that represents all syntax annotated
@@ -92,11 +95,12 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         self.add_nodes_from(sentence_graph.nodes(data=True))
         self.add_edges_from(sentence_graph.edges(data=True))
         self.add_edge(self.root, sentence_root_node_id,
-            layers={'tiger', 'tiger:sentence'})
+                      layers={'tiger', 'tiger:sentence'})
         self.sentences.append(sentence_root_node_id)
 
 
 class TigerSentenceGraph(DiscourseDocumentGraph):
+
     """
     A directed graph (based on a networkx.MultiDiGraph) that represents
     one syntax annotated sentence extracted from a TigerXML file.
@@ -108,6 +112,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
     tokens : list of str
         a sorted list of terminal node IDs (i.e. token nodes)
     """
+
     def __init__(self, sentence):
         """
         Creates a directed graph from a syntax annotated sentence (i.e.
@@ -134,7 +139,8 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
 
         # some sentences in the Tiger corpus are marked as discontinuous
         if 'discontinuous' in graph_element.attrib:
-            sentence_attributes.update({'tiger:discontinuous': graph_element.attrib['discontinuous']})
+            sentence_attributes.update(
+                {'tiger:discontinuous': graph_element.attrib['discontinuous']})
 
         self.__add_vroot(sentence_root_id, sentence_attributes)
         self.__tigersentence2graph(sentence)
@@ -158,17 +164,18 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
             token_ids.append(terminal_id)
             terminal_features = add_prefix(t.attrib, 'tiger:')
             # convert tokens to unicode
-            terminal_features['tiger:word'] = ensure_unicode(terminal_features['tiger:word'])
+            terminal_features['tiger:word'] = ensure_unicode(
+                terminal_features['tiger:word'])
             self.add_node(terminal_id, layers={'tiger', 'tiger:token'},
-                attr_dict=terminal_features)
+                          attr_dict=terminal_features)
             for secedge in t.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
-                secedge_attribs =  add_prefix(secedge.attrib, 'tiger:')
-                if not to_id in self: # if graph doesn't contain to-node, yet
+                secedge_attribs = add_prefix(secedge.attrib, 'tiger:')
+                if not to_id in self:  # if graph doesn't contain to-node, yet
                     self.add_node(to_id, layers={'tiger', 'tiger:secedge'})
                 self.add_edge(terminal_id, to_id,
-                    layers={'tiger', 'tiger:secedge'},
-                    attr_dict=secedge_attribs)
+                              layers={'tiger', 'tiger:secedge'},
+                              attr_dict=secedge_attribs)
 
         # add sorted list of all token node IDs to sentence root node
         # for performance reasons
@@ -178,31 +185,30 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         for nt in sentence.iterfind('./graph/nonterminals/nt'):
             from_id = nt.attrib['id']
             nt_feats = add_prefix(nt.attrib, 'tiger:')
-            if from_id in self: # root node already exists,
+            if from_id in self:  # root node already exists,
                                 # but doesn't have a cat value
-                    self.node[from_id].update(nt_feats)
+                self.node[from_id].update(nt_feats)
             else:
                 self.add_node(from_id, layers={'tiger', 'tiger:syntax'},
-                    attr_dict=nt_feats)
+                              attr_dict=nt_feats)
 
             for edge in nt.iterfind('./edge'):
                 to_id = edge.attrib['idref']
-                if to_id not in self: # if graph doesn't contain to-node, yet
+                if to_id not in self:  # if graph doesn't contain to-node, yet
                     self.add_node(to_id, layers={'tiger', 'tiger:secedge'})
                 edge_attribs = add_prefix(edge.attrib, 'tiger:')
                 self.add_edge(from_id, to_id,
-                    layers={'tiger', 'tiger:edge'},
-                    attr_dict=edge_attribs)
+                              layers={'tiger', 'tiger:edge'},
+                              attr_dict=edge_attribs)
 
             for secedge in nt.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
-                if to_id not in self: # if graph doesn't contain to-node, yet
+                if to_id not in self:  # if graph doesn't contain to-node, yet
                     self.add_node(to_id, layers={'tiger', 'tiger:secedge'})
                 secedge_attribs = add_prefix(secedge.attrib, 'tiger:')
                 self.add_edge(from_id, to_id,
-                    layers={'tiger', 'tiger:secedge'},
-                    attr_dict=secedge_attribs)
-
+                              layers={'tiger', 'tiger:secedge'},
+                              attr_dict=secedge_attribs)
 
     def __add_vroot(self, sentence_root_id, sentence_attributes):
         """
@@ -237,12 +243,13 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         sentence_id = sentence_attributes['tiger:id']
         new_root_node_id = 'VROOT-{0}'.format(sentence_id)
         self.add_node(old_root_node_id,
-            layers={'tiger', 'tiger:sentence', 'tiger:sentence:root'})
+                      layers={'tiger', 'tiger:sentence', 'tiger:sentence:root'})
         self.add_node(new_root_node_id,
-            layers={'tiger', 'tiger:sentence', 'tiger:sentence:vroot'},
-            attr_dict=sentence_attributes)
+                      layers={
+                          'tiger', 'tiger:sentence', 'tiger:sentence:vroot'},
+                      attr_dict=sentence_attributes)
         self.add_edge(new_root_node_id, old_root_node_id,
-            layers={'tiger', 'tiger:sentence', 'tiger:sentence:vroot'})
+                      layers={'tiger', 'tiger:sentence', 'tiger:sentence:vroot'})
         self.root = new_root_node_id
 
     def __repair_unconnected_nodes(self):
@@ -255,7 +262,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         unconnected_node_ids = get_unconnected_nodes(self)
         for unconnected_node_id in unconnected_node_ids:
             self.add_edge(self.root, unconnected_node_id,
-                layers={'tiger', 'tiger:sentence'})
+                          layers={'tiger', 'tiger:sentence'})
 
 
 def _get_terminals_and_nonterminals(sentence_graph):
@@ -281,10 +288,10 @@ def _get_terminals_and_nonterminals(sentence_graph):
         if sentence_graph.out_degree(node_id) > 0:
             # all nonterminals (incl. root)
             nonterminals.add(node_id)
-        else: # terminals
+        else:  # terminals
             terminals.add(node_id)
     return sorted(list(terminals), key=natural_sort_key), \
-            sorted(list(nonterminals), key=natural_sort_key)
+        sorted(list(nonterminals), key=natural_sort_key)
 
 
 def get_unconnected_nodes(sentence_graph):
@@ -308,21 +315,22 @@ def get_unconnected_nodes(sentence_graph):
         a list of node IDs of unconnected nodes
     """
     return [node for node in sentence_graph.nodes_iter()
-                if sentence_graph.degree(node) == 0 and
-                   sentence_graph.number_of_nodes() > 1]
+            if sentence_graph.degree(node) == 0 and
+            sentence_graph.number_of_nodes() > 1]
+
 
 def add_prefix(dict_like, prefix):
     """
     takes a dict (or dict-like object, e.g. etree._Attrib) and adds the
     given prefix to each key. Always returns a dict (via a typecast).
-    
+
     Parameters
     ----------
     dict_like : dict (or similar)
         a dictionary or a container that implements .items()
     prefix : str
         the prefix string to be prepended to each key in the input dict
-    
+
     Returns
     -------
     prefixed_dict : dict
@@ -332,9 +340,9 @@ def add_prefix(dict_like, prefix):
         try:
             dict_like = dict(dict_like)
         except Error as e:
-            raise ValueError("{0}\nCan't convert container to dict: " \
-                "{1}".format(e, dict_like))
-    return {prefix+k:v  for (k,v) in dict_like.items()}
+            raise ValueError("{0}\nCan't convert container to dict: "
+                             "{1}".format(e, dict_like))
+    return {prefix + k: v for (k, v) in dict_like.items()}
 
 
 def tiger_tokenlist(tigerdoc_graph):
@@ -357,7 +365,7 @@ def tiger_tokenlist(tigerdoc_graph):
     all_tiger_tokens = []
     for sent_id in tigerdoc_graph.sentences:
         tiger_sent_tokens = [(tigerdoc_graph.node[token_id]['tiger:word'], sent_id, token_id)
-                                 for token_id in tigerdoc_graph.node[sent_id]['tokens']]
+                             for token_id in tigerdoc_graph.node[sent_id]['tokens']]
         all_tiger_tokens.extend(tiger_sent_tokens)
     return all_tiger_tokens
 
@@ -377,7 +385,7 @@ def tiger_tokenlist(tigerdoc_graph):
     #~ nonterms_node = objectify.SubElement(graph_root, 'nonterminals')
     #~ for nt_id in nonterminals:
         #~ nt_node = objectify.Element('nt', sentence_graph.node[nt_id], id=nt_id)
-        #~ # edges are grouped by their source node in TigerXML
+        # ~ # edges are grouped by their source node in TigerXML
         #~ for out_edge in sentence_graph.out_edges(nt_id, data=True):
             #~ from_id, to_id, edge_attribs = out_edge
             #~ nt_node.append(objectify.Element('edge', edge_attribs))
@@ -389,7 +397,8 @@ def tiger_tokenlist(tigerdoc_graph):
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        sys.stderr.write('Usage: {0} TigerXML_input_file networkx_pickle_output_file\n'.format(sys.argv[0]))
+        sys.stderr.write(
+            'Usage: {0} TigerXML_input_file networkx_pickle_output_file\n'.format(sys.argv[0]))
         sys.exit(1)
     else:
         tiger_filepath = sys.argv[1]
@@ -397,5 +406,3 @@ if __name__ == '__main__':
         assert os.path.isfile(tiger_filepath)
         tiger_docgraph = TigerDocumentGraph(tiger_filepath)
         write_gpickle(tiger_docgraph, pickle_filepath)
-
-

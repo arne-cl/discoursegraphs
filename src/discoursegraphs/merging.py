@@ -37,12 +37,13 @@ def add_rst_to_tiger(tiger_docgraph, rst_graph):
         rst_token, rst_segment_node_id = rst_tokens[i]
         if tiger_tok == rst_token:
             tiger_docgraph.add_node(tiger_tok_id, layers={'rst', 'rst:token'},
-                                   attr_dict={'rst:token': rst_token})
+                                    attr_dict={'rst:token': rst_token})
             tiger_docgraph.add_edge(int(rst_segment_node_id), tiger_tok_id,
-                                   layers={'rst', 'rst:token'})
-        else: # token mismatch
-            raise ValueError("Tokenization mismatch between:\n" \
-                "{0}\n{1}".format(tiger_filepath, rst_filepath))
+                                    layers={'rst', 'rst:token'})
+        else:  # token mismatch
+            raise ValueError("Tokenization mismatch between:\n"
+                             "{0}\n{1}".format(tiger_filepath, rst_filepath))
+
 
 def map_anaphoricity_tokens_to_tiger(tiger_docgraph, anaphora_graph):
     """
@@ -68,14 +69,17 @@ def map_anaphoricity_tokens_to_tiger(tiger_docgraph, anaphora_graph):
 
     anaphora2tiger = {}
     for i, anaphora_node_id in enumerate(anaphora_graph.tokens):
-        anaphora_token = anaphora_graph.node[anaphora_node_id]['anaphoricity:token']
+        anaphora_token = anaphora_graph.node[
+            anaphora_node_id]['anaphoricity:token']
         tiger_token, tiger_sent_id, tiger_token_id = tiger_tokens[i]
 
         if anaphora_token == tiger_token:
             anaphora2tiger[anaphora_node_id] = tiger_token_id
         else:
-            raise ValueError(u"tokens don't match: {0} (anaphoricity) vs. {1} (tiger)".format(anaphora_token, tiger_token))
+            raise ValueError(u"tokens don't match: {0} (anaphoricity) vs. {1} (tiger)".format(
+                anaphora_token, tiger_token))
     return anaphora2tiger
+
 
 def add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph):
     """
@@ -91,7 +95,8 @@ def add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph):
         multidigraph representing a anaphorcity annotated document
         (ad-hoc format used in Christian Dittrich's diploma thesis)
     """
-    anaphora2tiger = map_anaphoricity_tokens_to_tiger(tiger_docgraph, anaphora_graph)
+    anaphora2tiger = map_anaphoricity_tokens_to_tiger(
+        tiger_docgraph, anaphora_graph)
     relabel_nodes(anaphora_graph, anaphora2tiger, copy=False)
     tiger_docgraph.add_nodes_from(anaphora_graph.nodes(data=True))
     # the anaphora doc graph only contains trivial edges from its root
@@ -104,7 +109,8 @@ def add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph):
 
 if __name__ == '__main__':
     if len(sys.argv) != 5:
-        sys.stderr.write('Usage: {0} tiger_file rst_file anaphoricity_file dot_output_file\n'.format(sys.argv[0]))
+        sys.stderr.write(
+            'Usage: {0} tiger_file rst_file anaphoricity_file dot_output_file\n'.format(sys.argv[0]))
         sys.exit(1)
     else:
         tiger_filepath = sys.argv[1]
@@ -113,7 +119,8 @@ if __name__ == '__main__':
         dot_filepath = sys.argv[4]
 
         for filepath in (tiger_filepath, rst_filepath, anaphora_filepath):
-            assert os.path.isfile(filepath), "{} doesn't exist".format(filepath)
+            assert os.path.isfile(
+                filepath), "{} doesn't exist".format(filepath)
         tiger_docgraph = TigerDocumentGraph(tiger_filepath)
         rst_graph = RSTGraph(rst_filepath)
         anaphora_graph = AnaphoraDocumentGraph(anaphora_filepath)
@@ -121,4 +128,3 @@ if __name__ == '__main__':
         add_rst_to_tiger(tiger_docgraph, rst_graph)
         add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph)
         write_dot(tiger_docgraph, dot_filepath)
-

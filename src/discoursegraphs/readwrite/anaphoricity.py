@@ -17,14 +17,17 @@ from discoursegraphs.util import ensure_unicode
 # uncertain, the annotation is marked with a question mark.
 #
 # Examples: 'Das/a', 'es/p?'
-ANNOTATED_ANAPHORA_REGEX = re.compile('(?P<token>([Dd]a|[Ee])s)/(?P<annotation>[anpr])(?P<uncertain>\??)')
+ANNOTATED_ANAPHORA_REGEX = re.compile(
+    '(?P<token>([Dd]a|[Ee])s)/(?P<annotation>[anpr])(?P<uncertain>\??)')
 
 ANNOTATION_TYPES = {'n': 'nominal',
                     'a': 'abstract',
                     'r': 'relative',
                     'p': 'pleonastic'}
 
+
 class AnaphoraDocumentGraph(DiscourseDocumentGraph):
+
     """
     represents a text in which abstract anaphora were annotated
     as a graph.
@@ -38,6 +41,7 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         name of the document root node ID
         (default: 'anaphoricity:root_node')
     """
+
     def __init__(self, anaphora_filepath, name=None):
         """
         Reads an abstract anaphora annotation file, creates a directed
@@ -77,7 +81,7 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         with open(anaphora_filepath, 'r') as anno_file:
             annotated_lines = anno_file.readlines()
             tokens = list(chain.from_iterable(line.split()
-                                        for line in annotated_lines))
+                                              for line in annotated_lines))
             for i, token in enumerate(tokens):
                 self.__add_token_to_document(token, i)
                 self.tokens.append(i)
@@ -95,27 +99,28 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
             exist in the document graph
         """
         regex_match = ANNOTATED_ANAPHORA_REGEX.search(token)
-        if regex_match: # token is annotated
+        if regex_match:  # token is annotated
             unannotated_token = regex_match.group('token')
             annotation = regex_match.group('annotation')
             certainty = 1.0 if not regex_match.group('uncertain') else 0.5
             self.add_node(token_id, layers={'anaphoricity', 'anaphoricity:token'},
-                attr_dict={
-                'anaphoricity:annotation': ANNOTATION_TYPES[annotation],
-                'anaphoricity:certainty': certainty,
-                'anaphoricity:token': ensure_unicode(unannotated_token)})
-        else: # token is not annotated
+                          attr_dict={
+                              'anaphoricity:annotation': ANNOTATION_TYPES[annotation],
+                              'anaphoricity:certainty': certainty,
+                              'anaphoricity:token': ensure_unicode(unannotated_token)})
+        else:  # token is not annotated
             self.add_node(token_id,
-                layers={'anaphoricity', 'anaphoricity:token'},
-                attr_dict={'anaphoricity:token': ensure_unicode(token)})
+                          layers={'anaphoricity', 'anaphoricity:token'},
+                          attr_dict={'anaphoricity:token': ensure_unicode(token)})
 
         self.add_edge(self.root, token_id,
-            layers={'anaphoricity', 'anaphoricity:token'})
+                      layers={'anaphoricity', 'anaphoricity:token'})
 
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        sys.stderr.write('Usage: {0} anaphoricity_input_file networkx_pickle_output_file\n'.format(sys.argv[0]))
+        sys.stderr.write(
+            'Usage: {0} anaphoricity_input_file networkx_pickle_output_file\n'.format(sys.argv[0]))
         sys.exit(1)
     else:
         anaphora_filepath = sys.argv[1]
@@ -123,4 +128,3 @@ if __name__ == '__main__':
         assert os.path.isfile(anaphora_filepath)
         anaphora_docgraph = AnaphoraDocumentGraph(anaphora_filepath)
         write_gpickle(anaphora_docgraph, pickle_filepath)
-

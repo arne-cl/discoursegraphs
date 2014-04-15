@@ -2,5 +2,6 @@
 
 from dg import DiscourseDocumentGraph
 
+
 def main():
     print "Hello World"

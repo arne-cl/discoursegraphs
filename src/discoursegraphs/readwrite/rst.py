@@ -15,12 +15,15 @@ from networkx import write_gpickle
 
 from discoursegraphs import DiscourseDocumentGraph
 
+
 class RSTGraph(DiscourseDocumentGraph):
+
     """
     A directed graph with multiple edges (based on a networkx
     MultiDiGraph) that represents the rhetorical structure of a
     document.
     """
+
     def __init__(self, rs3_filepath):
         """
         Creates an RSTGraph from a RS3 XML file and adds metadata to it
@@ -61,7 +64,6 @@ class RSTGraph(DiscourseDocumentGraph):
 
         self.__rst2graph(rs3_xml_tree)
 
-
     def __rst2graph(self, rs3_xml_tree):
         """
         Reads an RST tree (from an ElementTree representation of an RS3
@@ -80,42 +82,42 @@ class RSTGraph(DiscourseDocumentGraph):
         for segment in rst_xml_root.iterfind('./body/segment'):
             segment_node_id = int(segment.attrib['id'])
             self.add_node(segment_node_id,
-                layers={'rst', 'rst:segment'},
-                attr_dict={'rst:text': sanitize_string(segment.text)})
+                          layers={'rst', 'rst:segment'},
+                          attr_dict={'rst:text': sanitize_string(segment.text)})
 
             self.segments.append(segment_node_id)
             if 'parent' in segment.attrib:
                 # node has an outgoing edge,
                 # i.e. segment is in an RST relation
                 parent_node_id = int(segment.attrib['parent'])
-                if parent_node_id not in self: # node not in graph, yet
+                if parent_node_id not in self:  # node not in graph, yet
                     self.add_node(parent_node_id,
-                        layers={'rst', 'rst:segment'})
+                                  layers={'rst', 'rst:segment'})
                 self.add_edge(segment_node_id, parent_node_id,
-                    layers={'rst', 'rst:relation'},
-                    relname=segment.attrib['relname'])
+                              layers={'rst', 'rst:relation'},
+                              relname=segment.attrib['relname'])
 
         for group in rst_xml_root.iterfind('./body/group'):
             group_node_id = int(group.attrib['id'])
             node_type = group.attrib['type']
-            if group_node_id in self: # group node already exists
+            if group_node_id in self:  # group node already exists
                 self.node[group_node_id].update({'rst:reltype': node_type})
             else:
                 self.add_node(group_node_id,
-                    layers={'rst', 'rst:segment'},
-                    attr_dict={'rst:reltype': node_type})
+                              layers={'rst', 'rst:segment'},
+                              attr_dict={'rst:reltype': node_type})
 
             if 'parent' in group.attrib:
                 # node has an outgoing edge, i.e. group is not the
                 # topmost element in an RST tree
                 parent_node_id = int(group.attrib['parent'])
-                if parent_node_id not in self: # node not in graph, yet
+                if parent_node_id not in self:  # node not in graph, yet
                     self.add_node(parent_node_id,
-                        layers={'rst', 'rst:segment'})
+                                  layers={'rst', 'rst:segment'})
                 self.add_edge(group_node_id, parent_node_id,
-                    layers={'rst', 'rst:relation'},
-                    attr_dict={'rst:relname': group.attrib['relname']})
-            else: # group node is the root of an RST tree
+                              layers={'rst', 'rst:relation'},
+                              attr_dict={'rst:relname': group.attrib['relname']})
+            else:  # group node is the root of an RST tree
                 existing_layers = self.node[group_node_id]['layers']
                 all_layers = existing_layers.union({'rst:root'})
                 self.node[group_node_id].update({'layers': all_layers})
@@ -183,7 +185,7 @@ def rst_tokenlist(rst_graph):
     all_rst_tokens = []
     for segment_id in rst_graph.segments:
         segment_tokens = [(token, segment_id)
-                              for token in rst_graph.node[segment_id]['rst:text'].split()]
+                          for token in rst_graph.node[segment_id]['rst:text'].split()]
         all_rst_tokens.extend(segment_tokens)
     return all_rst_tokens
 
@@ -191,7 +193,7 @@ def rst_tokenlist(rst_graph):
 if __name__ == '__main__':
     if len(sys.argv) != 3:
         sys.stderr.write('Usage: {0} RS3_input_file '
-            'GraphML_output_file\n'.format(sys.argv[0]))
+                         'GraphML_output_file\n'.format(sys.argv[0]))
         sys.exit(1)
     else:
         INPUT_PATH = sys.argv[1]
