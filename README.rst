@@ -11,6 +11,14 @@ You can take a look at other projects, such as `pyramid's README.txt
 
 .. _`a little documentation goes a long way`: http://www.martinaspeli.net/articles/a-little-documentation-goes-a-long-way
 
+Requirements
+------------
+
+- `lxml`
+- `networkx`
+- `graphviz`
+- `pygraphviz`
+
 Credits
 -------
 
