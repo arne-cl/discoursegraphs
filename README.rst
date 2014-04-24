@@ -1,15 +1,36 @@
-This file requires editing
-==========================
+DiscourseGraphs
+===============
 
-Note to the author: Please add something informative to this README *before*
-releasing your software, as `a little documentation goes a long way`_.  Both
-README.rst (this file) and NEWS.rst (release notes) will be included in your
-package metadata which gets displayed in the PyPI page for your project.
+This library enables you to process linguistic corpora with multiple levels
+of annotations by:
 
-You can take a look at other projects, such as `pyramid's README.txt
-<https://github.com/Pylons/pyramid/blob/master/README.rst>`_ for some ideas.
+1. converting the different annotation formats into separate graphs and 
+2. merging these graphs into a single multidigraph (based on the common
+   tokenization of the annotation layers)
 
-.. _`a little documentation goes a long way`: http://www.martinaspeli.net/articles/a-little-documentation-goes-a-long-way
+So far, the following formats can be imported and merged:
+
+* `TigerXML`_ (a format for representing tree-like syntax graphs with
+  secondary edges)
+* RS3 (a format used by `RSTTool`_ to
+  annotate documents with Rhetorical Structure Theory)
+* an ad-hoc plain text format for annotating expletives (you're probably not
+  interested in)
+
+.. _`TigerXML`: http://www.ims.uni-stuttgart.de/forschung/ressourcen/werkzeuge/TIGERSearch/doc/html/TigerXML.html
+.. _`RSTTool`: http://www.wagsoft.com/RSTTool/
+
+
+Installation
+------------
+
+::
+
+    git clone https://github.com/arne-cl/discoursegraphs.git
+    cd discoursegraphs
+    python setup.py install # prepend 'sudo' if needed
+
+
 
 Requirements
 ------------
@@ -19,11 +40,19 @@ Requirements
 - `graphviz`
 - `pygraphviz`
 
-Credits
+License
 -------
 
-- `Distribute`_
-- `modern-package-template`_
+3-Clause BSD.
 
-.. _Distribute: http://code.activestate.com/pypm/distribute/
-.. _`modern-package-template`: http://code.activestate.com/pypm/modern-package-template/
+Author
+------
+Arne Neumann
+
+
+People who downloaded this also like
+------------------------------------
+
+- `SaltNPepper`_ a converter framework for various linguistic data formats
+
+.. _`SaltNPepper`: https://korpling.german.hu-berlin.de/p/projects/saltnpepper/wiki/
