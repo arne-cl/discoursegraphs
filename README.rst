@@ -35,10 +35,14 @@ Installation
 Requirements
 ------------
 
-- `lxml`
-- `networkx`
-- `graphviz`
-- `pygraphviz`
+- `lxml <http://lxml.de/>`_
+- `networkx <http://networkx.github.io/>`_
+
+If you'd like to visualize your graphs, you will also need:
+
+- `graphviz <http://graphviz.org/>`_
+- `pygraphviz <http://pygraphviz.github.io/>`_
+
 
 License
 -------
@@ -53,6 +57,6 @@ Arne Neumann
 People who downloaded this also like
 ------------------------------------
 
-- `SaltNPepper`_ a converter framework for various linguistic data formats
+- `SaltNPepper`_ (a converter framework for various linguistic data formats)
 
 .. _`SaltNPepper`: https://korpling.german.hu-berlin.de/p/projects/saltnpepper/wiki/

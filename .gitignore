@@ -2,6 +2,8 @@
 # https://github.com/github/gitignore/blob/master/Python.gitignore
 
 *.py[co]
+*.swp
+*.swo
 
 # Packages
 *.egg
