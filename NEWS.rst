@@ -6,7 +6,16 @@
 News
 ====
 
-0.1
+0.1.1
+---
+
+*Release date: 25-Apr-2014*
+
+* small improvements
+* added usage examples to readme
+* discoursegraphs script now uses the commandline interface of the merging module
+
+0.1.0
 ---
 
 *Release date: 24-Apr-2014*
