@@ -1,6 +1,20 @@
 DiscourseGraphs
 ===============
 
+.. image:: http://img.shields.io/pypi/dm/discoursegraphs.svg
+   :alt: PyPI download counter
+   :align: right
+   :target: https://pypi.python.org/pypi/discoursegraphs#downloads
+.. image:: http://img.shields.io/pypi/v/discoursegraphs.svg
+   :alt: Latest version
+   :align: right
+   :target: https://pypi.python.org/pypi/discoursegraphs
+.. image:: http://img.shields.io/badge/license-BSD-yellow.svg
+   :alt: BSD License
+   :align: right
+   :target: http://opensource.org/licenses/BSD-3-Clause
+
+
 This library enables you to process linguistic corpora with multiple levels
 of annotations by:
 
@@ -23,6 +37,23 @@ So far, the following formats can be imported and merged:
 
 Installation
 ------------
+
+Install from PyPI
+~~~~~~~~~~~~~~~~~
+
+::
+
+    pip install discoursegraphs # prepend 'sudo' if needed
+
+or, if you're oldschool:
+
+::
+
+    easy_install discoursegraphs # prepend 'sudo' if needed
+
+
+Install from source
+~~~~~~~~~~~~~~~~~~~
 
 ::
 
