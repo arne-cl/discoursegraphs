@@ -47,6 +47,6 @@ setup(name='discoursegraphs',
     install_requires=install_requires,
     entry_points={
         'console_scripts':
-            ['discoursegraphs=discoursegraphs:main']
+            ['discoursegraphs=discoursegraphs.merging:merging_cli']
     }
 )

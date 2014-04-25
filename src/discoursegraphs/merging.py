@@ -106,8 +106,10 @@ def add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph):
     except:
         pass
 
-
-if __name__ == '__main__':
+def merging_cli():
+    """
+    simple commandline interface of the merging module.
+    """
     if len(sys.argv) != 5:
         sys.stderr.write(
             'Usage: {0} tiger_file rst_file anaphoricity_file dot_output_file\n'.format(sys.argv[0]))
@@ -128,3 +130,7 @@ if __name__ == '__main__':
         add_rst_to_tiger(tiger_docgraph, rst_graph)
         add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph)
         write_dot(tiger_docgraph, dot_filepath)
+
+
+if __name__ == '__main__':
+    merging_cli()
