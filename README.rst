@@ -62,6 +62,33 @@ Install from source
     python setup.py install # prepend 'sudo' if needed
 
 
+Usage
+-----
+
+Right now, there's only a primitive command line interface that will
+merge the syntax, RST and expletive annotation layers into one
+graph and generates a dot file from it.
+
+::
+
+    discoursegraphs syntax/doc.xml rst/doc.rs3 expletives/doc.txt doc.dot
+    dot -Tpdf doc.dot > discoursegraph.pdf # generates a PDF from the dot file
+
+If you're interested in working with just one of those layers, you'll
+have to call the code directly::
+
+    from discoursegraphs import readwrite
+    tiger_docgraph = readwrite.TigerDocumentGraph('syntax/doc.xml')
+    rst_docgraph = readwrite.RSTGraph('rst/doc.rs3')
+    expletives_docgraph = readwrite.AnaphoraDocumentGraph('expletives/doc.txt')
+
+All the document graphs generated in this example are derived from the
+`networkx.MultiDiGraph`_ class, so you should be able to use all of its
+methods.
+
+.. _`networkx.MultiDiGraph`: http://networkx.lanl.gov/reference/classes.multidigraph.html
+
+
 
 Requirements
 ------------
