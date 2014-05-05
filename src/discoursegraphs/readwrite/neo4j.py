@@ -17,9 +17,9 @@ def make_json_encodable(discoursegraph):
     for node_id in discoursegraph:
         discoursegraph.node[node_id]['layers'] = \
             list(discoursegraph.node[node_id]['layers'])
-    for (from_id, to_id) in adg.edges_iter():
+    for (from_id, to_id) in discoursegraph.edges_iter():
         # there might be multiple edges between 2 nodes
-        edge_dict = adg.edge[from_id][to_id]
+        edge_dict = discoursegraph.edge[from_id][to_id]
         for edge_id in edge_dict:
             edge_dict[edge_id]['layers'] = \
                 list(edge_dict[edge_id]['layers'])
@@ -37,7 +37,7 @@ def convert_to_geoff(discoursegraph):
     geoff : string
         a geoff string representation of the discourse graph.
     """
-    make_json_encodable(discoursegraphs)
+    make_json_encodable(discoursegraph)
     return get_geoff(discoursegraph, 'LINKS_TO')
 
 
@@ -54,6 +54,6 @@ def upload_to_neo4j(discoursegraph):
     neonx_results : list of dict
         list of results from the `write_to_neo` function of neonx.
     """
-    make_json_encodable(discoursegraphs)
+    make_json_encodable(discoursegraph)
     return write_to_neo("http://localhost:7474/db/data/",
         discoursegraph, 'LINKS_TO')
