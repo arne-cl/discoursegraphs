@@ -1,4 +1,4 @@
-# discoursegraphs.io: input/output functionality
+# discoursegraphs.readwrite: input/output functionality
 
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
