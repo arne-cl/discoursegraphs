@@ -2,7 +2,7 @@
 
 __author__ = 'Arne Neumann'
 __email__ = 'discoursegraphs.programming@arne.cl'
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 from dg import DiscourseDocumentGraph
 

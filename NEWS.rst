@@ -6,8 +6,17 @@
 News
 ====
 
-0.1.1
------
+0.1.2 (Unreleased)
+------------------
+
+* added basic `Geoff`_ and `Neo4j`_ exporter
+* added sphinx-based documentation
+
+.. _`Geoff`: http://www.neo4j.org/develop/python/geoff
+.. _`Neo4j`: http://www.neo4j.org/
+
+0.1.1 (2014-04-25)
+------------------
 
 *Release date: 25-Apr-2014*
 
@@ -15,8 +24,8 @@ News
 * added usage examples to readme
 * discoursegraphs script now uses the commandline interface of the merging module
 
-0.1.0
------
+0.1.0 (2014-04-24)
+------------------
 
 *Release date: 24-Apr-2014*
 
