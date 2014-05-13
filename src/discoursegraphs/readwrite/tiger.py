@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
+"""
+The ``tiger`` module converts a ``TigerXML`` file into a networkx-based
+document graph.
+"""
+
 import sys
 import os
 import re
@@ -13,7 +18,6 @@ from discoursegraphs.util import natural_sort_key, ensure_unicode
 
 
 class TigerDocumentGraph(DiscourseDocumentGraph):
-
     """
     A directed graph with multiple edges (based on
     networkx.MultiDiGraph) that represents all the
@@ -33,14 +37,15 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         sorted list of all sentence root node IDs (of sentences
         contained in this document graph)
 
-    The attribute dict of each sentence root node contains a key
-    'tokens', which maps to a sorted list of token node IDs (str). To
-    print all tokens of a Tiger document, just do:
 
-    tdg = TigerDocumentGraph('/path/to/tiger.file')
-    for sentence_root_node in tdg.sentences:
-        for token_node_id in tdg.node[sentence_root_node]['tokens']:
-            print tdg.node[token_node_id]['tiger:word']
+    The attribute dict of each sentence root node contains a key
+    ``tokens``, which maps to a sorted list of token node IDs (str). To
+    print all tokens of a Tiger document, just do::
+
+        tdg = TigerDocumentGraph('/path/to/tiger.file')
+        for sentence_root_node in tdg.sentences:
+            for token_node_id in tdg.node[sentence_root_node]['tokens']:
+                print tdg.node[token_node_id]['tiger:word']
     """
 
     def __init__(self, tiger_filepath, name=None):

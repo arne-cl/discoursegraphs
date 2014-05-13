@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
+"""
+The ``neo4j`` module converts a ``DiscourseDocumentGraph`` into a ``Geoff``
+string and/or exports it to a running ``Neo4j`` graph database.
+"""
+
 from neonx import write_to_neo, get_geoff
 from discoursegraphs import DiscourseDocumentGraph
 

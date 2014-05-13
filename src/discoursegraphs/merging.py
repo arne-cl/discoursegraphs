@@ -2,6 +2,12 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
+"""
+The ``merging`` module combines several document graphs into one.
+So far, it is able to merge rhetorical structure theory (RS3), syntax
+(TigerXML) and anaphora (ad-hoc format) annotations of the same document.
+"""
+
 import os
 import sys
 import re
@@ -109,6 +115,9 @@ def add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph):
 def merging_cli():
     """
     simple commandline interface of the merging module.
+
+    This function is called when you use the ``discoursegraphs`` application
+    directly on the command line.
     """
     if len(sys.argv) != 5:
         sys.stderr.write(

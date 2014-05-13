@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
+"""
+The ``anaphoricity`` module parses Christian Dittrich's anaphoricity
+annotation ad-hoc format into a document graph.
+"""
+
 import sys
 import os
 import re

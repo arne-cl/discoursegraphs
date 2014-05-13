@@ -4,6 +4,13 @@
 #    Pieter Swart <swart@lanl.gov>
 #    All rights reserved.
 #    BSD license.
+
+"""
+This is a slightly modified version of ``networkx.relabel``. The only
+difference between the two versions is that this one supports the ``layers``
+attribute (which each node and edge in a ``DisourseDocumentGraph``) must have.
+"""
+
 import networkx as nx
 __author__ = """\n""".join(['Aric Hagberg <aric.hagberg@gmail.com>',
                            'Pieter Swart (swart@lanl.gov)',

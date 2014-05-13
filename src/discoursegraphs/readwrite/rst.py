@@ -3,8 +3,8 @@
 # Author: Arne Neumann <arne-neumann@web.de>
 
 """
-This module converts an RS3 XML file into a networkx-based directed
-graph.
+This module converts an RS3 XML file (used by RSTTool to annotate rhetorical
+structure) into a networkx-based directed graph (``DiscourseDocumentGraph``).
 """
 
 from __future__ import print_function
