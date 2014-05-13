@@ -6,10 +6,13 @@
 News
 ====
 
-0.1.2 (Unreleased)
+0.1.2 (2014-05-13)
 ------------------
 
-* added basic `Geoff`_ and `Neo4j`_ exporter
+*Release data: 13-May-2014*
+
+* added basic `Geoff`_ and `Neo4j`_ exporter (not yet available via the command
+  line)
 * added sphinx-based documentation
 
 .. _`Geoff`: http://www.neo4j.org/develop/python/geoff
