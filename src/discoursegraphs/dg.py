@@ -6,19 +6,19 @@ from networkx import MultiDiGraph
 
 
 class DiscourseDocumentGraph(MultiDiGraph):
-
     """
     Base class for representing annotated documents as directed graphs
     with multiple edges.
 
-    TODO: allow layers to be a single str or set of str
-    TODO: allow adding a layer by including it in **attr
-    TODO: add consistency check that would allow adding a node that
-        already exists in the graph, but only if the new graph has
-        different attributes (layers can be the same though)
-    TODO: outsource layer assertions to method?
+    TODO list:
+    
+    - allow layers to be a single str or set of str
+    - allow adding a layer by including it in ``**attr``
+    - add consistency check that would allow adding a node that
+      already exists in the graph, but only if the new graph has
+      different attributes (layers can be the same though)
+    - outsource layer assertions to method?
     """
-
     def __init__(self):
         """
         Initialized an empty directed graph which allows multiple edges.
@@ -302,6 +302,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
                 - 3-tuples (u,v,d) for an edge attribute dict d, or
                 - 4-tuples (u,v,k,d) for an edge identified by key k
+
             Each edge must have a layers attribute (set of str).
         attr_dict : dictionary, optional  (default= no attributes)
             Dictionary of edge attributes.  Key/value pairs will
@@ -348,6 +349,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
         We update the existing edge (key=0) and overwrite its 'weight'
         value. Note that we can't overwrite the 'layers' value, though.
         Instead, they are added to the set of existing layers
+        
         >>> d.add_edges_from([(1, 2, 0, {'layers':{'number'}, 'weight':66})])
         [(1, 2, {'layers': {'int', 'number'}, 'weight': 66}),
          (1, 2, {'layers': {'int'}, 'weight': 42})]
