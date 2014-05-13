@@ -25,4 +25,5 @@ pip-log.txt
 
 # Not in github's gitignore:
 tmp
+docs/_build
 
