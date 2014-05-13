@@ -89,6 +89,26 @@ methods.
 .. _`networkx.MultiDiGraph`: http://networkx.lanl.gov/reference/classes.multidigraph.html
 
 
+Documentation
+-------------
+
+Source code documentation is available
+`here <https://pythonhosted.org/pypolibox/>`_, but you can always get an
+up-to-date local copy using `Sphinx`_.
+
+You can generate an HTML or PDF version by running these commands in
+the ``docs`` directory::
+
+    make latexpdf
+
+to produce a PDF (``docs/_build/latex/discoursegraphs.pdf``) and ::
+
+    make html
+
+to produce a set of HTML files (``docs/_build/html/index.html``).
+
+.. _`Sphinx`: http://sphinx-doc.org/
+
 
 Requirements
 ------------
