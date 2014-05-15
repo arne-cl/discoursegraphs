@@ -7,11 +7,9 @@ The ``anaphoricity`` module parses Christian Dittrich's anaphoricity
 annotation ad-hoc format into a document graph.
 """
 
-import sys
 import os
 import re
 from itertools import chain
-from networkx import write_gpickle
 
 from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.util import ensure_unicode
@@ -109,15 +107,18 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
             unannotated_token = regex_match.group('token')
             annotation = regex_match.group('annotation')
             certainty = 1.0 if not regex_match.group('uncertain') else 0.5
-            self.add_node(token_id, layers={'anaphoricity', 'anaphoricity:token'},
-                          attr_dict={
-                              'anaphoricity:annotation': ANNOTATION_TYPES[annotation],
-                              'anaphoricity:certainty': certainty,
-                              'anaphoricity:token': ensure_unicode(unannotated_token)})
+            self.add_node(
+                token_id,
+                layers={'anaphoricity', 'anaphoricity:token'},
+                attr_dict={
+                    'anaphoricity:annotation': ANNOTATION_TYPES[annotation],
+                    'anaphoricity:certainty': certainty,
+                    'anaphoricity:token': ensure_unicode(unannotated_token)})
         else:  # token is not annotated
-            self.add_node(token_id,
-                          layers={'anaphoricity', 'anaphoricity:token'},
-                          attr_dict={'anaphoricity:token': ensure_unicode(token)})
+            self.add_node(
+                token_id,
+                layers={'anaphoricity', 'anaphoricity:token'},
+                attr_dict={'anaphoricity:token': ensure_unicode(token)})
 
         self.add_edge(self.root, token_id,
                       layers={'anaphoricity', 'anaphoricity:token'})
@@ -125,4 +126,4 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
 
 if __name__ == '__main__':
     generic_converter_cli(AnaphoraDocumentGraph,
-        file_descriptor='anaphoricity')
+                          file_descriptor='anaphoricity')
