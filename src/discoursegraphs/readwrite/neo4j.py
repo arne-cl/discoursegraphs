@@ -8,7 +8,6 @@ string and/or exports it to a running ``Neo4j`` graph database.
 """
 
 from neonx import write_to_neo, get_geoff
-from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.util import ensure_utf8
 
 
@@ -16,7 +15,7 @@ def make_json_encodable(discoursegraph):
     """
     typecasts all `layers` sets to lists to make the graph
     convertible into `geoff` format.
-    
+
     Parameters
     ----------
     discoursegraph : DiscourseDocumentGraph
@@ -30,6 +29,7 @@ def make_json_encodable(discoursegraph):
         for edge_id in edge_dict:
             edge_dict[edge_id]['layers'] = \
                 list(edge_dict[edge_id]['layers'])
+
 
 def add_node_ids_as_labels(discoursegraph):
     """
@@ -80,5 +80,5 @@ def upload_to_neo4j(discoursegraph):
     make_json_encodable(discoursegraph)
     add_node_ids_as_labels(discoursegraph)
     return write_to_neo("http://localhost:7474/db/data/",
-        discoursegraph, edge_rel_name='LINKS_TO',
-        edge_rel_attrib='edge_type', label_attrib='label')
+                        discoursegraph, edge_rel_name='LINKS_TO',
+                        edge_rel_attrib='edge_type', label_attrib='label')
