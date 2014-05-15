@@ -100,7 +100,8 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         self.add_nodes_from(sentence_graph.nodes(data=True))
         self.add_edges_from(sentence_graph.edges(data=True))
         self.add_edge(self.root, sentence_root_node_id,
-                      layers={'tiger', 'tiger:sentence'})
+                      layers={'tiger', 'tiger:sentence'},
+                      edge_type='contains')
         self.sentences.append(sentence_root_node_id)
 
 
@@ -164,6 +165,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
             a sentence from a TigerXML file in etree element format
         """
         token_ids = []
+        # add terminals to graph (tokens)
         for t in sentence.iterfind('./graph/terminals/t'):
             terminal_id = t.attrib['id']
             token_ids.append(terminal_id)
@@ -180,13 +182,15 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                     self.add_node(to_id, layers={'tiger', 'tiger:secedge'})
                 self.add_edge(terminal_id, to_id,
                               layers={'tiger', 'tiger:secedge'},
-                              attr_dict=secedge_attribs)
+                              attr_dict=secedge_attribs,
+                              edge_type='points_to')
 
         # add sorted list of all token node IDs to sentence root node
         # for performance reasons
         sorted_token_ids = sorted(token_ids, key=natural_sort_key)
         self.node[self.root].update({'tokens': sorted_token_ids})
 
+        # add nonterminals to graph
         for nt in sentence.iterfind('./graph/nonterminals/nt'):
             from_id = nt.attrib['id']
             nt_feats = add_prefix(nt.attrib, 'tiger:')
@@ -197,6 +201,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                 self.add_node(from_id, layers={'tiger', 'tiger:syntax'},
                               attr_dict=nt_feats)
 
+            # add edges to graph (dominance relations)
             for edge in nt.iterfind('./edge'):
                 to_id = edge.attrib['idref']
                 if to_id not in self:  # if graph doesn't contain to-node, yet
@@ -204,8 +209,10 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                 edge_attribs = add_prefix(edge.attrib, 'tiger:')
                 self.add_edge(from_id, to_id,
                               layers={'tiger', 'tiger:edge'},
-                              attr_dict=edge_attribs)
+                              attr_dict=edge_attribs,
+                              edge_type='dominates')
 
+            # add secondary edges to graph (pointing relations)
             for secedge in nt.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
                 if to_id not in self:  # if graph doesn't contain to-node, yet
@@ -213,7 +220,8 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                 secedge_attribs = add_prefix(secedge.attrib, 'tiger:')
                 self.add_edge(from_id, to_id,
                               layers={'tiger', 'tiger:secedge'},
-                              attr_dict=secedge_attribs)
+                              attr_dict=secedge_attribs,
+                              edge_type='points_to')
 
     def __add_vroot(self, sentence_root_id, sentence_attributes):
         """
@@ -254,7 +262,8 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                           'tiger', 'tiger:sentence', 'tiger:sentence:vroot'},
                       attr_dict=sentence_attributes)
         self.add_edge(new_root_node_id, old_root_node_id,
-                      layers={'tiger', 'tiger:sentence', 'tiger:sentence:vroot'})
+                      layers={'tiger', 'tiger:sentence', 'tiger:sentence:vroot'},
+                      edge_type='dominates')
         self.root = new_root_node_id
 
     def __repair_unconnected_nodes(self):
@@ -267,7 +276,8 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         unconnected_node_ids = get_unconnected_nodes(self)
         for unconnected_node_id in unconnected_node_ids:
             self.add_edge(self.root, unconnected_node_id,
-                          layers={'tiger', 'tiger:sentence'})
+                          layers={'tiger', 'tiger:sentence'},
+                          edge_type='contains')
 
 
 def _get_terminals_and_nonterminals(sentence_graph):
