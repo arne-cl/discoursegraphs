@@ -254,13 +254,15 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         sentence_id = sentence_attributes['tiger:id']
         new_root_node_id = 'VROOT-{0}'.format(sentence_id)
         self.add_node(old_root_node_id,
-                      layers={'tiger', 'tiger:sentence', 'tiger:sentence:root'})
+                      layers={'tiger', 'tiger:sentence',
+                              'tiger:sentence:root'})
         self.add_node(new_root_node_id,
-                      layers={
-                          'tiger', 'tiger:sentence', 'tiger:sentence:vroot'},
+                      layers={'tiger', 'tiger:sentence',
+                              'tiger:sentence:vroot'},
                       attr_dict=sentence_attributes)
         self.add_edge(new_root_node_id, old_root_node_id,
-                      layers={'tiger', 'tiger:sentence', 'tiger:sentence:vroot'},
+                      layers={'tiger', 'tiger:sentence',
+                              'tiger:sentence:vroot'},
                       edge_type='dominates')
         self.root = new_root_node_id
 
@@ -358,13 +360,13 @@ def add_prefix(dict_like, prefix):
     return {prefix + k: v for (k, v) in dict_like.items()}
 
 
-def tiger_tokenlist(tigerdoc_graph):
+def tiger_tokenlist(tdgraph):
     """
     extracts all tokens from a TigerDocumentGraph.
 
     Parameters
     ----------
-    tigerdoc_graph : TigerDocumentGraph
+    tdgraph : TigerDocumentGraph
         a directed graph representing a TigerXML file and all the
         annotated sentences found in it.
 
@@ -376,9 +378,10 @@ def tiger_tokenlist(tigerdoc_graph):
         corresponding sentence and the third is the token node ID.
     """
     all_tiger_tokens = []
-    for sent_id in tigerdoc_graph.sentences:
-        tiger_sent_tokens = [(tigerdoc_graph.node[token_id]['tiger:word'], sent_id, token_id)
-                             for token_id in tigerdoc_graph.node[sent_id]['tokens']]
+    for sent_id in tdgraph.sentences:
+        tiger_sent_tokens = \
+            [(tdgraph.node[token_id]['tiger:word'], sent_id, token_id)
+                for token_id in tdgraph.node[sent_id]['tokens']]
         all_tiger_tokens.extend(tiger_sent_tokens)
     return all_tiger_tokens
 
