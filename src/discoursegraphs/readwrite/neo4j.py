@@ -61,4 +61,4 @@ def upload_to_neo4j(discoursegraph):
     """
     make_json_encodable(discoursegraph)
     return write_to_neo("http://localhost:7474/db/data/",
-        discoursegraph, 'LINKS_TO')
+        discoursegraph, edge_rel_name='LINKS_TO', edge_rel_attrib='edge_type')
