@@ -352,7 +352,7 @@ def add_prefix(dict_like, prefix):
     if not isinstance(dict_like, dict):
         try:
             dict_like = dict(dict_like)
-        except Error as e:
+        except Exception as e:
             raise ValueError("{0}\nCan't convert container to dict: "
                              "{1}".format(e, dict_like))
     return {prefix + k: v for (k, v) in dict_like.items()}
