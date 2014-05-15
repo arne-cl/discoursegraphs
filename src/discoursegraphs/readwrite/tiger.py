@@ -9,9 +9,7 @@ document graph.
 
 import sys
 import os
-import re
-from lxml import etree, objectify
-from networkx import write_gpickle
+from lxml import etree
 
 from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.util import natural_sort_key, ensure_unicode
