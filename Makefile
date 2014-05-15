@@ -36,3 +36,12 @@ clean:
 	find . -name *.pyc -delete
 	rm -rf git_stats /tmp/dg
 	rm -rf build dist src/discoursegraphs.egg-info
+
+kill-delete-restart-neo4j:
+	~/bin/neo4j/bin/neo4j stop
+	rm -rf ~/bin/neo4j/data/*
+	~/bin/neo4j/bin/neo4j start
+
+repopulate-neo4j: kill-delete-restart-neo4j neo4j
+
+reinstall: clean uninstall install
