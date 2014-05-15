@@ -47,7 +47,7 @@ def add_rst_to_tiger(tiger_docgraph, rst_graph):
                                     layers={'rst', 'rst:token'})
         else:  # token mismatch
             raise ValueError("Tokenization mismatch between:\n"
-                             "{0}\n{1}".format(tiger_filepath, rst_filepath))
+                             "{0}\n{1}".format(tiger_docgraph, rst_graph))
 
 
 def map_anaphoricity_tokens_to_tiger(tiger_docgraph, anaphora_graph):
@@ -81,8 +81,9 @@ def map_anaphoricity_tokens_to_tiger(tiger_docgraph, anaphora_graph):
         if anaphora_token == tiger_token:
             anaphora2tiger[anaphora_node_id] = tiger_token_id
         else:
-            raise ValueError(u"tokens don't match: {0} (anaphoricity) vs. {1} (tiger)".format(
-                anaphora_token, tiger_token))
+            raise ValueError(
+                (u"tokens don't match: {0} (anaphoricity) vs. "
+                 "{1} (tiger)".format(anaphora_token, tiger_token)))
     return anaphora2tiger
 
 
@@ -111,6 +112,7 @@ def add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph):
     except:
         pass
 
+
 def merging_cli():
     """
     simple commandline interface of the merging module.
@@ -137,7 +139,7 @@ def merging_cli():
         "You'll need to provide at least a TigerXML file."
 
     for filepath in (args.tiger_file, args.rst_file, args.anaphoricity_file):
-        if filepath: # if it was specified on the command line
+        if filepath:  # if it was specified on the command line
             assert os.path.isfile(filepath), \
                 "File '{}' doesn't exist".format(filepath)
 
@@ -161,12 +163,14 @@ def merging_cli():
         try:
             upload_to_neo4j(tiger_docgraph)
         except requests.exceptions.ConnectionError as e:
-            sys.stderr.write(("Can't upload graph to Neo4j server. "
-                "Is it running?\n{}\n".format(e)))
+            sys.stderr.write(
+                ("Can't upload graph to Neo4j server. "
+                 "Is it running?\n{}\n".format(e)))
     elif args.output_format == 'no-output':
-        pass # just testing if the merging works
+        pass  # just testing if the merging works
     else:
-        raise ValueError("Unsupported output format: {}".format(args.output_format))
+        raise ValueError(
+            "Unsupported output format: {}".format(args.output_format))
 
 
 if __name__ == '__main__':
