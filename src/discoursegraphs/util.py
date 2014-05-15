@@ -48,3 +48,18 @@ def ensure_unicode(str_or_unicode):
         raise ValueError("Input '{0}' should be a string or unicode, "
                          "but its of type {1}".format(str_or_unicode,
                                                       type(str_or_unicode)))
+
+def ensure_utf8(str_or_unicode):
+    """
+    tests, if the input is ``str`` or ``unicode``. if it is ``unicode``,
+    it will be encoded from ``unicode`` to ``utf-8``. otherwise, the
+    input string is returned.
+    """
+    if isinstance(str_or_unicode, str):
+        return str_or_unicode
+    elif isinstance(str_or_unicode, unicode):
+        return str_or_unicode.encode('utf-8')
+    else:
+        raise ValueError("Input '{0}' should be a string or unicode, "
+                         "but it is of type {1}".format(str_or_unicode,
+                                                      type(str_or_unicode)))
