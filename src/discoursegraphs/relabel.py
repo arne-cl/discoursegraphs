@@ -11,6 +11,8 @@ difference between the two versions is that this one supports the ``layers``
 attribute (which each node and edge in a ``DisourseDocumentGraph``) must have.
 """
 
+# flake8: noqa
+
 import networkx as nx
 __author__ = """\n""".join(['Aric Hagberg <aric.hagberg@gmail.com>',
                            'Pieter Swart (swart@lanl.gov)',
