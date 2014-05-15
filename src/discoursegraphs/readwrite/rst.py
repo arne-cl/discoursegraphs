@@ -3,8 +3,9 @@
 # Author: Arne Neumann <arne-neumann@web.de>
 
 """
-This module converts an RS3 XML file (used by RSTTool to annotate rhetorical
-structure) into a networkx-based directed graph (``DiscourseDocumentGraph``).
+This module converts an RS3 XML file (used by RSTTool to annotate
+rhetorical structure) into a networkx-based directed graph
+(``DiscourseDocumentGraph``).
 """
 
 from __future__ import print_function
@@ -83,7 +84,8 @@ class RSTGraph(DiscourseDocumentGraph):
             segment_node_id = int(segment.attrib['id'])
             self.add_node(segment_node_id,
                           layers={'rst', 'rst:segment'},
-                          attr_dict={'rst:text': sanitize_string(segment.text)})
+                          attr_dict={'rst:text':
+                                     sanitize_string(segment.text)})
 
             self.segments.append(segment_node_id)
             if 'parent' in segment.attrib:
@@ -116,7 +118,8 @@ class RSTGraph(DiscourseDocumentGraph):
                                   layers={'rst', 'rst:segment'})
                 self.add_edge(group_node_id, parent_node_id,
                               layers={'rst', 'rst:relation'},
-                              attr_dict={'rst:relname': group.attrib['relname']})
+                              attr_dict={'rst:relname':
+                                         group.attrib['relname']})
             else:  # group node is the root of an RST tree
                 existing_layers = self.node[group_node_id]['layers']
                 all_layers = existing_layers.union({'rst:root'})
@@ -184,8 +187,9 @@ def rst_tokenlist(rst_graph):
     """
     all_rst_tokens = []
     for segment_id in rst_graph.segments:
-        segment_tokens = [(token, segment_id)
-                          for token in rst_graph.node[segment_id]['rst:text'].split()]
+        segment_tokens = \
+            [(token, segment_id)
+                for token in rst_graph.node[segment_id]['rst:text'].split()]
         all_rst_tokens.extend(segment_tokens)
     return all_rst_tokens
 
