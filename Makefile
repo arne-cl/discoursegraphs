@@ -49,3 +49,5 @@ reinstall: clean uninstall install
 
 lint:
 	flake8 src
+
+frankenstein: reinstall repopulate-neo4j
