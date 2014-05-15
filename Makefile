@@ -2,10 +2,21 @@
 
 MAZ = ~/repos/pcc-annis-merged/maz176
 
+merge-only:
+	date +"%H:%M:%S"
+	-ls $(MAZ)/syntax/*.xml | parallel ~/repos/discoursegraphs/src/discoursegraphs/merging.py -t {} -r $(MAZ)/rst/{/.}.rs3 -a $(MAZ)/anaphora/tosik/das/{/.}.txt -o no-output
+	date +"%H:%M:%S"
+
+
+neo4j:
+	date +"%H:%M:%S"
+	-ls $(MAZ)/syntax/*.xml | parallel ~/repos/discoursegraphs/src/discoursegraphs/merging.py -t {} -r $(MAZ)/rst/{/.}.rs3 -a $(MAZ)/anaphora/tosik/das/{/.}.txt -o neo4j
+	date +"%H:%M:%S"
+
 all:
 	mkdir -p /tmp/dg
 	date +"%H:%M:%S"
-	-ls $(MAZ)/syntax/*.xml | parallel ~/repos/discoursegraphs/src/discoursegraphs/merging.py {} $(MAZ)/rst/{/.}.rs3 $(MAZ)/anaphora/tosik/das/{/.}.txt /tmp/dg/{/.}.dot
+	-ls $(MAZ)/syntax/*.xml | parallel ~/repos/discoursegraphs/src/discoursegraphs/merging.py -t {} -r $(MAZ)/rst/{/.}.rs3 -a $(MAZ)/anaphora/tosik/das/{/.}.txt /tmp/dg/{/.}.dot
 	date +"%H:%M:%S"
 
 gitstats:
