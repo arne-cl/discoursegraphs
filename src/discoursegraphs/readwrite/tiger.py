@@ -384,30 +384,6 @@ def tiger_tokenlist(tigerdoc_graph):
         all_tiger_tokens.extend(tiger_sent_tokens)
     return all_tiger_tokens
 
-#~ def graph2tigersentence(sentence_graph):
-    #~ """
-    #~ @param sentence_graph: a directed graph containing a Tiger format
-        #~ sentence structure and annotations (syntax and morphology)
-    #~ @type sentence_graph: DiscourseDocumentGraph
-    #~ """
-    #~ terminals, nonterminals = _get_terminals_and_nonterminals(sentence_graph)
-    #~ sentence_root = objectify.Element('s', sentence_graph.metadata)
-    #~ graph_root = objectify.SubElement(sentence_root, 'graph', root=sentence_graph.root)
-    #~ terms_node = objectify.SubElement(graph_root, 'terminals')
-    #~ for term_id in terminals:
-        #~ terms_node.append(objectify.Element('t', sentence_graph.node[term_id], id=term_id))
-#~
-    #~ nonterms_node = objectify.SubElement(graph_root, 'nonterminals')
-    #~ for nt_id in nonterminals:
-        #~ nt_node = objectify.Element('nt', sentence_graph.node[nt_id], id=nt_id)
-        # ~ # edges are grouped by their source node in TigerXML
-        #~ for out_edge in sentence_graph.out_edges(nt_id, data=True):
-            #~ from_id, to_id, edge_attribs = out_edge
-            #~ nt_node.append(objectify.Element('edge', edge_attribs))
-        #~ nonterms_node.append(nt_node)
-#~
-    #~ objectify.deannotate(sentence_root, cleanup_namespaces=True)
-    #~ return sentence_root
 
 
 if __name__ == '__main__':
