@@ -58,6 +58,16 @@ discoursegraphs Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`generic` Module
+---------------------
+
+.. automodule:: discoursegraphs.readwrite.generic
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+
 :mod:`neo4j` Module
 -------------------
 
