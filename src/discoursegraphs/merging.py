@@ -10,13 +10,10 @@ So far, it is able to merge rhetorical structure theory (RS3), syntax
 
 import os
 import sys
-import re
 import argparse
 from networkx import write_dot
 
-from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.relabel import relabel_nodes
-from discoursegraphs.util import ensure_unicode
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
 from discoursegraphs.readwrite.rst import RSTGraph, rst_tokenlist
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph, tiger_tokenlist

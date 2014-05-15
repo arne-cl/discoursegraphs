@@ -7,7 +7,6 @@ The ``tiger`` module converts a ``TigerXML`` file into a networkx-based
 document graph.
 """
 
-import sys
 import os
 from lxml import etree
 

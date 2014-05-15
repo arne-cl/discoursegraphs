@@ -10,9 +10,7 @@ rhetorical structure) into a networkx-based directed graph
 
 from __future__ import print_function
 import os
-import sys
 from lxml import etree
-from networkx import write_gpickle
 
 from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.readwrite.generic import generic_converter_cli
