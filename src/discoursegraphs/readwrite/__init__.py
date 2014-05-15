@@ -7,6 +7,8 @@ linguistic documents into a graph-based representation for further
 processing.
 """
 
+__all__ = ['TigerDocumentGraph', 'AnaphoraDocumentGraph', 'RSTGraph']
+
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
 from discoursegraphs.readwrite.rst import RSTGraph
