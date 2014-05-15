@@ -13,6 +13,7 @@ from lxml import etree
 
 from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.util import natural_sort_key, ensure_unicode
+from discoursegraphs.readwrite.generic import generic_converter_cli
 
 
 class TigerDocumentGraph(DiscourseDocumentGraph):
@@ -387,16 +388,4 @@ def tiger_tokenlist(tdgraph):
 
 
 if __name__ == '__main__':
-    import argparse
-    from networkx import write_dot
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('input_file',
-                        help='TigerXML (syntax) file to be converted')
-    parser.add_argument('output_file', nargs='?', default=sys.stdout)
-    args = parser.parse_args(sys.argv[1:])
-
-    assert os.path.isfile(args.input_file), \
-        "'{}' isn't a file".format(args.input_file)
-    tiger_docgraph = TigerDocumentGraph(args.input_file)
-    write_dot(tiger_docgraph, args.output_file)
+    generic_converter_cli(TigerDocumentGraph, 'TigerXML (syntax)')

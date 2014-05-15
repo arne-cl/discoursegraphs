@@ -15,6 +15,7 @@ from lxml import etree
 from networkx import write_gpickle
 
 from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs.readwrite.generic import generic_converter_cli
 
 
 class RSTGraph(DiscourseDocumentGraph):
@@ -195,13 +196,4 @@ def rst_tokenlist(rst_graph):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        sys.stderr.write('Usage: {0} RS3_input_file '
-                         'GraphML_output_file\n'.format(sys.argv[0]))
-        sys.exit(1)
-    else:
-        INPUT_PATH = sys.argv[1]
-        OUTPUT_PATH = sys.argv[2]
-        assert os.path.isfile(INPUT_PATH)
-        RST_GRAPH = RSTGraph(INPUT_PATH)
-        write_gpickle(RST_GRAPH, OUTPUT_PATH)
+    generic_converter_cli(RSTGraph, 'RST (rhetorical structure)')

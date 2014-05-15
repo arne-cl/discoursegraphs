@@ -15,6 +15,7 @@ from networkx import write_gpickle
 
 from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.util import ensure_unicode
+from discoursegraphs.readwrite.generic import generic_converter_cli
 
 # The words 'das' and 'es were annotatated in the Potsdam Commentary
 # Corpus (PCC). Annotation options: '/n' (nominal), '/a' (abstract),
@@ -123,13 +124,5 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        sys.stderr.write(
-            'Usage: {0} anaphoricity_input_file networkx_pickle_output_file\n'.format(sys.argv[0]))
-        sys.exit(1)
-    else:
-        anaphora_filepath = sys.argv[1]
-        pickle_filepath = sys.argv[2]
-        assert os.path.isfile(anaphora_filepath)
-        anaphora_docgraph = AnaphoraDocumentGraph(anaphora_filepath)
-        write_gpickle(anaphora_docgraph, pickle_filepath)
+    generic_converter_cli(AnaphoraDocumentGraph,
+        file_descriptor='anaphoricity')
