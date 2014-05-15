@@ -18,7 +18,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
     with multiple edges.
 
     TODO list:
-    
+
     - allow layers to be a single str or set of str
     - allow adding a layer by including it in ``**attr``
     - add consistency check that would allow adding a node that
@@ -133,6 +133,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
         Examples
         --------
+        >>> from discoursegraphs import DiscourseDocumentGraph
+        >>> d = DiscourseDocumentGraph()
         >>> d.add_nodes_from([(1, {'layers':{'token'}, 'word':'hello'}), \
                 (2, {'layers':{'token'}, 'word':'world'})])
         >>> d.nodes(data=True)
@@ -151,7 +153,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
         >>> d.add_nodes_from([(1, {'layers': {'tiger'}})], size=10)
         >>> d.nodes(data=True)
-        [(1, {'layers': {'tiger', 'token'}, 'size': 10, 'weight': 1.0, 'word': 'hello'}),
+        [(1, {'layers': {'tiger', 'token'}, 'size': 10, 'weight': 1.0,
+              'word': 'hello'}),
          (2, {'layers': {'token'}, 'weight': 1.0, 'word': 'world'})]
         """
         additional_attribs = attr  # will be added to each node
@@ -356,7 +359,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
         We update the existing edge (key=0) and overwrite its 'weight'
         value. Note that we can't overwrite the 'layers' value, though.
         Instead, they are added to the set of existing layers
-        
+
         >>> d.add_edges_from([(1, 2, 0, {'layers':{'number'}, 'weight':66})])
         [(1, 2, {'layers': {'int', 'number'}, 'weight': 66}),
          (1, 2, {'layers': {'int'}, 'weight': 42})]
