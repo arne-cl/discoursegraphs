@@ -385,15 +385,17 @@ def tiger_tokenlist(tigerdoc_graph):
     return all_tiger_tokens
 
 
-
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        sys.stderr.write(
-            'Usage: {0} TigerXML_input_file networkx_pickle_output_file\n'.format(sys.argv[0]))
-        sys.exit(1)
-    else:
-        tiger_filepath = sys.argv[1]
-        pickle_filepath = sys.argv[2]
-        assert os.path.isfile(tiger_filepath)
-        tiger_docgraph = TigerDocumentGraph(tiger_filepath)
-        write_gpickle(tiger_docgraph, pickle_filepath)
+    import argparse
+    from networkx import write_dot
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('input_file',
+                        help='TigerXML (syntax) file to be converted')
+    parser.add_argument('output_file', nargs='?', default=sys.stdout)
+    args = parser.parse_args(sys.argv[1:])
+
+    assert os.path.isfile(args.input_file), \
+        "'{}' isn't a file".format(args.input_file)
+    tiger_docgraph = TigerDocumentGraph(args.input_file)
+    write_dot(tiger_docgraph, args.output_file)
