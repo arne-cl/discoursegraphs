@@ -45,3 +45,4 @@ kill-delete-restart-neo4j:
 repopulate-neo4j: kill-delete-restart-neo4j neo4j
 
 reinstall: clean uninstall install
+	cd ~/repos/neonx && make clean && yes | pip uninstall neonx && python setup.py install
