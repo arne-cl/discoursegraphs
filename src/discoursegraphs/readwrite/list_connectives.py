@@ -27,9 +27,10 @@ from collections import OrderedDict
 from lxml import etree
 import argparse
 import re
-import pudb #TODO: rm debug
+import pudb  # TODO: rm debug
 
 REDUCE_WHITESPACE_RE = re.compile(' +')
+
 
 def get_connectives(tree):
     """
@@ -58,7 +59,8 @@ def get_connectives(tree):
     for element in connective_elements:
         try:
             conn_id = int(element.attrib['id'])
-            conn_feats = {'text': get_connective_string(element),
+            conn_feats = {
+                'text': get_connective_string(element),
                 'relation': element.attrib['relation'],
                 'modifier': get_modifier(element)}
 
@@ -68,8 +70,12 @@ def get_connectives(tree):
                 connectives[conn_id] = [conn_feats]
 
         except KeyError as e:
-            sys.stderr.write("Something's wrong in file {0}.\nThere's no {1} attribute in element:\n{2}\n".format(tree.docinfo.URL, e, etree.tostring(element)))
+            sys.stderr.write(
+                ("Something's wrong in file {0}.\nThere's no {1} "
+                 "attribute in element:\n{2}"
+                 "\n".format(tree.docinfo.URL, e, etree.tostring(element))))
     return connectives
+
 
 def get_units(tree):
     """
@@ -93,7 +99,8 @@ def get_units(tree):
     ext_units = OrderedDict()
     int_units = OrderedDict()
     for unit in tree.findall('//unit'):
-        unit_str = etree.tostring(unit, encoding='utf8', method='text').replace('\n', ' ')
+        unit_str = etree.tostring(unit, encoding='utf8',
+                                  method='text').replace('\n', ' ')
         cleaned_str = REDUCE_WHITESPACE_RE.sub(' ', unit_str).strip()
 
         if unit.attrib['type'] == 'ext':
@@ -124,7 +131,7 @@ def get_connective_string(connective_element):
         a string representing the (modified) connective,
         e.g. 'und' or 'auch deshalb'
     """
-    if connective_element.text is None: # has a modifier
+    if connective_element.text is None:  # has a modifier
         modifier = connective_element.getchildren()[0]
         return ' '.join([modifier.text.strip(), modifier.tail.strip()])
 
@@ -152,70 +159,108 @@ def get_modifier(connective_element):
     else:
         return None
 
+
 def get_ancestor_units(unit_element):
     pudb.set_trace()
-    results = ["{0}-{1}".format(unit_element.attrib['type'], unit_element.attrib['id'])]
+    results = ["{0}-{1}".format(unit_element.attrib['type'],
+                                unit_element.attrib['id'])]
     parent_element = unit_element.getparent()
     if parent_element.tag == 'discourse':
         return results
     elif parent_element.tag == 'unit':
         results.append(get_ancestor_units(parent_element))
     else:
-        raise ValueError('Connective {0} embedded in unknown element {1}!'.format(results[0], parent_element.tag))
+        raise ValueError(
+            ('Connective {0} embedded in unknown element '
+             '{1}!'.format(results[0], parent_element.tag)))
 
 
-if __name__ == "__main__":
-    desc = "This script extracts connectives (and its relation" + \
-        " type, and int/ext-units) from Conano XML files."
+def write_connectives(connectives, outfile):
+    """
+    writes connectives to output file (one connective per line).
+    """
+    with outfile:
+        for cid, clist in connectives.items():
+            for connective in clist:
+                conn_str = connective['text'].encode('utf8')
+                outfile.write(conn_str + '\n')
+
+
+def write_relations(connectives, outfile):
+    """
+    Writes connectives and their relations to an output file. Each line
+    will contain one connective and the relation it belongs to (tab-separated).
+    """
+    with outfile:
+        for cid, clist in connectives.items():
+            for connective in clist:
+                conn_str = connective['text'].encode('utf8')
+                relation = connective['relation'].encode('utf8')
+                outfile.write(conn_str + '\t' + relation + '\n')
+
+
+def write_units(conano_etree, connectives, outfile):
+    """
+    """
+    ext_units, int_units = get_units(conano_etree)
+    with outfile:
+        for cid, clist in connectives.items():
+            for connective in clist:
+                conn_str = connective['text'].encode('utf8')
+                try:
+                    extunit = ext_units[cid]
+                except KeyError:
+                    sys.stderr.write(
+                        ("{0} has no ext-unit with ID {1}"
+                         "\n".format(conano_etree.docinfo.URL, cid)))
+                try:
+                    intunit = int_units[cid]
+                except KeyError:
+                    sys.stderr.write(
+                        ("{0} has no int-unit with ID {1}"
+                         "\n".format(conano_etree.docinfo.URL, cid)))
+                outfile.write('=====\n' + conn_str + '\n\nEXTERN: ' +
+                              extunit + '\n\nINTERN: ' + intunit + '\n\n\n')
+
+
+def cli():
+    """
+    command line interface for extracting connectives from Conano XML
+    files.
+    """
+    desc = ("This script extracts connectives (and its relation "
+            "type, and int/ext-units) from Conano XML files.")
+    infile_help = ("Conano XML file to be parsed. If no filename is given: "
+                   "read from stdin.")
+    outfile_help = ("the file that shall contain the connectives. If no "
+                    "filename is given: write to stdout.")
+    outformat_help = ("output file format: 'normal', 'relations' or 'units'\n"
+                      "Defaults to normal, which just prints the connectives.")
     parser = argparse.ArgumentParser(description=desc)
     parser.add_argument('infile', nargs='?', type=argparse.FileType('r'),
-        default=sys.stdin, help='the Conano XML file to be parsed. If no filename is given: read from stdin.')
+                        default=sys.stdin, help=infile_help)
     parser.add_argument('outfile', nargs='?', type=argparse.FileType('w'),
-        default=sys.stdout, help='the output file that shall contain the connectives. If no filename is given: write to stdout.')
+                        default=sys.stdout, help=outfile_help)
 
     parser.add_argument('-f', '--format', dest='outformat',
-        help="output file format: 'normal', 'relations' or 'units'" + \
-        "\nDefaults to normal, which just prints the connectives. ")
+                        help=outformat_help)
 
     args = parser.parse_args()
     conano_file = args.infile
-    output_file = args.outfile
+    outfile = args.outfile
 
     try:
         tree = etree.parse(conano_file)
-        #~ pudb.set_trace() #TODO: rm debug
         connectives = get_connectives(tree)
 
         if args.outformat in (None, 'normal'):
-            with output_file:
-                for cid, clist in connectives.items():
-                    for connective in clist:
-                        conn_str = connective['text'].encode('utf8')
-                        output_file.write(conn_str + '\n')
+            write_connectives(connectives, outfile)
 
         elif args.outformat == 'relations':
-            with output_file:
-                for cid, clist in connectives.items():
-                    for connective in clist:
-                        conn_str = connective['text'].encode('utf8')
-                        relation = connective['relation'].encode('utf8')
-                        output_file.write(conn_str + '\t' + relation + '\n')
+            write_relations(connectives, outfile)
 
         elif args.outformat == 'units':
-            ext_units, int_units = get_units(tree)
-            with output_file:
-                for cid, clist in connectives.items():
-                    for connective in clist:
-                        conn_str = connective['text'].encode('utf8')
-                        try:
-                            extunit = ext_units[cid]
-                        except KeyError as e:
-                            sys.stderr.write("{0} has no ext-unit with ID {1}\n".format(tree.docinfo.URL, cid))
-                        try:
-                            intunit = int_units[cid]
-                        except KeyError as e:
-                            sys.stderr.write("{0} has no int-unit with ID {1}\n".format(tree.docinfo.URL, cid))
-                        output_file.write('=====\n' + conn_str + '\n\nEXTERN: ' + extunit + '\n\nINTERN: ' + intunit + '\n\n\n')
+            write_units(tree, connectives, outfile)
 
         else:
             sys.stderr.write("Unsupported output format.\n")
@@ -224,3 +269,7 @@ if __name__ == "__main__":
 
     except etree.XMLSyntaxError as e:
         sys.stderr.write("Can't parse file {0}. {1}\n".format(conano_file, e))
+
+
+if __name__ == "__main__":
+    cli()
