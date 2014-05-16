@@ -29,7 +29,84 @@ import argparse
 import re
 import pudb  # TODO: rm debug
 
+from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs.util import ensure_unicode
+
 REDUCE_WHITESPACE_RE = re.compile(' +')
+
+
+class ConanoDocumentGraph(DiscourseDocumentGraph):
+    """
+    represents a Conano XML file as a multidigraph.
+
+    Attributes
+    ----------
+    tokens : list of int
+        a list of node IDs (int) which represent the tokens in the
+        order they occur in the text
+    root : str
+        name of the document root node ID
+        (default: 'conano:root_node')    
+    """
+    def __init__(self, conano_file, name=None):
+        """
+        reads a Conano XML file and converts it into a multidigraph.
+        
+        Parameters
+        ----------
+        conano_file : str or _ElementTree
+            relative or absolute path to a Conano XML file (or an
+            ``lxml.etree._ElementTree`` representing the file)
+        name : str or None
+            the name or ID of the graph to be generated. If no name is
+            given, the basename of the input file is used.
+        """
+        # super calls __init__() of base class DiscourseDocumentGraph
+        super(DiscourseDocumentGraph, self).__init__()
+
+        if name is not None:
+            self.name = os.path.basename(conano_filepath)
+        self.root = 'conano:root_node'
+        self.add_node(self.root, layers={'conano'})
+
+        if isinstance(conano_file, etree._ElementTree):
+            self.tree = conano_file
+        else:
+            self.tree = etree.parse(conano_file)
+        conano_plaintext = etree.tostring(self.tree, encoding='utf8',
+                                          method='text')
+        tokens = conano_plaintext.split()
+
+        self.tokens = []
+        for i, token in enumerate(tokens):
+            self.__add_token_to_document(token, i)
+            self.tokens.append(i)
+
+    def __add_token_to_document(self, token, token_id):
+        """
+        adds a token to the document graph as a node with the given ID.
+        adds an edge of type ``contains`` from the root node to the
+        token node.
+
+        TODO: only add edges from root to token if the token isn't part
+        of a unit span...
+
+        Parameters
+        ----------
+        token : str
+            the token to be added to the document graph
+        token_id : int
+            the node ID of the token to be added, which must not yet
+            exist in the document graph
+        """
+        self.add_node(
+            token_id,
+            layers={'conano', 'conano:token'},
+            attr_dict={'conano:token': ensure_unicode(token)})
+
+        self.add_edge(self.root, token_id,
+                      layers={'conano', 'conano:token'},
+                      edge_type='contains')
 
 
 def get_connectives(tree):
@@ -261,6 +338,11 @@ def cli():
 
         elif args.outformat == 'units':
             write_units(tree, connectives, outfile)
+
+        elif args.outformat == 'dot':
+            from networkx import write_dot
+            conano_docgraph = ConanoDocumentGraph(tree)
+            write_dot(conano_docgraph, outfile)
 
         else:
             sys.stderr.write("Unsupported output format.\n")
