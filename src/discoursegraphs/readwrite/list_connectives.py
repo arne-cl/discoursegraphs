@@ -22,7 +22,6 @@ Aber das muss irgendwann ein Ende haben .
 '''
 """
 
-import os
 import sys
 from collections import OrderedDict
 from lxml import etree
