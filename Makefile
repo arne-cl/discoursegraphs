@@ -45,6 +45,7 @@ kill-delete-restart-neo4j:
 
 repopulate-neo4j: kill-delete-restart-neo4j neo4j
 
+# cleans, uninstalls and reinstalls both discoursegraphs and our neonx "fork"
 reinstall: clean uninstall install
 	cd ~/repos/neonx && make clean && yes | pip uninstall neonx && python setup.py install
 
