@@ -8,12 +8,9 @@ connectives) into a networkx-based directed graph
 (``DiscourseDocumentGraph``).
 """
 
-import sys
-from collections import OrderedDict
-from lxml import etree
-import argparse
+import os
 import re
-import pudb  # TODO: rm debug
+from lxml import etree
 
 from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.readwrite.generic import generic_converter_cli
@@ -65,7 +62,6 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         for i, (token, spans) in enumerate(token_spans):
             self._add_token_to_document(i, token, spans)
 
-
     def _add_document_structure(self, token_spans):
         """
         adds the basic structure of the annotation to the graph,
@@ -94,7 +90,6 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
                               layers={self.ns, self.ns+':unit'},
                               edge_type='dominates')
 
-
     def _add_token_to_document(self, token_id, token, token_attribs):
         """
         TODO: add 'relation' attribute to connective node!
@@ -110,7 +105,6 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
             a dict containing all the spans a token belongs to (and
             in case of connectives the relation it is part of)
         """
-        unit_node_ids = [] # add edges from root later on
         self.add_node(
             token_id,
             layers={self.ns, self.ns+':token'},
@@ -124,14 +118,13 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
             elif span_type == 'modifier':
                 raise NotImplementedError("Can't handle modifiers, yet")
             else:
-                raise NotImplementedError("Can't handle span_type '{}', yet".format(span_type))
-
+                raise NotImplementedError(
+                    "Can't handle span_type '{}', yet".format(span_type))
 
         #~ # we might still need this for alignment debugging
         #~ conano_plaintext = etree.tostring(self.tree, encoding='utf8',
                                           #~ method='text')
         #~ tokens = conano_plaintext.split()
-
 
     def _parse_conano_element(self, token_list, element, part='text'):
         """
@@ -153,21 +146,23 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
             if cleaned_str:
                 tokens = cleaned_str.split()
                 dominating_spans = []
-                if element.tag != 'discourse': # discourse is the root element
-                    dominating_spans.append((element.attrib.get('type', element.tag),
-                                             element.attrib.get('id', '')))
+                if element.tag != 'discourse':  # discourse is the root element
+                    dominating_spans.append(
+                        (element.attrib.get('type', element.tag),
+                         element.attrib.get('id', '')))
 
-                dominating_spans.extend([(a.attrib.get('type', a.tag), a.attrib.get('id', ''))
-                                         for a in element.iterancestors()
-                                         if a.tag != 'discourse'])
+                dominating_spans.extend(
+                    [(a.attrib.get('type', a.tag), a.attrib.get('id', ''))
+                     for a in element.iterancestors()
+                     if a.tag != 'discourse'])
 
                 for token in tokens:
                     if element.tag == 'connective':
-                        token_list.append((token, {'spans': dominating_spans,
-                                                   'relation': element.attrib['relation']}))
+                        token_list.append(
+                            (token, {'spans': dominating_spans,
+                                     'relation': element.attrib['relation']}))
                     else:
                         token_list.append((token, {'spans': dominating_spans}))
-
 
     def _parse_conano(self, root_element):
         """
@@ -188,7 +183,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         tokens = []
         self._parse_conano_element(tokens, root_element, 'text')
         for child in root_element.iterchildren():
-             tokens.extend(self._parse_conano(child))
+            tokens.extend(self._parse_conano(child))
         self._parse_conano_element(tokens, root_element, 'tail')
         return tokens
 
