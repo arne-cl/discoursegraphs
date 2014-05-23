@@ -17,6 +17,7 @@ from discoursegraphs.relabel import relabel_nodes
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
 from discoursegraphs.readwrite.rst import RSTGraph, rst_tokenlist
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph, tiger_tokenlist
+from discoursegraphs.readwrite.conano import ConanoDocumentGraph
 from discoursegraphs.readwrite.neo4j import convert_to_geoff, upload_to_neo4j
 
 
@@ -48,6 +49,14 @@ def add_rst_to_tiger(tiger_docgraph, rst_graph):
         else:  # token mismatch
             raise ValueError("Tokenization mismatch between:\n"
                              "{0}\n{1}".format(tiger_docgraph, rst_graph))
+
+
+def add_conano_to_tiger(tiger_docgraph, conano_graph):
+    """
+    TODO: implement function
+    TODO: simplify Tiger doc graph (i.e. add `self.tokens`)
+    """
+    raise NotImplementedError
 
 
 def map_anaphoricity_tokens_to_tiger(tiger_docgraph, anaphora_graph):
@@ -128,6 +137,8 @@ def merging_cli():
                         help='RS3 (rhetorical structure) file to be merged')
     parser.add_argument('-a', '--anaphoricity-file',
                         help='anaphoricity file to be merged')
+    parser.add_argument('-c', '--conano-file',
+                        help='conano file to be merged')        
     parser.add_argument('-o', '--output-format',
                         default='dot',
                         help='output format: dot, geoff, neo4j, no-output')
@@ -138,7 +149,8 @@ def merging_cli():
     assert args.tiger_file, \
         "You'll need to provide at least a TigerXML file."
 
-    for filepath in (args.tiger_file, args.rst_file, args.anaphoricity_file):
+    for filepath in (args.tiger_file, args.rst_file, args.anaphoricity_file,
+                     args.conano_file):
         if filepath:  # if it was specified on the command line
             assert os.path.isfile(filepath), \
                 "File '{}' doesn't exist".format(filepath)
@@ -152,6 +164,10 @@ def merging_cli():
     if args.anaphoricity_file:
         anaphora_graph = AnaphoraDocumentGraph(args.anaphoricity_file)
         add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph)
+
+    if args.conano_file:
+        conano_graph = ConanoDocumentGraph(args.conano_file)
+        add_conano_to_tiger(tiger_docgraph, conano_graph)
 
     if args.output_format == 'dot':
         write_dot(tiger_docgraph, args.output_file)
