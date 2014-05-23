@@ -9,6 +9,7 @@ connectives) into a networkx-based directed graph
 """
 
 import os
+import sys
 import re
 from lxml import etree
 
@@ -33,7 +34,8 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         name of the document root node ID
         (default: 'conano:root_node')
     """
-    def __init__(self, conano_filepath, name=None):
+    def __init__(self, conano_filepath, name=None, check_validity=True,
+                 precedence=True, connected=False):
         """
         reads a Conano XML file and converts it into a multidigraph.
 
@@ -44,6 +46,16 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         name : str or None
             the name or ID of the graph to be generated. If no name is
             given, the basename of the input file is used.
+        check_validity : bool
+            checks, if the tokenization in the graph matches the one in
+            the Conano file (converted to plain text)
+        precedence : bool
+            add precedence relation edges (root precedes token1, which precedes
+            token2 etc.)
+        connected : bool
+            Make the graph connected, i.e. add an edge from root to each
+            token that isn't part of any span. This doesn't do anything, if
+            precendence=True.
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(DiscourseDocumentGraph, self).__init__()
@@ -53,14 +65,34 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         self.ns = 'conano'
         self.root = self.ns+':root_node'
         self.add_node(self.root, layers={self.ns})
+        self.tokens = []
 
-        #~ pudb.set_trace() # TODO: rm
-        root_element = etree.parse(conano_filepath).getroot()
+        tree = etree.parse(conano_filepath)
+        root_element = tree.getroot()
         token_spans = self._parse_conano(root_element)
         self._add_document_structure(token_spans)
 
         for i, (token, spans) in enumerate(token_spans):
-            self._add_token_to_document(i, token, spans)
+            self._add_token_to_document(i, token, spans, precedence, connected)
+
+        if check_validity:
+            assert self.is_valid(tree)
+
+    def is_valid(self, tree):
+        """
+        returns true, iff the order of the tokens in the graph are the
+        same as in the Conano file (converted to plain text).
+        """
+        conano_plaintext = etree.tostring(tree, encoding='utf8', method='text')
+        token_str_list = conano_plaintext.split()
+        for i, plain_token in enumerate(token_str_list):
+            graph_token = self.node[self.tokens[i]][self.ns+':token']
+            if ensure_unicode(plain_token) != graph_token:
+                sys.stderr.write(
+                    "Conano tokenizations don't match: {0} vs. {1} "
+                    "({2})".format(plain_token, graph_token))
+                return False
+        return True
 
     def _add_document_structure(self, token_spans):
         """
@@ -76,21 +108,25 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
             for (span_type, span_id) in tdict['spans']:
                 unit_ids.add(span_id)
 
+        # add a unit, int/ext sub-unit and connective node for each unit found
         for unit_id in unit_ids:
             for node_id in ('unit', 'int', 'ext', 'connective'):
                 self.add_node(
                     '{0}-{1}'.format(node_id, unit_id),
                     layers={self.ns, self.ns+':unit'})
 
+            # edge from root to unit
             self.add_edge(self.root, 'unit-{}'.format(unit_id),
                           layers={self.ns, self.ns+':unit'})
+            # edge from unit to int/ext sub-unit and connective
             for to_node in ('ext', 'int', 'connective'):
                 self.add_edge('unit-{}'.format(unit_id),
                               '{0}-{1}'.format(to_node, unit_id),
                               layers={self.ns, self.ns+':unit'},
                               edge_type='dominates')
 
-    def _add_token_to_document(self, token_id, token, token_attribs):
+    def _add_token_to_document(self, token_id, token, token_attribs,
+                               precedence=False, connected=False):
         """
         TODO: add 'relation' attribute to connective node!
         TODO: how to handle modifiers?
@@ -98,33 +134,58 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         Parameters
         ----------
         token_id : int
-            the ID of the token
+            the index of the token
         token : str or unicode
             the token itself
         token_attribs : dict
             a dict containing all the spans a token belongs to (and
             in case of connectives the relation it is part of)
+        precedence : bool
+            add precedence relation edges (root precedes token1, which precedes
+            token2 etc.)
+        connected : bool
+            make the graph connected, i.e. add an edge from root to each
+            token that isn't part of any span. This doesn't do anything, if
+            precendence=True.
         """
+        assert isinstance(token_id, int) and token_id >= 0
+        token_node_id = 'token-{}'.format(token_id)
+        token_str = ensure_unicode(token)
         self.add_node(
-            token_id,
+            token_node_id,
             layers={self.ns, self.ns+':token'},
-            attr_dict={self.ns+':token': ensure_unicode(token)})
+            attr_dict={self.ns+':token': token_str, 'label': token_str})
 
-        for (span_type, span_id) in token_attribs['spans']:
-            if span_type in ('int', 'ext', 'connective'):
-                self.add_edge("{0}-{1}".format(span_type, span_id),
-                              token_id, layers={self.ns, self.ns+':unit'},
+        self.tokens.append(token_node_id)
+
+        if precedence:
+            if token_id == 0: # edge from root to first token
+                self.add_edge(self.root, token_node_id,
+                              layers={self.ns, self.ns+':precedence'},
+                              edge_type='precedes')
+            else: # edge from preceeding token to this one
+                self.add_edge('token-{}'.format(token_id-1), token_node_id,
+                              layers={self.ns, self.ns+':precedence'},
+                              edge_type='precedes')
+
+        if connected and not precedence:
+            # precedence relations make the graph connected, so this wouldn't
+            # help
+            if not token_attribs['spans']: # token isn't part of any span
+                self.add_edge(self.root, token_node_id, layers={self.ns},
                               edge_type='contains')
-            elif span_type == 'modifier':
-                raise NotImplementedError("Can't handle modifiers, yet")
+
+        # add edges from all the spans a token is part of to the token node
+        for (span_type, span_id) in token_attribs['spans']:
+            if span_type in ('int', 'ext', 'connective', 'modifier'):
+                span_node_id = "{0}-{1}".format(span_type, span_id)
+                self.add_node(span_node_id, layers={self.ns, self.ns+':unit'})
+                self.add_edge(span_node_id,
+                              token_node_id, layers={self.ns, self.ns+':unit'},
+                              edge_type='contains')
             else:
                 raise NotImplementedError(
-                    "Can't handle span_type '{}', yet".format(span_type))
-
-        #~ # we might still need this for alignment debugging
-        #~ conano_plaintext = etree.tostring(self.tree, encoding='utf8',
-                                          #~ method='text')
-        #~ tokens = conano_plaintext.split()
+                    "Can't handle span_type '{}'".format(span_type))
 
     def _parse_conano_element(self, token_list, element, part='text'):
         """
