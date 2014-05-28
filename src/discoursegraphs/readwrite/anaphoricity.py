@@ -38,15 +38,17 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
 
     Attributes
     ----------
+    ns : str
+        the namespace of the graph (default: anaphoricity)
     tokens : list of int
         a list of node IDs (int) which represent the tokens in the
         order they occur in the text
     root : str
         name of the document root node ID
-        (default: 'anaphoricity:root_node')
+        (default: self.ns+':root_node')
     """
 
-    def __init__(self, anaphora_filepath, name=None):
+    def __init__(self, anaphora_filepath, name=None, namespace='anaphoricity'):
         """
         Reads an abstract anaphora annotation file, creates a directed
         graph and adds a node for each token, as well as an edge from
@@ -73,13 +75,16 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         name : str or None
             the name or ID of the graph to be generated. If no name is
             given, the basename of the input file is used.
+        namespace : str
+            the namespace of the graph (default: anaphoricity)
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(AnaphoraDocumentGraph, self).__init__()
         if name is not None:
             self.name = os.path.basename(anaphora_filepath)
-        self.root = 'anaphoricity:root_node'
-        self.add_node(self.root, layers={'anaphoricity'})
+        self.ns = namespace
+        self.root = self.ns+':root_node'
+        self.add_node(self.root, layers={self.ns})
         self.tokens = []
 
         with open(anaphora_filepath, 'r') as anno_file:
@@ -109,19 +114,19 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
             certainty = 1.0 if not regex_match.group('uncertain') else 0.5
             self.add_node(
                 token_id,
-                layers={'anaphoricity', 'anaphoricity:token'},
+                layers={self.ns, self.ns+':token'},
                 attr_dict={
-                    'anaphoricity:annotation': ANNOTATION_TYPES[annotation],
-                    'anaphoricity:certainty': certainty,
-                    'anaphoricity:token': ensure_unicode(unannotated_token)})
+                    self.ns+':annotation': ANNOTATION_TYPES[annotation],
+                    self.ns+':certainty': certainty,
+                    self.ns+':token': ensure_unicode(unannotated_token)})
         else:  # token is not annotated
             self.add_node(
                 token_id,
-                layers={'anaphoricity', 'anaphoricity:token'},
-                attr_dict={'anaphoricity:token': ensure_unicode(token)})
+                layers={self.ns, self.ns+':token'},
+                attr_dict={self.ns+':token': ensure_unicode(token)})
 
         self.add_edge(self.root, token_id,
-                      layers={'anaphoricity', 'anaphoricity:token'})
+                      layers={self.ns, self.ns+':token'})
 
 
 if __name__ == '__main__':
