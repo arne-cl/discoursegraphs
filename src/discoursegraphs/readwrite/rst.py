@@ -24,7 +24,7 @@ class RSTGraph(DiscourseDocumentGraph):
     document.
     """
 
-    def __init__(self, rs3_filepath):
+    def __init__(self, rs3_filepath, name=None, namespace='rst'):
         """
         Creates an RSTGraph from a RS3 XML file and adds metadata to it
         (filename of the RS3 file, names and types of allowed RST
@@ -34,11 +34,18 @@ class RSTGraph(DiscourseDocumentGraph):
         ----------
         rs3_filepath : str
             absolute or relative path to the RS3 file to be parsed
+        name : str or None
+            the name or ID of the graph to be generated. If no name is
+            given, the basename of the input file is used.
+        namespace : str
+            the namespace of the document (default: rst)
 
         Attributes
         ----------
-        filename : str
-            filename of the RS3 file that was parsed
+        name : str
+            name, ID of the document or file name of the input file
+        ns : str
+            the namespace of the document (default: rst)
         relations : dict of (str, str)
             dictionary containing all legal RST relations of that file,
             with relation names as keys (str) and relation types
@@ -54,10 +61,13 @@ class RSTGraph(DiscourseDocumentGraph):
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(RSTGraph, self).__init__()
+        if name is None:
+            self.name = os.path.basename(rs3_filepath)
+        self.ns = namespace
+
         utf8_parser = etree.XMLParser(encoding="utf-8")
         rs3_xml_tree = etree.parse(rs3_filepath, utf8_parser)
 
-        self.filename = os.path.basename(rs3_filepath)
         self.relations = extract_relationtypes(rs3_xml_tree)
         self.segments = []
         self.tokenized = False
@@ -82,8 +92,8 @@ class RSTGraph(DiscourseDocumentGraph):
         for segment in rst_xml_root.iterfind('./body/segment'):
             segment_node_id = int(segment.attrib['id'])
             self.add_node(segment_node_id,
-                          layers={'rst', 'rst:segment'},
-                          attr_dict={'rst:text':
+                          layers={self.ns, self.ns+':segment'},
+                          attr_dict={self.ns+':text':
                                      sanitize_string(segment.text)})
 
             self.segments.append(segment_node_id)
@@ -93,20 +103,20 @@ class RSTGraph(DiscourseDocumentGraph):
                 parent_node_id = int(segment.attrib['parent'])
                 if parent_node_id not in self:  # node not in graph, yet
                     self.add_node(parent_node_id,
-                                  layers={'rst', 'rst:segment'})
+                                  layers={self.ns, self.ns+':segment'})
                 self.add_edge(segment_node_id, parent_node_id,
-                              layers={'rst', 'rst:relation'},
+                              layers={self.ns, self.ns+':relation'},
                               relname=segment.attrib['relname'])
 
         for group in rst_xml_root.iterfind('./body/group'):
             group_node_id = int(group.attrib['id'])
             node_type = group.attrib['type']
             if group_node_id in self:  # group node already exists
-                self.node[group_node_id].update({'rst:reltype': node_type})
+                self.node[group_node_id].update({self.ns+':reltype': node_type})
             else:
                 self.add_node(group_node_id,
-                              layers={'rst', 'rst:segment'},
-                              attr_dict={'rst:reltype': node_type})
+                              layers={self.ns, self.ns+':segment'},
+                              attr_dict={self.ns+':reltype': node_type})
 
             if 'parent' in group.attrib:
                 # node has an outgoing edge, i.e. group is not the
@@ -114,14 +124,14 @@ class RSTGraph(DiscourseDocumentGraph):
                 parent_node_id = int(group.attrib['parent'])
                 if parent_node_id not in self:  # node not in graph, yet
                     self.add_node(parent_node_id,
-                                  layers={'rst', 'rst:segment'})
+                                  layers={self.ns, self.ns+':segment'})
                 self.add_edge(group_node_id, parent_node_id,
-                              layers={'rst', 'rst:relation'},
-                              attr_dict={'rst:relname':
+                              layers={self.ns, self.ns+':relation'},
+                              attr_dict={self.ns+':relname':
                                          group.attrib['relname']})
             else:  # group node is the root of an RST tree
                 existing_layers = self.node[group_node_id]['layers']
-                all_layers = existing_layers.union({'rst:root'})
+                all_layers = existing_layers.union({self.ns+':root'})
                 self.node[group_node_id].update({'layers': all_layers})
 
     def __str__(self):
@@ -129,7 +139,7 @@ class RSTGraph(DiscourseDocumentGraph):
         string representation of an RSTGraph (contains filename,
         allowed relations and tokenization status).
         """
-        ret_str = 'filename: {}\n'.format(self.filename)
+        ret_str = '(file) name: {}\n'.format(self.name)
         ret_str += 'number of segments: {}\n'.format(len(self.segments))
         ret_str += 'is tokenized: {}\n'.format(self.tokenized)
         ret_str += 'allowed relations: {}\n'.format(self.relations)
@@ -188,7 +198,7 @@ def rst_tokenlist(rst_graph):
     for segment_id in rst_graph.segments:
         segment_tokens = \
             [(token, segment_id)
-                for token in rst_graph.node[segment_id]['rst:text'].split()]
+                for token in rst_graph.node[segment_id][rst_graph.ns+':text'].split()]
         all_rst_tokens.extend(segment_tokens)
     return all_rst_tokens
 
