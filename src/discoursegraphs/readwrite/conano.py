@@ -27,6 +27,8 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
 
     Attributes
     ----------
+    ns : str
+        the namespace of the graph (default: conano)
     tokens : list of int
         a list of node IDs (int) which represent the tokens in the
         order they occur in the text
@@ -34,8 +36,8 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         name of the document root node ID
         (default: 'conano:root_node')
     """
-    def __init__(self, conano_filepath, name=None, check_validity=True,
-                 precedence=True, connected=False):
+    def __init__(self, conano_filepath, name=None, namespace='conano',
+                 check_validity=True, precedence=True, connected=False):
         """
         reads a Conano XML file and converts it into a multidigraph.
 
@@ -46,6 +48,8 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         name : str or None
             the name or ID of the graph to be generated. If no name is
             given, the basename of the input file is used.
+        namespace : str
+            the namespace of the graph (default: conano)
         check_validity : bool
             checks, if the tokenization in the graph matches the one in
             the Conano file (converted to plain text)
@@ -62,7 +66,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
 
         if name is not None:
             self.name = os.path.basename(conano_filepath)
-        self.ns = 'conano'
+        self.ns = namespace
         self.root = self.ns+':root_node'
         self.add_node(self.root, layers={self.ns})
         self.tokens = []
