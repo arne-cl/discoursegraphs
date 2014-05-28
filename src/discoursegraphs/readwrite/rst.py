@@ -22,6 +22,30 @@ class RSTGraph(DiscourseDocumentGraph):
     A directed graph with multiple edges (based on a networkx
     MultiDiGraph) that represents the rhetorical structure of a
     document.
+
+    TODO: add root node w/ namespace to graph (set it when self.ns+':root'
+          group node is found)
+
+    Attributes
+    ----------
+    name : str
+        name, ID of the document or file name of the input file
+    ns : str
+        the namespace of the document (default: rst)
+    relations : dict of (str, str)
+        dictionary containing all legal RST relations of that file,
+        with relation names as keys (str) and relation types
+        (either 'rst' or 'multinuc') as values (str).
+    segments : list of str
+        list of segment node IDs (i.e. leaf nodes in a RST
+        tree that represent segments of text).
+    root : str
+        name of the document root node ID
+    tokenized : bool
+        False, if the segments represent untokenized text (default).
+        True, if the segments have been tokenized (after they were
+        imported from an RS3 file) and have outgoing edges to nodes
+        representing tokens.
     """
 
     def __init__(self, rs3_filepath, name=None, namespace='rst'):
@@ -39,31 +63,13 @@ class RSTGraph(DiscourseDocumentGraph):
             given, the basename of the input file is used.
         namespace : str
             the namespace of the document (default: rst)
-
-        Attributes
-        ----------
-        name : str
-            name, ID of the document or file name of the input file
-        ns : str
-            the namespace of the document (default: rst)
-        relations : dict of (str, str)
-            dictionary containing all legal RST relations of that file,
-            with relation names as keys (str) and relation types
-            (either 'rst' or 'multinuc') as values (str).
-        segments : list of str
-            list of segment node IDs (i.e. leaf nodes in a RST
-            tree that represent segments of text).
-        tokenized : bool
-            False, if the segments represent untokenized text (default).
-            True, if the segments have been tokenized (after they were
-            imported from an RS3 file) and have outgoing edges to nodes
-            representing tokens.
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(RSTGraph, self).__init__()
         if name is None:
             self.name = os.path.basename(rs3_filepath)
         self.ns = namespace
+        self.root = None # __rst2graph() will find/set the root node
 
         utf8_parser = etree.XMLParser(encoding="utf-8")
         rs3_xml_tree = etree.parse(rs3_filepath, utf8_parser)
@@ -130,6 +136,7 @@ class RSTGraph(DiscourseDocumentGraph):
                               attr_dict={self.ns+':relname':
                                          group.attrib['relname']})
             else:  # group node is the root of an RST tree
+                self.root = group_node_id
                 existing_layers = self.node[group_node_id]['layers']
                 all_layers = existing_layers.union({self.ns+':root'})
                 self.node[group_node_id].update({'layers': all_layers})
