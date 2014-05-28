@@ -34,16 +34,22 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
     sentences : list of str
         sorted list of all sentence root node IDs (of sentences
         contained in this document graph)
+    tokens : list of str
+        sorted list of all token node IDs contained in this document graph
 
-
-    The attribute dict of each sentence root node contains a key
-    ``tokens``, which maps to a sorted list of token node IDs (str). To
-    print all tokens of a Tiger document, just do::
+    To print all tokens of a Tiger document, just do::
 
         tdg = TigerDocumentGraph('/path/to/tiger.file')
-        for sentence_root_node in tdg.sentences:
-            for token_node_id in tdg.node[sentence_root_node]['tokens']:
-                print tdg.node[token_node_id]['tiger:word']
+        for token_id in tdg.tokens:
+            print tdg.node[token_id]['tiger:word']
+
+    If you want to access the tokens of a specific sentence, use::
+
+        tdg = TigerDocumentGraph('/path/to/tiger.file')
+        for sent_id in tdg.sentences:
+            print sent_id
+            for token_id in tdg.node[sent_id]['tokens']:
+                print tdg.node[token_id]['tiger:word']
     """
 
     def __init__(self, tiger_filepath, name=None):
@@ -74,6 +80,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         self.root = 'tiger:root_node'
         self.add_node(self.root, layers={'tiger'})
 
+        self.tokens = []
         self.sentences = []
         for sentence in tigerxml_root.iterfind('./body/s'):
             self.__add_sentence_to_document(sentence)
@@ -93,6 +100,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
             a sentence from a TigerXML file in etree element format
         """
         sentence_graph = TigerSentenceGraph(sentence)
+        self.tokens.extend(sentence_graph.tokens)
         sentence_root_node_id = sentence_graph.root
 
         self.add_nodes_from(sentence_graph.nodes(data=True))
@@ -116,7 +124,6 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
     tokens : list of str
         a sorted list of terminal node IDs (i.e. token nodes)
     """
-
     def __init__(self, sentence):
         """
         Creates a directed graph from a syntax annotated sentence (i.e.
@@ -132,6 +139,8 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(TigerSentenceGraph, self).__init__()
+
+        self.tokens = []
 
         graph_element = sentence.find('./graph')
         sentence_root_id = graph_element.attrib['root']
@@ -155,7 +164,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         Reads a sentence with syntax annotation (parsed from a TigerXML
         file) into this directed graph. Adds an attribute named 'tokens'
         to the sentence root node containing a sorted list of token node
-        IDs.
+        IDs. (The same list is also stored in ``self.tokens``).
 
         Parameters
         ----------
@@ -184,9 +193,10 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                               edge_type='points_to')
 
         # add sorted list of all token node IDs to sentence root node
-        # for performance reasons
+        # to make queries simpler/faster
         sorted_token_ids = sorted(token_ids, key=natural_sort_key)
         self.node[self.root].update({'tokens': sorted_token_ids})
+        self.tokens = sorted_token_ids
 
         # add nonterminals to graph
         for nt in sentence.iterfind('./graph/nonterminals/nt'):
