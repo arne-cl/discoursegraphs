@@ -191,7 +191,8 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
             terminal_features[self.ns+':word'] = ensure_unicode(
                 terminal_features[self.ns+':word'])
             self.add_node(terminal_id, layers={self.ns, self.ns+':token'},
-                          attr_dict=terminal_features)
+                          attr_dict=terminal_features,
+                          label=terminal_features[self.ns+':word'])
             for secedge in t.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
                 secedge_attribs = add_prefix(secedge.attrib, self.ns+':')
@@ -212,6 +213,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         for nt in sentence.iterfind('./graph/nonterminals/nt'):
             from_id = nt.attrib['id']
             nt_feats = add_prefix(nt.attrib, self.ns+':')
+            nt_feats['label'] = nt_feats[self.ns+':cat']
             if from_id in self:  # root node already exists,
                                 # but doesn't have a cat value
                 self.node[from_id].update(nt_feats)
@@ -228,6 +230,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                 self.add_edge(from_id, to_id,
                               layers={self.ns, self.ns+':edge'},
                               attr_dict=edge_attribs,
+                              label=edge_attribs[self.ns+':label'],
                               edge_type='dominates')
 
             # add secondary edges to graph (pointing relations)
@@ -239,6 +242,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                 self.add_edge(from_id, to_id,
                               layers={self.ns, self.ns+':secedge'},
                               attr_dict=secedge_attribs,
+                              label=edge_attribs[self.ns+':label'],
                               edge_type='points_to')
 
     def __add_vroot(self, sentence_root_id, sentence_attributes):
