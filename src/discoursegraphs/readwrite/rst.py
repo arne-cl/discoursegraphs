@@ -23,9 +23,6 @@ class RSTGraph(DiscourseDocumentGraph):
     MultiDiGraph) that represents the rhetorical structure of a
     document.
 
-    TODO: add root node w/ namespace to graph (set it when self.ns+':root'
-          group node is found)
-
     Attributes
     ----------
     name : str
