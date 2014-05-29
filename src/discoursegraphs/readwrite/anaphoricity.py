@@ -48,7 +48,8 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         (default: self.ns+':root_node')
     """
 
-    def __init__(self, anaphora_filepath, name=None, namespace='anaphoricity'):
+    def __init__(self, anaphora_filepath, name=None, namespace='anaphoricity',
+                 connected=False):
         """
         Reads an abstract anaphora annotation file, creates a directed
         graph and adds a node for each token, as well as an edge from
@@ -77,6 +78,9 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
             given, the basename of the input file is used.
         namespace : str
             the namespace of the graph (default: anaphoricity)
+        connected : bool
+            Make the graph connected, i.e. add an edge from root to each
+            token (default: False).
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(AnaphoraDocumentGraph, self).__init__()
@@ -92,10 +96,10 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
             tokens = list(chain.from_iterable(line.split()
                                               for line in annotated_lines))
             for i, token in enumerate(tokens):
-                self.__add_token_to_document(token, i)
+                self.__add_token_to_document(token, i, connected)
                 self.tokens.append(i)
 
-    def __add_token_to_document(self, token, token_id):
+    def __add_token_to_document(self, token, token_id, connected):
         """
         adds a token to the document graph as a node with the given ID.
 
@@ -106,6 +110,8 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         token_id : int
             the node ID of the token to be added, which must not yet
             exist in the document graph
+        connected : bool
+            Make the graph connected, i.e. add an edge from root this token.
         """
         regex_match = ANNOTATED_ANAPHORA_REGEX.search(token)
         if regex_match:  # token is annotated
@@ -118,15 +124,18 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
                 attr_dict={
                     self.ns+':annotation': ANNOTATION_TYPES[annotation],
                     self.ns+':certainty': certainty,
-                    self.ns+':token': ensure_unicode(unannotated_token)})
+                    self.ns+':token': ensure_unicode(unannotated_token),
+                    'label': ensure_unicode(unannotated_token)+'_'+ANNOTATION_TYPES[annotation]})
         else:  # token is not annotated
             self.add_node(
                 token_id,
                 layers={self.ns, self.ns+':token'},
-                attr_dict={self.ns+':token': ensure_unicode(token)})
+                attr_dict={self.ns+':token': ensure_unicode(token),
+                           'label': ensure_unicode(token)})
 
-        self.add_edge(self.root, token_id,
-                      layers={self.ns, self.ns+':token'})
+        if connected:
+            self.add_edge(self.root, token_id,
+                          layers={self.ns, self.ns+':token'})
 
 
 if __name__ == '__main__':
