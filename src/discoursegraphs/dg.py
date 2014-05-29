@@ -427,10 +427,16 @@ class DiscourseDocumentGraph(MultiDiGraph):
             self.add_edge(u, v, layers=all_layers, key=key,
                           attr_dict=updated_attrs)
 
-    def get_tokens(self):
+    def get_tokens(self, token_attrib='token'):
         """
         returns a list of (token node ID, token) which represent the tokens
         of the input document (in the order they occur).
+
+        Parameters
+        ----------
+        token_attrib : str
+            name of the node attribute that contains the token string as its
+            value (default: token).
 
         Returns
         -------
@@ -438,4 +444,4 @@ class DiscourseDocumentGraph(MultiDiGraph):
             a (token node ID, token string) tuple
         """
         for token_id in self.tokens:
-            yield (token_id, self.node[token_id][self.ns+':token'])
+            yield (token_id, self.node[token_id][self.ns+':'+token_attrib])
