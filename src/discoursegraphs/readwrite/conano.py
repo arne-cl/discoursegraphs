@@ -37,7 +37,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         (default: 'conano:root_node')
     """
     def __init__(self, conano_filepath, name=None, namespace='conano',
-                 check_validity=True, precedence=True, connected=False):
+                 check_validity=True, precedence=False, connected=False):
         """
         reads a Conano XML file and converts it into a multidigraph.
 
@@ -114,10 +114,9 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
 
         # add a unit, int/ext sub-unit and connective node for each unit found
         for unit_id in unit_ids:
-            for node_id in ('unit', 'int', 'ext', 'connective'):
-                self.add_node(
-                    '{0}-{1}'.format(node_id, unit_id),
-                    layers={self.ns, self.ns+':unit'})
+            for node_type in ('unit', 'int', 'ext', 'connective'):
+                node_id = '{0}-{1}'.format(node_type, unit_id)
+                self.add_node(node_id, layers={self.ns, self.ns+':unit'})
 
             # edge from root to unit
             self.add_edge(self.root, 'unit-{}'.format(unit_id),
