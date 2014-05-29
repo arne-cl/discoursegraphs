@@ -429,8 +429,13 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
     def get_tokens(self):
         """
-        returns the plain text of the document graph as a generator of a
-        sorted list of unicode tokens)
+        returns a list of (token node ID, token) which represent the tokens
+        of the input document (in the order they occur).
+
+        Returns
+        -------
+        tuples : generator of (str, unicode)
+            a (token node ID, token string) tuple
         """
         for token_id in self.tokens:
-            yield self.node[token_id][self.ns+':token']
+            yield (token_id, self.node[token_id][self.ns+':token'])
