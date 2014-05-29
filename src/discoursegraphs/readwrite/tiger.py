@@ -78,6 +78,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
 
         if name is not None:
             self.name = os.path.basename(tiger_filepath)
+        self.ns = namespace
         self.corpus_id = tigerxml_root.attrib['id']
 
         # add root node of TigerDocumentGraph
@@ -103,7 +104,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         sentence : lxml.etree._Element
             a sentence from a TigerXML file in etree element format
         """
-        sentence_graph = TigerSentenceGraph(sentence)
+        sentence_graph = TigerSentenceGraph(sentence, self.ns)
         self.tokens.extend(sentence_graph.tokens)
         sentence_root_node_id = sentence_graph.root
 
@@ -123,12 +124,14 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
 
     Attributes
     ----------
+    ns : str
+        the namespace of the graph (default: tiger)
     root : str
         node ID of the root node of the sentence
     tokens : list of str
         a sorted list of terminal node IDs (i.e. token nodes)
     """
-    def __init__(self, sentence):
+    def __init__(self, sentence, namespace):
         """
         Creates a directed graph from a syntax annotated sentence (i.e.
         a <s> element from a TigerXML file parsed into an lxml etree
@@ -140,9 +143,12 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         ----------
         sentence : lxml.etree._Element
             a sentence from a TigerXML file in etree element format
+        namespace : str
+            the namespace of the graph (default: tiger)
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(TigerSentenceGraph, self).__init__()
+        self.ns = namespace
 
         self.tokens = []
 
