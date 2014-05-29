@@ -426,3 +426,11 @@ class DiscourseDocumentGraph(MultiDiGraph):
             # add_edge() checks if u and v exist, so we don't need to
             self.add_edge(u, v, layers=all_layers, key=key,
                           attr_dict=updated_attrs)
+
+    def get_tokens(self):
+        """
+        returns the plain text of the document graph as a generator of a
+        sorted list of unicode tokens)
+        """
+        for token_id in self.tokens:
+            yield self.node[token_id][self.ns+':token']
