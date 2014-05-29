@@ -100,7 +100,8 @@ class RSTGraph(DiscourseDocumentGraph):
             self.add_node(segment_node_id,
                           layers={self.ns, self.ns+':segment'},
                           attr_dict={self.ns+':text':
-                                     sanitize_string(segment.text)})
+                                     sanitize_string(segment.text)},
+                          label='{0}:segment:{1}'.format(self.ns, segment.attrib['id']))
 
             self.segments.append(segment_node_id)
             if 'parent' in segment.attrib:
@@ -112,17 +113,20 @@ class RSTGraph(DiscourseDocumentGraph):
                                   layers={self.ns, self.ns+':segment'})
                 self.add_edge(segment_node_id, parent_node_id,
                               layers={self.ns, self.ns+':relation'},
-                              relname=segment.attrib['relname'])
+                              relname=self.ns+':'+segment.attrib['relname'],
+                              label=self.ns+':'+segment.attrib['relname'])
 
         for group in rst_xml_root.iterfind('./body/group'):
             group_node_id = int(group.attrib['id'])
             node_type = group.attrib['type']
             if group_node_id in self:  # group node already exists
-                self.node[group_node_id].update({self.ns+':reltype': node_type})
+                self.node[group_node_id].update({self.ns+':reltype': node_type,
+                                                 'label': self.ns+':'+node_type})
             else:
                 self.add_node(group_node_id,
                               layers={self.ns, self.ns+':segment'},
-                              attr_dict={self.ns+':reltype': node_type})
+                              attr_dict={self.ns+':reltype': node_type,
+                                         'label': self.ns+':'+node_type})
 
             if 'parent' in group.attrib:
                 # node has an outgoing edge, i.e. group is not the
@@ -130,16 +134,19 @@ class RSTGraph(DiscourseDocumentGraph):
                 parent_node_id = int(group.attrib['parent'])
                 if parent_node_id not in self:  # node not in graph, yet
                     self.add_node(parent_node_id,
-                                  layers={self.ns, self.ns+':segment'})
+                                  layers={self.ns, self.ns+':segment'},
+                                  label='{0}:{1}'.format(self.ns, parent_node_id))
                 self.add_edge(group_node_id, parent_node_id,
                               layers={self.ns, self.ns+':relation'},
                               attr_dict={self.ns+':relname':
-                                         group.attrib['relname']})
+                                         group.attrib['relname'],
+                                         'label': self.ns+':'+group.attrib['relname']})
             else:  # group node is the root of an RST tree
                 self.root = group_node_id
                 existing_layers = self.node[group_node_id]['layers']
                 all_layers = existing_layers.union({self.ns+':root'})
-                self.node[group_node_id].update({'layers': all_layers})
+                self.node[group_node_id].update({'layers': all_layers,
+                                                 'label': self.ns+':root'})
 
     def __tokenize_segments(self):
         """
