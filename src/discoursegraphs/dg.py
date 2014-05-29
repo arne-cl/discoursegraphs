@@ -10,6 +10,7 @@ structure used in this package. It is a slightly modified
 """
 
 from networkx import MultiDiGraph
+from discoursegraphs.relabel import relabel_nodes
 
 
 class DiscourseDocumentGraph(MultiDiGraph):
@@ -445,3 +446,31 @@ class DiscourseDocumentGraph(MultiDiGraph):
         """
         for token_id in self.tokens:
             yield (token_id, self.node[token_id][self.ns+':'+token_attrib])
+
+    def merge_graphs(self, document_graph):
+        """
+        Merges this graph with another document graph, thereby adding all the
+        necessary nodes and edges (with attributes, layers etc.) to this one.
+
+        NOTE: This will only work if both graphs have exactly the same
+        tokenization.
+        """
+        if self.ns == 'tiger': # TODO: add 'tiger:token' attrib to Tiger importer
+            local_tokens = self.get_tokens(token_attrib='word')
+        else:
+            local_tokens = self.get_tokens()
+
+        remote_tokens = list(document_graph.get_tokens())
+
+        remote2local = {}
+        for i, (local_tok_id, local_tok) in enumerate(local_tokens):
+            remote_tok_id, remote_tok = remote_tokens[i]
+            if local_tok != remote_tok: # token mismatch
+                raise ValueError("Tokenization mismatch between:\n"
+                                 "{0}\n{1}".format(self, document_graph))
+            else:
+                remote2local[remote_tok_id] = local_tok_id
+
+        relabel_nodes(document_graph, remote2local, copy=False)
+        self.add_nodes_from(document_graph.nodes(data=True))
+        self.add_edges_from(document_graph.edges(data=True))
