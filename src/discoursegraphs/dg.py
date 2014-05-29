@@ -466,8 +466,11 @@ class DiscourseDocumentGraph(MultiDiGraph):
         for i, (local_tok_id, local_tok) in enumerate(local_tokens):
             remote_tok_id, remote_tok = remote_tokens[i]
             if local_tok != remote_tok: # token mismatch
-                raise ValueError("Tokenization mismatch between:\n"
-                                 "{0}\n{1}".format(self, document_graph))
+                raise ValueError(
+                    u"Tokenization mismatch: {0} ({1}) vs. {2} ({3})\n"
+                    "\t{4} != {5}".format(
+                        self.name, self.ns, document_graph.name,
+                        document_graph.ns, local_tok, remote_tok))
             else:
                 remote2local[remote_tok_id] = local_tok_id
 
