@@ -38,11 +38,13 @@ class RSTGraph(DiscourseDocumentGraph):
         tree that represent segments of text).
     root : str
         name of the document root node ID
+    tokens : list of str
+        sorted list of all token node IDs contained in this document graph
     tokenized : bool
-        False, if the segments represent untokenized text (default).
-        True, if the segments have been tokenized (after they were
+        True (default), if the segments have been tokenized (after they were
         imported from an RS3 file) and have outgoing edges to nodes
         representing tokens.
+        False, if the segments represent untokenized text.
     """
 
     def __init__(self, rs3_filepath, name=None, namespace='rst'):
