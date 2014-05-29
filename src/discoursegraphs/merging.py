@@ -138,7 +138,7 @@ def merging_cli():
     parser.add_argument('-a', '--anaphoricity-file',
                         help='anaphoricity file to be merged')
     parser.add_argument('-c', '--conano-file',
-                        help='conano file to be merged')        
+                        help='conano file to be merged')
     parser.add_argument('-o', '--output-format',
                         default='dot',
                         help='output format: dot, geoff, neo4j, no-output')
