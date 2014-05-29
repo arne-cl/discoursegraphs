@@ -64,7 +64,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         # super calls __init__() of base class DiscourseDocumentGraph
         super(DiscourseDocumentGraph, self).__init__()
 
-        if name is not None:
+        if name is None:
             self.name = os.path.basename(conano_filepath)
         self.ns = namespace
         self.root = self.ns+':root_node'
