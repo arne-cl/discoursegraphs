@@ -374,31 +374,5 @@ def add_prefix(dict_like, prefix):
     return {prefix + k: v for (k, v) in dict_like.items()}
 
 
-def tiger_tokenlist(tdgraph):
-    """
-    extracts all tokens from a TigerDocumentGraph.
-
-    Parameters
-    ----------
-    tdgraph : TigerDocumentGraph
-        a directed graph representing a TigerXML file and all the
-        annotated sentences found in it.
-
-    Returns
-    -------
-    all_tiger_tokens : tuple of (unicode, str, str)
-        a list of (unicode, str, str) tuples, where the first element
-        is the token, the second is the sentence root node ID (of the)
-        corresponding sentence and the third is the token node ID.
-    """
-    all_tiger_tokens = []
-    for sent_id in tdgraph.sentences:
-        tiger_sent_tokens = \
-            [(tdgraph.node[token_id][self.ns+':word'], sent_id, token_id)
-                for token_id in tdgraph.node[sent_id]['tokens']]
-        all_tiger_tokens.extend(tiger_sent_tokens)
-    return all_tiger_tokens
-
-
 if __name__ == '__main__':
     generic_converter_cli(TigerDocumentGraph, 'TigerXML (syntax)')

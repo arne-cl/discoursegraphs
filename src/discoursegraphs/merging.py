@@ -15,8 +15,8 @@ from networkx import write_dot
 
 from discoursegraphs.relabel import relabel_nodes
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
-from discoursegraphs.readwrite.rst import RSTGraph, rst_tokenlist
-from discoursegraphs.readwrite.tiger import TigerDocumentGraph, tiger_tokenlist
+from discoursegraphs.readwrite.rst import RSTGraph
+from discoursegraphs.readwrite.tiger import TigerDocumentGraph
 from discoursegraphs.readwrite.conano import ConanoDocumentGraph
 from discoursegraphs.readwrite.neo4j import convert_to_geoff, upload_to_neo4j
 
@@ -33,22 +33,22 @@ def add_rst_to_tiger(tiger_docgraph, rst_graph):
     rst_graph : RSTGraph
         multidigraph representing a RST annotated (RS3) document
     """
-    tiger_tokens = tiger_tokenlist(tiger_docgraph)
-    rst_tokens = rst_tokenlist(rst_graph)
+    tiger_tokens = tiger_docgraph.get_tokens(token_attrib='word')
+    rst_tokens = list(rst_graph.get_tokens())
 
+    rst2tiger = {}
+    for i, (tiger_tok_id, tiger_tok) in enumerate(tiger_tokens):
+        rst_token_id, rst_token = rst_tokens[i]
+        if tiger_tok != rst_token: # token mismatch
+            raise ValueError("Tokenization mismatch between:\n"
+                             "{0}\n{1}".format(tiger_docgraph, rst_graph))
+        else:
+            rst2tiger[rst_token_id] = tiger_tok_id
+
+    relabel_nodes(rst_graph, rst2tiger, copy=False)
     tiger_docgraph.add_nodes_from(rst_graph.nodes(data=True))
     tiger_docgraph.add_edges_from(rst_graph.edges(data=True))
 
-    for i, (tiger_tok, tiger_sent_id, tiger_tok_id) in enumerate(tiger_tokens):
-        rst_token, rst_segment_node_id = rst_tokens[i]
-        if tiger_tok == rst_token:
-            tiger_docgraph.add_node(tiger_tok_id, layers={'rst', 'rst:token'},
-                                    attr_dict={'rst:token': rst_token})
-            tiger_docgraph.add_edge(int(rst_segment_node_id), tiger_tok_id,
-                                    layers={'rst', 'rst:token'})
-        else:  # token mismatch
-            raise ValueError("Tokenization mismatch between:\n"
-                             "{0}\n{1}".format(tiger_docgraph, rst_graph))
 
 
 def add_conano_to_tiger(tiger_docgraph, conano_graph):
@@ -79,13 +79,13 @@ def map_anaphoricity_tokens_to_tiger(tiger_docgraph, anaphora_graph):
         IDs (str, e.g. 's23_5')
     """
     # list of (token unicode, tiger_sent_id str, tiger_token_id str)
-    tiger_tokens = tiger_tokenlist(tiger_docgraph)
+    tiger_tokens = list(tiger_docgraph.get_tokens(token_attrib='word'))
 
     anaphora2tiger = {}
     for i, anaphora_node_id in enumerate(anaphora_graph.tokens):
         anaphora_token = anaphora_graph.node[
             anaphora_node_id]['anaphoricity:token']
-        tiger_token, tiger_sent_id, tiger_token_id = tiger_tokens[i]
+        tiger_token_id, tiger_token = tiger_tokens[i]
 
         if anaphora_token == tiger_token:
             anaphora2tiger[anaphora_node_id] = tiger_token_id

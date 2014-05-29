@@ -186,29 +186,5 @@ def sanitize_string(string_or_unicode):
         return string_or_unicode.decode('utf-8').strip()
 
 
-def rst_tokenlist(rst_graph):
-    """
-    extracts all tokens from an RSTGraph.
-
-    Parameters
-    ----------
-    rst_graph : RSTGraph
-        a directed graph representing an RST tree
-
-    Returns
-    -------
-    all_rst_tokens : tuple of (unicode, str)
-        a list of (str, str) tuples, where the first element is the token
-        and the second one is the segment node ID it belongs to.
-    """
-    all_rst_tokens = []
-    for segment_id in rst_graph.segments:
-        segment_tokens = \
-            [(token, segment_id)
-                for token in rst_graph.node[segment_id][rst_graph.ns+':text'].split()]
-        all_rst_tokens.extend(segment_tokens)
-    return all_rst_tokens
-
-
 if __name__ == '__main__':
     generic_converter_cli(RSTGraph, 'RST (rhetorical structure)')
