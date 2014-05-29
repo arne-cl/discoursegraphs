@@ -21,107 +21,6 @@ from discoursegraphs.readwrite.conano import ConanoDocumentGraph
 from discoursegraphs.readwrite.neo4j import convert_to_geoff, upload_to_neo4j
 
 
-def add_rst_to_tiger(tiger_docgraph, rst_graph):
-    """
-    adds an RSTGraph to a TigerDocumentGraph, thereby adding edges from
-    each RST segment to the (Tiger) tokens they represent.
-
-    Parameters
-    ----------
-    tiger_docgraph : TigerDocumentGraph
-        multidigraph representing a syntax annotated (TigerXML) document
-    rst_graph : RSTGraph
-        multidigraph representing a RST annotated (RS3) document
-    """
-    tiger_tokens = tiger_docgraph.get_tokens(token_attrib='word')
-    rst_tokens = list(rst_graph.get_tokens())
-
-    rst2tiger = {}
-    for i, (tiger_tok_id, tiger_tok) in enumerate(tiger_tokens):
-        rst_token_id, rst_token = rst_tokens[i]
-        if tiger_tok != rst_token: # token mismatch
-            raise ValueError("Tokenization mismatch between:\n"
-                             "{0}\n{1}".format(tiger_docgraph, rst_graph))
-        else:
-            rst2tiger[rst_token_id] = tiger_tok_id
-
-    relabel_nodes(rst_graph, rst2tiger, copy=False)
-    tiger_docgraph.add_nodes_from(rst_graph.nodes(data=True))
-    tiger_docgraph.add_edges_from(rst_graph.edges(data=True))
-
-
-
-def add_conano_to_tiger(tiger_docgraph, conano_graph):
-    """
-    TODO: implement function
-    TODO: simplify Tiger doc graph (i.e. add `self.tokens`)
-    """
-    raise NotImplementedError
-
-
-def map_anaphoricity_tokens_to_tiger(tiger_docgraph, anaphora_graph):
-    """
-    creates a map from anaphoricity token node IDs to tiger token node
-    IDs.
-
-    Parameters
-    ----------
-    tiger_docgraph : TigerDocumentGraph
-        multidigraph representing a syntax annotated (TigerXML) document
-    anaphora_graph : AnaphoraDocumentGraph
-        multidigraph representing a anaphorcity annotated document
-        (ad-hoc format used in Christian Dittrich's diploma thesis)
-
-    Returns
-    -------
-    anaphora2tiger : dict
-        map from anaphoricity token node IDs (int) to tiger token node
-        IDs (str, e.g. 's23_5')
-    """
-    # list of (token unicode, tiger_sent_id str, tiger_token_id str)
-    tiger_tokens = list(tiger_docgraph.get_tokens(token_attrib='word'))
-
-    anaphora2tiger = {}
-    for i, anaphora_node_id in enumerate(anaphora_graph.tokens):
-        anaphora_token = anaphora_graph.node[
-            anaphora_node_id]['anaphoricity:token']
-        tiger_token_id, tiger_token = tiger_tokens[i]
-
-        if anaphora_token == tiger_token:
-            anaphora2tiger[anaphora_node_id] = tiger_token_id
-        else:
-            raise ValueError(
-                (u"tokens don't match: {0} (anaphoricity) vs. "
-                 "{1} (tiger)".format(anaphora_token, tiger_token)))
-    return anaphora2tiger
-
-
-def add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph):
-    """
-    adds an AnaphoraDocumentGraph to a TigerDocumentGraph, thereby
-    adding information about the anaphoricity of words
-    (e.g. 'das', 'es') to the respective (Tiger) tokens.
-
-    Parameters
-    ----------
-    tiger_docgraph : TigerDocumentGraph
-        multidigraph representing a syntax annotated (TigerXML) document
-    anaphora_graph : AnaphoraDocumentGraph
-        multidigraph representing a anaphorcity annotated document
-        (ad-hoc format used in Christian Dittrich's diploma thesis)
-    """
-    anaphora2tiger = map_anaphoricity_tokens_to_tiger(
-        tiger_docgraph, anaphora_graph)
-    relabel_nodes(anaphora_graph, anaphora2tiger, copy=False)
-    tiger_docgraph.add_nodes_from(anaphora_graph.nodes(data=True))
-    # the anaphora doc graph only contains trivial edges from its root
-    # node. we won't add them and will remove the root.
-    try:
-        tiger_docgraph.remove_node('anaphoricity:root_node')
-    except:
-        pass
-
-
 def merging_cli():
     """
     simple commandline interface of the merging module.
@@ -159,15 +58,22 @@ def merging_cli():
 
     if args.rst_file:
         rst_graph = RSTGraph(args.rst_file)
-        add_rst_to_tiger(tiger_docgraph, rst_graph)
+        tiger_docgraph.merge_graphs(rst_graph)
 
     if args.anaphoricity_file:
         anaphora_graph = AnaphoraDocumentGraph(args.anaphoricity_file)
-        add_anaphoricity_to_tiger(tiger_docgraph, anaphora_graph)
+        tiger_docgraph.merge_graphs(anaphora_graph)
+        # the anaphora doc graph only contains trivial edges from its root
+        # node.
+        try:
+            tiger_docgraph.remove_node('anaphoricity:root_node')
+        except:
+            pass
+
 
     if args.conano_file:
         conano_graph = ConanoDocumentGraph(args.conano_file)
-        add_conano_to_tiger(tiger_docgraph, conano_graph)
+        tiger_docgraph.merge_graphs(conano_graph)
 
     if args.output_format == 'dot':
         write_dot(tiger_docgraph, args.output_file)
