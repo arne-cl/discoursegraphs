@@ -77,8 +77,11 @@ class RSTGraph(DiscourseDocumentGraph):
         self.relations = extract_relationtypes(rs3_xml_tree)
         self.segments = []
         self.tokenized = False
+        self.tokens = []
 
         self.__rst2graph(rs3_xml_tree)
+        self.__tokenize_segments()
+        self.tokenized = True
 
     def __rst2graph(self, rs3_xml_tree):
         """
@@ -140,6 +143,25 @@ class RSTGraph(DiscourseDocumentGraph):
                 existing_layers = self.node[group_node_id]['layers']
                 all_layers = existing_layers.union({self.ns+':root'})
                 self.node[group_node_id].update({'layers': all_layers})
+
+    def __tokenize_segments(self):
+        """
+        tokenizes every RS3 segment (i.e. an RST nucleus or satellite).
+        for each token, a node is added to the graph, as well as an edge from
+        the segment node to the token node. the token node IDs are also added
+        to ``self.tokens``.
+        """
+        for segment_node_id in self.segments:
+            segment_tokens = self.node[segment_node_id][self.ns+':text'].split()
+            for i, token in enumerate(segment_tokens):
+                token_node_id = '{0}:{1}_{2}'.format(self.ns, segment_node_id, i)
+                self.add_node(token_node_id, layers={self.ns, self.ns+':token'},
+                              attr_dict={self.ns+':token': token,
+                                         'label': token})
+                self.tokens.append(token_node_id)
+                self.add_edge(segment_node_id, token_node_id,
+                                        layers={'rst', 'rst:token'})
+
 
     def __str__(self):
         """
