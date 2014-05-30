@@ -455,7 +455,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
         NOTE: This will only work if both graphs have exactly the same
         tokenization.
         """
-        if self.ns == 'tiger': # TODO: add 'tiger:token' attrib to Tiger importer
+        # TODO: add 'tiger:token' attrib to Tiger importer
+        if self.ns == 'tiger':
             local_tokens = self.get_tokens(token_attrib='word')
         else:
             local_tokens = self.get_tokens()
@@ -465,7 +466,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
         remote2local = {}
         for i, (local_tok_id, local_tok) in enumerate(local_tokens):
             remote_tok_id, remote_tok = remote_tokens[i]
-            if local_tok != remote_tok: # token mismatch
+            if local_tok != remote_tok:  # token mismatch
                 raise ValueError(
                     u"Tokenization mismatch: {0} ({1}) vs. {2} ({3})\n"
                     "\t{4} != {5}".format(
