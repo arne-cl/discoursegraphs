@@ -13,7 +13,6 @@ import sys
 import argparse
 from networkx import write_dot
 
-from discoursegraphs.relabel import relabel_nodes
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
 from discoursegraphs.readwrite.rst import RSTGraph
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph
@@ -69,7 +68,6 @@ def merging_cli():
             tiger_docgraph.remove_node('anaphoricity:root_node')
         except:
             pass
-
 
     if args.conano_file:
         conano_graph = ConanoDocumentGraph(args.conano_file)
