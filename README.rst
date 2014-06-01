@@ -28,11 +28,13 @@ So far, the following formats can be imported and merged:
   secondary edges)
 * RS3 (a format used by `RSTTool`_ to
   annotate documents with Rhetorical Structure Theory)
+* ConanoXML (a format for annotating connectives, used by `Conano`_)
 * an ad-hoc plain text format for annotating expletives (you're probably not
   interested in)
 
 .. _`TigerXML`: http://www.ims.uni-stuttgart.de/forschung/ressourcen/werkzeuge/TIGERSearch/doc/html/TigerXML.html
 .. _`RSTTool`: http://www.wagsoft.com/RSTTool/
+.. _`Conano`: http://www.ling.uni-potsdam.de/acl-lab/Forsch/pcc/pcc.html
 
 
 Installation
@@ -65,13 +67,21 @@ Install from source
 Usage
 -----
 
-Right now, there's only a primitive command line interface that will
-merge the syntax, RST and expletive annotation layers into one
-graph and generates a dot file from it.
+The command line interface of DiscourseGraphs allows you to
+merge syntax, rhetorical structure, connectives and expletives
+annotation files into one graph and either uploads it to a running
+instance of the `neo4j`_ graph database or generates output in `dot`_
+or `geoff`_ format.
+
+.. _`neo4j`:  http://www.neo4j.org/
+.. _`dot`: http://www.graphviz.org/content/dot-language
+.. _`geoff`: http://www.neo4j.org/develop/python/geoff
+
+
 
 ::
 
-    discoursegraphs syntax/doc.xml rst/doc.rs3 expletives/doc.txt doc.dot
+    discoursegraphs -t syntax/maz-13915.xml -r rst/maz-13915.rs3 -c connectors/maz-13915.xml -a anaphora/tosik/das/maz-13915.txt -o dot
     dot -Tpdf doc.dot > discoursegraph.pdf # generates a PDF from the dot file
 
 If you're interested in working with just one of those layers, you'll
