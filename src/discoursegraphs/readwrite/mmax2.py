@@ -11,6 +11,8 @@ class MMAXProject(object):
     """
     represents an MMAX annotation project, which may contain one or more
     files annotated on zero or more levels.
+
+    TODO: refactor this into an MMAXCorpusGraph(DiscourseCorpusGraph)
     """
     def __init__(self, project_path):
         self.paths, self.annotations, self.stylesheet = \

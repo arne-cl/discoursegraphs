@@ -7,6 +7,8 @@ The ``dg`` module specifies a ``DisourseDocumentGraph``, the fundamential data
 structure used in this package. It is a slightly modified
 ``networkx.MultiDiGraph``, which enforces every node and edge to have a
 ``layers`` attribute (which maps to the set of layers (str) it belongs to).
+
+TODO: implement a DiscourseCorpusGraph
 """
 
 from networkx import MultiDiGraph
