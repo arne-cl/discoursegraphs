@@ -76,8 +76,13 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         token_spans = self._parse_conano(root_element)
         self._add_document_structure(token_spans)
 
+        if precedence:
+            connected = False
         for i, (token, spans) in enumerate(token_spans):
-            self._add_token_to_document(i, token, spans, precedence, connected)
+            self._add_token_to_document(i, token, spans, connected)
+
+        if precedence:
+            self.add_precedence_relations()
 
         if check_validity:
             assert self.is_valid(tree)
@@ -129,7 +134,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
                               edge_type='dominates')
 
     def _add_token_to_document(self, token_id, token, token_attribs,
-                               precedence=False, connected=False):
+                               connected=False):
         """
         TODO: add 'relation' attribute to connective node!
         TODO: how to handle modifiers?
@@ -143,9 +148,6 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         token_attribs : dict
             a dict containing all the spans a token belongs to (and
             in case of connectives the relation it is part of)
-        precedence : bool
-            add precedence relation edges (root precedes token1, which precedes
-            token2 etc.)
         connected : bool
             make the graph connected, i.e. add an edge from root to each
             token that isn't part of any span. This doesn't do anything, if
@@ -161,19 +163,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
 
         self.tokens.append(token_node_id)
 
-        if precedence:
-            if token_id == 0: # edge from root to first token
-                self.add_edge(self.root, token_node_id,
-                              layers={self.ns, self.ns+':precedence'},
-                              edge_type='precedes')
-            else: # edge from preceeding token to this one
-                self.add_edge('token-{}'.format(token_id-1), token_node_id,
-                              layers={self.ns, self.ns+':precedence'},
-                              edge_type='precedes')
-
-        if connected and not precedence:
-            # precedence relations make the graph connected, so this wouldn't
-            # help
+        if connected:
             if not token_attribs['spans']: # token isn't part of any span
                 self.add_edge(self.root, token_node_id, layers={self.ns},
                               edge_type='contains')
