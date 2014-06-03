@@ -6,6 +6,7 @@ import os
 from lxml import etree
 from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.readwrite.generic import generic_converter_cli
+from discoursegraphs.util import ensure_unicode
 
 class MMAXProject(object):
     """
@@ -105,18 +106,27 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                             mmax_project.paths['basedata'],
                             etree.parse(mmax_base_file).find('//words').text)
 
-    def add_token_layer(self, words_file):
+    def add_token_layer(self, words_file, connected):
         """
         parses a _words.xml file, adds every token to the document graph
         and adds an edge from the MMAX root node to it.
 
-        TODO: enforce utf-8 or unicode for tokens
+        Parameters
+        ----------
+        connected : bool
+            Make the graph connected, i.e. add an edge from root to each
+            token.
         """
         for word in etree.parse(words_file).iterfind('//word'):
-            self.add_node(word.attrib['id'], token=word.text,
-                          layers={'mmax', 'mmax:token'})
-            self.add_edge('mmax:root_node', word.attrib['id'],
-                          layers={'mmax', 'mmax:token'})
+            token_node_id = word.attrib['id']
+            self.tokens.append(token_node_id)
+            token_str = ensure_unicode(word.text)
+            self.add_node(token_node_id,
+                          layers={self.ns, self.ns+':token'},
+                          attr_dict={self.ns+':token': token_str, 'label': token_str})
+            if connected:
+                self.add_edge(self.root, token_node_id,
+                              layers={self.ns, self.ns+':token'})
 
     def add_annotation_layer(self, annotation_file):
         """
