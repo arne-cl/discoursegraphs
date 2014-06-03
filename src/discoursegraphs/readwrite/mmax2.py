@@ -121,21 +121,21 @@ class MMAXDocumentGraph(MultiDiGraph):
         """
         assert os.path.isfile(annotation_file), \
             "Annotation doesn't exist: {}".format(annotation_file)
-        pass
+        raise NotImplementedError
 
     def span2tokens(span_string):
         """
         converts a span of tokens (str, e.g. 'word_88..word_91') into a list of
         token IDs (e.g. ['word_88', 'word_89', 'word_90', 'word_91'])
         """
-        pass
+        raise NotImplementedError
 
     def get_annotation_type():
         """
         TODO: watch out for cross-layer annotations,
         e.g. 'anaphor_antecedent="secmark:markable_18"'
         """
-        pass
+        raise NotImplementedError
 
 
 def span2tokens(span_string):
