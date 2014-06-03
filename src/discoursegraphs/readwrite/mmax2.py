@@ -192,6 +192,22 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                               edge_type='spans',
                               label=self.ns+':'+layer_name)
 
+            # this is a workaround for Chiarcos-style MMAX files
+            if 'anaphor_antecedent' in markable.attrib \
+            and markable.attrib['anaphor_antecedent'] != 'empty':
+                markable_str = markable.attrib['anaphor_antecedent']
+                # handles both 'markable_1' and 'layer:markable_1'
+                antecedent_node_id = markable_str.split(":")[-1]
+
+                # manually add antecedent node if it's not in the graph, yet
+                if antecedent_node_id not in self:
+                    self.add_node(antecedent_node_id,
+                                  layers={self.ns, self.ns+':markable'})
+                self.add_edge(markable_node_id, antecedent_node_id,
+                              layers={self.ns, self.ns+':markable'},
+                              edge_type='points_to',
+                              label=self.ns+':antecedent')
+
     def get_annotation_type():
         """
         TODO: watch out for cross-layer annotations,
