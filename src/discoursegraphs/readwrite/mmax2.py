@@ -129,7 +129,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                 mmax_rootdir,
                 mmax_project.paths['markable'],
                 file_id+layer_dict['file_extension'])
-            self.add_annotation_layer(annotation_file)
+            self.add_annotation_layer(annotation_file, layer_name)
 
     def get_file_id(self, mmax_base_file):
         """
@@ -165,12 +165,13 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
             token_str = ensure_unicode(word.text)
             self.add_node(token_node_id,
                           layers={self.ns, self.ns+':token'},
-                          attr_dict={self.ns+':token': token_str, 'label': token_str})
+                          attr_dict={self.ns+':token': token_str,
+                                     'label': token_str})
             if connected:
                 self.add_edge(self.root, token_node_id,
                               layers={self.ns, self.ns+':token'})
 
-    def add_annotation_layer(self, annotation_file):
+    def add_annotation_layer(self, annotation_file, layer_name):
         """
         """
         assert os.path.isfile(annotation_file), \
@@ -184,10 +185,12 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
             self.add_node(markable_node_id,
                           layers={self.ns, self.ns+':markable'},
                           attr_dict=markable_attribs,
-                          label=markable_node_id)
+                          label=markable_node_id+':'+layer_name)
             for to_node_id in span2tokens(markable.attrib['span']):
                 self.add_edge(markable_node_id, to_node_id,
-                              layers={self.ns, self.ns+':markable'})
+                              layers={self.ns, self.ns+':markable'},
+                              edge_type='spans',
+                              label=self.ns+':'+layer_name)
 
     def get_annotation_type():
         """
