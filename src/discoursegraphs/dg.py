@@ -480,3 +480,20 @@ class DiscourseDocumentGraph(MultiDiGraph):
         relabel_nodes(document_graph, remote2local, copy=False)
         self.add_nodes_from(document_graph.nodes(data=True))
         self.add_edges_from(document_graph.edges(data=True))
+
+    def add_precedence_relations(self):
+        """
+        add precedence relations to the document graph (i.e. an edge from the
+        root node to the first token node, an edge from the first token node to
+        the second one etc.)
+        """
+        assert len(self.tokens) > 1, \
+            "There are no tokens to add precedence relations to."
+        self.add_edge(self.root, self.tokens[0],
+                      layers={self.ns, self.ns+':precedence'},
+                      edge_type='precedes')
+        for i, token_node_id in enumerate(self.tokens[1:]):
+            # edge from token_n to token_n+1
+            self.add_edge(self.tokens[i], token_node_id,
+                          layers={self.ns, self.ns+':precedence'},
+                          edge_type='precedes')
