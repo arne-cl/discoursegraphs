@@ -64,3 +64,28 @@ def ensure_utf8(str_or_unicode):
         raise ValueError(
             "Input '{0}' should be a string or unicode, but it is of "
             "type {1}".format(str_or_unicode, type(str_or_unicode)))
+
+def add_prefix(dict_like, prefix):
+    """
+    takes a dict (or dict-like object, e.g. etree._Attrib) and adds the
+    given prefix to each key. Always returns a dict (via a typecast).
+
+    Parameters
+    ----------
+    dict_like : dict (or similar)
+        a dictionary or a container that implements .items()
+    prefix : str
+        the prefix string to be prepended to each key in the input dict
+
+    Returns
+    -------
+    prefixed_dict : dict
+        A dict, in which each key begins with the given prefix.
+    """
+    if not isinstance(dict_like, dict):
+        try:
+            dict_like = dict(dict_like)
+        except Exception as e:
+            raise ValueError("{0}\nCan't convert container to dict: "
+                             "{1}".format(e, dict_like))
+    return {prefix + k: v for (k, v) in dict_like.items()}

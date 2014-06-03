@@ -11,7 +11,7 @@ import os
 from lxml import etree
 
 from discoursegraphs import DiscourseDocumentGraph
-from discoursegraphs.util import natural_sort_key, ensure_unicode
+from discoursegraphs.util import natural_sort_key, ensure_unicode, add_prefix
 from discoursegraphs.readwrite.generic import generic_converter_cli
 
 
@@ -356,32 +356,6 @@ def get_unconnected_nodes(sentence_graph):
     return [node for node in sentence_graph.nodes_iter()
             if sentence_graph.degree(node) == 0 and
             sentence_graph.number_of_nodes() > 1]
-
-
-def add_prefix(dict_like, prefix):
-    """
-    takes a dict (or dict-like object, e.g. etree._Attrib) and adds the
-    given prefix to each key. Always returns a dict (via a typecast).
-
-    Parameters
-    ----------
-    dict_like : dict (or similar)
-        a dictionary or a container that implements .items()
-    prefix : str
-        the prefix string to be prepended to each key in the input dict
-
-    Returns
-    -------
-    prefixed_dict : dict
-        A dict, in which each key begins with the given prefix.
-    """
-    if not isinstance(dict_like, dict):
-        try:
-            dict_like = dict(dict_like)
-        except Exception as e:
-            raise ValueError("{0}\nCan't convert container to dict: "
-                             "{1}".format(e, dict_like))
-    return {prefix + k: v for (k, v) in dict_like.items()}
 
 
 if __name__ == '__main__':
