@@ -67,18 +67,59 @@ class MMAXProject(object):
 
 class MMAXDocumentGraph(DiscourseDocumentGraph):
     """
+    represents a MMAX2-annotated document as a multidigraph.
+
+    Attributes
+    ----------
+    ns : str
+        the namespace of the graph (default: mmax)
+    tokens : list of int
+        a list of node IDs (int) which represent the tokens in the
+        order they occur in the text
+    root : str
+        name of the document root node ID
+        (default: 'mmax:root_node')
     """
-    def __init__(self, mmax_rootdir, mmax_base_file):
+    def __init__(self, mmax_base_file, name=None, namespace='mmax',
+                 precedence=True, connected=False):
         """
+        Parameters
+        ----------
+        mmax_base_file : str
+            relative or absolute path to an MMAX2 document base file (*.mmax)
+        name : str or None
+            the name or ID of the graph to be generated. If no name is
+            given, the basename of the input *.mmax file is used.
+        namespace : str
+            the namespace of the graph (default: mmax)
+        precedence : bool
+            add precedence relation edges (root precedes token1, which precedes
+            token2 etc.)
+        connected : bool
+            Make the graph connected, i.e. add an edge from root to each
+            token. This doesn't do anything, if
+            precendence=True.
         """
-        # super calls __init__() of base class MultiDiGraph
+        # super calls __init__() of base class DiscourseDocumentGraph
         super(MMAXDocumentGraph, self).__init__()
-        self.name = os.path.basename(mmax_base_file)
-        self.add_node('mmax:root_node', layers={'mmax'})
+
+        if name is None:
+            self.name = os.path.basename(mmax_base_file)
+        self.ns = namespace
+        self.root = self.ns+':root_node'
+        self.add_node(self.root, layers={self.ns})
+        self.tokens = []
+
+        mmax_rootdir, _ = os.path.split(mmax_base_file)
 
         mmax_project = MMAXProject(mmax_rootdir)
         words_file = self.get_word_file(mmax_project, mmax_base_file)
-        self.add_token_layer(words_file)
+
+        if precedence:
+            self.add_token_layer(words_file, connected=False)
+            self.add_precedence_relations()
+        else:
+            self.add_token_layer(words_file, connected)
 
         for layer_name in mmax_project.annotations:
             layer_dict = mmax_project.annotations[layer_name]
@@ -87,7 +128,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                 mmax_rootdir,
                 mmax_project.paths['markable'],
                 file_id+layer_dict['file_extension'])
-            self.add_annotation_layer(annotation_file)
+            #~ self.add_annotation_layer(annotation_file) # TODO: implement method
 
     def get_file_id(self, mmax_base_file):
         """
