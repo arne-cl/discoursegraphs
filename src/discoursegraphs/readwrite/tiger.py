@@ -112,7 +112,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         self.add_edges_from(sentence_graph.edges(data=True))
         self.add_edge(self.root, sentence_root_node_id,
                       layers={self.ns, self.ns+':sentence'},
-                      edge_type='contains')
+                      edge_type='spans')
         self.sentences.append(sentence_root_node_id)
 
 
@@ -301,7 +301,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         for unconnected_node_id in unconnected_node_ids:
             self.add_edge(self.root, unconnected_node_id,
                           layers={self.ns, self.ns+':sentence'},
-                          edge_type='contains')
+                          edge_type='spans')
 
 
 def _get_terminals_and_nonterminals(sentence_graph):
