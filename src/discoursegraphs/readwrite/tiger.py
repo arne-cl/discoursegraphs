@@ -53,7 +53,6 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
             for token_id in tdg.node[sent_id]['tokens']:
                 print tdg.node[token_id]['tiger:word']
     """
-
     def __init__(self, tiger_filepath, name=None, namespace='tiger'):
         """
         Creates a directed graph that represents all syntax annotated
@@ -117,7 +116,6 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
 
 
 class TigerSentenceGraph(DiscourseDocumentGraph):
-
     """
     A directed graph (based on a networkx.MultiDiGraph) that represents
     one syntax annotated sentence extracted from a TigerXML file.
