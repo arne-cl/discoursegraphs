@@ -5,8 +5,9 @@
 import os
 from lxml import etree
 from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs.util import ensure_unicode, add_prefix
 from discoursegraphs.readwrite.generic import generic_converter_cli
-from discoursegraphs.util import ensure_unicode
+
 
 class MMAXProject(object):
     """
@@ -128,7 +129,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                 mmax_rootdir,
                 mmax_project.paths['markable'],
                 file_id+layer_dict['file_extension'])
-            #~ self.add_annotation_layer(annotation_file) # TODO: implement method
+            self.add_annotation_layer(annotation_file)
 
     def get_file_id(self, mmax_base_file):
         """
@@ -174,7 +175,19 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         """
         assert os.path.isfile(annotation_file), \
             "Annotation doesn't exist: {}".format(annotation_file)
-        raise NotImplementedError
+        tree = etree.parse(annotation_file)
+        root = tree.getroot()
+        # avoids eml.org namespace handling
+        for markable in root.iterchildren():
+            markable_node_id = markable.attrib['id']
+            markable_attribs = add_prefix(markable.attrib, self.ns+':')
+            self.add_node(markable_node_id,
+                          layers={self.ns, self.ns+':markable'},
+                          attr_dict=markable_attribs,
+                          label=markable_node_id)
+            for to_node_id in span2tokens(markable.attrib['span']):
+                self.add_edge(markable_node_id, to_node_id,
+                              layers={self.ns, self.ns+':markable'})
 
     def get_annotation_type():
         """
