@@ -6,6 +6,7 @@ import os
 from lxml import etree
 from networkx import MultiDiGraph
 
+from discoursegraphs.readwrite.generic import generic_converter_cli
 
 class MMAXProject(object):
     """
@@ -169,25 +170,6 @@ def span2tokens(span_string):
     return tokens
 
 
-
 if __name__ == "__main__":
-    MMAX_ROOTDIR = \
-        os.path.expanduser("~/repos/pcc-annis-merged/maz176/coreference")
-    COMMON_PATHS_FILE = os.path.join(MMAX_ROOTDIR, "common_paths.xml")
-    BASEDATA_DIR = os.path.join(MMAX_ROOTDIR,
-                                MMAXProject(MMAX_ROOTDIR).paths['basedata'])
-    EXAMPLE_WORDS_FILE = os.path.join(BASEDATA_DIR, 'maz-5010_words.xml')
-    EXAMPLE_BASE_FILE = os.path.join(MMAX_ROOTDIR, 'maz-1423.mmax')
-
-    mp = MMAXProject(MMAX_ROOTDIR)
-
-    for layer in mp.annotations:
-        print layer, mp.annotations[layer]
-
-    mdg = MMAXDocumentGraph(MMAX_ROOTDIR, EXAMPLE_BASE_FILE)
-
-    print span2tokens('word_1')
-    print span2tokens('word_2,word_3')
-    print span2tokens('word_7..word_11')
-    print span2tokens('word_2,word_3,word_7..word_11')
-    print span2tokens('word_2,word_3,word_7..word_11,word_15,word_17..word_19')
+    generic_converter_cli(MMAXDocumentGraph,
+                          '*.mmax file (MMAX2 annotation file)')
