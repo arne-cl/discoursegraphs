@@ -125,13 +125,6 @@ class MMAXDocumentGraph(MultiDiGraph):
             "Annotation doesn't exist: {}".format(annotation_file)
         raise NotImplementedError
 
-    def span2tokens(span_string):
-        """
-        converts a span of tokens (str, e.g. 'word_88..word_91') into a list of
-        token IDs (e.g. ['word_88', 'word_89', 'word_90', 'word_91'])
-        """
-        raise NotImplementedError
-
     def get_annotation_type():
         """
         TODO: watch out for cross-layer annotations,
@@ -139,11 +132,24 @@ class MMAXDocumentGraph(MultiDiGraph):
         """
         raise NotImplementedError
 
-
 def span2tokens(span_string):
     """
     converts a span of tokens (str, e.g. 'word_88..word_91')
     into a list of token IDs (e.g. ['word_88', 'word_89', 'word_90', 'word_91']
+
+    Examples
+    --------
+    >>> from discoursegraphs.readwrite.mmax2 import span2tokens
+    >>> span2tokens('word_1')
+    ['word_1']
+    >>> span2tokens('word_2,word_3')
+    ['word_2', 'word_3']
+    >>> span2tokens('word_7..word_11')
+    ['word_7', 'word_8', 'word_9', 'word_10', 'word_11']
+    >>> span2tokens('word_2,word_3,word_7..word_9')
+    ['word_2', 'word_3', 'word_7', 'word_8', 'word_9']
+    >>> span2tokens('word_7..word_9,word_15,word_17..word_19')
+    ['word_7', 'word_8', 'word_9', 'word_15', 'word_17', 'word_18', 'word_19']
     """
     tokens = []
 
@@ -163,18 +169,22 @@ def span2tokens(span_string):
     return tokens
 
 
+
 if __name__ == "__main__":
     MMAX_ROOTDIR = \
         os.path.expanduser("~/repos/pcc-annis-merged/maz176/coreference")
     COMMON_PATHS_FILE = os.path.join(MMAX_ROOTDIR, "common_paths.xml")
     BASEDATA_DIR = os.path.join(MMAX_ROOTDIR,
                                 MMAXProject(MMAX_ROOTDIR).paths['basedata'])
-    EXAMPLE_WORDS_FILE = os.path.join(BASEDATA_DIR, 'pocos.maz-5010_words.xml')
+    EXAMPLE_WORDS_FILE = os.path.join(BASEDATA_DIR, 'maz-5010_words.xml')
+    EXAMPLE_BASE_FILE = os.path.join(MMAX_ROOTDIR, 'maz-1423.mmax')
 
     mp = MMAXProject(MMAX_ROOTDIR)
 
     for layer in mp.annotations:
         print layer, mp.annotations[layer]
+
+    mdg = MMAXDocumentGraph(MMAX_ROOTDIR, EXAMPLE_BASE_FILE)
 
     print span2tokens('word_1')
     print span2tokens('word_2,word_3')
