@@ -4,8 +4,7 @@
 
 import os
 from lxml import etree
-from networkx import MultiDiGraph
-
+from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.readwrite.generic import generic_converter_cli
 
 class MMAXProject(object):
@@ -65,7 +64,7 @@ class MMAXProject(object):
         return paths, annotations, stylesheet
 
 
-class MMAXDocumentGraph(MultiDiGraph):
+class MMAXDocumentGraph(DiscourseDocumentGraph):
     """
     """
     def __init__(self, mmax_rootdir, mmax_base_file):
