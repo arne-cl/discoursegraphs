@@ -3,7 +3,6 @@
 # Author: Arne Neumann
 
 import os
-from collections import OrderedDict
 from lxml import etree
 from networkx import MultiDiGraph
 
