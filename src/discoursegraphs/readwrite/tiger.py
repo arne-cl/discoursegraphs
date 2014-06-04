@@ -186,11 +186,11 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
             token_ids.append(terminal_id)
             terminal_features = add_prefix(t.attrib, self.ns+':')
             # convert tokens to unicode
-            terminal_features[self.ns+':word'] = ensure_unicode(
+            terminal_features[self.ns+':token'] = ensure_unicode(
                 terminal_features[self.ns+':word'])
             self.add_node(terminal_id, layers={self.ns, self.ns+':token'},
                           attr_dict=terminal_features,
-                          label=terminal_features[self.ns+':word'])
+                          label=terminal_features[self.ns+':token'])
             for secedge in t.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
                 secedge_attribs = add_prefix(secedge.attrib, self.ns+':')
