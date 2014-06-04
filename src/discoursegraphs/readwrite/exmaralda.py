@@ -6,8 +6,8 @@ from collections import defaultdict
 from lxml import etree
 from lxml.builder import ElementMaker
 from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs.util import natural_sort_key
 
-import pudb # TODO: rm
 
 class ExmaraldaWriter(object):
     """
@@ -25,11 +25,14 @@ class ExmaraldaWriter(object):
         self.toknode2id = {node_id:i
                            for i, node_id in enumerate(docgraph.tokens)}
         self.E = ElementMaker()
+        self.tier_count = 0
         self.tree = self.__add_document_structure(docgraph)
 
     def __create_document_header(self):
         """
-        this creates an empty, but functional header for an Exmaralda *.exb
+        Look, mum! XML generation without string concatenation!1!!
+
+        This creates an empty, but functional header for an Exmaralda *.exb
         file.
         """
         E = self.E
@@ -69,30 +72,31 @@ class ExmaraldaWriter(object):
             # example: <tli id="T0" time="0"/>
             timeline.append(E('tli', {'id': 'T'+idx, 'time': idx}))
 
+        body.append(timeline)
+        body = self.__add_token_tiers(docgraph, body)
+
         annotation_layers = get_annotation_layers(docgraph)
         for layer in annotation_layers:
             # very dirty hack
             # TODO: fix Issue #36
-            #~ if len(layer.split(':')) == 2:
-                #~ print layer
-            # Original: <tier id="TIE0" category="tok" type="t" display-name="[tok]">
-            #
-            # Examples:
-            #
-            # layer_id: mmax:token
-            # layer_category: token
-            # layer_label: [token]
-            pass
-            #~ E('tier', {'id': layer_id, 'category': layer_category, 'type':"t",
-                       #~ 'display-name': layer_label})
-            for anno_element in layer:
-            # Original: <event start="T0" end="T1">Zum</event>
-                pass
+            layer_hierarchy = layer.split(':')
+            layer_category = layer_hierarchy[-1]
+            if len(layer_hierarchy) == 2 \
+            and layer_category not in ('token', 'root'):
+                temp_tier = E('tier',
+                {'id': "TIE{}".format(self.tier_count), 'category': layer_category, 'type':"t",
+                 'display-name': "[{}]".format(layer)})
+                self.tier_count += 1
 
+                for node_id in get_nodes_from_layer(docgraph, layer):
+                    span_node_ids = get_span(docgraph, node_id)
+                    if span_node_ids:
+                        first_tier_node = self.toknode2id[span_node_ids[0]]
+                        last_tier_node = self.toknode2id[span_node_ids[-1]]
+                        event_label = docgraph.node[node_id].get('label', '')
+                        temp_tier.append(E('event', {'start': "T{}".format(first_tier_node), 'end': "T{}".format(last_tier_node+1)}, event_label))
 
-
-        body.append(timeline)
-        body = self.__add_token_tiers(docgraph, body)
+                body.append(temp_tier)
         root.append(body)
         return root
 
@@ -114,8 +118,9 @@ class ExmaraldaWriter(object):
         """
         E = self.E
         token_tier = E('tier', {
-            'id': "TIE0", 'category': "tok", 'type':"t",
+            'id': "TIE{}".format(self.tier_count), 'category': "tok", 'type':"t",
             'display-name': "[tok]"})
+        self.tier_count += 1
 
         token_attribs = defaultdict(lambda : defaultdict(str))
         for token_node_id in docgraph.tokens:
@@ -129,11 +134,12 @@ class ExmaraldaWriter(object):
             token_tier.append(E('event', {'start': "T{}".format(i), 'end': "T{}".format(i+1)}, token_str))
         body.append(token_tier)
 
-        for i, anno_tier in enumerate(token_attribs, 1):
+        for anno_tier in token_attribs:
             category = anno_tier.split(':')[-1]
             temp_tier = E('tier',
-                {'id': "TIE{}".format(i), 'category': category, 'type':"t",
+                {'id': "TIE{}".format(self.tier_count), 'category': category, 'type':"t",
                  'display-name': "[{}]".format(anno_tier)})
+            self.tier_count += 1
             for token_node_id in token_attribs[anno_tier]:
                 token_tier_id = self.toknode2id[token_node_id]
                 token_attrib = token_attribs[anno_tier][token_node_id]
@@ -157,6 +163,39 @@ def get_annotation_layers(docgraph):
         for layer in node_attribs['layers']:
             all_layers.add(layer)
     return all_layers
+
+def get_span(docgraph, node_id):
+    """
+    returns all the tokens that are dominated or in a span relation with
+    the given node.
+
+    Returns
+    -------
+    span : list of str
+        sorted list of token nodes (token node IDs)
+    """
+    span = []
+    for from_id, to_id, edge_attribs in docgraph.out_edges_iter(node_id, data=True):
+        if from_id == to_id:
+            pass  # ignore self-loops
+        # ignore pointing relations
+        if edge_attribs['edge_type'] != 'points_to':
+            if docgraph.ns+':token' in docgraph.node[to_id]:
+                span.append(to_id)
+            else:
+                span.extend(get_span(docgraph, to_id))
+    return sorted(span, key=natural_sort_key)
+
+def get_nodes_from_layer(docgraph, layer):
+    """
+    Returns
+    -------
+    nodes : generator of str
+        a container/list of node IDs that are present in the given layer
+    """
+    for node_id, node_attribs in docgraph.nodes_iter(data=True):
+        if layer in node_attribs['layers']:
+            yield node_id
 
 
 if __name__ == "__main__":
