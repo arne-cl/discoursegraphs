@@ -116,7 +116,8 @@ class RSTGraph(DiscourseDocumentGraph):
                 self.add_edge(segment_node_id, parent_node_id,
                               layers={self.ns, self.ns+':relation'},
                               relname=self.ns+':'+segment.attrib['relname'],
-                              label=self.ns+':'+segment.attrib['relname'])
+                              label=self.ns+':'+segment.attrib['relname'],
+                              edge_type='is_dominated_by')
 
         for group in rst_xml_root.iterfind('./body/group'):
             group_node_id = int(group.attrib['id'])
@@ -142,7 +143,8 @@ class RSTGraph(DiscourseDocumentGraph):
                               layers={self.ns, self.ns+':relation'},
                               attr_dict={self.ns+':relname':
                                          group.attrib['relname'],
-                                         'label': self.ns+':'+group.attrib['relname']})
+                                         'label': self.ns+':'+group.attrib['relname']},
+                                         edge_type='is_dominated_by')
             else:  # group node is the root of an RST tree
                 self.root = group_node_id
                 existing_layers = self.node[group_node_id]['layers']
@@ -166,7 +168,8 @@ class RSTGraph(DiscourseDocumentGraph):
                                          'label': token})
                 self.tokens.append(token_node_id)
                 self.add_edge(segment_node_id, token_node_id,
-                                        layers={'rst', 'rst:token'})
+                              layers={'rst', 'rst:token'},
+                              edge_type='spans')
 
 
     def __str__(self):
