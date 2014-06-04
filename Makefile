@@ -4,7 +4,7 @@ MAZ = ~/repos/pcc-annis-merged/maz176
 
 merge-only:
 	date +"%H:%M:%S"
-	-ls $(MAZ)/syntax/*.xml | parallel ~/repos/discoursegraphs/src/discoursegraphs/merging.py -t {} -r $(MAZ)/rst/{/.}.rs3 -a $(MAZ)/anaphora/tosik/das/{/.}.txt -c $(MAZ)/connectors/{/.}.xml -o no-output
+	-ls $(MAZ)/syntax/*.xml | parallel ~/repos/discoursegraphs/src/discoursegraphs/merging.py -t {} -r $(MAZ)/rst/{/.}.rs3 -a $(MAZ)/anaphora/tosik/das/{/.}.txt -c $(MAZ)/connectors/{/.}.xml -m $(MAZ)/coreference/{/.}.mmax -o no-output
 	date +"%H:%M:%S"
 
 
