@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann
 
+"""
+This module converts an MMAX2-annotated document into a networkx-based directed
+graph (``DiscourseDocumentGraph``).
+"""
+
 import os
 from lxml import etree
 from discoursegraphs import DiscourseDocumentGraph
