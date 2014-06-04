@@ -21,26 +21,57 @@ class ExmaraldaWriter(object):
         output_path : str
             relative or absolute path to the Exmaralda file to be created
         """
+        self.E = ElementMaker()
         self.tree = self.__add_document_structure(docgraph)
 
-    def __add_document_structure(self, docgraph):
-        E = ElementMaker()
+    def __create_document_header(self):
+        """
+        this creates an empty, but functional header for an Exmaralda *.exb
+        file.
+        """
+        E = self.E
         root = E('basic-transcription')
-        header = E('head')
+        head = E('head')
+
+        meta = E('meta-information')
+        project = E('project-name')
+        tname = E('transcription-name')
+        ref_file = E('referenced-file', url="")
+        ud = E('ud-meta-information')
+        comment = E('comment')
+        tconvention = E('transcription-convention')
+        meta.append(project)
+        meta.append(tname)
+        meta.append(ref_file)
+        meta.append(ud)
+        meta.append(comment)
+        meta.append(tconvention)
+
+        speakers = E('speakertable')
+        head.append(meta)
+        head.append(speakers)
+        root.append(head)
+        return root
+
+    def __add_document_structure(self, docgraph):
+        E = self.E
+        root = self.__create_document_header()
+
         body = E('basic-body')
         timeline = E('common-timeline')
 
-        for i in xrange(len(docgraph.tokens)):
-            # original example: <tli id="T0" time="0"/>
+        # for n tokens we need to create n+1 timeline indices
+        for i in xrange(len(docgraph.tokens)+1):
             idx = str(i)
+            # example: <tli id="T0" time="0"/>
             timeline.append(E('tli', {'id': 'T'+idx, 'time': idx}))
 
         annotation_layers = get_annotation_layers(docgraph)
         for layer in annotation_layers:
             # very dirty hack
             # TODO: fix Issue #36
-            if len(layer.split(':')) == 2:
-                print layer
+            #~ if len(layer.split(':')) == 2:
+                #~ print layer
             # Original: <tier id="TIE0" category="tok" type="t" display-name="[tok]">
             #
             # Examples:
@@ -55,10 +86,40 @@ class ExmaraldaWriter(object):
             # Original: <event start="T0" end="T1">Zum</event>
                 pass
 
-        root.append(header)
+
+
         body.append(timeline)
+        body = self.__add_token_tiers(docgraph, body)
         root.append(body)
         return root
+
+    def __add_token_tiers(self, docgraph, body, default_ns='tiger'):
+        """
+        adds all tiers that annotate single tokens (e.g. token string, lemma,
+        POS tag) to the etree representation of the Exmaralda XML file.
+
+        Parameters
+        ----------
+        docgraph : DiscourseDocumentGraph
+            the document graph to be converted
+        body : etree._Element
+            an etree representation of the <basic_body> element (and all its
+            descendants) of the Exmaralda file
+        default_ns : str
+            the default namespace (i.a. used to extract the token strings
+            only once)
+        """
+        E = self.E
+        token_tier = E('tier', {
+            'id': "TIE0", 'category': "tok", 'type':"t",
+            'display-name': "[tok]"})
+
+        for i, (_tok_id, token_str) in enumerate(docgraph.get_tokens()):
+            # Original: <event start="T0" end="T1">Zum</event>
+            token_tier.append(E('event', {'start': "T{}".format(i), 'end': "T{}".format(i+1)}, token_str))
+        body.append(token_tier)
+        return body
+
 
 def get_annotation_layers(docgraph):
     """
@@ -95,12 +156,14 @@ if __name__ == "__main__":
     with open(args.input_file, 'rb') as docgraph_file:
         docgraph = pickle.load(docgraph_file)
     exmaralda = ExmaraldaWriter(docgraph, args.output_file)
+    exmaralda_str = etree.tostring(exmaralda.tree, pretty_print=True,
+                                   xml_declaration=True, encoding='UTF-8')
 
     if isinstance(args.output_file, file):
-        args.output_file.write(etree.tostring(exmaralda.tree, pretty_print=True))
+        args.output_file.write(exmaralda_str)
     else:
         with open(args.output_file, 'w') as exmaralda_file:
-            exmaralda_file.write(etree.tostring(exmaralda.tree, pretty_print=True))
+            exmaralda_file.write(exmaralda_str)
 
     #~ pudb.set_trace()
     #~ for token_id in docgraph.tokens:
