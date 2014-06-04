@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann
 
+from collections import defaultdict
 from lxml import etree
 from lxml.builder import ElementMaker
 from discoursegraphs import DiscourseDocumentGraph
@@ -21,6 +22,8 @@ class ExmaraldaWriter(object):
         output_path : str
             relative or absolute path to the Exmaralda file to be created
         """
+        self.toknode2id = {node_id:i
+                           for i, node_id in enumerate(docgraph.tokens)}
         self.E = ElementMaker()
         self.tree = self.__add_document_structure(docgraph)
 
@@ -114,10 +117,28 @@ class ExmaraldaWriter(object):
             'id': "TIE0", 'category': "tok", 'type':"t",
             'display-name': "[tok]"})
 
+        token_attribs = defaultdict(lambda : defaultdict(str))
+        for token_node_id in docgraph.tokens:
+            for attrib in docgraph.node[token_node_id]:
+                if attrib not in ('layers', 'label') \
+                and attrib.split(':')[-1] not in ('token', 'id', 'word', 'morph', 'lemma'):
+                    token_attribs[attrib][token_node_id] = docgraph.node[token_node_id][attrib]
+
         for i, (_tok_id, token_str) in enumerate(docgraph.get_tokens()):
             # Original: <event start="T0" end="T1">Zum</event>
             token_tier.append(E('event', {'start': "T{}".format(i), 'end': "T{}".format(i+1)}, token_str))
         body.append(token_tier)
+
+        for i, anno_tier in enumerate(token_attribs, 1):
+            category = anno_tier.split(':')[-1]
+            temp_tier = E('tier',
+                {'id': "TIE{}".format(i), 'category': category, 'type':"t",
+                 'display-name': "[{}]".format(anno_tier)})
+            for token_node_id in token_attribs[anno_tier]:
+                token_tier_id = self.toknode2id[token_node_id]
+                token_attrib = token_attribs[anno_tier][token_node_id]
+                temp_tier.append(E('event', {'start': "T{}".format(token_tier_id), 'end': "T{}".format(token_tier_id+1)}, token_attrib))
+            body.append(temp_tier)
         return body
 
 
@@ -143,6 +164,7 @@ if __name__ == "__main__":
     import sys
     import argparse
     import cPickle as pickle
+    from discoursegraphs.util import ensure_utf8
 
     parser = argparse.ArgumentParser()
     parser.add_argument('input_file',
@@ -165,6 +187,3 @@ if __name__ == "__main__":
         with open(args.output_file, 'w') as exmaralda_file:
             exmaralda_file.write(exmaralda_str)
 
-    #~ pudb.set_trace()
-    #~ for token_id in docgraph.tokens:
-        #~ print docgraph.node[token_id]
