@@ -39,7 +39,7 @@ def merging_cli():
                         help='conano file to be merged')
     parser.add_argument('-o', '--output-format',
                         default='dot',
-                        help='output format: dot, geoff, neo4j, no-output')
+                        help='output format: dot, pickle, geoff, neo4j, no-output')
     parser.add_argument('output_file', nargs='?', default=sys.stdout)
 
     args = parser.parse_args(sys.argv[1:])
@@ -75,6 +75,10 @@ def merging_cli():
 
     if args.output_format == 'dot':
         write_dot(tiger_docgraph, args.output_file)
+    elif args.output_format == 'pickle':
+        import cPickle as pickle
+        with open(args.output_file, 'wb') as pickle_file:
+            pickle.dump(tiger_docgraph, pickle_file)
     elif args.output_format == 'geoff':
         args.output_file.write(convert_to_geoff(tiger_docgraph))
         print ''
