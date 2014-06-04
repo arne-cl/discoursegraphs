@@ -21,7 +21,7 @@ from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph
 from discoursegraphs.readwrite.neo4j import convert_to_geoff, upload_to_neo4j
 
 
-def merging_cli():
+def merging_cli(debug=False):
     """
     simple commandline interface of the merging module.
 
@@ -103,6 +103,8 @@ def merging_cli():
         raise ValueError(
             "Unsupported output format: {}".format(args.output_format))
 
+    if debug:
+        print "Merged successfully: ", args.tiger_file
 
 if __name__ == '__main__':
-    merging_cli()
+    merging_cli(debug=True)
