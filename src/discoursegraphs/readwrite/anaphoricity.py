@@ -117,7 +117,7 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         if regex_match:  # token is annotated
             unannotated_token = regex_match.group('token')
             annotation = regex_match.group('annotation')
-            certainty = 1.0 if not regex_match.group('uncertain') else 0.5
+            certainty = "1.0" if not regex_match.group('uncertain') else "0.5"
             self.add_node(
                 token_id,
                 layers={self.ns, self.ns+':token'},
