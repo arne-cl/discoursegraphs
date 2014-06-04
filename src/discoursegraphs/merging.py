@@ -17,6 +17,7 @@ from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
 from discoursegraphs.readwrite.rst import RSTGraph
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph
 from discoursegraphs.readwrite.conano import ConanoDocumentGraph
+from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph
 from discoursegraphs.readwrite.neo4j import convert_to_geoff, upload_to_neo4j
 
 
@@ -37,6 +38,8 @@ def merging_cli():
                         help='anaphoricity file to be merged')
     parser.add_argument('-c', '--conano-file',
                         help='conano file to be merged')
+    parser.add_argument('-m', '--mmax-file',
+                        help='MMAX2 file to be merged')
     parser.add_argument('-o', '--output-format',
                         default='dot',
                         help='output format: dot, pickle, geoff, neo4j, no-output')
@@ -72,6 +75,10 @@ def merging_cli():
     if args.conano_file:
         conano_graph = ConanoDocumentGraph(args.conano_file)
         tiger_docgraph.merge_graphs(conano_graph)
+
+    if args.mmax_file:
+        mmax_graph = MMAXDocumentGraph(args.mmax_file)
+        tiger_docgraph.merge_graphs(mmax_graph)
 
     if args.output_format == 'dot':
         write_dot(tiger_docgraph, args.output_file)
