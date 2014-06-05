@@ -473,7 +473,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
                     u"Tokenization mismatch: {0} ({1}) vs. {2} ({3})\n"
                     "\t{4} != {5}".format(
                         self.name, self.ns, document_graph.name,
-                        document_graph.ns, local_tok, remote_tok))
+                        document_graph.ns, local_tok,
+                        remote_tok).encode('utf-8'))
             else:
                 remote2local[remote_tok_id] = local_tok_id
 
