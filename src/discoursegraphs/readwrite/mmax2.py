@@ -192,6 +192,13 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                           attr_dict=markable_attribs,
                           label=markable_node_id+':'+layer_name)
             for to_node_id in span2tokens(markable.attrib['span']):
+                # manually add to_node if it's not in the graph, yet
+                # cf. issue #39
+                if to_node_id not in self:
+                    self.add_node(to_node_id,
+                                  layers={self.ns, self.ns+':markable'},
+                                  label=to_node_id+':'+layer_name)
+
                 self.add_edge(markable_node_id, to_node_id,
                               layers={self.ns, self.ns+':markable'},
                               edge_type='spans',
@@ -205,6 +212,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                 antecedent_node_id = markable_str.split(":")[-1]
 
                 # manually add antecedent node if it's not in the graph, yet
+                # cf. issue #39
                 if antecedent_node_id not in self:
                     self.add_node(antecedent_node_id,
                                   layers={self.ns, self.ns+':markable'})
