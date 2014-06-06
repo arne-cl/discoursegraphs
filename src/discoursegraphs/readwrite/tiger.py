@@ -161,7 +161,8 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         # some sentences in the Tiger corpus are marked as discontinuous
         if 'discontinuous' in graph_element.attrib:
             sentence_attributes.update(
-                {self.ns+':discontinuous': graph_element.attrib['discontinuous']})
+                {self.ns+':discontinuous':
+                    graph_element.attrib['discontinuous']})
 
         self.__add_vroot(sentence_root_id, sentence_attributes)
         self.__tigersentence2graph(sentence)
