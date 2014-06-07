@@ -68,7 +68,7 @@ class RSTGraph(DiscourseDocumentGraph):
         if name is None:
             self.name = os.path.basename(rs3_filepath)
         self.ns = namespace
-        self.root = None # __rst2graph() will find/set the root node
+        self.root = None  # __rst2graph() will find/set the root node
 
         utf8_parser = etree.XMLParser(encoding="utf-8")
         rs3_xml_tree = etree.parse(rs3_filepath, utf8_parser)
@@ -103,7 +103,8 @@ class RSTGraph(DiscourseDocumentGraph):
                           layers={self.ns, self.ns+':segment'},
                           attr_dict={self.ns+':text':
                                      sanitize_string(segment.text)},
-                          label='{0}:segment:{1}'.format(self.ns, segment.attrib['id']))
+                          label='{0}:segment:{1}'.format(self.ns,
+                                                         segment.attrib['id']))
 
             self.segments.append(segment_node_id)
             if 'parent' in segment.attrib:
@@ -123,8 +124,9 @@ class RSTGraph(DiscourseDocumentGraph):
             group_node_id = int(group.attrib['id'])
             node_type = group.attrib['type']
             if group_node_id in self:  # group node already exists
-                self.node[group_node_id].update({self.ns+':reltype': node_type,
-                                                 'label': self.ns+':'+node_type})
+                self.node[group_node_id].update(
+                    {self.ns+':reltype': node_type,
+                     'label': self.ns+':'+node_type})
             else:
                 self.add_node(group_node_id,
                               layers={self.ns, self.ns+':segment'},
@@ -136,15 +138,15 @@ class RSTGraph(DiscourseDocumentGraph):
                 # topmost element in an RST tree
                 parent_node_id = int(group.attrib['parent'])
                 if parent_node_id not in self:  # node not in graph, yet
-                    self.add_node(parent_node_id,
-                                  layers={self.ns, self.ns+':segment'},
-                                  label='{0}:{1}'.format(self.ns, parent_node_id))
-                self.add_edge(group_node_id, parent_node_id,
-                              layers={self.ns, self.ns+':relation'},
-                              attr_dict={self.ns+':relname':
-                                         group.attrib['relname'],
-                                         'label': self.ns+':'+group.attrib['relname']},
-                                         edge_type='is_dominated_by')
+                    self.add_node(
+                        parent_node_id, layers={self.ns, self.ns+':segment'},
+                        label='{0}:{1}'.format(self.ns, parent_node_id))
+                self.add_edge(
+                    group_node_id, parent_node_id,
+                    layers={self.ns, self.ns+':relation'},
+                    attr_dict={self.ns+':relname': group.attrib['relname'],
+                               'label': self.ns+':'+group.attrib['relname']},
+                    edge_type='is_dominated_by')
             else:  # group node is the root of an RST tree
                 self.root = group_node_id
                 existing_layers = self.node[group_node_id]['layers']
@@ -159,18 +161,15 @@ class RSTGraph(DiscourseDocumentGraph):
         the segment node to the token node. the token node IDs are also added
         to ``self.tokens``.
         """
-        for segment_node_id in self.segments:
-            segment_tokens = self.node[segment_node_id][self.ns+':text'].split()
-            for i, token in enumerate(segment_tokens):
-                token_node_id = '{0}:{1}_{2}'.format(self.ns, segment_node_id, i)
-                self.add_node(token_node_id, layers={self.ns, self.ns+':token'},
-                              attr_dict={self.ns+':token': token,
-                                         'label': token})
-                self.tokens.append(token_node_id)
-                self.add_edge(segment_node_id, token_node_id,
-                              layers={'rst', 'rst:token'},
-                              edge_type='spans')
-
+        for seg_node_id in self.segments:
+            segment_toks = self.node[seg_node_id][self.ns+':text'].split()
+            for i, tok in enumerate(segment_toks):
+                tok_node_id = '{0}:{1}_{2}'.format(self.ns, seg_node_id, i)
+                self.add_node(tok_node_id, layers={self.ns, self.ns+':token'},
+                              attr_dict={self.ns+':token': tok, 'label': tok})
+                self.tokens.append(tok_node_id)
+                self.add_edge(seg_node_id, tok_node_id,
+                              layers={'rst', 'rst:token'}, edge_type='spans')
 
     def __str__(self):
         """
