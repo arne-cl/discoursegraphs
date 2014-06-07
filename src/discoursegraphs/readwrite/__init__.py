@@ -7,8 +7,12 @@ linguistic documents into a graph-based representation for further
 processing.
 """
 
-__all__ = ['TigerDocumentGraph', 'AnaphoraDocumentGraph', 'RSTGraph']
+__all__ = [
+    'TigerDocumentGraph', 'AnaphoraDocumentGraph', 'RSTGraph',
+    'MMAXDocumentGraph'
+]
 
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
 from discoursegraphs.readwrite.rst import RSTGraph
+from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph
