@@ -21,7 +21,7 @@ class ExmaraldaWriter(object):
         output_path : str
             relative or absolute path to the Exmaralda file to be created
         """
-        self.toknode2id = {node_id:i
+        self.toknode2id = {node_id: i
                            for i, node_id in enumerate(docgraph.tokens)}
         self.E = ElementMaker()
         self.tier_count = 0
@@ -78,13 +78,13 @@ class ExmaraldaWriter(object):
         for layer in annotation_layers:
             # very dirty hack
             # TODO: fix Issue #36
-            layer_hierarchy = layer.split(':')
-            layer_category = layer_hierarchy[-1]
-            if len(layer_hierarchy) == 2 \
-            and layer_category not in ('token', 'root'):
+            layer_levels = layer.split(':')
+            layer_cat = layer_levels[-1]
+            if len(layer_levels) == 2 and layer_cat not in ('token', 'root'):
                 temp_tier = E('tier',
-                {'id': "TIE{}".format(self.tier_count), 'category': layer_category, 'type':"t",
-                 'display-name': "[{}]".format(layer)})
+                              {'id': "TIE{}".format(self.tier_count),
+                               'category': layer_cat, 'type': "t",
+                               'display-name': "[{}]".format(layer)})
                 self.tier_count += 1
 
                 for node_id in select_nodes_by_layer(docgraph, layer):
@@ -93,7 +93,11 @@ class ExmaraldaWriter(object):
                         first_tier_node = self.toknode2id[span_node_ids[0]]
                         last_tier_node = self.toknode2id[span_node_ids[-1]]
                         event_label = docgraph.node[node_id].get('label', '')
-                        temp_tier.append(E('event', {'start': "T{}".format(first_tier_node), 'end': "T{}".format(last_tier_node+1)}, event_label))
+                        event = E('event',
+                                  {'start': "T{}".format(first_tier_node),
+                                   'end': "T{}".format(last_tier_node+1)},
+                                  event_label)
+                        temp_tier.append(event)
 
                 body.append(temp_tier)
         root.append(body)
@@ -116,33 +120,44 @@ class ExmaraldaWriter(object):
             only once)
         """
         E = self.E
-        token_tier = E('tier', {
-            'id': "TIE{}".format(self.tier_count), 'category': "tok", 'type':"t",
-            'display-name': "[tok]"})
+        token_tier = E('tier',
+                       {'id': "TIE{}".format(self.tier_count),
+                        'category': "tok", 'type': "t",
+                        'display-name': "[tok]"})
         self.tier_count += 1
 
-        token_attribs = defaultdict(lambda : defaultdict(str))
+        token_attribs = defaultdict(lambda: defaultdict(str))
         for token_node_id in docgraph.tokens:
             for attrib in docgraph.node[token_node_id]:
-                if attrib not in ('layers', 'label') \
-                and attrib.split(':')[-1] not in ('token', 'id', 'word', 'morph', 'lemma'):
-                    token_attribs[attrib][token_node_id] = docgraph.node[token_node_id][attrib]
+                boring_attrib = attrib in ('layers', 'label')
+                boring_cat = attrib.split(':')[-1] in ('token',
+                                                       'id', 'word', 'morph',
+                                                       'lemma')
+                if not boring_attrib and not boring_cat:
+                    token_attribs[attrib][token_node_id] = \
+                        docgraph.node[token_node_id][attrib]
 
         for i, (_tok_id, token_str) in enumerate(docgraph.get_tokens()):
-            # Original: <event start="T0" end="T1">Zum</event>
-            token_tier.append(E('event', {'start': "T{}".format(i), 'end': "T{}".format(i+1)}, token_str))
+            # example: <event start="T0" end="T1">Zum</event>
+            token_tier.append(
+                E('event', {'start': "T{}".format(i),
+                            'end': "T{}".format(i+1)}, token_str))
         body.append(token_tier)
 
         for anno_tier in token_attribs:
             category = anno_tier.split(':')[-1]
-            temp_tier = E('tier',
-                {'id': "TIE{}".format(self.tier_count), 'category': category, 'type':"t",
-                 'display-name': "[{}]".format(anno_tier)})
+            temp_tier = E(
+                'tier', {'id': "TIE{}".format(self.tier_count),
+                         'category': category, 'type': "t",
+                         'display-name': "[{}]".format(anno_tier)})
             self.tier_count += 1
             for token_node_id in token_attribs[anno_tier]:
                 token_tier_id = self.toknode2id[token_node_id]
                 token_attrib = token_attribs[anno_tier][token_node_id]
-                temp_tier.append(E('event', {'start': "T{}".format(token_tier_id), 'end': "T{}".format(token_tier_id+1)}, token_attrib))
+                temp_tier.append(
+                    E('event', {'start': "T{}".format(token_tier_id),
+                                'end': "T{}".format(token_tier_id+1)},
+                      token_attrib))
             body.append(temp_tier)
         return body
 
@@ -163,6 +178,7 @@ def get_annotation_layers(docgraph):
             all_layers.add(layer)
     return all_layers
 
+
 def get_span(docgraph, node_id):
     """
     returns all the tokens that are dominated or in a span relation with
@@ -174,7 +190,8 @@ def get_span(docgraph, node_id):
         sorted list of token nodes (token node IDs)
     """
     span = []
-    for from_id, to_id, edge_attribs in docgraph.out_edges_iter(node_id, data=True):
+    for from_id, to_id, edge_attribs in docgraph.out_edges_iter(node_id,
+                                                                data=True):
         if from_id == to_id:
             pass  # ignore self-loops
         # ignore pointing relations
@@ -257,7 +274,8 @@ def get_pointing_chains(docgraph):
             chain.append(to_id)
         return chain
 
-    all_chains = [walk_chain(rel_dict, from_id) for from_id in rel_dict.iterkeys()]
+    all_chains = [walk_chain(rel_dict, from_id)
+                  for from_id in rel_dict.iterkeys()]
 
     # don't return partial chains, i.e. instead of returning [a,b], [b,c] and
     # [a,b,c,d], just return [a,b,c,d]
@@ -265,7 +283,7 @@ def get_pointing_chains(docgraph):
     for i, chain in enumerate(all_chains):
         other_chains = all_chains[:i] + all_chains[i+1:]
         if any([chain[0] in other_chain for other_chain in other_chains]):
-            continue # ignore this chain, test the next one
+            continue  # ignore this chain, test the next one
         unique_chains.append(chain)
     return unique_chains
 
@@ -296,4 +314,3 @@ if __name__ == "__main__":
     else:
         with open(args.output_file, 'w') as exmaralda_file:
             exmaralda_file.write(exmaralda_str)
-
