@@ -202,6 +202,15 @@ def get_span(docgraph, node_id):
                 span.extend(get_span(docgraph, to_id))
     return sorted(span, key=natural_sort_key)
 
+def get_text(docgraph, node_id):
+    """
+    returns the text (joined token strings) that the given node dominates
+    or spans.
+    """
+    tokens = (docgraph.node[node_id][docgraph.ns+':token']
+              for node_id in get_span(docgraph, node_id))
+    return ' '.join(tokens)
+
 
 def select_nodes_by_layer(docgraph, layer):
     """
