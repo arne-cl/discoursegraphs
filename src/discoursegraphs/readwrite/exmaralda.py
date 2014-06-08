@@ -5,7 +5,6 @@
 from collections import defaultdict
 from lxml import etree
 from lxml.builder import ElementMaker
-from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.util import natural_sort_key
 
 
@@ -276,7 +275,6 @@ if __name__ == "__main__":
     import sys
     import argparse
     import cPickle as pickle
-    from discoursegraphs.util import ensure_utf8
 
     parser = argparse.ArgumentParser()
     parser.add_argument('input_file',
