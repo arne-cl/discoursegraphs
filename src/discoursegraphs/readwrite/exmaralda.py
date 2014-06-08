@@ -103,6 +103,48 @@ class ExmaraldaWriter(object):
         root.append(body)
         return root
 
+    def __add_coreference_chain_tiers(self, docgraph, body, min_chain_length=3):
+        """
+        Parameters
+        ----------
+        docgraph : DiscourseDocumentGraph
+            the document graph from which the chains will be extracted
+        body : etree._Element
+            an etree representation of the <basic_body> element (and all its
+            descendants) of the Exmaralda file
+        min_chain_length : int
+            don't add tiers for chains with less than N elements (default: 3)
+
+        TODO: this method assumes that each pointing relation chains signifies
+        a coreference chain.
+        """
+        E = self.E
+
+        for i, chain in enumerate(get_pointing_chains(docgraph)):
+            chain_tier = E('tier',
+                           {'id': "TIE{}".format(self.tier_count),
+                            'category': "chain", 'type': "t",
+                            'display-name': "[coref-chain-{}]".format(i)})
+            self.tier_count += 1
+
+            chain_length = len(chain)
+            if chain_length < min_chain_length:
+                continue # ignore short chains
+
+            for j, node_id in enumerate(chain):
+                span_node_ids = get_span(docgraph, node_id)
+                if span_node_ids:
+                    start_id, end_id = self.__span2event(span_node_ids)
+                    element_str = "chain_{0}: {1}/{2}".format(i, chain_length-j, chain_length)
+                    chain_tier.append(
+                        E('event', {'start': "T{}".format(start_id),
+                                    'end': "T{}".format(end_id)}, element_str))
+
+            body.append(chain_tier)
+        return body
+
+
+
     def __add_token_tiers(self, docgraph, body, default_ns='tiger'):
         """
         adds all tiers that annotate single tokens (e.g. token string, lemma,
