@@ -199,6 +199,69 @@ def select_nodes_by_layer(docgraph, layer):
             yield node_id
 
 
+def select_edges_by_edgetype(docgraph, edge_type, data=False):
+    """
+    Get all edges with the given edge type.
+    """
+    for (from_id, to_id, edge_attribs) in docgraph.edges(data=True):
+        if edge_attribs['edge_type'] == edge_type:
+            if data:
+                yield (from_id, to_id, edge_attribs)
+            else:
+                yield (from_id, to_id)
+
+
+def get_pointing_chains(docgraph):
+    """
+    returns a list of chained pointing relations (e.g. coreference chains)
+    found in the given document graph.
+    """
+    from networkx import is_directed_acyclic_graph
+    assert is_directed_acyclic_graph(docgraph), \
+        "Can't extract chains from a cyclic graph!"
+
+    pointing_relations = select_edges_by_edgetype(docgraph, 'points_to')
+    rel_dict = {from_id: to_id for from_id, to_id in pointing_relations}
+
+    def walk_chain(rel_dict, from_id):
+        """
+        given a dict of pointing relations and a start node, this function
+        will return a list of node IDs representing a path beginning with that
+        node.
+
+        Parameters
+        ----------
+        rel_dict : dict
+            a dictionary mapping from an edge source node (node ID str)
+            to a set of edge target nodes (node ID str)
+        from_id : str
+
+        Returns
+        -------
+        unique_chains : list of str
+            a chain of pointing relations, represented as a list of node IDs
+        """
+        chain = [from_id]
+        to_id = rel_dict[from_id]
+        if to_id in rel_dict:
+            chain.extend(walk_chain(rel_dict, to_id))
+        else:
+            chain.append(to_id)
+        return chain
+
+    all_chains = [walk_chain(rel_dict, from_id) for from_id in rel_dict.iterkeys()]
+
+    # don't return partial chains, i.e. instead of returning [a,b], [b,c] and
+    # [a,b,c,d], just return [a,b,c,d]
+    unique_chains = []
+    for i, chain in enumerate(all_chains):
+        other_chains = all_chains[:i] + all_chains[i+1:]
+        if any([chain[0] in other_chain for other_chain in other_chains]):
+            continue # ignore this chain, test the next one
+        unique_chains.append(chain)
+    return unique_chains
+
+
 if __name__ == "__main__":
     import os
     import sys
