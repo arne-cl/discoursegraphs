@@ -124,8 +124,11 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
                 self.add_node(node_id, layers={self.ns, self.ns+':unit'})
 
             # edge from root to unit
+            # TODO: do we need these edges? do we need those units?
+            # having just int-units and ext-units could be enough!
             self.add_edge(self.root, 'unit-{}'.format(unit_id),
-                          layers={self.ns, self.ns+':unit'})
+                          layers={self.ns, self.ns+':unit'},
+                          edge_type='spans')
             # edge from unit to int/ext sub-unit and connective
             for to_node in ('ext', 'int', 'connective'):
                 self.add_edge('unit-{}'.format(unit_id),
