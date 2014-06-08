@@ -171,11 +171,11 @@ class ExmaraldaWriter(object):
         token_attribs = defaultdict(lambda: defaultdict(str))
         for token_node_id in docgraph.tokens:
             for attrib in docgraph.node[token_node_id]:
-                boring_attrib = attrib in ('layers', 'label')
-                boring_cat = attrib.split(':')[-1] in ('token',
-                                                       'id', 'word', 'morph',
-                                                       'lemma')
-                if not boring_attrib and not boring_cat:
+                is_boring_attrib = attrib in ('layers', 'label')
+                is_boring_cat = attrib.split(':')[-1] in ('token',
+                                                          'id', 'word',
+                                                          'morph', 'lemma')
+                if not is_boring_attrib and not is_boring_cat:
                     token_attribs[attrib][token_node_id] = \
                         docgraph.node[token_node_id][attrib]
 
