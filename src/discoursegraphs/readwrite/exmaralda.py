@@ -250,10 +250,6 @@ def get_pointing_chains(docgraph):
     returns a list of chained pointing relations (e.g. coreference chains)
     found in the given document graph.
     """
-    from networkx import is_directed_acyclic_graph
-    assert is_directed_acyclic_graph(docgraph), \
-        "Can't extract chains from a cyclic graph!"
-
     pointing_relations = select_edges_by_edgetype(docgraph, 'points_to')
     rel_dict = {from_id: to_id for from_id, to_id in pointing_relations}
 
