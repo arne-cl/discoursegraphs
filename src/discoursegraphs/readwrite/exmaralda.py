@@ -189,6 +189,15 @@ def get_span(docgraph, node_id):
 
 def select_nodes_by_layer(docgraph, layer):
     """
+    Get all nodes belonging to the given layer.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        document graph from which the nodes will be extracted
+    layer : str
+        name of the layer
+
     Returns
     -------
     nodes : generator of str
