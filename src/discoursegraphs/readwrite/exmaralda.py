@@ -203,6 +203,25 @@ class ExmaraldaWriter(object):
             body.append(temp_tier)
         return body
 
+    def __span2event(self, span_node_ids):
+        """
+        converts a span of tokens (list of token node IDs) into an Exmaralda
+        event (start and end ID).
+
+        Parameters
+        ----------
+        span_node_ids : list of str
+            sorted list of node IDs representing a span of tokens
+
+        Returns
+        -------
+        event : tuple of (str, str)
+            event start ID and event end ID
+        """
+        return (self.toknode2id[span_node_ids[0]],
+                self.toknode2id[span_node_ids[-1]]+1)
+
+
 
 def get_annotation_layers(docgraph):
     """
