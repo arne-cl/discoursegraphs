@@ -5,12 +5,18 @@
 from collections import defaultdict
 from lxml import etree
 from lxml.builder import ElementMaker
-from discoursegraphs.util import natural_sort_key
+from discoursegraphs.util import natural_sort_key, ensure_utf8
 
 
 class ExmaraldaWriter(object):
     """
     This class converts a DiscourseDocumentGraph into an Exmaralda file.
+
+    Attributes
+    ----------
+    toknode2id : dict
+        maps from a token node ID to its Exmaralda ID (ID in the common
+        timeline)
     """
     def __init__(self, docgraph, output_path):
         """
@@ -80,7 +86,7 @@ class ExmaraldaWriter(object):
             # TODO: fix Issue #36
             layer_levels = layer.split(':')
             layer_cat = layer_levels[-1]
-            if len(layer_levels) == 2 and layer_cat not in ('token', 'root'):
+            if len(layer_levels) == 2 and layer_cat not in ('token', 'root', 'sentence'):
                 temp_tier = E('tier',
                               {'id': "TIE{}".format(self.tier_count),
                                'category': layer_cat, 'type': "t",
@@ -90,16 +96,19 @@ class ExmaraldaWriter(object):
                 for node_id in select_nodes_by_layer(docgraph, layer):
                     span_node_ids = get_span(docgraph, node_id)
                     if span_node_ids:
-                        first_tier_node = self.toknode2id[span_node_ids[0]]
-                        last_tier_node = self.toknode2id[span_node_ids[-1]]
+                        start_id, end_id = self.__span2event(span_node_ids)
                         event_label = docgraph.node[node_id].get('label', '')
-                        event = E('event',
-                                  {'start': "T{}".format(first_tier_node),
-                                   'end': "T{}".format(last_tier_node+1)},
-                                  event_label)
-                        temp_tier.append(event)
+                        # TODO: dirty hack to remove 'markable_n:sentence'
+                        # annotations
+                        if not event_label.endswith(':sentence'):
+                            event = E('event',
+                                      {'start': "T{}".format(start_id),
+                                       'end': "T{}".format(end_id)},
+                                      event_label)
+                            temp_tier.append(event)
 
                 body.append(temp_tier)
+        body = self.__add_coreference_chain_tiers(docgraph, body)
         root.append(body)
         return root
 
@@ -352,6 +361,8 @@ def get_pointing_chains(docgraph):
             continue  # ignore this chain, test the next one
         unique_chains.append(chain)
     return unique_chains
+
+
 
 
 if __name__ == "__main__":
