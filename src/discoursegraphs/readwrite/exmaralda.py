@@ -88,7 +88,7 @@ class ExmaraldaWriter(object):
                  'display-name': "[{}]".format(layer)})
                 self.tier_count += 1
 
-                for node_id in get_nodes_from_layer(docgraph, layer):
+                for node_id in select_nodes_by_layer(docgraph, layer):
                     span_node_ids = get_span(docgraph, node_id)
                     if span_node_ids:
                         first_tier_node = self.toknode2id[span_node_ids[0]]
@@ -186,7 +186,8 @@ def get_span(docgraph, node_id):
                 span.extend(get_span(docgraph, to_id))
     return sorted(span, key=natural_sort_key)
 
-def get_nodes_from_layer(docgraph, layer):
+
+def select_nodes_by_layer(docgraph, layer):
     """
     Returns
     -------
