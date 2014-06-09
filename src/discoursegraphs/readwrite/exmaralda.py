@@ -2,6 +2,15 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann
 
+"""
+The ``exmaralda`` module converts a ``DiscourseDocumentGraph`` (possibly
+containing multiple annotation layers) into an Exmaralda *.exb file.
+
+WARNING: This module contains lots of bad, academic code (i.e. I needed to get
+stuff done quickly for a presentation and didn't take the time to add
+parameters and refactor large methods).
+"""
+
 from collections import defaultdict
 from lxml import etree
 from lxml.builder import ElementMaker
