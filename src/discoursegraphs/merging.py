@@ -19,6 +19,7 @@ from discoursegraphs.readwrite.tiger import TigerDocumentGraph
 from discoursegraphs.readwrite.conano import ConanoDocumentGraph
 from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph
 from discoursegraphs.readwrite.neo4j import convert_to_geoff, upload_to_neo4j
+from discoursegraphs.util import create_dir
 
 
 def merging_cli(debug=False):
@@ -79,6 +80,10 @@ def merging_cli(debug=False):
     if args.mmax_file:
         mmax_graph = MMAXDocumentGraph(args.mmax_file)
         tiger_docgraph.merge_graphs(mmax_graph)
+
+    path_to_output_file = os.path.dirname(args.output_file)
+    if not os.path.isdir(path_to_output_file):
+        create_dir(path_to_output_file)
 
     if args.output_format == 'dot':
         write_dot(tiger_docgraph, args.output_file)

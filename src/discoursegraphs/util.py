@@ -6,6 +6,7 @@
 This module contains a number of helper functions.
 """
 
+import os
 import re
 
 INTEGER_RE = re.compile('([0-9]+)')
@@ -89,3 +90,24 @@ def add_prefix(dict_like, prefix):
             raise ValueError("{0}\nCan't convert container to dict: "
                              "{1}".format(e, dict_like))
     return {prefix + k: v for (k, v) in dict_like.items()}
+
+
+def create_dir(path):
+    """
+    Creates a directory. Warns, if the directory can't be accessed. Passes,
+    if the directory already exists.
+
+    @author: tzot (http://stackoverflow.com/a/600612)
+
+    @param path: path to the directory to be created
+    @type path: C{str}
+    """
+    try:
+        os.makedirs(path)
+    except OSError as exc: # Python >2.5
+        if exc.errno == errno.EEXIST:
+            pass
+        elif exc.errno == errno.EACCES:
+            print "Cannot create [%s]! Check Permissions" % path
+        else:
+            raise
