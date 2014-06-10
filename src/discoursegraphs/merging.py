@@ -81,9 +81,10 @@ def merging_cli(debug=False):
         mmax_graph = MMAXDocumentGraph(args.mmax_file)
         tiger_docgraph.merge_graphs(mmax_graph)
 
-    path_to_output_file = os.path.dirname(args.output_file)
-    if not os.path.isdir(path_to_output_file):
-        create_dir(path_to_output_file)
+    if isinstance(args.output_file, str): # if we're not piping to stdout ...
+        path_to_output_file = os.path.dirname(args.output_file)
+        if not os.path.isdir(path_to_output_file):
+            create_dir(path_to_output_file)
 
     if args.output_format == 'dot':
         write_dot(tiger_docgraph, args.output_file)
