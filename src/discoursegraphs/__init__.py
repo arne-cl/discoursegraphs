@@ -6,6 +6,6 @@ __author__ = 'Arne Neumann'
 __email__ = 'discoursegraphs.programming@arne.cl'
 __version__ = '0.1.2'
 
-__all__ = ['DiscourseDocumentGraph']
+__all__ = ['DiscourseDocumentGraph', 'EdgeTypes']
 
-from dg import DiscourseDocumentGraph
+from discoursegraph import DiscourseDocumentGraph, EdgeTypes

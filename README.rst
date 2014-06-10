@@ -123,6 +123,7 @@ to produce a set of HTML files (``docs/_build/html/index.html``).
 Requirements
 ------------
 
+- `enum <https://pypi.python.org/pypi/enum34>`_
 - `lxml <http://lxml.de/>`_
 - `networkx <http://networkx.github.io/>`_
 

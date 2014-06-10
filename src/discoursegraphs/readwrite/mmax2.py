@@ -9,7 +9,7 @@ graph (``DiscourseDocumentGraph``).
 
 import os
 from lxml import etree
-from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.util import ensure_unicode, add_prefix
 from discoursegraphs.readwrite.generic import generic_converter_cli
 
@@ -201,7 +201,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
 
                 self.add_edge(markable_node_id, to_node_id,
                               layers={self.ns, self.ns+':markable'},
-                              edge_type='spans',
+                              edge_type=EdgeTypes.spanning_relation,
                               label=self.ns+':'+layer_name)
 
             # this is a workaround for Chiarcos-style MMAX files
@@ -218,7 +218,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                                   layers={self.ns, self.ns+':markable'})
                 self.add_edge(markable_node_id, antecedent_node_id,
                               layers={self.ns, self.ns+':markable'},
-                              edge_type='points_to',
+                              edge_type=EdgeTypes.pointing_relation,
                               label=self.ns+':antecedent')
 
     def get_annotation_type():

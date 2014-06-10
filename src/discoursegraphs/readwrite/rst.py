@@ -12,7 +12,7 @@ from __future__ import print_function
 import os
 from lxml import etree
 
-from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.readwrite.generic import generic_converter_cli
 
 
@@ -118,7 +118,7 @@ class RSTGraph(DiscourseDocumentGraph):
                               layers={self.ns, self.ns+':relation'},
                               relname=self.ns+':'+segment.attrib['relname'],
                               label=self.ns+':'+segment.attrib['relname'],
-                              edge_type='is_dominated_by')
+                              edge_type=EdgeTypes.reverse_dominance_relation)
 
         for group in rst_xml_root.iterfind('./body/group'):
             group_node_id = int(group.attrib['id'])
@@ -146,7 +146,7 @@ class RSTGraph(DiscourseDocumentGraph):
                     layers={self.ns, self.ns+':relation'},
                     attr_dict={self.ns+':relname': group.attrib['relname'],
                                'label': self.ns+':'+group.attrib['relname']},
-                    edge_type='is_dominated_by')
+                    edge_type=EdgeTypes.reverse_dominance_relation)
             else:  # group node is the root of an RST tree
                 self.root = group_node_id
                 existing_layers = self.node[group_node_id]['layers']
@@ -169,7 +169,7 @@ class RSTGraph(DiscourseDocumentGraph):
                               attr_dict={self.ns+':token': tok, 'label': tok})
                 self.tokens.append(tok_node_id)
                 self.add_edge(seg_node_id, tok_node_id,
-                              layers={'rst', 'rst:token'}, edge_type='spans')
+                              layers={'rst', 'rst:token'}, edge_type=EdgeTypes.spanning_relation)
 
     def __str__(self):
         """

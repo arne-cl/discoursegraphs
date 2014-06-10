@@ -17,6 +17,7 @@ from collections import defaultdict
 from lxml import etree
 from lxml.builder import ElementMaker
 
+from discoursegraphs import EdgeTypes
 from discoursegraphs.util import natural_sort_key, ensure_utf8, create_dir
 
 
@@ -292,7 +293,7 @@ def get_span(docgraph, node_id):
         if from_id == to_id:
             pass  # ignore self-loops
         # ignore pointing relations
-        if edge_attribs['edge_type'] != 'points_to':
+        if edge_attribs['edge_type'] != EdgeTypes.pointing_relation:
             if docgraph.ns+':token' in docgraph.node[to_id]:
                 span.append(to_id)
             else:

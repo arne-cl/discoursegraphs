@@ -11,8 +11,18 @@ structure used in this package. It is a slightly modified
 TODO: implement a DiscourseCorpusGraph
 """
 
+from enum import Enum
 from networkx import MultiDiGraph
 from discoursegraphs.relabel import relabel_nodes
+
+
+class EdgeTypes(Enum):
+    pointing_relation = 'points_to'
+    reverse_pointing_relation = 'is_pointed_to_by'
+    dominance_relation = 'dominates'
+    reverse_dominance_relation = 'is_dominated_by'
+    spanning_relation = 'spans'
+    reverse_spanning_relation = 'is_part_of'
 
 
 class DiscourseDocumentGraph(MultiDiGraph):

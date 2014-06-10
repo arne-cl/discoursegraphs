@@ -10,7 +10,7 @@ document graph.
 import os
 from lxml import etree
 
-from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.util import natural_sort_key, ensure_unicode, add_prefix
 from discoursegraphs.readwrite.generic import generic_converter_cli
 
@@ -111,7 +111,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         self.add_edges_from(sentence_graph.edges(data=True))
         self.add_edge(self.root, sentence_root_node_id,
                       layers={self.ns, self.ns+':sentence'},
-                      edge_type='spans')
+                      edge_type=EdgeTypes.spanning_relation)
         self.sentences.append(sentence_root_node_id)
 
 
@@ -200,7 +200,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                 self.add_edge(terminal_id, to_id,
                               layers={self.ns, self.ns+':secedge'},
                               attr_dict=secedge_attribs,
-                              edge_type='points_to')
+                              edge_type=EdgeTypes.pointing_relation)
 
         # add sorted list of all token node IDs to sentence root node
         # to make queries simpler/faster
@@ -230,7 +230,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                               layers={self.ns, self.ns+':edge'},
                               attr_dict=edge_attribs,
                               label=edge_attribs[self.ns+':label'],
-                              edge_type='dominates')
+                              edge_type=EdgeTypes.dominance_relation)
 
             # add secondary edges to graph (pointing relations)
             for secedge in nt.iterfind('./secedge'):
@@ -242,7 +242,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                               layers={self.ns, self.ns+':secedge'},
                               attr_dict=secedge_attribs,
                               label=edge_attribs[self.ns+':label'],
-                              edge_type='points_to')
+                              edge_type=EdgeTypes.pointing_relation)
 
     def __add_vroot(self, sentence_root_id, sentence_attributes):
         """
@@ -286,7 +286,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         self.add_edge(new_root_node_id, old_root_node_id,
                       layers={self.ns, self.ns+':sentence',
                               self.ns+':sentence:vroot'},
-                      edge_type='dominates')
+                      edge_type=EdgeTypes.dominance_relation)
         self.root = new_root_node_id
 
     def __repair_unconnected_nodes(self):
@@ -300,7 +300,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         for unconnected_node_id in unconnected_node_ids:
             self.add_edge(self.root, unconnected_node_id,
                           layers={self.ns, self.ns+':sentence'},
-                          edge_type='spans')
+                          edge_type=EdgeTypes.spanning_relation)
 
 
 def _get_terminals_and_nonterminals(sentence_graph):

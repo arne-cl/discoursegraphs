@@ -13,7 +13,7 @@ import sys
 import re
 from lxml import etree
 
-from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.readwrite.generic import generic_converter_cli
 from discoursegraphs.util import ensure_unicode
 
@@ -128,13 +128,13 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
             # having just int-units and ext-units could be enough!
             self.add_edge(self.root, 'unit-{}'.format(unit_id),
                           layers={self.ns, self.ns+':unit'},
-                          edge_type='spans')
+                          edge_type=EdgeTypes.spanning_relation)
             # edge from unit to int/ext sub-unit and connective
             for to_node in ('ext', 'int', 'connective'):
                 self.add_edge('unit-{}'.format(unit_id),
                               '{0}-{1}'.format(to_node, unit_id),
                               layers={self.ns, self.ns+':unit'},
-                              edge_type='dominates')
+                              edge_type=EdgeTypes.dominance_relation)
 
     def _add_token_to_document(self, token_id, token, token_attribs,
                                connected=False):
@@ -169,7 +169,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         if connected:
             if not token_attribs['spans']: # token isn't part of any span
                 self.add_edge(self.root, token_node_id, layers={self.ns},
-                              edge_type='spans')
+                              edge_type=EdgeTypes.spanning_relation)
 
         # add edges from all the spans a token is part of to the token node
         for (span_type, span_id) in token_attribs['spans']:
@@ -178,7 +178,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
                 self.add_node(span_node_id, layers={self.ns, self.ns+':unit'})
                 self.add_edge(span_node_id,
                               token_node_id, layers={self.ns, self.ns+':unit'},
-                              edge_type='spans')
+                              edge_type=EdgeTypes.spanning_relation)
             else:
                 raise NotImplementedError(
                     "Can't handle span_type '{}'".format(span_type))
