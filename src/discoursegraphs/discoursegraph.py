@@ -18,11 +18,12 @@ from discoursegraphs.relabel import relabel_nodes
 
 class EdgeTypes(Enum):
     pointing_relation = 'points_to'
-    reverse_pointing_relation = 'is_pointed_to_by'
+    #~ reverse_pointing_relation = 'is_pointed_to_by'
     dominance_relation = 'dominates'
     reverse_dominance_relation = 'is_dominated_by'
     spanning_relation = 'spans'
-    reverse_spanning_relation = 'is_part_of'
+    #~ reverse_spanning_relation = 'is_part_of'
+    precedence_relation = 'precedes'
 
 
 class DiscourseDocumentGraph(MultiDiGraph):
@@ -502,9 +503,9 @@ class DiscourseDocumentGraph(MultiDiGraph):
             "There are no tokens to add precedence relations to."
         self.add_edge(self.root, self.tokens[0],
                       layers={self.ns, self.ns+':precedence'},
-                      edge_type='precedes')
+                      edge_type=EdgeTypes.precedence_relation)
         for i, token_node_id in enumerate(self.tokens[1:]):
             # edge from token_n to token_n+1
             self.add_edge(self.tokens[i], token_node_id,
                           layers={self.ns, self.ns+':precedence'},
-                          edge_type='precedes')
+                          edge_type=EdgeTypes.precedence_relation)
