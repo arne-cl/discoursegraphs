@@ -11,13 +11,16 @@ stuff done quickly for a presentation and didn't take the time to add
 parameters and refactor large methods).
 """
 
+import os
+import sys
 from collections import defaultdict
 from lxml import etree
 from lxml.builder import ElementMaker
-from discoursegraphs.util import natural_sort_key, ensure_utf8
+
+from discoursegraphs.util import natural_sort_key, ensure_utf8, create_dir
 
 
-class ExmaraldaWriter(object):
+class ExmaraldaFile(object):
     """
     This class converts a DiscourseDocumentGraph into an Exmaralda file.
 
@@ -27,20 +30,35 @@ class ExmaraldaWriter(object):
         maps from a token node ID to its Exmaralda ID (ID in the common
         timeline)
     """
-    def __init__(self, docgraph, output_path):
+    def __init__(self, docgraph):
         """
         Parameters
         ----------
         docgraph : DiscourseDocumentGraph
             the document graph to be converted
-        output_path : str
-            relative or absolute path to the Exmaralda file to be created
         """
         self.toknode2id = {node_id: i
                            for i, node_id in enumerate(docgraph.tokens)}
         self.E = ElementMaker()
         self.tier_count = 0
         self.tree = self.__add_document_structure(docgraph)
+
+    def __str__(self):
+        """
+        returns the generated Exmaralda *.exb file as a string.
+        """
+        return etree.tostring(self.tree, pretty_print=True,
+                              xml_declaration=True, encoding='UTF-8')
+
+    def write(self, output_filepath):
+        """
+        Parameters
+        ----------
+        output_filepath : str
+            relative or absolute path to the Exmaralda file to be created
+        """
+        with open(output_filepath, 'w') as out_file:
+            out_file.write(self.__str__())
 
     def __create_document_header(self):
         """
@@ -372,11 +390,23 @@ def get_pointing_chains(docgraph):
     return unique_chains
 
 
+def write_exb(docgraph, output_file):
+    """
+    converts a DiscourseDocumentGraph into an Exmaralda *.exb file and
+    writes it to the given file (or file path).
+    """
+    exmaralda_file = ExmaraldaFile(docgraph)
+    assert isinstance(output_file, (str, file))
+    if isinstance(output_file, str):
+        path_to_file = os.path.dirname(output_file)
+        if not os.path.isdir(path_to_file):
+            create_dir(path_to_file)
+        exmaralda_file.write(output_file)
+    else: # output_file is a file object
+        output_file.write(exmaralda_file.__str__())
 
 
 if __name__ == "__main__":
-    import os
-    import sys
     import argparse
     import cPickle as pickle
 
@@ -391,12 +421,4 @@ if __name__ == "__main__":
 
     with open(args.input_file, 'rb') as docgraph_file:
         docgraph = pickle.load(docgraph_file)
-    exmaralda = ExmaraldaWriter(docgraph, args.output_file)
-    exmaralda_str = etree.tostring(exmaralda.tree, pretty_print=True,
-                                   xml_declaration=True, encoding='UTF-8')
-
-    if isinstance(args.output_file, file):
-        args.output_file.write(exmaralda_str)
-    else:
-        with open(args.output_file, 'w') as exmaralda_file:
-            exmaralda_file.write(exmaralda_str)
+    write_exb(docgraph, args.output_file)
