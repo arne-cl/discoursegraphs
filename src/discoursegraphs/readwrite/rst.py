@@ -18,7 +18,6 @@ from discoursegraphs.readwrite.generic import generic_converter_cli
 
 
 class RSTGraph(DiscourseDocumentGraph):
-
     """
     A directed graph with multiple edges (based on a networkx
     MultiDiGraph) that represents the rhetorical structure of a
@@ -109,28 +108,39 @@ class RSTGraph(DiscourseDocumentGraph):
         """
         rst_xml_root = rs3_xml_tree.getroot()
 
+        # adds a node to the graph for each RST segment (nucleus or satellite)
         for segment in rst_xml_root.iterfind('./body/segment'):
             segment_node_id = int(segment.attrib['id'])
-            self.add_node(segment_node_id,
-                          layers={self.ns, self.ns+':segment'},
-                          attr_dict={self.ns+':text':
-                                     sanitize_string(segment.text)},
-                          label='{0}:segment:{1}'.format(self.ns,
-                                                         segment.attrib['id']))
-
+            self.add_node(
+                segment_node_id, layers={self.ns, self.ns+':segment'},
+                attr_dict={self.ns+':text': sanitize_string(segment.text)},
+                label='{0}:segment:{1}'.format(self.ns, segment.attrib['id']))
             self.segments.append(segment_node_id)
+
+            # adds an edge from the parent node of the segment to the segment
             if 'parent' in segment.attrib:
                 # node has an outgoing edge,
                 # i.e. segment is in an RST relation
                 parent_node_id = int(segment.attrib['parent'])
-                if parent_node_id not in self:  # node not in graph, yet
+                # if the parent node is not in graph yet, we'll add it first
+                if parent_node_id not in self:
                     self.add_node(parent_node_id,
                                   layers={self.ns, self.ns+':segment'})
-                self.add_edge(segment_node_id, parent_node_id,
+
+                segment_rel = self.relations.get(segment.attrib['relname'],
+                                                 'span')
+                if segment_rel in ('multinuc', 'span'):
+                    from_node = parent_node_id
+                    to_node = segment_node_id
+                else: # if segment_rel == 'rst'
+                    from_node = segment_node_id
+                    to_node = parent_node_id
+
+                self.add_edge(from_node, to_node,
                               layers={self.ns, self.ns+':relation'},
                               relname=self.ns+':'+segment.attrib['relname'],
                               label=self.ns+':'+segment.attrib['relname'],
-                              edge_type=EdgeTypes.reverse_dominance_relation)
+                              edge_type=EdgeTypes.dominance_relation)
 
         for group in rst_xml_root.iterfind('./body/group'):
             group_node_id = int(group.attrib['id'])
@@ -153,12 +163,22 @@ class RSTGraph(DiscourseDocumentGraph):
                     self.add_node(
                         parent_node_id, layers={self.ns, self.ns+':segment'},
                         label='{0}:{1}'.format(self.ns, parent_node_id))
+
+                group_rel = self.relations.get(group.attrib['relname'], 'span')
+                if group_rel in ('multinuc', 'span'):
+                    from_node = parent_node_id
+                    to_node = group_node_id
+                else: # lif segment_rel == 'rst'
+                    from_node = group_node_id
+                    to_node = parent_node_id
+
                 self.add_edge(
-                    group_node_id, parent_node_id,
+                    from_node, to_node,
                     layers={self.ns, self.ns+':relation'},
                     attr_dict={self.ns+':relname': group.attrib['relname'],
                                'label': self.ns+':'+group.attrib['relname']},
-                    edge_type=EdgeTypes.reverse_dominance_relation)
+                    edge_type=EdgeTypes.dominance_relation)
+
             else:  # group node is the root of an RST tree
                 self.root = group_node_id
                 existing_layers = self.node[group_node_id]['layers']
