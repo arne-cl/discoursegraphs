@@ -127,12 +127,12 @@ class RSTGraph(DiscourseDocumentGraph):
             if group_node_id in self:  # group node already exists
                 self.node[group_node_id].update(
                     {self.ns+':reltype': node_type,
-                     'label': self.ns+':'+node_type})
+                     'label': self.ns+':group:'+node_type+':'+group.attrib['id']})
             else:
                 self.add_node(group_node_id,
                               layers={self.ns, self.ns+':segment'},
                               attr_dict={self.ns+':reltype': node_type,
-                                         'label': self.ns+':'+node_type})
+                                         'label': '{0}:{1}:{2}'.format(self.ns, node_type, group_node_id)})
 
             if 'parent' in group.attrib:
                 # node has an outgoing edge, i.e. group is not the
@@ -153,7 +153,8 @@ class RSTGraph(DiscourseDocumentGraph):
                 existing_layers = self.node[group_node_id]['layers']
                 all_layers = existing_layers.union({self.ns+':root'})
                 self.node[group_node_id].update({'layers': all_layers,
-                                                 'label': self.ns+':root'})
+                                                 'label': '{0}:root:{1}'.format(self.ns, group_node_id)})
+
 
     def __tokenize_segments(self):
         """
@@ -170,7 +171,9 @@ class RSTGraph(DiscourseDocumentGraph):
                               attr_dict={self.ns+':token': tok, 'label': tok})
                 self.tokens.append(tok_node_id)
                 self.add_edge(seg_node_id, tok_node_id,
-                              layers={'rst', 'rst:token'}, edge_type=EdgeTypes.spanning_relation)
+                              layers={'rst', 'rst:token'},
+                              edge_type=EdgeTypes.spanning_relation)
+
 
     def __str__(self):
         """
