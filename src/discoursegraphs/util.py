@@ -111,3 +111,13 @@ def create_dir(path):
             print "Cannot create [%s]! Check Permissions" % path
         else:
             raise
+
+
+def sanitize_string(string_or_unicode):
+    """
+    remove leading/trailing whitespace and always return unicode.
+    """
+    if isinstance(string_or_unicode, unicode):
+        return string_or_unicode.strip()
+    else:
+        return string_or_unicode.decode('utf-8').strip()

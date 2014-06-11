@@ -13,6 +13,7 @@ import os
 from lxml import etree
 
 from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
+from discoursegraphs.util import sanitize_string
 from discoursegraphs.readwrite.generic import generic_converter_cli
 
 
@@ -204,16 +205,6 @@ def extract_relationtypes(rs3_xml_tree):
     for rel in rs3_xml_tree.iterfind('//header/relations/rel'):
         relations[rel.attrib['name']] = rel.attrib['type']
     return relations
-
-
-def sanitize_string(string_or_unicode):
-    """
-    remove leading/trailing whitespace and always return unicode.
-    """
-    if isinstance(string_or_unicode, unicode):
-        return string_or_unicode.strip()
-    else:
-        return string_or_unicode.decode('utf-8').strip()
 
 
 if __name__ == '__main__':
