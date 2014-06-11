@@ -47,8 +47,8 @@ class RSTGraph(DiscourseDocumentGraph):
         representing tokens.
         False, if the segments represent untokenized text.
     """
-
-    def __init__(self, rs3_filepath, name=None, namespace='rst'):
+    def __init__(self, rs3_filepath, name=None, namespace='rst',
+                 tokenize=True, precedence=False):
         """
         Creates an RSTGraph from a RS3 XML file and adds metadata to it
         (filename of the RS3 file, names and types of allowed RST
@@ -63,6 +63,13 @@ class RSTGraph(DiscourseDocumentGraph):
             given, the basename of the input file is used.
         namespace : str
             the namespace of the document (default: rst)
+        tokenize : bool
+            If True, the RST segments (i.e. nuclei and satellites) will
+            be tokenized and added as additonal token nodes to the
+            document graph (with edges from the respective RST segments).
+        precedence : bool
+            If True (and if tokenize == True), add precedence relation edges
+            (root precedes token1, which precedes token2 etc.)
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(RSTGraph, self).__init__()
@@ -80,8 +87,12 @@ class RSTGraph(DiscourseDocumentGraph):
         self.tokens = []
 
         self.__rst2graph(rs3_xml_tree)
-        self.__tokenize_segments()
-        self.tokenized = True
+
+        if tokenize:
+            self.__tokenize_segments()
+            self.tokenized = True
+            if precedence:
+                self.add_precedence_relations()
 
     def __rst2graph(self, rs3_xml_tree):
         """
