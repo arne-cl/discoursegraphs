@@ -180,7 +180,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         """
         """
         assert os.path.isfile(annotation_file), \
-            "Annotation doesn't exist: {}".format(annotation_file)
+            "Annotation file doesn't exist: {}".format(annotation_file)
         tree = etree.parse(annotation_file)
         root = tree.getroot()
         # avoids eml.org namespace handling
