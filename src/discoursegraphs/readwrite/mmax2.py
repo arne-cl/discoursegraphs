@@ -207,19 +207,29 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
             # this is a workaround for Chiarcos-style MMAX files
             if 'anaphor_antecedent' in markable.attrib \
             and markable.attrib['anaphor_antecedent'] != 'empty':
-                markable_str = markable.attrib['anaphor_antecedent']
-                # handles both 'markable_1' and 'layer:markable_1'
-                antecedent_node_id = markable_str.split(":")[-1]
+                antecedent_pointer = markable.attrib['anaphor_antecedent']
+                # mmax2 supports weird double antecedents,
+                # e.g. "markable_1000131;markable_1000132", cf. Issue #40
+                for antecedent in antecedent_pointer.split(';'):
+                    antecedent_split = antecedent.split(":")
+                    if len(antecedent_split) == 2:
+                        # mark group:markable_n or secmark:markable_n as such
+                        edge_label = '{}:antecedent'.format(antecedent_split[0])
+                    else:
+                        edge_label = ':antecedent'
 
-                # manually add antecedent node if it's not in the graph, yet
-                # cf. issue #39
-                if antecedent_node_id not in self:
-                    self.add_node(antecedent_node_id,
-                                  layers={self.ns, self.ns+':markable'})
-                self.add_edge(markable_node_id, antecedent_node_id,
-                              layers={self.ns, self.ns+':markable'},
-                              edge_type=EdgeTypes.pointing_relation,
-                              label=self.ns+':antecedent')
+                    # handles both 'markable_n' and 'layer:markable_n'
+                    antecedent_node_id = antecedent_split[-1]
+
+                    # manually add antecedent node if it's not in the graph, yet
+                    # cf. issue #39
+                    if antecedent_node_id not in self:
+                        self.add_node(antecedent_node_id,
+                                      layers={self.ns, self.ns+':markable'})
+                    self.add_edge(markable_node_id, antecedent_node_id,
+                                  layers={self.ns, self.ns+':markable'},
+                                  edge_type=EdgeTypes.pointing_relation,
+                                  label=self.ns+edge_label)
 
     def get_annotation_type():
         """
