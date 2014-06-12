@@ -14,6 +14,7 @@ TODO: implement a DiscourseCorpusGraph
 from enum import Enum
 from networkx import MultiDiGraph
 from discoursegraphs.relabel import relabel_nodes
+from discoursegraphs.util import natural_sort_key, ensure_utf8
 
 
 class EdgeTypes(Enum):
@@ -509,3 +510,135 @@ class DiscourseDocumentGraph(MultiDiGraph):
             self.add_edge(self.tokens[i], token_node_id,
                           layers={self.ns, self.ns+':precedence'},
                           edge_type=EdgeTypes.precedence_relation)
+
+
+def get_annotation_layers(docgraph):
+    """
+    WARNING: this is higly inefficient!
+    Fix this via Issue #36.
+
+    Returns
+    -------
+    all_layers : set or dict
+        the set of all annotation layers used in the given graph
+    """
+    all_layers = set()
+    for node_id, node_attribs in docgraph.nodes_iter(data=True):
+        for layer in node_attribs['layers']:
+            all_layers.add(layer)
+    return all_layers
+
+
+def get_span(docgraph, node_id):
+    """
+    returns all the tokens that are dominated or in a span relation with
+    the given node.
+
+    Returns
+    -------
+    span : list of str
+        sorted list of token nodes (token node IDs)
+    """
+    span = []
+    for from_id, to_id, edge_attribs in docgraph.out_edges_iter(node_id,
+                                                                data=True):
+        if from_id == to_id:
+            pass  # ignore self-loops
+        # ignore pointing relations
+        if edge_attribs['edge_type'] != EdgeTypes.pointing_relation:
+            if docgraph.ns+':token' in docgraph.node[to_id]:
+                span.append(to_id)
+            else:
+                span.extend(get_span(docgraph, to_id))
+    return sorted(span, key=natural_sort_key)
+
+
+def get_text(docgraph, node_id):
+    """
+    returns the text (joined token strings) that the given node dominates
+    or spans.
+    """
+    tokens = (docgraph.node[node_id][docgraph.ns+':token']
+              for node_id in get_span(docgraph, node_id))
+    return ' '.join(tokens)
+
+
+def select_nodes_by_layer(docgraph, layer):
+    """
+    Get all nodes belonging to the given layer.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        document graph from which the nodes will be extracted
+    layer : str
+        name of the layer
+
+    Returns
+    -------
+    nodes : generator of str
+        a container/list of node IDs that are present in the given layer
+    """
+    for node_id, node_attribs in docgraph.nodes_iter(data=True):
+        if layer in node_attribs['layers']:
+            yield node_id
+
+
+def select_edges_by_edgetype(docgraph, edge_type, data=False):
+    """
+    Get all edges with the given edge type.
+    """
+    for (from_id, to_id, edge_attribs) in docgraph.edges(data=True):
+        if edge_attribs['edge_type'] == edge_type:
+            if data:
+                yield (from_id, to_id, edge_attribs)
+            else:
+                yield (from_id, to_id)
+
+
+def get_pointing_chains(docgraph):
+    """
+    returns a list of chained pointing relations (e.g. coreference chains)
+    found in the given document graph.
+    """
+    pointing_relations = select_edges_by_edgetype(docgraph, 'points_to')
+    rel_dict = {from_id: to_id for from_id, to_id in pointing_relations}
+
+    def walk_chain(rel_dict, from_id):
+        """
+        given a dict of pointing relations and a start node, this function
+        will return a list of node IDs representing a path beginning with that
+        node.
+
+        Parameters
+        ----------
+        rel_dict : dict
+            a dictionary mapping from an edge source node (node ID str)
+            to a set of edge target nodes (node ID str)
+        from_id : str
+
+        Returns
+        -------
+        unique_chains : list of str
+            a chain of pointing relations, represented as a list of node IDs
+        """
+        chain = [from_id]
+        to_id = rel_dict[from_id]
+        if to_id in rel_dict:
+            chain.extend(walk_chain(rel_dict, to_id))
+        else:
+            chain.append(to_id)
+        return chain
+
+    all_chains = [walk_chain(rel_dict, from_id)
+                  for from_id in rel_dict.iterkeys()]
+
+    # don't return partial chains, i.e. instead of returning [a,b], [b,c] and
+    # [a,b,c,d], just return [a,b,c,d]
+    unique_chains = []
+    for i, chain in enumerate(all_chains):
+        other_chains = all_chains[:i] + all_chains[i+1:]
+        if any([chain[0] in other_chain for other_chain in other_chains]):
+            continue  # ignore this chain, test the next one
+        unique_chains.append(chain)
+    return unique_chains
