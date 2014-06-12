@@ -140,7 +140,8 @@ class ExmaraldaFile(object):
         root.append(body)
         return root
 
-    def __add_coreference_chain_tiers(self, docgraph, body, min_chain_length=3):
+    def __add_coreference_chain_tiers(self, docgraph, body,
+                                      min_chain_length=3):
         """
         Parameters
         ----------
@@ -166,13 +167,14 @@ class ExmaraldaFile(object):
 
             chain_length = len(chain)
             if chain_length < min_chain_length:
-                continue # ignore short chains
+                continue  # ignore short chains
 
             for j, node_id in enumerate(chain):
                 span_node_ids = get_span(docgraph, node_id)
                 if span_node_ids:
                     start_id, end_id = self.__span2event(span_node_ids)
-                    element_str = "chain_{0}: {1}/{2}".format(i, chain_length-j, chain_length)
+                    element_str = "chain_{0}: {1}/{2}".format(
+                        i, chain_length-j, chain_length)
                     chain_tier.append(
                         E('event', {'start': "T{}".format(start_id),
                                     'end': "T{}".format(end_id)}, element_str))
@@ -403,7 +405,7 @@ def write_exb(docgraph, output_file):
         if not os.path.isdir(path_to_file):
             create_dir(path_to_file)
         exmaralda_file.write(output_file)
-    else: # output_file is a file object
+    else:  # output_file is a file object
         output_file.write(exmaralda_file.__str__())
 
 
