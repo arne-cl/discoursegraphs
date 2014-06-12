@@ -13,12 +13,7 @@ import sys
 import argparse
 from networkx import write_dot
 
-from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
-from discoursegraphs.readwrite.rst import RSTGraph
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph
-from discoursegraphs.readwrite.conano import ConanoDocumentGraph
-from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph
-from discoursegraphs.readwrite.neo4j import convert_to_geoff, upload_to_neo4j
 from discoursegraphs.util import create_dir
 
 
@@ -41,9 +36,9 @@ def merging_cli(debug=False):
                         help='conano file to be merged')
     parser.add_argument('-m', '--mmax-file',
                         help='MMAX2 file to be merged')
-    parser.add_argument('-o', '--output-format',
-                        default='dot',
-                        help='output format: dot, pickle, geoff, neo4j, no-output')
+    parser.add_argument(
+        '-o', '--output-format', default='dot',
+        help='output format: dot, pickle, geoff, neo4j, exmaralda, no-output')
     parser.add_argument('output_file', nargs='?', default=sys.stdout)
 
     args = parser.parse_args(sys.argv[1:])
@@ -60,10 +55,12 @@ def merging_cli(debug=False):
     tiger_docgraph = TigerDocumentGraph(args.tiger_file)
 
     if args.rst_file:
+        from discoursegraphs.readwrite.rst import RSTGraph
         rst_graph = RSTGraph(args.rst_file)
         tiger_docgraph.merge_graphs(rst_graph)
 
     if args.anaphoricity_file:
+        from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
         anaphora_graph = AnaphoraDocumentGraph(args.anaphoricity_file)
         tiger_docgraph.merge_graphs(anaphora_graph)
         # the anaphora doc graph only contains trivial edges from its root
@@ -74,10 +71,12 @@ def merging_cli(debug=False):
             pass
 
     if args.conano_file:
+        from discoursegraphs.readwrite.conano import ConanoDocumentGraph
         conano_graph = ConanoDocumentGraph(args.conano_file)
         tiger_docgraph.merge_graphs(conano_graph)
 
     if args.mmax_file:
+        from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph
         mmax_graph = MMAXDocumentGraph(args.mmax_file)
         tiger_docgraph.merge_graphs(mmax_graph)
 
@@ -93,16 +92,22 @@ def merging_cli(debug=False):
         with open(args.output_file, 'wb') as pickle_file:
             pickle.dump(tiger_docgraph, pickle_file)
     elif args.output_format == 'geoff':
+        from discoursegraphs.readwrite.neo4j import convert_to_geoff
         args.output_file.write(convert_to_geoff(tiger_docgraph))
         print ''
     elif args.output_format == 'neo4j':
         import requests
+        from discoursegraphs.readwrite.neo4j import upload_to_neo4j
         try:
             upload_to_neo4j(tiger_docgraph)
         except requests.exceptions.ConnectionError as e:
             sys.stderr.write(
                 ("Can't upload graph to Neo4j server. "
                  "Is it running?\n{}\n".format(e)))
+    elif args.output_format == 'exmaralda':
+        from discoursegraphs.readwrite.exmaralda import write_exb
+        write_exb(tiger_docgraph, args.output_file)
+
     elif args.output_format == 'no-output':
         pass  # just testing if the merging works
     else:

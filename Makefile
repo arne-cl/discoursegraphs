@@ -2,6 +2,9 @@
 
 MAZ = ~/repos/pcc-annis-merged/maz176
 
+exmaralda:
+	-ls $(MAZ)/anaphora/tosik/das/*.txt | parallel discoursegraphs -a {} -c $(MAZ)/connectors/{/.}.xml -m $(MAZ)/coreference/{/.}.mmax -r $(MAZ)/rst/{/.}.rs3 -t $(MAZ)/syntax/{/.}.xml -o exmaralda /tmp/dg/{/.}.exb
+
 merge-only:
 	date +"%H:%M:%S"
 	-ls $(MAZ)/syntax/*.xml | parallel ~/repos/discoursegraphs/src/discoursegraphs/merging.py -t {} -r $(MAZ)/rst/{/.}.rs3 -a $(MAZ)/anaphora/tosik/das/{/.}.txt -c $(MAZ)/connectors/{/.}.xml -m $(MAZ)/coreference/{/.}.mmax -o no-output
