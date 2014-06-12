@@ -87,7 +87,8 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         (default: 'mmax:root_node')
     """
     def __init__(self, mmax_base_file, name=None, namespace='mmax',
-                 precedence=True, connected=False):
+                 precedence=False, connected=False,
+                 ignore_sentence_annotations=True):
         """
         Parameters
         ----------
@@ -105,6 +106,10 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
             Make the graph connected, i.e. add an edge from root to each
             token. This doesn't do anything, if
             precendence=True.
+        ignore_sentence_annotations : bool
+            If True, sentences will not be annotated in the document graph
+            (i.e. there will be no 'mmax:sentence' node for each sentence
+            and no edge connecting it to each token node). (Default: True)
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(MMAXDocumentGraph, self).__init__()
@@ -126,6 +131,10 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
             self.add_precedence_relations()
         else:
             self.add_token_layer(words_file, connected)
+
+        if ignore_sentence_annotations:
+            mmax_project.annotations.pop('sentence',
+                                         'no sentence annotation layer')
 
         for layer_name in mmax_project.annotations:
             layer_dict = mmax_project.annotations[layer_name]
