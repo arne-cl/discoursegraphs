@@ -11,6 +11,7 @@ structure used in this package. It is a slightly modified
 TODO: implement a DiscourseCorpusGraph
 """
 
+from collections import defaultdict
 from enum import Enum
 from networkx import MultiDiGraph
 from discoursegraphs.relabel import relabel_nodes
@@ -596,49 +597,62 @@ def select_edges_by_edgetype(docgraph, edge_type, data=False):
                 yield (from_id, to_id)
 
 
+def __walk_chain(rel_dict, from_id):
+    """
+    given a dict of pointing relations and a start node, this function
+    will return a list of paths (each path is represented as a list of
+    node IDs -- from the first node of the path to the last).
+
+    Parameters
+    ----------
+    rel_dict : dict
+        a dictionary mapping from an edge source node (node ID str)
+        to a set of edge target nodes (node ID str)
+    from_id : str
+
+    Returns
+    -------
+    paths_starting_with_id : list of list of str
+        each list constains a list of strings (i.e. a list of node IDs,
+        which represent a chain of pointing relations)
+    """
+    paths_starting_with_id = []
+    for to_id in rel_dict[from_id]:
+        if to_id in rel_dict:
+            for tail in __walk_chain(rel_dict, to_id):
+                paths_starting_with_id.append([from_id] + tail)
+        else:
+            paths_starting_with_id.append([from_id, to_id])
+    return paths_starting_with_id
+
+
 def get_pointing_chains(docgraph):
     """
     returns a list of chained pointing relations (e.g. coreference chains)
     found in the given document graph.
     """
     pointing_relations = select_edges_by_edgetype(docgraph, 'points_to')
-    rel_dict = {from_id: to_id for from_id, to_id in pointing_relations}
 
-    def walk_chain(rel_dict, from_id):
-        """
-        given a dict of pointing relations and a start node, this function
-        will return a list of node IDs representing a path beginning with that
-        node.
+    # a markable can point to more than one antecedent, cf. Issue #40
+    rel_dict = defaultdict(set)
+    for from_id, to_id in pointing_relations:
+        rel_dict[from_id].add(to_id)
 
-        Parameters
-        ----------
-        rel_dict : dict
-            a dictionary mapping from an edge source node (node ID str)
-            to a set of edge target nodes (node ID str)
-        from_id : str
-
-        Returns
-        -------
-        unique_chains : list of str
-            a chain of pointing relations, represented as a list of node IDs
-        """
-        chain = [from_id]
-        to_id = rel_dict[from_id]
-        if to_id in rel_dict:
-            chain.extend(walk_chain(rel_dict, to_id))
-        else:
-            chain.append(to_id)
-        return chain
-
-    all_chains = [walk_chain(rel_dict, from_id)
+    all_chains = [__walk_chain(rel_dict, from_id)
                   for from_id in rel_dict.iterkeys()]
 
     # don't return partial chains, i.e. instead of returning [a,b], [b,c] and
     # [a,b,c,d], just return [a,b,c,d]
     unique_chains = []
-    for i, chain in enumerate(all_chains):
-        other_chains = all_chains[:i] + all_chains[i+1:]
-        if any([chain[0] in other_chain for other_chain in other_chains]):
-            continue  # ignore this chain, test the next one
-        unique_chains.append(chain)
+    for i, from_id_chains in enumerate(all_chains):
+        # there will be at least one chain in this list and
+        # its first element is the from ID
+        from_id = from_id_chains[0][0]
+
+        # chain lists not starting with from_id
+        other_chainlists = all_chains[:i] + all_chains[i+1:]
+        if not any([from_id in chain
+                    for chain_list in other_chainlists
+                    for chain in chain_list]):
+                        unique_chains.extend(from_id_chains)
     return unique_chains
