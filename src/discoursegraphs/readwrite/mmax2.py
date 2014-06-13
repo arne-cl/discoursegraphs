@@ -284,6 +284,15 @@ def span2tokens(span_string):
     return tokens
 
 
+def span2text(docgraph, span_string):
+    """
+    converts a span of tokens (str, e.g. 'word_88..word_91') into a string
+    that contains the tokens itself.
+    """
+    token_node_ids = span2tokens(span_string)
+    return u' '.join(docgraph.node[tok_node_id][docgraph.ns+':token']
+                     for tok_node_id in token_node_ids)
+
 if __name__ == "__main__":
     generic_converter_cli(MMAXDocumentGraph,
                           '*.mmax file (MMAX2 annotation file)')
