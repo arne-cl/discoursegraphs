@@ -5,7 +5,7 @@ MAZ = ~/repos/pcc-annis-merged/maz176
 all:
 	mkdir -p /tmp/dg
 	date +"%H:%M:%S"
-	-ls $(MAZ)/syntax/*.xml | parallel discoursegraphs -t {} -r $(MAZ)/rst/{/.}.rs3 -a $(MAZ)/anaphora/tosik/das/{/.}.txt /tmp/dg/{/.}.dot
+	-ls $(MAZ)/syntax/*.xml | parallel discoursegraphs -t {} -r $(MAZ)/rst/{/.}.rs3 -a $(MAZ)/anaphora/tosik/das/{/.}.txt -m $(MAZ)/coreference/{/.}.mmax  /tmp/dg/{/.}.dot
 	date +"%H:%M:%S"
 
 show: all
