@@ -192,6 +192,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
             "Annotation file doesn't exist: {}".format(annotation_file)
         tree = etree.parse(annotation_file)
         root = tree.getroot()
+
         # avoids eml.org namespace handling
         for markable in root.iterchildren():
             markable_node_id = markable.attrib['id']
@@ -200,6 +201,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                           layers={self.ns, self.ns+':markable'},
                           attr_dict=markable_attribs,
                           label=markable_node_id+':'+layer_name)
+
             for to_node_id in span2tokens(markable.attrib['span']):
                 # manually add to_node if it's not in the graph, yet
                 # cf. issue #39
@@ -219,6 +221,9 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                 antecedent_pointer = markable.attrib['anaphor_antecedent']
                 # mmax2 supports weird double antecedents,
                 # e.g. "markable_1000131;markable_1000132", cf. Issue #40
+                #
+                # handling these double antecendents increases the number of
+                # chains, cf. commit edc28abdc4fd36065e8bbf5900eeb4d1326db153
                 for antecedent in antecedent_pointer.split(';'):
                     antecedent_split = antecedent.split(":")
                     if len(antecedent_split) == 2:
@@ -235,17 +240,12 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                     if antecedent_node_id not in self:
                         self.add_node(antecedent_node_id,
                                       layers={self.ns, self.ns+':markable'})
+
                     self.add_edge(markable_node_id, antecedent_node_id,
                                   layers={self.ns, self.ns+':markable'},
                                   edge_type=EdgeTypes.pointing_relation,
                                   label=self.ns+edge_label)
 
-    def get_annotation_type():
-        """
-        TODO: watch out for cross-layer annotations,
-        e.g. 'anaphor_antecedent="secmark:markable_18"'
-        """
-        raise NotImplementedError
 
 def span2tokens(span_string):
     """
