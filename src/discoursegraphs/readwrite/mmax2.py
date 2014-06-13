@@ -202,7 +202,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                           attr_dict=markable_attribs,
                           label=markable_node_id+':'+layer_name)
 
-            for to_node_id in span2tokens(markable.attrib['span']):
+            for to_node_id in spanstring2tokens(markable.attrib['span']):
                 # manually add to_node if it's not in the graph, yet
                 # cf. issue #39
                 if to_node_id not in self:
@@ -247,23 +247,23 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                                   label=self.ns+edge_label)
 
 
-def span2tokens(span_string):
+def spanstring2tokens(span_string):
     """
     converts a span of tokens (str, e.g. 'word_88..word_91')
     into a list of token IDs (e.g. ['word_88', 'word_89', 'word_90', 'word_91']
 
     Examples
     --------
-    >>> from discoursegraphs.readwrite.mmax2 import span2tokens
-    >>> span2tokens('word_1')
+    >>> from discoursegraphs.readwrite.mmax2 import spanstring2tokens
+    >>> spanstring2tokens('word_1')
     ['word_1']
-    >>> span2tokens('word_2,word_3')
+    >>> spanstring2tokens('word_2,word_3')
     ['word_2', 'word_3']
-    >>> span2tokens('word_7..word_11')
+    >>> spanstring2tokens('word_7..word_11')
     ['word_7', 'word_8', 'word_9', 'word_10', 'word_11']
-    >>> span2tokens('word_2,word_3,word_7..word_9')
+    >>> spanstring2tokens('word_2,word_3,word_7..word_9')
     ['word_2', 'word_3', 'word_7', 'word_8', 'word_9']
-    >>> span2tokens('word_7..word_9,word_15,word_17..word_19')
+    >>> spanstring2tokens('word_7..word_9,word_15,word_17..word_19')
     ['word_7', 'word_8', 'word_9', 'word_15', 'word_17', 'word_18', 'word_19']
     """
     tokens = []
@@ -284,12 +284,12 @@ def span2tokens(span_string):
     return tokens
 
 
-def span2text(docgraph, span_string):
+def spanstring2text(docgraph, span_string):
     """
     converts a span of tokens (str, e.g. 'word_88..word_91') into a string
     that contains the tokens itself.
     """
-    token_node_ids = span2tokens(span_string)
+    token_node_ids = spanstring2tokens(span_string)
     return u' '.join(docgraph.node[tok_node_id][docgraph.ns+':token']
                      for tok_node_id in token_node_ids)
 
