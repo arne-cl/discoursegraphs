@@ -148,7 +148,9 @@ class RSTGraph(DiscourseDocumentGraph):
             if group_node_id in self:  # group node already exists
                 self.node[group_node_id].update(
                     {self.ns+':reltype': node_type,
-                     'label': self.ns+':group:'+node_type+':'+group.attrib['id']})
+                     'label': '{0}:group:{1}:{2}'.format(self.ns,
+                                                         node_type,
+                                                         group_node_id)})
             else:
                 self.add_node(
                     group_node_id, layers={self.ns, self.ns+':segment'},
