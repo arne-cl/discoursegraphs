@@ -66,6 +66,7 @@ def ensure_utf8(str_or_unicode):
             "Input '{0}' should be a string or unicode, but it is of "
             "type {1}".format(str_or_unicode, type(str_or_unicode)))
 
+
 def add_prefix(dict_like, prefix):
     """
     takes a dict (or dict-like object, e.g. etree._Attrib) and adds the
@@ -102,9 +103,10 @@ def create_dir(path):
     @param path: path to the directory to be created
     @type path: C{str}
     """
+    import errno
     try:
         os.makedirs(path)
-    except OSError as exc: # Python >2.5
+    except OSError as exc:  # Python >2.5
         if exc.errno == errno.EEXIST:
             pass
         elif exc.errno == errno.EACCES:
