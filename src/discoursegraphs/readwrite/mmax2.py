@@ -216,8 +216,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                               label=self.ns+':'+layer_name)
 
             # this is a workaround for Chiarcos-style MMAX files
-            if 'anaphor_antecedent' in markable.attrib \
-            and markable.attrib['anaphor_antecedent'] != 'empty':
+            if has_antecedent(markable):
                 antecedent_pointer = markable.attrib['anaphor_antecedent']
                 # mmax2 supports weird double antecedents,
                 # e.g. "markable_1000131;markable_1000132", cf. Issue #40
@@ -225,17 +224,17 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                 # handling these double antecendents increases the number of
                 # chains, cf. commit edc28abdc4fd36065e8bbf5900eeb4d1326db153
                 for antecedent in antecedent_pointer.split(';'):
-                    antecedent_split = antecedent.split(":")
-                    if len(antecedent_split) == 2:
+                    ante_split = antecedent.split(":")
+                    if len(ante_split) == 2:
                         # mark group:markable_n or secmark:markable_n as such
-                        edge_label = '{}:antecedent'.format(antecedent_split[0])
+                        edge_label = '{}:antecedent'.format(ante_split[0])
                     else:
                         edge_label = ':antecedent'
 
                     # handles both 'markable_n' and 'layer:markable_n'
-                    antecedent_node_id = antecedent_split[-1]
+                    antecedent_node_id = ante_split[-1]
 
-                    # manually add antecedent node if it's not in the graph, yet
+                    # manually add antecedent node if it's not yet in the graph
                     # cf. issue #39
                     if antecedent_node_id not in self:
                         self.add_node(antecedent_node_id,
@@ -245,6 +244,26 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                                   layers={self.ns, self.ns+':markable'},
                                   edge_type=EdgeTypes.pointing_relation,
                                   label=self.ns+edge_label)
+
+
+def has_antecedent(markable):
+    """
+    checks, if a markable has an antecedent. This function is only useful
+    for Chiarcos-style MMAX projects, where anaphoric relations are marked
+    as pointing relations between markables.
+
+    Parameters
+    ----------
+    markable : etree._Element
+        an etree element representing an MMAX markable
+
+    Returns
+    -------
+    has_antecedent : bool
+        Returns True, iff the markable has an antecedent.
+    """
+    return ('anaphor_antecedent' in markable.attrib
+            and markable.attrib['anaphor_antecedent'] != 'empty')
 
 
 def spanstring2tokens(span_string):
