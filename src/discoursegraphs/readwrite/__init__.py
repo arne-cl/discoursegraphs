@@ -9,10 +9,11 @@ processing.
 
 __all__ = [
     'TigerDocumentGraph', 'AnaphoraDocumentGraph', 'RSTGraph',
-    'MMAXDocumentGraph'
+    'MMAXDocumentGraph', 'ConanoDocumentGraph'
 ]
 
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
+from discoursegraphs.readwrite.conano import ConanoDocumentGraph
 from discoursegraphs.readwrite.rst import RSTGraph
 from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph

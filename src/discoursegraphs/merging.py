@@ -60,7 +60,7 @@ def merging_cli(debug=False):
         tiger_docgraph.merge_graphs(rst_graph)
 
     if args.anaphoricity_file:
-        from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
+        from discoursegraphs.readwrite import AnaphoraDocumentGraph
         anaphora_graph = AnaphoraDocumentGraph(args.anaphoricity_file)
         tiger_docgraph.merge_graphs(anaphora_graph)
         # the anaphora doc graph only contains trivial edges from its root
@@ -71,16 +71,16 @@ def merging_cli(debug=False):
             pass
 
     if args.conano_file:
-        from discoursegraphs.readwrite.conano import ConanoDocumentGraph
+        from discoursegraphs.readwrite import ConanoDocumentGraph
         conano_graph = ConanoDocumentGraph(args.conano_file)
         tiger_docgraph.merge_graphs(conano_graph)
 
     if args.mmax_file:
-        from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph
+        from discoursegraphs.readwrite import MMAXDocumentGraph
         mmax_graph = MMAXDocumentGraph(args.mmax_file)
         tiger_docgraph.merge_graphs(mmax_graph)
 
-    if isinstance(args.output_file, str): # if we're not piping to stdout ...
+    if isinstance(args.output_file, str):  # if we're not piping to stdout ...
         path_to_output_file = os.path.dirname(args.output_file)
         if not os.path.isdir(path_to_output_file):
             create_dir(path_to_output_file)
