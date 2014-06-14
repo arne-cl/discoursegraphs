@@ -116,16 +116,18 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         regex_match = ANNOTATED_ANAPHORA_REGEX.search(token)
         if regex_match:  # token is annotated
             unannotated_token = regex_match.group('token')
+            unicode_token = ensure_unicode(unannotated_token)
             annotation = regex_match.group('annotation')
+            anno_type = ANNOTATION_TYPES[annotation]
             certainty = "1.0" if not regex_match.group('uncertain') else "0.5"
             self.add_node(
                 token_id,
                 layers={self.ns, self.ns+':token'},
                 attr_dict={
-                    self.ns+':annotation': ANNOTATION_TYPES[annotation],
+                    self.ns+':annotation': anno_type,
                     self.ns+':certainty': certainty,
-                    self.ns+':token': ensure_unicode(unannotated_token),
-                    'label': ensure_unicode(unannotated_token)+'_'+ANNOTATION_TYPES[annotation]})
+                    self.ns+':token': unicode_token,
+                    'label': u"{0}_{1}".format(unicode_token, anno_type)})
         else:  # token is not annotated
             self.add_node(
                 token_id,
