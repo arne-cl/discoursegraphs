@@ -113,9 +113,8 @@ class ExmaraldaFile(object):
         for layer in annotation_layers:
             # very dirty hack
             # TODO: fix Issue #36
-            layer_levels = layer.split(':')
-            layer_cat = layer_levels[-1]
-            if len(layer_levels) == 2 and layer_cat not in ('token', 'root', 'sentence'):
+            if is_informative(layer):
+                layer_cat = layer.split(':')[-1]
                 temp_tier = E('tier',
                               {'id': "TIE{}".format(self.tier_count),
                                'category': layer_cat, 'type': "t",
@@ -258,6 +257,29 @@ class ExmaraldaFile(object):
         """
         return (self.toknode2id[span_node_ids[0]],
                 self.toknode2id[span_node_ids[-1]]+1)
+
+
+def is_informative(layer):
+    """
+    Parameter
+    ---------
+    layer : str
+        the name of a layer, e.g. 'tiger', 'tiger:token' or 'mmax:sentence'
+
+    Reuturns
+    --------
+    is_informative : bool
+        Returns True, iff the layer is likely to contain information that
+        should be exported to Exmaralda. Usually, we don't want to include
+        information about sentence or token boundaries, since they are already
+        obvious from the token layer.
+    """
+    # very dirty hack
+    # TODO: fix Issue #36 (efficient self.layers / get_hierarchical_layers()
+    layer_levels = layer.split(':')
+    layer_cat = layer_levels[-1]
+    return (len(layer_levels) == 2 and
+            layer_cat not in ('token', 'root', 'sentence'))
 
 
 def write_exb(docgraph, output_file):
