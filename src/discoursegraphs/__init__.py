@@ -6,6 +6,7 @@ __author__ = 'Arne Neumann'
 __email__ = 'discoursegraphs.programming@arne.cl'
 __version__ = '0.1.2'
 
+# flake8: noqa
 
 from discoursegraph import (
     DiscourseDocumentGraph, EdgeTypes, get_annotation_layers, get_span,
