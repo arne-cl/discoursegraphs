@@ -38,7 +38,8 @@ def merging_cli(debug=False):
                         help='MMAX2 file to be merged')
     parser.add_argument(
         '-o', '--output-format', default='dot',
-        help='output format: dot, pickle, geoff, neo4j, exmaralda, no-output')
+        help=('output format: dot, pickle, geoff, neo4j, exmaralda, conll, '
+              'no-output'))
     parser.add_argument('output_file', nargs='?', default=sys.stdout)
 
     args = parser.parse_args(sys.argv[1:])
@@ -107,6 +108,9 @@ def merging_cli(debug=False):
     elif args.output_format == 'exmaralda':
         from discoursegraphs.readwrite.exmaralda import write_exb
         write_exb(tiger_docgraph, args.output_file)
+    elif args.output_format == 'conll':
+        from discoursegraphs.readwrite.conll import write_conll
+        write_conll(tiger_docgraph, args.output_file)
 
     elif args.output_format == 'no-output':
         pass  # just testing if the merging works
