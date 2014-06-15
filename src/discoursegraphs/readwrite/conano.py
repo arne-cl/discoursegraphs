@@ -167,7 +167,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         self.tokens.append(token_node_id)
 
         if connected:
-            if not token_attribs['spans']: # token isn't part of any span
+            if not token_attribs['spans']:  # token isn't part of any span
                 self.add_edge(self.root, token_node_id, layers={self.ns},
                               edge_type=EdgeTypes.spanning_relation)
 

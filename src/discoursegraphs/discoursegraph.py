@@ -15,7 +15,7 @@ from collections import defaultdict
 from enum import Enum
 from networkx import MultiDiGraph
 from discoursegraphs.relabel import relabel_nodes
-from discoursegraphs.util import natural_sort_key, ensure_utf8
+from discoursegraphs.util import natural_sort_key
 
 
 class EdgeTypes(Enum):
