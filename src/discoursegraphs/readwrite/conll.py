@@ -6,6 +6,9 @@
 The ``conll`` module converts a ``DiscourseDocumentGraph`` (possibly
 containing multiple annotation layers) into an CoNLL 2009 tab-separated file.
 
+Currently, all annotation levels are ignored; only the tokens and sentences
+are exported!
+
 TODO: write a generic_merging_cli() and a generic write_format() function.
 Coordinate this with
     issue #43: add write_formatname function for each output format
@@ -14,7 +17,7 @@ Coordinate this with
 import os
 import sys
 
-from discoursegraphs.util import create_dir
+from discoursegraphs.util import create_dir, ensure_utf8
 
 
 class Conll2009File(object):
@@ -28,13 +31,23 @@ class Conll2009File(object):
         docgraph : DiscourseDocumentGraph
             the document graph to be converted
         """
-        raise NotImplementedError
+        self.docgraph = docgraph
 
     def __str__(self):
         """
         returns the generated CoNLL 2009 file as a string.
         """
-        raise NotImplementedError
+        docgraph = self.docgraph
+        conll_str = ''
+        for sentence_id in docgraph.sentences:
+            # token indices in CoNLL files start with 1!
+            for i, token_id in enumerate(docgraph.node[sentence_id]['tokens'], 1):
+                word = docgraph.get_token(token_id)
+                conll_str += '{0}\t{1}{2}\n'.format(i,
+                                                    ensure_utf8(word),
+                                                    '\t_' * 13)
+            conll_str += '\n'
+        return conll_str
 
     def write(self, output_filepath):
         """
