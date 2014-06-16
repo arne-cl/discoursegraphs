@@ -19,6 +19,9 @@ merge-only:
 exmaralda:
 	-ls $(MAZ)/anaphora/tosik/das/*.txt | parallel discoursegraphs -a {} -c $(MAZ)/connectors/{/.}.xml -m $(MAZ)/coreference/{/.}.mmax -r $(MAZ)/rst/{/.}.rs3 -t $(MAZ)/syntax/{/.}.xml -o exmaralda /tmp/dg/{/.}.exb
 
+conll:
+	-ls $(MAZ)/syntax/*.xml | parallel discoursegraphs -t {} -m $(MAZ)/coreference/{/.}.mmax -o conll /tmp/dg/{/.}.expected
+
 neo4j:
 	date +"%H:%M:%S"
 	-ls $(MAZ)/syntax/*.xml | parallel discoursegraphs -t {} -r $(MAZ)/rst/{/.}.rs3 -a $(MAZ)/anaphora/tosik/das/{/.}.txt -o neo4j
