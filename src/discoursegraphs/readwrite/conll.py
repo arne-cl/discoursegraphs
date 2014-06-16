@@ -64,7 +64,7 @@ class Conll2009File(object):
         returns the generated CoNLL 2009 file as a string.
         """
         docgraph = self.docgraph
-        conll_str = ''
+        conll_str = '#begin document (__); __\n'
         for sentence_id in docgraph.sentences:
             # every sentence in a CoNLL file starts with index 1!
             for i, token_id in enumerate(docgraph.node[sentence_id]['tokens'], 1):
@@ -91,6 +91,7 @@ class Conll2009File(object):
                                                        '\t_' * 12,
                                                        coref_column)
             conll_str += '\n'
+        conll_str += '#end document'
         return conll_str
 
     def write(self, output_filepath):
