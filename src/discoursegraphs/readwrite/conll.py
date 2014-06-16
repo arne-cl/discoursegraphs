@@ -34,7 +34,7 @@ class Conll2009File(object):
             the document graph to be converted
         """
         self.docgraph = docgraph
-        self.tok2markable, self.markable2toks = \
+        self.tok2markable, self.tok2chain, self.markable2toks = \
             self.__build_markable_token_mapper()
 
     def __build_markable_token_mapper(self):
@@ -42,13 +42,17 @@ class Conll2009File(object):
         Returns
         -------
         tok2markable : dict (str -> set of str)
-            maps from a token (node ID) to all the markables (node IDs)
-            it is part of
+            Maps from a token (node ID) to all the markables (node IDs)
+            it is part of.
+        tok2chain : dict (str -> set of lists of str)
+            Maps from a token (node ID) to all the chains it belongs to.
+            Each chain is represented as a list of markables.
         markable2toks : dict (str -> list of str)
-            maps from a markable (node ID) to all the tokens (node IDs)
-            that belong to it
+            Maps from a markable (node ID) to all the tokens (node IDs)
+            that belong to it.
         """
         tok2markable = defaultdict(set)
+        tok2chain = defaultdict(set)
         markable2toks = defaultdict(list)
 
         for chain in get_pointing_chains(self.docgraph):
@@ -57,7 +61,8 @@ class Conll2009File(object):
                 markable2toks[markable] = span
                 for token_node_id in span:
                     tok2markable[token_node_id].add(markable)
-        return tok2markable, markable2toks
+                    tok2chain[token_node_id].add(chain)
+        return tok2markable, tok2chain, markable2toks
 
     def __str__(self):
         """
