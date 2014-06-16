@@ -6,8 +6,8 @@
 The ``conll`` module converts a ``DiscourseDocumentGraph`` (possibly
 containing multiple annotation layers) into an CoNLL 2009 tab-separated file.
 
-Currently, all annotation levels are ignored; only the tokens and sentences
-are exported!
+Currently, most annotation levels are ignored. Only tokens, sentences
+are coreferences are exported!
 
 TODO: write a generic_merging_cli() and a generic write_format() function.
 Coordinate this with
@@ -16,7 +16,9 @@ Coordinate this with
 
 import os
 import sys
+from collections import defaultdict
 
+from discoursegraphs import get_pointing_chains, get_span
 from discoursegraphs.util import create_dir, ensure_utf8
 
 
@@ -32,6 +34,30 @@ class Conll2009File(object):
             the document graph to be converted
         """
         self.docgraph = docgraph
+        self.tok2markable, self.markable2toks = \
+            self.__build_markable_token_mapper()
+
+    def __build_markable_token_mapper(self):
+        """
+        Returns
+        -------
+        tok2markable : dict (str -> set of str)
+            maps from a token (node ID) to all the markables (node IDs)
+            it is part of
+        markable2toks : dict (str -> list of str)
+            maps from a markable (node ID) to all the tokens (node IDs)
+            that belong to it
+        """
+        tok2markable = defaultdict(set)
+        markable2toks = defaultdict(list)
+
+        for chain in get_pointing_chains(self.docgraph):
+            for markable in chain:
+                span = get_span(self.docgraph, markable)
+                markable2toks[markable] = span
+                for token_node_id in span:
+                    tok2markable[token_node_id].add(markable)
+        return tok2markable, markable2toks
 
     def __str__(self):
         """
@@ -40,12 +66,30 @@ class Conll2009File(object):
         docgraph = self.docgraph
         conll_str = ''
         for sentence_id in docgraph.sentences:
-            # token indices in CoNLL files start with 1!
+            # every sentence in a CoNLL file starts with index 1!
             for i, token_id in enumerate(docgraph.node[sentence_id]['tokens'], 1):
+                if token_id in self.tok2markable:
+                    coreferences = []
+                    markable_ids = self.tok2markable[token_id]
+                    for markable_id in markable_ids:
+                        span = self.markable2toks[markable_id]
+                        coref_str = markable_id
+                        if span.index(token_id) == 0:
+                            # token is the first element of a markable span
+                            coref_str = '(' + coref_str
+                        if  span.index(token_id) == len(span)-1:
+                            # token is the last element of a markable span
+                            coref_str += ')'
+                        coreferences.append(coref_str)
+                    coref_column = '\t{}'.format('|'.join(coreferences))
+
+                else:
+                    coref_column = '\t_'
+
                 word = docgraph.get_token(token_id)
-                conll_str += '{0}\t{1}{2}\n'.format(i,
-                                                    ensure_utf8(word),
-                                                    '\t_' * 13)
+                conll_str += '{0}\t{1}{2}{3}\n'.format(i, ensure_utf8(word),
+                                                       '\t_' * 12,
+                                                       coref_column)
             conll_str += '\n'
         return conll_str
 
