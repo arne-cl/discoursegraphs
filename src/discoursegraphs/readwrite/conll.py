@@ -18,7 +18,8 @@ import os
 import sys
 from collections import defaultdict
 
-from discoursegraphs import get_pointing_chains, get_span
+from discoursegraphs import (get_pointing_chains, get_span,
+                             select_nodes_by_layer)
 from discoursegraphs.util import create_dir, ensure_utf8
 
 
@@ -58,18 +59,33 @@ class Conll2009File(object):
         markable2toks = defaultdict(list)
         markable2chains = defaultdict(list)
 
-        for chain_id, chain in enumerate(get_pointing_chains(self.docgraph)):
-            for markable in chain:
-                markable2chains[markable].append(chain_id)
-                span = get_span(self.docgraph, markable)
-                markable2toks[markable] = span
-                for token_node_id in span:
-                    tok2markables[token_node_id].add(markable)
+        coreference_chains = get_pointing_chains(self.docgraph)
+        for chain_id, chain in enumerate(coreference_chains):
+            for markable_node_id in chain:
+                markable2chains[markable_node_id].append(chain_id)
+
+        # ID of the first singleton (if there are any)
+        singleton_id = len(coreference_chains)
+
+        # markable2toks/tok2markables shall contains all markables, not only
+        # those which are part of a coreference chain
+        for markable_node_id in select_nodes_by_layer(self.docgraph,
+                                                      'mmax:markable'):
+            span = get_span(self.docgraph, markable_node_id)
+            markable2toks[markable_node_id] = span
+            for token_node_id in span:
+                tok2markables[token_node_id].add(markable_node_id)
+
+            # singletons each represent their own chain (with only one element)
+            if markable_node_id not in markable2chains:
+                markable2chains[markable_node_id] = [singleton_id]
+                singleton_id += 1
+
         return tok2markables, markable2toks, markable2chains
 
     def __str__(self):
         """
-        returns the generated CoNLL 2009 file as a string.
+        returns a string representation of the CoNLL 2009 file.
         """
         docgraph = self.docgraph
         conll_str = '#begin document (__); __\n'
@@ -80,18 +96,11 @@ class Conll2009File(object):
                     coreferences = []
                     markable_ids = self.tok2markables[token_id]
                     for markable_id in markable_ids:
-                        # a markable can be part of multiple chains, at least
-                        # it's legal in MMAX2
-                        for chain_id in self.markable2chains[markable_id]:
-                            span = self.markable2toks[markable_id]
-                            coref_str = str(chain_id)
-                            if span.index(token_id) == 0:
-                                # token is the first element of a markable span
-                                coref_str = '(' + coref_str
-                            if  span.index(token_id) == len(span)-1:
-                                # token is the last element of a markable span
-                                coref_str += ')'
-                            coreferences.append(coref_str)
+                            # a markable can be part of multiple chains, at least
+                            # it's legal in MMAX2
+                            for chain_id in self.markable2chains[markable_id]:
+                                coref_str = self.__gen_coref_str(token_id, markable_id, chain_id)
+                                coreferences.append(coref_str)
                     coref_column = '\t{}'.format('|'.join(coreferences))
 
                 else:
@@ -104,6 +113,37 @@ class Conll2009File(object):
             conll_str += '\n'
         conll_str += '#end document'
         return conll_str
+
+    def __gen_coref_str(self, token_id, markable_id, target_id):
+        """
+        generates the string that represents the markables and coreference
+        chains that a token is part of.
+
+        Parameters
+        ----------
+        token_id : str
+            the node ID of the token
+        markable_id : str
+            the node ID of the markable span
+        target_id : int
+            the ID of the target (either a singleton markable or a coreference
+            chain)
+
+        Returns
+        -------
+        coref_str : str
+            a string representing the token's position in a markable span
+            and its membership in one (or more) coreference chains
+        """
+        span = self.markable2toks[markable_id]
+        coref_str = str(target_id)
+        if span.index(token_id) == 0:
+            # token is the first element of a markable span
+            coref_str = '(' + coref_str
+        if  span.index(token_id) == len(span)-1:
+            # token is the last element of a markable span
+            coref_str += ')'
+        return coref_str
 
     def write(self, output_filepath):
         """
