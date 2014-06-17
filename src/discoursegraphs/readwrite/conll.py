@@ -34,35 +34,38 @@ class Conll2009File(object):
             the document graph to be converted
         """
         self.docgraph = docgraph
-        self.tok2markable, self.tok2chain, self.markable2toks = \
+        self.tok2markables, self.markable2toks, self.markable2chains = \
             self.__build_markable_token_mapper()
 
     def __build_markable_token_mapper(self):
         """
+        Creates mappings from tokens to the markable spans they belong to
+        and the coreference chains these markables are part of.
+
         Returns
         -------
-        tok2markable : dict (str -> set of str)
+        tok2markables : dict (str -> set of str)
             Maps from a token (node ID) to all the markables (node IDs)
             it is part of.
-        tok2chain : dict (str -> set of lists of str)
-            Maps from a token (node ID) to all the chains it belongs to.
-            Each chain is represented as a list of markables.
         markable2toks : dict (str -> list of str)
             Maps from a markable (node ID) to all the tokens (node IDs)
             that belong to it.
+        markable2chains : dict (str -> list of int)
+            Maps from a markable (node ID) to all the chains (chain ID) it
+            belongs to.
         """
-        tok2markable = defaultdict(set)
-        tok2chain = defaultdict(set)
+        tok2markables = defaultdict(set)
         markable2toks = defaultdict(list)
+        markable2chains = defaultdict(list)
 
-        for chain in get_pointing_chains(self.docgraph):
+        for chain_id, chain in enumerate(get_pointing_chains(self.docgraph)):
             for markable in chain:
+                markable2chains[markable].append(chain_id)
                 span = get_span(self.docgraph, markable)
                 markable2toks[markable] = span
                 for token_node_id in span:
-                    tok2markable[token_node_id].add(markable)
-                    tok2chain[token_node_id].add(chain)
-        return tok2markable, tok2chain, markable2toks
+                    tok2markables[token_node_id].add(markable)
+        return tok2markables, markable2toks, markable2chains
 
     def __str__(self):
         """
@@ -73,19 +76,22 @@ class Conll2009File(object):
         for sentence_id in docgraph.sentences:
             # every sentence in a CoNLL file starts with index 1!
             for i, token_id in enumerate(docgraph.node[sentence_id]['tokens'], 1):
-                if token_id in self.tok2markable:
+                if token_id in self.tok2markables:
                     coreferences = []
-                    markable_ids = self.tok2markable[token_id]
+                    markable_ids = self.tok2markables[token_id]
                     for markable_id in markable_ids:
-                        span = self.markable2toks[markable_id]
-                        coref_str = markable_id
-                        if span.index(token_id) == 0:
-                            # token is the first element of a markable span
-                            coref_str = '(' + coref_str
-                        if  span.index(token_id) == len(span)-1:
-                            # token is the last element of a markable span
-                            coref_str += ')'
-                        coreferences.append(coref_str)
+                        # a markable can be part of multiple chains, at least
+                        # it's legal in MMAX2
+                        for chain_id in self.markable2chains[markable_id]:
+                            span = self.markable2toks[markable_id]
+                            coref_str = str(chain_id)
+                            if span.index(token_id) == 0:
+                                # token is the first element of a markable span
+                                coref_str = '(' + coref_str
+                            if  span.index(token_id) == len(span)-1:
+                                # token is the last element of a markable span
+                                coref_str += ')'
+                            coreferences.append(coref_str)
                     coref_column = '\t{}'.format('|'.join(coreferences))
 
                 else:
