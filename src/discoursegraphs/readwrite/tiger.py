@@ -195,7 +195,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
             for secedge in t.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
                 secedge_attribs = add_prefix(secedge.attrib, self.ns+':')
-                if not to_id in self:  # if graph doesn't contain to-node, yet
+                if to_id not in self:  # if graph doesn't contain to-node, yet
                     self.add_node(to_id, layers={self.ns, self.ns+':secedge'})
                 self.add_edge(terminal_id, to_id,
                               layers={self.ns, self.ns+':secedge'},

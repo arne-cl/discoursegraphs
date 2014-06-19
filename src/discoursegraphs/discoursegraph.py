@@ -20,11 +20,11 @@ from discoursegraphs.util import natural_sort_key
 
 class EdgeTypes(Enum):
     pointing_relation = 'points_to'
-    #~ reverse_pointing_relation = 'is_pointed_to_by'
+    # reverse_pointing_relation = 'is_pointed_to_by' # not needed right now
     dominance_relation = 'dominates'
     reverse_dominance_relation = 'is_dominated_by'
     spanning_relation = 'spans'
-    #~ reverse_spanning_relation = 'is_part_of'
+    # reverse_spanning_relation = 'is_part_of' # not needed right now
     precedence_relation = 'precedes'
 
 

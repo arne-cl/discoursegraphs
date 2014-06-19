@@ -43,7 +43,7 @@ def add_node_ids_as_labels(discoursegraph):
     discoursegraph : DiscourseDocumentGraph
     """
     for node_id, properties in discoursegraph.nodes_iter(data=True):
-        if not 'label' in properties and isinstance(node_id, (str, unicode)):
+        if 'label' not in properties and isinstance(node_id, (str, unicode)):
             discoursegraph.node[node_id]['label'] = ensure_utf8(node_id)
 
 
