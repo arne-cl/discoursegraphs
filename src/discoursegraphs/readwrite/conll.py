@@ -87,26 +87,28 @@ class Conll2009File(object):
         """
         returns a string representation of the CoNLL 2009 file.
         """
-        docgraph = self.docgraph
+        dg = self.docgraph
         conll_str = '#begin document (__); __\n'
-        for sentence_id in docgraph.sentences:
+        for sentence_id in dg.sentences:
             # every sentence in a CoNLL file starts with index 1!
-            for i, token_id in enumerate(docgraph.node[sentence_id]['tokens'], 1):
-                if token_id in self.tok2markables:
+            for i, tok_id in enumerate(dg.node[sentence_id]['tokens'], 1):
+                if tok_id in self.tok2markables:
                     coreferences = []
-                    markable_ids = self.tok2markables[token_id]
+                    markable_ids = self.tok2markables[tok_id]
                     for markable_id in markable_ids:
-                            # a markable can be part of multiple chains, at least
-                            # it's legal in MMAX2
+                            # a markable can be part of multiple chains,
+                            # at least it's legal in MMAX2
                             for chain_id in self.markable2chains[markable_id]:
-                                coref_str = self.__gen_coref_str(token_id, markable_id, chain_id)
+                                coref_str = self.__gen_coref_str(tok_id,
+                                                                 markable_id,
+                                                                 chain_id)
                                 coreferences.append(coref_str)
                     coref_column = '\t{}'.format('|'.join(coreferences))
 
                 else:
                     coref_column = '\t_'
 
-                word = docgraph.get_token(token_id)
+                word = dg.get_token(tok_id)
                 conll_str += '{0}\t{1}{2}{3}\n'.format(i, ensure_utf8(word),
                                                        '\t_' * 12,
                                                        coref_column)
@@ -140,7 +142,7 @@ class Conll2009File(object):
         if span.index(token_id) == 0:
             # token is the first element of a markable span
             coref_str = '(' + coref_str
-        if  span.index(token_id) == len(span)-1:
+        if span.index(token_id) == len(span)-1:
             # token is the last element of a markable span
             coref_str += ')'
         return coref_str
@@ -188,5 +190,3 @@ if __name__ == "__main__":
     with open(args.input_file, 'rb') as docgraph_file:
         docgraph = pickle.load(docgraph_file)
     write_conll(docgraph, args.output_file)
-
-
