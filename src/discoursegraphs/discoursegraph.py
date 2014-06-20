@@ -542,9 +542,42 @@ def get_annotation_layers(docgraph):
     all_layers : set or dict
         the set of all annotation layers used in the given graph
     """
+	node_layers = get_node_annotation_layers(docgraph)
+    return node_layers.union(get_edge_annotation_layers(docgraph))
+
+
+def get_node_annotation_layers(docgraph):
+    """
+    WARNING: this is higly inefficient!
+    Fix this via Issue #36.
+
+    Returns
+    -------
+    all_layers : set or dict
+        the set of all annotation layers used for annotating nodes in the given
+        graph
+    """
     all_layers = set()
     for node_id, node_attribs in docgraph.nodes_iter(data=True):
         for layer in node_attribs['layers']:
+            all_layers.add(layer)
+    return all_layers
+
+
+def get_edge_annotation_layers(docgraph):
+    """
+    WARNING: this is higly inefficient!
+    Fix this via Issue #36.
+
+    Returns
+    -------
+    all_layers : set or dict
+        the set of all annotation layers used for annotating edges in the given
+        graph
+    """
+    all_layers = set()
+    for source_id, target_id, edge_attribs in docgraph.edges_iter(data=True):
+        for layer in edge_attribs['layers']:
             all_layers.add(layer)
     return all_layers
 
