@@ -616,6 +616,29 @@ def get_text(docgraph, node_id):
     return ' '.join(tokens)
 
 
+def select_edges_by_layer(docgraph, layer):
+    """
+    Get all edges belonging to the given layer.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        document graph from which the nodes will be extracted
+    layer : str
+        name of the layer
+
+    Returns
+    -------
+    edges : generator of str
+        a container/list of (source node ID, target node ID) tuples that are
+        present in the given layer
+    """
+    for from_id, to_id, edge_attribs in docgraph.edges_iter(data=True):
+        if layer in edge_attribs['layers']:
+            yield (from_id, to_id)
+
+
+
 def select_nodes_by_layer(docgraph, layer):
     """
     Get all nodes belonging to the given layer.
