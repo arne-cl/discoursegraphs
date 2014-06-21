@@ -542,7 +542,7 @@ def get_annotation_layers(docgraph):
     all_layers : set or dict
         the set of all annotation layers used in the given graph
     """
-	node_layers = get_node_annotation_layers(docgraph)
+    node_layers = get_node_annotation_layers(docgraph)
     return node_layers.union(get_edge_annotation_layers(docgraph))
 
 
@@ -616,7 +616,7 @@ def get_text(docgraph, node_id):
     return ' '.join(tokens)
 
 
-def select_edges_by_layer(docgraph, layer):
+def select_edges_by_layer(docgraph, layer, data=False):
     """
     Get all edges belonging to the given layer.
 
@@ -631,12 +631,17 @@ def select_edges_by_layer(docgraph, layer):
     -------
     edges : generator of str
         a container/list of (source node ID, target node ID) tuples that are
-        present in the given layer
+        present in the given layer. If data is True, (source node ID, target
+        node ID, edge attribute dict)
+    data : bool
+        If True, results will include edge attributes.
     """
     for from_id, to_id, edge_attribs in docgraph.edges_iter(data=True):
         if layer in edge_attribs['layers']:
-            yield (from_id, to_id)
-
+            if data:
+                yield (from_id, to_id, edge_attribs)
+            else:
+                yield (from_id, to_id)
 
 
 def select_nodes_by_layer(docgraph, layer):
@@ -670,6 +675,32 @@ def select_edges_by_edgetype(docgraph, edge_type, data=False):
                 yield (from_id, to_id, edge_attribs)
             else:
                 yield (from_id, to_id)
+
+
+def select_edges_by_edgetype_and_layer(docgraph, layer=None, edge_type=None,
+                                       data=False):
+    """get all edges with the given edge type and layer"""
+    for (from_id, to_id, edge_attribs) in docgraph.edges(data=True):
+        if edge_attribs['edge_type'] == edge_type and layer in edge_attribs['layers']:
+                if data:
+                    yield (from_id, to_id, edge_attribs)
+                else:
+                    yield (from_id, to_id)
+
+def select_edges_by(docgraph, layer=None, edge_type=None, data=False):
+    """get all edges with the given edge type and layer"""
+    if layer is not None:
+        if edge_type is not None:
+            return select_edges_by_edgetype_and_layer(docgraph, layer,
+                                                      edge_type, data)
+        else:  # filter by layer, but not by edge type
+            return select_edges_by_layer(docgraph, layer, data=data)
+
+    else:  # don't filter layers
+        if edge_type is not None:  # filter by edge type, but not by layer
+            return select_edges_by_edgetype(docgraph, edge_type, data=data)
+        else:  # neither layer, nor edge type is filtered
+            return docgraph.edges(data=data)
 
 
 def __walk_chain(rel_dict, from_id):
