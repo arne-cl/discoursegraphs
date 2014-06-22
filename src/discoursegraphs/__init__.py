@@ -10,5 +10,5 @@ __version__ = '0.1.2'
 
 from discoursegraph import (
     DiscourseDocumentGraph, EdgeTypes, get_annotation_layers, get_span,
-    get_text, select_nodes_by_layer, select_edges_by_edgetype,
+    get_text, select_nodes_by_layer, select_edges_by,
     get_pointing_chains)

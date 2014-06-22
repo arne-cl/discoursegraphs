@@ -616,34 +616,6 @@ def get_text(docgraph, node_id):
     return ' '.join(tokens)
 
 
-def select_edges_by_layer(docgraph, layer, data=False):
-    """
-    Get all edges belonging to the given layer.
-
-    Parameters
-    ----------
-    docgraph : DiscourseDocumentGraph
-        document graph from which the nodes will be extracted
-    layer : str
-        name of the layer
-
-    Returns
-    -------
-    edges : generator of str
-        a container/list of (source node ID, target node ID) tuples that are
-        present in the given layer. If data is True, (source node ID, target
-        node ID, edge attribute dict)
-    data : bool
-        If True, results will include edge attributes.
-    """
-    for from_id, to_id, edge_attribs in docgraph.edges_iter(data=True):
-        if layer in edge_attribs['layers']:
-            if data:
-                yield (from_id, to_id, edge_attribs)
-            else:
-                yield (from_id, to_id)
-
-
 def select_nodes_by_layer(docgraph, layer):
     """
     Get all nodes belonging to the given layer.
@@ -665,40 +637,55 @@ def select_nodes_by_layer(docgraph, layer):
             yield node_id
 
 
-def select_edges_by_edgetype(docgraph, edge_type, data=False):
+def select_edges_by(docgraph, layer=None, edge_type=None, data=False):
     """
-    Get all edges with the given edge type.
+    get all edges with the given edge type and layer.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        document graph from which the nodes will be extracted
+    layer : str
+        name of the layer
+    edge_type : str
+        Type of the edges to be extracted (Edge types are defined in the
+        Enum ``EdgeTypes``).
+    data : bool
+        If True, results will include edge attributes.
+
+    Returns
+    -------
+    edges : generator of str
+        a container/list of edges (represented as (source node ID, target
+        node ID) tuples). If data is True, edges are represented as
+        (source node ID, target node ID, edge attribute dict) tuples.
     """
-    for (from_id, to_id, edge_attribs) in docgraph.edges(data=True):
-        if edge_attribs['edge_type'] == edge_type:
-            if data:
-                yield (from_id, to_id, edge_attribs)
-            else:
-                yield (from_id, to_id)
+    edge_type_eval = "edge_attribs['edge_type'] == '{}'".format(edge_type)
+    layer_eval = "'{}' in edge_attribs['layers']".format(layer)
 
-
-def select_edges_by_edgetype_and_layer(docgraph, layer=None, edge_type=None,
-                                       data=False):
-    """get all edges with the given edge type and layer"""
-    for (from_id, to_id, edge_attribs) in docgraph.edges(data=True):
-        if edge_attribs['edge_type'] == edge_type and layer in edge_attribs['layers']:
+    def select_edges(docgraph, conditions, data):
+        """yields all edges that meet the conditions given as eval strings"""
+        for (from_id, to_id, edge_attribs) in docgraph.edges(data=True):
+            # if all conditions are fulfilled
+            # we need to add edge_attribs to the namespace eval is working in
+            if all((eval(cond, {'edge_attribs': edge_attribs})
+                    for cond in conditions)):
                 if data:
                     yield (from_id, to_id, edge_attribs)
                 else:
                     yield (from_id, to_id)
 
-def select_edges_by(docgraph, layer=None, edge_type=None, data=False):
-    """get all edges with the given edge type and layer"""
     if layer is not None:
         if edge_type is not None:
-            return select_edges_by_edgetype_and_layer(docgraph, layer,
-                                                      edge_type, data)
+            return select_edges(docgraph, data=data,
+                                conditions=[edge_type_eval, layer_eval])
         else:  # filter by layer, but not by edge type
-            return select_edges_by_layer(docgraph, layer, data=data)
+            return select_edges(docgraph, conditions=[layer_eval], data=data)
 
     else:  # don't filter layers
         if edge_type is not None:  # filter by edge type, but not by layer
-            return select_edges_by_edgetype(docgraph, edge_type, data=data)
+            return select_edges(docgraph, data=data,
+                                conditions=[edge_type_eval])
         else:  # neither layer, nor edge type is filtered
             return docgraph.edges(data=data)
 
@@ -737,7 +724,7 @@ def get_pointing_chains(docgraph):
     returns a list of chained pointing relations (e.g. coreference chains)
     found in the given document graph.
     """
-    pointing_relations = select_edges_by_edgetype(docgraph, 'points_to')
+    pointing_relations = select_edges_by(docgraph, edge_type=EdgeTypes.pointing_relation)
 
     # a markable can point to more than one antecedent, cf. Issue #40
     rel_dict = defaultdict(set)
