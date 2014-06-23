@@ -724,7 +724,8 @@ def get_pointing_chains(docgraph):
     returns a list of chained pointing relations (e.g. coreference chains)
     found in the given document graph.
     """
-    pointing_relations = select_edges_by(docgraph, edge_type=EdgeTypes.pointing_relation)
+    pointing_relations = select_edges_by(docgraph,
+                                         edge_type=EdgeTypes.pointing_relation)
 
     # a markable can point to more than one antecedent, cf. Issue #40
     rel_dict = defaultdict(set)
