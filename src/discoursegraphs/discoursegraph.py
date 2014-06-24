@@ -33,6 +33,21 @@ class DiscourseDocumentGraph(MultiDiGraph):
     Base class for representing annotated documents as directed graphs
     with multiple edges.
 
+    Attributes
+    ----------
+    ns : str
+        the namespace of the graph (default: discoursegraph)
+    root : str
+        name of the document root node ID
+        (default: self.ns+':root_node')
+    sentences : list of str
+        sorted list of all sentence root node IDs (of sentences
+        contained in this document graph -- iff the document was annotated
+        for sentence boundaries in one of the layers present in this graph)
+    tokens : list of int
+        a list of node IDs (int) which represent the tokens in the
+        order they occur in the text
+
     TODO list:
 
     - allow layers to be a single str or set of str
@@ -42,12 +57,24 @@ class DiscourseDocumentGraph(MultiDiGraph):
       different attributes (layers can be the same though)
     - outsource layer assertions to method?
     """
-    def __init__(self):
+    def __init__(self, name='', namespace='discoursegraph'):
         """
         Initialized an empty directed graph which allows multiple edges.
+
+        Parameters
+        ----------
+        name : str or None
+            the name or ID of the graph to be generated.
+        namespace : str
+            the namespace of the graph (default: discoursegraph)
         """
         # super calls __init__() of base class MultiDiGraph
         super(DiscourseDocumentGraph, self).__init__()
+        self.name = name
+        self.ns = namespace
+        self.root = self.ns+':root_node'
+        self.sentences = []
+        self.tokens = []
 
     def add_node(self, n, layers, attr_dict=None, **attr):
         """Add a single node n and update node attributes.
