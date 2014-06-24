@@ -72,8 +72,8 @@ class RSTGraph(DiscourseDocumentGraph):
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(RSTGraph, self).__init__()
-        if name is None:
-            self.name = os.path.basename(rs3_filepath)
+
+        self.name = name if name else os.path.basename(rs3_filepath)
         self.ns = namespace
         self.root = None  # __rst2graph() will find/set the root node
 

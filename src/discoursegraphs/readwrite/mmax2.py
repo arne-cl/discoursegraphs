@@ -114,8 +114,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         # super calls __init__() of base class DiscourseDocumentGraph
         super(MMAXDocumentGraph, self).__init__()
 
-        if name is None:
-            self.name = os.path.basename(mmax_base_file)
+        self.name = name if name else os.path.basename(mmax_base_file)
         self.ns = namespace
         self.root = self.ns+':root_node'
         self.add_node(self.root, layers={self.ns})

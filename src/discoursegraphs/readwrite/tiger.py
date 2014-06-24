@@ -75,8 +75,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         tigerxml_tree = etree.parse(tiger_filepath, utf8_parser)
         tigerxml_root = tigerxml_tree.getroot()
 
-        if name is None:
-            self.name = os.path.basename(tiger_filepath)
+        self.name = name if name else os.path.basename(tiger_filepath)
         self.ns = namespace
         self.corpus_id = tigerxml_root.attrib['id']
 
