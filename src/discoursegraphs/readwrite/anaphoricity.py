@@ -48,7 +48,7 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         (default: self.ns+':root_node')
     """
 
-    def __init__(self, anaphora_filepath, name=None, namespace='anaphoricity',
+    def __init__(self, anaphora_filepath=None, name=None, namespace='anaphoricity',
                  connected=False):
         """
         Reads an abstract anaphora annotation file, creates a directed
@@ -63,8 +63,9 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
 
         Parameters
         ----------
-        anaphora_filepath : str
+        anaphora_filepath : str or None
             relative or absolute path to an anaphora annotation file.
+            If not set, an empty graph will be generated.
             The format of the file was created ad-hoc by one of our
             students for his diploma thesis. It consists of tokenized
             plain text (one sentence per line with spaces between
@@ -87,16 +88,17 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         self.name = name if name else os.path.basename(anaphora_filepath)
         self.ns = namespace
         self.root = self.ns+':root_node'
-        self.add_node(self.root, layers={self.ns})
         self.tokens = []
 
-        with open(anaphora_filepath, 'r') as anno_file:
-            annotated_lines = anno_file.readlines()
-            tokens = list(chain.from_iterable(line.split()
-                                              for line in annotated_lines))
-            for i, token in enumerate(tokens):
-                self.__add_token_to_document(token, i, connected)
-                self.tokens.append(i)
+        if anaphora_filepath:
+            self.add_node(self.root, layers={self.ns})
+            with open(anaphora_filepath, 'r') as anno_file:
+                annotated_lines = anno_file.readlines()
+                tokens = list(chain.from_iterable(line.split()
+                                                  for line in annotated_lines))
+                for i, token in enumerate(tokens):
+                    self.__add_token_to_document(token, i, connected)
+                    self.tokens.append(i)
 
     def __add_token_to_document(self, token, token_id, connected):
         """

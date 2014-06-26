@@ -46,7 +46,7 @@ class RSTGraph(DiscourseDocumentGraph):
         representing tokens.
         False, if the segments represent untokenized text.
     """
-    def __init__(self, rs3_filepath, name=None, namespace='rst',
+    def __init__(self, rs3_filepath=None, name=None, namespace='rst',
                  tokenize=True, precedence=False):
         """
         Creates an RSTGraph from a RS3 XML file and adds metadata to it
@@ -55,8 +55,9 @@ class RSTGraph(DiscourseDocumentGraph):
 
         Parameters
         ----------
-        rs3_filepath : str
-            absolute or relative path to the RS3 file to be parsed
+        rs3_filepath : str or None
+            absolute or relative path to the RS3 file to be parsed. If not set,
+            an empty graph will be generated
         name : str or None
             the name or ID of the graph to be generated. If no name is
             given, the basename of the input file is used.
@@ -77,21 +78,21 @@ class RSTGraph(DiscourseDocumentGraph):
         self.ns = namespace
         self.root = None  # __rst2graph() will find/set the root node
 
-        utf8_parser = etree.XMLParser(encoding="utf-8")
-        rs3_xml_tree = etree.parse(rs3_filepath, utf8_parser)
-
-        self.relations = extract_relationtypes(rs3_xml_tree)
         self.segments = []
         self.tokenized = False
         self.tokens = []
 
-        self.__rst2graph(rs3_xml_tree)
+        if rs3_filepath:
+            utf8_parser = etree.XMLParser(encoding="utf-8")
+            rs3_xml_tree = etree.parse(rs3_filepath, utf8_parser)
+            self.relations = extract_relationtypes(rs3_xml_tree)
+            self.__rst2graph(rs3_xml_tree)
 
-        if tokenize:
-            self.__tokenize_segments()
-            self.tokenized = True
-            if precedence:
-                self.add_precedence_relations()
+            if tokenize:
+                self.__tokenize_segments()
+                self.tokenized = True
+                if precedence:
+                    self.add_precedence_relations()
 
     def __rst2graph(self, rs3_xml_tree):
         """

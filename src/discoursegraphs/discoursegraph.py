@@ -163,7 +163,10 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
         Parameters
         ----------
-        nodes : iterable container of (node, attribute dict) tuples.
+        nodes : iterable container
+            A container of nodes (list, dict, set, etc.).
+            OR
+            A container of (node, attribute dict) tuples.
             Node attributes are updated using the attribute dict.
         attr : keyword arguments, optional (default= no attributes)
             Update attributes for all nodes in nodes.
@@ -202,28 +205,70 @@ class DiscourseDocumentGraph(MultiDiGraph):
         """
         additional_attribs = attr  # will be added to each node
         for n in nodes:
-            node_id, ndict = n
-            assert 'layers' in ndict, \
-                "Every node must have a 'layers' attribute."
-            layers = ndict['layers']
-            assert isinstance(layers, set), \
-                "'layers' must be specified as a set of strings."
-            assert all((isinstance(layer, str) for layer in layers)), \
-                "All elements of the 'layers' set must be strings."
+            try:  # check, if n is a node_id or a (node_id, attribute dict) tuple
+                newnode=n not in self.succ  # is node in the graph, yet?
+            except TypeError:  # n is a (node_id, attribute dict) tuple
+                node_id, ndict = n
+                assert 'layers' in ndict, \
+                    "Every node must have a 'layers' attribute."
+                layers = ndict['layers']
+                assert isinstance(layers, set), \
+                    "'layers' must be specified as a set of strings."
+                assert all((isinstance(layer, str) for layer in layers)), \
+                    "All elements of the 'layers' set must be strings."
 
-            if node_id not in self.succ:  # node doesn't exist, yet
-                self.succ[node_id] = {}
-                self.pred[node_id] = {}
-                newdict = additional_attribs.copy()
-                newdict.update(ndict)  # all given attribs incl. layers
-                self.node[node_id] = newdict
-            else:  # node already exists
-                existing_layers = self.node[node_id]['layers']
-                all_layers = existing_layers.union(layers)
+                if node_id not in self.succ:  # node doesn't exist, yet
+                    self.succ[node_id] = {}
+                    self.pred[node_id] = {}
+                    newdict = additional_attribs.copy()
+                    newdict.update(ndict)  # all given attribs incl. layers
+                    self.node[node_id] = newdict
+                else:  # node already exists
+                    existing_layers = self.node[node_id]['layers']
+                    all_layers = existing_layers.union(layers)
 
-                self.node[node_id].update(ndict)
-                self.node[node_id].update(additional_attribs)
-                self.node[node_id].update({'layers': all_layers})
+                    self.node[node_id].update(ndict)
+                    self.node[node_id].update(additional_attribs)
+                    self.node[node_id].update({'layers': all_layers})
+                continue  # process next node
+
+            # newnode check didn't raise an exception
+            if newnode:  # n is a node_id and it's not in the graph, yet
+                self.succ[n] = {}
+                self.pred[n] = {}
+                self.node[n] = attr.copy()
+                # since the node isn't represented as a
+                # (node_id, attribute dict) tuple, we don't know which layers
+                # it is part of. Therefore, we'll add the namespace of the
+                # graph as the node layer
+                self.node[n].update({'layers': set([self.ns])})
+            else:  # n is a node_id and it's already in the graph
+                self.node[n].update(attr)
+
+
+        #~ for n in nodes:
+            #~ try:  # check, if n is a node_id or a (node_id, attribute dict) tuple
+                #~ newnode=n not in self.succ
+            #~ except TypeError:  # n is a (node_id, attribute dict) tuple
+                #~ node_id, ndict = n
+                #~ if node_id not in self.succ:  # node isn't in the graph, yet
+                    #~ self.succ[node_id] = {}
+                    #~ self.pred[node_id] = {}
+                    #~ newdict = attr.copy()
+                    #~ newdict.update(ndict)
+                    #~ self.node[node_id] = newdict
+                #~ else:  # node is already in the graph
+                    #~ olddict = self.node[node_id]
+                    #~ olddict.update(attr)
+                    #~ olddict.update(ndict)
+                #~ continue  # process next node
+                #~ 
+            #~ if newnode:  # n is a node_id and it's not in the graph, yet
+                #~ self.succ[n] = {}
+                #~ self.pred[n] = {}
+                #~ self.node[n] = attr.copy()
+            #~ else:  # n is a node_id and it's already in the graph
+                #~ self.node[n].update(attr)
 
     def add_edge(self, u, v, layers, key=None, attr_dict=None, **attr):
         """Add an edge between u and v.
