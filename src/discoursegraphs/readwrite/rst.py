@@ -136,11 +136,12 @@ class RSTGraph(DiscourseDocumentGraph):
                     from_node = segment_node_id
                     to_node = parent_node_id
 
-                self.add_edge(from_node, to_node,
-                              layers={self.ns, self.ns+':relation'},
-                              relname=self.ns+':'+segment.attrib['relname'],
-                              label=self.ns+':'+segment.attrib['relname'],
-                              edge_type=EdgeTypes.dominance_relation)
+                self.add_edge(
+                    from_node, to_node,
+                    layers={self.ns, self.ns+':relation'},
+                    attr_dict={self.ns+':relname': segment.attrib['relname'],
+                               'label': self.ns+':'+segment.attrib['relname']},
+                    edge_type=EdgeTypes.dominance_relation)
 
         for group in rst_xml_root.iterfind('./body/group'):
             group_node_id = int(group.attrib['id'])
