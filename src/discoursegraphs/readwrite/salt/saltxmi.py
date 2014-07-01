@@ -23,9 +23,13 @@ from edges import Edge, DominanceRelation, SpanningRelation, TextualRelation
 from elements import (Element, get_elements, get_subelements, get_xsi_type,
                       element_statistics)
 
+TEST_DOC_ID = "maz-1423"
 
-TEST_DIRECTORY = os.path.expanduser("~/repos/salt-test/pcc176-syntax-rst-salt/salt:/")
-TEST_FILE = os.path.join(TEST_DIRECTORY, "maz-1423.salt")
+TEST_DIR1 = os.path.expanduser("~/repos/salt-test/pcc176-syntax-rst-salt/salt:/")
+TEST_FILE1 = os.path.join(TEST_DIR1, TEST_DOC_ID+".salt")
+
+TEST_DIR2 = os.path.expanduser("~/repos/salt-test/ritz-pcc176-syntax-coref-salt/pcc_maz176_merged_paula/")
+TEST_FILE2 = os.path.join(TEST_DIR2, TEST_DOC_ID+".salt")
 
 XSI_TYPE_CLASSES = {
     'SStructure': StructureNode,
