@@ -43,12 +43,12 @@ XSI_TYPE_CLASSES = {
 
 
 
-class SaltDiGraph(nx.DiGraph):
+class SaltXMIGraph(nx.DiGraph):
     """
     represents a SaltXML file as a networkx DiGraph
     """
     def __init__(self, document_path):
-        super(SaltDiGraph, self).__init__()
+        super(SaltXMIGraph, self).__init__()
         self.tree = etree.parse(document_path)
         self.doc_id = get_doc_id(self.tree)
         for i, node_element in enumerate(get_elements(self.tree, 'nodes')):
@@ -388,7 +388,7 @@ def abslistdir(directory):
 if __name__ == "__main__":
     sd = SaltDocument(TEST_FILE)
     ld = LinguisticDocument(sd)
-    sx = SaltDiGraph(TEST_FILE)
+    sx = SaltXMIGraph(TEST_FILE)
 
     #~ documents = {}
     #~ for filename in abslistdir(TEST_DIRECTORY):
