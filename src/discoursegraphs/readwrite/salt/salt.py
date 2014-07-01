@@ -24,8 +24,8 @@ from elements import (Element, get_elements, get_subelements, get_xsi_type,
                       element_statistics)
 
 
-TEST_FILE = "pcc_maz176_merged_salt/pcc_maz176_merged_paula/maz-0002.salt"
-TEST_DIRECTORY = "pcc_maz176_merged_salt/pcc_maz176_merged_paula/"
+TEST_DIRECTORY = os.path.expanduser("~/repos/salt-test/pcc176-syntax-rst-salt/salt:/")
+TEST_FILE = os.path.join(TEST_DIRECTORY, "maz-1423.salt")
 
 XSI_TYPE_CLASSES = {
     'SStructure': StructureNode,
