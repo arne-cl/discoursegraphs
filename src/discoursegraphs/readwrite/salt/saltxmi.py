@@ -104,6 +104,9 @@ class SaltDocument(object):
             for subtype in subtype_counts:
                 ret_str += "\t{0}: {1}\n".format(subtype,
                     subtype_counts[subtype])
+                if element_type == 'layers':
+                    layer_names = [layer.name for layer in self.layers]
+                    ret_str += "\t\t" + ", ".join(layer_names)
             ret_str += "\n"
         return ret_str
 
