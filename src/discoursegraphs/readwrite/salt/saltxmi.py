@@ -45,9 +45,26 @@ XSI_TYPE_CLASSES = {
 
 class SaltXMIGraph(nx.DiGraph):
     """
-    represents a SaltXML file as a networkx DiGraph
+    a DiGraph representation of a SaltXMI file (as truthful to the orginal
+    as possible).
+
+    Attributes
+    ----------
+    doc_id : str
+        the document ID of the input file (e.g. salt:/maz-1423/maz-1423_graph)
+    tree : etree._ElementTree
+        an element tree representation of the SaltXMI input file
     """
     def __init__(self, document_path):
+        """
+        convert a SaltXMI file into a networkx DiGraph
+
+        Parameters
+        ----------
+        document_path : str
+            abosulte or relative path to a SaltXMI file
+            (i.e. a SDocumentGraph)
+        """
         super(SaltXMIGraph, self).__init__()
         self.tree = etree.parse(document_path)
         self.doc_id = get_doc_id(self.tree)
@@ -60,14 +77,15 @@ class SaltXMIGraph(nx.DiGraph):
 
 class SaltDocument(object):
     """
-    represents the relevant parts of a SaltXML file as a class.
+    represents the relevant parts of a SaltXML file as a class (with lists
+    of ``Node``s, ``Edge``s and ``Layer``s.
 
     Attributes
     ----------
     doc_id : str
-        the document ID of the Salt document
+        the document ID of the input file (e.g. salt:/maz-1423/maz-1423_graph)
     tree : etree._ElementTree
-        an ElementTree that represents a SaltXML document
+        an element tree representation of the SaltXMI input file
     edges : list of Edge
         i.e. TextualRelation, SpanningRelation or DominanceRelation
     nodes : list of Node
@@ -92,7 +110,8 @@ class SaltDocument(object):
     def __str__(self):
         """
         returns the string representation of a `SaltDocument`, i.e
-        node, edge and layer counts, as well as counts of subtypes
+        node, edge and layer counts, as well as counts of subtypes and names
+        of layers.
         """
         ret_str = ""
         for element_type in ('nodes', 'edges', 'layers'):
@@ -386,6 +405,19 @@ def abslistdir(directory):
     abs_dir = os.path.abspath(directory)
     filenames = os.listdir(abs_dir)
     return [os.path.join(abs_dir, filename) for filename in filenames]
+
+
+def string2value(value_string):
+    """
+    SaltXMI files store each value attribute twice (i.e. as a string and
+    as a HEX value with some weird padded string in front of it that I still
+    need to decode.
+
+    Example:
+    <labels xsi:type="saltCore:SFeature" namespace="salt" name="SNAME"
+        value="ACED00057400057469676572" valueString="tiger"/>
+    """
+    return "".join("{:02x}".format(ord(c)).upper() for c in value_string)
 
 
 if __name__ == "__main__":
