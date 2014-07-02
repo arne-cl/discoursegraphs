@@ -4,16 +4,16 @@
 """
 This module handles the parsing of SALT nodes.
 
-TODO: add docstring to Node subclasses
+TODO: add docstring to SaltNode subclasses
 """
 
 import elements
 import layers
 
 
-class Node(elements.SaltElement):
+class SaltNode(elements.SaltElement):
     """
-    A Node inherits all the attributes from `SaltElement`, i.e. 'name', 'type' and
+    A SaltNode inherits all the attributes from `SaltElement`, i.e. 'name', 'type' and
     'xml'. Additional attributes:
 
     Attributes
@@ -28,7 +28,7 @@ class Node(elements.SaltElement):
         the index of the node
     """
     def __init__(self, element, element_id, doc_id):
-        super(Node, self).__init__(element, doc_id)
+        super(SaltNode, self).__init__(element, doc_id)
         self.layer = elements.get_layer_id(element)
         self.node_id = element_id
         if elements.has_annotations(element):
@@ -38,10 +38,10 @@ class Node(elements.SaltElement):
 
     def __str__(self):
         """
-        returns the string representation of a `Node`, which contains the facts
+        returns the string representation of a `SaltNode`, which contains the facts
         from `SaltElement` plus the node's layer and its features.
         """
-        ret_str = super(Node, self).__str__() + "\n"
+        ret_str = super(SaltNode, self).__str__() + "\n"
 
         if self.layer is not None: # mere check for existence would ignore '0'
             ret_str += "layer: {0}\n".format(self.layer)
@@ -58,9 +58,9 @@ class Node(elements.SaltElement):
         return ret_str
 
 
-class PrimaryTextNode(Node):
+class PrimaryTextNode(SaltNode):
     """
-    A PrimaryTextNode inherits all the attributes from `Node` and adds
+    A PrimaryTextNode inherits all the attributes from `SaltNode` and adds
 
     Attributes
     ----------
@@ -76,10 +76,10 @@ class PrimaryTextNode(Node):
         return "{0}\nprimary text:\n{1}".format(node_string, self.text.encode('utf-8'))
 
 
-class TokenNode(Node):
+class TokenNode(SaltNode):
     """
     A TokenNode describes a token, including its annotation features,
-    e.g. tiger.pos = ART. It inherits all attributes from `Node`, i.e. 'layer'
+    e.g. tiger.pos = ART. It inherits all attributes from `SaltNode`, i.e. 'layer'
     and 'features' as well as those from `SaltElement`.
 
     A sentence boundary is marked by TokenNode.features['tiger.pos'] == '$.'
@@ -88,7 +88,7 @@ class TokenNode(Node):
         super(TokenNode, self).__init__(element, element_id, doc_id)
         pass
 
-class SpanNode(Node):
+class SpanNode(SaltNode):
     """
     A SpanNode contains all the I{SAnnotation}s features made to a span
     (e.g. coreference), but it DOES NOT tell you which tokens belong to that
@@ -111,7 +111,7 @@ class SpanNode(Node):
         super(SpanNode, self).__init__(element, element_id, doc_id)
         pass
 
-class StructureNode(Node):
+class StructureNode(SaltNode):
     """
     A StructureNode contains all the I{SAnnotation}s features made to a span
     (i.e. syntactic constituents), but it DOES NOT tell you which tokens belong to that
@@ -133,8 +133,8 @@ class StructureNode(Node):
 
 def extract_sentences(nodes, token_node_indices):
     """
-    given a list of Nodes, returns a list of lists, where each list
-    contains the indices of the Nodes belonging to that sentence.
+    given a list of ``SaltNode``s, returns a list of lists, where each list
+    contains the indices of the nodes belonging to that sentence.
     """
     sents = []
     tokens = []

@@ -16,7 +16,7 @@ from lxml import etree
 from collections import defaultdict
 
 import labels
-from nodes import (Node, PrimaryTextNode, TokenNode, SpanNode, StructureNode,
+from nodes import (SaltNode, PrimaryTextNode, TokenNode, SpanNode, StructureNode,
                    extract_sentences)
 from layers import SaltLayer
 from edges import SaltEdge, DominanceRelation, SpanningRelation, TextualRelation
@@ -78,7 +78,7 @@ class SaltXMIGraph(nx.DiGraph):
 class SaltDocument(object):
     """
     represents the relevant parts of a SaltXML file as a class (with lists
-    of ``Node``s, ``SaltEdge``s and ``SaltLayer``s.
+    of ``SaltNode``s, ``SaltEdge``s and ``SaltLayer``s.
 
     Attributes
     ----------
@@ -88,7 +88,7 @@ class SaltDocument(object):
         an element tree representation of the SaltXMI input file
     edges : list of SaltEdge
         i.e. TextualRelation, SpanningRelation or DominanceRelation
-    nodes : list of Node
+    nodes : list of SaltNode
         i.e. PrimaryTextNode, TokenNode, SpanNode, StructureNode
     layers : list of SaltLayer
     """
@@ -183,7 +183,7 @@ class LinguisticDocument(object):
             i.e. SaltEdges of type ``TextualRelation``, ``SpanningRelation`` and
             ``DominanceRelation``
         layers : list of SaltLayer
-        nodes : list of Node
+        nodes : list of SaltNode
             i.e. SaltEdges of type ``PrimaryTextNode``, ``TokenNode``, ``SpanNode``
             and ``StructureNode``
         text : str
