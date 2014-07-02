@@ -20,21 +20,27 @@ class SaltElement(object):
     An `SaltElement` is the most basic data structure used in `SaltDocument`s and
     `LinguisticDocument`s. `SaltNode`s, `SaltEdge`s and {SaltLayer}s are derived from it.
 
-    :ivar name: a `str` that contains the SNAME of a SaltXML element
-    :ivar type: a `str` that contains the xsi:type of a SaltXML element
-    :ivar xml: a `lxml.etree._Element` that represents a SaltXML element
+    Attributes
+    ----------
+    name: str
+        the name (the ``valueString`` of the ``SNAME`` label of a) of a SaltXML
+        element
+    type: str
+        the ``xsi:type`` of a SaltXML element
+    xml: lxml.etree._Element
+        the etree element representation of a SaltXML element
     """
     def __init__(self, element, doc_id):
         """
         A `SaltElement` instance is created from an `etree._Element` representing
-        a SaltXML document.
+        a SaltXML element.
 
         >>> node_str = '''
         ... <nodes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="sDocumentStructure:SToken">
         ...     <labels name="SNAME" valueString="tok_1"/>
         ... </nodes>'''
         >>> node = etree.fromstring(node_str)
-        >>> e = SaltElement(node)
+        >>> e = SaltElement(node, 'document_23')
         >>> e.name, e.type
         ('tok_1', 'SToken')
 

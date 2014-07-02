@@ -407,7 +407,7 @@ def abslistdir(directory):
     return [os.path.join(abs_dir, filename) for filename in filenames]
 
 
-def string2value(value_string):
+def string2xmihex(value_string):
     """
     SaltXMI files store each value attribute twice (i.e. as a string and
     as a HEX value with some weird padded string in front of it that I still
