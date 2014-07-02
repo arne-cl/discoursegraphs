@@ -5,18 +5,18 @@
 This module handles the parsing of SALT edges.
 """
 
-from elements import (Element, get_graph_element_id, get_annotations,
+from elements import (SaltElement, get_graph_element_id, get_annotations,
     get_layer_id)
 
 
-class Edge(Element):
+class Edge(SaltElement):
     """
     An edge connects a source node with a target node and belongs to a layer.
     """
     def __init__(self, element, element_id, doc_id):
         """
         Every edge has these attributes (in addition to the attributes inherited
-        from the ``Element`` class, i.e. ``xml``, ``name`` and ``type``):
+        from the ``SaltElement`` class, i.e. ``xml``, ``name`` and ``type``):
 
         Attributes
         ----------
@@ -48,7 +48,7 @@ class Edge(Element):
 class SpanningRelation(Edge):
     """
     Every SpanningRelation edge inherits all the attributes from `Edge`
-    (and `Element`). A ``SpanningRelation`` is an ``Edgde`` that links a
+    (and `SaltElement`). A ``SpanningRelation`` is an ``Edgde`` that links a
     ``SpanNode`` to a ``TokenNode``.
 
     A SpanningRelation edge looks like this::
@@ -72,7 +72,7 @@ class TextualRelation(Edge):
     retrieve the text/string of a token from the documents primary text.
 
     Every TextualRelation has these attributes (in addition to those inherited
-    from `Edge` and `Element`):
+    from `Edge` and `SaltElement`):
 
     :ivar onset: `int` representing the string onset of the source node
     (`TokenNode`)

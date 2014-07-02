@@ -9,7 +9,7 @@ Labels can occur as children of these elements: 'layers', 'nodes', 'edges'
 and '{sDocumentStructure}SDocumentGraph'.
 """
 
-from elements import Element, get_element_name, get_xsi_type
+from elements import SaltElement, get_element_name, get_xsi_type
 
 
 def get_namespace(label):

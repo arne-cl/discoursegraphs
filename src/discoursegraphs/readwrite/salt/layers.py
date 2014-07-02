@@ -7,11 +7,11 @@ This module handles the parsing of SALT layers.
 
 import re
 from lxml import etree
-from elements import Element
+from elements import SaltElement
 
 DIGITS = re.compile('\d+')
 
-class Layer(Element):
+class Layer(SaltElement):
     """
     A ``Layer`` instances describes a Salt XML layer. In Salt, a layer groups
     nodes and edges belonging to the same annotation level, e.g. syntax or

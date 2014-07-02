@@ -15,9 +15,9 @@ NAMESPACES = {'xmi': 'http://www.omg.org/XMI',
               'sDocumentStructure': 'sDocumentStructure',
               'saltCore': 'saltCore'}
 
-class Element(object):
+class SaltElement(object):
     """
-    An `Element` is the most basic data structure used in `SaltDocument`s and
+    An `SaltElement` is the most basic data structure used in `SaltDocument`s and
     `LinguisticDocument`s. `Node`s, `Edge`s and {Layer}s are derived from it.
 
     :ivar name: a `str` that contains the SNAME of a SaltXML element
@@ -26,7 +26,7 @@ class Element(object):
     """
     def __init__(self, element, doc_id):
         """
-        An `Element` instance is created from an `etree._Element` representing
+        A `SaltElement` instance is created from an `etree._Element` representing
         a SaltXML document.
 
         >>> node_str = '''
@@ -34,7 +34,7 @@ class Element(object):
         ...     <labels name="SNAME" valueString="tok_1"/>
         ... </nodes>'''
         >>> node = etree.fromstring(node_str)
-        >>> e = Element(node)
+        >>> e = SaltElement(node)
         >>> e.name, e.type
         ('tok_1', 'SToken')
 
@@ -52,7 +52,7 @@ class Element(object):
 
     def __str__(self):
         """
-        returns the name, Salt type and XML representation of an `Element`.
+        returns the name, Salt type and XML representation of a `SaltElement`.
         """
         ret_str = "name: %s\n" % self.name
         ret_str += "Salt type: %s\n\n" % self.type

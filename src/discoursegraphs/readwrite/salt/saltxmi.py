@@ -20,7 +20,7 @@ from nodes import (Node, PrimaryTextNode, TokenNode, SpanNode, StructureNode,
                    extract_sentences)
 from layers import Layer
 from edges import Edge, DominanceRelation, SpanningRelation, TextualRelation
-from elements import (Element, get_elements, get_subelements, get_xsi_type,
+from elements import (SaltElement, get_elements, get_subelements, get_xsi_type,
                       element_statistics)
 
 TEST_DOC_ID = "maz-1423"
@@ -328,7 +328,7 @@ class LinguisticDocument(object):
 
 def create_class_instance(element, element_id, doc_id):
     """
-    given an Salt XML element, returns a corresponding `Element` class
+    given an Salt XML element, returns a corresponding `SaltElement` class
     instance, i.e. a SaltXML `SToken` node will be converted into a
     `TokenNode`.
 
@@ -342,7 +342,7 @@ def create_class_instance(element, element_id, doc_id):
     doc_id : str
         the ID of the SaltXML document
 
-    :returns: an instance of an `Element` subclass instance, e.g. `TokenNode`,
+    :returns: an instance of an `SaltElement` subclass instance, e.g. `TokenNode`,
     `TextualRelation` or `Layer`
     """
     xsi_type = get_xsi_type(element)
@@ -394,7 +394,7 @@ def printxml(element):
     """
     if isinstance(element, (etree._Element, etree._ElementTree)):
         print etree.tostring(element)
-    elif isinstance(element, Element):
+    elif isinstance(element, SaltElement):
         print etree.tostring(element.xml)
 
 def abslistdir(directory):

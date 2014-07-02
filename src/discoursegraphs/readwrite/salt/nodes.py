@@ -11,9 +11,9 @@ import elements
 import layers
 
 
-class Node(elements.Element):
+class Node(elements.SaltElement):
     """
-    A Node inherits all the attributes from `Element`, i.e. 'name', 'type' and
+    A Node inherits all the attributes from `SaltElement`, i.e. 'name', 'type' and
     'xml'. Additional attributes:
 
     Attributes
@@ -39,7 +39,7 @@ class Node(elements.Element):
     def __str__(self):
         """
         returns the string representation of a `Node`, which contains the facts
-        from `Element` plus the node's layer and its features.
+        from `SaltElement` plus the node's layer and its features.
         """
         ret_str = super(Node, self).__str__() + "\n"
 
@@ -80,7 +80,7 @@ class TokenNode(Node):
     """
     A TokenNode describes a token, including its annotation features,
     e.g. tiger.pos = ART. It inherits all attributes from `Node`, i.e. 'layer'
-    and 'features' as well as those from `Element`.
+    and 'features' as well as those from `SaltElement`.
 
     A sentence boundary is marked by TokenNode.features['tiger.pos'] == '$.'
     """
