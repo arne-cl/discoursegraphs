@@ -39,7 +39,7 @@ XSI_TYPE_CLASSES = {
     'SSpanningRelation': SpanningRelation,
     'STextualRelation': TextualRelation,
     'SDominanceRelation': DominanceRelation,
-    'SLayer': Layer}
+    'SLayer': SaltLayer}
 
 
 
@@ -421,9 +421,9 @@ def string2value(value_string):
 
 
 if __name__ == "__main__":
-    sd = SaltDocument(TEST_FILE)
+    sd = SaltDocument(TEST_FILE2)
     ld = LinguisticDocument(sd)
-    sx = SaltXMIGraph(TEST_FILE)
+    sx = SaltXMIGraph(TEST_FILE2)
 
     #~ documents = {}
     #~ for filename in abslistdir(TEST_DIRECTORY):
