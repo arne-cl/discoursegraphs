@@ -9,7 +9,11 @@ Labels can occur as children of these elements: 'layers', 'nodes', 'edges'
 and '{sDocumentStructure}SDocumentGraph'.
 """
 
+from lxml.builder import ElementMaker
 from elements import SaltElement, get_element_name, get_xsi_type
+
+
+XSI = "http://www.w3.org/2001/XMLSchema-instance"
 
 
 class SaltLabel(object):
@@ -47,7 +51,7 @@ class SaltLabel(object):
         self.hexvalue = hexvalue if hexvalue else string2xmihex(value)
 
     @classmethod
-    def from_element(cls, etree_element):
+    def from_etree(cls, etree_element):
         """
         creates a ``SaltLabel`` from an etree element representing a label
         element in a SaltXMI file.
@@ -68,6 +72,20 @@ class SaltLabel(object):
                    xsi_type=get_xsi_type(etree_element),
                    namespace=etree_element.attrib.get('namespace', None),
                    hexvalue=etree_element.attrib['value'])
+
+
+    def to_etree(self):
+        """
+        creates an etree element of a ``SaltLabel`` that mimicks a SaltXMI
+        <labels> element
+        """
+        attribs = {'{{{pre}}}type'.format(pre=XSI): self.xsi_type,
+                   'namespace': self.namespace, 'name': self.name,
+                   'value': self.hexvalue, 'valueString': self.value}
+        non_empty_attribs = {key:val for key,val in attribs.items()
+                             if val is not None}
+        E = ElementMaker()
+        return E('labels', non_empty_attribs)
 
 
 def get_namespace(label):
