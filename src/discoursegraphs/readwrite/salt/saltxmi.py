@@ -19,7 +19,7 @@ import labels
 from nodes import (Node, PrimaryTextNode, TokenNode, SpanNode, StructureNode,
                    extract_sentences)
 from layers import Layer
-from edges import Edge, DominanceRelation, SpanningRelation, TextualRelation
+from edges import SaltEdge, DominanceRelation, SpanningRelation, TextualRelation
 from elements import (SaltElement, get_elements, get_subelements, get_xsi_type,
                       element_statistics)
 
@@ -78,7 +78,7 @@ class SaltXMIGraph(nx.DiGraph):
 class SaltDocument(object):
     """
     represents the relevant parts of a SaltXML file as a class (with lists
-    of ``Node``s, ``Edge``s and ``Layer``s.
+    of ``Node``s, ``SaltEdge``s and ``Layer``s.
 
     Attributes
     ----------
@@ -86,7 +86,7 @@ class SaltDocument(object):
         the document ID of the input file (e.g. salt:/maz-1423/maz-1423_graph)
     tree : etree._ElementTree
         an element tree representation of the SaltXMI input file
-    edges : list of Edge
+    edges : list of SaltEdge
         i.e. TextualRelation, SpanningRelation or DominanceRelation
     nodes : list of Node
         i.e. PrimaryTextNode, TokenNode, SpanNode, StructureNode
@@ -179,12 +179,12 @@ class LinguisticDocument(object):
         ----------
         doc_id : str
             the document ID of the Salt document
-        edges : list of Edge
-            i.e. Edges of type ``TextualRelation``, ``SpanningRelation`` and
+        edges : list of SaltEdge
+            i.e. SaltEdges of type ``TextualRelation``, ``SpanningRelation`` and
             ``DominanceRelation``
         layers : list of Layer
         nodes : list of Node
-            i.e. Edges of type ``PrimaryTextNode``, ``TokenNode``, ``SpanNode``
+            i.e. SaltEdges of type ``PrimaryTextNode``, ``TokenNode``, ``SpanNode``
             and ``StructureNode``
         text : str
             the primary text of the Salt document

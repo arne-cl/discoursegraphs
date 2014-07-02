@@ -18,7 +18,7 @@ NAMESPACES = {'xmi': 'http://www.omg.org/XMI',
 class SaltElement(object):
     """
     An `SaltElement` is the most basic data structure used in `SaltDocument`s and
-    `LinguisticDocument`s. `Node`s, `Edge`s and {Layer}s are derived from it.
+    `LinguisticDocument`s. `Node`s, `SaltEdge`s and {Layer}s are derived from it.
 
     :ivar name: a `str` that contains the SNAME of a SaltXML element
     :ivar type: a `str` that contains the xsi:type of a SaltXML element
@@ -140,7 +140,7 @@ def get_graph_element_id(element):
 
 def get_layer_id(element):
     """
-    returns the layer id from an element (e.g. Node or Edge).
+    returns the layer id from an element (e.g. Node or SaltEdge).
     returns None for elements that don't belong to a layer.
 
     :param element: an etree element parsed from a SaltXML document

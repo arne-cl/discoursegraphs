@@ -9,7 +9,7 @@ from elements import (SaltElement, get_graph_element_id, get_annotations,
     get_layer_id)
 
 
-class Edge(SaltElement):
+class SaltEdge(SaltElement):
     """
     An edge connects a source node with a target node and belongs to a layer.
     """
@@ -32,7 +32,7 @@ class Edge(SaltElement):
         target : int
             the index of the target node connected to the edge
         """
-        super(Edge, self).__init__(element, doc_id)
+        super(SaltEdge, self).__init__(element, doc_id)
         self.edge_id = element_id
         self.layer = get_layer_id(element)
         self.source = get_node_id(element, 'source')
@@ -40,14 +40,14 @@ class Edge(SaltElement):
         self.graph_id = get_graph_element_id(element)
 
     def __str__(self):
-        ret_str = super(Edge, self).__str__() + "\n"
+        ret_str = super(SaltEdge, self).__str__() + "\n"
         ret_str += "source node: {0}\n".format(self.source)
         ret_str += "target node: {0}".format(self.target)
         return ret_str
 
-class SpanningRelation(Edge):
+class SpanningRelation(SaltEdge):
     """
-    Every SpanningRelation edge inherits all the attributes from `Edge`
+    Every SpanningRelation edge inherits all the attributes from `SaltEdge`
     (and `SaltElement`). A ``SpanningRelation`` is an ``Edgde`` that links a
     ``SpanNode`` to a ``TokenNode``.
 
@@ -60,11 +60,11 @@ class SpanningRelation(Edge):
 
     """
     def __init__(self, element, element_id, doc_id):
-        """A ``SpanningRelation`` is created just like an ``Edge``."""
+        """A ``SpanningRelation`` is created just like an ``SaltEdge``."""
         super(SpanningRelation, self).__init__(element, element_id, doc_id)
         pass
 
-class TextualRelation(Edge):
+class TextualRelation(SaltEdge):
     """
     An TextualRelation edge always links a token (source node) to the
     PrimaryTextNode (target node 0). Textual relations don't belong to a layer.
@@ -72,7 +72,7 @@ class TextualRelation(Edge):
     retrieve the text/string of a token from the documents primary text.
 
     Every TextualRelation has these attributes (in addition to those inherited
-    from `Edge` and `SaltElement`):
+    from `SaltEdge` and `SaltElement`):
 
     :ivar onset: `int` representing the string onset of the source node
     (`TokenNode`)
@@ -85,7 +85,7 @@ class TextualRelation(Edge):
         self.offset = get_string_offset(element)
 
 
-class DominanceRelation(Edge):
+class DominanceRelation(SaltEdge):
     """
     A `DominanceRelation` edge always links a `StructureNode` (source) to a
     `TokenNode` (target). Every `DominanceRelation` has a `feature` attribute:
