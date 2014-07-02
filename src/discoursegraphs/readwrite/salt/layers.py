@@ -11,9 +11,9 @@ from elements import SaltElement
 
 DIGITS = re.compile('\d+')
 
-class Layer(SaltElement):
+class SaltLayer(SaltElement):
     """
-    A ``Layer`` instances describes a Salt XML layer. In Salt, a layer groups
+    A ``SaltLayer`` instances describes a Salt XML layer. In Salt, a layer groups
     nodes and edges belonging to the same annotation level, e.g. syntax or
     information structure.
     """
@@ -43,7 +43,7 @@ class Layer(SaltElement):
         xml : etree._Element
             etree element representing this Salt layer
         """
-        super(Layer, self).__init__(element, doc_id)
+        super(SaltLayer, self).__init__(element, doc_id)
         nodes_str = element.xpath('@nodes')[0]
         self.nodes = [int(node_id) for node_id in DIGITS.findall(nodes_str)]
         self.layer_id = element_id

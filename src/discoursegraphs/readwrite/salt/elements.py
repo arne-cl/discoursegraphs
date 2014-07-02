@@ -18,7 +18,7 @@ NAMESPACES = {'xmi': 'http://www.omg.org/XMI',
 class SaltElement(object):
     """
     An `SaltElement` is the most basic data structure used in `SaltDocument`s and
-    `LinguisticDocument`s. `Node`s, `SaltEdge`s and {Layer}s are derived from it.
+    `LinguisticDocument`s. `Node`s, `SaltEdge`s and {SaltLayer}s are derived from it.
 
     :ivar name: a `str` that contains the SNAME of a SaltXML element
     :ivar type: a `str` that contains the xsi:type of a SaltXML element

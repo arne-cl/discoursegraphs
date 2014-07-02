@@ -18,7 +18,7 @@ from collections import defaultdict
 import labels
 from nodes import (Node, PrimaryTextNode, TokenNode, SpanNode, StructureNode,
                    extract_sentences)
-from layers import Layer
+from layers import SaltLayer
 from edges import SaltEdge, DominanceRelation, SpanningRelation, TextualRelation
 from elements import (SaltElement, get_elements, get_subelements, get_xsi_type,
                       element_statistics)
@@ -78,7 +78,7 @@ class SaltXMIGraph(nx.DiGraph):
 class SaltDocument(object):
     """
     represents the relevant parts of a SaltXML file as a class (with lists
-    of ``Node``s, ``SaltEdge``s and ``Layer``s.
+    of ``Node``s, ``SaltEdge``s and ``SaltLayer``s.
 
     Attributes
     ----------
@@ -90,7 +90,7 @@ class SaltDocument(object):
         i.e. TextualRelation, SpanningRelation or DominanceRelation
     nodes : list of Node
         i.e. PrimaryTextNode, TokenNode, SpanNode, StructureNode
-    layers : list of Layer
+    layers : list of SaltLayer
     """
     def __init__(self, document_path):
         """
@@ -182,7 +182,7 @@ class LinguisticDocument(object):
         edges : list of SaltEdge
             i.e. SaltEdges of type ``TextualRelation``, ``SpanningRelation`` and
             ``DominanceRelation``
-        layers : list of Layer
+        layers : list of SaltLayer
         nodes : list of Node
             i.e. SaltEdges of type ``PrimaryTextNode``, ``TokenNode``, ``SpanNode``
             and ``StructureNode``
@@ -343,7 +343,7 @@ def create_class_instance(element, element_id, doc_id):
         the ID of the SaltXML document
 
     :returns: an instance of an `SaltElement` subclass instance, e.g. `TokenNode`,
-    `TextualRelation` or `Layer`
+    `TextualRelation` or `SaltLayer`
     """
     xsi_type = get_xsi_type(element)
     element_class = XSI_TYPE_CLASSES[xsi_type]
