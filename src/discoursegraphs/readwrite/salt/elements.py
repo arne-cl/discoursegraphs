@@ -10,10 +10,9 @@ This module handles LXML etree elements from SALT documents.
 from lxml import etree # used by doctests only
 from collections import defaultdict
 
-NAMESPACES = {'xmi': 'http://www.omg.org/XMI',
-              'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-              'sDocumentStructure': 'sDocumentStructure',
-              'saltCore': 'saltCore'}
+from discoursegraphs.readwrite.salt.labels import SaltLabel
+from discoursegraphs.readwrite.salt.util import get_xsi_type, NAMESPACES
+
 
 class SaltElement(object):
     """
@@ -113,20 +112,8 @@ def get_subelements(element, tag_name):
     return element.findall(tag_name)
 
 
-def get_xsi_type(element):
-    """
-    returns the type of an element of the XML tree, i.e. nodes, edges,
-    layers etc.), raises an exception if the element has no 'xsi:type'
-    attribute.
-    """
-    #.xpath() always returns a list, so we need to select the first element
-    try:
-        type_with_namespace = element.xpath('@xsi:type', namespaces=NAMESPACES)[0]
-        salt_ns, element_type = type_with_namespace.split(':')
-        return element_type
-    except:
-        raise Exception, ("The '{0}' element has no 'xsi:type' but has these "
-            "attribs:\n{1}").format(element.tag, element.attrib)
+
+
 
 def get_element_name(element):
     """get the element name of a node, e.g. 'tok_1'"""
@@ -144,21 +131,28 @@ def get_graph_element_id(element):
     else:
         return None
 
-def get_layer_id(element):
-    """
-    returns the layer id from an element (e.g. SaltNode or SaltEdge).
-    returns None for elements that don't belong to a layer.
 
-    :param element: an etree element parsed from a SaltXML document
-    :type element: an `lxml.etree._Element`
-    :rtype: `int` or None
+def get_layer_ids(element):
     """
+    returns the layer ids from a SaltElement (i.e. a node, edge or layer).
+
+    Parameters
+    ----------
+    element : lxml.etree._Element
+        an etree element parsed from a SaltXML document
+
+    Returns
+    -------
+    layers: list of int
+        list of layer indices. list might be empty.
+    """
+    layers = []
     if element.xpath('@layers'):
-        layer_string = element.xpath('@layers')[0]
-        _prefix, layer = layer_string.split('.') # '//@layers.0' -> '0'
-        return int(layer)
-    else:
-        return None
+        layers_string = element.xpath('@layers')[0]
+        for layer_string in layers_string.split():
+            _prefix, layer = layer_string.split('.')  # '//@layers.0' -> '0'
+            layers.append(int(layer))
+
 
 def element_statistics(tree, element_type):
     """

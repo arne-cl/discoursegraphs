@@ -5,9 +5,14 @@
 This module handles the parsing of SALT edges.
 """
 
-from elements import (SaltElement, get_graph_element_id, get_annotations,
-    get_layer_id)
-
+from discoursegraphs.readwrite.salt.util import get_xsi_type
+from discoursegraphs.readwrite.salt.labels import SaltLabel
+from discoursegraphs.readwrite.salt.elements import (SaltElement,
+                                                     get_element_name,
+                                                     get_graph_element_id,
+                                                     get_annotations,
+                                                     get_layer_ids,
+                                                     get_subelements)
 
 class SaltEdge(SaltElement):
     """

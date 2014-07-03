@@ -15,13 +15,17 @@ import networkx as nx
 from lxml import etree
 from collections import defaultdict
 
-import labels
-from nodes import (SaltNode, PrimaryTextNode, TokenNode, SpanNode, StructureNode,
-                   extract_sentences)
-from layers import SaltLayer
-from edges import SaltEdge, DominanceRelation, SpanningRelation, TextualRelation
-from elements import (SaltElement, get_elements, get_subelements, get_xsi_type,
-                      element_statistics)
+from discoursegraphs.readwrite.salt.nodes import (SaltNode, PrimaryTextNode,
+                                                  TokenNode, SpanNode,
+                                                  StructureNode,
+                                                  extract_sentences)
+from discoursegraphs.readwrite.salt.layers import SaltLayer
+from discoursegraphs.readwrite.salt.edges import (DominanceRelation,
+                                                  SpanningRelation,
+                                                  TextualRelation)
+from discoursegraphs.readwrite.salt.elements import (SaltElement, get_elements,
+                                                     get_subelements)
+from discoursegraphs.readwrite.salt.util import get_xsi_type
 
 TEST_DOC_ID = "maz-1423"
 

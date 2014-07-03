@@ -7,7 +7,8 @@ This module handles the parsing of SALT layers.
 
 import re
 from lxml import etree
-from elements import SaltElement
+
+from discoursegraphs.readwrite.salt.elements import SaltElement
 
 DIGITS = re.compile('\d+')
 

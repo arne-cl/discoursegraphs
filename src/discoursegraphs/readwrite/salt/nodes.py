@@ -7,11 +7,10 @@ This module handles the parsing of SALT nodes.
 TODO: add docstring to SaltNode subclasses
 """
 
-import elements
-import layers
+from discoursegraphs.readwrite.salt.elements import SaltElement, get_layer_ids, has_annotations, get_annotations
 
 
-class SaltNode(elements.SaltElement):
+class SaltNode(SaltElement):
     """
     A SaltNode inherits all the attributes from `SaltElement`, i.e. 'name', 'type' and
     'xml'. Additional attributes:
@@ -21,18 +20,18 @@ class SaltNode(elements.SaltElement):
     features : dict
         a dictionary of all the SAnnotation attributes of a layer,
         e.g. lemma, morph or pos
-    layer : int
-        an integer representing the index of the layer the node belongs to
-        or None
+    layers : list of int or None
+        list of indices of the layers that the node belongs to,
+        or ``None`` if the node doesn't belong to any layer
     node_id : int
         the index of the node
     """
     def __init__(self, element, element_id, doc_id):
         super(SaltNode, self).__init__(element, doc_id)
-        self.layer = elements.get_layer_id(element)
+        self.layers = get_layer_ids(element)
         self.node_id = element_id
-        if elements.has_annotations(element):
-            self.features = elements.get_annotations(element)
+        if has_annotations(element):
+            self.features = get_annotations(element)
         else:
             self.features = {}
 

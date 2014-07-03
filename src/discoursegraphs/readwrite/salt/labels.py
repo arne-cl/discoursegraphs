@@ -10,7 +10,7 @@ and '{sDocumentStructure}SDocumentGraph'.
 """
 
 from lxml.builder import ElementMaker
-from elements import SaltElement, get_element_name, get_xsi_type
+from discoursegraphs.readwrite.salt.util import get_xsi_type
 
 
 XSI = "http://www.w3.org/2001/XMLSchema-instance"
