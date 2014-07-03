@@ -16,33 +16,46 @@ from discoursegraphs.readwrite.salt.elements import (SaltElement,
 
 class SaltEdge(SaltElement):
     """
-    An edge connects a source node with a target node and belongs to a layer.
+    An edge connects a source node with a target node, belongs to a layer
+    and has two or more labels attached to it.
     """
-    def __init__(self, element, element_id, doc_id):
+    def __init__(self, name, element_id, xsi_type, labels, source, target,
+                 layers=None, xml=None):
         """
-        Every edge has these attributes (in addition to the attributes inherited
-        from the ``SaltElement`` class, i.e. ``xml``, ``name`` and ``type``):
+        Every edge has these attributes (in addition to the attributes
+        inherited from the ``SaltElement`` class):
 
         Attributes
         ----------
-        edge_id : int
-            the index of the edge
-        graph_id : str
-            the ``saltCore:SElementId`` value string, e.g. `edge123`
-        layer : int or None
-            the index of the layer that the edge belongs to, or ``None`` if the
-            edge doesn't belong to a layer
+        layers : list of int or None
+            list of indices of the layers that the edge belongs to,
+            or ``None`` if the edge doesn't belong to any layer
         source : int
             the index of the source node connected to the edge
         target : int
             the index of the target node connected to the edge
         """
-        super(SaltEdge, self).__init__(element, doc_id)
-        self.edge_id = element_id
-        self.layer = get_layer_id(element)
-        self.source = get_node_id(element, 'source')
-        self.target = get_node_id(element, 'target')
-        self.graph_id = get_graph_element_id(element)
+        super(SaltEdge, self).__init__(name, element_id, xsi_type, labels, xml)
+        self.layers = layers
+        self.source = source
+        self.target = target
+
+    @classmethod
+    def from_etree(cls, etree_element):
+        """
+        creates a ``SaltEdge`` from the etree representation of an <edges>
+        element from a SaltXMI file.
+        """
+        label_elements = get_subelements(etree_element, 'labels')
+        labels = [SaltLabel.from_etree(elem) for elem in label_elements]
+        return cls(name=get_element_name(etree_element),
+                   element_id=get_graph_element_id(etree_element),
+                   xsi_type=get_xsi_type(etree_element),
+                   labels=labels,
+                   source=get_node_id(etree_element, 'source'),
+                   target=get_node_id(etree_element, 'target'),
+                   layers=get_layer_ids(etree_element),
+                   xml=etree_element)
 
     def __str__(self):
         ret_str = super(SaltEdge, self).__str__() + "\n"
@@ -64,10 +77,13 @@ class SpanningRelation(SaltEdge):
         </edges>
 
     """
-    def __init__(self, element, element_id, doc_id):
+    def __init__(self, name, element_id, xsi_type, labels, source, target,
+                 layers=None, xml=None):
         """A ``SpanningRelation`` is created just like an ``SaltEdge``."""
-        super(SpanningRelation, self).__init__(element, element_id, doc_id)
-        pass
+        super(SpanningRelation, self).__init__(name, element_id, xsi_type,
+                                               labels, source, target,
+                                               layers=None, xml=None)
+
 
 class TextualRelation(SaltEdge):
     """
@@ -79,15 +95,31 @@ class TextualRelation(SaltEdge):
     Every TextualRelation has these attributes (in addition to those inherited
     from `SaltEdge` and `SaltElement`):
 
-    :ivar onset: `int` representing the string onset of the source node
-    (`TokenNode`)
-    :ivar offset: `int` representing the string offset of the source node
-    (`TokenNode`)
+    Attributes
+    ----------
+    onset : int
+        the string onset of the source node (``TokenNode``)
+    offset : int
+        the string offset of the source node (``TokenNode``)
     """
-    def __init__(self, element, element_id, doc_id):
-        super(TextualRelation, self).__init__(element, element_id, doc_id)
-        self.onset = get_string_onset(element)
-        self.offset = get_string_offset(element)
+    def __init__(self, name, element_id, xsi_type, labels, source, target,
+                 onset, offset, layers=None, xml=None):
+        super(TextualRelation, self).__init__(name, element_id, xsi_type,
+                                              labels, source, target,
+                                              layers=None, xml=None)
+
+    @classmethod
+    def from_etree(cls, etree_element):
+        """
+        create a ``TextualRelation`` from an etree element representing
+        an <edges> element with xsi:type 'sDocumentStructure:STextualRelation'.
+        """
+        #~ instance = super(TextualRelation, cls).from_etree(etree_element)
+        #~ instance.onset = get_string_onset(etree_element)
+        #~ instance.offset = get_string_offset(etree_element)
+        #~ return instance
+        # doesn't work
+        raise NotImplementedError
 
 
 class DominanceRelation(SaltEdge):
