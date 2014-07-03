@@ -16,23 +16,25 @@ from discoursegraphs.readwrite.salt.util import get_xsi_type, NAMESPACES
 
 class SaltElement(object):
     """
-    An `SaltElement` is the most basic data structure used in `SaltDocument`s and
-    `LinguisticDocument`s. `SaltNode`s, `SaltEdge`s and {SaltLayer}s are derived from it.
+    A ``SaltElement`` is the most basic data structure used in
+    ``SaltDocument``s and ``LinguisticDocument``s.
+    ``SaltNode``, ``SaltEdge`` and ``SaltLayer`` are derived from it.
 
     Attributes
     ----------
-    name: str
+    name : str
         the name (the ``valueString`` of the ``SNAME`` label of a) of a SaltXML
         element
-    type: str
+    xsi_type : str
         the ``xsi:type`` of a SaltXML element
-    xml: lxml.etree._Element
-        the etree element representation of a SaltXML element
+    xml : lxml.etree._Element or None
+        contains the etree element representation of an SaltXMI file element
+        that this SaltElement was created from. Contains None, If the
+        SaltElement was created from scratch.
     """
-    def __init__(self, element, doc_id):
+    def __init__(self, name, element_id, xsi_type, labels, xml=None):
         """
-        A `SaltElement` instance is created from an `etree._Element` representing
-        a SaltXML element.
+        creates a `SaltElement` instance
 
         >>> node_str = '''
         ... <nodes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="sDocumentStructure:SToken">
@@ -40,27 +42,51 @@ class SaltElement(object):
         ... </nodes>'''
         >>> node = etree.fromstring(node_str)
         >>> e = SaltElement(node, 'document_23')
-        >>> e.name, e.type
+        >>> e.name, e.xsi_type
         ('tok_1', 'SToken')
 
         Parameters
         ----------
-        element : lxml.etree._Element
+        name : str
+            the name (the ``valueString`` of the ``SNAME`` label of a) of a
+            SaltXML element
+        element_id : str
+            the ID of the edge (i.e. the valueString attribute of the label
+            with xsi:type ``saltCore:SElementId`` and name ``id``,
+            e.g. `edge123)
+        xsi_type : str
+            the ``xsi:type`` of a SaltXML element
+        labels : list of SaltLabel
+            the list of labels attached to this SaltElement
+        xml : lxml.etree._Element or None
             an etree element parsed from a SaltXML document
-        doc_id : str
-            the document ID of the Salt document that the element
         """
-        self.doc_id = doc_id
-        self.xml = element
-        self.name = get_element_name(element)
-        self.type = get_xsi_type(element)
+        self.name = name
+        self.element_id = element_id
+        self.xsi_type = xsi_type
+        self.labels = labels
+        self.xml = xml
+
+    @classmethod
+    def from_etree(cls, etree_element):
+        """
+        creates a `SaltElement` from an `etree._Element` representing
+        an element in a SaltXMI file.
+        """
+        label_elements = get_subelements(etree_element, 'labels')
+        labels = [SaltLabel.from_etree(elem) for elem in label_elements]
+        return cls(name=get_element_name(etree_element),
+                   element_id=get_graph_element_id(etree_element),
+                   xsi_type=get_xsi_type(etree_element),
+                   labels=labels,
+                   xml=etree_element)
 
     def __str__(self):
         """
         returns the name, Salt type and XML representation of a `SaltElement`.
         """
         ret_str = "name: %s\n" % self.name
-        ret_str += "Salt type: %s\n\n" % self.type
+        ret_str += "Salt type: %s\n\n" % self.xsi_type
         ret_str += "XML representation:\n%s" % etree.tostring(self.xml)
         return ret_str
 
@@ -78,6 +104,7 @@ def has_annotations(element):
     else:
         return False
 
+
 def get_annotations(element):
     """
     returns a dictionary of all the annotation features of an element,
@@ -89,6 +116,7 @@ def get_annotations(element):
         if get_xsi_type(label) == 'SAnnotation':
             annotations.update([get_annotation(label)])
     return annotations
+
 
 def get_elements(tree, tag_name):
     """
@@ -103,6 +131,7 @@ def get_elements(tree, tag_name):
         the name of an XML tag, e.g. 'nodes', 'edges', 'labels'
     """
     return tree.findall("//{0}".format(tag_name))
+
 
 def get_subelements(element, tag_name):
     """
@@ -120,9 +149,11 @@ def get_element_name(element):
     id_label = element.find('labels[@name="SNAME"]')
     return id_label.xpath('@valueString')[0]
 
+
 def get_graph_element_id(element):
     """
-    returns the graph element id of a label/element, e.g. "pcc_maz176_merged_paula/maz-0002/maz-0002_graph#tok_1" or "edge177".
+    returns the graph element id of a label/element,
+    e.g. "pcc_maz176_merged_paula/maz-0002/maz-0002_graph#tok_1" or "edge177".
     returns none, if no graph element id is present.
     """
     graph_id_label = element.find('labels[@name="id"]')
