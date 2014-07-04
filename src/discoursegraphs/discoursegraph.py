@@ -205,8 +205,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
         """
         additional_attribs = attr  # will be added to each node
         for n in nodes:
-            try:  # check, if n is a node_id or a (node_id, attribute dict) tuple
-                newnode=n not in self.succ  # is node in the graph, yet?
+            try:  # check, if n is a node_id or a (node_id, attrib dict) tuple
+                newnode = n not in self.succ  # is node in the graph, yet?
             except TypeError:  # n is a (node_id, attribute dict) tuple
                 node_id, ndict = n
                 assert 'layers' in ndict, \
@@ -244,31 +244,6 @@ class DiscourseDocumentGraph(MultiDiGraph):
                 self.node[n].update({'layers': set([self.ns])})
             else:  # n is a node_id and it's already in the graph
                 self.node[n].update(attr)
-
-
-        #~ for n in nodes:
-            #~ try:  # check, if n is a node_id or a (node_id, attribute dict) tuple
-                #~ newnode=n not in self.succ
-            #~ except TypeError:  # n is a (node_id, attribute dict) tuple
-                #~ node_id, ndict = n
-                #~ if node_id not in self.succ:  # node isn't in the graph, yet
-                    #~ self.succ[node_id] = {}
-                    #~ self.pred[node_id] = {}
-                    #~ newdict = attr.copy()
-                    #~ newdict.update(ndict)
-                    #~ self.node[node_id] = newdict
-                #~ else:  # node is already in the graph
-                    #~ olddict = self.node[node_id]
-                    #~ olddict.update(attr)
-                    #~ olddict.update(ndict)
-                #~ continue  # process next node
-                #~ 
-            #~ if newnode:  # n is a node_id and it's not in the graph, yet
-                #~ self.succ[n] = {}
-                #~ self.pred[n] = {}
-                #~ self.node[n] = attr.copy()
-            #~ else:  # n is a node_id and it's already in the graph
-                #~ self.node[n].update(attr)
 
     def add_edge(self, u, v, layers, key=None, attr_dict=None, **attr):
         """Add an edge between u and v.
