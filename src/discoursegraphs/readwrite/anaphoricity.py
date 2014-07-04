@@ -48,8 +48,8 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         (default: self.ns+':root_node')
     """
 
-    def __init__(self, anaphora_filepath=None, name=None, namespace='anaphoricity',
-                 connected=False):
+    def __init__(self, anaphora_filepath=None, name=None,
+                 namespace='anaphoricity', connected=False):
         """
         Reads an abstract anaphora annotation file, creates a directed
         graph and adds a node for each token, as well as an edge from
