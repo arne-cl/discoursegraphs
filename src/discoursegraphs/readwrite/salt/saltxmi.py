@@ -15,7 +15,7 @@ import networkx as nx
 from lxml import etree
 from collections import defaultdict
 
-from discoursegraphs.readwrite.salt.nodes import (SaltNode, PrimaryTextNode,
+from discoursegraphs.readwrite.salt.nodes import (PrimaryTextNode,
                                                   TokenNode, SpanNode,
                                                   StructureNode,
                                                   extract_sentences)
@@ -23,17 +23,21 @@ from discoursegraphs.readwrite.salt.layers import SaltLayer
 from discoursegraphs.readwrite.salt.edges import (DominanceRelation,
                                                   SpanningRelation,
                                                   TextualRelation)
-from discoursegraphs.readwrite.salt.elements import (SaltElement, get_elements,
-                                                     get_subelements)
+from discoursegraphs.readwrite.salt.elements import (SaltElement, get_elements)
 from discoursegraphs.readwrite.salt.util import get_xsi_type
 
 TEST_DOC_ID = "maz-1423"
+TEST_ROOT_DIR = os.path.expanduser('~/repos/salt-test/')
 
-TEST_DIR1 = os.path.expanduser("~/repos/salt-test/pcc176-syntax-rst-salt/salt:/")
-TEST_FILE1 = os.path.join(TEST_DIR1, TEST_DOC_ID+".salt")
+TEST_FILE1 = os.path.join(
+    TEST_ROOT_DIR,
+    "pcc176-syntax-rst-salt/salt:/",
+    TEST_DOC_ID+".salt")
 
-TEST_DIR2 = os.path.expanduser("~/repos/salt-test/ritz-pcc176-syntax-coref-salt/pcc_maz176_merged_paula/")
-TEST_FILE2 = os.path.join(TEST_DIR2, TEST_DOC_ID+".salt")
+TEST_FILE2 = os.path.join(
+    TEST_ROOT_DIR,
+    "ritz-pcc176-syntax-coref-salt/pcc_maz176_merged_paula/",
+    TEST_DOC_ID+".salt")
 
 XSI_TYPE_CLASSES = {
     'SStructure': StructureNode,
@@ -44,7 +48,6 @@ XSI_TYPE_CLASSES = {
     'STextualRelation': TextualRelation,
     'SDominanceRelation': DominanceRelation,
     'SLayer': SaltLayer}
-
 
 
 class SaltXMIGraph(nx.DiGraph):
@@ -78,6 +81,7 @@ class SaltXMIGraph(nx.DiGraph):
         for i, edge_element in enumerate(get_elements(self.tree, 'edges')):
             edge = create_class_instance(edge_element, i, self.doc_id)
             self.add_edge(edge.source, edge.target, edge.__dict__)
+
 
 class SaltDocument(object):
     """
@@ -126,7 +130,7 @@ class SaltDocument(object):
                 subtype_counts[type(element).__name__] += 1
             for subtype in subtype_counts:
                 ret_str += "\t{0}: {1}\n".format(subtype,
-                    subtype_counts[subtype])
+                                                 subtype_counts[subtype])
                 if element_type == 'layers':
                     layer_names = [layer.name for layer in self.layers]
                     ret_str += "\t\t" + ", ".join(layer_names)
@@ -150,13 +154,13 @@ class SaltDocument(object):
         # creates a new attribute, e.g. 'self.nodes' and assigns it an
         # empty list
         setattr(self, element_type, [])
-        elements_list = get_elements(tree, element_type)
-        for i, element in enumerate(elements_list):
+        etree_elements = get_elements(tree, element_type)
+        for i, etree_element in enumerate(etree_elements):
             # create an instance of an element class (e.g. TokenNode)
-            element_class_instance = create_class_instance(element, i, self.doc_id)
+            salt_element = create_class_instance(etree_element, i, self.doc_id)
             # and add it to the corresponding element type list,
             # e.g. 'self.nodes'
-            getattr(self, element_type).append(element_class_instance)
+            getattr(self, element_type).append(salt_element)
             # In case of a 'nodes' element this is equivalent to:
             # self.nodes.append(TokenNode(etree_element, document_id))
 
@@ -184,12 +188,12 @@ class LinguisticDocument(object):
         doc_id : str
             the document ID of the Salt document
         edges : list of SaltEdge
-            i.e. SaltEdges of type ``TextualRelation``, ``SpanningRelation`` and
-            ``DominanceRelation``
+            i.e. SaltEdges of type ``TextualRelation``, ``SpanningRelation``
+            and ``DominanceRelation``
         layers : list of SaltLayer
         nodes : list of SaltNode
-            i.e. SaltEdges of type ``PrimaryTextNode``, ``TokenNode``, ``SpanNode``
-            and ``StructureNode``
+            i.e. SaltEdges of type ``PrimaryTextNode``, ``TokenNode``,
+            ``SpanNode`` and ``StructureNode``
         text : str
             the primary text of the Salt document
         tree : etree._ElementTree
@@ -213,15 +217,15 @@ class LinguisticDocument(object):
         # lists of edge ids of a certain type
         self._textual_relation_ids = subtype_ids(self.edges, TextualRelation)
         self._spanning_relation_ids = subtype_ids(self.edges, SpanningRelation)
-        self._dominance_relation_ids = subtype_ids(self.edges, DominanceRelation)
+        self._dominance_relation_ids = subtype_ids(self.edges,
+                                                   DominanceRelation)
 
         self._add_offsets_to_token_nodes()
         self.sentences = extract_sentences(self.nodes,
-                            self._token_node_ids)
+                                           self._token_node_ids)
         self._add_token_node_ids_to_span_nodes()
         self._add_span_node_ids_to_token_nodes()
         self._add_dominance_relation__to__nodes()
-
 
     def __str__(self):
         """
@@ -238,7 +242,7 @@ class LinguisticDocument(object):
                 subtype_counts[type(element).__name__] += 1
             for subtype in subtype_counts:
                 ret_str += "\t{0}: {1}\n".format(subtype,
-                    subtype_counts[subtype])
+                                                 subtype_counts[subtype])
             ret_str += "\n"
         ret_str += "primary text:\n{0}".format(self.text.encode('utf-8'))
         return ret_str
@@ -252,7 +256,8 @@ class LinguisticDocument(object):
         :return: the sentence string
         :rtype: str
         """
-        tokens = [self.print_token(tok_idx) for tok_idx in self.sentences[sent_index]]
+        tokens = [self.print_token(tok_idx)
+                  for tok_idx in self.sentences[sent_index]]
         return ' '.join(tokens)
 
     def print_token(self, token_node_index):
@@ -265,8 +270,9 @@ class LinguisticDocument(object):
 
     def _add_offsets_to_token_nodes(self):
         """
-        Adds primary text string onsets/offsets to all nodes that represent tokens.
-        In SaltDocuments, this data was stored in TextualRelation edges only.
+        Adds primary text string onsets/offsets to all nodes that represent
+        tokens. In SaltDocuments, this data was stored in TextualRelation
+        edges only.
         """
         for edge_index in self._textual_relation_ids:
             token_node_index = self.edges[edge_index].source
@@ -326,9 +332,12 @@ class LinguisticDocument(object):
             dominated_dict[dominated_node_id].append(dominating_node_id)
 
         for dominating_node_id in dominating_dict:
-            self.nodes[dominating_node_id].dominates = dominating_dict[dominating_node_id]
+            self.nodes[dominating_node_id].dominates = \
+                dominating_dict[dominating_node_id]
         for dominated_node_id in dominated_dict:
-            self.nodes[dominated_node_id].dominated_by = dominated_dict[dominated_node_id]
+            self.nodes[dominated_node_id].dominated_by = \
+                dominated_dict[dominated_node_id]
+
 
 def create_class_instance(element, element_id, doc_id):
     """
@@ -346,8 +355,11 @@ def create_class_instance(element, element_id, doc_id):
     doc_id : str
         the ID of the SaltXML document
 
-    :returns: an instance of an `SaltElement` subclass instance, e.g. `TokenNode`,
-    `TextualRelation` or `SaltLayer`
+    Returns
+    -------
+    salt_element : SaltElement
+        an instance of a `SaltElement` subclass instance, e.g. a `TokenNode`,
+        `TextualRelation` or `SaltLayer`
     """
     xsi_type = get_xsi_type(element)
     element_class = XSI_TYPE_CLASSES[xsi_type]
@@ -364,13 +376,15 @@ def get_doc_id(element_tree):
     id_element = element_tree.xpath('labels[@name="id"]')[0]
     return id_element.attrib['valueString']
 
+
 def subtype_ids(elements, subtype):
     """
     returns the ids of all elements of a list that have a certain type,
     e.g. show all the nodes that are `TokenNode`s.
     """
     return [i for (i, element) in enumerate(elements)
-                if isinstance(element, subtype)]
+            if isinstance(element, subtype)]
+
 
 def tree_statistics(tree):
     """
@@ -391,6 +405,7 @@ def tree_statistics(tree):
     for (tag, counts) in tag_counter.items():
         print "{0}: {1}".format(tag, counts)
 
+
 def printxml(element):
     """
     prints the SaltDocument XML representation of a SaltDocument or an element
@@ -400,6 +415,7 @@ def printxml(element):
         print etree.tostring(element)
     elif isinstance(element, SaltElement):
         print etree.tostring(element.xml)
+
 
 def abslistdir(directory):
     """
