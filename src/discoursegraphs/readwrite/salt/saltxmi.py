@@ -27,12 +27,17 @@ from discoursegraphs.readwrite.salt.elements import (SaltElement, get_elements)
 from discoursegraphs.readwrite.salt.util import get_xsi_type
 
 TEST_DOC_ID = "maz-1423"
+TEST_ROOT_DIR = os.path.expanduser('~/repos/salt-test/')
 
-TEST_DIR1 = os.path.expanduser("~/repos/salt-test/pcc176-syntax-rst-salt/salt:/")
-TEST_FILE1 = os.path.join(TEST_DIR1, TEST_DOC_ID+".salt")
+TEST_FILE1 = os.path.join(
+    TEST_ROOT_DIR,
+    "pcc176-syntax-rst-salt/salt:/",
+    TEST_DOC_ID+".salt")
 
-TEST_DIR2 = os.path.expanduser("~/repos/salt-test/ritz-pcc176-syntax-coref-salt/pcc_maz176_merged_paula/")
-TEST_FILE2 = os.path.join(TEST_DIR2, TEST_DOC_ID+".salt")
+TEST_FILE2 = os.path.join(
+    TEST_ROOT_DIR,
+    "ritz-pcc176-syntax-coref-salt/pcc_maz176_merged_paula/",
+    TEST_DOC_ID+".salt")
 
 XSI_TYPE_CLASSES = {
     'SStructure': StructureNode,
@@ -43,7 +48,6 @@ XSI_TYPE_CLASSES = {
     'STextualRelation': TextualRelation,
     'SDominanceRelation': DominanceRelation,
     'SLayer': SaltLayer}
-
 
 
 class SaltXMIGraph(nx.DiGraph):
@@ -77,6 +81,7 @@ class SaltXMIGraph(nx.DiGraph):
         for i, edge_element in enumerate(get_elements(self.tree, 'edges')):
             edge = create_class_instance(edge_element, i, self.doc_id)
             self.add_edge(edge.source, edge.target, edge.__dict__)
+
 
 class SaltDocument(object):
     """
@@ -149,13 +154,13 @@ class SaltDocument(object):
         # creates a new attribute, e.g. 'self.nodes' and assigns it an
         # empty list
         setattr(self, element_type, [])
-        elements_list = get_elements(tree, element_type)
-        for i, element in enumerate(elements_list):
+        etree_elements = get_elements(tree, element_type)
+        for i, etree_element in enumerate(etree_elements):
             # create an instance of an element class (e.g. TokenNode)
-            element_class_instance = create_class_instance(element, i, self.doc_id)
+            salt_element = create_class_instance(etree_element, i, self.doc_id)
             # and add it to the corresponding element type list,
             # e.g. 'self.nodes'
-            getattr(self, element_type).append(element_class_instance)
+            getattr(self, element_type).append(salt_element)
             # In case of a 'nodes' element this is equivalent to:
             # self.nodes.append(TokenNode(etree_element, document_id))
 
@@ -221,7 +226,6 @@ class LinguisticDocument(object):
         self._add_token_node_ids_to_span_nodes()
         self._add_span_node_ids_to_token_nodes()
         self._add_dominance_relation__to__nodes()
-
 
     def __str__(self):
         """
