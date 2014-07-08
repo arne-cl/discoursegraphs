@@ -12,7 +12,7 @@ from discoursegraphs.readwrite.salt.elements import SaltElement, get_layer_ids, 
 
 class SaltNode(SaltElement):
     """
-    A SaltNode inherits all the attributes from `SaltElement`, i.e. 'name', 'type' and
+    A SaltNode inherits all the attributes from `SaltElement`, i.e. 'name', 'xsi_type' and
     'xml'. Additional attributes:
 
     Attributes
@@ -23,17 +23,25 @@ class SaltNode(SaltElement):
     layers : list of int or None
         list of indices of the layers that the node belongs to,
         or ``None`` if the node doesn't belong to any layer
-    node_id : int
-        the index of the node
     """
-    def __init__(self, element, element_id, doc_id):
-        super(SaltNode, self).__init__(element, doc_id)
-        self.layers = get_layer_ids(element)
-        self.node_id = element_id
-        if has_annotations(element):
-            self.features = get_annotations(element)
-        else:
-            self.features = {}
+    def __init__(self, name, element_id, xsi_type, labels, layers=None,
+                 features=None, xml=None):
+        super(SaltNode, self).__init__(name, element_id, xsi_type, labels, xml)
+        self.features = {} if features is None else features
+        self.layers = layers
+
+    @classmethod
+    def from_etree(cls, etree_element):
+        """
+        creates a ``SaltNode`` instance from the etree representation of an
+        <nodes> element from a SaltXMI file.
+        """
+        ins = SaltElement.from_etree(etree_element)
+        # TODO: this looks dangerous, ask Stackoverflow about it!
+        ins.__class__ = SaltNode.mro()[0]  # convert SaltElement into SaltNode
+        ins.layers = get_layer_ids(etree_element)
+        ins.features = get_annotations(etree_element)
+        return ins
 
     def __str__(self):
         """
@@ -66,9 +74,23 @@ class PrimaryTextNode(SaltNode):
     text : str
         the string representing the text of a document
     """
-    def __init__(self, element, element_id, doc_id):
-        super(PrimaryTextNode, self).__init__(element, element_id, doc_id)
-        self.text = extract_primary_text(element)
+    def __init__(self, name, element_id, xsi_type, labels, text, layers=None,
+                 features=None, xml=None):
+        super(PrimaryTextNode, self).__init__(name, element_id, xsi_type,
+                                              labels, layers, features, xml)
+        self.text = text
+
+    @classmethod
+    def from_etree(cls, etree_element):
+        """
+        creates a ``PrimaryTextNode`` instance from the etree representation of
+        a <nodes> element from a SaltXMI file.
+        """
+        ins = SaltNode.from_etree(etree_element)
+        # TODO: this looks dangerous, ask Stackoverflow about it!
+        ins.__class__ = PrimaryTextNode.mro()[0]  # convert SaltNode into PrimaryTextNode
+        ins.text = extract_primary_text(etree_element)
+        return ins
 
     def __str__(self):
         node_string = super(PrimaryTextNode, self).__str__()
@@ -86,6 +108,7 @@ class TokenNode(SaltNode):
     def __init__(self, element, element_id, doc_id):
         super(TokenNode, self).__init__(element, element_id, doc_id)
         pass
+
 
 class SpanNode(SaltNode):
     """
@@ -109,6 +132,7 @@ class SpanNode(SaltNode):
     def __init__(self, element, element_id, doc_id):
         super(SpanNode, self).__init__(element, element_id, doc_id)
         pass
+
 
 class StructureNode(SaltNode):
     """
