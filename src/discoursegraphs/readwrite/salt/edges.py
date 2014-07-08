@@ -16,33 +16,43 @@ from discoursegraphs.readwrite.salt.elements import (SaltElement,
 
 class SaltEdge(SaltElement):
     """
-    An edge connects a source node with a target node and belongs to a layer.
+    An edge connects a source node with a target node, belongs to a layer
+    and has two or more labels attached to it.
     """
-    def __init__(self, element, element_id, doc_id):
+    def __init__(self, name, element_id, xsi_type, labels, source, target,
+                 layers=None, xml=None):
         """
-        Every edge has these attributes (in addition to the attributes inherited
-        from the ``SaltElement`` class, i.e. ``xml``, ``name`` and ``type``):
+        Every edge has these attributes (in addition to the attributes
+        inherited from the ``SaltElement`` class):
 
         Attributes
         ----------
-        edge_id : int
-            the index of the edge
-        graph_id : str
-            the ``saltCore:SElementId`` value string, e.g. `edge123`
-        layer : int or None
-            the index of the layer that the edge belongs to, or ``None`` if the
-            edge doesn't belong to a layer
+        layers : list of int or None
+            list of indices of the layers that the edge belongs to,
+            or ``None`` if the edge doesn't belong to any layer
         source : int
             the index of the source node connected to the edge
         target : int
             the index of the target node connected to the edge
         """
-        super(SaltEdge, self).__init__(element, doc_id)
-        self.edge_id = element_id
-        self.layer = get_layer_id(element)
-        self.source = get_node_id(element, 'source')
-        self.target = get_node_id(element, 'target')
-        self.graph_id = get_graph_element_id(element)
+        super(SaltEdge, self).__init__(name, element_id, xsi_type, labels, xml)
+        self.layers = layers
+        self.source = source
+        self.target = target
+
+    @classmethod
+    def from_etree(cls, etree_element):
+        """
+        creates a ``SaltEdge`` instance from the etree representation of an
+        <edges> element from a SaltXMI file.
+        """
+        ins = SaltElement.from_etree(etree_element)
+        # TODO: this looks dangerous, ask Stackoverflow about it!
+        ins.__class__ = SaltEdge.mro()[0]  # convert SaltElement into SaltEdge
+        ins.layers = get_layer_ids(etree_element)
+        ins.source = get_node_id(etree_element, 'source')
+        ins.target = get_node_id(etree_element, 'target')
+        return ins
 
     def __str__(self):
         ret_str = super(SaltEdge, self).__str__() + "\n"
@@ -64,10 +74,13 @@ class SpanningRelation(SaltEdge):
         </edges>
 
     """
-    def __init__(self, element, element_id, doc_id):
+    def __init__(self, name, element_id, xsi_type, labels, source, target,
+                 layers=None, xml=None):
         """A ``SpanningRelation`` is created just like an ``SaltEdge``."""
-        super(SpanningRelation, self).__init__(element, element_id, doc_id)
-        pass
+        super(SpanningRelation, self).__init__(name, element_id, xsi_type,
+                                               labels, source, target,
+                                               layers=None, xml=None)
+
 
 class TextualRelation(SaltEdge):
     """
@@ -79,15 +92,35 @@ class TextualRelation(SaltEdge):
     Every TextualRelation has these attributes (in addition to those inherited
     from `SaltEdge` and `SaltElement`):
 
-    :ivar onset: `int` representing the string onset of the source node
-    (`TokenNode`)
-    :ivar offset: `int` representing the string offset of the source node
-    (`TokenNode`)
+    Attributes
+    ----------
+    onset : int
+        the string onset of the source node (``TokenNode``)
+    offset : int
+        the string offset of the source node (``TokenNode``)
     """
-    def __init__(self, element, element_id, doc_id):
-        super(TextualRelation, self).__init__(element, element_id, doc_id)
-        self.onset = get_string_onset(element)
-        self.offset = get_string_offset(element)
+    def __init__(self, name, element_id, xsi_type, labels, source, target,
+                 onset, offset, layers=None, xml=None):
+        super(TextualRelation, self).__init__(name, element_id, xsi_type,
+                                              labels, source, target,
+                                              layers, xml)
+        self.onset = onset
+        self.offset = offset
+
+    @classmethod
+    def from_etree(cls, etree_element):
+        """
+        create a ``TextualRelation`` instance from an etree element
+        representing an <edges> element with xsi:type 
+        'sDocumentStructure:STextualRelation'.
+        """
+        ins = SaltEdge.from_etree(etree_element)
+        # TODO: this looks dangerous, ask Stackoverflow about it!
+        # convert SaltEdge into TextualRelation
+        ins.__class__ = TextualRelation.mro()[0]
+        ins.onset = get_string_onset(etree_element)
+        ins.offset = get_string_offset(etree_element)
+        return ins
 
 
 class DominanceRelation(SaltEdge):
@@ -95,8 +128,11 @@ class DominanceRelation(SaltEdge):
     A `DominanceRelation` edge always links a `StructureNode` (source) to a
     `TokenNode` (target). Every `DominanceRelation` has a `feature` attribute:
 
-    :ivar feature: `dict` of (`str`, `str`) key-value pairs which e.g. describe
-    the syntactical constituent a token belongs to, such as {'tiger.func': 'PP'}.
+    Attributes
+    ----------
+    features : dict of (str, str)  key-value pairs which e.g. describe
+    the syntactical constituent a token belongs to, such as
+    {'tiger.func': 'PP'}.
 
     A DominanceRelation edge looks like this::
 
@@ -106,11 +142,27 @@ class DominanceRelation(SaltEdge):
             <labels xsi:type="saltCore:SElementId" namespace="graph" name="id" valueString="edge530"/>
             <labels xsi:type="saltCore:SAnnotation" name="tiger.func" valueString="OC"/>
         </edges>
-
     """
-    def __init__(self, element, element_id, doc_id):
-        super(DominanceRelation, self).__init__(element, element_id, doc_id)
-        self.features = get_annotations(element)
+    def __init__(self, name, element_id, xsi_type, labels, source, target,
+                 features=None, layers=None, xml=None):
+        super(DominanceRelation, self).__init__(name, element_id, xsi_type,
+                                                labels, source, target,
+                                                layers, xml)
+        self.features = {} if features is None else features
+
+    @classmethod
+    def from_etree(cls, etree_element):
+        """
+        create a ``DominanceRelation`` instance from an etree element
+        representing an <edges> element with xsi:type 
+        'sDocumentStructure:SDominanceRelation'.
+        """
+        ins = SaltEdge.from_etree(etree_element)
+        # TODO: this looks dangerous, ask Stackoverflow about it!
+        # convert SaltEdge into DominanceRelation
+        ins.__class__ = DominanceRelation.mro()[0]
+        ins.features = get_annotations(etree_element)
+        return ins
 
 
 def get_node_id(edge, node_type):
@@ -122,10 +174,12 @@ def get_node_id(edge, node_type):
     _, node_id_str = edge.attrib[node_type].split('.') # e.g. //@nodes.251
     return int(node_id_str)
 
+
 def get_string_onset(edge):
     onset_label = edge.find('labels[@name="SSTART"]')
     onset_str = onset_label.xpath('@valueString')[0]
     return int(onset_str)
+
 
 def get_string_offset(edge):
     onset_label = edge.find('labels[@name="SEND"]')
