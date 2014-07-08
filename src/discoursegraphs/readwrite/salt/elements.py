@@ -27,6 +27,8 @@ class SaltElement(object):
         element
     xsi_type : str
         the ``xsi:type`` of a SaltXML element
+    labels : list of SaltLabel
+        the list of labels attached to this SaltElement
     xml : lxml.etree._Element or None
         contains the etree element representation of an SaltXMI file element
         that this SaltElement was created from. Contains None, If the
