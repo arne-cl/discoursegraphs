@@ -363,7 +363,7 @@ def create_class_instance(element, element_id, doc_id):
     """
     xsi_type = get_xsi_type(element)
     element_class = XSI_TYPE_CLASSES[xsi_type]
-    return element_class(element, element_id, doc_id)
+    return element_class.from_etree(element)
 
 
 def get_doc_id(element_tree):
