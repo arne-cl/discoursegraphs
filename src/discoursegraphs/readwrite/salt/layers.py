@@ -17,35 +17,47 @@ class SaltLayer(SaltElement):
     A ``SaltLayer`` instances describes a Salt XML layer. In Salt, a layer groups
     nodes and edges belonging to the same annotation level, e.g. syntax or
     information structure.
+
+    Attributes
+    ----------
+    nodes : list of int
+        a list of node indices which point to the nodes belonging to this
+        layer
     """
-    def __init__(self, element, element_id, doc_id):
+    def __init__(self, name, element_id, xsi_type, labels, nodes, xml=None):
         """
         Parameters
         ----------
-        element : lxml.etree._Element
-            an `etree._Element` is the XML representation of a Salt element.
-            here: a `layer` element
-        element_id : int
-            the index of the element (used to connect edges to nodes)
-        doc_id : str
-            the ID of the SaltXML document
-
-        Attributes
-        ----------
         name : str
-            represents the type of the layer, e.g. `tiger` or `mmax`
+            the name (the ``valueString`` of the ``SNAME`` label of a) of a
+            SaltXML element
+        element_id : str
+            the ID of the edge (i.e. the valueString attribute of the label
+            with xsi:type ``saltCore:SElementId`` and name ``id``,
+            e.g. `edge123)
+        xsi_type : str
+            the ``xsi:type`` of a SaltXML element
+        labels : list of SaltLabel
+            the list of labels attached to this SaltElement
         nodes : list of int
             a list of node indices which point to the nodes belonging to this
             layer
-        layer_id : int
-            the index of the layer
-        type : str
-            is always 'SLayer' (the type of the corresponding SaltXML element)
-        xml : etree._Element
-            etree element representing this Salt layer
+        xml : lxml.etree._Element or None
+            an etree element parsed from a SaltXML document
         """
-        super(SaltLayer, self).__init__(element, doc_id)
+        super(SaltLayer, self).__init__(name, element_id, xsi_type, labels, xml)
         nodes_str = element.xpath('@nodes')[0]
-        self.nodes = [int(node_id) for node_id in DIGITS.findall(nodes_str)]
-        self.layer_id = element_id
+        self.nodes = nodes
 
+    @classmethod
+    def from_etree(cls, etree_element):
+        """
+        creates a ``SaltLayer`` instance from the etree representation of an
+        <layers> element from a SaltXMI file.
+        """
+        ins = SaltElement.from_etree(etree_element)
+        # TODO: this looks dangerous, ask Stackoverflow about it!
+        ins.__class__ = SaltLayer.mro()[0]  # convert SaltElement into SaltLayer
+        nodes_str = etree_element.xpath('@nodes')[0]
+        ins.nodes = [int(node_id) for node_id in DIGITS.findall(nodes_str)]
+        return ins
