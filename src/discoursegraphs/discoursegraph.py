@@ -528,7 +528,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
         for token_id in self.tokens:
             yield (token_id, self.get_token(token_id, token_attrib))
 
-    def merge_graphs(self, document_graph):
+
+    def merge_graphs(self, other_docgraph):
         """
         Merges this graph with another document graph, thereby adding all the
         necessary nodes and edges (with attributes, layers etc.) to this one.
@@ -536,26 +537,10 @@ class DiscourseDocumentGraph(MultiDiGraph):
         NOTE: This will only work if both graphs have exactly the same
         tokenization.
         """
-        local_tokens = self.get_tokens()
-
-        remote_tokens = list(document_graph.get_tokens())
-
-        remote2local = {}
-        for i, (local_tok_id, local_tok) in enumerate(local_tokens):
-            remote_tok_id, remote_tok = remote_tokens[i]
-            if local_tok != remote_tok:  # token mismatch
-                raise ValueError(
-                    u"Tokenization mismatch: {0} ({1}) vs. {2} ({3})\n"
-                    "\t{4} != {5}".format(
-                        self.name, self.ns, document_graph.name,
-                        document_graph.ns, local_tok,
-                        remote_tok).encode('utf-8'))
-            else:
-                remote2local[remote_tok_id] = local_tok_id
-
-        relabel_nodes(document_graph, remote2local, copy=False)
-        self.add_nodes_from(document_graph.nodes(data=True))
-        self.add_edges_from(document_graph.edges(data=True))
+        # renaming the tokens of the other graph to match this one
+        rename_tokens(other_docgraph, self)
+        self.add_nodes_from(other_docgraph.nodes(data=True))
+        self.add_edges_from(other_docgraph.edges(data=True))
 
     def add_precedence_relations(self):
         """
@@ -573,6 +558,32 @@ class DiscourseDocumentGraph(MultiDiGraph):
             self.add_edge(self.tokens[i], token_node_id,
                           layers={self.ns, self.ns+':precedence'},
                           edge_type=EdgeTypes.precedence_relation)
+
+
+def rename_tokens(docgraph_with_old_names, docgraph_with_new_names):
+    """
+    Renames the tokens of a graph (``docgraph_with_old_names``) in-place,
+    using the token names of another document graph
+    (``docgraph_with_new_names``).
+
+    This will only work, iff both graphs have the same tokenization.
+    """
+    old_token_ids = list(docgraph_with_old_names.get_tokens())
+    new_token_ids = docgraph_with_new_names.get_tokens()
+
+    old2new = {}
+    for i, (new_tok_id, new_tok) in enumerate(new_token_ids):
+        old_tok_id, old_tok = old_token_ids[i]
+        if new_tok != old_tok:  # token mismatch
+            raise ValueError(
+                u"Tokenization mismatch: {0} ({1}) vs. {2} ({3})\n"
+                "\t{4} != {5}".format(
+                    docgraph_with_new_names.name, docgraph_with_new_names.ns,
+                    docgraph_with_old_names.name, docgraph_with_old_names.ns,
+                    new_tok, old_tok).encode('utf-8'))
+        else:
+            old2new[old_tok_id] = new_tok_id
+    relabel_nodes(docgraph_with_old_names, old2new, copy=False)
 
 
 def get_annotation_layers(docgraph):
