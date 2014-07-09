@@ -3,10 +3,10 @@
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 """
-The ``dg`` module specifies a ``DisourseDocumentGraph``, the fundamential data
-structure used in this package. It is a slightly modified
-``networkx.MultiDiGraph``, which enforces every node and edge to have a
-``layers`` attribute (which maps to the set of layers (str) it belongs to).
+The ``discoursegraph`` module specifies a ``DisourseDocumentGraph``,
+the fundamential data structure used in this package. It is a slightly
+modified ``networkx.MultiDiGraph``, which enforces every node and edge to have
+a ``layers`` attribute (which maps to the set of layers (str) it belongs to).
 
 TODO: implement a DiscourseCorpusGraph
 """
