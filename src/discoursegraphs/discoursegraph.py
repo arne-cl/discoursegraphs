@@ -536,11 +536,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
         NOTE: This will only work if both graphs have exactly the same
         tokenization.
         """
-        # TODO: add 'tiger:token' attrib to Tiger importer
-        if self.ns == 'tiger':
-            local_tokens = self.get_tokens(token_attrib='word')
-        else:
-            local_tokens = self.get_tokens()
+        local_tokens = self.get_tokens()
 
         remote_tokens = list(document_graph.get_tokens())
 
