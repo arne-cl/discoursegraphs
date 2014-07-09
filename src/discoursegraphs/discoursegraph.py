@@ -564,7 +564,8 @@ def rename_tokens(docgraph_with_old_names, docgraph_with_new_names):
     """
     Renames the tokens of a graph (``docgraph_with_old_names``) in-place,
     using the token names of another document graph
-    (``docgraph_with_new_names``).
+    (``docgraph_with_new_names``). Also updates the ``.tokens`` list of the old
+    graph.
 
     This will only work, iff both graphs have the same tokenization.
     """
@@ -584,6 +585,7 @@ def rename_tokens(docgraph_with_old_names, docgraph_with_new_names):
         else:
             old2new[old_tok_id] = new_tok_id
     relabel_nodes(docgraph_with_old_names, old2new, copy=False)
+    docgraph_with_old_names.tokens = old2new.values()
 
 
 def get_annotation_layers(docgraph):
