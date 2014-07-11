@@ -7,8 +7,10 @@ This module handles the parsing of SALT layers.
 
 import re
 from lxml import etree
+from lxml.builder import ElementMaker
 
 from discoursegraphs.readwrite.salt.elements import SaltElement
+from discoursegraphs.readwrite.salt.util import NAMESPACES
 
 DIGITS = re.compile('\d+')
 
@@ -75,3 +77,25 @@ class SaltLayer(SaltElement):
                                  for elem_id in DIGITS.findall(val_str))
             setattr(ins, element, elem_list)
         return ins
+
+    def to_etree(self):
+        """
+        creates an etree element of a ``SaltLayer`` that mimicks a SaltXMI
+        <layers> element
+        """
+        nodes_attrib_val = ' '.join('//@nodes.{}'.format(node_id)
+                                    for node_id in self.nodes)
+        edges_attrib_val = ' '.join('//@edges.{}'.format(edge_id)
+                                    for edge_id in self.edges)
+
+        attribs = {'{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
+                   'nodes': nodes_attrib_val, 'edges': edges_attrib_val}
+        # a layer might have no nodes or edges attributed to it
+        non_empty_attribs = {key:val for key,val in attribs.items()
+                             if val is not None}
+
+        E = ElementMaker()
+        layer = E('layers', non_empty_attribs)
+        label_elements = (label.to_etree() for label in self.labels)
+        layer.extend(label_elements)
+        return layer
