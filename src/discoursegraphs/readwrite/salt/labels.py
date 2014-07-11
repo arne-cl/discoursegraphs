@@ -10,7 +10,7 @@ and '{sDocumentStructure}SDocumentGraph'.
 """
 
 from lxml.builder import ElementMaker
-from discoursegraphs.readwrite.salt.util import get_xsi_type
+from discoursegraphs.readwrite.salt.util import get_xsi_type, NAMESPACES
 
 
 XSI = "http://www.w3.org/2001/XMLSchema-instance"
@@ -79,7 +79,7 @@ class SaltLabel(object):
         creates an etree element of a ``SaltLabel`` that mimicks a SaltXMI
         <labels> element
         """
-        attribs = {'{{{pre}}}type'.format(pre=XSI): self.xsi_type,
+        attribs = {'{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
                    'namespace': self.namespace, 'name': self.name,
                    'value': self.hexvalue, 'valueString': self.value}
         non_empty_attribs = {key:val for key,val in attribs.items()
