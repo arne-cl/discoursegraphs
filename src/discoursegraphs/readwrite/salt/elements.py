@@ -185,6 +185,7 @@ def get_layer_ids(element):
         for layer_string in layers_string.split():
             _prefix, layer = layer_string.split('.')  # '//@layers.0' -> '0'
             layers.append(int(layer))
+    return layers
 
 
 def element_statistics(tree, element_type):
