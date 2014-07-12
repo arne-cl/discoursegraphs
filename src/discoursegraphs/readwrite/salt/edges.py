@@ -5,7 +5,9 @@
 This module handles the parsing of SALT edges.
 """
 
-from discoursegraphs.readwrite.salt.util import get_xsi_type
+from lxml.builder import ElementMaker
+
+from discoursegraphs.readwrite.salt.util import get_xsi_type, NAMESPACES
 from discoursegraphs.readwrite.salt.labels import SaltLabel
 from discoursegraphs.readwrite.salt.elements import (SaltElement,
                                                      get_element_name,
@@ -36,7 +38,7 @@ class SaltEdge(SaltElement):
             the index of the target node connected to the edge
         """
         super(SaltEdge, self).__init__(name, element_id, xsi_type, labels, xml)
-        self.layers = layers
+        self.layers = [] if layers is None else layers
         self.source = source
         self.target = target
 
@@ -53,6 +55,28 @@ class SaltEdge(SaltElement):
         ins.source = get_node_id(etree_element, 'source')
         ins.target = get_node_id(etree_element, 'target')
         return ins
+
+    def to_etree(self):
+        """
+        creates an etree element of a ``SaltEdge`` that mimicks a SaltXMI
+        <edges> element
+        """
+        layers_attrib_val = ' '.join('//@layers.{}'.format(node_id)
+                                    for layer_id in self.layers)
+
+        attribs = {'{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
+                   'source': "//@nodes.{}".format(self.source),
+                   'target': "//@nodes.{}".format(self.target),
+                   'layers': layers_attrib_val}
+        # an edge might belong to one or more layers
+        non_empty_attribs = {key:val for key,val in attribs.items()
+                             if val is not None}
+
+        E = ElementMaker()
+        edge = E('edges', attribs)
+        label_elements = (label.to_etree() for label in self.labels)
+        edge.extend(label_elements)
+        return edge
 
     def __str__(self):
         ret_str = super(SaltEdge, self).__str__() + "\n"
