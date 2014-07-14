@@ -7,7 +7,7 @@ This module handles the parsing of SALT edges.
 
 from lxml.builder import ElementMaker
 
-from discoursegraphs.readwrite.salt.util import get_xsi_type, NAMESPACES
+from discoursegraphs.readwrite.salt.util import NAMESPACES
 from discoursegraphs.readwrite.salt.labels import SaltLabel
 from discoursegraphs.readwrite.salt.elements import (SaltElement,
                                                      get_element_name,
@@ -15,6 +15,7 @@ from discoursegraphs.readwrite.salt.elements import (SaltElement,
                                                      get_annotations,
                                                      get_layer_ids,
                                                      get_subelements)
+
 
 class SaltEdge(SaltElement):
     """
@@ -61,7 +62,7 @@ class SaltEdge(SaltElement):
         creates an etree element of a ``SaltEdge`` that mimicks a SaltXMI
         <edges> element
         """
-        layers_attrib_val = ' '.join('//@layers.{}'.format(node_id)
+        layers_attrib_val = ' '.join('//@layers.{}'.format(layer_id)
                                     for layer_id in self.layers)
 
         attribs = {'{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
@@ -73,7 +74,7 @@ class SaltEdge(SaltElement):
                              if val is not None}
 
         E = ElementMaker()
-        edge = E('edges', attribs)
+        edge = E('edges', non_empty_attribs)
         label_elements = (label.to_etree() for label in self.labels)
         edge.extend(label_elements)
         return edge
