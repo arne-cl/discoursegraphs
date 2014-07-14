@@ -40,14 +40,14 @@ TEST_FILE2 = os.path.join(
     TEST_DOC_ID+".salt")
 
 XSI_TYPE_CLASSES = {
-    'SStructure': StructureNode,
-    'SSpan': SpanNode,
-    'SToken': TokenNode,
-    'STextualDS': PrimaryTextNode,
-    'SSpanningRelation': SpanningRelation,
-    'STextualRelation': TextualRelation,
-    'SDominanceRelation': DominanceRelation,
-    'SLayer': SaltLayer}
+    'sDocumentStructure:SStructure': StructureNode,
+    'sDocumentStructure:SSpan': SpanNode,
+    'sDocumentStructure:SToken': TokenNode,
+    'sDocumentStructure:STextualDS': PrimaryTextNode,
+    'sDocumentStructure:SSpanningRelation': SpanningRelation,
+    'sDocumentStructure:STextualRelation': TextualRelation,
+    'sDocumentStructure:SDominanceRelation': DominanceRelation,
+    'saltCore:SLayer': SaltLayer}
 
 
 class SaltXMIGraph(nx.DiGraph):

@@ -103,6 +103,6 @@ def get_annotation(label):
     returns an annotation (key, value) tuple given an etree element
     (with tag 'labels' and xsi type 'SAnnotation'), e.g. ('tiger.pos', 'ART')
     """
-    assert get_xsi_type(label) == 'SAnnotation'
+    assert get_xsi_type(label) == 'saltCore:SAnnotation'
     return (label.attrib['name'], label.attrib['valueString'])
 

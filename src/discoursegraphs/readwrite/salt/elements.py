@@ -115,7 +115,7 @@ def get_annotations(element):
     from labels import get_annotation
     annotations = {}
     for label in element.getchildren():
-        if get_xsi_type(label) == 'SAnnotation':
+        if get_xsi_type(label) == 'saltCore:SAnnotation':
             annotations.update([get_annotation(label)])
     return annotations
 
