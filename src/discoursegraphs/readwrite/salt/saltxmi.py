@@ -412,9 +412,9 @@ def printxml(element):
     thereof, e.g. a node, edge, layer etc.
     """
     if isinstance(element, (etree._Element, etree._ElementTree)):
-        print etree.tostring(element)
+        print etree.tostring(element, pretty_print=True)
     elif isinstance(element, SaltElement):
-        print etree.tostring(element.xml)
+        print etree.tostring(element.xml, pretty_print=True)
 
 
 def abslistdir(directory):
