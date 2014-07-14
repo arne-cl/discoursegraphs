@@ -7,13 +7,19 @@ This module handles the parsing of SALT nodes.
 TODO: add docstring to SaltNode subclasses
 """
 
-from discoursegraphs.readwrite.salt.elements import SaltElement, get_layer_ids, has_annotations, get_annotations
+from lxml.builder import ElementMaker
+
+from discoursegraphs.readwrite.salt.util import NAMESPACES
+from discoursegraphs.readwrite.salt.elements import (SaltElement,
+                                                     get_layer_ids,
+                                                     has_annotations,
+                                                     get_annotations)
 
 
 class SaltNode(SaltElement):
     """
-    A SaltNode inherits all the attributes from `SaltElement`, i.e. 'name', 'xsi_type' and
-    'xml'. Additional attributes:
+    A SaltNode inherits all the attributes from `SaltElement`, i.e. 'name',
+    'xsi_type' and 'xml'. Additional attributes:
 
     Attributes
     ----------
@@ -42,6 +48,23 @@ class SaltNode(SaltElement):
         ins.layers = get_layer_ids(etree_element)
         ins.features = get_annotations(etree_element)
         return ins
+
+    def to_etree(self):
+        """
+        creates an etree element of a ``SaltNode`` that mimicks a SaltXMI
+        <nodes> element
+        """
+        layers_attrib_val = ' '.join('//@layers.{}'.format(layer_id)
+                                    for layer_id in self.layers)
+
+        attribs = {'{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
+                   'layers': layers_attrib_val}
+
+        E = ElementMaker()
+        node = E('nodes', attribs)
+        label_elements = (label.to_etree() for label in self.labels)
+        node.extend(label_elements)
+        return node
 
     def __str__(self):
         """
