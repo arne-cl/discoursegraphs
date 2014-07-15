@@ -662,13 +662,18 @@ def get_span(docgraph, node_id):
     return sorted(span, key=natural_sort_key)
 
 
-def get_text(docgraph, node_id):
+def get_text(docgraph, node_id=None):
     """
     returns the text (joined token strings) that the given node dominates
-    or spans.
+    or spans. If no node ID is given, returns the complete text of the
+    document
     """
-    tokens = (docgraph.node[node_id][docgraph.ns+':token']
-              for node_id in get_span(docgraph, node_id))
+    if node_id:
+        tokens = (docgraph.node[node_id][docgraph.ns+':token']
+                  for node_id in get_span(docgraph, node_id))
+    else:
+        tokens = (docgraph.node[token_id][docgraph.ns+':token']
+                  for token_id in docgraph.tokens)
     return ' '.join(tokens)
 
 
