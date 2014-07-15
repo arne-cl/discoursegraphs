@@ -32,7 +32,7 @@ class ExmaraldaFile(object):
         maps from a token node ID to its Exmaralda ID (ID in the common
         timeline)
     """
-    def __init__(self, docgraph):
+    def __init__(self, docgraph, remove_redundant_layers=True):
         """
         Parameters
         ----------
@@ -43,7 +43,7 @@ class ExmaraldaFile(object):
                            for i, node_id in enumerate(docgraph.tokens)}
         self.E = ElementMaker()
         self.tier_count = 0
-        self.tree = self.__add_document_structure(docgraph)
+        self.tree = self.__add_document_structure(docgraph, remove_redundant_layers)
 
     def __str__(self):
         """
@@ -93,7 +93,8 @@ class ExmaraldaFile(object):
         root.append(head)
         return root
 
-    def __add_document_structure(self, docgraph):
+    def __add_document_structure(self, docgraph,
+                                 remove_redundant_layers=True):
         E = self.E
         root = self.__create_document_header()
 
@@ -111,34 +112,51 @@ class ExmaraldaFile(object):
 
         annotation_layers = get_annotation_layers(docgraph)
         for layer in annotation_layers:
-            # very dirty hack
-            # TODO: fix Issue #36
-            if is_informative(layer):
-                layer_cat = layer.split(':')[-1]
-                temp_tier = E('tier',
-                              {'id': "TIE{}".format(self.tier_count),
-                               'category': layer_cat, 'type': "t",
-                               'display-name': "[{}]".format(layer)})
-                self.tier_count += 1
+            if remove_redundant_layers:
+                if is_informative(layer):
+                    self.__add_annotation_tier(docgraph, body, layer)
+            else:  # always add all layers
+                self.__add_annotation_tier(docgraph, body, layer)
 
-                for node_id in select_nodes_by_layer(docgraph, layer):
-                    span_node_ids = get_span(docgraph, node_id)
-                    if span_node_ids:
-                        start_id, end_id = self.__span2event(span_node_ids)
-                        event_label = docgraph.node[node_id].get('label', '')
-                        # TODO: dirty hack to remove 'markable_n:sentence'
-                        # annotations
-                        if not event_label.endswith(':sentence'):
-                            event = E('event',
-                                      {'start': "T{}".format(start_id),
-                                       'end': "T{}".format(end_id)},
-                                      event_label)
-                            temp_tier.append(event)
-
-                body.append(temp_tier)
-        body = self.__add_coreference_chain_tiers(docgraph, body)
+        self.__add_coreference_chain_tiers(docgraph, body)
         root.append(body)
         return root
+
+    def __add_annotation_tier(self, docgraph, body, annotation_layer):
+        """
+        adds a span-based annotation layer as a <tier> to the Exmaralda <body>.
+
+        Parameter
+        ---------
+        docgraph : DiscourseDocumentGraph
+            the document graph from which the chains will be extracted
+        body : etree._Element
+            an etree representation of the <basic_body> element (and all its
+            descendants) of the Exmaralda file
+        annotation_layer : str
+            the name of a layer, e.g. 'tiger', 'tiger:token' or 'mmax:sentence'
+        """
+        layer_cat = annotation_layer.split(':')[-1]
+        temp_tier = self.E('tier',
+                           {'id': "TIE{}".format(self.tier_count),
+                            'category': layer_cat, 'type': "t",
+                            'display-name': "[{}]".format(annotation_layer)})
+        self.tier_count += 1
+
+        for node_id in select_nodes_by_layer(docgraph, annotation_layer):
+            span_node_ids = get_span(docgraph, node_id)
+            if span_node_ids:
+                start_id, end_id = self.__span2event(span_node_ids)
+                event_label = docgraph.node[node_id].get('label', '')
+                # TODO: dirty hack to remove 'markable_n:sentence'
+                # annotations
+                if not event_label.endswith(':sentence'):
+                    event = self.E('event',
+                                   {'start': "T{}".format(start_id),
+                                    'end': "T{}".format(end_id)},
+                                   event_label)
+                    temp_tier.append(event)
+        body.append(temp_tier)
 
     def __add_coreference_chain_tiers(self, docgraph, body,
                                       min_chain_length=3):
@@ -178,9 +196,7 @@ class ExmaraldaFile(object):
                     chain_tier.append(
                         E('event', {'start': "T{}".format(start_id),
                                     'end': "T{}".format(end_id)}, element_str))
-
             body.append(chain_tier)
-        return body
 
     def __add_token_tiers(self, docgraph, body, default_ns='tiger'):
         """
