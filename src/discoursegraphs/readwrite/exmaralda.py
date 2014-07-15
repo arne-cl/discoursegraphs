@@ -276,10 +276,8 @@ def is_informative(layer):
     """
     # very dirty hack
     # TODO: fix Issue #36 (efficient self.layers / get_hierarchical_layers()
-    layer_levels = layer.split(':')
-    layer_cat = layer_levels[-1]
-    return (len(layer_levels) == 2 and
-            layer_cat not in ('token', 'root', 'sentence'))
+    return layer not in ('tiger', 'tiger:token', 'tiger:sentence:root',
+                         'tiger:sentence:vroot', 'tiger:edge')
 
 
 def write_exb(docgraph, output_file):
