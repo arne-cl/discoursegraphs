@@ -293,7 +293,7 @@ def is_informative(layer):
     # very dirty hack
     # TODO: fix Issue #36 (efficient self.layers / get_hierarchical_layers()
     return layer not in ('tiger', 'tiger:token', 'tiger:sentence:root',
-                         'tiger:sentence:vroot', 'tiger:edge')
+                         'tiger:sentence:vroot', 'tiger:edge', 'tiger:secedge')
 
 
 def write_exb(docgraph, output_file):
