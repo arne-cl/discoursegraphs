@@ -509,7 +509,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
         """
         return self.node[token_node_id][self.ns+':'+token_attrib]
 
-    def get_tokens(self, token_attrib='token'):
+    def get_tokens(self, token_attrib='token', token_strings_only=False):
         """
         returns a list of (token node ID, token) which represent the tokens
         of the input document (in the order they occur).
@@ -522,12 +522,16 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
         Returns
         -------
-        tuples : generator of (str, unicode)
-            a (token node ID, token string) tuple
+        result : generator of (str, unicode) or generator unicode
+            a generator of (token node ID, token string) tuples if
+            token_strings_only==False, a generator of token strings otherwise
         """
-        for token_id in self.tokens:
-            yield (token_id, self.get_token(token_id, token_attrib))
-
+        if token_strings_only:
+            for token_id in self.tokens:
+                yield self.get_token(token_id, token_attrib)
+        else:
+            for token_id in self.tokens:
+                yield (token_id, self.get_token(token_id, token_attrib))
 
     def merge_graphs(self, other_docgraph):
         """
