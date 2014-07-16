@@ -94,9 +94,9 @@ def merging_cli(debug=False):
         with open(args.output_file, 'wb') as pickle_file:
             pickle.dump(tiger_docgraph, pickle_file)
     elif args.output_format == 'geoff':
-        from discoursegraphs.readwrite.neo4j import convert_to_geoff
-        args.output_file.write(convert_to_geoff(tiger_docgraph))
-        print ''
+        from discoursegraphs.readwrite.neo4j import write_geoff
+        write_geoff(tiger_docgraph, args.output_file)
+        print ''  # this is just cosmetic for stdout
     elif args.output_format == 'neo4j':
         import requests
         from discoursegraphs.readwrite.neo4j import upload_to_neo4j
