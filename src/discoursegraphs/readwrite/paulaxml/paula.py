@@ -10,14 +10,16 @@ SaltNPepper converter framework
 
 """
 
-#~ import os
-#~ import sys
-#~ from collections import defaultdict
+
 from lxml import etree
 from lxml.builder import ElementMaker
 
 from discoursegraphs import get_text
 from discoursegraphs.util import create_dir
+
+
+NSMAP={'xlink': 'http://www.w3.org/1999/xlink',
+       'xml': 'http://www.w3.org/XML/1998/namespace'}
 
 
 class PaulaDocument(object):
@@ -34,13 +36,22 @@ class PaulaDocument(object):
             the document graph to be converted
         """
         self.E = ElementMaker()
-        primary_text = __generate_primary_text_file(docgraph)
-        tokenization = __generate_tokenization_file(docgraph)
+        self.primary_text = self.__generate_primary_text_file(docgraph)
+        self.tokenization = self.__generate_tokenization_file(docgraph)
 
     def __generate_primary_text_file(self, docgraph):
         """
         generate the PAULA file that contains the primary text of the document
         graph.
+
+        Example
+        -------
+        <?xml version="1.0" standalone="no"?>
+        <!DOCTYPE paula SYSTEM "paula_text.dtd">
+        <paula version="1.1">
+            <header paula_id="maz-1423.text" type="text"/>
+            <body>Zum Angewöhnen ...</body>
+        </paula>
         """
         tree = self.E('paula', version='1.1')
         tree.append(self.E('header', paula_id='{}.text'.format(docgraph.name)))
@@ -56,7 +67,8 @@ class PaulaDocument(object):
         generate the PAULA file that contains the tokenization of the document
         graph.
 
-        Example:
+        Example
+        -------
         <?xml version="1.0" standalone="no"?>
         <!DOCTYPE paula SYSTEM "paula_mark.dtd">
         <paula version="1.1">
@@ -64,12 +76,23 @@ class PaulaDocument(object):
             <markList xmlns:xlink="http://www.w3.org/1999/xlink" type="tok" xml:base="maz-1423.text.xml">
                 <mark id="sTok1" xlink:href="#xpointer(string-range(//body,'',1,3))" />
                 <mark id="sTok2" xlink:href="#xpointer(string-range(//body,'',5,10))" />
-                <mark id="sTok18" xlink:href="#xpointer(string-range(//body,'',111,3))" />
+                ...
+            </markList>
+        </paula>
         ...
         """
-        tree = self.E('paula', version='1.1')
-        tree.append(self.E('header', paula_id='{}.tok'.format(docgraph.name)))
-        raise NotImplementedError
+        E = ElementMaker(nsmap=NSMAP)
+        tree = E('paula', version='1.1')
+        tree.append(E('header', paula_id='{}.tok'.format(docgraph.name)))
+        mlist = E('markList', {'type': 'tok',
+                               '{%s}base' % NSMAP['xml']: 'maz-1423.text.xml'})
+        tok_tuples = docgraph.get_tokens()
+        for (tid, onset, tlen) in get_onsets(tok_tuples):
+            xp = "#xpointer(string-range(//body,'',{},{}))".format(onset, tlen)
+            mlist.append(E('mark', {'id': tid,
+                                    '{%s}href' % NSMAP['xlink']: xp}))
+        tree.append(mlist)
+        return tree
 
     def etree_to_string(self, tree):
         return etree.tostring(tree, pretty_print=True, xml_declaration=True,
