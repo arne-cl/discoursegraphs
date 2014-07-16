@@ -108,4 +108,4 @@ def get_onsets(token_tuples):
     onset = 1
     for (token_id, token) in token_tuples:
         yield (token_id, onset, len(token))
-        onset += len(token_id) + 1
+        onset += (len(token) + 1)
