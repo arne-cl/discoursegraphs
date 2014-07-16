@@ -406,17 +406,6 @@ def tree_statistics(tree):
         print "{0}: {1}".format(tag, counts)
 
 
-def printxml(element):
-    """
-    prints the SaltDocument XML representation of a SaltDocument or an element
-    thereof, e.g. a node, edge, layer etc.
-    """
-    if isinstance(element, (etree._Element, etree._ElementTree)):
-        print etree.tostring(element, pretty_print=True)
-    elif isinstance(element, SaltElement):
-        print etree.tostring(element.xml, pretty_print=True)
-
-
 def abslistdir(directory):
     """
     returns a list of absolute filepaths for all files found in the given

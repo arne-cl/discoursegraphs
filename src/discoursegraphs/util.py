@@ -8,6 +8,7 @@ This module contains a number of helper functions.
 
 import os
 import re
+from lxml import etree
 
 INTEGER_RE = re.compile('([0-9]+)')
 
@@ -123,3 +124,15 @@ def sanitize_string(string_or_unicode):
         return string_or_unicode.strip()
     else:
         return string_or_unicode.decode('utf-8').strip()
+
+
+def xmlprint(element):
+    """
+    pretty prints an ElementTree (or an Element of it), or the XML
+    representation of a SaltDocument (or an element
+    thereof, e.g. a node, edge, layer etc.)
+    """
+    if isinstance(element, (etree._Element, etree._ElementTree)):
+        print etree.tostring(element, pretty_print=True)
+    elif isinstance(element, SaltElement):
+        print etree.tostring(element.xml, pretty_print=True)

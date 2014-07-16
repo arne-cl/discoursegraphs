@@ -8,7 +8,8 @@ __version__ = '0.1.2'
 
 # flake8: noqa
 
-from discoursegraph import (
+from discoursegraphs.discoursegraph import (
     DiscourseDocumentGraph, EdgeTypes, get_annotation_layers, get_span,
     get_text, select_nodes_by_layer, select_edges_by,
     get_pointing_chains)
+from discoursegraphs.util import xmlprint
