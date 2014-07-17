@@ -136,3 +136,41 @@ def xmlprint(element):
         print etree.tostring(element, pretty_print=True)
     elif isinstance(element, SaltElement):
         print etree.tostring(element.xml, pretty_print=True)
+
+
+def make_labels_explicit(docgraph):
+    """
+    Appends the node ID to each node label and appends the edge type to each
+    edge label in the given document graph. This can be used to debug a
+    graph visually with ``networkx.write_dot``.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        document graph from which the nodes will be extracted
+
+    Returns
+    -------
+    explicit_docgraph : DiscourseDocumentGraph
+        document graph with explicit node and edge labels
+    """
+    def make_nodelabels_explicit(docgraph):
+        for node_id, node_attribs in docgraph.nodes(data=True):
+            if 'label' in docgraph.node[node_id]:
+                docgraph.node[node_id]['label'] =  \
+                    u"{}_{}".format(node_attribs['label'],
+                                    node_attribs[docgraph.ns+':id'])
+        return docgraph
+
+    def make_edgelabels_explicit(docgraph):
+        for from_id, to_id, edge_attribs in docgraph.edges(data=True):
+            for edge_num in docgraph.edge[from_id][to_id]:
+                if 'label' in docgraph.edge[from_id][to_id][edge_num]:
+                    docgraph.edge[from_id][to_id][edge_num]['label'] = \
+                        u"{}_{}".format(edge_attribs['label'],
+                                        edge_attribs['edge_type'])
+                else:
+                    docgraph.edge[from_id][to_id][edge_num]['label'] = \
+                        edge_attribs['edge_type']
+        return docgraph
+    return make_edgelabels_explicit(make_nodelabels_explicit(docgraph))
