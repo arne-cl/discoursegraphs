@@ -92,9 +92,10 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
     def __add_sentence_to_document(self, sentence):
         """
         Converts a sentence into a TigerSentenceGraph and adds all
-        its nodes, edges (and their features) to this graph.
-        This also adds an edge from the root node of this document
-        graph to the root node of the sentence and appends the
+        its nodes, edges (and their features) to this document graph.
+
+        This also adds a ``dominance_relation`` edge from the root node of this
+        document graph to the root node of the sentence and appends the
         sentence root node ID to ``self.sentences``.
 
         Parameters
@@ -110,7 +111,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         self.add_edges_from(sentence_graph.edges(data=True))
         self.add_edge(self.root, sentence_root_node_id,
                       layers={self.ns, self.ns+':sentence'},
-                      edge_type=EdgeTypes.spanning_relation)
+                      edge_type=EdgeTypes.dominance_relation)
         self.sentences.append(sentence_root_node_id)
 
 
@@ -184,6 +185,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         for t in sentence.iterfind('./graph/terminals/t'):
             terminal_id = t.attrib['id']
             token_ids.append(terminal_id)
+            # all token attributes shall belong to the tiger namespace
             terminal_features = add_prefix(t.attrib, self.ns+':')
             # convert tokens to unicode
             terminal_features[self.ns+':token'] = ensure_unicode(
@@ -191,6 +193,9 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
             self.add_node(terminal_id, layers={self.ns, self.ns+':token'},
                           attr_dict=terminal_features,
                           label=terminal_features[self.ns+':token'])
+
+            # add secedge pointing relations from tokens to other tokens or
+            # syntactic categories
             for secedge in t.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
                 secedge_attribs = add_prefix(secedge.attrib, self.ns+':')
@@ -207,31 +212,38 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         self.node[self.root].update({'tokens': sorted_token_ids})
         self.tokens = sorted_token_ids
 
-        # add nonterminals to graph
+        # add nonterminals (syntax categories) to graph
         for nt in sentence.iterfind('./graph/nonterminals/nt'):
             from_id = nt.attrib['id']
             nt_feats = add_prefix(nt.attrib, self.ns+':')
             nt_feats['label'] = nt_feats[self.ns+':cat']
-            if from_id in self:  # root node already exists,
-                                # but doesn't have a cat value
+            # root node already exists, but doesn't have a cat value
+            if from_id in self:
                 self.node[from_id].update(nt_feats)
             else:
                 self.add_node(from_id, layers={self.ns, self.ns+':syntax'},
                               attr_dict=nt_feats)
 
-            # add edges to graph (dominance relations)
+            # add edges to graph (syntax cat dominances token/other cat)
             for edge in nt.iterfind('./edge'):
                 to_id = edge.attrib['idref']
                 if to_id not in self:  # if graph doesn't contain to-node, yet
                     self.add_node(to_id, layers={self.ns, self.ns+':secedge'})
                 edge_attribs = add_prefix(edge.attrib, self.ns+':')
+
+                # add a spanning relation from a syntax cat to a token
+                if self.ns+':token' in self.node[to_id]['layers']:
+                    edge_type = EdgeTypes.spanning_relation
+                else:  # add a dominance relation between two syntax categories
+                    edge_type = EdgeTypes.dominance_relation
+
                 self.add_edge(from_id, to_id,
                               layers={self.ns, self.ns+':edge'},
                               attr_dict=edge_attribs,
                               label=edge_attribs[self.ns+':label'],
-                              edge_type=EdgeTypes.dominance_relation)
+                              edge_type=edge_type)
 
-            # add secondary edges to graph (pointing relations)
+            # add secondary edges to graph (cat points to other cat/token)
             for secedge in nt.iterfind('./secedge'):
                 to_id = secedge.attrib['idref']
                 if to_id not in self:  # if graph doesn't contain to-node, yet
@@ -246,10 +258,10 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
     def __add_vroot(self, sentence_root_id, sentence_attributes):
         """
         Adds a new node with the ID 'VROOT' to this sentence graph.
-        The 'VROOT' node will have an outgoing edge to the node that has
-        previously been considered the root node of the sentence and
-        will have the attributes extracted from the <s> element of the
-        corresponding sentence in the TigerXML file.
+        The 'VROOT' node will have an outgoing edge (``dominance_relation``)
+        to the node that has previously been considered the root node of the
+        sentence and will have the attributes extracted from the <s> element of
+        the corresponding sentence in the TigerXML file.
         The ``TigerSentenceGraph.root`` attribute will be set as well.
 
         Why do we do this?
@@ -290,16 +302,17 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
 
     def __repair_unconnected_nodes(self):
         """
-        Adds an edge from the 'VROOT' node to all previously unconnected
-        nodes (token nodes, that either represent a punctuation mark or
-        are part of a headline 'sentence' that has no full syntax
-        structure annotation).
+        Adds a (``dominance_relation``) edge from the 'VROOT' node to all
+        previously unconnected nodes (token nodes, that either represent a
+        punctuation mark or are part of a headline 'sentence' that has no
+        full syntax structure annotation).
         """
         unconnected_node_ids = get_unconnected_nodes(self)
         for unconnected_node_id in unconnected_node_ids:
             self.add_edge(self.root, unconnected_node_id,
-                          layers={self.ns, self.ns+':sentence'},
-                          edge_type=EdgeTypes.spanning_relation)
+                          layers={self.ns, self.ns+':sentence',
+                                  self.ns+':unconnected'},
+                          edge_type=EdgeTypes.dominance_relation)
 
 
 def _get_terminals_and_nonterminals(sentence_graph):
