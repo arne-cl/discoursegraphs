@@ -10,12 +10,14 @@ SaltNPepper converter framework
 
 """
 
+from collections import defaultdict
 
 from lxml import etree
 from lxml.builder import ElementMaker
 
-from discoursegraphs import get_text
-from discoursegraphs.util import create_dir
+from discoursegraphs import (EdgeTypes, get_text, get_top_level_layers,
+                             select_edges_by, tokens2text)
+from discoursegraphs.util import create_dir, natural_sort_key
 
 
 NSMAP={'xlink': 'http://www.w3.org/1999/xlink',
@@ -38,6 +40,12 @@ class PaulaDocument(object):
         self.E = ElementMaker()
         self.primary_text = self.__generate_primary_text_file(docgraph)
         self.tokenization = self.__generate_tokenization_file(docgraph)
+
+        self.span_markable_files = []
+        for top_level_layer in get_top_level_layers(docgraph):
+            self.span_markable_files.append(
+                self.__add_span_markables_file(docgraph, top_level_layer,
+                                               human_readable=human_readable))
 
     def __generate_primary_text_file(self, docgraph):
         """
@@ -101,6 +109,43 @@ class PaulaDocument(object):
                               standalone='no',
                               xml_version='1.0')
 
+    def __add_span_markables_file(self, docgraph, layer, human_readable=True):
+        """
+        """
+        E = ElementMaker(nsmap=NSMAP)
+        tree = E('paula', version='1.1')
+        tree.append(E('header', paula_id='{}.{}_{}_seg'.format(self.corpus_name, docgraph.name, layer)))
+        mlist = E('markList', {'type': 'tok',
+                               '{%s}base' % NSMAP['xml']: '{}.{}.tok.xml'.format(self.corpus_name, docgraph.name)})
+
+        span_dict = defaultdict(lambda : defaultdict(str))
+        edges = select_edges_by(docgraph, layer=layer,
+                                edge_type=EdgeTypes.spanning_relation,
+                                data=True)
+        for source_id, target_id, edge_attrs in edges:
+            span_dict[source_id][target_id] = edge_attrs
+
+        target_dict = defaultdict(list)
+        for source_id in span_dict:
+            target_ids = sorted(span_dict[source_id], key=natural_sort_key)
+            xp = '(#xpointer(id({})/range-to(id({}))))'.format(target_ids[0],
+                                                               target_ids[-1])
+            mark = E('mark', {'{%s}href' % NSMAP['xlink']: xp})
+            if human_readable:
+                # add <!-- comments --> containing the token strings
+                mark.append(etree.Comment(tokens2text(docgraph, target_ids)))
+                target_dict[target_ids[0]].append(mark)
+            else:
+                mlist.append(mark)
+
+        if human_readable:  # order <mark> elements by token ordering
+            for target in sorted(target_dict, key=natural_sort_key):
+                for mark in target_dict[target]:
+                    mlist.append(mark)
+
+        tree.append(mlist)
+        return tree
+
     def write(self, output_rootdir):
         """
         Parameters
@@ -109,7 +154,7 @@ class PaulaDocument(object):
             in the output root directory, a directory (with the name of the
             document ID) will be created. This document directory will contain
             all the annotations in PAULA XML format.
-            
+
         """
         create_dir(output_rootdir)
         raise NotImplementedError
@@ -121,7 +166,7 @@ def get_onsets(token_tuples):
     ----------
     token_tuples : list of (str, unicode)
         a list/generator of (token ID, token string) tuples
-    
+
     Returns
     -------
     onset_tuples : generator of (str, int, int)
