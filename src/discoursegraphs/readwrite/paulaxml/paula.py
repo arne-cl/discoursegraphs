@@ -30,13 +30,16 @@ class PaulaDocument(object):
     (i.e. a set of XML files describing one document annotated on multiple
     lebels).
     """
-    def __init__(self, docgraph):
+    def __init__(self, docgraph, corpus_name='mycorpus', human_readable=False):
         """
         Parameters
         ----------
         docgraph : DiscourseDocumentGraph
             the document graph to be converted
+        corpus_name : str
+            name of the corpus this document belongs to
         """
+        self.corpus_name = corpus_name
         self.E = ElementMaker()
         self.primary_text = self.__generate_primary_text_file(docgraph)
         self.tokenization = self.__generate_tokenization_file(docgraph)
@@ -68,7 +71,6 @@ class PaulaDocument(object):
         body.text = primary_text
         tree.append(body)
         return tree
-
 
     def __generate_tokenization_file(self, docgraph):
         """
