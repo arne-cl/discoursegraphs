@@ -605,6 +605,20 @@ def get_annotation_layers(docgraph):
     node_layers = get_node_annotation_layers(docgraph)
     return node_layers.union(get_edge_annotation_layers(docgraph))
 
+def get_top_level_layers(docgraph):
+    """
+    WARNING: this is higly inefficient!
+    Fix this via Issue #36.
+
+    Returns
+    -------
+    top_level_layers : set
+        the set of all top level annotation layers used in the given graph
+        (e.g. 'tiger' or 'rst', but not 'tiger:sentence:root' or 'rst:segment')
+    """
+    return set(layer.split(':')[0]
+               for layer in get_annotation_layers(docgraph))
+
 
 def get_node_annotation_layers(docgraph):
     """
@@ -679,6 +693,15 @@ def get_text(docgraph, node_id=None):
         tokens = (docgraph.node[token_id][docgraph.ns+':token']
                   for token_id in docgraph.tokens)
     return ' '.join(tokens)
+
+
+def tokens2text(docgraph, token_ids):
+    """
+    given a list of token node IDs, returns a their string representation
+    (concatenated token strings).
+    """
+    return ' '.join(docgraph.node[token_id][docgraph.ns+':token']
+                    for token_id in token_ids)
 
 
 def select_nodes_by_layer(docgraph, layer):
