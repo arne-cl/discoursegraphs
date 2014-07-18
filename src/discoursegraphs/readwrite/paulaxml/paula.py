@@ -93,7 +93,7 @@ class PaulaDocument(object):
         tree = E('paula', version='1.1')
         tree.append(E('header', paula_id='{}.tok'.format(docgraph.name)))
         mlist = E('markList', {'type': 'tok',
-                               '{%s}base' % NSMAP['xml']: 'maz-1423.text.xml'})
+                               '{%s}base' % NSMAP['xml']: '{}.{}.text.xml'.format(self.corpus_name, docgraph.name)})
         tok_tuples = docgraph.get_tokens()
         for (tid, onset, tlen) in get_onsets(tok_tuples):
             xp = "#xpointer(string-range(//body,'',{},{}))".format(onset, tlen)
