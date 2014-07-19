@@ -12,7 +12,6 @@ from lxml.builder import ElementMaker
 from discoursegraphs.readwrite.salt.util import NAMESPACES
 from discoursegraphs.readwrite.salt.elements import (SaltElement,
                                                      get_layer_ids,
-                                                     has_annotations,
                                                      get_annotations)
 
 
@@ -55,10 +54,11 @@ class SaltNode(SaltElement):
         <nodes> element
         """
         layers_attrib_val = ' '.join('//@layers.{}'.format(layer_id)
-                                    for layer_id in self.layers)
+                                     for layer_id in self.layers)
 
-        attribs = {'{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
-                   'layers': layers_attrib_val}
+        attribs = {
+            '{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
+            'layers': layers_attrib_val}
 
         E = ElementMaker()
         node = E('nodes', attribs)
@@ -68,12 +68,12 @@ class SaltNode(SaltElement):
 
     def __str__(self):
         """
-        returns the string representation of a `SaltNode`, which contains the facts
-        from `SaltElement` plus the node's layer and its features.
+        returns the string representation of a ``SaltNode``, which contains the
+        facts from ``SaltElement`` plus the node's layer and its features.
         """
         ret_str = super(SaltNode, self).__str__() + "\n"
 
-        if self.layer is not None: # mere check for existence would ignore '0'
+        if self.layer is not None:  # mere check for existence would ignore '0'
             ret_str += "layer: {0}\n".format(self.layer)
 
         if self.features:
@@ -111,20 +111,22 @@ class PrimaryTextNode(SaltNode):
         """
         ins = SaltNode.from_etree(etree_element)
         # TODO: this looks dangerous, ask Stackoverflow about it!
-        ins.__class__ = PrimaryTextNode.mro()[0]  # convert SaltNode into PrimaryTextNode
+        # convert SaltNode into PrimaryTextNode
+        ins.__class__ = PrimaryTextNode.mro()[0]
         ins.text = extract_primary_text(etree_element)
         return ins
 
     def __str__(self):
         node_string = super(PrimaryTextNode, self).__str__()
-        return "{0}\nprimary text:\n{1}".format(node_string, self.text.encode('utf-8'))
+        return ("{0}\nprimary text:\n"
+                "{1}".format(node_string, self.text.encode('utf-8')))
 
 
 class TokenNode(SaltNode):
     """
     A TokenNode describes a token, including its annotation features,
-    e.g. tiger.pos = ART. It inherits all attributes from `SaltNode`, i.e. 'layer'
-    and 'features' as well as those from `SaltElement`.
+    e.g. tiger.pos = ART. It inherits all attributes from ``SaltNode``,
+    i.e. 'layer' and 'features' as well as those from `SaltElement`.
 
     A sentence boundary is marked by TokenNode.features['tiger.pos'] == '$.'
     """
@@ -150,7 +152,6 @@ class SpanNode(SaltNode):
             <labels xsi:type="saltCore:SAnnotation" name="coref.phrase_type" valueString="np"/>
             <labels xsi:type="saltCore:SAnnotation" name="coref.grammatical_role" valueString="sbj"/>
         </nodes>
-
     """
     def __init__(self, element, element_id, doc_id):
         super(SpanNode, self).__init__(element, element_id, doc_id)
@@ -160,8 +161,8 @@ class SpanNode(SaltNode):
 class StructureNode(SaltNode):
     """
     A StructureNode contains all the I{SAnnotation}s features made to a span
-    (i.e. syntactic constituents), but it DOES NOT tell you which tokens belong to that
-    constituent.
+    (i.e. syntactic constituents), but it DOES NOT tell you which tokens belong
+    to that constituent.
 
     A StructureNode looks like this::
 
@@ -170,7 +171,6 @@ class StructureNode(SaltNode):
             <labels xsi:type="saltCore:SElementId" namespace="graph" name="id" valueString="pcc_maz176_merged_paula/maz-0002/maz-0002_graph#const_4"/>
             <labels xsi:type="saltCore:SAnnotation" name="tiger.cat" valueString="PP"/>
         </nodes>
-
     """
     def __init__(self, element, element_id, doc_id):
         super(StructureNode, self).__init__(element, element_id, doc_id)
@@ -188,7 +188,7 @@ def extract_sentences(nodes, token_node_indices):
         if i in token_node_indices:
             if node.features['tiger.pos'] != '$.':
                 tokens.append(i)
-            else: # start a new sentence, if 'tiger.pos' is '$.'
+            else:  # start a new sentence, if 'tiger.pos' is '$.'
                 tokens.append(i)
                 sents.append(tokens)
                 tokens = []
@@ -205,5 +205,7 @@ def extract_primary_text(sTextualDS_node):
     text_element = sTextualDS_node.find('labels[@name="SDATA"]')
     return text_element.xpath('@valueString')[0]
 
+
 def get_nodes_by_layer(tree, layer_number):
-    return tree.findall("//nodes[@layers='//@layers.{0}']".format(layer_number))
+    return tree.findall(
+        "//nodes[@layers='//@layers.{0}']".format(layer_number))
