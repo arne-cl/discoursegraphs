@@ -23,7 +23,7 @@ from discoursegraphs.readwrite.salt.layers import SaltLayer
 from discoursegraphs.readwrite.salt.edges import (DominanceRelation,
                                                   SpanningRelation,
                                                   TextualRelation)
-from discoursegraphs.readwrite.salt.elements import (SaltElement, get_elements)
+from discoursegraphs.readwrite.salt.elements import get_elements
 from discoursegraphs.readwrite.salt.util import get_xsi_type
 
 TEST_DOC_ID = "maz-1423"
