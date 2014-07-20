@@ -6,7 +6,6 @@ This module handles the parsing of SALT layers.
 """
 
 import re
-from lxml import etree
 from lxml.builder import ElementMaker
 
 from discoursegraphs.readwrite.salt.elements import SaltElement
@@ -14,11 +13,12 @@ from discoursegraphs.readwrite.salt.util import NAMESPACES
 
 DIGITS = re.compile('\d+')
 
+
 class SaltLayer(SaltElement):
     """
-    A ``SaltLayer`` instances describes a Salt XML layer. In Salt, a layer groups
-    nodes and edges belonging to the same annotation level, e.g. syntax or
-    information structure.
+    A ``SaltLayer`` instances describes a Salt XML layer. In Salt, a layer
+    groups nodes and edges belonging to the same annotation level, e.g.
+    syntax or information structure.
 
     Attributes
     ----------
@@ -29,7 +29,8 @@ class SaltLayer(SaltElement):
         a list of edge indices which point to the edges belonging to this
         layer
     """
-    def __init__(self, name, element_id, xsi_type, labels, nodes, edges, xml=None):
+    def __init__(self, name, element_id, xsi_type, labels, nodes, edges,
+                 xml=None):
         """
         Parameters
         ----------
@@ -53,7 +54,8 @@ class SaltLayer(SaltElement):
         xml : lxml.etree._Element or None
             an etree element parsed from a SaltXML document
         """
-        super(SaltLayer, self).__init__(name, element_id, xsi_type, labels, xml)
+        super(SaltLayer, self).__init__(name, element_id, xsi_type, labels,
+                                        xml)
         self.nodes = nodes
         self.edges = edges
 
@@ -65,7 +67,8 @@ class SaltLayer(SaltElement):
         """
         ins = SaltElement.from_etree(etree_element)
         # TODO: this looks dangerous, ask Stackoverflow about it!
-        ins.__class__ = SaltLayer.mro()[0]  # convert SaltElement into SaltLayer
+        # convert SaltElement into SaltLayer
+        ins.__class__ = SaltLayer.mro()[0]
 
         # add nodes and edges that belong to this layer (if any)
         for element in ('nodes', 'edges'):
@@ -88,10 +91,11 @@ class SaltLayer(SaltElement):
         edges_attrib_val = ' '.join('//@edges.{}'.format(edge_id)
                                     for edge_id in self.edges)
 
-        attribs = {'{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
-                   'nodes': nodes_attrib_val, 'edges': edges_attrib_val}
+        attribs = {
+            '{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
+            'nodes': nodes_attrib_val, 'edges': edges_attrib_val}
         # a layer might have no nodes or edges attributed to it
-        non_empty_attribs = {key:val for key,val in attribs.items()
+        non_empty_attribs = {key: val for (key, val) in attribs.items()
                              if val is not None}
 
         E = ElementMaker()
