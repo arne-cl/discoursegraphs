@@ -116,13 +116,6 @@ class PaulaDocument(object):
         tree.append(mlist)
         return tree
 
-    def etree_to_string(self, tree):
-        return etree.tostring(tree, pretty_print=True, xml_declaration=True,
-                              encoding="UTF-8",
-                              doctype='<!DOCTYPE paula SYSTEM "paula_text.dtd">',
-                              standalone='no',
-                              xml_version='1.0')
-
     def __gen_span_markables_file(self, docgraph, layer, human_readable=True):
         """
         """
@@ -187,6 +180,13 @@ class PaulaDocument(object):
             mflist.append(mfeat)
         tree.append(mflist)
         return tree
+
+    def etree_to_string(self, tree):
+        return etree.tostring(tree, pretty_print=True, xml_declaration=True,
+                              encoding="UTF-8",
+                              doctype='<!DOCTYPE paula SYSTEM "paula_text.dtd">',
+                              standalone='no',
+                              xml_version='1.0')
 
     def write(self, output_rootdir):
         """
