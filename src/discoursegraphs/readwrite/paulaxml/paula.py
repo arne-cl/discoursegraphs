@@ -78,12 +78,9 @@ class PaulaDocument(object):
             <body>Zum Angewöhnen ...</body>
         </paula>
         """
-        tree = self.E('paula', version='1.1')
-        tree.append(self.E('header', paula_id='{}.text'.format(docgraph.name)))
-        body = self.E('body')
-        primary_text = get_text(docgraph)
-        body.text = primary_text
-        tree.append(body)
+        paula_id = '{}.text'.format(docgraph.name)
+        E, tree = gen_paula_etree(paula_id)
+        tree.append(E.body(get_text(docgraph)))
         return tree
 
     def __gen_tokenization_file(self, docgraph):
@@ -106,13 +103,12 @@ class PaulaDocument(object):
         ...
         """
         paula_id = '{}.{}.tok'.format(self.corpus_name, docgraph.name)
+        E, tree = gen_paula_etree(paula_id)
         self.files['tokenization'] = paula_id+'.xml'
 
-        E = ElementMaker(nsmap=NSMAP)
-        tree = E('paula', version='1.1')
-        tree.append(E('header', paula_id=paula_id))
+        basefile = '{}.{}.text.xml'.format(self.corpus_name, docgraph.name)
         mlist = E('markList', {'type': 'tok',
-                               '{%s}base' % NSMAP['xml']: '{}.{}.text.xml'.format(self.corpus_name, docgraph.name)})
+                               '{%s}base' % NSMAP['xml']: basefile})
         tok_tuples = docgraph.get_tokens()
         for (tid, onset, tlen) in get_onsets(tok_tuples):
             xp = "#xpointer(string-range(//body,'',{},{}))".format(onset, tlen)
@@ -124,11 +120,12 @@ class PaulaDocument(object):
     def __gen_span_markables_file(self, docgraph, layer, human_readable=True):
         """
         """
-        E = ElementMaker(nsmap=NSMAP)
-        tree = E('paula', version='1.1')
-        tree.append(E('header', paula_id='{}.{}_{}_seg'.format(self.corpus_name, docgraph.name, layer)))
+        paula_id = '{}.{}_{}_seg'.format(self.corpus_name, docgraph.name,
+                                         layer)
+        E, tree = gen_paula_etree(paula_id)
+        basefile = '{}.{}.tok.xml'.format(self.corpus_name, docgraph.name)
         mlist = E('markList', {'type': 'tok',
-                               '{%s}base' % NSMAP['xml']: '{}.{}.tok.xml'.format(self.corpus_name, docgraph.name)})
+                               '{%s}base' % NSMAP['xml']: basefile})
 
         span_dict = defaultdict(lambda : defaultdict(str))
         edges = select_edges_by(docgraph, layer=layer,
@@ -166,9 +163,7 @@ class PaulaDocument(object):
         basefile = '{}.{}.tok.xml'.format(self.corpus_name, docgraph.name)
         paula_id = '{}.{}.tok_multiFeat'.format(self.corpus_name,
                                                 docgraph.name)
-        E = ElementMaker(nsmap=NSMAP)
-        tree = E('paula', version='1.1')
-        tree.append(E('header', paula_id=paula_id))
+        E, tree = gen_paula_etree(paula_id)
         mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: basefile})
 
         for token_id in docgraph.tokens:
@@ -176,7 +171,7 @@ class PaulaDocument(object):
                       {'{%s}href' % NSMAP['xlink']: '#{}'.format(token_id)})
             token_dict = docgraph.node[token_id]
             for feature in token_dict:
-                if feature not in IGNORED_TOKEN_FEATURES:
+                if feature not in IGNORED_TOKEN_ATTRIBS:
                     mfeat.append(
                         E('feat',
                           {'name': feature, 'value': token_dict[feature]}))
@@ -191,10 +186,8 @@ class PaulaDocument(object):
         """
         """
         paula_id = '{}.{}_{}'.format(self.corpus_name, docgraph.name, layer)
-
-        E = ElementMaker(nsmap=NSMAP)
-        tree = E('paula', version='1.1')
-        tree.append(E('header', paula_id=paula_id))
+        self.files['hierarchy'][layer] = paula_id+'.xml'
+        E, tree = gen_paula_etree(paula_id)
 
         dominance_edges = select_edges_by(docgraph, layer=layer,
                                 edge_type=EdgeTypes.dominance_relation,
