@@ -11,7 +11,7 @@ and '{sDocumentStructure}SDocumentGraph'.
 
 from lxml.builder import ElementMaker
 from discoursegraphs.readwrite.salt.util import get_xsi_type, NAMESPACES
-
+from discoursegraphs.readwrite.salt.saltxmi import string2xmihex
 
 XSI = "http://www.w3.org/2001/XMLSchema-instance"
 
@@ -57,11 +57,11 @@ class SaltLabel(object):
         element in a SaltXMI file.
 
         A label element in SaltXMI looks like this::
-        
+
             <labels xsi:type="saltCore:SFeature" namespace="salt"
-                name="SNAME" value="ACED0005740007735370616E3139" 
+                name="SNAME" value="ACED0005740007735370616E3139"
                 valueString="sSpan19"/>
-        
+
         Parameters
         ----------
         etree_element : lxml.etree._Element
@@ -73,16 +73,16 @@ class SaltLabel(object):
                    namespace=etree_element.attrib.get('namespace', None),
                    hexvalue=etree_element.attrib['value'])
 
-
     def to_etree(self):
         """
         creates an etree element of a ``SaltLabel`` that mimicks a SaltXMI
         <labels> element
         """
-        attribs = {'{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
-                   'namespace': self.namespace, 'name': self.name,
-                   'value': self.hexvalue, 'valueString': self.value}
-        non_empty_attribs = {key:val for key,val in attribs.items()
+        attribs = {
+            '{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
+            'namespace': self.namespace, 'name': self.name,
+            'value': self.hexvalue, 'valueString': self.value}
+        non_empty_attribs = {key: val for (key, val) in attribs.items()
                              if val is not None}
         E = ElementMaker()
         return E('labels', non_empty_attribs)
@@ -98,6 +98,7 @@ def get_namespace(label):
     else:
         return None
 
+
 def get_annotation(label):
     """
     returns an annotation (key, value) tuple given an etree element
@@ -105,4 +106,3 @@ def get_annotation(label):
     """
     assert get_xsi_type(label) == 'saltCore:SAnnotation'
     return (label.attrib['name'], label.attrib['valueString'])
-
