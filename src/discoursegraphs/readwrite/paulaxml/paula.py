@@ -23,8 +23,10 @@ from discoursegraphs.util import create_dir, natural_sort_key
 NSMAP={'xlink': 'http://www.w3.org/1999/xlink',
        'xml': 'http://www.w3.org/XML/1998/namespace'}
 
-IGNORED_TOKEN_FEATURES = ('layers', 'label', 'tiger:token', 'tiger:word',
-                          'tiger:id')
+IGNORED_EDGE_ATTRIBS = ('layers', 'label', 'tiger:idref')
+IGNORED_NODE_ATTRIBS = ('layers', 'label', 'tokens', 'tiger:id', 'tiger:art_id', 'tiger:orig_id')
+IGNORED_TOKEN_ATTRIBS = IGNORED_NODE_ATTRIBS + ('tiger:token', 'tiger:word')
+
 
 
 class PaulaDocument(object):
