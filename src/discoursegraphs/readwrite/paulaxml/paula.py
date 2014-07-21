@@ -23,6 +23,9 @@ from discoursegraphs.util import create_dir, natural_sort_key
 NSMAP={'xlink': 'http://www.w3.org/1999/xlink',
        'xml': 'http://www.w3.org/XML/1998/namespace'}
 
+IGNORED_TOKEN_FEATURES = ('layers', 'label', 'tiger:token', 'tiger:word',
+                          'tiger:id')
+
 
 class PaulaDocument(object):
     """
@@ -41,8 +44,13 @@ class PaulaDocument(object):
         """
         self.corpus_name = corpus_name
         self.E = ElementMaker()
+        self.files = defaultdict(str)  # map file types to file names
+
         self.primary_text = self.__generate_primary_text_file(docgraph)
         self.tokenization = self.__generate_tokenization_file(docgraph)
+        self.token_annotation = \
+            self.__add_token_annotation_file(docgraph,
+                                             human_readable=human_readable)
 
         self.span_markable_files = []
         for top_level_layer in get_top_level_layers(docgraph):
@@ -146,6 +154,34 @@ class PaulaDocument(object):
                     mlist.append(mark)
 
         tree.append(mlist)
+        return tree
+
+    def __add_token_annotation_file(self, docgraph, human_readable=True):
+        """
+        creates an etree representation of a multiFeat file that describes all
+        the annotations that only span one token (e.g. POS, lemma etc.)
+        """
+        basefile = '{}.{}.tok.xml'.format(self.corpus_name, docgraph.name)
+        paula_id = '{}.{}.tok_multiFeat'.format(self.corpus_name,
+                                                docgraph.name)
+        E = ElementMaker(nsmap=NSMAP)
+        tree = E('paula', version='1.1')
+        tree.append(E('header', paula_id=paula_id))
+        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: basefile})
+
+        for token_id in docgraph.tokens:
+            mfeat = E('multiFeat',
+                      {'{%s}href' % NSMAP['xlink']: '#{}'.format(token_id)})
+            token_dict = docgraph.node[token_id]
+            for feature in token_dict:
+                if feature not in IGNORED_TOKEN_FEATURES:
+                    mfeat.append(
+                        E('feat',
+                          {'name': feature, 'value': token_dict[feature]}))
+            if human_readable:  # adds token string as a <!-- comment -->
+                mfeat.append(etree.Comment(token_dict[docgraph.ns+':token']))
+            mflist.append(mfeat)
+        tree.append(mflist)
         return tree
 
     def write(self, output_rootdir):
