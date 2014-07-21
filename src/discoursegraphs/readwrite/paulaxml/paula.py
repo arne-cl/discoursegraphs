@@ -46,19 +46,19 @@ class PaulaDocument(object):
         self.E = ElementMaker()
         self.files = defaultdict(str)  # map file types to file names
 
-        self.primary_text = self.__generate_primary_text_file(docgraph)
-        self.tokenization = self.__generate_tokenization_file(docgraph)
+        self.primary_text = self.__gen_primary_text_file(docgraph)
+        self.tokenization = self.__gen_tokenization_file(docgraph)
         self.token_annotation = \
-            self.__add_token_annotation_file(docgraph,
+            self.__gen_token_annotation_file(docgraph,
                                              human_readable=human_readable)
 
         self.span_markable_files = []
         for top_level_layer in get_top_level_layers(docgraph):
             self.span_markable_files.append(
-                self.__add_span_markables_file(docgraph, top_level_layer,
+                self.__gen_span_markables_file(docgraph, top_level_layer,
                                                human_readable=human_readable))
 
-    def __generate_primary_text_file(self, docgraph):
+    def __gen_primary_text_file(self, docgraph):
         """
         generate the PAULA file that contains the primary text of the document
         graph.
@@ -80,7 +80,7 @@ class PaulaDocument(object):
         tree.append(body)
         return tree
 
-    def __generate_tokenization_file(self, docgraph):
+    def __gen_tokenization_file(self, docgraph):
         """
         generate the PAULA file that contains the tokenization of the document
         graph.
@@ -119,7 +119,7 @@ class PaulaDocument(object):
                               standalone='no',
                               xml_version='1.0')
 
-    def __add_span_markables_file(self, docgraph, layer, human_readable=True):
+    def __gen_span_markables_file(self, docgraph, layer, human_readable=True):
         """
         """
         E = ElementMaker(nsmap=NSMAP)
@@ -156,7 +156,7 @@ class PaulaDocument(object):
         tree.append(mlist)
         return tree
 
-    def __add_token_annotation_file(self, docgraph, human_readable=True):
+    def __gen_token_annotation_file(self, docgraph, human_readable=True):
         """
         creates an etree representation of a multiFeat file that describes all
         the annotations that only span one token (e.g. POS, lemma etc.)
