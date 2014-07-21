@@ -53,6 +53,7 @@ class PaulaDocument(object):
                                              human_readable=human_readable)
 
         self.span_markable_files = []
+        self.hierarchy_files = []
         for top_level_layer in get_top_level_layers(docgraph):
             self.span_markable_files.append(
                 self.__gen_span_markables_file(docgraph, top_level_layer,
@@ -99,9 +100,12 @@ class PaulaDocument(object):
         </paula>
         ...
         """
+        paula_id = '{}.{}.tok'.format(self.corpus_name, docgraph.name)
+        self.files['tokenization'] = paula_id+'.xml'
+
         E = ElementMaker(nsmap=NSMAP)
         tree = E('paula', version='1.1')
-        tree.append(E('header', paula_id='{}.tok'.format(docgraph.name)))
+        tree.append(E('header', paula_id=paula_id))
         mlist = E('markList', {'type': 'tok',
                                '{%s}base' % NSMAP['xml']: '{}.{}.text.xml'.format(self.corpus_name, docgraph.name)})
         tok_tuples = docgraph.get_tokens()
