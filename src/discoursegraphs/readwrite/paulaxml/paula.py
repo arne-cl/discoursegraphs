@@ -155,7 +155,7 @@ class PaulaDocument(object):
         tree.append(mlist)
         return tree
 
-    def __gen_token_annotation_file(self, docgraph, human_readable=True):
+    def __gen_token_anno_file(self, docgraph, human_readable=True):
         """
         creates an etree representation of a multiFeat file that describes all
         the annotations that only span one token (e.g. POS, lemma etc.)
@@ -181,7 +181,7 @@ class PaulaDocument(object):
         tree.append(mflist)
         return tree
 
-    def __gen_hierarchical_annotation_file(self, docgraph, layer,
+    def __gen_hierarchical_anno_file(self, docgraph, layer,
                                            human_readable=True):
         """
         """
