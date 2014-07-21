@@ -16,7 +16,8 @@ from lxml import etree
 from lxml.builder import ElementMaker
 
 from discoursegraphs import (EdgeTypes, get_text, get_top_level_layers,
-                             istoken, select_edges_by, tokens2text)
+                             istoken, select_edges_by, select_nodes_by_layer,
+                             tokens2text)
 from discoursegraphs.util import create_dir, natural_sort_key
 
 
@@ -45,24 +46,33 @@ class PaulaDocument(object):
             name of the corpus this document belongs to
         """
         self.corpus_name = corpus_name
-        self.E = ElementMaker()
-        self.files = defaultdict(str)  # map file types to file names
+        # map file types to file names
+        self.files = defaultdict(lambda : defaultdict(str))
 
         self.primary_text = self.__gen_primary_text_file(docgraph)
         self.tokenization = self.__gen_tokenization_file(docgraph)
         self.token_annotation = \
-            self.__gen_token_annotation_file(docgraph,
-                                             human_readable=human_readable)
+            self.__gen_token_anno_file(docgraph,
+                                       human_readable=human_readable)
 
         self.span_markable_files = []
         self.hierarchy_files = []
+        self.struct_anno_files = []
+        self.rel_anno_files = []
         for top_level_layer in get_top_level_layers(docgraph):
             self.span_markable_files.append(
                 self.__gen_span_markables_file(docgraph, top_level_layer,
                                                human_readable=human_readable))
             self.hierarchy_files.append(
-               self.__gen_hierarchical_annotation_file(docgraph, top_level_layer,
-                                                       human_readable=human_readable))
+               self.__gen_hierarchical_anno_file(docgraph, top_level_layer,
+                                                 human_readable=human_readable))
+            self.struct_anno_files.append(
+               self.__gen_struct_anno_files(docgraph, top_level_layer,
+                                            human_readable=human_readable))
+            self.rel_anno_files.append(
+               self.__gen_rel_anno_files(docgraph, top_level_layer,
+                                            human_readable=human_readable))
+
 
     def __gen_primary_text_file(self, docgraph):
         """
@@ -228,6 +238,81 @@ class PaulaDocument(object):
 
             slist.append(struct)
         tree.append(slist)
+        return tree
+
+    def __gen_struct_anno_files(self, docgraph, top_level_layer,
+                                human_readable=True):
+        """
+        A struct annotation file contains node (struct) attributes (of
+        non-token nodes). It is e.g. used to annotate the type of a syntactic
+        category (NP, VP etc.).
+        """
+        paula_id = '{}.{}_{}_struct'.format(self.corpus_name, docgraph.name,
+                                            top_level_layer)
+        E, tree = gen_paula_etree(paula_id)
+
+        basefile = self.files['hierarchy'][top_level_layer]
+        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: basefile})
+
+        for node_id in select_nodes_by_layer(docgraph, top_level_layer):
+            if not istoken(docgraph, node_id):
+                mfeat = E('multiFeat',
+                          {'{%s}href' % NSMAP['xlink']: '#{}'.format(node_id)})
+                node_dict = docgraph.node[node_id]
+                for attr in node_dict:
+                    if attr not in IGNORED_NODE_ATTRIBS:
+                        try:
+                            mfeat.append(
+                                E('feat',
+                                  {'name': attr, 'value': node_dict[attr]}))
+                        except KeyError as e: #TODO: rm after debug
+                            print "DEBUG KeyError: attr = {}; node_dict = {}".format(attr, node_dict)
+                if human_readable:  # adds node label as a <!-- comment -->
+                    mfeat.append(etree.Comment(node_dict.get('label')))
+            mflist.append(mfeat)
+        tree.append(mflist)
+        return tree
+
+    def __gen_rel_anno_files(self, docgraph, top_level_layer,
+                             human_readable=True):
+        """
+        A rel annotation file contains edge (rel)
+        attributes. It is e.g. used to annotate the type of a dependency
+        relation (subj, obj etc.).
+        """
+        paula_id = '{}.{}_{}_rel'.format(self.corpus_name, docgraph.name,
+                                         top_level_layer)
+        E, tree = gen_paula_etree(paula_id)
+
+        dominance_edges = select_edges_by(docgraph, layer=top_level_layer,
+                                edge_type=EdgeTypes.dominance_relation,
+                                data=True)
+        dominance_dict = defaultdict(lambda : defaultdict(str))
+        for source_id, target_id, edge_attrs in dominance_edges:
+            if source_id != top_level_layer+':root_node':
+                dominance_dict[source_id][target_id] = edge_attrs
+
+        basefile = self.files['hierarchy'][top_level_layer]
+        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: basefile})
+        for source_id in dominance_dict:
+            for target_id in dominance_dict[source_id]:
+                rel_href = '#rel_{}_{}'.format(source_id, target_id)
+                mfeat = E('multiFeat',
+                          {'{%s}href' % NSMAP['xlink']: rel_href})
+            edge_attrs = dominance_dict[source_id][target_id]
+            for edge_attr in edge_attrs:
+                if edge_attr not in IGNORED_EDGE_ATTRIBS:
+                    try:
+                        mfeat.append(
+                            E('feat',
+                              {'name': edge_attr, 'value': edge_attrs[edge_attr]}))
+                    except KeyError as e:
+                        print "DEBUG KeyError: attr = {}; edge_dict = {}".format(edge_attr, edge_attrs)
+
+            if human_readable:  # adds edge label as a <!-- comment -->
+                mfeat.append(etree.Comment(edge_attrs.get('label')))
+            mflist.append(mfeat)
+        tree.append(mflist)
         return tree
 
     def etree_to_string(self, tree):
