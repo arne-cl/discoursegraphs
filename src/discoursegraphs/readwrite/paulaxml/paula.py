@@ -257,6 +257,14 @@ class PaulaDocument(object):
         create_dir(output_rootdir)
         raise NotImplementedError
 
+def gen_paula_etree(paula_id):
+    """
+    creates an element tree representation of an empty PAULA XML file.
+    """
+    E = ElementMaker(nsmap=NSMAP)
+    tree = E('paula', version='1.1')
+    tree.append(E('header', paula_id=paula_id))
+    return E, tree
 
 def get_onsets(token_tuples):
     """
