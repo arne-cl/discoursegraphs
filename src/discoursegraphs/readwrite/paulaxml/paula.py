@@ -16,7 +16,7 @@ from lxml import etree
 from lxml.builder import ElementMaker
 
 from discoursegraphs import (EdgeTypes, get_text, get_top_level_layers,
-                             select_edges_by, tokens2text)
+                             istoken, select_edges_by, tokens2text)
 from discoursegraphs.util import create_dir, natural_sort_key
 
 
@@ -58,6 +58,9 @@ class PaulaDocument(object):
             self.span_markable_files.append(
                 self.__gen_span_markables_file(docgraph, top_level_layer,
                                                human_readable=human_readable))
+            self.hierarchy_files.append(
+               self.__gen_hierarchical_annotation_file(docgraph, top_level_layer,
+                                                       human_readable=human_readable))
 
     def __gen_primary_text_file(self, docgraph):
         """
@@ -179,6 +182,57 @@ class PaulaDocument(object):
                 mfeat.append(etree.Comment(token_dict[docgraph.ns+':token']))
             mflist.append(mfeat)
         tree.append(mflist)
+        return tree
+
+    def __gen_hierarchical_annotation_file(self, docgraph, layer,
+                                           human_readable=True):
+        """
+        """
+        paula_id = '{}.{}_{}'.format(self.corpus_name, docgraph.name, layer)
+
+        E = ElementMaker(nsmap=NSMAP)
+        tree = E('paula', version='1.1')
+        tree.append(E('header', paula_id=paula_id))
+
+        dominance_edges = select_edges_by(docgraph, layer=layer,
+                                edge_type=EdgeTypes.dominance_relation,
+                                data=True)
+        span_edges = select_edges_by(docgraph, layer=layer,
+                        edge_type=EdgeTypes.spanning_relation,
+                        data=True)
+        dominance_dict = defaultdict(lambda : defaultdict(str))
+        for source_id, target_id, edge_attrs in dominance_edges:
+            if source_id != layer+':root_node':
+                dominance_dict[source_id][target_id] = edge_attrs
+
+        # in PAULA XML, token spans are also part of the hierarchy
+        for source_id, target_id, edge_attrs in span_edges:
+            if istoken(docgraph, target_id):
+                dominance_dict[source_id][target_id] = edge_attrs
+
+        slist = E('structList', {'type': layer})
+        for source_id in dominance_dict:
+            struct = E('struct',
+                       {'id': source_id})
+            if human_readable:
+                struct.append(etree.Comment(docgraph.node[source_id].get('label')))
+
+            for target_id in dominance_dict[source_id]:
+                if istoken(docgraph, target_id):
+                    href = '{}#{}'.format(self.files['tokenization'], target_id)
+                else:
+                    href = '#{}'.format(target_id)
+
+                rel = E('rel',
+                        {'id': 'rel_{}_{}'.format(source_id, target_id),
+                         'type': dominance_dict[source_id][target_id]['edge_type'],
+                         '{%s}href' % NSMAP['xlink']: href})
+                struct.append(rel)
+                if human_readable:
+                    struct.append(etree.Comment(docgraph.node[target_id].get('label')))
+
+            slist.append(struct)
+        tree.append(slist)
         return tree
 
     def etree_to_string(self, tree):
