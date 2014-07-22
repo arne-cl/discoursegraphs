@@ -26,3 +26,16 @@ def get_xsi_type(element):
     except IndexError:  # xpath result is empty
         raise ValueError("The '{0}' element has no 'xsi:type' but has these "
                          "attribs:\n{1}").format(element.tag, element.attrib)
+
+
+def string2xmihex(value_string):
+    """
+    SaltXMI files store each value attribute twice (i.e. as a string and
+    as a HEX value with some weird padded string in front of it that I still
+    need to decode.
+
+    Example:
+    <labels xsi:type="saltCore:SFeature" namespace="salt" name="SNAME"
+        value="ACED00057400057469676572" valueString="tiger"/>
+    """
+    return "".join("{:02x}".format(ord(c)).upper() for c in value_string)

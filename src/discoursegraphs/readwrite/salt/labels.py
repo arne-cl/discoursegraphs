@@ -10,8 +10,8 @@ and '{sDocumentStructure}SDocumentGraph'.
 """
 
 from lxml.builder import ElementMaker
-from discoursegraphs.readwrite.salt.util import get_xsi_type, NAMESPACES
-from discoursegraphs.readwrite.salt.saltxmi import string2xmihex
+from discoursegraphs.readwrite.salt.util import (get_xsi_type, string2xmihex,
+                                                 NAMESPACES)
 
 XSI = "http://www.w3.org/2001/XMLSchema-instance"
 

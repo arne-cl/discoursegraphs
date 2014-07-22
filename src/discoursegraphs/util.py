@@ -134,8 +134,9 @@ def xmlprint(element):
     """
     if isinstance(element, (etree._Element, etree._ElementTree)):
         print etree.tostring(element, pretty_print=True)
-    elif isinstance(element, SaltElement):
-        print etree.tostring(element.xml, pretty_print=True)
+    else:
+        if hasattr(element, 'xml'):
+            print etree.tostring(element.xml, pretty_print=True)
 
 
 def make_labels_explicit(docgraph):

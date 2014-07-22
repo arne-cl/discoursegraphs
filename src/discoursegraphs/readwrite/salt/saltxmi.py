@@ -24,7 +24,7 @@ from discoursegraphs.readwrite.salt.edges import (DominanceRelation,
                                                   SpanningRelation,
                                                   TextualRelation)
 from discoursegraphs.readwrite.salt.elements import get_elements
-from discoursegraphs.readwrite.salt.util import get_xsi_type
+from discoursegraphs.readwrite.salt.util import get_xsi_type, string2xmihex
 
 TEST_DOC_ID = "maz-1423"
 TEST_ROOT_DIR = os.path.expanduser('~/repos/salt-test/')
@@ -416,17 +416,7 @@ def abslistdir(directory):
     return [os.path.join(abs_dir, filename) for filename in filenames]
 
 
-def string2xmihex(value_string):
-    """
-    SaltXMI files store each value attribute twice (i.e. as a string and
-    as a HEX value with some weird padded string in front of it that I still
-    need to decode.
 
-    Example:
-    <labels xsi:type="saltCore:SFeature" namespace="salt" name="SNAME"
-        value="ACED00057400057469676572" valueString="tiger"/>
-    """
-    return "".join("{:02x}".format(ord(c)).upper() for c in value_string)
 
 
 if __name__ == "__main__":
