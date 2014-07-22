@@ -261,15 +261,12 @@ class PaulaDocument(object):
                 node_dict = docgraph.node[node_id]
                 for attr in node_dict:
                     if attr not in IGNORED_NODE_ATTRIBS:
-                        try:
-                            mfeat.append(
-                                E('feat',
-                                  {'name': attr, 'value': node_dict[attr]}))
-                        except KeyError as e: #TODO: rm after debug
-                            print "DEBUG KeyError: attr = {}; node_dict = {}".format(attr, node_dict)
+                        mfeat.append(
+                            E('feat',
+                              {'name': attr, 'value': node_dict[attr]}))
                 if human_readable:  # adds node label as a <!-- comment -->
                     mfeat.append(etree.Comment(node_dict.get('label')))
-            mflist.append(mfeat)
+                mflist.append(mfeat)
         tree.append(mflist)
         return tree
 
