@@ -481,18 +481,6 @@ class PaulaDocument(object):
             base_paula_id = self.paulamap['hierarchy'][layer]
         return '{}.xml#{}'.format(base_paula_id, node_id)
 
-    def write(self, output_rootdir):
-        """
-        Parameters
-        ----------
-        output_rootdir : str
-            in the output root directory, a directory (with the name of the
-            document ID) will be created. This document directory will contain
-            all the annotations in PAULA XML format.
-
-        """
-        create_dir(output_rootdir)
-        raise NotImplementedError
 
 def paula_etree_to_string(tree, dtd_filename):
     return etree.tostring(
