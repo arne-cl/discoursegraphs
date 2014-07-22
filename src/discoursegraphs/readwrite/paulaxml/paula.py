@@ -79,38 +79,27 @@ class PaulaDocument(object):
         """
         self.dg = docgraph
         self.human_readable = human_readable
+        # remove file extension from document name
+        self.name = docgraph.name.rsplit('.')[0]
         self.corpus_name = corpus_name
-        # map file types to file names
-        self.filemap = defaultdict(lambda : defaultdict(str))
-        # map file names to etrees
+        # map file types to paula IDs
+        self.paulamap = defaultdict(lambda : defaultdict(str))
+        # map paula IDs to etrees
         self.files = {}
-        # map file names to DTDs
+        # map file IDs to DTDs
         self.file2dtd = {}
 
-        self.primary_text = self.__gen_primary_text_file()
-        self.tokenization = self.__gen_tokenization_file()
-        self.token_annotation = \
-            self.__gen_token_anno_file()
+        self.__gen_primary_text_file()
+        self.__gen_tokenization_file()
+        self.__gen_token_anno_file()
 
-        self.span_markable_files = []
-        self.hierarchy_files = []
-        self.struct_anno_files = []
-        self.rel_anno_files = []
-        self.pointing_files = []
-        self.pointing_anno_files = []
         for top_level_layer in get_top_level_layers(docgraph):
-            self.span_markable_files.append(
-                self.__gen_span_markables_file(top_level_layer))
-            self.hierarchy_files.append(
-               self.__gen_hierarchy_file(top_level_layer))
-            self.struct_anno_files.append(
-               self.__gen_struct_anno_files(top_level_layer))
-            self.rel_anno_files.append(
-               self.__gen_rel_anno_file(top_level_layer))
-            self.pointing_files.append(
-                self.__gen_pointing_file(top_level_layer))
-            self.pointing_anno_files.append(
-                self.__gen_pointing_anno_file(top_level_layer))
+            self.__gen_span_markables_file(top_level_layer)
+            self.__gen_hierarchy_file(top_level_layer)
+            self.__gen_struct_anno_files(top_level_layer)
+            self.__gen_rel_anno_file(top_level_layer)
+            self.__gen_pointing_file(top_level_layer)
+            self.__gen_pointing_anno_file(top_level_layer)
         self.__gen_annoset_file()
 
     def __gen_primary_text_file(self):
@@ -127,13 +116,12 @@ class PaulaDocument(object):
             <body>Zum Angewöhnen ...</body>
         </paula>
         """
-        paula_id = '{}.{}.text'.format(self.corpus_name, self.dg.name)
-        paula_fname = paula_id+'.xml'
+        paula_id = '{}.{}.text'.format(self.corpus_name, self.name)
         E, tree = gen_paula_etree(paula_id)
         tree.append(E.body(get_text(self.dg)))
-        self.files[paula_fname] = tree
-        self.file2dtd[paula_fname] = PaulaDTDs.text
-        return paula_fname
+        self.files[paula_id] = tree
+        self.file2dtd[paula_id] = PaulaDTDs.text
+        return paula_id
 
     def __gen_tokenization_file(self):
         """
@@ -154,34 +142,32 @@ class PaulaDocument(object):
         </paula>
         ...
         """
-        paula_id = '{}.{}.tok'.format(self.corpus_name, self.dg.name)
-        paula_fname = paula_id+'.xml'
+        paula_id = '{}.{}.tok'.format(self.corpus_name, self.name)
         E, tree = gen_paula_etree(paula_id)
-        self.filemap['tokenization'] = paula_id+'.xml'
+        self.paulamap['tokenization'] = paula_id
 
-        basefile = '{}.{}.text.xml'.format(self.corpus_name, self.dg.name)
+        base_paula_id = '{}.{}.text'.format(self.corpus_name, self.name)
         mlist = E('markList', {'type': 'tok',
-                               '{%s}base' % NSMAP['xml']: basefile})
+                               '{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
         tok_tuples = self.dg.get_tokens()
         for (tid, onset, tlen) in get_onsets(tok_tuples):
             xp = "#xpointer(string-range(//body,'',{},{}))".format(onset, tlen)
             mlist.append(E('mark', {'id': tid,
                                     '{%s}href' % NSMAP['xlink']: xp}))
         tree.append(mlist)
-        self.files[paula_fname] = tree
-        self.file2dtd[paula_fname] = PaulaDTDs.mark
-        return paula_fname
+        self.files[paula_id] = tree
+        self.file2dtd[paula_id] = PaulaDTDs.mark
+        return paula_id
 
     def __gen_span_markables_file(self, layer):
         """
         """
         paula_id = '{}.{}.{}_{}_seg'.format(layer, self.corpus_name,
-                                            self.dg.name, layer)
-        paula_fname = paula_id+'.xml'
+                                            self.name, layer)
         E, tree = gen_paula_etree(paula_id)
-        basefile = '{}.{}.tok.xml'.format(self.corpus_name, self.dg.name)
+        base_paula_id = '{}.{}.tok'.format(self.corpus_name, self.name)
         mlist = E('markList', {'type': 'tok',
-                               '{%s}base' % NSMAP['xml']: basefile})
+                               '{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
 
         span_dict = defaultdict(lambda : defaultdict(str))
         edges = select_edges_by(self.dg, layer=layer,
@@ -209,21 +195,20 @@ class PaulaDocument(object):
                     mlist.append(mark)
 
         tree.append(mlist)
-        self.files[paula_fname] = tree
-        self.file2dtd[paula_fname] = PaulaDTDs.mark
-        return paula_fname
+        self.files[paula_id] = tree
+        self.file2dtd[paula_id] = PaulaDTDs.mark
+        return paula_id
 
     def __gen_token_anno_file(self):
         """
         creates an etree representation of a multiFeat file that describes all
         the annotations that only span one token (e.g. POS, lemma etc.)
         """
-        basefile = '{}.{}.tok.xml'.format(self.corpus_name, self.dg.name)
+        base_paula_id = '{}.{}.tok'.format(self.corpus_name, self.name)
         paula_id = '{}.{}.tok_multiFeat'.format(self.corpus_name,
-                                                self.dg.name)
-        paula_fname = paula_id+'.xml'
+                                                self.name)
         E, tree = gen_paula_etree(paula_id)
-        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: basefile})
+        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
 
         for token_id in self.dg.tokens:
             mfeat = E('multiFeat',
@@ -238,17 +223,16 @@ class PaulaDocument(object):
                 mfeat.append(etree.Comment(token_dict[self.dg.ns+':token']))
             mflist.append(mfeat)
         tree.append(mflist)
-        self.files[paula_fname] = tree
-        self.file2dtd[paula_fname] = PaulaDTDs.multifeat
-        return paula_fname
+        self.files[paula_id] = tree
+        self.file2dtd[paula_id] = PaulaDTDs.multifeat
+        return paula_id
 
     def __gen_hierarchy_file(self, layer):
         """
         """
-        paula_id = '{}.{}.{}_{}'.format(layer, self.corpus_name, self.dg.name,
+        paula_id = '{}.{}.{}_{}'.format(layer, self.corpus_name, self.name,
                                         layer)
-        paula_fname = paula_id+'.xml'
-        self.filemap['hierarchy'][layer] = paula_id+'.xml'
+        self.paulamap['hierarchy'][layer] = paula_id
         E, tree = gen_paula_etree(paula_id)
 
         dominance_edges = select_edges_by(self.dg, layer=layer,
@@ -272,11 +256,11 @@ class PaulaDocument(object):
             struct = E('struct',
                        {'id': source_id})
             if self.human_readable:
-                struct.append(etree.Comment(self.dg.node[source_id].get('label')))
+                struct.append(etree.Comment(self.dg.node[source_id].get('label', 'NONE')))
 
             for target_id in dominance_dict[source_id]:
                 if istoken(self.dg, target_id):
-                    href = '{}#{}'.format(self.filemap['tokenization'], target_id)
+                    href = '{}.xml#{}'.format(self.paulamap['tokenization'], target_id)
                 else:
                     href = '#{}'.format(target_id)
 
@@ -286,13 +270,12 @@ class PaulaDocument(object):
                          '{%s}href' % NSMAP['xlink']: href})
                 struct.append(rel)
                 if self.human_readable:
-                    struct.append(etree.Comment(self.dg.node[target_id].get('label')))
-
+                    struct.append(etree.Comment(self.dg.node[target_id].get('label', 'NONE')))
             slist.append(struct)
         tree.append(slist)
-        self.files[paula_fname] = tree
-        self.file2dtd[paula_fname] = PaulaDTDs.struct
-        return paula_fname
+        self.files[paula_id] = tree
+        self.file2dtd[paula_id] = PaulaDTDs.struct
+        return paula_id
 
     def __gen_struct_anno_files(self, top_level_layer):
         """
@@ -301,13 +284,12 @@ class PaulaDocument(object):
         category (NP, VP etc.).
         """
         paula_id = '{}.{}.{}_{}_struct'.format(top_level_layer,
-                                               self.corpus_name, self.dg.name,
+                                               self.corpus_name, self.name,
                                                top_level_layer)
-        paula_fname = paula_id+'.xml'
         E, tree = gen_paula_etree(paula_id)
 
-        basefile = self.filemap['hierarchy'][top_level_layer]
-        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: basefile})
+        base_paula_id = self.paulamap['hierarchy'][top_level_layer]
+        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
 
         for node_id in select_nodes_by_layer(self.dg, top_level_layer):
             if not istoken(self.dg, node_id):
@@ -320,12 +302,12 @@ class PaulaDocument(object):
                             E('feat',
                               {'name': attr, 'value': node_dict[attr]}))
                 if self.human_readable:  # adds node label as a <!-- comment -->
-                    mfeat.append(etree.Comment(node_dict.get('label')))
+                    mfeat.append(etree.Comment(node_dict.get('label', 'NONE')))
                 mflist.append(mfeat)
         tree.append(mflist)
-        self.files[paula_fname] = tree
-        self.file2dtd[paula_fname] = PaulaDTDs.multifeat
-        return paula_fname
+        self.files[paula_id] = tree
+        self.file2dtd[paula_id] = PaulaDTDs.multifeat
+        return paula_id
 
     def __gen_rel_anno_file(self, top_level_layer):
         """
@@ -334,8 +316,7 @@ class PaulaDocument(object):
         relation (subj, obj etc.).
         """
         paula_id = '{}.{}.{}_{}_rel'.format(top_level_layer, self.corpus_name,
-                                            self.dg.name, top_level_layer)
-        paula_fname = paula_id+'.xml'
+                                            self.name, top_level_layer)
         E, tree = gen_paula_etree(paula_id)
 
         dominance_edges = select_edges_by(self.dg, layer=top_level_layer,
@@ -346,8 +327,8 @@ class PaulaDocument(object):
             if source_id != top_level_layer+':root_node':
                 dominance_dict[source_id][target_id] = edge_attrs
 
-        basefile = self.filemap['hierarchy'][top_level_layer]
-        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: basefile})
+        base_paula_id = self.paulamap['hierarchy'][top_level_layer]
+        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
         for source_id in dominance_dict:
             for target_id in dominance_dict[source_id]:
                 rel_href = '#rel_{}_{}'.format(source_id, target_id)
@@ -367,9 +348,9 @@ class PaulaDocument(object):
                 mfeat.append(etree.Comment(edge_attrs.get('label')))
             mflist.append(mfeat)
         tree.append(mflist)
-        self.files[paula_fname] = tree
-        self.file2dtd[paula_fname] = PaulaDTDs.multifeat
-        return paula_fname
+        self.files[paula_id] = tree
+        self.file2dtd[paula_id] = PaulaDTDs.multifeat
+        return paula_id
 
     def __gen_pointing_file(self, top_level_layer):
         """
@@ -379,11 +360,10 @@ class PaulaDocument(object):
         pointing relations between tokens (e.g. in a dependency parse tree)
         or the coreference link between anaphora and antecedent.
         """
-        paula_id = '{}.{}.{}.{}_pointing'.format(top_level_layer,
-                                              self.corpus_name, self.dg.name,
+        paula_id = '{}.{}.{}_{}_pointing'.format(top_level_layer,
+                                              self.corpus_name, self.name,
                                               top_level_layer)
-        paula_fname = paula_id+'.xml'
-        self.filemap['pointing'][top_level_layer] = paula_id+'.xml'
+        self.paulamap['pointing'][top_level_layer] = paula_id
         E, tree = gen_paula_etree(paula_id)
 
         pointing_edges = select_edges_by(self.dg, layer=top_level_layer,
@@ -407,15 +387,15 @@ class PaulaDocument(object):
 
                 # adds source/target node labels as a <!-- comment -->
                 if self.human_readable:
-                    source_label = self.dg.node[source_id].get('label')
-                    target_label = self.dg.node[target_id].get('label')
+                    source_label = self.dg.node[source_id].get('label', 'NONE')
+                    target_label = self.dg.node[target_id].get('label', 'NONE')
                     rel.append(etree.Comment(u'{} - {}'.format(source_label,
                                                               target_label)))
                 rlist.append(rel)
         tree.append(rlist)
-        self.files[paula_fname] = tree
-        self.file2dtd[paula_fname] = PaulaDTDs.rel
-        return paula_fname
+        self.files[paula_id] = tree
+        self.file2dtd[paula_id] = PaulaDTDs.rel
+        return paula_id
 
     def __gen_pointing_anno_file(self, top_level_layer):
         """
@@ -424,10 +404,10 @@ class PaulaDocument(object):
 
         TODO: merge code with __gen_rel_anno_file() if possible!
         """
-        paula_id = '{}.{}.{}_{}_pointing'.format(top_level_layer,
-                                                 self.corpus_name,
-                                                 self.dg.name, top_level_layer)
-        paula_fname = paula_id+'.xml'
+        paula_id = '{}.{}.{}_{}_pointing_multiFeat'.format(top_level_layer,
+                                                           self.corpus_name,
+                                                           self.name,
+                                                           top_level_layer)
         E, tree = gen_paula_etree(paula_id)
 
         pointing_edges = select_edges_by(self.dg, layer=top_level_layer,
@@ -437,8 +417,8 @@ class PaulaDocument(object):
         for source_id, target_id, edge_attrs in pointing_edges:
             pointing_dict[source_id][target_id] = edge_attrs
 
-        basefile = self.filemap['pointing'][top_level_layer]
-        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: basefile})
+        base_paula_id = self.paulamap['pointing'][top_level_layer]
+        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
         for source_id in pointing_dict:
             for target_id in pointing_dict[source_id]:
                 rel_href = '#rel_{}_{}'.format(source_id, target_id)
@@ -458,32 +438,31 @@ class PaulaDocument(object):
                 mfeat.append(etree.Comment(edge_attrs.get('label')))
             mflist.append(mfeat)
         tree.append(mflist)
-        self.files[paula_fname] = tree
-        self.file2dtd[paula_fname] = PaulaDTDs.multifeat
-        return paula_fname
+        self.files[paula_id] = tree
+        self.file2dtd[paula_id] = PaulaDTDs.multifeat
+        return paula_id
 
     def __gen_annoset_file(self):
         """
         An ``annoSet`` file describes the set of annotations contained in a
         document. Each PAULA document must contain an annoSet file.
         """
-        paula_id = '{}.{}.anno'.format(self.corpus_name, self.dg.name)
-        paula_fname = paula_id+'.xml'
+        paula_id = '{}.{}.anno'.format(self.corpus_name, self.name)
         E, tree = gen_paula_etree(paula_id)
 
         slist = E('structList', {'type': 'annoSet'})
         # NOTE: we could group all the annotations into different structs
         # but I don't see the point. We're already using namespaces, after all
         struct = E('struct', {'id': 'anno_all_annotations'})
-        for i, file_name in enumerate(self.files):
+        for i, paula_file_id in enumerate(self.files):
             struct.append(E('rel',
                             {'id': 'rel_{}'.format(i),
-                             '{%s}href' % NSMAP['xlink']: file_name}))
+                             '{%s}href' % NSMAP['xlink']: paula_file_id+'.xml'}))
         slist.append(struct)
         tree.append(slist)
-        self.files[paula_fname] = tree
-        self.file2dtd[paula_fname] = PaulaDTDs.struct
-        return paula_fname
+        self.files[paula_id] = tree
+        self.file2dtd[paula_id] = PaulaDTDs.struct
+        return paula_id
 
 
     def __gen_node_href(self, layer, node_id):
@@ -491,13 +470,13 @@ class PaulaDocument(object):
         generates a complete xlink:href for any node (token node,
         structure node etc.) in the docgraph. This will only work AFTER
         the corresponding PAULA files have been created (and their file names
-        are registered in ``self.filemap``).
+        are registered in ``self.paulamap``).
         """
         if istoken(self.dg, node_id):
-            basefile = self.filemap['tokenization']
+            base_paula_id = self.paulamap['tokenization']
         else:
-            basefile = self.filemap['hierarchy'][layer]
-        return '{}#{}'.format(basefile, node_id)
+            base_paula_id = self.paulamap['hierarchy'][layer]
+        return '{}.xml#{}'.format(base_paula_id, node_id)
 
     def write(self, output_rootdir):
         """
@@ -561,8 +540,8 @@ def write_paula(docgraph, output_root_dir):
     assert isinstance(output_root_dir, str), error_msg
     if not os.path.isdir(output_root_dir):
         create_dir(output_root_dir)
-    for file_name in paula_document.files:
-        with open(os.path.join(output_root_dir, file_name), 'w') as outfile:
+    for paula_id in paula_document.files:
+        with open(os.path.join(output_root_dir, paula_id+'.xml'), 'w') as outfile:
             outfile.write(
-                paula_etree_to_string(paula_document.files[file_name],
-                                      paula_document.file2dtd[file_name]))
+                paula_etree_to_string(paula_document.files[paula_id],
+                                      paula_document.file2dtd[paula_id]))
