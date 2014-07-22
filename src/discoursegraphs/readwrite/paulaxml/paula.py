@@ -59,6 +59,7 @@ class PaulaDocument(object):
         self.hierarchy_files = []
         self.struct_anno_files = []
         self.rel_anno_files = []
+        self.pointing_files = []
         for top_level_layer in get_top_level_layers(docgraph):
             self.span_markable_files.append(
                 self.__gen_span_markables_file(docgraph, top_level_layer,
@@ -72,6 +73,9 @@ class PaulaDocument(object):
             self.rel_anno_files.append(
                self.__gen_rel_anno_files(docgraph, top_level_layer,
                                             human_readable=human_readable))
+            self.pointing_files.append(
+                self.__gen_pointing_file(docgraph, top_level_layer,
+                                         human_readable=human_readable))
 
 
     def __gen_primary_text_file(self, docgraph):
@@ -311,6 +315,61 @@ class PaulaDocument(object):
             mflist.append(mfeat)
         tree.append(mflist)
         return tree
+
+    def __gen_pointing_file(self, docgraph, top_level_layer, human_readable=True):
+        """
+        Creates etree representations of PAULA XML files modeling pointing
+        relations. Pointing relations are ahierarchical edges between any
+        two nodes (``tok``, ``mark`` or ``struct``). They are used to signal
+        pointing relations between tokens (e.g. in a dependency parse tree)
+        or the coreference link between anaphora and antecedent.
+        """
+        paula_id = '{}.{}_pointing'.format(self.corpus_name, docgraph.name,
+                                           top_level_layer)
+        E, tree = gen_paula_etree(paula_id)
+
+        pointing_edges = select_edges_by(docgraph, layer=top_level_layer,
+                                         edge_type=EdgeTypes.pointing_relation,
+                                         data=True)
+        pointing_dict = defaultdict(lambda : defaultdict(str))
+        for source_id, target_id, edge_attrs in pointing_edges:
+            pointing_dict[source_id][target_id] = edge_attrs
+
+        # NOTE: we don't add a base file here, because the nodes could be
+        # tokens or structural nodes
+        rlist = E('relList')
+        for source_id in pointing_dict:
+            for target_id in pointing_dict[source_id]:
+                source_href = self.__gen_node_href(docgraph, top_level_layer, source_id)
+                target_href = self.__gen_node_href(docgraph, top_level_layer, target_id)
+                rel = E('rel',
+                        {'id': 'rel_{}_{}'.format(source_id, target_id),
+                         '{%s}href' % NSMAP['xlink']: source_href,
+                         'target': target_href})
+
+                # adds source/target node labels as a <!-- comment -->
+                if human_readable:
+                    source_label = docgraph.node[source_id].get('label')
+                    target_label = docgraph.node[target_id].get('label')
+                    rel.append(etree.Comment(u'{} - {}'.format(source_label,
+                                                              target_label)))
+                rlist.append(rel)
+        tree.append(rlist)
+        return tree
+
+    def __gen_node_href(self, docgraph, layer, node_id):
+        """
+        generates a complete xlink:href for any node (token node,
+        structure node etc.) in the docgraph. This will only work AFTER
+        the corresponding PAULA files have been created (and their file names
+        are registered in ``self.files``).
+        """
+        if istoken(docgraph, node_id):
+            basefile = self.files['tokenization']
+        else:
+            basefile = self.files['hierarchy'][layer]
+        return '{}#{}'.format(basefile, node_id)
+
 
     def etree_to_string(self, tree):
         return etree.tostring(tree, pretty_print=True, xml_declaration=True,
