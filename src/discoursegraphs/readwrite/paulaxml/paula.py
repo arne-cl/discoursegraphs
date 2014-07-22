@@ -524,7 +524,7 @@ def get_onsets(token_tuples):
         yield (token_id, onset, len(token))
         onset += (len(token) + 1)
 
-def write_paula(docgraph, output_root_dir):
+def write_paula(docgraph, output_root_dir, human_readable=False):
     """
     converts a DiscourseDocumentGraph into a set of PAULA XML files
     representing the same document.
@@ -534,7 +534,7 @@ def write_paula(docgraph, output_root_dir):
     docgraph : DiscourseDocumentGraph
         the document graph to be converted
     """
-    paula_document = PaulaDocument(docgraph)
+    paula_document = PaulaDocument(docgraph, human_readable=human_readable)
     error_msg = ("Please specify an output directory.\nPaula documents consist"
                  " of multiple files, so we can't just pipe them to STDOUT.")
     assert isinstance(output_root_dir, str), error_msg
