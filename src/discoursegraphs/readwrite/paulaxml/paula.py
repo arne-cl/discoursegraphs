@@ -111,7 +111,7 @@ class PaulaDocument(object):
                 self.__gen_pointing_file(top_level_layer))
             self.pointing_anno_files.append(
                 self.__gen_pointing_anno_file(top_level_layer))
-
+        self.__gen_annoset_file()
 
     def __gen_primary_text_file(self):
         """
@@ -461,6 +461,30 @@ class PaulaDocument(object):
         self.files[paula_fname] = tree
         self.file2dtd[paula_fname] = PaulaDTDs.multifeat
         return paula_fname
+
+    def __gen_annoset_file(self):
+        """
+        An ``annoSet`` file describes the set of annotations contained in a
+        document. Each PAULA document must contain an annoSet file.
+        """
+        paula_id = '{}.{}.anno'.format(self.corpus_name, self.dg.name)
+        paula_fname = paula_id+'.xml'
+        E, tree = gen_paula_etree(paula_id)
+
+        slist = E('structList', {'type': 'annoSet'})
+        # NOTE: we could group all the annotations into different structs
+        # but I don't see the point. We're already using namespaces, after all
+        struct = E('struct', {'id': 'anno_all_annotations'})
+        for i, file_name in enumerate(self.files):
+            struct.append(E('rel',
+                            {'id': 'rel_{}'.format(i),
+                             '{%s}href' % NSMAP['xlink']: file_name}))
+        slist.append(struct)
+        tree.append(slist)
+        self.files[paula_fname] = tree
+        self.file2dtd[paula_fname] = PaulaDTDs.struct
+        return paula_fname
+
 
     def __gen_node_href(self, layer, node_id):
         """
