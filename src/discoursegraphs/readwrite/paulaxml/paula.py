@@ -529,10 +529,11 @@ def write_paula(docgraph, output_root_dir, human_readable=False):
     error_msg = ("Please specify an output directory.\nPaula documents consist"
                  " of multiple files, so we can't just pipe them to STDOUT.")
     assert isinstance(output_root_dir, str), error_msg
-    if not os.path.isdir(output_root_dir):
-        create_dir(output_root_dir)
+    document_dir = os.path.join(output_root_dir, paula_document.name)
+    if not os.path.isdir(document_dir):
+        create_dir(document_dir)
     for paula_id in paula_document.files:
-        with open(os.path.join(output_root_dir, paula_id+'.xml'), 'w') as outfile:
+        with open(os.path.join(document_dir, paula_id+'.xml'), 'w') as outfile:
             outfile.write(
                 paula_etree_to_string(paula_document.files[paula_id],
                                       paula_document.file2dtd[paula_id]))
