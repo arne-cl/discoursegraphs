@@ -64,7 +64,7 @@ class PaulaDocument(object):
                 self.__gen_span_markables_file(docgraph, top_level_layer,
                                                human_readable=human_readable))
             self.hierarchy_files.append(
-               self.__gen_hierarchical_anno_file(docgraph, top_level_layer,
+               self.__gen_hierarchy_file(docgraph, top_level_layer,
                                                  human_readable=human_readable))
             self.struct_anno_files.append(
                self.__gen_struct_anno_files(docgraph, top_level_layer,
@@ -191,7 +191,7 @@ class PaulaDocument(object):
         tree.append(mflist)
         return tree
 
-    def __gen_hierarchical_anno_file(self, docgraph, layer,
+    def __gen_hierarchy_file(self, docgraph, layer,
                                            human_readable=True):
         """
         """
@@ -334,6 +334,7 @@ class PaulaDocument(object):
         """
         create_dir(output_rootdir)
         raise NotImplementedError
+
 
 def gen_paula_etree(paula_id):
     """
