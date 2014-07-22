@@ -45,15 +45,16 @@ class PaulaDocument(object):
         corpus_name : str
             name of the corpus this document belongs to
         """
+        self.dg = docgraph
+        self.human_readable = human_readable
         self.corpus_name = corpus_name
         # map file types to file names
         self.files = defaultdict(lambda : defaultdict(str))
 
-        self.primary_text = self.__gen_primary_text_file(docgraph)
-        self.tokenization = self.__gen_tokenization_file(docgraph)
+        self.primary_text = self.__gen_primary_text_file()
+        self.tokenization = self.__gen_tokenization_file()
         self.token_annotation = \
-            self.__gen_token_anno_file(docgraph,
-                                       human_readable=human_readable)
+            self.__gen_token_anno_file()
 
         self.span_markable_files = []
         self.hierarchy_files = []
@@ -62,23 +63,18 @@ class PaulaDocument(object):
         self.pointing_files = []
         for top_level_layer in get_top_level_layers(docgraph):
             self.span_markable_files.append(
-                self.__gen_span_markables_file(docgraph, top_level_layer,
-                                               human_readable=human_readable))
+                self.__gen_span_markables_file(top_level_layer))
             self.hierarchy_files.append(
-               self.__gen_hierarchy_file(docgraph, top_level_layer,
-                                                 human_readable=human_readable))
+               self.__gen_hierarchy_file(top_level_layer))
             self.struct_anno_files.append(
-               self.__gen_struct_anno_files(docgraph, top_level_layer,
-                                            human_readable=human_readable))
+               self.__gen_struct_anno_files(top_level_layer))
             self.rel_anno_files.append(
-               self.__gen_rel_anno_files(docgraph, top_level_layer,
-                                            human_readable=human_readable))
+               self.__gen_rel_anno_files(top_level_layer))
             self.pointing_files.append(
-                self.__gen_pointing_file(docgraph, top_level_layer,
-                                         human_readable=human_readable))
+                self.__gen_pointing_file(top_level_layer))
 
 
-    def __gen_primary_text_file(self, docgraph):
+    def __gen_primary_text_file(self):
         """
         generate the PAULA file that contains the primary text of the document
         graph.
@@ -92,12 +88,12 @@ class PaulaDocument(object):
             <body>Zum Angewöhnen ...</body>
         </paula>
         """
-        paula_id = '{}.text'.format(docgraph.name)
+        paula_id = '{}.text'.format(self.dg.name)
         E, tree = gen_paula_etree(paula_id)
-        tree.append(E.body(get_text(docgraph)))
+        tree.append(E.body(get_text(self.dg)))
         return tree
 
-    def __gen_tokenization_file(self, docgraph):
+    def __gen_tokenization_file(self):
         """
         generate the PAULA file that contains the tokenization of the document
         graph.
@@ -116,14 +112,14 @@ class PaulaDocument(object):
         </paula>
         ...
         """
-        paula_id = '{}.{}.tok'.format(self.corpus_name, docgraph.name)
+        paula_id = '{}.{}.tok'.format(self.corpus_name, self.dg.name)
         E, tree = gen_paula_etree(paula_id)
         self.files['tokenization'] = paula_id+'.xml'
 
-        basefile = '{}.{}.text.xml'.format(self.corpus_name, docgraph.name)
+        basefile = '{}.{}.text.xml'.format(self.corpus_name, self.dg.name)
         mlist = E('markList', {'type': 'tok',
                                '{%s}base' % NSMAP['xml']: basefile})
-        tok_tuples = docgraph.get_tokens()
+        tok_tuples = self.dg.get_tokens()
         for (tid, onset, tlen) in get_onsets(tok_tuples):
             xp = "#xpointer(string-range(//body,'',{},{}))".format(onset, tlen)
             mlist.append(E('mark', {'id': tid,
@@ -131,18 +127,18 @@ class PaulaDocument(object):
         tree.append(mlist)
         return tree
 
-    def __gen_span_markables_file(self, docgraph, layer, human_readable=True):
+    def __gen_span_markables_file(self, layer):
         """
         """
-        paula_id = '{}.{}_{}_seg'.format(self.corpus_name, docgraph.name,
+        paula_id = '{}.{}_{}_seg'.format(self.corpus_name, self.dg.name,
                                          layer)
         E, tree = gen_paula_etree(paula_id)
-        basefile = '{}.{}.tok.xml'.format(self.corpus_name, docgraph.name)
+        basefile = '{}.{}.tok.xml'.format(self.corpus_name, self.dg.name)
         mlist = E('markList', {'type': 'tok',
                                '{%s}base' % NSMAP['xml']: basefile})
 
         span_dict = defaultdict(lambda : defaultdict(str))
-        edges = select_edges_by(docgraph, layer=layer,
+        edges = select_edges_by(self.dg, layer=layer,
                                 edge_type=EdgeTypes.spanning_relation,
                                 data=True)
         for source_id, target_id, edge_attrs in edges:
@@ -154,14 +150,14 @@ class PaulaDocument(object):
             xp = '(#xpointer(id({})/range-to(id({}))))'.format(target_ids[0],
                                                                target_ids[-1])
             mark = E('mark', {'{%s}href' % NSMAP['xlink']: xp})
-            if human_readable:
+            if self.human_readable:
                 # add <!-- comments --> containing the token strings
-                mark.append(etree.Comment(tokens2text(docgraph, target_ids)))
+                mark.append(etree.Comment(tokens2text(self.dg, target_ids)))
                 target_dict[target_ids[0]].append(mark)
             else:
                 mlist.append(mark)
 
-        if human_readable:  # order <mark> elements by token ordering
+        if self.human_readable:  # order <mark> elements by token ordering
             for target in sorted(target_dict, key=natural_sort_key):
                 for mark in target_dict[target]:
                     mlist.append(mark)
@@ -169,44 +165,43 @@ class PaulaDocument(object):
         tree.append(mlist)
         return tree
 
-    def __gen_token_anno_file(self, docgraph, human_readable=True):
+    def __gen_token_anno_file(self):
         """
         creates an etree representation of a multiFeat file that describes all
         the annotations that only span one token (e.g. POS, lemma etc.)
         """
-        basefile = '{}.{}.tok.xml'.format(self.corpus_name, docgraph.name)
+        basefile = '{}.{}.tok.xml'.format(self.corpus_name, self.dg.name)
         paula_id = '{}.{}.tok_multiFeat'.format(self.corpus_name,
-                                                docgraph.name)
+                                                self.dg.name)
         E, tree = gen_paula_etree(paula_id)
         mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: basefile})
 
-        for token_id in docgraph.tokens:
+        for token_id in self.dg.tokens:
             mfeat = E('multiFeat',
                       {'{%s}href' % NSMAP['xlink']: '#{}'.format(token_id)})
-            token_dict = docgraph.node[token_id]
+            token_dict = self.dg.node[token_id]
             for feature in token_dict:
                 if feature not in IGNORED_TOKEN_ATTRIBS:
                     mfeat.append(
                         E('feat',
                           {'name': feature, 'value': token_dict[feature]}))
-            if human_readable:  # adds token string as a <!-- comment -->
-                mfeat.append(etree.Comment(token_dict[docgraph.ns+':token']))
+            if self.human_readable:  # adds token string as a <!-- comment -->
+                mfeat.append(etree.Comment(token_dict[self.dg.ns+':token']))
             mflist.append(mfeat)
         tree.append(mflist)
         return tree
 
-    def __gen_hierarchy_file(self, docgraph, layer,
-                                           human_readable=True):
+    def __gen_hierarchy_file(self, layer):
         """
         """
-        paula_id = '{}.{}_{}'.format(self.corpus_name, docgraph.name, layer)
+        paula_id = '{}.{}_{}'.format(self.corpus_name, self.dg.name, layer)
         self.files['hierarchy'][layer] = paula_id+'.xml'
         E, tree = gen_paula_etree(paula_id)
 
-        dominance_edges = select_edges_by(docgraph, layer=layer,
+        dominance_edges = select_edges_by(self.dg, layer=layer,
                                 edge_type=EdgeTypes.dominance_relation,
                                 data=True)
-        span_edges = select_edges_by(docgraph, layer=layer,
+        span_edges = select_edges_by(self.dg, layer=layer,
                         edge_type=EdgeTypes.spanning_relation,
                         data=True)
         dominance_dict = defaultdict(lambda : defaultdict(str))
@@ -216,18 +211,18 @@ class PaulaDocument(object):
 
         # in PAULA XML, token spans are also part of the hierarchy
         for source_id, target_id, edge_attrs in span_edges:
-            if istoken(docgraph, target_id):
+            if istoken(self.dg, target_id):
                 dominance_dict[source_id][target_id] = edge_attrs
 
         slist = E('structList', {'type': layer})
         for source_id in dominance_dict:
             struct = E('struct',
                        {'id': source_id})
-            if human_readable:
-                struct.append(etree.Comment(docgraph.node[source_id].get('label')))
+            if self.human_readable:
+                struct.append(etree.Comment(self.dg.node[source_id].get('label')))
 
             for target_id in dominance_dict[source_id]:
-                if istoken(docgraph, target_id):
+                if istoken(self.dg, target_id):
                     href = '{}#{}'.format(self.files['tokenization'], target_id)
                 else:
                     href = '#{}'.format(target_id)
@@ -237,55 +232,53 @@ class PaulaDocument(object):
                          'type': dominance_dict[source_id][target_id]['edge_type'],
                          '{%s}href' % NSMAP['xlink']: href})
                 struct.append(rel)
-                if human_readable:
-                    struct.append(etree.Comment(docgraph.node[target_id].get('label')))
+                if self.human_readable:
+                    struct.append(etree.Comment(self.dg.node[target_id].get('label')))
 
             slist.append(struct)
         tree.append(slist)
         return tree
 
-    def __gen_struct_anno_files(self, docgraph, top_level_layer,
-                                human_readable=True):
+    def __gen_struct_anno_files(self, top_level_layer):
         """
         A struct annotation file contains node (struct) attributes (of
         non-token nodes). It is e.g. used to annotate the type of a syntactic
         category (NP, VP etc.).
         """
-        paula_id = '{}.{}_{}_struct'.format(self.corpus_name, docgraph.name,
+        paula_id = '{}.{}_{}_struct'.format(self.corpus_name, self.dg.name,
                                             top_level_layer)
         E, tree = gen_paula_etree(paula_id)
 
         basefile = self.files['hierarchy'][top_level_layer]
         mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: basefile})
 
-        for node_id in select_nodes_by_layer(docgraph, top_level_layer):
-            if not istoken(docgraph, node_id):
+        for node_id in select_nodes_by_layer(self.dg, top_level_layer):
+            if not istoken(self.dg, node_id):
                 mfeat = E('multiFeat',
                           {'{%s}href' % NSMAP['xlink']: '#{}'.format(node_id)})
-                node_dict = docgraph.node[node_id]
+                node_dict = self.dg.node[node_id]
                 for attr in node_dict:
                     if attr not in IGNORED_NODE_ATTRIBS:
                         mfeat.append(
                             E('feat',
                               {'name': attr, 'value': node_dict[attr]}))
-                if human_readable:  # adds node label as a <!-- comment -->
+                if self.human_readable:  # adds node label as a <!-- comment -->
                     mfeat.append(etree.Comment(node_dict.get('label')))
                 mflist.append(mfeat)
         tree.append(mflist)
         return tree
 
-    def __gen_rel_anno_files(self, docgraph, top_level_layer,
-                             human_readable=True):
+    def __gen_rel_anno_files(self, top_level_layer):
         """
         A rel annotation file contains edge (rel)
         attributes. It is e.g. used to annotate the type of a dependency
         relation (subj, obj etc.).
         """
-        paula_id = '{}.{}_{}_rel'.format(self.corpus_name, docgraph.name,
+        paula_id = '{}.{}_{}_rel'.format(self.corpus_name, self.dg.name,
                                          top_level_layer)
         E, tree = gen_paula_etree(paula_id)
 
-        dominance_edges = select_edges_by(docgraph, layer=top_level_layer,
+        dominance_edges = select_edges_by(self.dg, layer=top_level_layer,
                                 edge_type=EdgeTypes.dominance_relation,
                                 data=True)
         dominance_dict = defaultdict(lambda : defaultdict(str))
@@ -310,13 +303,13 @@ class PaulaDocument(object):
                     except KeyError as e:
                         print "DEBUG KeyError: attr = {}; edge_dict = {}".format(edge_attr, edge_attrs)
 
-            if human_readable:  # adds edge label as a <!-- comment -->
+            if self.human_readable:  # adds edge label as a <!-- comment -->
                 mfeat.append(etree.Comment(edge_attrs.get('label')))
             mflist.append(mfeat)
         tree.append(mflist)
         return tree
 
-    def __gen_pointing_file(self, docgraph, top_level_layer, human_readable=True):
+    def __gen_pointing_file(self, top_level_layer):
         """
         Creates etree representations of PAULA XML files modeling pointing
         relations. Pointing relations are ahierarchical edges between any
@@ -324,11 +317,11 @@ class PaulaDocument(object):
         pointing relations between tokens (e.g. in a dependency parse tree)
         or the coreference link between anaphora and antecedent.
         """
-        paula_id = '{}.{}_pointing'.format(self.corpus_name, docgraph.name,
+        paula_id = '{}.{}_pointing'.format(self.corpus_name, self.dg.name,
                                            top_level_layer)
         E, tree = gen_paula_etree(paula_id)
 
-        pointing_edges = select_edges_by(docgraph, layer=top_level_layer,
+        pointing_edges = select_edges_by(self.dg, layer=top_level_layer,
                                          edge_type=EdgeTypes.pointing_relation,
                                          data=True)
         pointing_dict = defaultdict(lambda : defaultdict(str))
@@ -340,31 +333,31 @@ class PaulaDocument(object):
         rlist = E('relList')
         for source_id in pointing_dict:
             for target_id in pointing_dict[source_id]:
-                source_href = self.__gen_node_href(docgraph, top_level_layer, source_id)
-                target_href = self.__gen_node_href(docgraph, top_level_layer, target_id)
+                source_href = self.__gen_node_href(top_level_layer, source_id)
+                target_href = self.__gen_node_href(top_level_layer, target_id)
                 rel = E('rel',
                         {'id': 'rel_{}_{}'.format(source_id, target_id),
                          '{%s}href' % NSMAP['xlink']: source_href,
                          'target': target_href})
 
                 # adds source/target node labels as a <!-- comment -->
-                if human_readable:
-                    source_label = docgraph.node[source_id].get('label')
-                    target_label = docgraph.node[target_id].get('label')
+                if self.human_readable:
+                    source_label = self.dg.node[source_id].get('label')
+                    target_label = self.dg.node[target_id].get('label')
                     rel.append(etree.Comment(u'{} - {}'.format(source_label,
                                                               target_label)))
                 rlist.append(rel)
         tree.append(rlist)
         return tree
 
-    def __gen_node_href(self, docgraph, layer, node_id):
+    def __gen_node_href(self, layer, node_id):
         """
         generates a complete xlink:href for any node (token node,
         structure node etc.) in the docgraph. This will only work AFTER
         the corresponding PAULA files have been created (and their file names
         are registered in ``self.files``).
         """
-        if istoken(docgraph, node_id):
+        if istoken(self.dg, node_id):
             basefile = self.files['tokenization']
         else:
             basefile = self.files['hierarchy'][layer]
