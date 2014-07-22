@@ -179,7 +179,7 @@ class PaulaDocument(object):
         target_dict = defaultdict(list)
         for source_id in span_dict:
             target_ids = sorted(span_dict[source_id], key=natural_sort_key)
-            xp = '(#xpointer(id({})/range-to(id({}))))'.format(target_ids[0],
+            xp = '#xpointer(id({})/range-to(id({})))'.format(target_ids[0],
                                                                target_ids[-1])
             mark = E('mark', {'{%s}href' % NSMAP['xlink']: xp})
             if self.human_readable:
