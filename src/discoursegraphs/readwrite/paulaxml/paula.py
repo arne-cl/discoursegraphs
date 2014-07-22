@@ -257,7 +257,7 @@ class PaulaDocument(object):
         slist = E('structList', {'type': layer})
         for source_id in dominance_dict:
             struct = E('struct',
-                       {'id': source_id})
+                       {'id': str(source_id)})
             if self.human_readable:
                 struct.append(etree.Comment(self.dg.node[source_id].get('label', 'NONE')))
 
