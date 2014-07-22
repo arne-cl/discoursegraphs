@@ -69,7 +69,7 @@ class PaulaDocument(object):
             self.struct_anno_files.append(
                self.__gen_struct_anno_files(top_level_layer))
             self.rel_anno_files.append(
-               self.__gen_rel_anno_files(top_level_layer))
+               self.__gen_rel_anno_file(top_level_layer))
             self.pointing_files.append(
                 self.__gen_pointing_file(top_level_layer))
 
@@ -268,7 +268,7 @@ class PaulaDocument(object):
         tree.append(mflist)
         return tree
 
-    def __gen_rel_anno_files(self, top_level_layer):
+    def __gen_rel_anno_file(self, top_level_layer):
         """
         A rel annotation file contains edge (rel)
         attributes. It is e.g. used to annotate the type of a dependency
