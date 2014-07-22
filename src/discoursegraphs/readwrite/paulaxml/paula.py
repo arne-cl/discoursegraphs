@@ -94,7 +94,7 @@ class PaulaDocument(object):
             <body>Zum Angewöhnen ...</body>
         </paula>
         """
-        paula_id = '{}.text'.format(self.dg.name)
+        paula_id = '{}.{}.text'.format(self.corpus_name, self.dg.name)
         E, tree = gen_paula_etree(paula_id)
         tree.append(E.body(get_text(self.dg)))
         self.files[paula_id+'.xml'] = tree
@@ -138,8 +138,8 @@ class PaulaDocument(object):
     def __gen_span_markables_file(self, layer):
         """
         """
-        paula_id = '{}.{}_{}_seg'.format(self.corpus_name, self.dg.name,
-                                         layer)
+        paula_id = '{}.{}.{}_{}_seg'.format(layer, self.corpus_name,
+                                            self.dg.name, layer)
         E, tree = gen_paula_etree(paula_id)
         basefile = '{}.{}.tok.xml'.format(self.corpus_name, self.dg.name)
         mlist = E('markList', {'type': 'tok',
@@ -204,7 +204,8 @@ class PaulaDocument(object):
     def __gen_hierarchy_file(self, layer):
         """
         """
-        paula_id = '{}.{}_{}'.format(self.corpus_name, self.dg.name, layer)
+        paula_id = '{}.{}.{}_{}'.format(layer, self.corpus_name, self.dg.name,
+                                        layer)
         self.filemap['hierarchy'][layer] = paula_id+'.xml'
         E, tree = gen_paula_etree(paula_id)
 
@@ -256,8 +257,9 @@ class PaulaDocument(object):
         non-token nodes). It is e.g. used to annotate the type of a syntactic
         category (NP, VP etc.).
         """
-        paula_id = '{}.{}_{}_struct'.format(self.corpus_name, self.dg.name,
-                                            top_level_layer)
+        paula_id = '{}.{}.{}_{}_struct'.format(top_level_layer,
+                                               self.corpus_name, self.dg.name,
+                                               top_level_layer)
         E, tree = gen_paula_etree(paula_id)
 
         basefile = self.filemap['hierarchy'][top_level_layer]
@@ -286,8 +288,8 @@ class PaulaDocument(object):
         attributes. It is e.g. used to annotate the type of a dependency
         relation (subj, obj etc.).
         """
-        paula_id = '{}.{}_{}_rel'.format(self.corpus_name, self.dg.name,
-                                         top_level_layer)
+        paula_id = '{}.{}.{}_{}_rel'.format(top_level_layer, self.corpus_name,
+                                            self.dg.name, top_level_layer)
         E, tree = gen_paula_etree(paula_id)
 
         dominance_edges = select_edges_by(self.dg, layer=top_level_layer,
@@ -330,8 +332,9 @@ class PaulaDocument(object):
         pointing relations between tokens (e.g. in a dependency parse tree)
         or the coreference link between anaphora and antecedent.
         """
-        paula_id = '{}.{}_pointing'.format(self.corpus_name, self.dg.name,
-                                           top_level_layer)
+        paula_id = '{}.{}.{}.{}_pointing'.format(top_level_layer,
+                                              self.corpus_name, self.dg.name,
+                                              top_level_layer)
         self.filemap['pointing'][top_level_layer] = paula_id+'.xml'
         E, tree = gen_paula_etree(paula_id)
 
@@ -372,8 +375,9 @@ class PaulaDocument(object):
 
         TODO: merge code with __gen_rel_anno_file() if possible!
         """
-        paula_id = '{}.{}_{}_pointing'.format(self.corpus_name, self.dg.name,
-                                              top_level_layer)
+        paula_id = '{}.{}.{}_{}_pointing'.format(top_level_layer,
+                                                 self.corpus_name,
+                                                 self.dg.name, top_level_layer)
         E, tree = gen_paula_etree(paula_id)
 
         pointing_edges = select_edges_by(self.dg, layer=top_level_layer,
