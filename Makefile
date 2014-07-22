@@ -11,6 +11,11 @@ all:
 show: all
 	ls /tmp/dg/*.dot | parallel dot -Tsvg {} -o {.}.svg
 
+paula:
+	date +"%H:%M:%S"
+	-ls $(MAZ)/syntax/*.xml | parallel discoursegraphs -t {} -r $(MAZ)/rst/{/.}.rs3 -a $(MAZ)/anaphora/tosik/das/{/.}.txt -c $(MAZ)/connectors/{/.}.xml -m $(MAZ)/coreference/{/.}.mmax -o paula /tmp/dg/paula-test
+	date +"%H:%M:%S"
+
 merge-only:
 	date +"%H:%M:%S"
 	-ls $(MAZ)/syntax/*.xml | parallel discoursegraphs -t {} -r $(MAZ)/rst/{/.}.rs3 -a $(MAZ)/anaphora/tosik/das/{/.}.txt -c $(MAZ)/connectors/{/.}.xml -m $(MAZ)/coreference/{/.}.mmax -o no-output
