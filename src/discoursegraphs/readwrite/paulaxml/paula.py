@@ -49,7 +49,7 @@ class PaulaDocument(object):
         self.human_readable = human_readable
         self.corpus_name = corpus_name
         # map file types to file names
-        self.files = defaultdict(lambda : defaultdict(str))
+        self.filemap = defaultdict(lambda : defaultdict(str))
 
         self.primary_text = self.__gen_primary_text_file()
         self.tokenization = self.__gen_tokenization_file()
@@ -117,7 +117,7 @@ class PaulaDocument(object):
         """
         paula_id = '{}.{}.tok'.format(self.corpus_name, self.dg.name)
         E, tree = gen_paula_etree(paula_id)
-        self.files['tokenization'] = paula_id+'.xml'
+        self.filemap['tokenization'] = paula_id+'.xml'
 
         basefile = '{}.{}.text.xml'.format(self.corpus_name, self.dg.name)
         mlist = E('markList', {'type': 'tok',
@@ -198,7 +198,7 @@ class PaulaDocument(object):
         """
         """
         paula_id = '{}.{}_{}'.format(self.corpus_name, self.dg.name, layer)
-        self.files['hierarchy'][layer] = paula_id+'.xml'
+        self.filemap['hierarchy'][layer] = paula_id+'.xml'
         E, tree = gen_paula_etree(paula_id)
 
         dominance_edges = select_edges_by(self.dg, layer=layer,
@@ -226,7 +226,7 @@ class PaulaDocument(object):
 
             for target_id in dominance_dict[source_id]:
                 if istoken(self.dg, target_id):
-                    href = '{}#{}'.format(self.files['tokenization'], target_id)
+                    href = '{}#{}'.format(self.filemap['tokenization'], target_id)
                 else:
                     href = '#{}'.format(target_id)
 
@@ -252,7 +252,7 @@ class PaulaDocument(object):
                                             top_level_layer)
         E, tree = gen_paula_etree(paula_id)
 
-        basefile = self.files['hierarchy'][top_level_layer]
+        basefile = self.filemap['hierarchy'][top_level_layer]
         mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: basefile})
 
         for node_id in select_nodes_by_layer(self.dg, top_level_layer):
@@ -289,7 +289,7 @@ class PaulaDocument(object):
             if source_id != top_level_layer+':root_node':
                 dominance_dict[source_id][target_id] = edge_attrs
 
-        basefile = self.files['hierarchy'][top_level_layer]
+        basefile = self.filemap['hierarchy'][top_level_layer]
         mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: basefile})
         for source_id in dominance_dict:
             for target_id in dominance_dict[source_id]:
@@ -322,6 +322,7 @@ class PaulaDocument(object):
         """
         paula_id = '{}.{}_pointing'.format(self.corpus_name, self.dg.name,
                                            top_level_layer)
+        self.filemap['pointing'][top_level_layer] = paula_id+'.xml'
         E, tree = gen_paula_etree(paula_id)
 
         pointing_edges = select_edges_by(self.dg, layer=top_level_layer,
@@ -399,12 +400,12 @@ class PaulaDocument(object):
         generates a complete xlink:href for any node (token node,
         structure node etc.) in the docgraph. This will only work AFTER
         the corresponding PAULA files have been created (and their file names
-        are registered in ``self.files``).
+        are registered in ``self.filemap``).
         """
         if istoken(self.dg, node_id):
-            basefile = self.files['tokenization']
+            basefile = self.filemap['tokenization']
         else:
-            basefile = self.files['hierarchy'][layer]
+            basefile = self.filemap['hierarchy'][layer]
         return '{}#{}'.format(basefile, node_id)
 
 
