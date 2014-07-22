@@ -334,19 +334,19 @@ class PaulaDocument(object):
                 rel_href = '#rel_{}_{}'.format(source_id, target_id)
                 mfeat = E('multiFeat',
                           {'{%s}href' % NSMAP['xlink']: rel_href})
-            edge_attrs = dominance_dict[source_id][target_id]
-            for edge_attr in edge_attrs:
-                if edge_attr not in IGNORED_EDGE_ATTRIBS:
-                    try:
+                edge_attrs = dominance_dict[source_id][target_id]
+                for edge_attr in edge_attrs:
+                    if edge_attr not in IGNORED_EDGE_ATTRIBS:
                         mfeat.append(
                             E('feat',
                               {'name': edge_attr, 'value': edge_attrs[edge_attr]}))
-                    except KeyError as e:
-                        print "DEBUG KeyError: attr = {}; edge_dict = {}".format(edge_attr, edge_attrs)
 
-            if self.human_readable:  # adds edge label as a <!-- comment -->
-                mfeat.append(etree.Comment(edge_attrs.get('label')))
-            mflist.append(mfeat)
+                if self.human_readable:  # adds edge label as a <!-- comment -->
+                    source_label = self.dg.node[source_id].get('label', 'NONE')
+                    target_label = self.dg.node[target_id].get('label', 'NONE')
+                    mfeat.append(etree.Comment(u'{} - {}'.format(source_label,
+                                                                 target_label)))
+                mflist.append(mfeat)
         tree.append(mflist)
         self.files[paula_id] = tree
         self.file2dtd[paula_id] = PaulaDTDs.multifeat
@@ -424,19 +424,19 @@ class PaulaDocument(object):
                 rel_href = '#rel_{}_{}'.format(source_id, target_id)
                 mfeat = E('multiFeat',
                           {'{%s}href' % NSMAP['xlink']: rel_href})
-            edge_attrs = pointing_dict[source_id][target_id]
-            for edge_attr in edge_attrs:
-                if edge_attr not in IGNORED_EDGE_ATTRIBS:
-                    try:
+                edge_attrs = pointing_dict[source_id][target_id]
+                for edge_attr in edge_attrs:
+                    if edge_attr not in IGNORED_EDGE_ATTRIBS:
                         mfeat.append(
                             E('feat',
                               {'name': edge_attr, 'value': edge_attrs[edge_attr]}))
-                    except KeyError as e:
-                        print "DEBUG KeyError: attr = {}; edge_dict = {}".format(edge_attr, edge_attrs)
 
-            if self.human_readable:  # adds edge label as a <!-- comment -->
-                mfeat.append(etree.Comment(edge_attrs.get('label')))
-            mflist.append(mfeat)
+                if self.human_readable:  # adds edge label as a <!-- comment -->
+                    source_label = self.dg.node[source_id].get('label', 'NONE')
+                    target_label = self.dg.node[target_id].get('label', 'NONE')
+                    mfeat.append(etree.Comment(u'{} - {}'.format(source_label,
+                                                                 target_label)))
+                mflist.append(mfeat)
         tree.append(mflist)
         self.files[paula_id] = tree
         self.file2dtd[paula_id] = PaulaDTDs.multifeat
