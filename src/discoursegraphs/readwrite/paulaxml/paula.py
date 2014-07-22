@@ -91,9 +91,9 @@ class PaulaDocument(object):
 
         self.__gen_primary_text_file()
         self.__gen_tokenization_file()
-        self.__gen_token_anno_file()
 
         for top_level_layer in get_top_level_layers(docgraph):
+            self.__gen_token_anno_file(top_level_layer)
             self.__gen_span_markables_file(top_level_layer)
             self.__gen_hierarchy_file(top_level_layer)
             self.__gen_struct_anno_files(top_level_layer)
@@ -199,14 +199,15 @@ class PaulaDocument(object):
         self.file2dtd[paula_id] = PaulaDTDs.mark
         return paula_id
 
-    def __gen_token_anno_file(self):
+    def __gen_token_anno_file(self, top_level_layer):
         """
         creates an etree representation of a multiFeat file that describes all
         the annotations that only span one token (e.g. POS, lemma etc.)
         """
         base_paula_id = '{}.{}.tok'.format(self.corpus_name, self.name)
-        paula_id = '{}.{}.tok_multiFeat'.format(self.corpus_name,
-                                                self.name)
+        paula_id = '{}.{}.{}.tok_multiFeat'.format(top_level_layer,
+                                                   self.corpus_name,
+                                                   self.name)
         E, tree = gen_paula_etree(paula_id)
         mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
 
@@ -215,7 +216,9 @@ class PaulaDocument(object):
                       {'{%s}href' % NSMAP['xlink']: '#{}'.format(token_id)})
             token_dict = self.dg.node[token_id]
             for feature in token_dict:
-                if feature not in IGNORED_TOKEN_ATTRIBS:
+                # TODO: highly inefficient! refactor!1!!
+                if feature not in IGNORED_TOKEN_ATTRIBS \
+                and feature.startswith(top_level_layer):
                     mfeat.append(
                         E('feat',
                           {'name': feature, 'value': token_dict[feature]}))
