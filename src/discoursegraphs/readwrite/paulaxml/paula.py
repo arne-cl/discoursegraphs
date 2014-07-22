@@ -50,6 +50,8 @@ class PaulaDocument(object):
         self.corpus_name = corpus_name
         # map file types to file names
         self.filemap = defaultdict(lambda : defaultdict(str))
+        # map file names to etrees
+        self.files = {}
 
         self.primary_text = self.__gen_primary_text_file()
         self.tokenization = self.__gen_tokenization_file()
@@ -94,7 +96,8 @@ class PaulaDocument(object):
         paula_id = '{}.text'.format(self.dg.name)
         E, tree = gen_paula_etree(paula_id)
         tree.append(E.body(get_text(self.dg)))
-        return tree
+        self.files[paula_id+'.xml'] = tree
+        return paula_id+'.xml'
 
     def __gen_tokenization_file(self):
         """
@@ -128,7 +131,8 @@ class PaulaDocument(object):
             mlist.append(E('mark', {'id': tid,
                                     '{%s}href' % NSMAP['xlink']: xp}))
         tree.append(mlist)
-        return tree
+        self.files[paula_id+'.xml'] = tree
+        return paula_id+'.xml'
 
     def __gen_span_markables_file(self, layer):
         """
@@ -166,7 +170,8 @@ class PaulaDocument(object):
                     mlist.append(mark)
 
         tree.append(mlist)
-        return tree
+        self.files[paula_id+'.xml'] = tree
+        return paula_id+'.xml'
 
     def __gen_token_anno_file(self):
         """
@@ -192,7 +197,8 @@ class PaulaDocument(object):
                 mfeat.append(etree.Comment(token_dict[self.dg.ns+':token']))
             mflist.append(mfeat)
         tree.append(mflist)
-        return tree
+        self.files[paula_id+'.xml'] = tree
+        return paula_id+'.xml'
 
     def __gen_hierarchy_file(self, layer):
         """
@@ -240,7 +246,8 @@ class PaulaDocument(object):
 
             slist.append(struct)
         tree.append(slist)
-        return tree
+        self.files[paula_id+'.xml'] = tree
+        return paula_id+'.xml'
 
     def __gen_struct_anno_files(self, top_level_layer):
         """
@@ -269,7 +276,8 @@ class PaulaDocument(object):
                     mfeat.append(etree.Comment(node_dict.get('label')))
                 mflist.append(mfeat)
         tree.append(mflist)
-        return tree
+        self.files[paula_id+'.xml'] = tree
+        return paula_id+'.xml'
 
     def __gen_rel_anno_file(self, top_level_layer):
         """
@@ -310,7 +318,8 @@ class PaulaDocument(object):
                 mfeat.append(etree.Comment(edge_attrs.get('label')))
             mflist.append(mfeat)
         tree.append(mflist)
-        return tree
+        self.files[paula_id+'.xml'] = tree
+        return paula_id+'.xml'
 
     def __gen_pointing_file(self, top_level_layer):
         """
@@ -352,7 +361,8 @@ class PaulaDocument(object):
                                                               target_label)))
                 rlist.append(rel)
         tree.append(rlist)
-        return tree
+        self.files[paula_id+'.xml'] = tree
+        return paula_id+'.xml'
 
     def __gen_pointing_anno_file(self, top_level_layer):
         """
@@ -393,7 +403,8 @@ class PaulaDocument(object):
                 mfeat.append(etree.Comment(edge_attrs.get('label')))
             mflist.append(mfeat)
         tree.append(mflist)
-        return tree
+        self.files[paula_id+'.xml'] = tree
+        return paula_id+'.xml'
 
     def __gen_node_href(self, layer, node_id):
         """
@@ -407,7 +418,6 @@ class PaulaDocument(object):
         else:
             basefile = self.filemap['hierarchy'][layer]
         return '{}#{}'.format(basefile, node_id)
-
 
     def etree_to_string(self, tree):
         return etree.tostring(tree, pretty_print=True, xml_declaration=True,
