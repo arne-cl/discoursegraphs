@@ -10,6 +10,7 @@ SaltNPepper converter framework
 
 """
 
+import os
 from collections import defaultdict
 
 from lxml import etree
@@ -466,3 +467,23 @@ def get_onsets(token_tuples):
     for (token_id, token) in token_tuples:
         yield (token_id, onset, len(token))
         onset += (len(token) + 1)
+
+def write_paula(docgraph, output_root_dir):
+    """
+    converts a DiscourseDocumentGraph into a set of PAULA XML files
+    representing the same document.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        the document graph to be converted
+    """
+    paula_document = PaulaDocument(docgraph)
+    error_msg = ("Please specify an output directory.\nPaula documents consist"
+                 " of multiple files, so we can't just pipe them to STDOUT.")
+    assert isinstance(output_root_dir, str), error_msg
+    if not os.path.isdir(output_root_dir):
+        create_dir(output_root_dir)
+    for file_name in paula_document.files:
+        with open(os.path.join(output_root_dir, file_name), 'w') as outfile:
+            outfile.write(etree.tostring(paula_document.files[file_name]))
