@@ -92,8 +92,7 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
             for utter in turn.iterfind('./utterance'):
                     utter_id = 'utterance_{}'.format(utter.attrib['nrgen'])
                     self._add_dominance_relation(turn_id, utter_id)
-                    self._add_token_span_to_document(utter)
-                    self.utterances.append(utter_id)
+                    self._add_utterance_to_document(utter)
 
         conclu = tree.find('/conclu')
         if conclu is not None:
@@ -113,27 +112,31 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
         self.tokens.append(token_id)
         return token_id
 
-    def _add_token_span_to_document(self, span_element):
-        if span_element.tag == 'utterance':
-            utter_id = 'utterance_{}'.format(span_element.attrib['nrgen'])
-            norm, lemma, pos = [elem.text.split()
-                                for elem in span_element.iterchildren()]
-            for i, word in enumerate(span_element.text.split()):
-                token_id = self._add_token_to_document(
-                    word, token_attrs={self.ns+':norm': norm[i],
-                                       self.ns+':lemma': lemma[i],
-                                       self.ns+':pos': pos[i]})
-                self._add_spanning_relation(utter_id, token_id)
+    def _add_utterance_to_document(self, utterance):
+        utter_id = 'utterance_{}'.format(utterance.attrib['nrgen'])
+        norm, lemma, pos = [elem.text.split()
+                            for elem in utterance.iterchildren()]
+        for i, word in enumerate(utterance.text.split()):
+            token_id = self._add_token_to_document(
+                word, token_attrs={self.ns+':norm': norm[i],
+                                   self.ns+':lemma': lemma[i],
+                                   self.ns+':pos': pos[i]})
+            self._add_spanning_relation(utter_id, token_id)
+        self.utterances.append(utter_id)
 
-        else:  # <intro>, <act> or <conclu>
-            for token in span_element.text.split():
-                token_id = self._add_token_to_document(token)
-                if span_element.tag == 'act':  # doc can have 0+ acts
-                    self._add_spanning_relation('act_{}'.format(self.act_count),
-                                                token_id)
-                    self.act_count += 1
-                else:  # <intro> or <conclu>
-                    self._add_spanning_relation(span_element.tag, token_id)
+    def _add_token_span_to_document(self, span_element):
+        """
+        adds an <intro>, <act> or <conclu> token span to the document.
+        """
+        for token in span_element.text.split():
+            token_id = self._add_token_to_document(token)
+            if span_element.tag == 'act':  # doc can have 0+ acts
+                self._add_spanning_relation('act_{}'.format(self.act_count),
+                                            token_id)
+            else:  # <intro> or <conclu>
+                self._add_spanning_relation(span_element.tag, token_id)
+        if span_element.tag == 'act':
+            self.act_count += 1
 
     def _add_dominance_relation(self, source, target):
         # TODO: fix #39, so we don't need to add nodes by hand
