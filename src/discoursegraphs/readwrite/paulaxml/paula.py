@@ -101,8 +101,8 @@ class PaulaDocument(object):
 
         for top_level_layer in get_top_level_layers(docgraph):
             self.__gen_token_anno_file(top_level_layer)
-            if not saltnpepper_compatible:
-                self.__gen_span_markables_file(top_level_layer)
+            self.__gen_span_markables_file(top_level_layer,
+                                           saltnpepper_compatible)
             self.__gen_hierarchy_file(top_level_layer)
             self.__gen_struct_anno_files(top_level_layer)
             self.__gen_rel_anno_file(top_level_layer)
@@ -167,7 +167,7 @@ class PaulaDocument(object):
         self.file2dtd[paula_id] = PaulaDTDs.mark
         return paula_id
 
-    def __gen_span_markables_file(self, layer):
+    def __gen_span_markables_file(self, layer, saltnpepper_compatible=True):
         """
         """
         paula_id = '{}.{}.{}_{}_seg'.format(layer, self.corpus_name,
@@ -187,8 +187,11 @@ class PaulaDocument(object):
         target_dict = defaultdict(list)
         for source_id in span_dict:
             target_ids = sorted(span_dict[source_id], key=natural_sort_key)
-            xp = '#xpointer(id({})/range-to(id({})))'.format(target_ids[0],
-                                                               target_ids[-1])
+            if saltnpepper_compatible:  # SNP doesn't like xpointer ranges
+                xp = ' '.join('#{}'.format(target_id) for target_id in target_ids)
+            else:  # PAULA XML 1.1 specification
+                xp = '#xpointer(id({})/range-to(id({})))'.format(target_ids[0],
+                                                                 target_ids[-1])
             mark = E('mark', {'{%s}href' % NSMAP['xlink']: xp})
             if self.human_readable:
                 # add <!-- comments --> containing the token strings
