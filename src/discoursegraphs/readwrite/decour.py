@@ -31,7 +31,8 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
         name of the document root node ID
         (default: 'decour:root_node')
     """
-    def __init__(self, decour_filepath, name=None, namespace='decour'):
+    def __init__(self, decour_filepath, name=None, namespace='decour',
+                 precedence=False):
         """
         reads a DeCour XML file and converts it into a multidigraph.
 
@@ -44,6 +45,9 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
             given, the basename of the input file is used.
         namespace : str
             the namespace of the graph (default: decour)
+        precedence : bool
+            add precedence relation edges (root precedes token1, which precedes
+            token2 etc.)
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(DecourDocumentGraph, self).__init__()
@@ -51,19 +55,95 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
         self.name = name if name else os.path.basename(decour_filepath)
         self.ns = namespace
         self.root = self.ns+':root_node'
-        self.add_node(self.root, layers={self.ns})  # TODO: add metadata to root node
+        # TODO: add metadata to root node
+        self.add_node(self.root, layers={self.ns})
         self.tokens = []
+
+        self.token_count = 1
+        self.act_count = 1
 
         self.turns = []
         self.utterances = []
 
         tree = etree.parse(decour_filepath)
-        root_element = tree.getroot()
-        #~ token_spans = self._parse_decour(root_element)
-        #~ self._add_document_structure(token_spans)
+        self._parse_decour(tree)
+        if precedence:
+            self._add_precedence_relations()
 
-        #~ for i, (token, spans) in enumerate(token_spans):
-            #~ self._add_token_to_document(i, token, spans, connected)
+    def _parse_decour(self, tree):
+        """
+        <!ELEMENT hearing (header, intro, turn+, conclu?)>
+        # <!ELEMENT turn (act?|utterance+)*>
+        # <!ELEMENT utterance (#PCDATA|token|lemma|pos)*>
+        """
+        self._add_dominance_relation(self.root, 'intro')
+        self._add_token_span_to_document(tree.find('/intro'))
+
+        for turn in tree.iterfind('/turn'):
+            turn_id = 'turn_{}'.format(turn.attrib['nrgen'])
+            self._add_dominance_relation(self.root, turn_id)
+            self.turns.append(turn_id)
+            act = turn.find('./act')
+            if act:
+                self._add_dominance_relation(turn_id, self.act_count)
+                self._add_token_span_to_document(act)
+
+            for utter in turn.iterfind('./utterance'):
+                    utter_id = 'utterance_{}'.format(utter.attrib['nrgen'])
+                    self._add_dominance_relation(turn_id, utter_id)
+                    self._add_token_span_to_document(utter)
+                    self.utterances.append(utter_id)
+
+        conclu = tree.find('/conclu')
+        if conclu:
+            self._add_dominance_relation(self.root, 'conclu')
+            self._add_token_span_to_document(conclu)
+
+    def _add_token_to_document(self, token_string, token_attrs=None):
+        token_feat = {self.ns+':token': token_string}
+        if token_attrs:
+            token_attrs.update(token_feat)
+        else:
+            token_attrs = token_feat
+        token_id = 'token_{}'.format(self.token_count)
+        self.add_node(token_id, layers={self.ns, self.ns+':token'},
+                      attr_dict=token_attrs)
+        self.token_count += 1
+        self.tokens.append(token_id)
+        return token_id
+
+    def _add_token_span_to_document(self, span_element):
+        if span_element.tag == 'utterance':
+            utter_id = 'utterance_{}'.format(span_element.attrib['nrgen'])
+            norm, lemma, pos = [elem.text.split()
+                                for elem in span_element.iterchildren()]
+            for i, word in enumerate(span_element.text.split()):
+                token_id = self._add_token_to_document(
+                    word, token_attrs={self.ns+':norm': norm[i],
+                                       self.ns+':lemma': lemma[i],
+                                       self.ns+':lemma': pos[i]})
+                self._add_spanning_relation(utter_id, token_id)
+
+        else:  # <intro>, <act> or <conclu>
+            for token in span_element.text.split():
+                token_id = self._add_token_to_document(token)
+                if span_element.tag == 'act':  # doc can have 0+ acts
+                    self._add_spanning_relation('act_{}'.format(self.act_count),
+                                                token_id)
+                    self.act_count += 1
+                else:  # <intro> or <conclu>
+                    self._add_spanning_relation(span_element.tag, token_id)
+
+    def _add_dominance_relation(self, source, target):
+        # TODO: fix #39, so we don't need to add nodes by hand
+        self.add_node(target, layers={self.ns, self.ns+':unit'})
+        self.add_edge(source, target,
+                      layers={self.ns, self.ns+':discourse'},
+                      edge_type=EdgeTypes.dominance_relation)
+
+    def _add_spanning_relation(self, source, target):
+        self.add_edge(source, target, layers={self.ns, self.ns+':unit'},
+                      edge_type=EdgeTypes.spanning_relation)
 
 
 if __name__ == "__main__":
