@@ -44,7 +44,7 @@ uninstall:
 
 clean:
 	find . -name *.pyc -delete
-	rm -rf git_stats /tmp/dg
+	rm -rf git_stats
 	rm -rf build dist src/discoursegraphs.egg-info
 	rm -rf docs/_build
 
