@@ -84,7 +84,7 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
             self._add_dominance_relation(self.root, turn_id)
             self.turns.append(turn_id)
             act = turn.find('./act')
-            if act:
+            if act is not None:
                 self._add_dominance_relation(turn_id, self.act_count)
                 self._add_token_span_to_document(act)
 
@@ -95,7 +95,7 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
                     self.utterances.append(utter_id)
 
         conclu = tree.find('/conclu')
-        if conclu:
+        if conclu is not None:
             self._add_dominance_relation(self.root, 'conclu')
             self._add_token_span_to_document(conclu)
 
