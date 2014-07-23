@@ -62,7 +62,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
             precendence=True.
         """
         # super calls __init__() of base class DiscourseDocumentGraph
-        super(DiscourseDocumentGraph, self).__init__()
+        super(ConanoDocumentGraph, self).__init__()
 
         self.name = name if name else os.path.basename(conano_filepath)
         self.ns = namespace
