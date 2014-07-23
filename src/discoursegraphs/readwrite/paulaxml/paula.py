@@ -68,7 +68,8 @@ class PaulaDocument(object):
     (i.e. a set of XML files describing one document annotated on multiple
     lebels).
     """
-    def __init__(self, docgraph, corpus_name='mycorpus', human_readable=False):
+    def __init__(self, docgraph, corpus_name='mycorpus', human_readable=False,
+                 saltnpepper_compatible=True):
         """
         Parameters
         ----------
@@ -76,6 +77,12 @@ class PaulaDocument(object):
             the document graph to be converted
         corpus_name : str
             name of the corpus this document belongs to
+        human_readable : bool
+            adds node/edge label <!-- comments --> to the XML output for
+            debugging purposes
+        saltnpepper_compatible : bool
+            don't generate certain PAULA file types that SaltNPepper can't
+            handle
         """
         self.dg = docgraph
         self.human_readable = human_readable
@@ -94,7 +101,8 @@ class PaulaDocument(object):
 
         for top_level_layer in get_top_level_layers(docgraph):
             self.__gen_token_anno_file(top_level_layer)
-            self.__gen_span_markables_file(top_level_layer)
+            if not saltnpepper_compatible:
+                self.__gen_span_markables_file(top_level_layer)
             self.__gen_hierarchy_file(top_level_layer)
             self.__gen_struct_anno_files(top_level_layer)
             self.__gen_rel_anno_file(top_level_layer)
