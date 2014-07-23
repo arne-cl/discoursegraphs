@@ -122,7 +122,7 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
                 token_id = self._add_token_to_document(
                     word, token_attrs={self.ns+':norm': norm[i],
                                        self.ns+':lemma': lemma[i],
-                                       self.ns+':lemma': pos[i]})
+                                       self.ns+':pos': pos[i]})
                 self._add_spanning_relation(utter_id, token_id)
 
         else:  # <intro>, <act> or <conclu>
