@@ -85,7 +85,8 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
             self.turns.append(turn_id)
             act = turn.find('./act')
             if act is not None:
-                self._add_dominance_relation(turn_id, self.act_count)
+                self._add_dominance_relation(turn_id,
+                                             'act_{}'.format(self.act_count))
                 self._add_token_span_to_document(act)
 
             for utter in turn.iterfind('./utterance'):
