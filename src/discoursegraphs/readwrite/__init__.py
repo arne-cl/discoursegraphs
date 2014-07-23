@@ -8,13 +8,14 @@ processing.
 """
 
 __all__ = [
-    'AnaphoraDocumentGraph', 'ConanoDocumentGraph', 'MMAXDocumentGraph',
-    'PaulaDocument', 'write_paula', 'RSTGraph', 'SaltDocument', 'SaltXMIGraph',
-    'TigerDocumentGraph'
+    'AnaphoraDocumentGraph', 'ConanoDocumentGraph', 'DecourDocumentGraph',
+    'MMAXDocumentGraph', 'PaulaDocument', 'write_paula', 'RSTGraph',
+    'SaltDocument', 'SaltXMIGraph', 'TigerDocumentGraph'
 ]
 
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
 from discoursegraphs.readwrite.conano import ConanoDocumentGraph
+from discoursegraphs.readwrite.decour import DecourDocumentGraph
 from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph
 from discoursegraphs.readwrite.paulaxml.paula import PaulaDocument, write_paula
 from discoursegraphs.readwrite.rst import RSTGraph
