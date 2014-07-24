@@ -22,6 +22,108 @@ from discoursegraphs import (get_pointing_chains, get_span,
                              select_nodes_by_layer)
 from discoursegraphs.util import create_dir, ensure_utf8
 
+CONLL2009_COLUMNS = ['word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos', 'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel', 'fillpred', 'pred',  'APREDs']
+CONLL2010_COLUMNS = ['word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos', 'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel', 'ne', 'pne', 'pred', 'ppred', 'coref']
+Conll2009Word = namedtuple('Conll2009Word', CONLL2009_COLUMNS)
+Conll2010Word = namedtuple('Conll2010Word', CONLL2010_COLUMNS)
+
+
+class ConllDocumentGraph(DiscourseDocumentGraph):
+    """
+    This class converts a CoNLL file (CoNLL2009 or CoNLL2010) into a
+    DiscourseDocumentGraph.
+
+    Attributes
+    ----------
+    ns : str
+        the namespace of the graph (default: conll)
+    tokens : list of int
+        a list of node IDs (int) which represent the tokens in the
+        order they occur in the text
+    root : str
+        name of the document root node ID
+        (default: 'conll:root_node')
+    """
+    def __init__(self, conll_filepath, conll_format='2010', name=None,
+                 namespace='conll', precedence=False):
+        """
+        reads a CoNLL file and converts it into a multidigraph.
+
+        Parameters
+        ----------
+        conll_filepath : str
+            relative or absolute path to a DeCour XML file
+        name : str or None
+            the name or ID of the graph to be generated. If no name is
+            given, the basename of the input file is used.
+        namespace : str
+            the namespace of the graph (default: conll)
+        precedence : bool
+            add precedence relation edges (root precedes token1, which precedes
+            token2 etc.)
+        """
+        # super calls __init__() of base class DiscourseDocumentGraph
+        super(ConllDocumentGraph, self).__init__()
+
+        self.name = name if name else os.path.basename(conll_filepath)
+        self.ns = namespace
+        self.root = self.ns+':root_node'
+        self.add_node(self.root, layers={self.ns})
+        self.tokens = []
+        self.token_count = 1
+        self.sentences = []
+
+        self._parse_conll(conll_filepath, conll_format=conll_format)
+
+        if precedence:
+            self._add_precedence_relations()
+
+    def _parse_conll(conll_filepath, conll_format='2010'):
+        assert conll_format in ('2009', '2010'), \
+            "We only support CoNLL2009 and CoNLL2010 format."
+        if conll_format == '2009':
+            word_class = Conll2009Word
+        else:
+            word_class = Conll2010Word
+
+        conll_doc = open(conll_filepath, 'r').read()
+        sentences = conll_doc.strip().split("\n\n")
+
+        for sentence in sentences:
+            conll_sentence = []
+            word_lines = sentence.split("\n")
+            for line in word_lines:
+                if line.startswith('#'):  # ignore comment lines
+                    continue
+                word_features = line.split("\t")
+                try:
+                    word = word_class._make(word_features)
+                except:
+                    print "Is input really in CoNLL2009/2010 format?"
+                    print "can't parse word_features: ", word_features
+                self.__add_token(word)
+                self.__add_dependency(word)
+        close(conll_filepath)
+
+    def __add_token(self, word_instance):
+        """
+        adds a token to the document graph (with all the features given
+        in the columns of the CoNLL file).
+
+        Parameters
+        ----------
+        word_instance : Conll2009Word or Conll2010Word
+            a namedtuple representing all the information stored in a CoNLL file
+            line (token, lemma, pos, dependencies etc.)
+        """
+        self.add_node('token_{}'.format(self.token_count),
+                      layers={self.ns, self.ns+':token'},
+                      attr_dict=word_instance._asdict())
+        self.token_count += 1
+
+    def __add_dependency(self, word_instance):
+        raise NotImplementedError
+
 
 class Conll2009File(object):
     """
