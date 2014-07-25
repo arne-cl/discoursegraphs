@@ -85,8 +85,9 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         else:
             word_class = Conll2010Word
 
-        conll_doc = open(conll_filepath, 'r').read()
-        sentences = conll_doc.strip().split("\n\n")
+        conll_file = open(conll_filepath, 'r')
+        conll_str = conll_file.read()
+        sentences = conll_str.strip().split("\n\n")
 
         for sentence in sentences:
             conll_sentence = []
@@ -97,12 +98,12 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
                 word_features = line.split("\t")
                 try:
                     word = word_class._make(word_features)
+                    self.__add_token(word)
+                    self.__add_dependency(word)
                 except:
                     print "Is input really in CoNLL2009/2010 format?"
                     print "can't parse word_features: ", word_features
-                self.__add_token(word)
-                self.__add_dependency(word)
-        close(conll_filepath)
+        conll_file.close()
 
     def __add_token(self, word_instance):
         """
