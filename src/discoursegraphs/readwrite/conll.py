@@ -77,7 +77,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         if precedence:
             self._add_precedence_relations()
 
-    def _parse_conll(conll_filepath, conll_format='2010'):
+    def _parse_conll(self, conll_filepath, conll_format='2010'):
         assert conll_format in ('2009', '2010'), \
             "We only support CoNLL2009 and CoNLL2010 format."
         if conll_format == '2009':
