@@ -16,11 +16,10 @@ Coordinate this with
 
 import os
 import sys
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 
-from discoursegraphs import (get_pointing_chains, get_span,
-                             select_nodes_by_layer)
-from discoursegraphs.util import create_dir, ensure_utf8
+from discoursegraphs import DiscourseDocumentGraph
+
 
 CONLL2009_COLUMNS = ['word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos', 'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel', 'fillpred', 'pred',  'APREDs']
 CONLL2010_COLUMNS = ['word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos', 'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel', 'ne', 'pne', 'pred', 'ppred', 'coref']
