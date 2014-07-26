@@ -7,7 +7,7 @@ This module handles LXML etree elements from SALT documents.
 :var NAMESPACES: the namespaces used in SaltXML files
 """
 
-from lxml import etree # used by doctests only
+from lxml import etree  # used by doctests only
 from collections import defaultdict
 
 from discoursegraphs.readwrite.salt.labels import SaltLabel
@@ -39,7 +39,8 @@ class SaltElement(object):
         creates a `SaltElement` instance
 
         >>> node_str = '''
-        ... <nodes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="sDocumentStructure:SToken">
+        ... <nodes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        ... xsi:type="sDocumentStructure:SToken">
         ...     <labels name="SNAME" valueString="tok_1"/>
         ... </nodes>'''
         >>> node = etree.fromstring(node_str)
@@ -143,9 +144,6 @@ def get_subelements(element, tag_name):
     return element.findall(tag_name)
 
 
-
-
-
 def get_element_name(element):
     """get the element name of a node, e.g. 'tok_1'"""
     id_label = element.find('labels[@name="SNAME"]')
@@ -159,7 +157,7 @@ def get_graph_element_id(element):
     returns none, if no graph element id is present.
     """
     graph_id_label = element.find('labels[@name="id"]')
-    if graph_id_label is not None: # 'is not None' used b/c of FutureWarning
+    if graph_id_label is not None:  # 'is not None' used b/c of FutureWarning
         return graph_id_label.attrib['valueString']
     else:
         return None
@@ -211,5 +209,3 @@ def element_statistics(tree, element_type):
         stats[get_xsi_type(element)] += 1
     for (etype, count) in stats.items():
         print "{0}: {1}".format(etype, count)
-
-
