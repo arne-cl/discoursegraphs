@@ -144,13 +144,20 @@ class SpanNode(SaltNode):
     A SpanNode looks like this::
 
         <nodes xsi:type="sDocumentStructure:SSpan" layers="//@layers.1">
-            <labels xsi:type="saltCore:SFeature" namespace="salt" name="SNAME" valueString="sSpan1"/>
-            <labels xsi:type="saltCore:SElementId" namespace="graph" name="id" valueString="pcc_maz176_merged_paula/maz-0002/maz-0002_graph#sSpan1"/>
-            <labels xsi:type="saltCore:SAnnotation" name="coref.referentiality" valueString="referring"/>
-            <labels xsi:type="saltCore:SAnnotation" name="coref.anaphor_antecedent" valueString="#primmarkSeg_25"/>
-            <labels xsi:type="saltCore:SAnnotation" name="coref.type" valueString="anaphoric"/>
-            <labels xsi:type="saltCore:SAnnotation" name="coref.phrase_type" valueString="np"/>
-            <labels xsi:type="saltCore:SAnnotation" name="coref.grammatical_role" valueString="sbj"/>
+            <labels xsi:type="saltCore:SFeature" namespace="salt" name="SNAME"
+                valueString="sSpan1"/>
+            <labels xsi:type="saltCore:SElementId" namespace="graph" name="id"
+                valueString="pcc_maz176/maz-0002/maz-0002_graph#sSpan1"/>
+            <labels xsi:type="saltCore:SAnnotation" name="coref.referentiality"
+                valueString="referring"/>
+            <labels xsi:type="saltCore:SAnnotation"
+                name="coref.anaphor_antecedent" valueString="#primmarkSeg_25"/>
+            <labels xsi:type="saltCore:SAnnotation" name="coref.type"
+                valueString="anaphoric"/>
+            <labels xsi:type="saltCore:SAnnotation" name="coref.phrase_type"
+                valueString="np"/>
+            <labels xsi:type="saltCore:SAnnotation"
+                name="coref.grammatical_role" valueString="sbj"/>
         </nodes>
     """
     def __init__(self, element, element_id, doc_id):
@@ -167,9 +174,12 @@ class StructureNode(SaltNode):
     A StructureNode looks like this::
 
         <nodes xsi:type="sDocumentStructure:SStructure" layers="//@layers.2">
-            <labels xsi:type="saltCore:SFeature" namespace="salt" name="SNAME" valueString="const_4"/>
-            <labels xsi:type="saltCore:SElementId" namespace="graph" name="id" valueString="pcc_maz176_merged_paula/maz-0002/maz-0002_graph#const_4"/>
-            <labels xsi:type="saltCore:SAnnotation" name="tiger.cat" valueString="PP"/>
+            <labels xsi:type="saltCore:SFeature" namespace="salt" name="SNAME"
+                valueString="const_4"/>
+            <labels xsi:type="saltCore:SElementId" namespace="graph" name="id"
+                valueString="pcc_maz176/maz-0002/maz-0002_graph#const_4"/>
+            <labels xsi:type="saltCore:SAnnotation" name="tiger.cat"
+                valueString="PP"/>
         </nodes>
     """
     def __init__(self, element, element_id, doc_id):
