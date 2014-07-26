@@ -24,7 +24,7 @@ from discoursegraphs.readwrite.salt.edges import (DominanceRelation,
                                                   SpanningRelation,
                                                   TextualRelation)
 from discoursegraphs.readwrite.salt.elements import get_elements
-from discoursegraphs.readwrite.salt.util import get_xsi_type, string2xmihex
+from discoursegraphs.readwrite.salt.util import get_xsi_type
 
 TEST_DOC_ID = "maz-1423"
 TEST_ROOT_DIR = os.path.expanduser('~/repos/salt-test/')
@@ -416,17 +416,7 @@ def abslistdir(directory):
     return [os.path.join(abs_dir, filename) for filename in filenames]
 
 
-
-
-
 if __name__ == "__main__":
     sd = SaltDocument(TEST_FILE2)
     ld = LinguisticDocument(sd)
     sx = SaltXMIGraph(TEST_FILE2)
-
-    #~ documents = {}
-    #~ for filename in abslistdir(TEST_DIRECTORY):
-        #~ print "creating SaltDocument from file: ", filename
-        #~ salt = SaltDocument(filename)
-        #~ lingdoc = LinguisticDocument(salt)
-        #~ documents[filename] = lingdoc
