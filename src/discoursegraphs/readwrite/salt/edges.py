@@ -8,13 +8,9 @@ This module handles the parsing of SALT edges.
 from lxml.builder import ElementMaker
 
 from discoursegraphs.readwrite.salt.util import NAMESPACES
-from discoursegraphs.readwrite.salt.labels import SaltLabel
 from discoursegraphs.readwrite.salt.elements import (SaltElement,
-                                                     get_element_name,
-                                                     get_graph_element_id,
                                                      get_annotations,
-                                                     get_layer_ids,
-                                                     get_subelements)
+                                                     get_layer_ids)
 
 
 class SaltEdge(SaltElement):
@@ -63,14 +59,15 @@ class SaltEdge(SaltElement):
         <edges> element
         """
         layers_attrib_val = ' '.join('//@layers.{}'.format(layer_id)
-                                    for layer_id in self.layers)
+                                     for layer_id in self.layers)
 
-        attribs = {'{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
-                   'source': "//@nodes.{}".format(self.source),
-                   'target': "//@nodes.{}".format(self.target),
-                   'layers': layers_attrib_val}
+        attribs = {
+            '{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
+            'source': "//@nodes.{}".format(self.source),
+            'target': "//@nodes.{}".format(self.target),
+            'layers': layers_attrib_val}
         # an edge might belong to one or more layers
-        non_empty_attribs = {key:val for key,val in attribs.items()
+        non_empty_attribs = {key: val for (key, val) in attribs.items()
                              if val is not None}
 
         E = ElementMaker()
@@ -85,6 +82,7 @@ class SaltEdge(SaltElement):
         ret_str += "target node: {0}".format(self.target)
         return ret_str
 
+
 class SpanningRelation(SaltEdge):
     """
     Every SpanningRelation edge inherits all the attributes from `SaltEdge`
@@ -93,11 +91,13 @@ class SpanningRelation(SaltEdge):
 
     A SpanningRelation edge looks like this::
 
-        <edges xsi:type="sDocumentStructure:SSpanningRelation" source="//@nodes.167" target="//@nodes.59" layers="//@layers.1">
-            <labels xsi:type="saltCore:SFeature" namespace="salt" name="SNAME" valueString="sSpanRel27"/>
-            <labels xsi:type="saltCore:SElementId" namespace="graph" name="id" valueString="edge181"/>
+        <edges xsi:type="sDocumentStructure:SSpanningRelation"
+            source="//@nodes.167" target="//@nodes.59" layers="//@layers.1">
+            <labels xsi:type="saltCore:SFeature" namespace="salt" name="SNAME"
+                valueString="sSpanRel27"/>
+            <labels xsi:type="saltCore:SElementId" namespace="graph" name="id"
+                valueString="edge181"/>
         </edges>
-
     """
     def __init__(self, name, element_id, xsi_type, labels, source, target,
                  layers=None, xml=None):
@@ -136,7 +136,7 @@ class TextualRelation(SaltEdge):
     def from_etree(cls, etree_element):
         """
         create a ``TextualRelation`` instance from an etree element
-        representing an <edges> element with xsi:type 
+        representing an <edges> element with xsi:type
         'sDocumentStructure:STextualRelation'.
         """
         ins = SaltEdge.from_etree(etree_element)
@@ -161,11 +161,16 @@ class DominanceRelation(SaltEdge):
 
     A DominanceRelation edge looks like this::
 
-        <edges xsi:type="sDocumentStructure:SDominanceRelation" source="//@nodes.251" target="//@nodes.134" layers="//@layers.2">
-            <labels xsi:type="saltCore:SFeature" namespace="saltCore" name="STYPE" valueString="edge"/>
-            <labels xsi:type="saltCore:SFeature" namespace="salt" name="SNAME" valueString="sDomRel185"/>
-            <labels xsi:type="saltCore:SElementId" namespace="graph" name="id" valueString="edge530"/>
-            <labels xsi:type="saltCore:SAnnotation" name="tiger.func" valueString="OC"/>
+        <edges xsi:type="sDocumentStructure:SDominanceRelation"
+            source="//@nodes.251" target="//@nodes.134" layers="//@layers.2">
+            <labels xsi:type="saltCore:SFeature" namespace="saltCore"
+                name="STYPE" valueString="edge"/>
+            <labels xsi:type="saltCore:SFeature" namespace="salt" name="SNAME"
+                valueString="sDomRel185"/>
+            <labels xsi:type="saltCore:SElementId" namespace="graph" name="id"
+                valueString="edge530"/>
+            <labels xsi:type="saltCore:SAnnotation" name="tiger.func"
+                valueString="OC"/>
         </edges>
     """
     def __init__(self, name, element_id, xsi_type, labels, source, target,
@@ -179,7 +184,7 @@ class DominanceRelation(SaltEdge):
     def from_etree(cls, etree_element):
         """
         create a ``DominanceRelation`` instance from an etree element
-        representing an <edges> element with xsi:type 
+        representing an <edges> element with xsi:type
         'sDocumentStructure:SDominanceRelation'.
         """
         ins = SaltEdge.from_etree(etree_element)
@@ -196,7 +201,7 @@ def get_node_id(edge, node_type):
     node_type given.
     """
     assert node_type in ('source', 'target')
-    _, node_id_str = edge.attrib[node_type].split('.') # e.g. //@nodes.251
+    _, node_id_str = edge.attrib[node_type].split('.')  # e.g. //@nodes.251
     return int(node_id_str)
 
 
