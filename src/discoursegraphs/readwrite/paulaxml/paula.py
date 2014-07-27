@@ -14,6 +14,7 @@ import os
 from collections import defaultdict
 
 from lxml import etree
+from lxml.etree import Comment
 from lxml.builder import ElementMaker
 from enum import Enum
 
@@ -27,7 +28,8 @@ NSMAP={'xlink': 'http://www.w3.org/1999/xlink',
        'xml': 'http://www.w3.org/XML/1998/namespace'}
 
 IGNORED_EDGE_ATTRIBS = ('layers', 'label', 'tiger:idref')
-IGNORED_NODE_ATTRIBS = ('layers', 'label', 'tokens', 'tiger:id', 'tiger:art_id', 'tiger:orig_id')
+IGNORED_NODE_ATTRIBS = ('layers', 'label', 'tokens', 'tiger:id',
+                        'tiger:art_id', 'tiger:orig_id')
 IGNORED_TOKEN_ATTRIBS = IGNORED_NODE_ATTRIBS + ('tiger:token', 'tiger:word')
 
 
@@ -62,6 +64,7 @@ class PaulaDTDs(Enum):
     rel = 'paula_rel.dtd'
     multifeat = 'paula_multiFeat.dtd'
 
+
 class PaulaDocument(object):
     """
     This class converts a DiscourseDocumentGraph into a PAULA XML document
@@ -90,7 +93,7 @@ class PaulaDocument(object):
         self.name = docgraph.name.rsplit('.')[0]
         self.corpus_name = corpus_name
         # map file types to paula IDs
-        self.paulamap = defaultdict(lambda : defaultdict(str))
+        self.paulamap = defaultdict(lambda: defaultdict(str))
         # map paula IDs to etrees
         self.files = {}
         # map file IDs to DTDs
@@ -142,13 +145,15 @@ class PaulaDocument(object):
         <!DOCTYPE paula SYSTEM "paula_mark.dtd">
         <paula version="1.1">
             <header paula_id="nolayer.maz-1423.tok"/>
-            <markList xmlns:xlink="http://www.w3.org/1999/xlink" type="tok" xml:base="maz-1423.text.xml">
-                <mark id="sTok1" xlink:href="#xpointer(string-range(//body,'',1,3))" />
-                <mark id="sTok2" xlink:href="#xpointer(string-range(//body,'',5,10))" />
+            <markList xmlns:xlink="http://www.w3.org/1999/xlink" type="tok"
+                xml:base="maz-1423.text.xml">
+                <mark id="sTok1"
+                    xlink:href="#xpointer(string-range(//body,'',1,3))" />
+                <mark id="sTok2"
+                    xlink:href="#xpointer(string-range(//body,'',5,10))" />
                 ...
             </markList>
         </paula>
-        ...
         """
         paula_id = '{}.{}.tok'.format(self.corpus_name, self.name)
         E, tree = gen_paula_etree(paula_id)
@@ -177,7 +182,7 @@ class PaulaDocument(object):
         mlist = E('markList', {'type': 'tok',
                                '{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
 
-        span_dict = defaultdict(lambda : defaultdict(str))
+        span_dict = defaultdict(lambda: defaultdict(str))
         edges = select_edges_by(self.dg, layer=layer,
                                 edge_type=EdgeTypes.spanning_relation,
                                 data=True)
@@ -186,17 +191,18 @@ class PaulaDocument(object):
 
         target_dict = defaultdict(list)
         for source_id in span_dict:
-            target_ids = sorted(span_dict[source_id], key=natural_sort_key)
+            targets = sorted(span_dict[source_id], key=natural_sort_key)
             if saltnpepper_compatible:  # SNP doesn't like xpointer ranges
-                xp = ' '.join('#{}'.format(target_id) for target_id in target_ids)
+                xp = ' '.join('#{}'.format(target_id)
+                              for target_id in targets)
             else:  # PAULA XML 1.1 specification
-                xp = '#xpointer(id({})/range-to(id({})))'.format(target_ids[0],
-                                                                 target_ids[-1])
+                xp = '#xpointer(id({})/range-to(id({})))'.format(targets[0],
+                                                                 targets[-1])
             mark = E('mark', {'{%s}href' % NSMAP['xlink']: xp})
             if self.human_readable:
                 # add <!-- comments --> containing the token strings
-                mark.append(etree.Comment(tokens2text(self.dg, target_ids)))
-                target_dict[target_ids[0]].append(mark)
+                mark.append(Comment(tokens2text(self.dg, targets)))
+                target_dict[targets[0]].append(mark)
             else:
                 mlist.append(mark)
 
@@ -229,13 +235,15 @@ class PaulaDocument(object):
             for feature in token_dict:
                 # TODO: highly inefficient! refactor!1!!
                 if feature not in IGNORED_TOKEN_ATTRIBS \
-                and feature.startswith(top_level_layer):
-                    mfeat.append(
-                        E('feat',
-                          {'name': feature, 'value': token_dict[feature]}))
+                   and feature.startswith(top_level_layer):
+                    mfeat.append(E('feat',
+                                   {'name': feature,
+                                    'value': token_dict[feature]}))
+
             if self.human_readable:  # adds token string as a <!-- comment -->
-                mfeat.append(etree.Comment(token_dict[self.dg.ns+':token']))
+                mfeat.append(Comment(token_dict[self.dg.ns+':token']))
             mflist.append(mfeat)
+
         tree.append(mflist)
         self.files[paula_id] = tree
         self.file2dtd[paula_id] = PaulaDTDs.multifeat
@@ -249,13 +257,13 @@ class PaulaDocument(object):
         self.paulamap['hierarchy'][layer] = paula_id
         E, tree = gen_paula_etree(paula_id)
 
-        dominance_edges = select_edges_by(self.dg, layer=layer,
-                                edge_type=EdgeTypes.dominance_relation,
-                                data=True)
-        span_edges = select_edges_by(self.dg, layer=layer,
-                        edge_type=EdgeTypes.spanning_relation,
-                        data=True)
-        dominance_dict = defaultdict(lambda : defaultdict(str))
+        dominance_edges = select_edges_by(
+            self.dg, layer=layer, edge_type=EdgeTypes.dominance_relation,
+            data=True)
+        span_edges = select_edges_by(
+            self.dg, layer=layer, edge_type=EdgeTypes.spanning_relation,
+            data=True)
+        dominance_dict = defaultdict(lambda: defaultdict(str))
         for source_id, target_id, edge_attrs in dominance_edges:
             if source_id != layer+':root_node':
                 dominance_dict[source_id][target_id] = edge_attrs
@@ -270,21 +278,24 @@ class PaulaDocument(object):
             struct = E('struct',
                        {'id': str(source_id)})
             if self.human_readable:
-                struct.append(etree.Comment(self.dg.node[source_id].get('label', 'NONE')))
+                struct.append(Comment(self.dg.node[source_id].get('label')))
 
             for target_id in dominance_dict[source_id]:
                 if istoken(self.dg, target_id):
-                    href = '{}.xml#{}'.format(self.paulamap['tokenization'], target_id)
+                    href = '{}.xml#{}'.format(self.paulamap['tokenization'],
+                                              target_id)
                 else:
                     href = '#{}'.format(target_id)
 
-                rel = E('rel',
-                        {'id': 'rel_{}_{}'.format(source_id, target_id),
-                         'type': dominance_dict[source_id][target_id]['edge_type'],
-                         '{%s}href' % NSMAP['xlink']: href})
+                rel = E(
+                    'rel',
+                    {'id': 'rel_{}_{}'.format(source_id, target_id),
+                     'type': dominance_dict[source_id][target_id]['edge_type'],
+                     '{%s}href' % NSMAP['xlink']: href})
                 struct.append(rel)
                 if self.human_readable:
-                    struct.append(etree.Comment(self.dg.node[target_id].get('label', 'NONE')))
+                    struct.append(
+                        Comment(self.dg.node[target_id].get('label')))
             slist.append(struct)
         tree.append(slist)
         self.files[paula_id] = tree
@@ -315,8 +326,8 @@ class PaulaDocument(object):
                         mfeat.append(
                             E('feat',
                               {'name': attr, 'value': node_dict[attr]}))
-                if self.human_readable:  # adds node label as a <!-- comment -->
-                    mfeat.append(etree.Comment(node_dict.get('label', 'NONE')))
+                if self.human_readable:  # adds node label as a <!--comment-->
+                    mfeat.append(Comment(node_dict.get('label')))
                 mflist.append(mfeat)
         tree.append(mflist)
         self.files[paula_id] = tree
@@ -333,10 +344,10 @@ class PaulaDocument(object):
                                             self.name, top_level_layer)
         E, tree = gen_paula_etree(paula_id)
 
-        dominance_edges = select_edges_by(self.dg, layer=top_level_layer,
-                                edge_type=EdgeTypes.dominance_relation,
-                                data=True)
-        dominance_dict = defaultdict(lambda : defaultdict(str))
+        dominance_edges = select_edges_by(
+            self.dg, layer=top_level_layer,
+            edge_type=EdgeTypes.dominance_relation, data=True)
+        dominance_dict = defaultdict(lambda: defaultdict(str))
         for source_id, target_id, edge_attrs in dominance_edges:
             if source_id != top_level_layer+':root_node':
                 dominance_dict[source_id][target_id] = edge_attrs
@@ -351,16 +362,17 @@ class PaulaDocument(object):
                 edge_attrs = dominance_dict[source_id][target_id]
                 for edge_attr in edge_attrs:
                     if edge_attr not in IGNORED_EDGE_ATTRIBS:
-                        mfeat.append(
-                            E('feat',
-                              {'name': edge_attr, 'value': edge_attrs[edge_attr]}))
+                        mfeat.append(E('feat',
+                                       {'name': edge_attr,
+                                        'value': edge_attrs[edge_attr]}))
 
-                if self.human_readable:  # adds edge label as a <!-- comment -->
-                    source_label = self.dg.node[source_id].get('label', 'NONE')
-                    target_label = self.dg.node[target_id].get('label', 'NONE')
-                    mfeat.append(etree.Comment(u'{} - {}'.format(source_label,
-                                                                 target_label)))
+                if self.human_readable:  # adds edge label as a <!--comment-->
+                    source_label = self.dg.node[source_id].get('label')
+                    target_label = self.dg.node[target_id].get('label')
+                    mfeat.append(Comment(u'{} - {}'.format(source_label,
+                                                           target_label)))
                 mflist.append(mfeat)
+
         tree.append(mflist)
         self.files[paula_id] = tree
         self.file2dtd[paula_id] = PaulaDTDs.multifeat
@@ -375,15 +387,15 @@ class PaulaDocument(object):
         or the coreference link between anaphora and antecedent.
         """
         paula_id = '{}.{}.{}_{}_pointing'.format(top_level_layer,
-                                              self.corpus_name, self.name,
-                                              top_level_layer)
+                                                 self.corpus_name, self.name,
+                                                 top_level_layer)
         self.paulamap['pointing'][top_level_layer] = paula_id
         E, tree = gen_paula_etree(paula_id)
 
         pointing_edges = select_edges_by(self.dg, layer=top_level_layer,
                                          edge_type=EdgeTypes.pointing_relation,
                                          data=True)
-        pointing_dict = defaultdict(lambda : defaultdict(str))
+        pointing_dict = defaultdict(lambda: defaultdict(str))
         for source_id, target_id, edge_attrs in pointing_edges:
             pointing_dict[source_id][target_id] = edge_attrs
 
@@ -401,10 +413,10 @@ class PaulaDocument(object):
 
                 # adds source/target node labels as a <!-- comment -->
                 if self.human_readable:
-                    source_label = self.dg.node[source_id].get('label', 'NONE')
-                    target_label = self.dg.node[target_id].get('label', 'NONE')
-                    rel.append(etree.Comment(u'{} - {}'.format(source_label,
-                                                              target_label)))
+                    source_label = self.dg.node[source_id].get('label')
+                    target_label = self.dg.node[target_id].get('label')
+                    rel.append(Comment(u'{} - {}'.format(source_label,
+                                                         target_label)))
                 rlist.append(rel)
         tree.append(rlist)
         self.files[paula_id] = tree
@@ -414,7 +426,8 @@ class PaulaDocument(object):
     def __gen_pointing_anno_file(self, top_level_layer):
         """
         A pointing relation annotation file contains edge (rel)
-        attributes. It is e.g. used to annotate the type of a pointing relation.
+        attributes. It is e.g. used to annotate the type of a pointing
+        relation.
 
         TODO: merge code with __gen_rel_anno_file() if possible!
         """
@@ -427,7 +440,7 @@ class PaulaDocument(object):
         pointing_edges = select_edges_by(self.dg, layer=top_level_layer,
                                          edge_type=EdgeTypes.pointing_relation,
                                          data=True)
-        pointing_dict = defaultdict(lambda : defaultdict(str))
+        pointing_dict = defaultdict(lambda: defaultdict(str))
         for source_id, target_id, edge_attrs in pointing_edges:
             pointing_dict[source_id][target_id] = edge_attrs
 
@@ -441,16 +454,17 @@ class PaulaDocument(object):
                 edge_attrs = pointing_dict[source_id][target_id]
                 for edge_attr in edge_attrs:
                     if edge_attr not in IGNORED_EDGE_ATTRIBS:
-                        mfeat.append(
-                            E('feat',
-                              {'name': edge_attr, 'value': edge_attrs[edge_attr]}))
+                        mfeat.append(E('feat',
+                                       {'name': edge_attr,
+                                        'value': edge_attrs[edge_attr]}))
 
-                if self.human_readable:  # adds edge label as a <!-- comment -->
-                    source_label = self.dg.node[source_id].get('label', 'NONE')
-                    target_label = self.dg.node[target_id].get('label', 'NONE')
-                    mfeat.append(etree.Comment(u'{} - {}'.format(source_label,
-                                                                 target_label)))
+                if self.human_readable:  # adds edge label as a <!--comment-->
+                    source_label = self.dg.node[source_id].get('label')
+                    target_label = self.dg.node[target_id].get('label')
+                    mfeat.append(Comment(u'{} - {}'.format(source_label,
+                                                           target_label)))
                 mflist.append(mfeat)
+
         tree.append(mflist)
         self.files[paula_id] = tree
         self.file2dtd[paula_id] = PaulaDTDs.multifeat
@@ -468,16 +482,15 @@ class PaulaDocument(object):
         # NOTE: we could group all the annotations into different structs
         # but I don't see the point. We're already using namespaces, after all
         struct = E('struct', {'id': 'anno_all_annotations'})
-        for i, paula_file_id in enumerate(self.files):
+        for i, file_id in enumerate(self.files):
             struct.append(E('rel',
                             {'id': 'rel_{}'.format(i),
-                             '{%s}href' % NSMAP['xlink']: paula_file_id+'.xml'}))
+                             '{%s}href' % NSMAP['xlink']: file_id+'.xml'}))
         slist.append(struct)
         tree.append(slist)
         self.files[paula_id] = tree
         self.file2dtd[paula_id] = PaulaDTDs.struct
         return paula_id
-
 
     def __gen_node_href(self, layer, node_id):
         """
@@ -499,6 +512,7 @@ def paula_etree_to_string(tree, dtd_filename):
         encoding="UTF-8", standalone='no',
         doctype='<!DOCTYPE paula SYSTEM "{}">'.format(dtd_filename))
 
+
 def gen_paula_etree(paula_id):
     """
     creates an element tree representation of an empty PAULA XML file.
@@ -507,6 +521,7 @@ def gen_paula_etree(paula_id):
     tree = E('paula', version='1.1')
     tree.append(E('header', paula_id=paula_id))
     return E, tree
+
 
 def get_onsets(token_tuples):
     """
@@ -525,6 +540,7 @@ def get_onsets(token_tuples):
     for (token_id, token) in token_tuples:
         yield (token_id, onset, len(token))
         onset += (len(token) + 1)
+
 
 def write_paula(docgraph, output_root_dir, human_readable=False):
     """
