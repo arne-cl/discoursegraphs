@@ -24,8 +24,10 @@ from discoursegraphs import (EdgeTypes, get_text, get_top_level_layers,
 from discoursegraphs.util import create_dir, natural_sort_key
 
 
-NSMAP={'xlink': 'http://www.w3.org/1999/xlink',
-       'xml': 'http://www.w3.org/XML/1998/namespace'}
+NSMAP = {'xlink': 'http://www.w3.org/1999/xlink',
+         'xml': 'http://www.w3.org/XML/1998/namespace'}
+XMLBASE = '{%s}base' % NSMAP['xml']
+XLINKHREF = '{%s}href' % NSMAP['xlink']
 
 IGNORED_EDGE_ATTRIBS = ('layers', 'label', 'tiger:idref')
 IGNORED_NODE_ATTRIBS = ('layers', 'label', 'tokens', 'tiger:id',
@@ -160,13 +162,14 @@ class PaulaDocument(object):
         self.paulamap['tokenization'] = paula_id
 
         base_paula_id = '{}.{}.text'.format(self.corpus_name, self.name)
-        mlist = E('markList', {'type': 'tok',
-                               '{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
+        mlist = E('markList',
+                  {'type': 'tok',
+                   XMLBASE: base_paula_id+'.xml'})
         tok_tuples = self.dg.get_tokens()
         for (tid, onset, tlen) in get_onsets(tok_tuples):
             xp = "#xpointer(string-range(//body,'',{},{}))".format(onset, tlen)
             mlist.append(E('mark', {'id': tid,
-                                    '{%s}href' % NSMAP['xlink']: xp}))
+                                    XLINKHREF: xp}))
         tree.append(mlist)
         self.files[paula_id] = tree
         self.file2dtd[paula_id] = PaulaDTDs.mark
@@ -179,8 +182,9 @@ class PaulaDocument(object):
                                             self.name, layer)
         E, tree = gen_paula_etree(paula_id)
         base_paula_id = '{}.{}.tok'.format(self.corpus_name, self.name)
-        mlist = E('markList', {'type': 'tok',
-                               '{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
+        mlist = E('markList',
+                  {'type': 'tok',
+                   XMLBASE: base_paula_id+'.xml'})
 
         span_dict = defaultdict(lambda: defaultdict(str))
         edges = select_edges_by(self.dg, layer=layer,
@@ -198,7 +202,7 @@ class PaulaDocument(object):
             else:  # PAULA XML 1.1 specification
                 xp = '#xpointer(id({})/range-to(id({})))'.format(targets[0],
                                                                  targets[-1])
-            mark = E('mark', {'{%s}href' % NSMAP['xlink']: xp})
+            mark = E('mark', {XLINKHREF: xp})
             if self.human_readable:
                 # add <!-- comments --> containing the token strings
                 mark.append(Comment(tokens2text(self.dg, targets)))
@@ -226,11 +230,12 @@ class PaulaDocument(object):
                                                    self.corpus_name,
                                                    self.name)
         E, tree = gen_paula_etree(paula_id)
-        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
+        mflist = E('multiFeatList',
+                   {XMLBASE: base_paula_id+'.xml'})
 
         for token_id in self.dg.tokens:
             mfeat = E('multiFeat',
-                      {'{%s}href' % NSMAP['xlink']: '#{}'.format(token_id)})
+                      {XLINKHREF: '#{}'.format(token_id)})
             token_dict = self.dg.node[token_id]
             for feature in token_dict:
                 # TODO: highly inefficient! refactor!1!!
@@ -291,7 +296,7 @@ class PaulaDocument(object):
                     'rel',
                     {'id': 'rel_{}_{}'.format(source_id, target_id),
                      'type': dominance_dict[source_id][target_id]['edge_type'],
-                     '{%s}href' % NSMAP['xlink']: href})
+                     XLINKHREF: href})
                 struct.append(rel)
                 if self.human_readable:
                     struct.append(
@@ -314,12 +319,13 @@ class PaulaDocument(object):
         E, tree = gen_paula_etree(paula_id)
 
         base_paula_id = self.paulamap['hierarchy'][top_level_layer]
-        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
+        mflist = E('multiFeatList',
+                   {XMLBASE: base_paula_id+'.xml'})
 
         for node_id in select_nodes_by_layer(self.dg, top_level_layer):
             if not istoken(self.dg, node_id):
                 mfeat = E('multiFeat',
-                          {'{%s}href' % NSMAP['xlink']: '#{}'.format(node_id)})
+                          {XLINKHREF: '#{}'.format(node_id)})
                 node_dict = self.dg.node[node_id]
                 for attr in node_dict:
                     if attr not in IGNORED_NODE_ATTRIBS:
@@ -353,12 +359,13 @@ class PaulaDocument(object):
                 dominance_dict[source_id][target_id] = edge_attrs
 
         base_paula_id = self.paulamap['hierarchy'][top_level_layer]
-        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
+        mflist = E('multiFeatList',
+                   {XMLBASE: base_paula_id+'.xml'})
         for source_id in dominance_dict:
             for target_id in dominance_dict[source_id]:
                 rel_href = '#rel_{}_{}'.format(source_id, target_id)
                 mfeat = E('multiFeat',
-                          {'{%s}href' % NSMAP['xlink']: rel_href})
+                          {XLINKHREF: rel_href})
                 edge_attrs = dominance_dict[source_id][target_id]
                 for edge_attr in edge_attrs:
                     if edge_attr not in IGNORED_EDGE_ATTRIBS:
@@ -408,7 +415,7 @@ class PaulaDocument(object):
                 target_href = self.__gen_node_href(top_level_layer, target_id)
                 rel = E('rel',
                         {'id': 'rel_{}_{}'.format(source_id, target_id),
-                         '{%s}href' % NSMAP['xlink']: source_href,
+                         XLINKHREF: source_href,
                          'target': target_href})
 
                 # adds source/target node labels as a <!-- comment -->
@@ -445,12 +452,13 @@ class PaulaDocument(object):
             pointing_dict[source_id][target_id] = edge_attrs
 
         base_paula_id = self.paulamap['pointing'][top_level_layer]
-        mflist = E('multiFeatList', {'{%s}base' % NSMAP['xml']: base_paula_id+'.xml'})
+        mflist = E('multiFeatList',
+                   {XMLBASE: base_paula_id+'.xml'})
         for source_id in pointing_dict:
             for target_id in pointing_dict[source_id]:
                 rel_href = '#rel_{}_{}'.format(source_id, target_id)
                 mfeat = E('multiFeat',
-                          {'{%s}href' % NSMAP['xlink']: rel_href})
+                          {XLINKHREF: rel_href})
                 edge_attrs = pointing_dict[source_id][target_id]
                 for edge_attr in edge_attrs:
                     if edge_attr not in IGNORED_EDGE_ATTRIBS:
@@ -485,7 +493,7 @@ class PaulaDocument(object):
         for i, file_id in enumerate(self.files):
             struct.append(E('rel',
                             {'id': 'rel_{}'.format(i),
-                             '{%s}href' % NSMAP['xlink']: file_id+'.xml'}))
+                             XLINKHREF: file_id+'.xml'}))
         slist.append(struct)
         tree.append(slist)
         self.files[paula_id] = tree
