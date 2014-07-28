@@ -83,7 +83,8 @@ def merging_cli(debug=False):
 
     if isinstance(args.output_file, str):  # if we're not piping to stdout ...
         # we need abspath to handle files in the current directory
-        path_to_output_file = os.path.dirname(os.path.abspath(args.output_file))
+        path_to_output_file = \
+            os.path.dirname(os.path.abspath(args.output_file))
         if not os.path.isdir(path_to_output_file):
             create_dir(path_to_output_file)
 
