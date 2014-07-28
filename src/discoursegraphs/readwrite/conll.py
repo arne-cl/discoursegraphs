@@ -18,11 +18,18 @@ import os
 import sys
 from collections import defaultdict, namedtuple
 
-from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs import (DiscourseDocumentGraph, get_pointing_chains,
+                             get_span, select_nodes_by_layer)
+from discoursegraphs.util import ensure_utf8, create_dir
 
 
-CONLL2009_COLUMNS = ['word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos', 'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel', 'fillpred', 'pred',  'APREDs']
-CONLL2010_COLUMNS = ['word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos', 'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel', 'ne', 'pne', 'pred', 'ppred', 'coref']
+CONLL2009_COLUMNS = ('word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos',
+                     'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel',
+                     'fillpred', 'pred',  'APREDs')
+CONLL2010_COLUMNS = ('word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos',
+                     'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel',
+                     'ne', 'pne', 'pred', 'ppred', 'coref')
+
 Conll2009Word = namedtuple('Conll2009Word', CONLL2009_COLUMNS)
 Conll2010Word = namedtuple('Conll2010Word', CONLL2010_COLUMNS)
 
@@ -90,7 +97,6 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         sentences = conll_str.strip().split("\n\n")
 
         for sentence in sentences:
-            conll_sentence = []
             word_lines = sentence.split("\n")
             for line in word_lines:
                 if line.startswith('#'):  # ignore comment lines
@@ -113,8 +119,8 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         Parameters
         ----------
         word_instance : Conll2009Word or Conll2010Word
-            a namedtuple representing all the information stored in a CoNLL file
-            line (token, lemma, pos, dependencies etc.)
+            a namedtuple representing all the information stored in a CoNLL
+            file line (token, lemma, pos, dependencies etc.)
         """
         self.add_node('token_{}'.format(self.token_count),
                       layers={self.ns, self.ns+':token'},
