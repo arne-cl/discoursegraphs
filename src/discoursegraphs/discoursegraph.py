@@ -605,6 +605,7 @@ def get_annotation_layers(docgraph):
     node_layers = get_node_annotation_layers(docgraph)
     return node_layers.union(get_edge_annotation_layers(docgraph))
 
+
 def get_top_level_layers(docgraph):
     """
     WARNING: this is higly inefficient!
@@ -703,9 +704,11 @@ def tokens2text(docgraph, token_ids):
     return ' '.join(docgraph.node[token_id][docgraph.ns+':token']
                     for token_id in token_ids)
 
+
 def istoken(docgraph, node_id):
     """returns true, iff the given node ID belongs to a token node."""
     return docgraph.ns+':token' in docgraph.node[node_id]
+
 
 def select_nodes_by_layer(docgraph, layer):
     """
