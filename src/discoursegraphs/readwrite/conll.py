@@ -25,7 +25,7 @@ from discoursegraphs.util import ensure_utf8, create_dir
 
 CONLL2009_COLUMNS = ('word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos',
                      'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel',
-                     'fillpred', 'pred',  'APREDs')
+                     'fillpred', 'pred')
 CONLL2010_COLUMNS = ('word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos',
                      'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel',
                      'ne', 'pne', 'pred', 'ppred', 'coref')
