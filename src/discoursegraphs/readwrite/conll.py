@@ -127,8 +127,29 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
                       attr_dict=word_instance._asdict())
         self.token_count += 1
 
-    def __add_dependency(self, word_instance):
-        raise NotImplementedError
+    def __add_dependency(self, word_instance, sent_id):
+        """
+        adds an ingoing dependency relation from the projected head of a token
+        to the token itself.
+        """
+        # 'phead': projected head
+        if word_instance.phead == '0':  # word represents the sentence root
+            source_id = sent_id
+        else:
+            source_id = '{}_t{}'.format(sent_id, word_instance.phead)
+            # TODO: fix issue #39, so we don't have to add nodes explicitly
+            if source_id not in self.node:
+                self.add_node(source_id, layers={self.ns})
+
+        target_id = '{}_t{}'.format(sent_id, word_instance.word_id)
+        # 'pdeprel': projected dependency relation
+        try:
+            self.add_edge(source_id, target_id,
+                          layers={self.ns, self.ns+':dependency'},
+                          relation_type=word_instance.pdeprel,
+                          edge_type=EdgeTypes.dominance_relation)
+        except AssertionError:
+            print "source: {}, target: {}".format(source_id, target_id)
 
 
 class Conll2009File(object):
