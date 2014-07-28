@@ -43,7 +43,8 @@ class ExmaraldaFile(object):
                            for i, node_id in enumerate(docgraph.tokens)}
         self.E = ElementMaker()
         self.tier_count = 0
-        self.tree = self.__add_document_structure(docgraph, remove_redundant_layers)
+        self.tree = self.__add_document_structure(docgraph,
+                                                  remove_redundant_layers)
 
     def __str__(self):
         """
