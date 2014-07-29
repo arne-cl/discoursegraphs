@@ -361,6 +361,18 @@ class Conll2009File(object):
             out_file.write(self.__str__())
 
 
+def traverse_up(docgraph, node_id):
+    # there's only one, but we're in a multidigraph
+    source, target = docgraph.in_edges(node_id)[0]
+    lemma = docgraph.node[source].get('plemma')
+    if lemma:
+        yield lemma
+
+    if istoken(docgraph, source) is True:
+        for lemma in traverse_up(docgraph, source):
+            yield lemma
+
+
 def write_conll(docgraph, output_file):
     """
     converts a DiscourseDocumentGraph into a tab-separated CoNLL 2009 file and
