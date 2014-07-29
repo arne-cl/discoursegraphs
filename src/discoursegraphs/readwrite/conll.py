@@ -102,11 +102,9 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         self.root = self.ns+':root_node'
         self.add_node(self.root, layers={self.ns})
         self.tokens = []
-        self.token_count = 1
         self.sentences = []
 
         self._parse_conll(conll_filepath, conll_format=conll_format)
-
         if precedence:
             self._add_precedence_relations()
 
@@ -138,20 +136,31 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         conll_file.close()
 
     def __add_token(self, word_instance):
+
+    def __add_token(self, word, sent_id):
         """
         adds a token to the document graph (with all the features given
         in the columns of the CoNLL file).
 
         Parameters
         ----------
-        word_instance : Conll2009Word or Conll2010Word
+        word : Conll2009Word or Conll2010Word
             a namedtuple representing all the information stored in a CoNLL
             file line (token, lemma, pos, dependencies etc.)
+        sent_id : str
+            the ID of the sentence this word/token belongs to
+
+        Returns
+        -------
+        token_id : str
+            the ID of the token just created
         """
-        self.add_node('token_{}'.format(self.token_count),
+        token_id = '{}_t{}'.format(sent_id, word.word_id)
+        self.add_node(token_id,
                       layers={self.ns, self.ns+':token'},
-                      attr_dict=word_instance._asdict())
-        self.token_count += 1
+                      attr_dict=word._asdict())
+        self.tokens.append(token_id)
+        return token_id
 
     def __add_dependency(self, word_instance, sent_id):
         """
