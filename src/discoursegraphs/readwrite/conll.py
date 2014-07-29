@@ -192,10 +192,11 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
             the ID of the token just created
         """
         token_id = '{}_t{}'.format(sent_id, word.word_id)
-        self.add_node(token_id,
-                      layers={self.ns, self.ns+':token'},
-                      attr_dict=word._asdict(),
-                      label=word.token)
+        feats = word._asdict()
+        # dicts can't be generated and updated at once
+        feats.update({self.ns+':token': word.token, 'label': word.token})
+        self.add_node(token_id, layers={self.ns, self.ns+':token'},
+                      attr_dict=feats)
         self.tokens.append(token_id)
         return token_id
 
