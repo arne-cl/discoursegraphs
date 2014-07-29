@@ -107,7 +107,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
 
         self._parse_conll(conll_filepath, conll_format=conll_format)
         if precedence:
-            self._add_precedence_relations()
+            self.add_precedence_relations()
 
     def _parse_conll(self, conll_filepath, conll_format='2010'):
         """
