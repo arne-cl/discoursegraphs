@@ -194,7 +194,8 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         token_id = '{}_t{}'.format(sent_id, word.word_id)
         self.add_node(token_id,
                       layers={self.ns, self.ns+':token'},
-                      attr_dict=word._asdict())
+                      attr_dict=word._asdict(),
+                      label=word.token)
         self.tokens.append(token_id)
         return token_id
 
@@ -218,6 +219,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
             self.add_edge(source_id, target_id,
                           layers={self.ns, self.ns+':dependency'},
                           relation_type=word_instance.pdeprel,
+                          label=word_instance.pdeprel,
                           edge_type=EdgeTypes.dominance_relation)
         except AssertionError:
             print "source: {}, target: {}".format(source_id, target_id)
