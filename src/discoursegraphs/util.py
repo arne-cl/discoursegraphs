@@ -159,8 +159,7 @@ def make_labels_explicit(docgraph):
         for node_id, node_attribs in docgraph.nodes(data=True):
             if 'label' in docgraph.node[node_id]:
                 docgraph.node[node_id]['label'] =  \
-                    u"{}_{}".format(node_attribs['label'],
-                                    node_attribs[docgraph.ns+':id'])
+                    u"{}_{}".format(node_attribs['label'], node_id)
         return docgraph
 
     def make_edgelabels_explicit(docgraph):
