@@ -42,6 +42,7 @@ TODOs
 
 import os
 import sys
+import codecs
 from collections import defaultdict, namedtuple
 
 from discoursegraphs import (DiscourseDocumentGraph, get_pointing_chains,
@@ -119,7 +120,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         else:
             word_class = Conll2010Word
 
-        with open(conll_filepath, 'r') as conll_file:
+        with codecs.open(conll_filepath, 'r', 'utf-8') as conll_file:
             conll_str = conll_file.read()
             sentences = conll_str.strip().split("\n\n")
             for i, sentence in enumerate(sentences, 1):
