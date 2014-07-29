@@ -3,15 +3,41 @@
 # Author: Arne Neumann
 
 """
-The ``conll`` module converts a ``DiscourseDocumentGraph`` (possibly
-containing multiple annotation layers) into an CoNLL 2009 tab-separated file.
+The ``conll`` module converts a CoNLL 2009/2010 files into a
+``DiscourseDocumentGraph`` and is also able to convert document graphs
+into a CoNLL 2009 file.
+
+Current state
+=============
+
+CoNLL import
+------------
+
+The resulting document graph will contain a node for each token (with CoNLL
+columns added as features) with dominance edges (representing dependency
+relations between them). The document and sentence root are also represented
+and connected via edges.
+
+CoNLL 2009 import
+~~~~~~~~~~~~~~~~~
+
+Only the first 14 columns will be parsed into token features, i.e. we're
+ignoring all APREDs (columns that represent argument dependencies and labels of
+PRED).
+
+CoNLL 2009 export
+-----------------
 
 Currently, most annotation levels are ignored. Only tokens, sentences
 are coreferences are exported!
 
-TODO: write a generic_merging_cli() and a generic write_format() function.
-Coordinate this with
-    issue #43: add write_formatname function for each output format
+
+TODOs
+=====
+
+- write a generic_merging_cli() and a generic write_format() function.
+- coordinate this with issue #43 (add write_formatname function for each output
+  format)
 """
 
 import os
