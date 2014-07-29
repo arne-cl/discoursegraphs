@@ -45,7 +45,7 @@ import sys
 from collections import defaultdict, namedtuple
 
 from discoursegraphs import (DiscourseDocumentGraph, get_pointing_chains,
-                             get_span, select_nodes_by_layer)
+                             get_span, select_nodes_by_layer, EdgeTypes)
 from discoursegraphs.util import ensure_utf8, create_dir
 
 
@@ -79,7 +79,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
     def __init__(self, conll_filepath, conll_format='2010', name=None,
                  namespace='conll', precedence=False):
         """
-        reads a CoNLL file and converts it into a multidigraph.
+        initializes a multidigraph and parses a CoNLL file into it.
 
         Parameters
         ----------
@@ -109,6 +109,9 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
             self._add_precedence_relations()
 
     def _parse_conll(self, conll_filepath, conll_format='2010'):
+        """
+        parses a CoNLL2009/2010 file into a multidigraph.
+        """
         assert conll_format in ('2009', '2010'), \
             "We only support CoNLL2009 and CoNLL2010 format."
         if conll_format == '2009':
@@ -116,26 +119,58 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         else:
             word_class = Conll2010Word
 
-        conll_file = open(conll_filepath, 'r')
-        conll_str = conll_file.read()
-        sentences = conll_str.strip().split("\n\n")
+        with open(conll_filepath, 'r') as conll_file:
+            conll_str = conll_file.read()
+            sentences = conll_str.strip().split("\n\n")
+            for i, sentence in enumerate(sentences, 1):
+                sent_id = self.__add_sentence_root_node(i)
+                for word in self.__parse_conll_sentence(sentence, word_class):
+                    token_id = self.__add_token(word, sent_id)
+                    self.__add_dependency(word, sent_id)
 
-        for sentence in sentences:
-            word_lines = sentence.split("\n")
-            for line in word_lines:
-                if line.startswith('#'):  # ignore comment lines
-                    continue
-                word_features = line.split("\t")
-                try:
-                    word = word_class._make(word_features)
-                    self.__add_token(word)
-                    self.__add_dependency(word)
-                except:
-                    print "Is input really in CoNLL2009/2010 format?"
-                    print "can't parse word_features: ", word_features
-        conll_file.close()
+    def __parse_conll_sentence(self, sentence, word_class,
+                               conll_format='2010'):
+        """
+        """
+        for line in sentence.split("\n"):
+            if line.startswith('#'):
+                continue  # don't yield anything for comment lines
+            try:
+                # create a named tuple containing all features of the word
+                if conll_format == '2010':
+                    yield word_class._make(line.split("\t"))
+                else:  # CoNLL2009
+                    # we ignore APREDs (columns that represent argument
+                    # dependencies and labels of PRED)
+                    yield word_class._make(line.split("\t")[:14])
+            except TypeError as e:
+                error_msg = ("Is input really in CoNLL{} format?\n"
+                    "word features: {}\n"
+                    "{}".format(conll_format, line.split('\t'),e))
+                raise TypeError(error_msg.format(e))
 
-    def __add_token(self, word_instance):
+    def __add_sentence_root_node(self, sent_number):
+        """
+        adds the root node of a sentence to the graph and the list of sentences
+        (``self.sentences``).
+
+        Parameters
+        ----------
+        sent_number : int
+            the index of the sentence within the document
+
+        Results
+        -------
+        sent_id : str
+            the ID of the sentence
+        """
+        sent_id = 's{}'.format(sent_number)
+        self.add_node(sent_id, layers={self.ns, self.ns+':sentence'})
+        self.add_edge(self.root, sent_id,
+                      layers={self.ns, self.ns+':sentence'},
+                      edge_type=EdgeTypes.dominance_relation)
+        self.sentences.append(sent_id)
+        return sent_id
 
     def __add_token(self, word, sent_id):
         """
