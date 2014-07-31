@@ -361,16 +361,21 @@ class Conll2009File(object):
             out_file.write(self.__str__())
 
 
-def traverse_up(docgraph, node_id):
+def traverse_dependencies_up(docgraph, node_id, node_attribute='plemma'):
+    """
+    starting from the given node, traverse ingoing edges up to the root element
+    of the sentence. return the given node attribute from all the nodes visited
+    along the way.
+    """
     # there's only one, but we're in a multidigraph
     source, target = docgraph.in_edges(node_id)[0]
-    lemma = docgraph.node[source].get('plemma')
-    if lemma:
-        yield lemma
+    lemma = docgraph.node[source].get(node_attribute)
+    if node_attribute:
+        yield node_attribute
 
     if istoken(docgraph, source) is True:
-        for lemma in traverse_up(docgraph, source):
-            yield lemma
+        for node_attribute in traverse_up(docgraph, source):
+            yield node_attribute
 
 
 def write_conll(docgraph, output_file):
