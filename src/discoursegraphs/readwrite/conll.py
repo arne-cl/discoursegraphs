@@ -46,7 +46,8 @@ import codecs
 from collections import defaultdict, namedtuple
 
 from discoursegraphs import (DiscourseDocumentGraph, get_pointing_chains,
-                             get_span, select_nodes_by_layer, EdgeTypes)
+                             get_span, istoken, select_nodes_by_layer,
+                             EdgeTypes)
 from discoursegraphs.util import ensure_utf8, create_dir
 
 
@@ -372,13 +373,14 @@ def traverse_dependencies_up(docgraph, node_id, node_attribute='plemma'):
     """
     # there's only one, but we're in a multidigraph
     source, target = docgraph.in_edges(node_id)[0]
-    lemma = docgraph.node[source].get(node_attribute)
-    if node_attribute:
-        yield node_attribute
+    attrib_value = docgraph.node[source].get(node_attribute)
+    if attrib_value:
+        yield attrib_value
 
     if istoken(docgraph, source) is True:
-        for node_attribute in traverse_up(docgraph, source):
-            yield node_attribute
+        for attrib_value in traverse_dependencies_up(docgraph, source,
+                                                     node_attribute):
+            yield attrib_value
 
 
 def write_conll(docgraph, output_file):
