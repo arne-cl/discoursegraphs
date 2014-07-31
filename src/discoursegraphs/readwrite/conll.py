@@ -153,7 +153,8 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
     def __add_sentence_root_node(self, sent_number):
         """
         adds the root node of a sentence to the graph and the list of sentences
-        (``self.sentences``).
+        (``self.sentences``). the node has a ``tokens` attribute, which
+        contains a list of the tokens (token node IDs) of this sentence.
 
         Parameters
         ----------
@@ -166,7 +167,8 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
             the ID of the sentence
         """
         sent_id = 's{}'.format(sent_number)
-        self.add_node(sent_id, layers={self.ns, self.ns+':sentence'})
+        self.add_node(sent_id, layers={self.ns, self.ns+':sentence'},
+                      tokens=[])
         self.add_edge(self.root, sent_id,
                       layers={self.ns, self.ns+':sentence'},
                       edge_type=EdgeTypes.dominance_relation)
@@ -198,6 +200,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         self.add_node(token_id, layers={self.ns, self.ns+':token'},
                       attr_dict=feats)
         self.tokens.append(token_id)
+        self.node[sent_id]['tokens'].append(token_id)
         return token_id
 
     def __add_dependency(self, word_instance, sent_id):
