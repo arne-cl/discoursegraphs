@@ -38,8 +38,8 @@ def merging_cli(debug=False):
                         help='MMAX2 file to be merged')
     parser.add_argument(
         '-o', '--output-format', default='dot',
-        help=('output format: dot, pickle, geoff, neo4j, exmaralda, conll, '
-              'paula, no-output'))
+        help=('output format: dot, pickle, geoff, gexf, gml, graphml, neo4j, '
+              'exmaralda, conll, paula, no-output'))
     parser.add_argument('output_file', nargs='?', default=sys.stdout)
 
     args = parser.parse_args(sys.argv[1:])
@@ -98,6 +98,19 @@ def merging_cli(debug=False):
         from discoursegraphs.readwrite.neo4j import write_geoff
         write_geoff(tiger_docgraph, args.output_file)
         print ''  # this is just cosmetic for stdout
+    elif args.output_format == 'gexf':
+        from networkx import write_gexf
+        from discoursegraphs.readwrite.neo4j import make_json_encodable
+        make_json_encodable(tiger_docgraph)
+        write_gexf(tiger_docgraph, args.output_file)
+    elif args.output_format == 'gml':
+        from networkx import write_gml
+        write_gml(tiger_docgraph, args.output_file)
+    elif args.output_format == 'graphml':
+        from networkx import write_graphml
+        from discoursegraphs.readwrite.neo4j import make_json_encodable
+        make_json_encodable(tiger_docgraph)
+        write_graphml(tiger_docgraph, args.output_file)
     elif args.output_format == 'neo4j':
         import requests
         from discoursegraphs.readwrite.neo4j import upload_to_neo4j
