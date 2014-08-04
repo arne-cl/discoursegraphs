@@ -100,8 +100,9 @@ def merging_cli(debug=False):
         print ''  # this is just cosmetic for stdout
     elif args.output_format == 'gexf':
         from networkx import write_gexf
-        from discoursegraphs.readwrite.generic import layerset2list
-        layerset2list(tiger_docgraph)
+        from discoursegraphs.readwrite.generic import layerset2str, attriblist2str
+        layerset2str(tiger_docgraph)
+        attriblist2str(tiger_docgraph)
         write_gexf(tiger_docgraph, args.output_file)
     elif args.output_format == 'gml':
         from networkx import write_gml
