@@ -100,16 +100,16 @@ def merging_cli(debug=False):
         print ''  # this is just cosmetic for stdout
     elif args.output_format == 'gexf':
         from networkx import write_gexf
-        from discoursegraphs.readwrite.neo4j import make_json_encodable
-        make_json_encodable(tiger_docgraph)
+        from discoursegraphs.readwrite.generic import layerset2list
+        layerset2list(tiger_docgraph)
         write_gexf(tiger_docgraph, args.output_file)
     elif args.output_format == 'gml':
         from networkx import write_gml
         write_gml(tiger_docgraph, args.output_file)
     elif args.output_format == 'graphml':
         from networkx import write_graphml
-        from discoursegraphs.readwrite.neo4j import make_json_encodable
-        make_json_encodable(tiger_docgraph)
+        from discoursegraphs.readwrite.generic import layerset2list
+        layerset2list(tiger_docgraph)
         write_graphml(tiger_docgraph, args.output_file)
     elif args.output_format == 'neo4j':
         import requests

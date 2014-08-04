@@ -9,26 +9,7 @@ string and/or exports it to a running ``Neo4j`` graph database.
 
 from neonx import write_to_neo, get_geoff
 from discoursegraphs.util import ensure_utf8
-
-
-def make_json_encodable(discoursegraph):
-    """
-    typecasts all `layers` sets to lists to make the graph
-    convertible into `geoff` format.
-
-    Parameters
-    ----------
-    discoursegraph : DiscourseDocumentGraph
-    """
-    for node_id in discoursegraph:
-        discoursegraph.node[node_id]['layers'] = \
-            list(discoursegraph.node[node_id]['layers'])
-    for (from_id, to_id) in discoursegraph.edges_iter():
-        # there might be multiple edges between 2 nodes
-        edge_dict = discoursegraph.edge[from_id][to_id]
-        for edge_id in edge_dict:
-            edge_dict[edge_id]['layers'] = \
-                list(edge_dict[edge_id]['layers'])
+from discoursegraphs.readwrite.generic import layerset2list
 
 
 def add_node_ids_as_labels(discoursegraph):
@@ -59,7 +40,7 @@ def convert_to_geoff(discoursegraph):
     geoff : string
         a geoff string representation of the discourse graph.
     """
-    make_json_encodable(discoursegraph)
+    layerset2list(discoursegraph)
     add_node_ids_as_labels(discoursegraph)
     return get_geoff(discoursegraph, 'LINKS_TO')
 
@@ -90,7 +71,7 @@ def upload_to_neo4j(discoursegraph):
     neonx_results : list of dict
         list of results from the `write_to_neo` function of neonx.
     """
-    make_json_encodable(discoursegraph)
+    layerset2list(discoursegraph)
     add_node_ids_as_labels(discoursegraph)
     return write_to_neo("http://localhost:7474/db/data/",
                         discoursegraph, edge_rel_name='LINKS_TO',

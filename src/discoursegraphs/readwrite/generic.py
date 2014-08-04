@@ -33,3 +33,23 @@ def generic_converter_cli(docgraph_class, file_descriptor=''):
         "'{}' isn't a file".format(args.input_file)
     docgraph = docgraph_class(args.input_file)
     write_dot(docgraph, args.output_file)
+
+
+def layerset2list(discoursegraph):
+    """
+    typecasts all `layers` sets to lists to make the graph
+    exportable (e.g. into the `geoff` format or to upload the graph to neo4j).
+
+    Parameters
+    ----------
+    discoursegraph : DiscourseDocumentGraph
+    """
+    for node_id in discoursegraph:
+        discoursegraph.node[node_id]['layers'] = \
+            list(discoursegraph.node[node_id]['layers'])
+    for (from_id, to_id) in discoursegraph.edges_iter():
+        # there might be multiple edges between 2 nodes
+        edge_dict = discoursegraph.edge[from_id][to_id]
+        for edge_id in edge_dict:
+            edge_dict[edge_id]['layers'] = \
+                list(edge_dict[edge_id]['layers'])
