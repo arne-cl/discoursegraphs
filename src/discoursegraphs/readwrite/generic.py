@@ -53,3 +53,51 @@ def layerset2list(discoursegraph):
         for edge_id in edge_dict:
             edge_dict[edge_id]['layers'] = \
                 list(edge_dict[edge_id]['layers'])
+
+
+def layerset2str(discoursegraph):
+    """
+    typecasts all `layers` from sets of strings into a single string to make
+    the graph exportable (e.g. into the `gexf`, `gml` and `graphml` formats).
+
+    Parameters
+    ----------
+    discoursegraph : DiscourseDocumentGraph
+    """
+    for node_id in discoursegraph:
+        discoursegraph.node[node_id]['layers'] = \
+            str(discoursegraph.node[node_id]['layers'])
+    for (from_id, to_id) in discoursegraph.edges_iter():
+        # there might be multiple edges between 2 nodes
+        edge_dict = discoursegraph.edge[from_id][to_id]
+        for edge_id in edge_dict:
+            edge_dict[edge_id]['layers'] = \
+                str(edge_dict[edge_id]['layers'])
+
+
+def attriblist2str(discoursegraph):
+    """
+    converts all node/edge attributes whose values are lists into string
+    values (e.g. to export them into the `gexf`, `gml` and `graphml` formats).
+
+    WARNING: This function iterates over all nodes and edges! You can speed up
+    conversion by writing a custom function that only fixes those attributes
+    that have lists (of strings) as values.
+
+    Parameters
+    ----------
+    discoursegraph : DiscourseDocumentGraph
+    """
+    for node_id in discoursegraph:
+        node_dict = discoursegraph.node[node_id]
+        for attrib in node_dict:
+            if isinstance(node_dict[attrib], list):
+                node_dict[attrib] = str(node_dict[attrib])
+    for (from_id, to_id) in discoursegraph.edges_iter():
+        # there might be multiple edges between 2 nodes
+        edge_dict = discoursegraph.edge[from_id][to_id]
+        for edge_id in edge_dict:
+            for attrib in edge_dict[edge_id]:
+                if isinstance(edge_dict[edge_id][attrib], list):
+                    edge_dict[edge_id][attrib] \
+                        = str(edge_dict[edge_id][attrib])
