@@ -109,8 +109,9 @@ def merging_cli(debug=False):
         write_gml(tiger_docgraph, args.output_file)
     elif args.output_format == 'graphml':
         from networkx import write_graphml
-        from discoursegraphs.readwrite.generic import layerset2list
-        layerset2list(tiger_docgraph)
+        from discoursegraphs.readwrite.generic import layerset2str, attriblist2str
+        layerset2str(tiger_docgraph)
+        attriblist2str(tiger_docgraph)
         write_graphml(tiger_docgraph, args.output_file)
     elif args.output_format == 'neo4j':
         import requests
