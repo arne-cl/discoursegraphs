@@ -7,7 +7,7 @@ import sys
 import argparse
 from networkx import write_dot
 
-from discoursegraphs.util import ensure_utf8
+from discoursegraphs.util import ensure_ascii
 
 
 def generic_converter_cli(docgraph_class, file_descriptor=''):
@@ -105,10 +105,10 @@ def attriblist2str(discoursegraph):
                         = str(edge_dict[edge_id][attrib])
 
 
-def ensure_utf8_labels(discoursegraph):
+def ensure_ascii_labels(discoursegraph):
     """
-    ensure that all node/edge labels are UTF8 encoded (e.g. to export them
-    in `gml` format).
+    ensure that all node/edge labels are 7-bit latin-1 strings
+    (e.g. ``ä`` becomes ``&auml;``). This is necessary for ``gml`` export.
 
     Parameters
     ----------
@@ -117,14 +117,14 @@ def ensure_utf8_labels(discoursegraph):
     for node_id in discoursegraph:
         label = discoursegraph.node[node_id].get('label')
         if label:
-            discoursegraph.node[node_id][label] = ensure_utf8(label)
+            discoursegraph.node[node_id]['label'] = ensure_ascii(label)
     for (from_id, to_id) in discoursegraph.edges_iter():
         # there might be multiple edges between 2 nodes
         edge_dict = discoursegraph.edge[from_id][to_id]
         for edge_id in edge_dict:
             label = edge_dict[edge_id].get('label')
             if label:
-                edge_dict[edge_id]['label'] = ensure_utf8(label)
+                edge_dict[edge_id]['label'] = ensure_ascii(label)
 
 
 def ensure_utf8_graph(discoursegraph):

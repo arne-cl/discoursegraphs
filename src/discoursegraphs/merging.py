@@ -106,8 +106,8 @@ def merging_cli(debug=False):
         write_gexf(tiger_docgraph, args.output_file)
     elif args.output_format == 'gml':
         from networkx import write_gml
-        from discoursegraphs.readwrite.generic import ensure_utf8_labels
-        ensure_utf8_labels(tiger_docgraph)
+        from discoursegraphs.readwrite.generic import ensure_ascii_labels
+        ensure_ascii_labels(tiger_docgraph)
         write_gml(tiger_docgraph, args.output_file)
     elif args.output_format == 'graphml':
         from networkx import write_graphml
