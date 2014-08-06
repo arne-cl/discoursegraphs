@@ -68,6 +68,25 @@ def ensure_utf8(str_or_unicode):
             "type {1}".format(str_or_unicode, type(str_or_unicode)))
 
 
+def ensure_ascii(str_or_unicode):
+    """
+    tests, if the input is ``str`` or ``unicode``. if it is ``unicode``,
+    it will be encoded from ``unicode`` to 7-bit ``latin-1``.
+    otherwise, the input string is converted from ``utf-8`` to 7-bit
+    ``latin-1``. 7-bit latin-1 doesn't even contain umlauts, but
+    XML/HTML-style escape sequences (e.g. ``ä`` becomes ``&auml;``).
+    """
+    if isinstance(str_or_unicode, str):
+        return str_or_unicode.decode('utf-8').encode('ascii',
+                                                     'xmlcharrefreplace')
+    elif isinstance(str_or_unicode, unicode):
+        return str_or_unicode.encode('ascii', 'xmlcharrefreplace')
+    else:
+        raise ValueError(
+            "Input '{0}' should be a string or unicode, but it is of "
+            "type {1}".format(str_or_unicode, type(str_or_unicode)))
+
+
 def add_prefix(dict_like, prefix):
     """
     takes a dict (or dict-like object, e.g. etree._Attrib) and adds the
