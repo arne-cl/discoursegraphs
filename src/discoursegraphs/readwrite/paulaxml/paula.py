@@ -8,9 +8,6 @@ containing multiple annotation layers) into a PAULA XML document. Our goal is
 to produce the subset of the PAULA 'specification' that is understood by the
 SaltNPepper converter framework
 
-TODO: _seg files can't have markList type `tok` (rather use the ns as type).
-     `tok` is a reserved type that can only be used in tok files!
-
 TODO: in Tiger (and other dominance graphs, there are no spans, only structs,
       e.g. struct: NP -> tok1, tok2, tok3)
 """
@@ -188,7 +185,7 @@ class PaulaDocument(object):
         E, tree = gen_paula_etree(paula_id)
         base_paula_id = '{}.{}.tok'.format(self.corpus_name, self.name)
         mlist = E('markList',
-                  {'type': 'tok',
+                  {'type': layer,
                    XMLBASE: base_paula_id+'.xml'})
 
         span_dict = defaultdict(lambda: defaultdict(str))
