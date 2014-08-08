@@ -197,9 +197,10 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         token_id = '{}_t{}'.format(sent_id, word.word_id)
         feats = word._asdict()
         # dicts can't be generated and updated at once
-        feats.update({self.ns+':token': word.token, 'label': word.token})
+        feats.update({self.ns+':token': word.token, 'label': word.token,
+                      'word_pos': int(word.word_id)})
         self.add_node(token_id, layers={self.ns, self.ns+':token'},
-                      attr_dict=feats)
+                      attr_dict=feats, sent_pos=int(sent_id[1:]))
         self.tokens.append(token_id)
         self.node[sent_id]['tokens'].append(token_id)
         return token_id
