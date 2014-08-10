@@ -127,7 +127,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
             for i, sentence in enumerate(sentences, 1):
                 sent_id = self.__add_sentence_root_node(i)
                 for word in self.__parse_conll_sentence(sentence, word_class):
-                    token_id = self.__add_token(word, sent_id)
+                    self.__add_token(word, sent_id)
                     self.__add_dependency(word, sent_id)
 
     def __parse_conll_sentence(self, sentence, word_class,
@@ -147,8 +147,8 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
                     yield word_class._make(line.split("\t")[:14])
             except TypeError as e:
                 error_msg = ("Is input really in CoNLL{} format?\n"
-                    "word features: {}\n"
-                    "{}".format(conll_format, line.split('\t'),e))
+                             "word features: {}\n"
+                             "{}".format(conll_format, line.split('\t'), e))
                 raise TypeError(error_msg.format(e))
 
     def __add_sentence_root_node(self, sent_number):
