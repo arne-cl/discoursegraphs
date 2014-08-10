@@ -7,7 +7,7 @@ import sys
 import argparse
 from networkx import write_dot
 
-from discoursegraphs.util import ensure_ascii
+from discoursegraphs.util import ensure_utf8, ensure_ascii
 
 
 def generic_converter_cli(docgraph_class, file_descriptor=''):
