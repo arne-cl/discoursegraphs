@@ -126,12 +126,13 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
             sentences = conll_str.strip().split("\n\n")
             for i, sentence in enumerate(sentences, 1):
                 sent_id = self.__add_sentence_root_node(i)
-                for word in self.__parse_conll_sentence(sentence, word_class):
+                for word in self.__parse_conll_sentence(sentence, word_class,
+                                                        conll_format):
                     self.__add_token(word, sent_id)
                     self.__add_dependency(word, sent_id)
 
     def __parse_conll_sentence(self, sentence, word_class,
-                               conll_format='2010'):
+                               conll_format):
         """
         """
         for line in sentence.split("\n"):
