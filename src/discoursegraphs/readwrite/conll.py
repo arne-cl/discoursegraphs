@@ -58,6 +58,11 @@ CONLL2010_COLUMNS = ('word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos',
                      'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel',
                      'ne', 'pne', 'pred', 'ppred', 'coref')
 
+GENDER_VALUES = set(['Masc', 'Fem', 'Neut'])
+PERSON_VALUES = set(['1', '2', '3'])
+NUMBER_VALUES = set(['Sg', 'Pl'])
+
+
 Conll2009Word = namedtuple('Conll2009Word', CONLL2009_COLUMNS)
 Conll2010Word = namedtuple('Conll2010Word', CONLL2010_COLUMNS)
 
@@ -365,6 +370,47 @@ class Conll2009File(object):
         """
         with open(output_filepath, 'w') as out_file:
             out_file.write(self.__str__())
+
+
+def add_features(token_dict, feature_string, feature_format='unknown'):
+    """
+    Parameters
+    ----------
+    token_dict : dict
+        the node attribute dict belonging to a token node
+    feature_string : str
+        a string representing the (grammatical) features of a token
+    feature_format : str
+        Format of the feature string (i.e. ``attrib_val``, ``val_only`` or
+        ``unknown``). A ``val_only`` string contains only the attribute values,
+        e.g. ``Pos|Dat|Sg|Fem``. An ``attrib_val`` string contains both the
+        attribute's name and its value, e.g.
+        ``case=dat|number=sg|gender=fem|degree=pos``.
+    """
+    raise NotImplementedError
+    assert isinstance(feature_format, ('attrib_val', 'val_only', 'unknown'))
+
+    def add_val_only_features():
+        """
+        TODO: add handling for case/degree/mood etc.
+        """
+        feature_values = feature_string.split('|')
+        for feat_val in feature_values:
+            if feat_val in GENDER_VALUES:
+                token_dict["gender"] = feat_val.lower()
+            elif feat_val in PERSON_VALUES:
+                token_dict["person"] = int(feat_val)
+            elif feat_val in NUMBER_VALUES:
+                token_dict["number"] = feat_val.lower()
+
+    def add_attrib_val_features():
+        for attrib_val_str in feature_string.split('|'):
+            try:
+                attrib, val = attrib_val_str.split('=')
+                token_dict[attrib] = val
+            # TODO: check, if these exceptions really occur
+            except ValueError:  # if there are no attrib-val pairs
+                continue
 
 
 def traverse_dependencies_up(docgraph, node_id, node_attribute='plemma'):
