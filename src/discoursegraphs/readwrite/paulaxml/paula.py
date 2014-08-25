@@ -73,7 +73,7 @@ class PaulaDocument(object):
     """
     This class converts a DiscourseDocumentGraph into a PAULA XML document
     (i.e. a set of XML files describing one document annotated on multiple
-    lebels).
+    labels).
     """
     def __init__(self, docgraph, corpus_name='mycorpus', human_readable=False,
                  saltnpepper_compatible=True):
@@ -120,7 +120,9 @@ class PaulaDocument(object):
     def __gen_primary_text_file(self):
         """
         generate the PAULA file that contains the primary text of the document
-        graph.
+        graph. (PAULA documents can have more than one primary text, but
+        discoursegraphs only works with documents that are based on exactly one
+        primary text.)
 
         Example
         -------
@@ -141,7 +143,9 @@ class PaulaDocument(object):
     def __gen_tokenization_file(self):
         """
         generate the PAULA file that contains the tokenization of the document
-        graph.
+        graph. (In general, a PAULA document may contain more than one
+        tokenization, but in discoursegraphs we'll only work with documents
+        that have exactly one tokenization.)
 
         Example
         -------
@@ -179,6 +183,16 @@ class PaulaDocument(object):
 
     def __gen_span_markables_file(self, layer, saltnpepper_compatible=True):
         """
+        <mark> elements are used to group tokens (continuous or discontinuos spans)
+        for further annotation. A span markable file (*_seg.xml) contains a
+        list of spans and the type of annotation that is applied to them
+        (stored in <markList type="annotation type..."). As a consequence,
+        each span markable file contains only spans of a single type
+        (in discoursegraph: spans from a single namespace, e.g. syntax
+        categories or entity mentions).
+
+        Note: The annotations themselves are stored in other files, using
+        <feat> or <multiFeat> elements.
         """
         paula_id = '{}.{}.{}_{}_seg'.format(layer, self.corpus_name,
                                             self.name, layer)
@@ -224,8 +238,11 @@ class PaulaDocument(object):
 
     def __gen_token_anno_file(self, top_level_layer):
         """
-        creates an etree representation of a multiFeat file that describes all
-        the annotations that only span one token (e.g. POS, lemma etc.)
+        creates an etree representation of a <multiFeat> file that describes
+        all the annotations that only span one token (e.g. POS, lemma etc.).
+
+        Note: discoursegraphs will create one token annotation file for each
+        top level layer (e.g. conano, tiger etc.).
         """
         base_paula_id = '{}.{}.tok'.format(self.corpus_name, self.name)
         paula_id = '{}.{}.{}.tok_multiFeat'.format(top_level_layer,
@@ -258,6 +275,21 @@ class PaulaDocument(object):
 
     def __gen_hierarchy_file(self, layer):
         """
+        Hierarchical structures (<structList> elements) are used to create
+        hierarchically nested annotation graphs (e.g. to express consists-of
+        relationships or dominance-edges in syntax trees, RST).
+        A <struct> element will be created for each hierarchical node
+        (e.g. an NP) with edges (<rel> elements) to each dominated element
+        (e.g. tokens, other <struct> elements).
+
+        NOTE: The types/labels of these newly create hierarchical nodes and
+        edges aren't stored in this file, but in feat/multiFeat files
+        referencing this one! See: __gen_struct_anno_files() and
+        __gen_rel_anno_file()).
+
+        There will be one hierarchy file for each top level layer.
+        TODO: check, if we can omit hierarchy files for layers that don't
+              contain dominance edges
         """
         paula_id = '{}.{}.{}_{}'.format(layer, self.corpus_name, self.name,
                                         layer)
@@ -280,6 +312,8 @@ class PaulaDocument(object):
             if istoken(self.dg, target_id):
                 dominance_dict[source_id][target_id] = edge_attrs
 
+        # NOTE: we don't add a base file here, because the nodes could be
+        # tokens or structural nodes
         slist = E('structList', {'type': layer})
         for source_id in dominance_dict:
             struct = E('struct',
@@ -314,6 +348,8 @@ class PaulaDocument(object):
         A struct annotation file contains node (struct) attributes (of
         non-token nodes). It is e.g. used to annotate the type of a syntactic
         category (NP, VP etc.).
+
+        See also: __gen_hierarchy_file()
         """
         paula_id = '{}.{}.{}_{}_struct'.format(top_level_layer,
                                                self.corpus_name, self.name,
@@ -347,6 +383,8 @@ class PaulaDocument(object):
         A rel annotation file contains edge (rel)
         attributes. It is e.g. used to annotate the type of a dependency
         relation (subj, obj etc.).
+
+        See also: __gen_hierarchy_file()
         """
         paula_id = '{}.{}.{}_{}_rel'.format(top_level_layer, self.corpus_name,
                                             self.name, top_level_layer)
@@ -483,7 +521,11 @@ class PaulaDocument(object):
     def __gen_annoset_file(self):
         """
         An ``annoSet`` file describes the set of annotations contained in a
-        document. Each PAULA document must contain an annoSet file.
+        document (i.e. it lists all annotation files that belong to a PAULA
+        document). Each PAULA document must contain an annoSet file.
+
+        An ``annoSet`` file can also be used to list the contents of a
+        (sub)corpus, but we're not using this feature in discoursegraphs, yet.
         """
         paula_id = '{}.{}.anno'.format(self.corpus_name, self.name)
         E, tree = gen_paula_etree(paula_id)
