@@ -52,6 +52,9 @@ from discoursegraphs import (DiscourseDocumentGraph, get_pointing_chains,
 from discoursegraphs.util import ensure_utf8, create_dir
 
 
+# cpos: coarse-grained POS tag
+CONLLX_COLUMNS = ('word_id', 'token', 'lemma', 'cpos', 'pos', 'feat', 'head',
+                  'deprel', 'phead', 'pdeprel')
 CONLL2009_COLUMNS = ('word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos',
                      'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel',
                      'fillpred', 'pred')
