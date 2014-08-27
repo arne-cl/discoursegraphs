@@ -263,9 +263,9 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
             a string representing the (grammatical) features of a token
         feature_format : str
             Format of the feature string (i.e. ``attrib_val``, ``val_only`` or
-            ``unknown``). A ``val_only`` string contains only the attribute values,
-            e.g. ``Pos|Dat|Sg|Fem``. An ``attrib_val`` string contains both the
-            attribute's name and its value, e.g.
+            ``unknown``). A ``val_only`` string contains only the attribute
+            values, e.g. ``Pos|Dat|Sg|Fem``. An ``attrib_val`` string contains
+            both the attribute's name and its value, e.g.
             ``case=dat|number=sg|gender=fem|degree=pos``.
         """
         assert feature_format in ('attrib_val', 'val_only', 'unknown')
@@ -304,7 +304,6 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
                 add_attrib_val_features(token_dict, feature_string)
             else:
                 add_val_only_features(token_dict, feature_string)
-
 
 
 class Conll2009File(object):
