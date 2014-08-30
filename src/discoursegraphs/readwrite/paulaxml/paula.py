@@ -183,9 +183,10 @@ class PaulaDocument(object):
 
     def __gen_span_markables_file(self, layer, saltnpepper_compatible=True):
         """
-        <mark> elements are used to group tokens (continuous or discontinuos spans)
-        for further annotation. A span markable file (*_seg.xml) contains a
-        list of spans and the type of annotation that is applied to them
+        <mark> elements are used to group tokens (continuous or discontinuos
+        spans) for further annotation.
+        A span markable file (*_seg.xml) contains a list of spans and the type
+        of annotation that is applied to them
         (stored in <markList type="annotation type..."). As a consequence,
         each span markable file contains only spans of a single type
         (in discoursegraph: spans from a single namespace, e.g. syntax
