@@ -97,7 +97,9 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         name of the document root node ID
         (default: 'conll:root_node')
     """
-    def __init__(self, conll_filepath, conll_format='2010', name=None,
+    def __init__(self, conll_filepath, conll_format='2009',
+                 deprel_attr='pdeprel', feat_attr='pfeat', head_attr='phead',
+                 lemma_attr='plemma', pos_attr='ppos', name=None,
                  namespace='conll', precedence=False):
         """
         initializes a multidigraph and parses a CoNLL file into it.
@@ -125,17 +127,24 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         self.tokens = []
         self.sentences = []
 
-        self._parse_conll(conll_filepath, conll_format=conll_format)
+        self.conll_format = conll_format
+        self.deprel_attr = deprel_attr
+        self.feat_attr = feat_attr
+        self.head_attr = head_attr
+        self.lemma_attr = lemma_attr
+        self.pos_attr = pos_attr
+
+        self._parse_conll(conll_filepath)
         if precedence:
             self.add_precedence_relations()
 
-    def _parse_conll(self, conll_filepath, conll_format='2010'):
+    def _parse_conll(self, conll_filepath):
         """
         parses a CoNLL2009/2010 file into a multidigraph.
         """
-        assert conll_format in ('2009', '2010'), \
+        assert self.conll_format in ('2009', '2010'), \
             "We only support CoNLL2009 and CoNLL2010 format."
-        if conll_format == '2009':
+        if self.conll_format == '2009':
             word_class = Conll2009Word
         else:
             word_class = Conll2010Word
@@ -145,13 +154,11 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
             sentences = conll_str.strip().split("\n\n")
             for i, sentence in enumerate(sentences, 1):
                 sent_id = self.__add_sentence_root_node(i)
-                for word in self.__parse_conll_sentence(sentence, word_class,
-                                                        conll_format):
+                for word in self.__parse_conll_sentence(sentence, word_class):
                     self.__add_token(word, sent_id)
                     self.__add_dependency(word, sent_id)
 
-    def __parse_conll_sentence(self, sentence, word_class,
-                               conll_format):
+    def __parse_conll_sentence(self, sentence, word_class):
         """
         """
         for line in sentence.split("\n"):
@@ -159,7 +166,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
                 continue  # don't yield anything for comment lines
             try:
                 # create a named tuple containing all features of the word
-                if conll_format == '2010':
+                if self.conll_format == '2010':
                     yield word_class._make(line.split("\t"))
                 else:  # CoNLL2009
                     # we ignore APREDs (columns that represent argument
@@ -168,7 +175,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
             except TypeError as e:
                 error_msg = ("Is input really in CoNLL{} format?\n"
                              "word features: {}\n"
-                             "{}".format(conll_format, line.split('\t'), e))
+                             "{}".format(self.conll_format, line.split('\t'), e))
                 raise TypeError(error_msg.format(e))
 
     def __add_sentence_root_node(self, sent_number):
@@ -196,8 +203,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         self.sentences.append(sent_id)
         return sent_id
 
-    def __add_token(self, word, sent_id, feat_attrib='pfeat',
-                    feat_format='unknown'):
+    def __add_token(self, word, sent_id, feat_format='unknown'):
         """
         adds a token to the document graph (with all the features given
         in the columns of the CoNLL file).
@@ -220,7 +226,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         # dicts can't be generated and updated at once
         feats.update({self.ns+':token': word.token, 'label': word.token,
                       'word_pos': int(word.word_id)})
-        self.__add_morph_features(feats, feats[feat_attrib], feat_format)
+        self.__add_morph_features(feats, feats[self.feat_attr], feat_format)
         self.add_node(token_id, layers={self.ns, self.ns+':token'},
                       attr_dict=feats, sent_pos=int(sent_id[1:]))
         self.tokens.append(token_id)
@@ -232,11 +238,14 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         adds an ingoing dependency relation from the projected head of a token
         to the token itself.
         """
-        # 'phead': projected head
-        if word_instance.phead == '0':  # word represents the sentence root
+        # 'head_attr': (projected) head
+        head = word_instance.__getattribute__(self.head_attr)
+        deprel = word_instance.__getattribute__(self.deprel_attr)
+        if head == '0':
+            # word represents the sentence root
             source_id = sent_id
         else:
-            source_id = '{}_t{}'.format(sent_id, word_instance.phead)
+            source_id = '{}_t{}'.format(sent_id, head)
             # TODO: fix issue #39, so we don't have to add nodes explicitly
             if source_id not in self.node:
                 self.add_node(source_id, layers={self.ns})
@@ -246,8 +255,8 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         try:
             self.add_edge(source_id, target_id,
                           layers={self.ns, self.ns+':dependency'},
-                          relation_type=word_instance.pdeprel,
-                          label=word_instance.pdeprel,
+                          relation_type=deprel,
+                          label=deprel,
                           edge_type=EdgeTypes.dominance_relation)
         except AssertionError:
             print "source: {}, target: {}".format(source_id, target_id)
@@ -441,7 +450,7 @@ class Conll2009File(object):
             out_file.write(self.__str__())
 
 
-def traverse_dependencies_up(docgraph, node_id, node_attribute='plemma'):
+def traverse_dependencies_up(docgraph, node_id, node_attr=None):
     """
     starting from the given node, traverse ingoing edges up to the root element
     of the sentence. return the given node attribute from all the nodes visited
@@ -449,13 +458,15 @@ def traverse_dependencies_up(docgraph, node_id, node_attribute='plemma'):
     """
     # there's only one, but we're in a multidigraph
     source, target = docgraph.in_edges(node_id)[0]
-    attrib_value = docgraph.node[source].get(node_attribute)
+    traverse_attr = node_attr if node_attr else docgraph.lemma_attr
+
+    attrib_value = docgraph.node[source].get(traverse_attr)
     if attrib_value:
         yield attrib_value
 
     if istoken(docgraph, source) is True:
         for attrib_value in traverse_dependencies_up(docgraph, source,
-                                                     node_attribute):
+                                                     traverse_attr):
             yield attrib_value
 
 
