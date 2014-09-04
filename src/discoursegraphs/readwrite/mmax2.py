@@ -120,6 +120,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         self.add_node(self.root, layers={self.ns})
         self.tokens = []
 
+        mmax_base_file = os.path.abspath(os.path.expanduser(mmax_base_file))
         mmax_rootdir, _ = os.path.split(mmax_base_file)
 
         mmax_project = MMAXProject(mmax_rootdir)
