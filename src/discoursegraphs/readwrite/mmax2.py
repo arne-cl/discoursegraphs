@@ -57,7 +57,8 @@ class MMAXProject(object):
         path_vars = ['basedata', 'scheme', 'style', 'style', 'customization',
                      'markable']
         for path_var in path_vars:
-            paths[path_var] = tree.find('//{}_path'.format(path_var)).text
+            specific_path = tree.find('//{}_path'.format(path_var)).text
+            paths[path_var] = specific_path if specific_path else project_path
         paths['project_path'] = project_path
 
         annotations = {}
