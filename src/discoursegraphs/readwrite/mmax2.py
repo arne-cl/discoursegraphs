@@ -188,31 +188,38 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
 
     def add_annotation_layer(self, annotation_file, layer_name):
         """
+        adds all markables from the given annotation layer to the discourse
+        graph.
         """
         assert os.path.isfile(annotation_file), \
             "Annotation file doesn't exist: {}".format(annotation_file)
         tree = etree.parse(annotation_file)
         root = tree.getroot()
 
+        default_layers = {self.ns, self.ns+':markable', self.ns+':'+layer_name}
+
         # avoids eml.org namespace handling
         for markable in root.iterchildren():
             markable_node_id = markable.attrib['id']
             markable_attribs = add_prefix(markable.attrib, self.ns+':')
             self.add_node(markable_node_id,
-                          layers={self.ns, self.ns+':markable'},
+                          layers=default_layers,
                           attr_dict=markable_attribs,
                           label=markable_node_id+':'+layer_name)
 
-            for to_node_id in spanstring2tokens(markable.attrib['span']):
+            for target_node_id in spanstring2tokens(markable.attrib['span']):
                 # manually add to_node if it's not in the graph, yet
                 # cf. issue #39
-                if to_node_id not in self:
-                    self.add_node(to_node_id,
+                if target_node_id not in self:
+                    self.add_node(target_node_id,
+                                  # adding 'mmax:layer_name' here could be
+                                  # misleading (e.g. each token would be part
+                                  # of the 'mmax:sentence' layer
                                   layers={self.ns, self.ns+':markable'},
-                                  label=to_node_id+':'+layer_name)
+                                  label=target_node_id)
 
-                self.add_edge(markable_node_id, to_node_id,
-                              layers={self.ns, self.ns+':markable'},
+                self.add_edge(markable_node_id, target_node_id,
+                              layers=default_layers,
                               edge_type=EdgeTypes.spanning_relation,
                               label=self.ns+':'+layer_name)
 
@@ -239,10 +246,10 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                     # cf. issue #39
                     if antecedent_node_id not in self:
                         self.add_node(antecedent_node_id,
-                                      layers={self.ns, self.ns+':markable'})
+                                      layers=default_layers)
 
                     self.add_edge(markable_node_id, antecedent_node_id,
-                                  layers={self.ns, self.ns+':markable'},
+                                  layers=default_layers,
                                   edge_type=EdgeTypes.pointing_relation,
                                   label=self.ns+edge_label)
 
