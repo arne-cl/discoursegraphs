@@ -813,12 +813,12 @@ def __walk_chain(rel_dict, from_id):
     return paths_starting_with_id
 
 
-def get_pointing_chains(docgraph):
+def get_pointing_chains(docgraph, layer=None):
     """
     returns a list of chained pointing relations (e.g. coreference chains)
     found in the given document graph.
     """
-    pointing_relations = select_edges_by(docgraph,
+    pointing_relations = select_edges_by(docgraph, layer=layer,
                                          edge_type=EdgeTypes.pointing_relation)
 
     # a markable can point to more than one antecedent, cf. Issue #40
