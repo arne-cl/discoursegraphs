@@ -573,6 +573,13 @@ def rename_tokens(docgraph_with_old_names, docgraph_with_new_names):
 
     This will only work, iff both graphs have the same tokenization.
     """
+    old2new = create_token_mapping(docgraph_with_old_names,
+                                   docgraph_with_new_names)
+    relabel_nodes(docgraph_with_old_names, old2new, copy=False)
+    docgraph_with_old_names.tokens = old2new.values()
+
+
+def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names):
     old_token_ids = list(docgraph_with_old_names.get_tokens())
     new_token_ids = docgraph_with_new_names.get_tokens()
 
@@ -588,8 +595,8 @@ def rename_tokens(docgraph_with_old_names, docgraph_with_new_names):
                     new_tok, old_tok).encode('utf-8'))
         else:
             old2new[old_tok_id] = new_tok_id
-    relabel_nodes(docgraph_with_old_names, old2new, copy=False)
-    docgraph_with_old_names.tokens = old2new.values()
+    return old2new
+
 
 
 def get_annotation_layers(docgraph):
