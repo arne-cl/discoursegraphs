@@ -13,7 +13,7 @@ import sys
 import argparse
 from networkx import write_dot
 
-from discoursegraphs.readwrite.tiger import TigerDocumentGraph
+from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.util import create_dir
 
 
@@ -44,42 +44,45 @@ def merging_cli(debug=False):
 
     args = parser.parse_args(sys.argv[1:])
 
-    assert args.tiger_file, \
-        "You'll need to provide at least a TigerXML file."
-
     for filepath in (args.tiger_file, args.rst_file, args.anaphoricity_file,
                      args.conano_file):
         if filepath:  # if it was specified on the command line
             assert os.path.isfile(filepath), \
                 "File '{}' doesn't exist".format(filepath)
 
-    tiger_docgraph = TigerDocumentGraph(args.tiger_file)
+    # create an empty document graph. merge it with other graphs later on.
+    discourse_docgraph = DiscourseDocumentGraph()
+
+    if args.tiger_file:
+        from discoursegraphs.readwrite.tiger import TigerDocumentGraph
+        tiger_docgraph = TigerDocumentGraph(args.tiger_file)
+        discourse_docgraph.merge_graphs(tiger_docgraph)
 
     if args.rst_file:
         from discoursegraphs.readwrite.rst import RSTGraph
         rst_graph = RSTGraph(args.rst_file)
-        tiger_docgraph.merge_graphs(rst_graph)
+        discourse_docgraph.merge_graphs(rst_graph)
 
     if args.anaphoricity_file:
         from discoursegraphs.readwrite import AnaphoraDocumentGraph
         anaphora_graph = AnaphoraDocumentGraph(args.anaphoricity_file)
-        tiger_docgraph.merge_graphs(anaphora_graph)
+        discourse_docgraph.merge_graphs(anaphora_graph)
         # the anaphora doc graph only contains trivial edges from its root
         # node.
         try:
-            tiger_docgraph.remove_node('anaphoricity:root_node')
+            discourse_docgraph.remove_node('anaphoricity:root_node')
         except:
             pass
 
     if args.conano_file:
         from discoursegraphs.readwrite import ConanoDocumentGraph
         conano_graph = ConanoDocumentGraph(args.conano_file)
-        tiger_docgraph.merge_graphs(conano_graph)
+        discourse_docgraph.merge_graphs(conano_graph)
 
     if args.mmax_file:
         from discoursegraphs.readwrite import MMAXDocumentGraph
         mmax_graph = MMAXDocumentGraph(args.mmax_file)
-        tiger_docgraph.merge_graphs(mmax_graph)
+        discourse_docgraph.merge_graphs(mmax_graph)
 
     if isinstance(args.output_file, str):  # if we're not piping to stdout ...
         # we need abspath to handle files in the current directory
@@ -89,56 +92,56 @@ def merging_cli(debug=False):
             create_dir(path_to_output_file)
 
     if args.output_format == 'dot':
-        write_dot(tiger_docgraph, args.output_file)
+        write_dot(discourse_docgraph, args.output_file)
     elif args.output_format == 'pickle':
         import cPickle as pickle
         with open(args.output_file, 'wb') as pickle_file:
-            pickle.dump(tiger_docgraph, pickle_file)
+            pickle.dump(discourse_docgraph, pickle_file)
     elif args.output_format == 'geoff':
         from discoursegraphs.readwrite.neo4j import write_geoff
-        write_geoff(tiger_docgraph, args.output_file)
+        write_geoff(discourse_docgraph, args.output_file)
         print ''  # this is just cosmetic for stdout
     elif args.output_format == 'gexf':
         from networkx import write_gexf
         from discoursegraphs.readwrite.generic import (layerset2str,
                                                        attriblist2str)
-        layerset2str(tiger_docgraph)
-        attriblist2str(tiger_docgraph)
-        write_gexf(tiger_docgraph, args.output_file)
+        layerset2str(discourse_docgraph)
+        attriblist2str(discourse_docgraph)
+        write_gexf(discourse_docgraph, args.output_file)
     elif args.output_format == 'gml':
         from networkx import write_gml
         from discoursegraphs.readwrite.generic import ensure_ascii_labels
         from discoursegraphs.readwrite.generic import (layerset2str,
                                                        attriblist2str)
-        layerset2str(tiger_docgraph)
-        attriblist2str(tiger_docgraph)
-        ensure_ascii_labels(tiger_docgraph)
-        write_gml(tiger_docgraph, args.output_file)
+        layerset2str(discourse_docgraph)
+        attriblist2str(discourse_docgraph)
+        ensure_ascii_labels(discourse_docgraph)
+        write_gml(discourse_docgraph, args.output_file)
     elif args.output_format == 'graphml':
         from networkx import write_graphml
         from discoursegraphs.readwrite.generic import (layerset2str,
                                                        attriblist2str)
-        layerset2str(tiger_docgraph)
-        attriblist2str(tiger_docgraph)
-        write_graphml(tiger_docgraph, args.output_file)
+        layerset2str(discourse_docgraph)
+        attriblist2str(discourse_docgraph)
+        write_graphml(discourse_docgraph, args.output_file)
     elif args.output_format == 'neo4j':
         import requests
         from discoursegraphs.readwrite.neo4j import upload_to_neo4j
         try:
-            upload_to_neo4j(tiger_docgraph)
+            upload_to_neo4j(discourse_docgraph)
         except requests.exceptions.ConnectionError as e:
             sys.stderr.write(
                 ("Can't upload graph to Neo4j server. "
                  "Is it running?\n{}\n".format(e)))
     elif args.output_format == 'exmaralda':
         from discoursegraphs.readwrite.exmaralda import write_exb
-        write_exb(tiger_docgraph, args.output_file)
+        write_exb(discourse_docgraph, args.output_file)
     elif args.output_format == 'conll':
         from discoursegraphs.readwrite.conll import write_conll
-        write_conll(tiger_docgraph, args.output_file)
+        write_conll(discourse_docgraph, args.output_file)
     elif args.output_format == 'paula':
         from discoursegraphs.readwrite.paulaxml.paula import write_paula
-        write_paula(tiger_docgraph, args.output_file)
+        write_paula(discourse_docgraph, args.output_file)
 
     elif args.output_format == 'no-output':
         pass  # just testing if the merging works
