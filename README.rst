@@ -40,6 +40,12 @@ So far, the following formats can be imported and merged:
 Installation
 ------------
 
+This should work on both Linux and Mac OSX using `Python 2.7`_ and
+either `pip`_ or easy_install.
+
+.. _`Python 2.7`: https://www.python.org/downloads/
+.. _`pip`: https://pip.pypa.io/en/latest/installing.html
+
 Install from PyPI
 ~~~~~~~~~~~~~~~~~
 
