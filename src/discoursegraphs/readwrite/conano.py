@@ -139,7 +139,6 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
     def _add_token_to_document(self, token_id, token, token_attribs,
                                connected=False):
         """
-        TODO: add 'relation' attribute to connective node!
         TODO: how to handle modifiers?
 
         Parameters
@@ -159,10 +158,16 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         assert isinstance(token_id, int) and token_id >= 0
         token_node_id = 'token-{}'.format(token_id)
         token_str = ensure_unicode(token)
+
+        attr_dict = {self.ns+':token': token_str, 'label': token_str}
+        token_layers={self.ns, self.ns+':token'}
+        if 'relation' in token_attribs:
+            attr_dict.update({'relation': token_attribs['relation']})
+            token_layers.update({self.ns+':connective'})
         self.add_node(
             token_node_id,
-            layers={self.ns, self.ns+':token'},
-            attr_dict={self.ns+':token': token_str, 'label': token_str})
+            layers=token_layers,
+            attr_dict=attr_dict)
 
         self.tokens.append(token_node_id)
 
@@ -185,11 +190,20 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
 
     def _parse_conano_element(self, token_list, element, part='text'):
         """
+        parses a single XML element from a Conano document (i.e. a <discourse>,
+        <unit>, <connective> or <modifier>) and fills the given token list
+        with information about the tokens contained by this element.
+
         Parameters
         ----------
-        token_list : list of str or unicode
-            the list of tokens to which the tokens from this element
-            are added
+        token_list : list of (str/unicode, dict) tuples
+            the list of (token string, token dict) tuples, to which the tokens
+            from this element are added. the token dict contains a ``spans``
+            attribute, which holds a list of (element type, element ID) tuples
+            of elements that dominate this one.
+            In the case of a <connective>, the dict also contains a ``relation``
+            type string and the ``connective`` token string.
+
         element : etree._Element
             an element of the etree representation of a Conano XML file
         part : str
@@ -201,25 +215,36 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         if element_str:
             cleaned_str = element_str.strip()
             if cleaned_str:
+                # all the tokens contained in this element
                 tokens = cleaned_str.split()
                 dominating_spans = []
-                if element.tag != 'discourse':  # discourse is the root element
+                # if the current element is not the root element (<discourse>)
+                if element.tag != 'discourse':
                     dominating_spans.append(
                         (element.attrib.get('type', element.tag),
                          element.attrib.get('id', '')))
 
+                # ``dominate_spans`` will contain a list of all elements that
+                # dominate this one (except for the root element), given as
+                # (element type, element ID) tuples, e.g. ('ext', '4')
                 dominating_spans.extend(
                     [(a.attrib.get('type', a.tag), a.attrib.get('id', ''))
                      for a in element.iterancestors()
                      if a.tag != 'discourse'])
 
+                # adds a (token string, token dict) tuple to ``token_list``
+                # for each token that is contained in this element.
                 for token in tokens:
-                    if element.tag == 'connective':
-                        token_list.append(
-                            (token, {'spans': dominating_spans,
-                                     'relation': element.attrib['relation']}))
+                    if element.tag == 'connective' and part == 'text':
+                        token_dict = {'spans': dominating_spans,
+                                      'relation': element.attrib['relation'],
+                                      'connective': cleaned_str}
+                    # if we're parsing a <discourse>, <unit> or <modifier> or
+                    # the tail of a <connective> element
                     else:
-                        token_list.append((token, {'spans': dominating_spans}))
+                        token_dict = {'spans': dominating_spans}
+
+                    token_list.append((token, token_dict))
 
     def _parse_conano(self, root_element):
         """
