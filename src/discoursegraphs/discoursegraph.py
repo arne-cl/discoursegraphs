@@ -544,7 +544,16 @@ class DiscourseDocumentGraph(MultiDiGraph):
         # renaming the tokens of the other graph to match this one
         rename_tokens(other_docgraph, self)
         self.add_nodes_from(other_docgraph.nodes(data=True))
+
+        # copy token node attributes to the current namespace
+        for node_id, node_attrs in other_docgraph.nodes(data=True):
+            if istoken(other_docgraph, node_id):
+                if self.ns+':token' not in self.node[node_id]:
+                    self.node[node_id].update({self.ns+':token': other_docgraph.get_token(node_id)})
         self.add_edges_from(other_docgraph.edges(data=True))
+
+        if other_docgraph.tokens and not self.tokens:
+            self.tokens = other_docgraph.tokens
 
     def add_precedence_relations(self):
         """
