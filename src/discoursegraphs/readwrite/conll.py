@@ -120,7 +120,13 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         # super calls __init__() of base class DiscourseDocumentGraph
         super(ConllDocumentGraph, self).__init__()
 
-        self.name = name if name else os.path.basename(conll_filepath)
+        if name:
+            self.name = name
+        elif isinstance(conll_filepath, str):
+             self.name = os.path.basename(conll_filepath)
+        else: # conll_filepath is a file object
+            self.name = conll_filepath.name
+
         self.ns = namespace
         self.root = self.ns+':root_node'
         self.add_node(self.root, layers={self.ns})
@@ -149,14 +155,20 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         else:
             word_class = Conll2010Word
 
-        with codecs.open(conll_filepath, 'r', 'utf-8') as conll_file:
-            conll_str = conll_file.read()
+        def parse_conll_file(conll_file, encoding=None):
+            conll_str = conll_file.read().decode(encoding) if encoding else conll_file.read()
             sentences = conll_str.strip().split("\n\n")
             for i, sentence in enumerate(sentences, 1):
                 sent_id = self.__add_sentence_root_node(i)
                 for word in self.__parse_conll_sentence(sentence, word_class):
                     self.__add_token(word, sent_id)
                     self.__add_dependency(word, sent_id)
+
+        if isinstance(conll_filepath, str):
+            with codecs.open(conll_filepath, 'r', 'utf-8') as conll_file:
+                parse_conll_file(conll_file)
+        else:  # conll_filepath is a file object (e.g. stdin)
+            parse_conll_file(conll_filepath, encoding='utf-8')
 
     def __parse_conll_sentence(self, sentence, word_class):
         """
