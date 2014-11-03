@@ -535,8 +535,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
     def merge_graphs(self, other_docgraph):
         """
-        Merges this graph with another document graph, thereby adding all the
-        necessary nodes and edges (with attributes, layers etc.) to this one.
+        Merges another document graph into the current one, thereby adding all
+        the necessary nodes and edges (with attributes, layers etc.).
 
         NOTE: This will only work if both graphs have exactly the same
         tokenization.
@@ -552,8 +552,12 @@ class DiscourseDocumentGraph(MultiDiGraph):
                     self.node[node_id].update({self.ns+':token': other_docgraph.get_token(node_id)})
         self.add_edges_from(other_docgraph.edges(data=True))
 
+        # copy the token node IDs / sentence node IDs from the other graph,
+        # if this graph doesn't have such lists, yet
         if other_docgraph.tokens and not self.tokens:
             self.tokens = other_docgraph.tokens
+        if other_docgraph.sentences and not self.sentences:
+            self.sentences = other_docgraph.sentences
 
     def add_precedence_relations(self):
         """

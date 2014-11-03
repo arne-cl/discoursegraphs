@@ -9,7 +9,8 @@ graph (``DiscourseDocumentGraph``).
 
 import os
 from lxml import etree
-from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
+from discoursegraphs import (DiscourseDocumentGraph, EdgeTypes,
+                             select_nodes_by_layer)
 from discoursegraphs.util import ensure_unicode, add_prefix
 from discoursegraphs.readwrite.generic import generic_converter_cli
 
@@ -145,6 +146,26 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                 mmax_project.paths['markable'],
                 file_id+layer_dict['file_extension'])
             self.add_annotation_layer(annotation_file, layer_name)
+
+        # the sentence root nodes can only be extracted after all the
+        # annotation layers are parsed
+        self.sentences = self.get_sentence_root_nodes()
+        # add the list of tokens in a sentence to the sentence root node
+        # and extend the document token list accordingly
+        for sentence in self.sentences:
+            sentence_token_nodes = self.get_token_nodes_from_sentence(sentence)
+            self.node[sentence]['tokens'] = sentence_token_nodes
+            self.tokens.extend(sentence_token_nodes)
+
+    def get_sentence_root_nodes(self):
+        """
+        returns a list of sentence root node IDs (if they were annotated
+        as such in the original MMAX2 data; otherwise, the list will be empty).
+        """
+        return list(select_nodes_by_layer(self, self.ns+':sentence'))
+
+    def get_token_nodes_from_sentence(self, sentence_root_node):
+        return spanstring2tokens(self.node[sentence_root_node][self.ns+':span'])
 
     def get_file_id(self, mmax_base_file):
         """
