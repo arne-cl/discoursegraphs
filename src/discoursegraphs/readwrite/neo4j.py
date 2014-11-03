@@ -73,6 +73,9 @@ def upload_to_neo4j(discoursegraph):
     """
     layerset2list(discoursegraph)
     add_node_ids_as_labels(discoursegraph)
+    # neonx requires a label_name as a fallback, in case a node doesn't
+    # have the specified label_attrib to extract the label from
     return write_to_neo("http://localhost:7474/db/data/",
                         discoursegraph, edge_rel_name='LINKS_TO',
-                        edge_rel_attrib='edge_type', label_attrib='label')
+                        edge_rel_attrib='edge_type', label_attrib='label',
+                        label_name='discoursegraph:fallback_label')
