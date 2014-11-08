@@ -90,7 +90,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
     """
     def __init__(self, mmax_base_file, name=None, namespace='mmax',
                  precedence=False, connected=False,
-                 ignore_sentence_annotations=False):
+                 ignore_sentence_annotations=True):
         """
         Parameters
         ----------
