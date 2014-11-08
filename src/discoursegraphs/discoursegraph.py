@@ -589,7 +589,11 @@ def rename_tokens(docgraph_with_old_names, docgraph_with_new_names):
     old2new = create_token_mapping(docgraph_with_old_names,
                                    docgraph_with_new_names)
     relabel_nodes(docgraph_with_old_names, old2new, copy=False)
-    docgraph_with_old_names.tokens = old2new.values()
+    new_token_ids = old2new.values()
+
+    # new_token_ids could be empty (if docgraph_with_new_names is still empty)
+    if new_token_ids:
+        docgraph_with_old_names.tokens = new_token_ids
 
 
 def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names):
