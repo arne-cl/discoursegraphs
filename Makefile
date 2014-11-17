@@ -1,6 +1,6 @@
 # a '-' before a shell command causes make to ignore its exit code (errors)
 
-MAZ = ~/repos/pcc-annis-merged/maz176
+MAZ = ~/corpora/potsdam-commentary-corpus-2.0.0
 
 all:
 	mkdir -p /tmp/dg
