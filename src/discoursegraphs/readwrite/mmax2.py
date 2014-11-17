@@ -23,6 +23,7 @@ class MMAXProject(object):
     TODO: refactor this into an MMAXCorpusGraph(DiscourseCorpusGraph)
     """
     def __init__(self, project_path):
+        self.project_path = project_path
         self.paths, self.annotations, self.stylesheet = \
             self._parse_common_paths_file(project_path)
 
