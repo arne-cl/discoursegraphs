@@ -122,12 +122,13 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         self.root = self.ns+':root_node'
         self.add_node(self.root, layers={self.ns})
         self.tokens = []
+        self.ignore_sentence_annotations = ignore_sentence_annotations
 
         mmax_base_file = os.path.abspath(os.path.expanduser(mmax_base_file))
         mmax_rootdir, _ = os.path.split(mmax_base_file)
 
-        mmax_project = MMAXProject(mmax_rootdir)
-        words_file = self.get_word_file(mmax_project, mmax_base_file)
+        self.mmax_project = MMAXProject(mmax_rootdir)
+        words_file = self.get_word_file(mmax_base_file)
 
         if precedence:
             self.add_token_layer(words_file, connected=False)
@@ -135,35 +136,54 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         else:
             self.add_token_layer(words_file, connected)
 
-        if ignore_sentence_annotations:
-            mmax_project.annotations.pop('sentence',
-                                         'no sentence annotation layer')
+        if self.ignore_sentence_annotations:
+            annotation_layers = set(self.mmax_project.annotations)
+            annotation_layers.discard('sentence')
+        else:
+            annotation_layers = self.mmax_project.annotations
 
-        for layer_name in mmax_project.annotations:
-            layer_dict = mmax_project.annotations[layer_name]
+        for layer_name in annotation_layers:
+            layer_dict = self.mmax_project.annotations[layer_name]
             file_id = self.get_file_id(mmax_base_file)
             annotation_file = os.path.join(
                 mmax_rootdir,
-                mmax_project.paths['markable'],
+                self.mmax_project.paths['markable'],
                 file_id+layer_dict['file_extension'])
             self.add_annotation_layer(annotation_file, layer_name)
 
         # the sentence root nodes can only be extracted after all the
         # annotation layers are parsed
-        self.sentences = self.get_sentence_root_nodes()
+        self.sentences, sentence_token_nodes = self.get_sentences_and_token_nodes()
         # add the list of tokens in a sentence to the sentence root node
         # and extend the document token list accordingly
-        for sentence in self.sentences:
-            sentence_token_nodes = self.get_token_nodes_from_sentence(sentence)
-            self.node[sentence]['tokens'] = sentence_token_nodes
-            self.tokens.extend(sentence_token_nodes)
+        for i, sentence in enumerate(self.sentences):
+            self.node[sentence]['tokens'] = sentence_token_nodes[i]
+            self.tokens.extend(sentence_token_nodes[i])
 
-    def get_sentence_root_nodes(self):
+    def get_sentences_and_token_nodes(self):
         """
         returns a list of sentence root node IDs (if they were annotated
         as such in the original MMAX2 data; otherwise, the list will be empty).
         """
-        return list(select_nodes_by_layer(self, self.ns+':sentence'))
+        if self.ignore_sentence_annotations:
+            mp = self.mmax_project
+            layer_dict = mp.annotations['sentence']
+            file_id = self.get_file_id(self.name)
+            sentence_anno_file = os.path.join(mp.project_path,
+                mp.paths['markable'], file_id+layer_dict['file_extension'])
+            tree = etree.parse(sentence_anno_file)
+            root = tree.getroot()
+            sentence_root_nodes = []
+            sentence_token_nodes = []
+            for markable in root.iterchildren():
+                sentence_root_nodes.append(markable.attrib['id'])
+                sentence_token_nodes.append(spanstring2tokens(markable.attrib['span']))
+                self.add_node(markable.attrib['id'], layers={self.ns+':sentence'})
+            return sentence_root_nodes, sentence_token_nodes
+        else:
+            sentence_root_nodes = list(select_nodes_by_layer(self, self.ns+':sentence'))
+            sentence_token_nodes = [get_token_nodes_from_sentence(sent_node) for sent_node in sentence_root_nodes]
+            return sentence_root_nodes, sentence_token_nodes
 
     def get_token_nodes_from_sentence(self, sentence_root_node):
         return spanstring2tokens(self.node[sentence_root_node][self.ns+':span'])
@@ -175,14 +195,14 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         # removes '.mmax' from filename
         return os.path.basename(mmax_base_file)[:-5]
 
-    def get_word_file(self, mmax_project, mmax_base_file):
+    def get_word_file(self, mmax_base_file):
         """
         parses an MMAX base file (*.mmax) and returns the path
         to the corresponding _words.xml file (which contains
         the tokens of the document).
         """
-        return os.path.join(mmax_project.paths['project_path'],
-                            mmax_project.paths['basedata'],
+        return os.path.join(self.mmax_project.paths['project_path'],
+                            self.mmax_project.paths['basedata'],
                             etree.parse(mmax_base_file).find('//words').text)
 
     def add_token_layer(self, words_file, connected):
