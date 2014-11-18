@@ -162,9 +162,27 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
 
     def get_sentences_and_token_nodes(self):
         """
-        returns a list of sentence root node IDs (if they were annotated
-        as such in the original MMAX2 data; otherwise, the list will be empty).
+        Returns a list of sentence root node IDs and a list of sentences,
+        where each list contains the token node IDs of that sentence.
+        Both lists will be empty if sentences were not annotated in the original
+        MMAX2 data.
+
+        TODO: Refactor this! There's code overlap with
+        self.add_annotation_layer(). Ideally, we would always import sentence
+        annotations and filter them out in the exporters (e.g. Exmaralda,
+        CoNLL), probably by modifying get_pointing_chains().
+
+        Returns
+        -------
+        sentence_root_nodes : list of str
+            a list of all sentence root node IDs, in the order they occur in the
+            text
+        token_nodes : list of list of str
+            a list of lists. each list represents a sentence and contains
+            token node IDs (in the order they occur in the text)
         """
+        # if sentence annotations were ignored during MMAXDocumentGraph
+        # construction, we need to extract sentence/token node IDs manually
         if self.ignore_sentence_annotations:
             mp = self.mmax_project
             layer_dict = mp.annotations['sentence']
@@ -174,16 +192,29 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
             tree = etree.parse(sentence_anno_file)
             root = tree.getroot()
             sentence_root_nodes = []
-            sentence_token_nodes = []
+            token_nodes = []
             for markable in root.iterchildren():
                 sentence_root_nodes.append(markable.attrib['id'])
-                sentence_token_nodes.append(spanstring2tokens(markable.attrib['span']))
-                self.add_node(markable.attrib['id'], layers={self.ns+':sentence'})
-            return sentence_root_nodes, sentence_token_nodes
+
+                sentence_token_nodes = []
+                for token_id in spanstring2tokens(markable.attrib['span']):
+                    # ignore token IDs that aren't used in the *_words.xml file
+                    # NOTE: we only need this filter for broken files in the PCC corpus
+                    if token_id in self.tokens:
+                        sentence_token_nodes.append(token_id)
+                        self.add_node(markable.attrib['id'], layers={self.ns+':sentence'})
+                token_nodes.append(sentence_token_nodes)
         else:
             sentence_root_nodes = list(select_nodes_by_layer(self, self.ns+':sentence'))
-            sentence_token_nodes = [get_token_nodes_from_sentence(sent_node) for sent_node in sentence_root_nodes]
-            return sentence_root_nodes, sentence_token_nodes
+            for sent_node in sentence_root_nodes:
+                sentence_token_nodes = []
+                for token_id in get_token_nodes_from_sentence(sent_node):
+                    # ignore token IDs that aren't used in the *_words.xml file
+                    # NOTE: we only need this filter for broken files in the PCC corpus
+                    if token_id in self.tokens:
+                        sentence_token_nodes.append(token_id)
+                token_nodes.append(sentence_token_nodes)
+        return sentence_root_nodes, token_nodes
 
     def get_token_nodes_from_sentence(self, sentence_root_node):
         return spanstring2tokens(self.node[sentence_root_node][self.ns+':span'])
