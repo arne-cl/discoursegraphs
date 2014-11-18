@@ -11,7 +11,7 @@ import os
 from lxml import etree
 from discoursegraphs import (DiscourseDocumentGraph, EdgeTypes,
                              select_nodes_by_layer)
-from discoursegraphs.util import ensure_unicode, add_prefix
+from discoursegraphs.util import add_prefix, ensure_unicode, natural_sort_key
 from discoursegraphs.readwrite.generic import generic_converter_cli
 
 
@@ -153,12 +153,14 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
 
         # the sentence root nodes can only be extracted after all the
         # annotation layers are parsed
-        self.sentences, sentence_token_nodes = self.get_sentences_and_token_nodes()
+        sentence_root_nodes, token_nodes = self.get_sentences_and_token_nodes()
+        sentence_token_tuples = sort_sentences_by_token_order(sentence_root_nodes, token_nodes)
+        self.sentences, token_nodes = zip(*sentence_token_tuples)
         # add the list of tokens in a sentence to the sentence root node
         # and extend the document token list accordingly
-        for i, sentence in enumerate(self.sentences):
-            self.node[sentence]['tokens'] = sentence_token_nodes[i]
-            self.tokens.extend(sentence_token_nodes[i])
+        for sent_root_id, sent_token_node_ids in sentence_token_tuples:
+            self.node[sent_root_id]['tokens'] = sent_token_node_ids
+            self.tokens.extend(sent_token_node_ids)
 
     def get_sentences_and_token_nodes(self):
         """
@@ -392,6 +394,32 @@ def spanstring2text(docgraph, span_string):
     token_node_ids = spanstring2tokens(span_string)
     return u' '.join(docgraph.node[tok_node_id][docgraph.ns+':token']
                      for tok_node_id in token_node_ids)
+
+
+def sort_sentences_by_token_order(sentence_root_nodes, token_nodes):
+    """
+    Parameters
+    ----------
+    sentence_root_nodes : list of str
+        a list of all sentence root node IDs
+    token_nodes : list of list of str
+        a list of lists. each list represents a sentence and contains
+        token node IDs (in the order they occur in the text)
+
+    Returns
+    -------
+    sorted_sentence_tuples : list of (str, list of str) tuples
+        a list of all sentences in the order they occur in the text. each
+        sentence is represented by an list of ordered token node IDs
+    """
+    def sentence_sort_key(sentence_token_tuple):
+        """
+        extracts a sortable key from the first token node ID of a sentence
+        """
+        return natural_sort_key(sentence_token_tuple[1][0])
+
+    sentence_token_tuples = zip(sentence_root_nodes, token_nodes)
+    return sorted(sentence_token_tuples, key=sentence_sort_key)
 
 if __name__ == "__main__":
     generic_converter_cli(MMAXDocumentGraph,
