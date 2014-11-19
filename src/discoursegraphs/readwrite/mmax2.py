@@ -113,6 +113,9 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
             If True, sentences will not be annotated in the document graph
             (i.e. there will be no 'mmax:sentence' node for each sentence
             and no edge connecting it to each token node). (Default: True)
+            Only set this to false if you know what you're doing, as this
+            will mess up the output of Exmaralda, CoNLL and the like (i.e.
+            they will interpret sentence annotations as coreferences)!
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(MMAXDocumentGraph, self).__init__()
@@ -183,6 +186,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
             a list of lists. each list represents a sentence and contains
             token node IDs (in the order they occur in the text)
         """
+        token_nodes = []
         # if sentence annotations were ignored during MMAXDocumentGraph
         # construction, we need to extract sentence/token node IDs manually
         if self.ignore_sentence_annotations:
@@ -194,7 +198,6 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
             tree = etree.parse(sentence_anno_file)
             root = tree.getroot()
             sentence_root_nodes = []
-            token_nodes = []
             for markable in root.iterchildren():
                 sentence_root_nodes.append(markable.attrib['id'])
 
@@ -210,7 +213,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
             sentence_root_nodes = list(select_nodes_by_layer(self, self.ns+':sentence'))
             for sent_node in sentence_root_nodes:
                 sentence_token_nodes = []
-                for token_id in get_token_nodes_from_sentence(sent_node):
+                for token_id in self.get_token_nodes_from_sentence(sent_node):
                     # ignore token IDs that aren't used in the *_words.xml file
                     # NOTE: we only need this filter for broken files in the PCC corpus
                     if token_id in self.tokens:
