@@ -153,7 +153,7 @@ class RSTGraph(DiscourseDocumentGraph):
                                                          group_node_id)})
             else:
                 self.add_node(
-                    group_node_id, layers={self.ns, self.ns+':segment'},
+                    group_node_id, layers={self.ns, self.ns+':group'},
                     attr_dict={self.ns+':reltype': node_type,
                                'label': '{0}:{1}:{2}'.format(self.ns,
                                                              node_type,
@@ -165,14 +165,14 @@ class RSTGraph(DiscourseDocumentGraph):
                 parent_node_id = int(group.attrib['parent'])
                 if parent_node_id not in self:  # node not in graph, yet
                     self.add_node(
-                        parent_node_id, layers={self.ns, self.ns+':segment'},
+                        parent_node_id, layers={self.ns, self.ns+':group'},
                         label='{0}:{1}'.format(self.ns, parent_node_id))
 
                 group_rel = self.relations.get(group.attrib['relname'], 'span')
                 if group_rel in ('multinuc', 'span'):
                     from_node = parent_node_id
                     to_node = group_node_id
-                else:  # lif segment_rel == 'rst'
+                else:  # if group_rel == 'rst'
                     from_node = group_node_id
                     to_node = parent_node_id
 
