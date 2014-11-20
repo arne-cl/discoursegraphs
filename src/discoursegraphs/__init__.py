@@ -13,5 +13,6 @@ from discoursegraphs.discoursegraph import (
     get_annotation_layers, get_span,
     get_text, istoken, select_nodes_by_layer, select_edges_by, tokens2text,
     get_pointing_chains, get_top_level_layers)
+from discoursegraphs.readwrite.dot import print_dot
 from discoursegraphs.statistics import info
 from discoursegraphs.util import xmlprint, make_labels_explicit

@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Author: Arne Neumann <discoursegraphs.programming@arne.cl>
+
+"""
+This module contains code to convert document graphs to graphviz graphs
+("dot files") and manipulate them.
+"""
+
+import codecs
+from tempfile import NamedTemporaryFile
+from networkx import write_dot
+
+
+def print_dot(docgraph):
+    """
+    converts a document graph into a dot file and returns it as a string.
+
+    If this function call is prepended by %dotstr,
+    it will display the given document graph as a dot/graphviz graph
+    in the currently running IPython notebook session.
+
+    To use this function, the gvmagic IPython notebook extension
+    needs to be installed once::
+
+        %install_ext https://raw.github.com/cjdrake/ipython-magic/master/gvmagic.py
+
+    In order to visualize dot graphs in your currently running
+    IPython notebook, run this command once::
+
+        %load_ext gvmagic
+    """
+    tmp_file = NamedTemporaryFile()
+    write_dot(docgraph, tmp_file.name)
+    return codecs.open(tmp_file.name, encoding='utf8').read()
