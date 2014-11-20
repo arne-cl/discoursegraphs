@@ -84,7 +84,7 @@ class RSTGraph(DiscourseDocumentGraph):
         utf8_parser = etree.XMLParser(encoding="utf-8")
         rs3_xml_tree = etree.parse(rs3_filepath, utf8_parser)
         self.relations = extract_relationtypes(rs3_xml_tree)
-        self.__rst2graph(rs3_xml_tree)
+        self.__rst2graph(rs3_xml_tree, tokenize)
 
         if tokenize:
             self.__tokenize_segments()
@@ -92,7 +92,7 @@ class RSTGraph(DiscourseDocumentGraph):
             if precedence:
                 self.add_precedence_relations()
 
-    def __rst2graph(self, rs3_xml_tree):
+    def __rst2graph(self, rs3_xml_tree, tokenize):
         """
         Reads an RST tree (from an ElementTree representation of an RS3
         XML file) and adds all segments (nodes representing text) and
@@ -104,16 +104,26 @@ class RSTGraph(DiscourseDocumentGraph):
         ----------
         rs3_xml_tree : lxml.etree._ElementTree
             lxml ElementTree representation of an RS3 XML file
+        tokenize : bool
+            If True, the RST segments (i.e. nuclei and satellites) will
+            be tokenized and added as additonal token nodes to the
+            document graph (with edges from the respective RST segments).
+            If False, each RST segment will be labeled with the text it
+            represents.
         """
         rst_xml_root = rs3_xml_tree.getroot()
 
         # adds a node to the graph for each RST segment (nucleus or satellite)
         for segment in rst_xml_root.iterfind('./body/segment'):
             segment_node_id = int(segment.attrib['id'])
+            segment_text = sanitize_string(segment.text)
+            if tokenize:
+                segment_label = '{0}:segment:{1}'.format(self.ns, segment.attrib['id'])
+            else:
+                segment_label = segment_text
             self.add_node(
                 segment_node_id, layers={self.ns, self.ns+':segment'},
-                attr_dict={self.ns+':text': sanitize_string(segment.text)},
-                label='{0}:segment:{1}'.format(self.ns, segment.attrib['id']))
+                attr_dict={self.ns+':text': segment_text}, label=segment_label)
             self.segments.append(segment_node_id)
 
             # adds an edge from the parent node to the segment
