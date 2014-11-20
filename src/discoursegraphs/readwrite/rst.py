@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Author: Arne Neumann <arne-neumann@web.de>
+# Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 """
 This module converts an RS3 XML file (used by RSTTool to annotate

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Author: Arne Neumann
+# Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 """
 This module converts an MMAX2-annotated document into a networkx-based directed
