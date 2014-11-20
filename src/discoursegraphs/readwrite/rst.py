@@ -124,7 +124,7 @@ class RSTGraph(DiscourseDocumentGraph):
                 # if the parent node is not in graph yet, we'll add it first
                 if parent_node_id not in self:
                     self.add_node(parent_node_id,
-                                  layers={self.ns, self.ns+':segment'})
+                                  layers={self.ns, self.ns+':group'})
 
                 segment_rel = self.relations.get(segment.attrib['relname'],
                                                  'span')
