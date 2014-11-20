@@ -1,5 +1,5 @@
-Source Code Documentation
-=========================
+discoursegraphs
+===============
 
 .. toctree::
    :maxdepth: 4

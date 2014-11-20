@@ -1,40 +1,50 @@
-discoursegraphs Package
+discoursegraphs package
 =======================
 
-:mod:`discoursegraphs` Package
+Subpackages
+-----------
+
+.. toctree::
+
+    discoursegraphs.readwrite
+
+Submodules
+----------
+
+discoursegraphs.discoursegraph module
+-------------------------------------
+
+.. automodule:: discoursegraphs.discoursegraph
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+discoursegraphs.merging module
 ------------------------------
-
-.. automodule:: discoursegraphs.__init__
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`dg` Module
-----------------
-
-.. automodule:: discoursegraphs.dg
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`merging` Module
----------------------
 
 .. automodule:: discoursegraphs.merging
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`relabel` Module
----------------------
+discoursegraphs.relabel module
+------------------------------
 
 .. automodule:: discoursegraphs.relabel
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`util` Module
-------------------
+discoursegraphs.statistics module
+---------------------------------
+
+.. automodule:: discoursegraphs.statistics
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+discoursegraphs.util module
+---------------------------
 
 .. automodule:: discoursegraphs.util
     :members:
@@ -42,52 +52,10 @@ discoursegraphs Package
     :show-inheritance:
 
 
-:mod:`readwrite` Package
-------------------------
+Module contents
+---------------
 
-.. automodule:: discoursegraphs.readwrite.__init__
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`anaphoricity` Module
---------------------------
-
-.. automodule:: discoursegraphs.readwrite.anaphoricity
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`generic` Module
----------------------
-
-.. automodule:: discoursegraphs.readwrite.generic
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-
-:mod:`neo4j` Module
--------------------
-
-.. automodule:: discoursegraphs.readwrite.neo4j
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`rst` Module
------------------
-
-.. automodule:: discoursegraphs.readwrite.rst
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`tiger` Module
--------------------
-
-.. automodule:: discoursegraphs.readwrite.tiger
+.. automodule:: discoursegraphs
     :members:
     :undoc-members:
     :show-inheritance:
