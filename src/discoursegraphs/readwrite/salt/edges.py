@@ -150,16 +150,8 @@ class TextualRelation(SaltEdge):
 
 class DominanceRelation(SaltEdge):
     """
-    A `DominanceRelation` edge always links a `StructureNode` (source) to a
-    `TokenNode` (target). Every `DominanceRelation` has a `feature` attribute:
-
-    Attributes
-    ----------
-    features : dict of (str, str)  key-value pairs which e.g. describe
-    the syntactical constituent a token belongs to, such as
-    {'tiger.func': 'PP'}.
-
-    A DominanceRelation edge looks like this::
+    A ``DominanceRelation`` edge always links a ``StructureNode`` (source) to a
+    ``TokenNode`` (target). It looks like this::
 
         <edges xsi:type="sDocumentStructure:SDominanceRelation"
             source="//@nodes.251" target="//@nodes.134" layers="//@layers.2">
@@ -172,6 +164,12 @@ class DominanceRelation(SaltEdge):
             <labels xsi:type="saltCore:SAnnotation" name="tiger.func"
                 valueString="OC"/>
         </edges>
+
+    Attributes
+    ----------
+    features : dict of (str, str)
+        key-value pairs which e.g. describe the syntactical constituent a token
+        belongs to, such as {'tiger.func': 'PP'}.
     """
     def __init__(self, name, element_id, xsi_type, labels, source, target,
                  features=None, layers=None, xml=None):

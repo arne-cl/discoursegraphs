@@ -24,6 +24,19 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
     which has an outgoing edge to the sentence root nodes of each
     sentence.
 
+    To print all tokens of a Tiger document, just do::
+
+        tdg = TigerDocumentGraph('/path/to/tiger.file')
+        for token_id in tdg.tokens:
+            print tdg.node[token_id]['tiger:word']
+
+    If you want to access the tokens of a specific sentence, use::
+
+        tdg = TigerDocumentGraph('/path/to/tiger.file')
+        # print all tokens of the second sentence
+        for token_id in tdg.node[tdg.sentences[1]]['tokens']:
+            print tdg.get_token(token_id)
+
     Attributes
     ----------
     corpus_id : str
@@ -38,20 +51,6 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         contained in this document graph)
     tokens : list of str
         sorted list of all token node IDs contained in this document graph
-
-    To print all tokens of a Tiger document, just do::
-
-        tdg = TigerDocumentGraph('/path/to/tiger.file')
-        for token_id in tdg.tokens:
-            print tdg.node[token_id]['tiger:word']
-
-    If you want to access the tokens of a specific sentence, use::
-
-        tdg = TigerDocumentGraph('/path/to/tiger.file')
-        for sent_id in tdg.sentences:
-            print sent_id
-            for token_id in tdg.node[sent_id]['tokens']:
-                print tdg.node[token_id]['tiger:word']
     """
     def __init__(self, tiger_filepath, name=None, namespace='tiger'):
         """

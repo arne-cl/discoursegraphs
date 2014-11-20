@@ -226,15 +226,15 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
 
     def get_file_id(self, mmax_base_file):
         """
-        given an MMAX base file (*.mmax), returns its file ID.
+        given an MMAX base file (``*.mmax``), returns its file ID.
         """
         # removes '.mmax' from filename
         return os.path.basename(mmax_base_file)[:-5]
 
     def get_word_file(self, mmax_base_file):
         """
-        parses an MMAX base file (*.mmax) and returns the path
-        to the corresponding _words.xml file (which contains
+        parses an MMAX base file (``*.mmax``) and returns the path
+        to the corresponding ``_words.xml`` file (which contains
         the tokens of the document).
         """
         return os.path.join(self.mmax_project.paths['project_path'],

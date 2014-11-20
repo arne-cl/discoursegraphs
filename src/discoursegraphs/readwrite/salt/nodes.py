@@ -189,7 +189,7 @@ class StructureNode(SaltNode):
 
 def extract_sentences(nodes, token_node_indices):
     """
-    given a list of ``SaltNode``s, returns a list of lists, where each list
+    given a list of ``SaltNode``\s, returns a list of lists, where each list
     contains the indices of the nodes belonging to that sentence.
     """
     sents = []

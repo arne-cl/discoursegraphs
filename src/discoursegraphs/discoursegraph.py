@@ -520,7 +520,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
             name of the node attribute that contains the token string as its
             value (default: token).
 
-        Returns
+        Yields
         -------
         result : generator of (str, unicode) or generator unicode
             a generator of (token node ID, token string) tuples if

@@ -6,8 +6,9 @@ suitable for graph visualization.
 
 TODO: get parent element statistics!
 
-:var XSI_TYPE_CLASSES: a dict that maps xsi:types (which most elements in a
-SaltXML file have) to the Classes that represent those elements
+:var XSI_TYPE_CLASSES:
+    a dict that maps xsi:types (which most elements in a SaltXML file have)
+    to the Classes that represent those elements
 """
 
 import os
@@ -86,7 +87,7 @@ class SaltXMIGraph(nx.DiGraph):
 class SaltDocument(object):
     """
     represents the relevant parts of a SaltXML file as a class (with lists
-    of ``SaltNode``s, ``SaltEdge``s and ``SaltLayer``s.
+    of ``SaltNode``\s, ``SaltEdge``\s and ``SaltLayer``\s.
 
     Attributes
     ----------
@@ -380,7 +381,7 @@ def get_doc_id(element_tree):
 def subtype_ids(elements, subtype):
     """
     returns the ids of all elements of a list that have a certain type,
-    e.g. show all the nodes that are `TokenNode`s.
+    e.g. show all the nodes that are ``TokenNode``\s.
     """
     return [i for (i, element) in enumerate(elements)
             if isinstance(element, subtype)]

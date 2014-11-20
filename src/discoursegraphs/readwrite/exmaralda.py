@@ -4,7 +4,7 @@
 
 """
 The ``exmaralda`` module converts a ``DiscourseDocumentGraph`` (possibly
-containing multiple annotation layers) into an Exmaralda *.exb file.
+containing multiple annotation layers) into an Exmaralda ``*.exb`` file.
 
 WARNING: This module contains lots of bad, academic code (i.e. I needed to get
 stuff done quickly for a presentation and didn't take the time to add
@@ -48,7 +48,7 @@ class ExmaraldaFile(object):
 
     def __str__(self):
         """
-        returns the generated Exmaralda *.exb file as a string.
+        returns the generated Exmaralda ``*.exb`` file as a string.
         """
         return etree.tostring(self.tree, pretty_print=True,
                               xml_declaration=True, encoding='UTF-8')
@@ -278,13 +278,17 @@ class ExmaraldaFile(object):
 
 def is_informative(layer):
     """
-    Parameter
-    ---------
+    returns true, iff the annotation layer contains information that 'makes
+    sense' in Exmaralda (i.e. there are annotations we don't need and which
+    would clutter the Exmaralda Partitur editor).
+
+    Parameters
+    ----------
     layer : str
         the name of a layer, e.g. 'tiger', 'tiger:token' or 'mmax:sentence'
 
-    Reuturns
-    --------
+    Returns
+    -------
     is_informative : bool
         Returns True, iff the layer is likely to contain information that
         should be exported to Exmaralda. Usually, we don't want to include
@@ -299,7 +303,7 @@ def is_informative(layer):
 
 def write_exb(docgraph, output_file):
     """
-    converts a DiscourseDocumentGraph into an Exmaralda *.exb file and
+    converts a DiscourseDocumentGraph into an Exmaralda ``*.exb`` file and
     writes it to the given file (or file path).
     """
     exmaralda_file = ExmaraldaFile(docgraph)
