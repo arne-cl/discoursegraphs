@@ -240,10 +240,8 @@ def extract_relationtypes(rs3_xml_tree):
         and relation types (either 'rst' or 'multinuc') as values
         (str).
     """
-    relations = {}
-    for rel in rs3_xml_tree.iterfind('//header/relations/rel'):
-        relations[rel.attrib['name']] = rel.attrib['type']
-    return relations
+    return {rel.attrib['name']: rel.attrib['type']
+            for rel in rs3_xml_tree.iterfind('//header/relations/rel')}
 
 
 if __name__ == '__main__':
