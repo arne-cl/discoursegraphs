@@ -116,7 +116,7 @@ class RSTGraph(DiscourseDocumentGraph):
                 label='{0}:segment:{1}'.format(self.ns, segment.attrib['id']))
             self.segments.append(segment_node_id)
 
-            # adds an edge from the parent node of the segment to the segment
+            # adds an edge from the parent node to the segment
             if 'parent' in segment.attrib:
                 # node has an outgoing edge,
                 # i.e. segment is in an RST relation
@@ -129,14 +129,14 @@ class RSTGraph(DiscourseDocumentGraph):
                 segment_rel = self.relations.get(segment.attrib['relname'],
                                                  'span')
                 if segment_rel in ('multinuc', 'span'):
-                    from_node = parent_node_id
-                    to_node = segment_node_id
+                    source_node = parent_node_id
+                    target_node = segment_node_id
                 else:  # if segment_rel == 'rst'
-                    from_node = segment_node_id
-                    to_node = parent_node_id
+                    source_node = segment_node_id
+                    target_node = parent_node_id
 
                 self.add_edge(
-                    from_node, to_node,
+                    source_node, target_node,
                     layers={self.ns, self.ns+':relation'},
                     attr_dict={self.ns+':relname': segment.attrib['relname'],
                                'label': self.ns+':'+segment.attrib['relname']},
@@ -170,14 +170,14 @@ class RSTGraph(DiscourseDocumentGraph):
 
                 group_rel = self.relations.get(group.attrib['relname'], 'span')
                 if group_rel in ('multinuc', 'span'):
-                    from_node = parent_node_id
-                    to_node = group_node_id
+                    source_node = parent_node_id
+                    target_node = group_node_id
                 else:  # if group_rel == 'rst'
-                    from_node = group_node_id
-                    to_node = parent_node_id
+                    source_node = group_node_id
+                    target_node = parent_node_id
 
                 self.add_edge(
-                    from_node, to_node,
+                    source_node, target_node,
                     layers={self.ns, self.ns+':relation'},
                     attr_dict={self.ns+':relname': group.attrib['relname'],
                                'label': self.ns+':'+group.attrib['relname']},
