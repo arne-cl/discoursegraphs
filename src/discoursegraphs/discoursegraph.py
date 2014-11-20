@@ -734,7 +734,7 @@ def istoken(docgraph, node_id):
     return docgraph.ns+':token' in docgraph.node[node_id]
 
 
-def select_nodes_by_layer(docgraph, layer):
+def select_nodes_by_layer(docgraph, layer, data=False):
     """
     Get all nodes belonging to the given layer.
 
@@ -744,15 +744,22 @@ def select_nodes_by_layer(docgraph, layer):
         document graph from which the nodes will be extracted
     layer : str
         name of the layer
+    data : bool
+        If True, results will include node attributes.
 
-    Returns
-    -------
-    nodes : generator of str
-        a container/list of node IDs that are present in the given layer
+    Yields
+    ------
+    nodes : generator of str or generator of (str, dict) tuple
+        If data is False (default), a generator of node IDs that are present in
+        the given layer. If data is True, a generator of (node ID, node attrib
+        dict) tuples.
     """
     for node_id, node_attribs in docgraph.nodes_iter(data=True):
         if layer in node_attribs['layers']:
-            yield node_id
+            if data:
+                yield (node_id, node_attribs)
+            else:
+                yield node_id
 
 
 def select_edges_by(docgraph, layer=None, edge_type=None, data=False):
