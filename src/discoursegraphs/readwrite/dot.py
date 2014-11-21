@@ -32,4 +32,10 @@ def print_dot(docgraph):
     """
     tmp_file = NamedTemporaryFile()
     write_dot(docgraph, tmp_file.name)
-    return codecs.open(tmp_file.name, encoding='utf8').read()
+    # write_dot does not seem to produce valid utf8 for all files, that's
+    # why we're adding error handling here
+    # 
+    # maz-10175.rs3, maz-10374.rs3 and maz-13758.rs3 cause this
+    # error: UnicodeDecodeError: 'utf8' codec can't decode byte 0xc3 in
+    # position ...: invalid continuation byte
+    return codecs.open(tmp_file.name, encoding='utf8', errors='replace').read()
