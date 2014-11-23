@@ -111,95 +111,83 @@ class RSTGraph(DiscourseDocumentGraph):
             If False, each RST segment will be labeled with the text it
             represents.
         """
-        rst_xml_root = rs3_xml_tree.getroot()
+        rst_root = rs3_xml_tree.getroot()
 
-        # adds a node to the graph for each RST segment (nucleus or satellite)
-        for segment in rst_xml_root.iterfind('./body/segment'):
-            segment_node_id = int(segment.attrib['id'])
+        # the rs3 format is weird. in order to determine edge directionality,
+        # we'll mark all nodes as being either a ``segment`` (nucleus or
+        # satellite) or a ``group`` (span of segments/groups or a multinucular
+        # relation between two or more groups or segments).
+        for element in rst_root.iter('segment', 'group'):
+            element_id = self.ns+':'+element.attrib['id']
+            self.add_node(element_id, layers={self.ns, self.ns+':'+element.tag})
+
+        # add attributes to segment nodes, as well as edges to/from other
+        # segments/groups
+        for segment in rst_root.iter('segment'):
+            segment_id = self.ns+':'+segment.attrib['id']
+            self.segments.append(segment_id)
             segment_text = sanitize_string(segment.text)
+
+            relname = segment.attrib.get('relname')
+            if not relname:
+                # an isolated segment, e.g. a news headline
+                segment_type = 'isolated'
+            elif relname == 'span':  # a nucleus (dominated by a span group)
+                segment_type = 'nucleus'
+            else:  # a satellite (dominated by a nucleus segment)
+                segment_type = 'satellite'
+
             if tokenize:
-                segment_label = '{0}:segment:{1}'.format(self.ns, segment.attrib['id'])
+                segment_label = u'[{0}]:{1}:segment:{2}'.format(
+                    segment_type[0], self.ns, segment.attrib['id'])
             else:
-                segment_label = segment_text
-            self.add_node(
-                segment_node_id, layers={self.ns, self.ns+':segment'},
-                attr_dict={self.ns+':text': segment_text}, label=segment_label)
-            self.segments.append(segment_node_id)
+                segment_label = u'[{0}]: {1}'.format(segment_type[0], segment_text)
 
-            # adds an edge from the parent node to the segment
-            if 'parent' in segment.attrib:
-                # node has an outgoing edge,
-                # i.e. segment is in an RST relation
-                parent_node_id = int(segment.attrib['parent'])
-                # if the parent node is not in graph yet, we'll add it first
-                if parent_node_id not in self:
-                    self.add_node(parent_node_id,
-                                  layers={self.ns, self.ns+':group'})
+            self.node[segment_id].update({self.ns+':text': segment_text,
+                                          'label': segment_label,
+                                          self.ns+':segment_type': segment_type})
+            
+            # skip to the next segment, if the node has no in/outgoing edge,
+            # (this often happens when annotating news headlines)
+            if 'parent' not in segment.attrib:
+                continue
 
-                segment_rel = self.relations.get(segment.attrib['relname'],
-                                                 'span')
-                if segment_rel in ('multinuc', 'span'):
-                    source_node = parent_node_id
-                    target_node = segment_node_id
-                else:  # if segment_rel == 'rst'
-                    source_node = segment_node_id
-                    target_node = parent_node_id
+            parent_id = self.ns+':'+segment.attrib['parent']
+            self.add_edge(parent_id, segment_id, layers={self.ns},
+                          attr_dict={self.ns+':rel_name': relname,
+                                     'label': self.ns+':'+relname},
+                          edge_type=EdgeTypes.dominance_relation)
 
-                self.add_edge(
-                    source_node, target_node,
-                    layers={self.ns, self.ns+':relation'},
-                    attr_dict={self.ns+':relname': segment.attrib['relname'],
-                               'label': self.ns+':'+segment.attrib['relname']},
-                    edge_type=EdgeTypes.dominance_relation)
+        # add attributes to group nodes, as well as in-edges from other
+        # groups
+        for group in rst_root.iter('group'):
+            group_id = self.ns+':'+group.attrib['id']
+            group_type = group.attrib['type']  # 'span' or 'multinuc'
 
-        for group in rst_xml_root.iterfind('./body/group'):
-            group_node_id = int(group.attrib['id'])
-            node_type = group.attrib['type']
-            if group_node_id in self:  # group node already exists
-                self.node[group_node_id].update(
-                    {self.ns+':reltype': node_type,
-                     'label': '{0}:group:{1}:{2}'.format(self.ns,
-                                                         node_type,
-                                                         group_node_id)})
-            else:
-                self.add_node(
-                    group_node_id, layers={self.ns, self.ns+':group'},
-                    attr_dict={self.ns+':reltype': node_type,
-                               'label': '{0}:{1}:{2}'.format(self.ns,
-                                                             node_type,
-                                                             group_node_id)})
+            self.node[group_id].update(
+                {self.ns+':group_type': group_type,
+                 'label': '{0}:group:{1}:{2}'.format(self.ns, group_type,
+                                                     group.attrib['id'])})
 
-            if 'parent' in group.attrib:
-                # node has an outgoing edge, i.e. group is not the
-                # topmost element in an RST tree
-                parent_node_id = int(group.attrib['parent'])
-                if parent_node_id not in self:  # node not in graph, yet
-                    self.add_node(
-                        parent_node_id, layers={self.ns, self.ns+':group'},
-                        label='{0}:{1}'.format(self.ns, parent_node_id))
-
-                group_rel = self.relations.get(group.attrib['relname'], 'span')
-                if group_rel in ('multinuc', 'span'):
-                    source_node = parent_node_id
-                    target_node = group_node_id
-                else:  # if group_rel == 'rst'
-                    source_node = group_node_id
-                    target_node = parent_node_id
-
-                self.add_edge(
-                    source_node, target_node,
-                    layers={self.ns, self.ns+':relation'},
-                    attr_dict={self.ns+':relname': group.attrib['relname'],
-                               'label': self.ns+':'+group.attrib['relname']},
-                    edge_type=EdgeTypes.dominance_relation)
-
-            else:  # group node is the root of an RST tree
-                self.root = group_node_id
-                existing_layers = self.node[group_node_id]['layers']
+            if 'parent' not in group.attrib:  # mark group RST root node
+                self.root = group_id
+                existing_layers = self.node[group_id]['layers']
                 all_layers = existing_layers.union({self.ns+':root'})
-                self.node[group_node_id].update(
+                self.node[group_id].update(
                     {'layers': all_layers,
-                     'label': '{0}:root:{1}'.format(self.ns, group_node_id)})
+                     'label': '{0}:root:{1}'.format(self.ns, group_id)})
+            else:
+                parent_id = self.ns+':'+group.attrib['parent']
+                relname = group.attrib['relname']
+                # type of the relation acc. to rst/header/relations,
+                # i.e. 'span', 'multinuc' or 'rst'
+                reltype = self.relations.get(relname, 'span')
+                self.add_edge(
+                    parent_id, group_id, layers={self.ns, self.ns+':relation'},
+                    attr_dict={self.ns+':rel_name': relname,
+                               self.ns+':rel_type': reltype,
+                               'label': self.ns+':'+relname},
+                    edge_type=EdgeTypes.dominance_relation)
 
     def __tokenize_segments(self):
         """
