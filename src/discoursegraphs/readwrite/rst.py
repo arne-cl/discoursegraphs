@@ -119,7 +119,8 @@ class RSTGraph(DiscourseDocumentGraph):
         # relation between two or more groups or segments).
         for element in rst_root.iter('segment', 'group'):
             element_id = self.ns+':'+element.attrib['id']
-            self.add_node(element_id, layers={self.ns, self.ns+':'+element.tag})
+            self.add_node(element_id, layers={self.ns, self.ns+':'+element.tag},
+                          attr_dict={self.ns+':rel_name': ''})
 
         # add attributes to segment nodes, as well as edges to/from other
         # segments/groups
@@ -141,7 +142,10 @@ class RSTGraph(DiscourseDocumentGraph):
                 segment_label = u'[{0}]:{1}:segment:{2}'.format(
                     segment_type[0], self.ns, segment.attrib['id'])
             else:
-                segment_label = u'[{0}]: {1}'.format(segment_type[0], segment_text)
+                # if the graph is not tokenized, put (the beginning of) the
+                # segment's text into its label
+                segment_label = u'[{0}]:{1}: {2}...'.format(
+                    segment_type[0], segment.attrib['id'], segment_text[:20])
 
             self.node[segment_id].update({self.ns+':text': segment_text,
                                           'label': segment_label,
@@ -153,6 +157,11 @@ class RSTGraph(DiscourseDocumentGraph):
                 continue
 
             parent_id = self.ns+':'+segment.attrib['parent']
+            # we'll search dominating nodes for their RST relations, so we'll
+            # have to add this information to the parent node
+            if relname != 'span':  # if it is an RST relation
+                self.node[parent_id].update({self.ns+':rel_name': relname})
+
             self.add_edge(parent_id, segment_id, layers={self.ns},
                           attr_dict={self.ns+':rel_name': relname,
                                      'label': self.ns+':'+relname},
@@ -179,6 +188,12 @@ class RSTGraph(DiscourseDocumentGraph):
             else:
                 parent_id = self.ns+':'+group.attrib['parent']
                 relname = group.attrib['relname']
+
+                # we'll search dominating nodes for their RST relations, so we'll
+                # have to add this information to the parent node
+                if relname != 'span':  # if it is an RST relation
+                    self.node[parent_id].update({self.ns+':rel_name': relname})
+
                 # type of the relation acc. to rst/header/relations,
                 # i.e. 'span', 'multinuc' or 'rst'
                 reltype = self.relations.get(relname, 'span')
