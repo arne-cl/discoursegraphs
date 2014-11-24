@@ -15,4 +15,4 @@ from discoursegraphs.discoursegraph import (
     get_pointing_chains, get_top_level_layers)
 from discoursegraphs.readwrite.dot import print_dot
 from discoursegraphs.statistics import info
-from discoursegraphs.util import xmlprint, make_labels_explicit
+from discoursegraphs.util import natural_sort_key, xmlprint, make_labels_explicit
