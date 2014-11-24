@@ -12,7 +12,7 @@ from __future__ import print_function
 import os
 from lxml import etree
 
-from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
+from discoursegraphs import DiscourseDocumentGraph, EdgeTypes, get_span
 from discoursegraphs.util import sanitize_string
 from discoursegraphs.readwrite.generic import generic_converter_cli
 
@@ -253,6 +253,33 @@ def extract_relationtypes(rs3_xml_tree):
     """
     return {rel.attrib['name']: rel.attrib['type']
             for rel in rs3_xml_tree.iterfind('//header/relations/rel')}
+
+
+def get_rst_relations(docgraph, data=True, rst_namespace='rst'):
+    """
+    yield all RST relations that occur in the given document graph.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        a document graph which contains RST annotations
+    data : bool
+        If True (default), yields (node ID, relation name, list of tokens)
+        tuples. If False, yields just node IDs.
+
+    Yields
+    ------
+    relations : str or (str, str, list of str) tuples
+        If data=False, this will just yield node IDs of the nodes that
+        directly dominate an RST relation. If data=True, this yields
+        tuples of the form: (node ID, relation name, list of tokens that this
+        relation spans).
+    """
+    rel_attr = rst_namespace+':rel_name'
+    for node_id, node_attrs in docgraph.nodes_iter(data=True):
+        if rel_attr in node_attrs:
+            if node_attrs[rel_attr] in docgraph.relations:
+                yield (node_id, node_attrs[rel_attr], get_span(docgraph, node_id)) if data else (node_id)
 
 
 if __name__ == '__main__':
