@@ -734,6 +734,39 @@ def istoken(docgraph, node_id):
     return docgraph.ns+':token' in docgraph.node[node_id]
 
 
+def select_neighbors_by_layer(docgraph, node, layer, data=False):
+    """
+    Get all neighboring nodes belonging to (any of) the given layer(s),
+    A neighboring node is a node that the given node connects to with an
+    outgoing edge.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        document graph from which the nodes will be extracted
+    layer : str or collection of str
+        name(s) of the layer(s)
+    data : bool
+        If True, results will include node attributes.
+
+    Yields
+    ------
+    nodes : generator of str or generator of (str, dict) tuple
+        If data is False (default), a generator of neighbor node IDs
+        that are present in the given layer. If data is True,
+        a generator of (node ID, node attrib dict) tuples.
+    """
+    for node_id in docgraph.neighbors_iter(node):
+        node_layers = docgraph.node[node_id]['layers']
+        if isinstance(layer, (str, unicode)):
+            condition = layer in node_layers
+        else:  # ``layer`` is a list/set/dict of layers
+            condition = any(l in node_layers for l in layer)
+
+        if condition:
+            yield (node_id, docgraph.node[node_id]) if data else (node_id)
+
+
 def select_nodes_by_layer(docgraph, layer, data=False):
     """
     Get all nodes belonging to (any of) the given layer(s).
