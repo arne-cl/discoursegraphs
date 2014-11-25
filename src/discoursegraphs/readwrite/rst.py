@@ -266,6 +266,8 @@ def get_rst_relations(docgraph, data=True, rst_namespace='rst'):
     data : bool
         If True (default), yields (node ID, relation name, list of tokens)
         tuples. If False, yields just node IDs.
+    rst_namespace : str
+        The namespace that the RST annotations use (default: rst)
 
     Yields
     ------
