@@ -13,9 +13,9 @@ import sys
 import re
 from lxml import etree
 
-from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
+from discoursegraphs import DiscourseDocumentGraph, EdgeTypes, get_span, select_nodes_by_layer
 from discoursegraphs.readwrite.generic import generic_converter_cli
-from discoursegraphs.util import ensure_unicode
+from discoursegraphs.util import ensure_unicode, natural_sort_key
 
 
 REDUCE_WHITESPACE_RE = re.compile(' +')
@@ -134,6 +134,44 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
                     "({2})".format(plain_token, graph_token))
                 return False
         return True
+
+
+def get_conano_units(docgraph, data=True, conano_namespace='conano'):
+    """
+    yield all Conano units that occur in the given document graph,
+    sorted by their unit ID. int(ernal) and ext(ernal) count as distinct units.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        a document graph which contains Conano annotations
+    data : bool
+        If True (default), yields (node ID, list of tokens)
+        tuples. If False, yields just unit IDs.
+    conano_namespace : str
+        The namespace that the Conano annotations use (default: conano)
+
+    Yields
+    ------
+    relations : str or (str, str, list of str) tuples
+        If data=False, this will just yield node IDs of the nodes that
+        directly dominate an RST relation. If data=True, this yields
+        tuples of the form: (node ID, relation name, list of tokens that this
+        relation spans).
+    """
+    for unit_id in sorted(select_nodes_by_layer(docgraph, conano_namespace+':unit'),
+                          key=natural_sort_key):
+        yield (unit_id, get_span(docgraph, unit_id)) if data else (unit_id)
+
+
+def get_connective(docgraph, unit_id):
+    """
+    returns the lowercased string of the connective used in the given Conano unit.
+    """
+    unit_index, _unit_type = unit_id.split(':')
+    connective_id = unit_index+':connective'
+    return ' '.join(docgraph.get_token(tok_id).lower()
+                    for tok_id in get_span(docgraph, connective_id))
 
 
 if __name__ == "__main__":
