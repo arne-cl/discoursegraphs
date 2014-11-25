@@ -12,8 +12,8 @@ from __future__ import print_function
 import os
 from lxml import etree
 
-from discoursegraphs import DiscourseDocumentGraph, EdgeTypes, get_span
-from discoursegraphs.util import sanitize_string
+from discoursegraphs import DiscourseDocumentGraph, EdgeTypes, get_span, istoken, select_neighbors_by_layer
+from discoursegraphs.util import sanitize_string, natural_sort_key
 from discoursegraphs.readwrite.generic import generic_converter_cli
 
 
@@ -160,7 +160,7 @@ class RSTGraph(DiscourseDocumentGraph):
             else:
                 self.node[segment_id].update({self.ns+':text': segment_text,
                                               'label': segment_label})
-            
+
             # skip to the next segment, if the node has no in/outgoing edge,
             # (this often happens when annotating news headlines)
             if 'parent' not in segment.attrib:
@@ -306,6 +306,37 @@ def get_rst_relations(docgraph, data=True, rst_namespace='rst'):
         if rel_attr in node_attrs:
             if node_attrs[rel_attr] in docgraph.relations:
                 yield (node_id, node_attrs[rel_attr], get_span(docgraph, node_id)) if data else (node_id)
+
+
+def get_segment_spans_from_rst_relation(docgraph, relation_id, rst_namespace='rst'):
+    spans = {}
+
+    if rst_namespace+':segment' in docgraph.node[relation_id]['layers']:
+        nuc_tok_ids = sorted([node for node in docgraph.neighbors(relation_id)
+                              if istoken(docgraph, node)], key=natural_sort_key)
+        spans['N'] = nuc_tok_ids
+
+        # a nucleus segment can only dominate one other segment/group
+        satellite = list(select_neighbors_by_layer(docgraph, relation_id, {'rst:segment', 'rst:group'}))[0]
+        spans['S'] = get_span(docgraph, satellite)
+        return spans
+
+    else:  # dominating node (relation ID) is a <group>
+        group_type = docgraph.node[relation_id][rst_namespace+':group_type']
+        nucleus_count = 1
+        for neighbor in select_neighbors_by_layer(docgraph, relation_id,
+                                                  {rst_namespace+':segment', rst_namespace+':group'}):
+            neighbor_type = docgraph.node[neighbor][rst_namespace+':segment_type']
+
+            if neighbor_type == 'nucleus':
+                if group_type == 'multinuc':
+                    spans['N{}'.format(nucleus_count)] = get_span(docgraph, neighbor)
+                    nucleus_count += 1
+                else:
+                    spans['N'] = get_span(docgraph, neighbor)
+            else:  # neighbor_type == 'span'
+                spans['S'] = get_span(docgraph, neighbor)
+        return spans
 
 
 if __name__ == '__main__':
