@@ -103,8 +103,9 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
             self._add_element(child_element, element_node_id)
 
         if element.tail:
+            # tokens _after_ the </element> closes
             for token in element.tail.split():
-                self._add_token(token, element_node_id)
+                self._add_token(token, parent_node)
 
     def _add_token(self, token, parent_node='root'):
         if parent_node == 'root':
