@@ -13,6 +13,27 @@ from lxml import etree
 INTEGER_RE = re.compile('([0-9]+)')
 
 
+class TokenMapper(object):
+    """
+    Attributes
+    ----------
+    id2index : dict of (int, str)
+        maps from token indices (int) to token IDs (str)
+    index2id : dict of (str, int)
+        maps from token IDs (str) to token indices (int)
+    """
+    def __init__(self, docgraph):
+        """
+        given a document graph, creates a bidirectional mapping from
+        token IDs (str) to token indices (int).
+        """
+        self.id2index = {}
+        self.index2id = {}
+        for token_index, token_id in enumerate(docgraph.tokens):
+            self.id2index[token_id] = token_index
+            self.index2id[token_index] = token_id
+
+
 def natural_sort_key(s):
     """
     returns a key that can be used in sort functions.
