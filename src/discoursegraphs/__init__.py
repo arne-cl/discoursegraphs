@@ -11,8 +11,8 @@ __version__ = '0.1.2'
 from discoursegraphs.discoursegraph import (
     DiscourseDocumentGraph, EdgeTypes, create_token_mapping,
     get_annotation_layers, get_span,
-    get_text, istoken, select_nodes_by_layer, select_edges_by, tokens2text,
-    get_pointing_chains, get_top_level_layers)
+    get_text, istoken, select_neighbors_by_layer, select_nodes_by_layer,
+    select_edges_by, tokens2text, get_pointing_chains, get_top_level_layers)
 from discoursegraphs.readwrite.dot import print_dot
 from discoursegraphs.statistics import info
-from discoursegraphs.util import natural_sort_key, xmlprint, make_labels_explicit
+from discoursegraphs.util import xmlprint, make_labels_explicit
