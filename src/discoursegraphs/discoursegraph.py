@@ -736,14 +736,14 @@ def istoken(docgraph, node_id):
 
 def select_nodes_by_layer(docgraph, layer, data=False):
     """
-    Get all nodes belonging to the given layer.
+    Get all nodes belonging to (any of) the given layer(s).
 
     Parameters
     ----------
     docgraph : DiscourseDocumentGraph
         document graph from which the nodes will be extracted
-    layer : str
-        name of the layer
+    layer : str or collection of str
+        name(s) of the layer(s)
     data : bool
         If True, results will include node attributes.
 
@@ -755,7 +755,11 @@ def select_nodes_by_layer(docgraph, layer, data=False):
         dict) tuples.
     """
     for node_id, node_attribs in docgraph.nodes_iter(data=True):
-        if layer in node_attribs['layers']:
+        if isinstance(layer, (str, unicode)):
+            condition = layer in node_attribs['layers']
+        else:  # ``layer`` is a list/set/dict of layers
+            condition = any(l in node_attribs['layers'] for l in layer)
+        if condition:
             if data:
                 yield (node_id, node_attribs)
             else:
