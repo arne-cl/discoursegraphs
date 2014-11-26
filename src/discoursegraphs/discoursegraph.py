@@ -552,6 +552,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
                     self.node[node_id].update({self.ns+':token': other_docgraph.get_token(node_id)})
         self.add_edges_from(other_docgraph.edges(data=True))
 
+        # workaround for issues #89 and #96
         # copy the token node IDs / sentence node IDs from the other graph,
         # if this graph doesn't have such lists, yet
         if other_docgraph.name and not self.name:
