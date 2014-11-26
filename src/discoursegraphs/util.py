@@ -11,7 +11,7 @@ import re
 from lxml import etree
 
 INTEGER_RE = re.compile('([0-9]+)')
-
+FORBIDDEN_XPOINTER_RE = re.compile(':')
 
 class TokenMapper(object):
     """
@@ -106,6 +106,31 @@ def ensure_ascii(str_or_unicode):
         raise ValueError(
             "Input '{0}' should be a string or unicode, but it is of "
             "type {1}".format(str_or_unicode, type(str_or_unicode)))
+
+
+def ensure_xpointer_compatibility(node_id):
+    """
+    makes a given node ID xpointer compatible.
+    xpointer identifiers must not contain ':', so we'll
+    replace it by '_'.
+
+    Parameters
+    ----------
+    node_id : str or unicode or int
+        a node or edge ID
+
+    Returns
+    -------
+    xpointer_id : str or unicode or int
+        int IDs are returned verbatim, str/unicode IDs are
+        returned with ':' replaced by '_'
+    """
+    assert isinstance(node_id, (int, str, unicode)),\
+        "node ID must be an int, str or unicode, not".format(type(node_id))
+    if isinstance(node_id, (str, unicode)):
+        return FORBIDDEN_XPOINTER_RE.sub('_', node_id)
+    else:
+        return node_id
 
 
 def add_prefix(dict_like, prefix):

@@ -23,7 +23,9 @@ from enum import Enum
 from discoursegraphs import (EdgeTypes, get_text, get_top_level_layers,
                              istoken, select_edges_by, select_nodes_by_layer,
                              tokens2text)
-from discoursegraphs.util import create_dir, natural_sort_key
+from discoursegraphs.util import (create_dir, ensure_xpointer_compatibility,
+                                  natural_sort_key)
+from discoursegraphs.relabel import relabel_nodes
 
 
 NSMAP = {'xlink': 'http://www.w3.org/1999/xlink',
@@ -103,6 +105,7 @@ class PaulaDocument(object):
         # map file IDs to DTDs
         self.file2dtd = {}
 
+        self.__make_xpointer_compatible()
         self.__gen_primary_text_file()
         self.__gen_tokenization_file()
 
@@ -116,6 +119,21 @@ class PaulaDocument(object):
             self.__gen_pointing_file(top_level_layer)
             self.__gen_pointing_anno_file(top_level_layer)
         self.__gen_annoset_file()
+
+    def __make_xpointer_compatible(self):
+        """
+        ensure that all node and IDs in the document graph are valid
+        xpointer IDs. this will relabel all node IDs in place in the discourse
+        graph and change its ``.tokens`` list accordingly.
+        """
+
+        node_id_map = {node: ensure_xpointer_compatibility(node)
+                       for node in self.dg.nodes_iter()}
+
+        old_token_ids = self.dg.tokens
+        # replace document graph with node relabeled version
+        self.dg = relabel_nodes(self.dg, node_id_map, copy=True)
+        self.dg.tokens = [node_id_map[tok] for tok in old_token_ids]
 
     def __gen_primary_text_file(self):
         """
@@ -173,6 +191,7 @@ class PaulaDocument(object):
                    XMLBASE: base_paula_id+'.xml'})
         tok_tuples = self.dg.get_tokens()
         for (tid, onset, tlen) in get_onsets(tok_tuples):
+            # even SaltNPepper still uses xpointers for string-ranges!
             xp = "#xpointer(string-range(//body,'',{},{}))".format(onset, tlen)
             mlist.append(E('mark', {'id': tid,
                                     XLINKHREF: xp}))
