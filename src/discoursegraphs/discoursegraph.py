@@ -335,8 +335,9 @@ class DiscourseDocumentGraph(MultiDiGraph):
             except AttributeError as e:
                 raise AttributeError("The attr_dict argument must be "
                                      "a dictionary: ".format(e))
-        assert u in self.succ, "from-node doesn't exist, yet"
-        assert v in self.succ, "to-node doesn't exist, yet"
+        for node in (u, v):  # u = source, v = target
+            if node not in self.nodes_iter():
+                self.add_node(node, layers={self.ns})
 
         if v in self.succ[u]:  # if there's already an edge from u to v
             keydict = self.adj[u][v]
