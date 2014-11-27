@@ -11,9 +11,10 @@ a ``layers`` attribute (which maps to the set of layers (str) it belongs to).
 TODO: implement a DiscourseCorpusGraph
 """
 
+import warnings
 from collections import defaultdict
 from enum import Enum
-from networkx import MultiDiGraph
+from networkx import MultiDiGraph, is_directed_acyclic_graph
 from discoursegraphs.relabel import relabel_nodes
 from discoursegraphs.util import natural_sort_key
 
@@ -695,6 +696,11 @@ def get_span(docgraph, node_id):
     span : list of str
         sorted list of token nodes (token node IDs)
     """
+    if not is_directed_acyclic_graph(docgraph):
+        warnings.warn(
+            ("Can't reliably extract span '{0}' from cyclical graph'{1}'."
+            "Maximum recursion depth may be exceeded.").format(node_id,
+                                                               docgraph))
     span = []
     for from_id, to_id, edge_attribs in docgraph.out_edges_iter(node_id,
                                                                 data=True):
