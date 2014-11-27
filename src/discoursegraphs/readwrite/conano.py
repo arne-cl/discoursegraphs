@@ -13,9 +13,11 @@ import sys
 import re
 from lxml import etree
 
-from discoursegraphs import DiscourseDocumentGraph, EdgeTypes, get_span, select_nodes_by_layer
+from discoursegraphs import (DiscourseDocumentGraph, EdgeTypes, get_span,
+                             select_nodes_by_layer)
 from discoursegraphs.readwrite.generic import generic_converter_cli
-from discoursegraphs.util import ensure_unicode, natural_sort_key
+from discoursegraphs.util import (ensure_unicode, natural_sort_key,
+                                  sanitize_string)
 
 
 REDUCE_WHITESPACE_RE = re.compile(' +')
@@ -37,7 +39,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         (default: 'conano:root_node')
     """
     def __init__(self, conano_filepath, name=None, namespace='conano',
-                 check_validity=True, precedence=False):
+                 check_validity=True, precedence=False, tokenize=True):
         """
         reads a Conano XML file and converts it into a multidigraph.
 
@@ -56,6 +58,11 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         precedence : bool
             add precedence relation edges (root precedes token1, which precedes
             token2 etc.)
+        tokenize : bool
+            If True, the text will be tokenized and each int(ernal) and
+            ext(ernal) unit will have outgoing edges to each of the tokens it
+            spans. If False, each int/ext unit node will be labeled with the
+            text it spans (this is only useful for debugging).
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(ConanoDocumentGraph, self).__init__()
@@ -64,8 +71,11 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         self.ns = namespace
         self.root = self.ns+':root_node'
         self.add_node(self.root, layers={self.ns})
-        self.tokens = []
-        self.token_count = 1
+
+        self.tokenize = tokenize
+        if self.tokenize:
+            self.tokens = []
+            self.token_count = 1
 
         tree = etree.parse(conano_filepath)
         root_element = tree.getroot()  # <discourse>
@@ -74,7 +84,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         if precedence:
             self.add_precedence_relations()
 
-        if check_validity:
+        if check_validity and self.tokenize:
             assert self.is_valid(tree)
 
     def _add_element(self, element, parent_node):
@@ -96,16 +106,29 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
                       edge_type=EdgeTypes.dominance_relation)
 
         if element.text:
-            for token in element.text.split():
-                self._add_token(token, element_node_id)
+            if self.tokenize:
+                for token in element.text.split():
+                    self._add_token(token, element_node_id)
+            else:
+                element_text = sanitize_string(element.text)
+                self.node[element_node_id].update(
+                    {'label': u"{0}: {1}...".format(element_node_id,
+                                                   element_text[:20])})
+
 
         for child_element in element.iterchildren():
             self._add_element(child_element, element_node_id)
 
-        if element.tail:
-            # tokens _after_ the </element> closes
-            for token in element.tail.split():
-                self._add_token(token, parent_node)
+        if element.tail:  # tokens _after_ the </element> closes
+            if self.tokenize:
+                for token in element.tail.split():
+                    self._add_token(token, parent_node)
+            else:
+                tail_text = sanitize_string(element.tail)
+                self.node[parent_node].update(
+                    {'label': u"{0}: {1}...".format(parent_node,
+                                                    tail_text[:20])})
+
 
     def _add_token(self, token, parent_node='root'):
         if parent_node == 'root':
