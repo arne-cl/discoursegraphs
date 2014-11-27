@@ -303,9 +303,8 @@ def get_rst_relations(docgraph, data=True, rst_namespace='rst'):
     """
     rel_attr = rst_namespace+':rel_name'
     for node_id, node_attrs in docgraph.nodes_iter(data=True):
-        if rel_attr in node_attrs:
-            if node_attrs[rel_attr] in docgraph.relations:
-                yield (node_id, node_attrs[rel_attr], get_span(docgraph, node_id)) if data else (node_id)
+        if node_attrs.get(rel_attr):  # if rel_attr in node_attrs and is not empty
+            yield (node_id, node_attrs[rel_attr], get_span(docgraph, node_id)) if data else (node_id)
 
 
 def get_segment_spans_from_rst_relation(docgraph, relation_id, rst_namespace='rst'):
