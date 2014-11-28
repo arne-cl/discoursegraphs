@@ -113,9 +113,10 @@ class RSTGraph(DiscourseDocumentGraph):
         """
         rst_root = rs3_xml_tree.getroot()
 
-        # the rs3 format is weird. in order to determine edge directionality,
-        # we'll mark all nodes as being either a ``segment`` (nucleus or
-        # satellite) or a ``group`` (span of segments/groups or a multinucular
+        # the rs3 format is a little weird.
+        # we're iterating over all nodes once, so we always know if a node
+        # is dominated by an RST ``segment`` (nucleus or satellite) or a
+        # ``group`` (span of segments/groups or a multinucular
         # relation between two or more groups or segments).
         for element in rst_root.iter('segment', 'group'):
             element_id = self.ns+':'+element.attrib['id']
@@ -129,7 +130,15 @@ class RSTGraph(DiscourseDocumentGraph):
             self.segments.append(segment_id)
             segment_text = sanitize_string(segment.text)
 
+            # ``relname`` either contains the name of an RST relation or
+            # the string ``span`` (iff the segment is dominated by a span
+            # node -- a horizontal line spanning one or more segments/groups
+            # in an RST diagram). ``relname`` is None, if the segment is
+            # unconnected.
             relname = segment.attrib.get('relname')
+            # we look up, if ``relname`` represents a regular, binary RST
+            # relation or a multinucular relation. ``reltype`` is None,
+            # if ``relname`` is ``span`` (i.e. a span isn't an RST relation).
             reltype = self.relations.get(relname)
             if not relname:
                 # an isolated segment, e.g. a news headline
@@ -142,24 +151,27 @@ class RSTGraph(DiscourseDocumentGraph):
                    segment_type = 'nucleus'
                    parent_segment_type = 'nucleus'
                 else:  # reltype == None
-                    pass  # no meaningful segment type
+                    # the segment is of unknown type, it is dominated by
+                    # a span group node
+                    segment_type = ''
+                    parent_segment_type = 'span'
 
+            segment_prefix = segment_type[0] if segment_type else '_'
             if tokenize:
                 segment_label = u'[{0}]:{1}:segment:{2}'.format(
-                    segment_type[0], self.ns, segment.attrib['id'])
+                    segment_prefix, self.ns, segment.attrib['id'])
             else:
                 # if the graph is not tokenized, put (the beginning of) the
                 # segment's text into its label
                 segment_label = u'[{0}]:{1}: {2}...'.format(
-                    segment_type[0], segment.attrib['id'], segment_text[:20])
+                    segment_prefix, segment.attrib['id'], segment_text[:20])
 
-            if reltype or segment_type == 'isolated':
+            # update the segment's type, iff we have new/better knowledge of it
+            old_segment_type = self.node[segment_id].get(self.ns+':segment_type')
+            if segment_type and not old_segment_type:
                 self.node[segment_id].update({self.ns+':text': segment_text,
                                               'label': segment_label,
                                               self.ns+':segment_type': segment_type})
-            else:
-                self.node[segment_id].update({self.ns+':text': segment_text,
-                                              'label': segment_label})
 
             # skip to the next segment, if the node has no in/outgoing edge,
             # (this often happens when annotating news headlines)
@@ -180,7 +192,12 @@ class RSTGraph(DiscourseDocumentGraph):
                           edge_type=edge_type)
 
         # add attributes to group nodes, as well as in-edges from other
-        # groups
+        # groups. a group's ``type`` attribute tells us whether the group
+        # node represents a span (of RST segments or other groups) OR
+        # a multinuc(ular) relation (i.e. it dominates several RST nucleii).
+        #
+        # a group's ``relname`` gives us the name of the relation between
+        # the group node and the group's parent node.
         for group in rst_root.iter('group'):
             group_id = self.ns+':'+group.attrib['id']
             group_type = group.attrib['type']  # 'span' or 'multinuc'
@@ -201,7 +218,7 @@ class RSTGraph(DiscourseDocumentGraph):
                 parent_id = self.ns+':'+group.attrib['parent']
                 relname = group.attrib['relname']
                 # type of the relation, i.e. 'span', 'multinuc' or 'rst'
-                reltype = self.relations.get(relname, 'span')
+                reltype = self.relations.get(relname)
 
                 # determine nucleus/span by the relation type
                 if reltype == 'rst':
@@ -210,8 +227,11 @@ class RSTGraph(DiscourseDocumentGraph):
                 elif reltype == 'multinuc':
                    segment_type = 'nucleus'
                    parent_segment_type = 'nucleus'
-                else:  # reltype == 'span'
-                    pass
+                else:  # reltype == None
+                    # the segment is of unknown type, it is dominated by
+                    # a span group node
+                    segment_type = ''
+                    parent_segment_type = 'span'
 
                 # we'll search dominating nodes for their RST relations, so we'll
                 # have to add this information to the parent node
