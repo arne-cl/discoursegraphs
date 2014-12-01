@@ -12,7 +12,8 @@ from __future__ import print_function
 import os
 from lxml import etree
 
-from discoursegraphs import DiscourseDocumentGraph, EdgeTypes, get_span, istoken, select_neighbors_by_layer
+from discoursegraphs import (DiscourseDocumentGraph, EdgeTypes, get_span,
+                             istoken, select_neighbors_by_layer)
 from discoursegraphs.util import sanitize_string, natural_sort_key
 from discoursegraphs.readwrite.generic import generic_converter_cli
 
@@ -84,7 +85,7 @@ class RSTGraph(DiscourseDocumentGraph):
         utf8_parser = etree.XMLParser(encoding="utf-8")
         rs3_xml_tree = etree.parse(rs3_filepath, utf8_parser)
         self.relations = extract_relationtypes(rs3_xml_tree)
-        self.__rst2graph(rs3_xml_tree, tokenize)
+        self.__rst2graph(rs3_xml_tree)
 
         if tokenize:
             self.__tokenize_segments()
@@ -92,7 +93,7 @@ class RSTGraph(DiscourseDocumentGraph):
             if precedence:
                 self.add_precedence_relations()
 
-    def __rst2graph(self, rs3_xml_tree, tokenize):
+    def __rst2graph(self, rs3_xml_tree):
         """
         Reads an RST tree (from an ElementTree representation of an RS3
         XML file) and adds all segments (nodes representing text) and
@@ -112,141 +113,173 @@ class RSTGraph(DiscourseDocumentGraph):
             represents.
         """
         rst_root = rs3_xml_tree.getroot()
-
-        # the rs3 format is a little weird.
-        # we're iterating over all nodes once, so we always know if a node
-        # is dominated by an RST ``segment`` (nucleus or satellite) or a
-        # ``group`` (span of segments/groups or a multinucular
-        # relation between two or more groups or segments).
-        for element in rst_root.iter('segment', 'group'):
-            element_id = self.ns+':'+element.attrib['id']
-            self.add_node(element_id, layers={self.ns, self.ns+':'+element.tag},
-                          attr_dict={self.ns+':rel_name': ''})
-
-        # add attributes to segment nodes, as well as edges to/from other
-        # segments/groups
         for segment in rst_root.iter('segment'):
-            segment_id = self.ns+':'+segment.attrib['id']
-            self.segments.append(segment_id)
-            segment_text = sanitize_string(segment.text)
-
-            # ``relname`` either contains the name of an RST relation or
-            # the string ``span`` (iff the segment is dominated by a span
-            # node -- a horizontal line spanning one or more segments/groups
-            # in an RST diagram). ``relname`` is None, if the segment is
-            # unconnected.
-            relname = segment.attrib.get('relname')
-            # we look up, if ``relname`` represents a regular, binary RST
-            # relation or a multinucular relation. ``reltype`` is None,
-            # if ``relname`` is ``span`` (i.e. a span isn't an RST relation).
-            reltype = self.relations.get(relname)
-            if not relname:
-                # an isolated segment, e.g. a news headline
-                segment_type = 'isolated'
-            else:  # determine nucleus/span by the relation type
-                if reltype == 'rst':
-                    segment_type = 'satellite'
-                    parent_segment_type = 'nucleus'
-                elif reltype == 'multinuc':
-                   segment_type = 'nucleus'
-                   parent_segment_type = 'nucleus'
-                else:  # reltype == None
-                    # the segment is of unknown type, it is dominated by
-                    # a span group node
-                    segment_type = ''
-                    parent_segment_type = 'span'
-
-            segment_prefix = segment_type[0] if segment_type else '_'
-            if tokenize:
-                segment_label = u'[{0}]:{1}:segment:{2}'.format(
-                    segment_prefix, self.ns, segment.attrib['id'])
-            else:
-                # if the graph is not tokenized, put (the beginning of) the
-                # segment's text into its label
-                segment_label = u'[{0}]:{1}: {2}...'.format(
-                    segment_prefix, segment.attrib['id'], segment_text[:20])
-
-            # update the segment's type, iff we have new/better knowledge of it
-            old_segment_type = self.node[segment_id].get(self.ns+':segment_type')
-            if segment_type and not old_segment_type:
-                self.node[segment_id].update({self.ns+':text': segment_text,
-                                              'label': segment_label,
-                                              self.ns+':segment_type': segment_type})
-
-            # skip to the next segment, if the node has no in/outgoing edge,
-            # (this often happens when annotating news headlines)
-            if 'parent' not in segment.attrib:
-                continue
-
-            parent_id = self.ns+':'+segment.attrib['parent']
-            # we'll search dominating nodes for their RST relations, so we'll
-            # have to add this information to the parent node
-            if relname != 'span':  # if it is an RST relation
-                self.node[parent_id].update({self.ns+':rel_name': relname,
-                                             self.ns+':segment_type': parent_segment_type})
-
-            edge_type = EdgeTypes.dominance_relation if relname != 'span' else EdgeTypes.spanning_relation
-            self.add_edge(parent_id, segment_id, layers={self.ns},
-                          attr_dict={self.ns+':rel_name': relname,
-                                     'label': self.ns+':'+relname},
-                          edge_type=edge_type)
-
-        # add attributes to group nodes, as well as in-edges from other
-        # groups. a group's ``type`` attribute tells us whether the group
-        # node represents a span (of RST segments or other groups) OR
-        # a multinuc(ular) relation (i.e. it dominates several RST nucleii).
-        #
-        # a group's ``relname`` gives us the name of the relation between
-        # the group node and the group's parent node.
+            self.__add_segment(segment)
         for group in rst_root.iter('group'):
-            group_id = self.ns+':'+group.attrib['id']
-            group_type = group.attrib['type']  # 'span' or 'multinuc'
+            self.__add_group(group)
 
-            self.node[group_id].update(
-                {self.ns+':group_type': group_type,
-                 'label': '{0}:group:{1}:{2}'.format(self.ns, group_type,
-                                                     group.attrib['id'])})
+    def __add_segment(self, segment):
+        """
+        add attributes to segment nodes, as well as edges to/from other
+        segments/groups
 
-            if 'parent' not in group.attrib:  # mark group as RST root node
-                self.root = group_id
-                existing_layers = self.node[group_id]['layers']
-                all_layers = existing_layers.union({self.ns+':root'})
-                self.node[group_id].update(
-                    {'layers': all_layers,
-                     'label': '{0}:root:{1}'.format(self.ns, group_id)})
-            else:
-                parent_id = self.ns+':'+group.attrib['parent']
-                relname = group.attrib['relname']
-                # type of the relation, i.e. 'span', 'multinuc' or 'rst'
-                reltype = self.relations.get(relname)
+        Parameters
+        ----------
+        segment : ??? etree Element        
+        """
+        segment_id = self.ns+':'+segment.attrib['id']
+        self.segments.append(segment_id)
+        segment_type, parent_segment_type = self.__get_segment_types(segment)
+        segment_text = sanitize_string(segment.text)
+        segment_label = self.__get_segment_label(segment, segment_type, segment_text)
 
-                # determine nucleus/span by the relation type
-                if reltype == 'rst':
-                    segment_type = 'satellite'
-                    parent_segment_type = 'nucleus'
-                elif reltype == 'multinuc':
-                   segment_type = 'nucleus'
-                   parent_segment_type = 'nucleus'
-                else:  # reltype == None
-                    # the segment is of unknown type, it is dominated by
-                    # a span group node
-                    segment_type = ''
-                    parent_segment_type = 'span'
+        self.add_node(
+            segment_id, layers={self.ns, self.ns+':segment'},
+            attr_dict={'label': segment_label,
+                       self.ns+':text' : segment_text,
+                       self.ns+':segment_type': segment_type})
 
-                # we'll search dominating nodes for their RST relations, so we'll
-                # have to add this information to the parent node
-                if relname != 'span':  # if it is an RST relation
-                    self.node[group_id].update({self.ns+':segment_type': segment_type})
-                    self.node[parent_id].update({self.ns+':rel_name': relname,
-                                                 self.ns+':segment_type': parent_segment_type})
+        if 'parent' in segment.attrib:
+            self.__add_parent_relation(segment, segment_id, segment_type, 
+                                       parent_segment_type)
 
-                edge_type = EdgeTypes.dominance_relation if relname != 'span' else EdgeTypes.spanning_relation
-                self.add_edge(
-                    parent_id, group_id, layers={self.ns, self.ns+':relation'},
-                    attr_dict={self.ns+':rel_name': relname,
-                               self.ns+':rel_type': reltype,
-                               'label': self.ns+':'+relname},
-                    edge_type=edge_type)
+    def __get_segment_label(self, segment, segment_type, segment_text):
+        """
+        generates an appropriate node label for a segment (useful for dot
+        visualization).
+        """
+        segment_prefix = segment_type[0] if segment_type else '_'
+        if self.tokenized:
+            segment_label = u'[{0}]:{1}:segment:{2}'.format(
+                segment_prefix, self.ns, segment.attrib['id'])
+        else:
+            # if the graph is not tokenized, put (the beginning of) the
+            # segment's text into its label
+            segment_label = u'[{0}]:{1}: {2}...'.format(
+                segment_prefix, segment.attrib['id'], segment_text[:20])
+        return segment_label
+
+    def __add_group(self, group):
+        """
+        add attributes to group nodes, as well as in-edges from other
+        groups. a group's ``type`` attribute tells us whether the group
+        node represents a span (of RST segments or other groups) OR
+        a multinuc(ular) relation (i.e. it dominates several RST nucleii).
+
+        a group's ``relname`` gives us the name of the relation between
+        the group node and the group's parent node.
+
+        Parameters
+        ----------
+        group : ??? etree Element
+        """
+        group_id = self.ns+':'+group.attrib['id']
+        group_type = group.attrib['type']  # 'span' or 'multinuc'
+        group_layers = {self.ns, self.ns+':group'}
+        segment_type, parent_segment_type = self.__get_segment_types(group)
+
+        group_attrs = \
+            {self.ns+':group_type': group_type,
+             'label': '{0}:group:{1}:{2}'.format(self.ns, group_type,
+                                                 group.attrib['id'])}
+        if segment_type:  # if it is an RST relation
+            group_attrs[self.ns+':segment_type'] = segment_type
+
+        if group_id not in self:
+            self.add_node(group_id, layers=group_layers,
+                          attr_dict=group_attrs)
+        else:
+            self.node[group_id].update(group_attrs,
+                                       layers={self.ns, self.ns+':group'})
+
+        if 'parent' not in group.attrib:  # mark group as RST root node
+            self.root = group_id
+            # the layers attribute is append-only
+            self.node[group_id].update(layers={self.ns+':root'})
+        else:  # the group node is dominated by another group or segment
+            self.__add_parent_relation(group, group_id, segment_type,
+                                       parent_segment_type)
+
+    def __add_parent_relation(self, element, element_id, segment_type, parent_segment_type):
+        """
+        - add parent node (if not there, yet) w/ segment type
+        - add edge from parent node to current element
+        """
+        relname = element.attrib['relname'] # name of RST relation or 'span'
+        reltype = self.relations.get(relname) # 'span', 'multinuc' or None
+        
+        parent_id = self.ns+':'+element.attrib['parent']
+        parent_attrs = {self.ns+':rel_name': relname, self.ns+':segment_type': parent_segment_type}
+
+        if parent_id not in self:
+            self.add_node(parent_id, layers={self.ns}, attr_dict=parent_attrs)
+        else:
+            if segment_type: 
+                self.node[parent_id].update(parent_attrs)
+
+        if segment_type:
+            edge_type = EdgeTypes.dominance_relation
+        else:
+            edge_type = EdgeTypes.spanning_relation
+                 
+        rel_attrs = {self.ns+':rel_name': relname, self.ns+':rel_type': reltype,
+                     'label': self.ns+':'+relname}
+        self.add_edge(parent_id, element_id, layers={self.ns},
+                      attr_dict=rel_attrs, edge_type=edge_type)
+
+
+    def __get_segment_types(self, element):
+        """
+        given a <segment> or <group> element, returns its segment type and the
+        segment type of its parent (i.e. its dominating node)
+
+        Parameters
+        ----------
+        element : ??? etree Element
+
+        Returns
+        -------
+        segment_type : str or None
+            'nucleus', 'satellite' or 'isolated' (unconnected segment, e.g. a
+            news headline) or None (iff the segment type is currently
+            unknown -- i.e. ``relname`` is ``span``)
+        parent_segment_type : str
+            'nucleus' or 'satellite'
+        """
+        if not 'parent' in element.attrib:
+            if element.tag == 'segment':
+                segment_type = 'isolated'
+                parent_segment_type = None
+            else:  # element.tag == 'group'
+                segment_type = None
+                parent_segment_type = None
+            return segment_type, parent_segment_type
+
+        parent_id = self.ns+':'+element.attrib['parent']
+        # ``relname`` either contains the name of an RST relation or
+        # the string ``span`` (iff the segment is dominated by a span
+        # node -- a horizontal line spanning one or more segments/groups
+        # in an RST diagram). ``relname`` is None, if the segment is
+        # unconnected.
+        relname = element.attrib.get('relname')
+        # we look up, if ``relname`` represents a regular, binary RST
+        # relation or a multinucular relation. ``reltype`` is None,
+        # if ``relname`` is ``span`` (i.e. a span isn't an RST relation).
+        reltype = self.relations.get(relname)
+
+        if reltype == 'rst':
+            segment_type = 'satellite'
+            parent_segment_type = 'nucleus'
+        elif reltype == 'multinuc':
+           segment_type = 'nucleus'
+           parent_segment_type = 'nucleus'
+        else:  # reltype == None
+            # the segment is of unknown type, it is dominated by
+            # a span group node
+            segment_type = None
+            parent_segment_type = 'span'
+        return segment_type, parent_segment_type
+
 
     def __tokenize_segments(self):
         """
@@ -323,39 +356,39 @@ def get_rst_relations(docgraph, data=True, rst_namespace='rst'):
     """
     rel_attr = rst_namespace+':rel_name'
     for node_id, node_attrs in docgraph.nodes_iter(data=True):
-        if node_attrs.get(rel_attr):  # if rel_attr in node_attrs and is not empty
+        if rel_attr in node_attrs and node_attrs[rel_attr] != 'span':
             yield (node_id, node_attrs[rel_attr], get_span(docgraph, node_id)) if data else (node_id)
 
 
-def get_segment_spans_from_rst_relation(docgraph, relation_id, rst_namespace='rst'):
-    spans = {}
-
-    if rst_namespace+':segment' in docgraph.node[relation_id]['layers']:
-        nuc_tok_ids = sorted([node for node in docgraph.neighbors(relation_id)
-                              if istoken(docgraph, node)], key=natural_sort_key)
-        spans['N'] = nuc_tok_ids
-
-        # a nucleus segment can only dominate one other segment/group
-        satellite = list(select_neighbors_by_layer(docgraph, relation_id, {'rst:segment', 'rst:group'}))[0]
-        spans['S'] = get_span(docgraph, satellite)
-        return spans
-
-    else:  # dominating node (relation ID) is a <group>
-        group_type = docgraph.node[relation_id][rst_namespace+':group_type']
-        nucleus_count = 1
-        for neighbor in select_neighbors_by_layer(docgraph, relation_id,
-                                                  {rst_namespace+':segment', rst_namespace+':group'}):
-            neighbor_type = docgraph.node[neighbor][rst_namespace+':segment_type']
-
-            if neighbor_type == 'nucleus':
-                if group_type == 'multinuc':
-                    spans['N{}'.format(nucleus_count)] = get_span(docgraph, neighbor)
-                    nucleus_count += 1
-                else:
-                    spans['N'] = get_span(docgraph, neighbor)
-            else:  # neighbor_type == 'span'
-                spans['S'] = get_span(docgraph, neighbor)
-        return spans
+#~ def get_segment_spans_from_rst_relation(docgraph, relation_id, rst_namespace='rst'):
+    #~ spans = {}
+#~ 
+    #~ if rst_namespace+':segment' in docgraph.node[relation_id]['layers']:
+        #~ nuc_tok_ids = sorted([node for node in docgraph.neighbors(relation_id)
+                              #~ if istoken(docgraph, node)], key=natural_sort_key)
+        #~ spans['N'] = nuc_tok_ids
+#~ 
+        #~ # a nucleus segment can only dominate one other segment/group
+        #~ satellite = list(select_neighbors_by_layer(docgraph, relation_id, {'rst:segment', 'rst:group'}))[0]
+        #~ spans['S'] = get_span(docgraph, satellite)
+        #~ return spans
+#~ 
+    #~ else:  # dominating node (relation ID) is a <group>
+        #~ group_type = docgraph.node[relation_id][rst_namespace+':group_type']
+        #~ nucleus_count = 1
+        #~ for neighbor in select_neighbors_by_layer(docgraph, relation_id,
+                                                  #~ {rst_namespace+':segment', rst_namespace+':group'}):
+            #~ neighbor_type = docgraph.node[neighbor][rst_namespace+':segment_type']
+#~ 
+            #~ if neighbor_type == 'nucleus':
+                #~ if group_type == 'multinuc':
+                    #~ spans['N{}'.format(nucleus_count)] = get_span(docgraph, neighbor)
+                    #~ nucleus_count += 1
+                #~ else:
+                    #~ spans['N'] = get_span(docgraph, neighbor)
+            #~ else:  # neighbor_type == 'span'
+                #~ spans['S'] = get_span(docgraph, neighbor)
+        #~ return spans
 
 
 if __name__ == '__main__':
