@@ -333,9 +333,10 @@ def extract_relationtypes(rs3_xml_tree):
             for rel in rs3_xml_tree.iterfind('//header/relations/rel')}
 
 
-def get_rst_relations(docgraph, data=True, rst_namespace='rst'):
+def get_rst_relation_root_nodes(docgraph, data=True, rst_namespace='rst'):
     """
-    yield all RST relations that occur in the given document graph.
+    yield all nodes that dominate one or more RST relations in the given
+    document graph.
 
     Parameters
     ----------
