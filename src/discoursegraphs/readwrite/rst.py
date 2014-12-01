@@ -182,13 +182,14 @@ class RSTGraph(DiscourseDocumentGraph):
             {self.ns+':group_type': group_type,
              'label': '{0}:group:{1}:{2}'.format(self.ns, group_type,
                                                  group.attrib['id'])}
-        if segment_type:  # if it is an RST relation
-            group_attrs[self.ns+':segment_type'] = segment_type
 
-        if group_id not in self:
+        if group_id not in self:  # group node doesn't exist, yet
+            group_attrs[self.ns+':segment_type'] = segment_type
             self.add_node(group_id, layers=group_layers,
                           attr_dict=group_attrs)
         else:
+            if segment_type != 'span':  # if it is an RST relation
+                group_attrs[self.ns+':segment_type'] = segment_type
             self.node[group_id].update(group_attrs,
                                        layers={self.ns, self.ns+':group'})
 
@@ -214,13 +215,13 @@ class RSTGraph(DiscourseDocumentGraph):
         if parent_id not in self:
             self.add_node(parent_id, layers={self.ns}, attr_dict=parent_attrs)
         else:
-            if segment_type: 
+            if segment_type != 'span': 
                 self.node[parent_id].update(parent_attrs)
 
-        if segment_type:
-            edge_type = EdgeTypes.dominance_relation
-        else:
+        if segment_type == 'span':
             edge_type = EdgeTypes.spanning_relation
+        else:
+            edge_type = EdgeTypes.dominance_relation
                  
         rel_attrs = {self.ns+':rel_name': relname, self.ns+':rel_type': reltype,
                      'label': self.ns+':'+relname}
@@ -239,19 +240,19 @@ class RSTGraph(DiscourseDocumentGraph):
 
         Returns
         -------
-        segment_type : str or None
+        segment_type : str
             'nucleus', 'satellite' or 'isolated' (unconnected segment, e.g. a
-            news headline) or None (iff the segment type is currently
+            news headline) or 'span' (iff the segment type is currently
             unknown -- i.e. ``relname`` is ``span``)
-        parent_segment_type : str
-            'nucleus' or 'satellite'
+        parent_segment_type : str or None
+            'nucleus', 'satellite' or None (e.g. for the root group node)
         """
         if not 'parent' in element.attrib:
             if element.tag == 'segment':
                 segment_type = 'isolated'
                 parent_segment_type = None
             else:  # element.tag == 'group'
-                segment_type = None
+                segment_type = 'span'
                 parent_segment_type = None
             return segment_type, parent_segment_type
 
@@ -276,7 +277,7 @@ class RSTGraph(DiscourseDocumentGraph):
         else:  # reltype == None
             # the segment is of unknown type, it is dominated by
             # a span group node
-            segment_type = None
+            segment_type = 'span'
             parent_segment_type = 'span'
         return segment_type, parent_segment_type
 
