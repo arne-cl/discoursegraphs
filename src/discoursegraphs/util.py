@@ -34,6 +34,33 @@ class TokenMapper(object):
             self.index2id[token_index] = token_id
 
 
+def get_segment_token_offsets(segment_token_list, token_map):
+    """
+    given a list of token node IDs, returns the index of its first and last
+    elements. this actually calculates the int indices, as there are weird
+    formats like RS3, which use unordered / wrongly ordered IDs.
+
+    Parameters
+    ----------
+    segment_token_list : list of str
+        sorted list of token IDs (i.e. the tokens
+        that this segment spans)
+    token_map : dict of (str, int)
+        a map from token IDs to token indices
+
+    Returns
+    -------
+    first_token_index : int
+        index of the first token of the segment
+    last_token_index : int
+        index of the last token of the segment
+    """
+    token_indices = [token_map[token_id] for token_id in segment_token_list]
+    # we need to foolproof this for nasty RS3 files or other input formats
+    # with unordered or wrongly orderd IDs
+    return min(token_indices), max(token_indices)
+
+
 def natural_sort_key(s):
     """
     returns a key that can be used in sort functions.

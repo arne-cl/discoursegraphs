@@ -6,15 +6,22 @@
 This module converts an RS3 XML file (used by RSTTool to annotate
 rhetorical structure) into a networkx-based directed graph
 (``DiscourseDocumentGraph``).
+
+Warning: RS3 files considered harmful. Sement IDs appear ordered, but they
+aren't. For example, after segment 1, there could be segment 19, followed by
+segment 2, 3 and 4 etc.
 """
 
 from __future__ import print_function
 import os
+import sys
+from collections import defaultdict
 from lxml import etree
 
 from discoursegraphs import (DiscourseDocumentGraph, EdgeTypes, get_span,
                              istoken, select_neighbors_by_layer)
-from discoursegraphs.util import sanitize_string, natural_sort_key
+from discoursegraphs.util import (get_segment_token_offsets, natural_sort_key,
+                                  sanitize_string, TokenMapper)
 from discoursegraphs.readwrite.generic import generic_converter_cli
 
 
@@ -125,7 +132,7 @@ class RSTGraph(DiscourseDocumentGraph):
 
         Parameters
         ----------
-        segment : ??? etree Element        
+        segment : ??? etree Element
         """
         segment_id = self.ns+':'+segment.attrib['id']
         self.segments.append(segment_id)
@@ -140,7 +147,7 @@ class RSTGraph(DiscourseDocumentGraph):
                        self.ns+':segment_type': segment_type})
 
         if 'parent' in segment.attrib:
-            self.__add_parent_relation(segment, segment_id, segment_type, 
+            self.__add_parent_relation(segment, segment_id, segment_type,
                                        parent_segment_type)
 
     def __get_segment_label(self, segment, segment_type, segment_text):
@@ -208,21 +215,21 @@ class RSTGraph(DiscourseDocumentGraph):
         """
         relname = element.attrib['relname'] # name of RST relation or 'span'
         reltype = self.relations.get(relname) # 'span', 'multinuc' or None
-        
+
         parent_id = self.ns+':'+element.attrib['parent']
         parent_attrs = {self.ns+':rel_name': relname, self.ns+':segment_type': parent_segment_type}
 
         if parent_id not in self:
             self.add_node(parent_id, layers={self.ns}, attr_dict=parent_attrs)
         else:
-            if segment_type != 'span': 
+            if segment_type != 'span':
                 self.node[parent_id].update(parent_attrs)
 
         if segment_type == 'span':
             edge_type = EdgeTypes.spanning_relation
         else:
             edge_type = EdgeTypes.dominance_relation
-                 
+
         rel_attrs = {self.ns+':rel_name': relname, self.ns+':rel_type': reltype,
                      'label': self.ns+':'+relname}
         self.add_edge(parent_id, element_id, layers={self.ns},
@@ -362,35 +369,99 @@ def get_rst_relation_root_nodes(docgraph, data=True, rst_namespace='rst'):
             yield (node_id, node_attrs[rel_attr], get_span(docgraph, node_id)) if data else (node_id)
 
 
-#~ def get_segment_spans_from_rst_relation(docgraph, relation_id, rst_namespace='rst'):
-    #~ spans = {}
-#~ 
-    #~ if rst_namespace+':segment' in docgraph.node[relation_id]['layers']:
-        #~ nuc_tok_ids = sorted([node for node in docgraph.neighbors(relation_id)
-                              #~ if istoken(docgraph, node)], key=natural_sort_key)
-        #~ spans['N'] = nuc_tok_ids
-#~ 
-        #~ # a nucleus segment can only dominate one other segment/group
-        #~ satellite = list(select_neighbors_by_layer(docgraph, relation_id, {'rst:segment', 'rst:group'}))[0]
-        #~ spans['S'] = get_span(docgraph, satellite)
-        #~ return spans
-#~ 
-    #~ else:  # dominating node (relation ID) is a <group>
-        #~ group_type = docgraph.node[relation_id][rst_namespace+':group_type']
-        #~ nucleus_count = 1
-        #~ for neighbor in select_neighbors_by_layer(docgraph, relation_id,
-                                                  #~ {rst_namespace+':segment', rst_namespace+':group'}):
-            #~ neighbor_type = docgraph.node[neighbor][rst_namespace+':segment_type']
-#~ 
-            #~ if neighbor_type == 'nucleus':
-                #~ if group_type == 'multinuc':
-                    #~ spans['N{}'.format(nucleus_count)] = get_span(docgraph, neighbor)
-                    #~ nucleus_count += 1
-                #~ else:
-                    #~ spans['N'] = get_span(docgraph, neighbor)
-            #~ else:  # neighbor_type == 'span'
-                #~ spans['S'] = get_span(docgraph, neighbor)
-        #~ return spans
+def get_rst_relations(docgraph):
+    """
+    Returns
+    rst_relations : defaultdict(str)
+        keys: 'tokens', 'nucleus', 'satellites', 'multinuc'
+    """
+    rst_relations = defaultdict(lambda : defaultdict(str))
+
+    for dom_node, relname, toks in get_rst_relation_root_nodes(docgraph):
+        neighbors = \
+            list(select_neighbors_by_layer(docgraph, dom_node,
+                                           layer={'rst:segment', 'rst:group'}))
+        multinuc_nuc_count = 1
+        directly_dominated_tokens = sorted([node for node in docgraph.neighbors(dom_node)
+                                            if istoken(docgraph, node)], key=natural_sort_key)
+        if directly_dominated_tokens:
+            rst_relations[dom_node]['tokens'] = directly_dominated_tokens
+
+        for neighbor in neighbors:
+            for edge in docgraph[dom_node][neighbor]:  # multidigraph
+                edge_attrs = docgraph[dom_node][neighbor][edge]
+
+                if edge_attrs['edge_type'] == EdgeTypes.spanning_relation:
+                    # a span always signifies the nucleus of a relation
+                    # there can be only one
+                    rst_relations[dom_node]['nucleus'] = (neighbor, get_span(docgraph, neighbor))
+                elif edge_attrs['rst:rel_type'] == 'rst':
+                    # a segment/group nucleus can dominate multiple satellites
+                    # (in different RST relations)
+                    satellite = (neighbor, edge_attrs['rst:rel_name'], get_span(docgraph, neighbor))
+                    if 'satellites' in rst_relations[dom_node]:
+                        rst_relations[dom_node]['satellites'].append(satellite)
+                    else:
+                        rst_relations[dom_node]['satellites'] = [satellite]
+                elif edge_attrs['rst:rel_type'] == 'multinuc':
+                    nucleus = (neighbor, edge_attrs['rst:rel_name'], get_span(docgraph, neighbor))
+                    if 'multinuc' in rst_relations[dom_node]:
+                        rst_relations[dom_node]['multinuc'].append(nucleus)
+                    else:
+                        rst_relations[dom_node]['multinuc'] = [nucleus]
+                    multinuc_nuc_count += 1
+                else:
+                    raise NotImplementedError("unknown type of RST segment domination")
+    return rst_relations
+
+
+def get_rst_spans(rst_graph):
+    """
+    """
+    token_map = TokenMapper(rst_graph).id2index
+    rst_relations = get_rst_relations(rst_graph)
+    all_spans = []
+    for dom_node in rst_relations:
+        if 'multinuc' in rst_relations[dom_node]:
+            nuc_count = 1
+            multinuc_start, multinuc_end = sys.maxint, 0
+            multinuc_spans = rst_relations[dom_node]['multinuc']
+            multinuc_rel_id = "{0}-{1}".format(
+                dom_node, '-'.join(target for target, _rel, _toks in multinuc_spans))
+
+            for nucleus, relname, toks in multinuc_spans:
+                nuc_start, nuc_end = get_segment_token_offsets(toks, token_map)
+                multinuc_span = (multinuc_rel_id, "N{}".format(nuc_count), relname, nuc_start, nuc_end)
+                all_spans.append(multinuc_span)
+                nuc_count += 1
+                # determine the token offsets of the whole multinuc relation iteratively
+                if nuc_start < multinuc_start:
+                    multinuc_start = nuc_start
+                if nuc_end > multinuc_end:
+                    multinuc_end = nuc_end
+
+        if 'satellites' in rst_relations[dom_node]:
+            # find the nucleus
+            if 'nucleus' in rst_relations[dom_node]:
+                nuc_id, nuc_toks = rst_relations[dom_node]['nucleus']
+                nuc_start, nuc_end = get_segment_token_offsets(nuc_toks, token_map)
+            elif 'multinuc' in rst_relations[dom_node]:
+                nuc_id = dom_node # multinuc as a whole is the nucleus
+                nuc_start, nuc_end = multinuc_start, multinuc_end
+            elif 'tokens' in rst_relations[dom_node]:
+                nuc_id = dom_node # dominating segment node directly dominates these tokens
+                nuc_start, nuc_end = get_segment_token_offsets(rst_relations[dom_node]['tokens'], token_map)
+            else:
+                raise ValueError("Can't find a nucleus for these satellites: {}".format(rst_relations[dom_node]['satellites']))
+
+            sat_spans = rst_relations[dom_node]['satellites']
+            for satellite, relname, sat_toks in sat_spans:
+                sat_start, sat_end = get_segment_token_offsets(sat_toks, token_map)
+                nucleus_span =  ("{0}-{1}".format(nuc_id, satellite), 'N', relname, nuc_start, nuc_end)
+                all_spans.append(nucleus_span)
+                satellite_span = ("{0}-{1}".format(nuc_id, satellite), 'S', relname, sat_start, sat_end)
+                all_spans.append(satellite_span)
+    return all_spans
 
 
 if __name__ == '__main__':
