@@ -21,6 +21,14 @@ of annotations by:
 1. converting the different annotation formats into separate graphs and 
 2. merging these graphs into a single multidigraph (based on the common
    tokenization of the annotation layers)
+3. exporting your (merged) graphs into several output formats
+4. `visualizing linguistic graphs`_ directly in an `IPython notebook`_
+
+.. _`visualizing linguistic graphs`: http://nbviewer.ipython.org/github/arne-cl/alt-mulig/blob/master/python/discoursegraphs-visualization-examples.ipynb
+.. _`IPython notebook`: http://ipython.org/notebook.html
+
+Import formats
+--------------
 
 So far, the following formats can be imported and merged:
 
@@ -28,13 +36,40 @@ So far, the following formats can be imported and merged:
   secondary edges)
 * RS3 (a format used by `RSTTool`_ to
   annotate documents with Rhetorical Structure Theory)
+* `MMAX2`_ (a format / GUI tool for annotating spans and connections between
+  them (e.g. coreferences)
+* `CoNLL 2009`_ and `CoNLL 2010`_ formats (used for annotating i.a. dependency parses
+  and coreference links)
 * ConanoXML (a format for annotating connectives, used by `Conano`_)
 * an ad-hoc plain text format for annotating expletives (you're probably not
   interested in)
 
 .. _`TigerXML`: http://www.ims.uni-stuttgart.de/forschung/ressourcen/werkzeuge/TIGERSearch/doc/html/TigerXML.html
 .. _`RSTTool`: http://www.wagsoft.com/RSTTool/
+.. _`MMAX2`: http://mmax2.sourceforge.net/
+.. _`CoNLL 2009`: http://ufal.mff.cuni.cz/conll2009-st/task-description.html
+.. _`CoNLL 2010`: http://web.archive.org/web/20130119013221/http://www.inf.u-szeged.hu/rgai/conll2010st
 .. _`Conano`: http://www.ling.uni-potsdam.de/acl-lab/Forsch/pcc/pcc.html
+
+Export formats
+--------------
+
+discoursegraphs can export graphs into the following formats /
+for the following tools:
+
+* dot format, which is used by the open source graph visualization software `graphviz <>`_
+* geoff format, used by the `neo4j <http://neo4j.com/>`_ graph database (please
+  use my fork of the `neonx <https://github.com/arne-cl/neonx>`_ library to make this work)
+* direct data export into a running neon4j database (see above)
+* `GEFX <http://gexf.net/format/>`_, `GML <http://www.fim.uni-passau.de/index.php?id=17297&L=1>`_
+  and `GraphML <http://graphml.graphdrawing.org/>`_ (common interchange formats for graphs used
+  by various tools such as `Gephi <https://gephi.github.io/>`_ and
+  `Cytoscape <http://www.cytoscape.org/>`_)
+* `PAULA XML 1.1 <https://www.sfb632.uni-potsdam.de/en/paula.html>`_, an exchange format
+  for linguistic data (exporter is still buggy)
+* `EXMARaLDA <http://exmaralda.org/>`_, a tool for annotating spans in spoken
+  or written language
+* `CoNLL 2009`_ (so far, only tokens, sentence boundaries and coreferences are exported)
 
 
 Installation
