@@ -41,6 +41,8 @@ So far, the following formats can be imported and merged:
 * `CoNLL 2009`_ and `CoNLL 2010`_ formats (used for annotating i.a. dependency parses
   and coreference links)
 * ConanoXML (a format for annotating connectives, used by `Conano`_)
+* Decour (an XML format used by a corpus of
+  `DEceptive statements in Italian COURts <http://www.lrec-conf.org/proceedings/lrec2012/pdf/377_Paper.pdf>`_)
 * an ad-hoc plain text format for annotating expletives (you're probably not
   interested in)
 
