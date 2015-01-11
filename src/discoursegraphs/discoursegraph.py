@@ -621,12 +621,13 @@ def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names):
         maps from a token ID used in ``docgraph_with_old_names`` to the token
         ID used in ``docgraph_with_new_names`` to reference the same token
     """
-    old_token_ids = list(docgraph_with_old_names.get_tokens())
-    new_token_ids = docgraph_with_new_names.get_tokens()
+    # generators of (token ID, token) tuples
+    old_token_gen = docgraph_with_old_names.get_tokens()
+    new_token_gen = docgraph_with_new_names.get_tokens()
 
     old2new = {}
-    for i, (new_tok_id, new_tok) in enumerate(new_token_ids):
-        old_tok_id, old_tok = old_token_ids[i]
+    for i, (new_tok_id, new_tok) in enumerate(new_token_gen):
+        old_tok_id, old_tok = old_token_gen.next()
         if new_tok != old_tok:  # token mismatch
             raise ValueError(
                 u"Tokenization mismatch: {0} ({1}) vs. {2} ({3})\n"
