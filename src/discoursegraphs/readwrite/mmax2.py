@@ -160,10 +160,8 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         sentence_token_tuples = sort_sentences_by_token_order(sentence_root_nodes, token_nodes)
         self.sentences, token_nodes = zip(*sentence_token_tuples)
         # add the list of tokens in a sentence to the sentence root node
-        # and extend the document token list accordingly
         for sent_root_id, sent_token_node_ids in sentence_token_tuples:
             self.node[sent_root_id]['tokens'] = sent_token_node_ids
-            self.tokens.extend(sent_token_node_ids)
 
     def get_sentences_and_token_nodes(self):
         """
