@@ -74,6 +74,9 @@ class DiscourseDocumentGraph(MultiDiGraph):
         self.name = name
         self.ns = namespace
         self.root = self.ns+':root_node'
+        self.add_node(self.root, layers={self.ns})
+        # metadata shall be stored in the root node's dictionary
+        self.node[self.root]['metadata'] = defaultdict(lambda: defaultdict(dict))
         self.sentences = []
         self.tokens = []
 
