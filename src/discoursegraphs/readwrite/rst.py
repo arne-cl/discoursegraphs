@@ -83,11 +83,12 @@ class RSTGraph(DiscourseDocumentGraph):
 
         self.name = name if name else os.path.basename(rs3_filepath)
         self.ns = namespace
-        self.root = None  # __rst2graph() will find/set the root node
+        # __rst2graph() will find/set the root node later on
 
         self.segments = []
         self.tokenized = False
         self.tokens = []
+        self.edus = []
 
         utf8_parser = etree.XMLParser(encoding="utf-8")
         rs3_xml_tree = etree.parse(rs3_filepath, utf8_parser)
@@ -99,6 +100,11 @@ class RSTGraph(DiscourseDocumentGraph):
             self.tokenized = True
             if precedence:
                 self.add_precedence_relations()
+
+        # the nodes representing EDUs (elementary discourse units)
+        # will be stored here (to keep them even after merging graphs)
+        if self.ns+':edus' not in self.node[self.root]['metadata']:
+            self.node[self.root]['metadata'][self.ns+':edus'] = self.edus
 
     def __rst2graph(self, rs3_xml_tree):
         """
@@ -120,6 +126,7 @@ class RSTGraph(DiscourseDocumentGraph):
             represents.
         """
         rst_root = rs3_xml_tree.getroot()
+
         for segment in rst_root.iter('segment'):
             self.__add_segment(segment)
         for group in rst_root.iter('group'):
@@ -128,7 +135,7 @@ class RSTGraph(DiscourseDocumentGraph):
     def __add_segment(self, segment):
         """
         add attributes to segment nodes, as well as edges to/from other
-        segments/groups
+        segments/groups. add segment to list of EDUs.
 
         Parameters
         ----------
@@ -145,6 +152,9 @@ class RSTGraph(DiscourseDocumentGraph):
             attr_dict={'label': segment_label,
                        self.ns+':text' : segment_text,
                        self.ns+':segment_type': segment_type})
+
+        # store RST segment in list of EDUs
+        self.edus.append(segment_id)
 
         if 'parent' in segment.attrib:
             self.__add_parent_relation(segment, segment_id, segment_type,
@@ -201,9 +211,14 @@ class RSTGraph(DiscourseDocumentGraph):
                                        layers={self.ns, self.ns+':group'})
 
         if 'parent' not in group.attrib:  # mark group as RST root node
+            # each discourse docgraphs has a default root node, but we will
+            # overwrite it here
+            old_root_id = self.root
             self.root = group_id
             # the layers attribute is append-only
             self.node[group_id].update(layers={self.ns+':root'})
+            # copy metadata from old root node
+            self.node[group_id]['metadata'] = self.node[old_root_id]['metadata']
         else:  # the group node is dominated by another group or segment
             self.__add_parent_relation(group, group_id, segment_type,
                                        parent_segment_type)
@@ -317,6 +332,25 @@ class RSTGraph(DiscourseDocumentGraph):
         ret_str += 'is tokenized: {}\n'.format(self.tokenized)
         ret_str += 'allowed relations: {}\n'.format(self.relations)
         return ret_str
+
+
+def get_edus(rst_graph):
+    """
+    returns the elementary discourse units (EDUs) in the order they occur
+    in the document.
+
+    Parameters
+    ----------
+    rst_graph : RSTGraph
+        a document graph representing an RS3 file
+
+    Returns
+    -------
+    edus : list of str
+        a list of node IDs of RST segments (EDUs) in the order they occur
+        in the RS3 file
+    """
+    return rst_graph.node[rst_graph.root]['metadata'][rst_graph.ns+':edus']
 
 
 def extract_relationtypes(rs3_xml_tree):
