@@ -16,7 +16,7 @@ __all__ = [
 
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
 from discoursegraphs.readwrite.conano import ConanoDocumentGraph
-from discoursegraphs.readwrite.conll import ConllDocumentGraph
+from discoursegraphs.readwrite.conll import ConllDocumentGraph, write_conll
 from discoursegraphs.readwrite.decour import DecourDocumentGraph
 from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph
 from discoursegraphs.readwrite.paulaxml.paula import PaulaDocument, write_paula
