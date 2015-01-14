@@ -54,9 +54,10 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         Reads an abstract anaphora annotation file, creates a directed
         graph and adds a node for each token, as well as an edge from
         the root node to each token.
-        If a token is annotated, it will have an attribute 'annotation',
-        which maps to a dict with the keys 'anaphoricity' (str) and
-        'certainty' (float).
+        If a token is annotated, it will have a 'namespace:annotation'
+        attribute, which maps to a dict with the keys 'anaphoricity' (str)
+        and 'certainty' (float). Annotated tokens are also part of the
+        'namespace:annotated' layer.
 
         'anaphoricity' is one of the following: 'abstract', 'nominal',
         'pleonastic' or 'relative'.
@@ -123,7 +124,7 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
             certainty = "1.0" if not regex_match.group('uncertain') else "0.5"
             self.add_node(
                 token_id,
-                layers={self.ns, self.ns+':token'},
+                layers={self.ns, self.ns+':token', self.ns+':annotated'},
                 attr_dict={
                     self.ns+':annotation': anno_type,
                     self.ns+':certainty': certainty,
