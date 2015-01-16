@@ -200,7 +200,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                 sentence_root_nodes.append(markable.attrib['id'])
 
                 sentence_token_nodes = []
-                for token_id in spanstring2tokens(markable.attrib['span']):
+                for token_id in spanstring2tokens(self, markable.attrib['span']):
                     # ignore token IDs that aren't used in the *_words.xml file
                     # NOTE: we only need this filter for broken files in the PCC corpus
                     if token_id in self.tokens:
@@ -220,7 +220,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         return sentence_root_nodes, token_nodes
 
     def get_token_nodes_from_sentence(self, sentence_root_node):
-        return spanstring2tokens(self.node[sentence_root_node][self.ns+':span'])
+        return spanstring2tokens(self, self.node[sentence_root_node][self.ns+':span'])
 
     def get_file_id(self, mmax_base_file):
         """
@@ -283,7 +283,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                           attr_dict=markable_attribs,
                           label=markable_node_id+':'+layer_name)
 
-            for target_node_id in spanstring2tokens(markable.attrib['span']):
+            for target_node_id in spanstring2tokens(self, markable.attrib['span']):
                 # manually add to_node if it's not in the graph, yet
                 # cf. issue #39
                 if target_node_id not in self:
@@ -350,23 +350,23 @@ def has_antecedent(markable):
             and markable.attrib['anaphor_antecedent'] != 'empty')
 
 
-def spanstring2tokens(span_string):
+def _spanstring2tokens(span_string):
     """
     converts a span of tokens (str, e.g. 'word_88..word_91')
     into a list of token IDs (e.g. ['word_88', 'word_89', 'word_90', 'word_91']
 
     Examples
     --------
-    >>> from discoursegraphs.readwrite.mmax2 import spanstring2tokens
-    >>> spanstring2tokens('word_1')
+    >>> from discoursegraphs.readwrite.mmax2 import _spanstring2tokens
+    >>> _spanstring2tokens('word_1')
     ['word_1']
-    >>> spanstring2tokens('word_2,word_3')
+    >>> _spanstring2tokens('word_2,word_3')
     ['word_2', 'word_3']
-    >>> spanstring2tokens('word_7..word_11')
+    >>> _spanstring2tokens('word_7..word_11')
     ['word_7', 'word_8', 'word_9', 'word_10', 'word_11']
-    >>> spanstring2tokens('word_2,word_3,word_7..word_9')
+    >>> _spanstring2tokens('word_2,word_3,word_7..word_9')
     ['word_2', 'word_3', 'word_7', 'word_8', 'word_9']
-    >>> spanstring2tokens('word_7..word_9,word_15,word_17..word_19')
+    >>> _spanstring2tokens('word_7..word_9,word_15,word_17..word_19')
     ['word_7', 'word_8', 'word_9', 'word_15', 'word_17', 'word_18', 'word_19']
     """
     tokens = []
@@ -387,12 +387,37 @@ def spanstring2tokens(span_string):
     return tokens
 
 
+def spanstring2tokens(docgraph, span_string):
+    """
+    Converts a span string (e.g. 'word_88..word_91') into a list of token
+    IDs (e.g. ['word_88', 'word_89', 'word_90', 'word_91']. Token IDs that
+    do not occur in the given document graph will be filtered out.
+
+    Parameters
+    ----------
+    docgraph : MMAXDocumentGraph
+        a document graph which represent an MMAX2 annotated document
+    span_string : str
+        a string representing a (non)-contiguous series of tokens by their
+        token IDs
+
+    Returns
+    -------
+    existing_tokens : list of str
+        a list of all those tokens that are represented by the span string
+        and which actually exist in the given graph
+    """
+    tokens = _spanstring2tokens(span_string)
+    existing_nodes = set(docgraph.nodes())
+    return [tok for tok in tokens if tok in existing_nodes]
+
+
 def spanstring2text(docgraph, span_string):
     """
     converts a span of tokens (str, e.g. 'word_88..word_91') into a string
     that contains the tokens itself.
     """
-    token_node_ids = spanstring2tokens(span_string)
+    token_node_ids = spanstring2tokens(docgraph, span_string)
     return u' '.join(docgraph.node[tok_node_id][docgraph.ns+':token']
                      for tok_node_id in token_node_ids)
 
