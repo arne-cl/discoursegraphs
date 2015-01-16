@@ -189,6 +189,8 @@ Arne Neumann
 People who downloaded this also like
 ------------------------------------
 
-- `SaltNPepper`_ (a converter framework for various linguistic data formats)
+- `SaltNPepper`_: a converter framework for various linguistic data formats
+- `educe`_: a library for handling discourse-annotated corpora (SDRT, RST and PDTB)
 
 .. _`SaltNPepper`: https://korpling.german.hu-berlin.de/p/projects/saltnpepper/wiki/
+.. _`educe`: https://github.com/kowey/educe
