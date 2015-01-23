@@ -80,16 +80,17 @@ class DiscourseDocumentGraph(MultiDiGraph):
         self.sentences = []
         self.tokens = []
 
-    def add_node(self, n, layers, attr_dict=None, **attr):
+    def add_node(self, n, layers=None, attr_dict=None, **attr):
         """Add a single node n and update node attributes.
 
         Parameters
         ----------
         n : node
             A node can be any hashable Python object except None.
-        layers : set of str
+        layers : set of str or None
             the set of layers the node belongs to,
-            e.g. {'tiger:token', 'anaphoricity:annotation'}
+            e.g. {'tiger:token', 'anaphoricity:annotation'}.
+            Will be set to {self.ns} if None.
         attr_dict : dictionary, optional (default= no attributes)
             Dictionary of node attributes.  Key/value pairs will
             update existing data associated with the node.
@@ -129,6 +130,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
         NetworkX Graphs, though one should be careful that the hash
         doesn't change on mutables.
         """
+        if not layers:
+            layers = {self.ns}
         assert isinstance(layers, set), \
             "'layers' parameter must be given as a set of strings."
         assert all((isinstance(layer, str) for layer in layers)), \
@@ -249,7 +252,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
             else:  # n is a node_id and it's already in the graph
                 self.node[n].update(attr)
 
-    def add_edge(self, u, v, layers, key=None, attr_dict=None, **attr):
+    def add_edge(self, u, v, layers=None, key=None, attr_dict=None, **attr):
         """Add an edge between u and v.
 
         An edge can only be added if the nodes u and v already exist.
@@ -268,7 +271,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
             Nodes must be hashable (and not None) Python objects.
         layers : set of str
             the set of layers the edge belongs to,
-            e.g. {'tiger:token', 'anaphoricity:annotation'}
+            e.g. {'tiger:token', 'anaphoricity:annotation'}.
+            Will be set to {self.ns} if None.
         key : hashable identifier, optional (default=lowest unused integer)
             Used to distinguish multiedges between a pair of nodes.
         attr_dict : dictionary, optional (default= no attributes)
@@ -323,6 +327,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
         [(1, 2, {'layers': {'generic'}}),
          (1, 2, {'layers': {'foo', 'tokens'}, 'weight': 1.0})]
         """
+        if not layers:
+            layers = {self.ns}
         assert isinstance(layers, set), \
             "'layers' parameter must be given as a set of strings."
         assert all((isinstance(layer, str) for layer in layers)), \
