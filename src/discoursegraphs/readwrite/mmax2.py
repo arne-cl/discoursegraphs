@@ -447,6 +447,11 @@ def sort_sentences_by_token_order(sentence_root_nodes, token_nodes):
     sentence_token_tuples = zip(sentence_root_nodes, token_nodes)
     return sorted(sentence_token_tuples, key=sentence_sort_key)
 
+
+# instanciate an MMAX document graph with a pseudo-function
+read_mmax2 = MMAXDocumentGraph
+
+
 if __name__ == "__main__":
     generic_converter_cli(MMAXDocumentGraph,
                           '*.mmax file (MMAX2 annotation file)')
