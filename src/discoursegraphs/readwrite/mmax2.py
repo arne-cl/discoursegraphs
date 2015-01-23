@@ -425,6 +425,11 @@ def spanstring2text(docgraph, span_string):
 
 def sort_sentences_by_token_order(sentence_root_nodes, token_nodes):
     """
+    Given a list of sentence markables (i.e. sentence root nodes) and a list of
+    lists of token markables (one list per sentence), returns a list of
+    (sentence root node, token nodes) tuples. The result is sorted by the
+    order in which the tokens occur in the text.
+
     Parameters
     ----------
     sentence_root_nodes : list of str
