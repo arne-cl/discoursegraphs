@@ -55,6 +55,8 @@ class ExmaraldaFile(object):
 
     def write(self, output_filepath):
         """
+        serialize the ExmaraldaFile instance and write it to a file.
+
         Parameters
         ----------
         output_filepath : str
