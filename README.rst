@@ -43,6 +43,8 @@ So far, the following formats can be imported and merged:
 * ConanoXML (a format for annotating connectives, used by `Conano`_)
 * Decour (an XML format used by a corpus of
   `DEceptive statements in Italian COURts <http://www.lrec-conf.org/proceedings/lrec2012/pdf/377_Paper.pdf>`_)
+* `EXMARaLDA <http://exmaralda.org/>`_, a format for annotating spans in spoken
+  or written language
 * an ad-hoc plain text format for annotating expletives (you're probably not
   interested in)
 
@@ -130,10 +132,10 @@ or `geoff`_ format.
 If you're interested in working with just one of those layers, you'll
 have to call the code directly::
 
-    from discoursegraphs import readwrite
-    tiger_docgraph = readwrite.TigerDocumentGraph('syntax/doc.xml')
-    rst_docgraph = readwrite.RSTGraph('rst/doc.rs3')
-    expletives_docgraph = readwrite.AnaphoraDocumentGraph('expletives/doc.txt')
+    import discoursegraphs as dg
+    tiger_docgraph = dg.read_tiger('syntax/doc.xml')
+    rst_docgraph = dg.read_rs3('rst/doc.rs3')
+    expletives_docgraph = dg.read_anaphoricity('expletives/doc.txt')
 
 All the document graphs generated in this example are derived from the
 `networkx.MultiDiGraph`_ class, so you should be able to use all of its
