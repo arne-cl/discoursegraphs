@@ -473,6 +473,10 @@ def is_informative(layer):
                          'discoursegraph')
 
 
+# pseudo-function to create a document graph from an Exmaralda file
+read_exb = read_exmaralda = ExmaraldaDocumentGraph
+
+
 def write_exb(docgraph, output_file):
     """
     converts a DiscourseDocumentGraph into an Exmaralda ``*.exb`` file and
@@ -487,6 +491,10 @@ def write_exb(docgraph, output_file):
         exmaralda_file.write(output_file)
     else:  # output_file is a file object
         output_file.write(exmaralda_file.__str__())
+
+
+# alias for write_exb(): convert docgraph into Exmaralda file
+write_exmaralda = write_exb
 
 
 if __name__ == "__main__":

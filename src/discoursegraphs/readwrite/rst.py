@@ -406,6 +406,7 @@ def get_rst_relation_root_nodes(docgraph, data=True, rst_namespace='rst'):
 def get_rst_relations(docgraph):
     """
     Returns
+    -------
     rst_relations : defaultdict(str)
         keys: 'tokens', 'nucleus', 'satellites', 'multinuc'
     """
@@ -496,6 +497,10 @@ def get_rst_spans(rst_graph):
                 satellite_span = ("{0}-{1}".format(nuc_id, satellite), 'S', relname, sat_start, sat_end)
                 all_spans.append(satellite_span)
     return all_spans
+
+
+# pseudo-function(s) to create a document graph from a RST (.rs3) file
+read_rst = read_rs3 = RSTGraph
 
 
 if __name__ == '__main__':

@@ -198,5 +198,9 @@ def get_connective(docgraph, unit_id):
                     for tok_id in get_span(docgraph, connective_id))
 
 
+# pseudo-function to create a document graph from a ConanoXML file
+read_conano = ConanoDocumentGraph
+
+
 if __name__ == "__main__":
     generic_converter_cli(ConanoDocumentGraph, 'ConanoXML (connectives)')

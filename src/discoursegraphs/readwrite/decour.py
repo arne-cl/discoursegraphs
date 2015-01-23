@@ -150,5 +150,9 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
                       edge_type=EdgeTypes.spanning_relation)
 
 
+# pseudo-function to create a document graph from a DeCour XML file
+read_decour = DecourDocumentGraph
+
+
 if __name__ == "__main__":
     generic_converter_cli(DecourDocumentGraph, 'DeCour (court transcripts)')

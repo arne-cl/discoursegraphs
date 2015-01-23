@@ -482,6 +482,10 @@ def traverse_dependencies_up(docgraph, node_id, node_attr=None):
             yield attrib_value
 
 
+# pseudo-function to create a document graph from a CoNLL 2009/2010 file
+read_conll = ConllDocumentGraph
+
+
 def write_conll(docgraph, output_file):
     """
     converts a DiscourseDocumentGraph into a tab-separated CoNLL 2009 file and

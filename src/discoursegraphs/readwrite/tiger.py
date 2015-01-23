@@ -368,5 +368,9 @@ def get_unconnected_nodes(sentence_graph):
             sentence_graph.number_of_nodes() > 1]
 
 
+# pseudo-function to create a document graph from a Tiger XML file
+read_tiger = TigerDocumentGraph
+
+
 if __name__ == '__main__':
     generic_converter_cli(TigerDocumentGraph, 'TigerXML (syntax)')

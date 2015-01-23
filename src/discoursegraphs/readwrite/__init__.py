@@ -14,12 +14,14 @@ __all__ = [
     'TigerDocumentGraph'
 ]
 
-from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph
-from discoursegraphs.readwrite.conano import ConanoDocumentGraph
-from discoursegraphs.readwrite.conll import ConllDocumentGraph, write_conll
-from discoursegraphs.readwrite.decour import DecourDocumentGraph
-from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph
+from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph, read_anaphoricity
+from discoursegraphs.readwrite.conano import ConanoDocumentGraph, read_conano
+from discoursegraphs.readwrite.conll import ConllDocumentGraph, read_conll, write_conll
+from discoursegraphs.readwrite.decour import DecourDocumentGraph, read_decour
+from discoursegraphs.readwrite.exmaralda import (
+    ExmaraldaDocumentGraph, read_exb, read_exmaralda, write_exmaralda, write_exb)
+from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph, read_mmax2
 from discoursegraphs.readwrite.paulaxml.paula import PaulaDocument, write_paula
-from discoursegraphs.readwrite.rst import RSTGraph
+from discoursegraphs.readwrite.rst import RSTGraph, read_rst, read_rs3
 from discoursegraphs.readwrite.salt.saltxmi import SaltDocument, SaltXMIGraph
-from discoursegraphs.readwrite.tiger import TigerDocumentGraph
+from discoursegraphs.readwrite.tiger import TigerDocumentGraph, read_tiger

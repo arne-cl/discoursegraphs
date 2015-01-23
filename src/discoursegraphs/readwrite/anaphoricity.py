@@ -142,6 +142,10 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
                           layers={self.ns, self.ns+':token'})
 
 
+# pseudo-function to create a document graph from an anaphoricity file
+read_anaphoricity = AnaphoraDocumentGraph
+
+
 if __name__ == '__main__':
     generic_converter_cli(AnaphoraDocumentGraph,
                           file_descriptor='anaphoricity')
