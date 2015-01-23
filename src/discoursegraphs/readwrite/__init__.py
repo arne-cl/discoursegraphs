@@ -21,6 +21,7 @@ from discoursegraphs.readwrite.decour import DecourDocumentGraph, read_decour
 from discoursegraphs.readwrite.exmaralda import (
     ExmaraldaDocumentGraph, read_exb, read_exmaralda, write_exmaralda, write_exb)
 from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph, read_mmax2
+from discoursegraphs.readwrite.neo4j import write_neo4j, write_geoff
 from discoursegraphs.readwrite.paulaxml.paula import PaulaDocument, write_paula
 from discoursegraphs.readwrite.rst import RSTGraph, read_rst, read_rs3
 from discoursegraphs.readwrite.salt.saltxmi import SaltDocument, SaltXMIGraph

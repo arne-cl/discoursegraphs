@@ -58,6 +58,10 @@ def write_geoff(discoursegraph, output_file):
         output_file.write(convert_to_geoff(discoursegraph))
 
 
+# alias for write_geoff(): convert document graph into a Geoff file
+write_neo4j = write_geoff
+
+
 def upload_to_neo4j(discoursegraph):
     """
     Parameters
