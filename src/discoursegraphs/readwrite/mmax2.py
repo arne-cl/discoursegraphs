@@ -350,43 +350,6 @@ def has_antecedent(markable):
             and markable.attrib['anaphor_antecedent'] != 'empty')
 
 
-def _spanstring2tokens(span_string):
-    """
-    converts a span of tokens (str, e.g. 'word_88..word_91')
-    into a list of token IDs (e.g. ['word_88', 'word_89', 'word_90', 'word_91']
-
-    Examples
-    --------
-    >>> from discoursegraphs.readwrite.mmax2 import _spanstring2tokens
-    >>> _spanstring2tokens('word_1')
-    ['word_1']
-    >>> _spanstring2tokens('word_2,word_3')
-    ['word_2', 'word_3']
-    >>> _spanstring2tokens('word_7..word_11')
-    ['word_7', 'word_8', 'word_9', 'word_10', 'word_11']
-    >>> _spanstring2tokens('word_2,word_3,word_7..word_9')
-    ['word_2', 'word_3', 'word_7', 'word_8', 'word_9']
-    >>> _spanstring2tokens('word_7..word_9,word_15,word_17..word_19')
-    ['word_7', 'word_8', 'word_9', 'word_15', 'word_17', 'word_18', 'word_19']
-    """
-    tokens = []
-
-    spans = span_string.split(',')
-    for span in spans:
-        span_elements = span.split('..')
-        if len(span_elements) == 1:
-            tokens.append(span_elements[0])
-        elif len(span_elements) == 2:
-            start, end = span_elements
-            start_id = int(start[5:])  # removes 'word_'
-            end_id = int(end[5:])
-            tokens.extend(['word_'+str(token_id)
-                           for token_id in range(start_id, end_id+1)])
-        else:
-            raise ValueError("Can't parse span '{}'".format(span_string))
-    return tokens
-
-
 def spanstring2tokens(docgraph, span_string):
     """
     Converts a span string (e.g. 'word_88..word_91') into a list of token
@@ -407,7 +370,45 @@ def spanstring2tokens(docgraph, span_string):
         a list of all those tokens that are represented by the span string
         and which actually exist in the given graph
     """
-    tokens = _spanstring2tokens(span_string)
+    def convert_spanstring(span_string):
+        """
+        converts a span of tokens (str, e.g. 'word_88..word_91')
+        into a list of token IDs (e.g. ['word_88', 'word_89', 'word_90', 'word_91']
+
+        Note: Please don't use this function directly, use spanstring2tokens()
+        instead, which checks for non-existing tokens!
+
+        Examples
+        --------
+        >>> convert_spanstring('word_1')
+        ['word_1']
+        >>> convert_spanstring('word_2,word_3')
+        ['word_2', 'word_3']
+        >>> convert_spanstring('word_7..word_11')
+        ['word_7', 'word_8', 'word_9', 'word_10', 'word_11']
+        >>> convert_spanstring('word_2,word_3,word_7..word_9')
+        ['word_2', 'word_3', 'word_7', 'word_8', 'word_9']
+        >>> convert_spanstring('word_7..word_9,word_15,word_17..word_19')
+        ['word_7', 'word_8', 'word_9', 'word_15', 'word_17', 'word_18', 'word_19']
+        """
+        tokens = []
+
+        spans = span_string.split(',')
+        for span in spans:
+            span_elements = span.split('..')
+            if len(span_elements) == 1:
+                tokens.append(span_elements[0])
+            elif len(span_elements) == 2:
+                start, end = span_elements
+                start_id = int(start[5:])  # removes 'word_'
+                end_id = int(end[5:])
+                tokens.extend(['word_'+str(token_id)
+                               for token_id in range(start_id, end_id+1)])
+            else:
+                raise ValueError("Can't parse span '{}'".format(span_string))
+        return tokens
+
+    tokens = convert_spanstring(span_string)
     existing_nodes = set(docgraph.nodes())
     return [tok for tok in tokens if tok in existing_nodes]
 
