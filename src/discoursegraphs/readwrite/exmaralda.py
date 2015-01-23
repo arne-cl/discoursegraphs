@@ -151,14 +151,11 @@ class ExmaraldaFile(object):
             if span_node_ids:
                 start_id, end_id = self.__span2event(span_node_ids)
                 event_label = docgraph.node[node_id].get('label', '')
-                # TODO: dirty hack to remove 'markable_n:sentence'
-                # annotations
-                if not event_label.endswith(':sentence'):
-                    event = self.E('event',
-                                   {'start': "T{}".format(start_id),
-                                    'end': "T{}".format(end_id)},
-                                   event_label)
-                    temp_tier.append(event)
+                event = self.E('event',
+                               {'start': "T{}".format(start_id),
+                                'end': "T{}".format(end_id)},
+                               event_label)
+                temp_tier.append(event)
         body.append(temp_tier)
 
     def __add_coreference_chain_tiers(self, docgraph, body,
