@@ -191,19 +191,27 @@ def create_dir(path):
     Creates a directory. Warns, if the directory can't be accessed. Passes,
     if the directory already exists.
 
-    @author: tzot (http://stackoverflow.com/a/600612)
+    modified from http://stackoverflow.com/a/600612
 
-    @param path: path to the directory to be created
-    @type path: C{str}
+    Parameters
+    ----------
+    path : str
+        path to the directory to be created
     """
+    import sys
     import errno
+
     try:
         os.makedirs(path)
     except OSError as exc:  # Python >2.5
         if exc.errno == errno.EEXIST:
-            pass
+            if os.path.isdir(path):
+                pass
+            else: # if something exists at the path, but it's not a dir
+                raise
         elif exc.errno == errno.EACCES:
-            print "Cannot create [%s]! Check Permissions" % path
+            sys.stderr.write("Cannot create [%s]! Check Permissions" % path)
+            raise
         else:
             raise
 
