@@ -17,7 +17,7 @@ import discoursegraphs as dg
 from discoursegraphs.readwrite.mmax2 import spanstring2tokens
 
 
-def gen_bracket_mappings(docgraph, layer):
+def gen_bracket_mappings(docgraph, layer=None):
     """
     extract all pointing chains (e.g. coreference chains) from a document
     graph (or just from the specified layer). return dictionaries describing
