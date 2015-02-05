@@ -48,7 +48,7 @@ def gen_closing_string(closing_dict, markable2chain, token_id, stack):
     num_of_closing_brackets = len(closing_dict[token_id])
     closing_markable_ids = [stack.pop()
                             for i in range(num_of_closing_brackets)]
-    return u''.join(u']_{}'.format(markable2chain[closing_id])
+    return u''.join(u']_{{{}}}'.format(markable2chain[closing_id])
                                    for closing_id in closing_markable_ids)
 
 
@@ -61,13 +61,13 @@ def gen_bracketed_output(docgraph):
 
     Example
     -------
-    Die Diskussion , wie teuer [die neue [Wittstocker]_markable_22
-    Stadthalle]_markable_21 für Vereine und Veranstalter wird , hat
+    Die Diskussion , wie teuer [die neue [Wittstocker]_{markable_22}
+    Stadthalle]_{markable_21} für Vereine und Veranstalter wird , hat
     einige Zeit in Anspruch genommen .
-    Die Betriebskosten [für den schmucken Veranstaltungsort]_markable_21
-    sind hoch . Jetzt wird es darum gehen , [die Halle]_markable_21 so oft wie
-    möglich zu füllen .
-    Und [in der Region]_markable_22 gibt es Konkurrenz .
+    Die Betriebskosten [für den schmucken Veranstaltungsort]_{markable_21}
+    sind hoch . Jetzt wird es darum gehen , [die Halle]_{markable_21} so oft
+    wie möglich zu füllen .
+    Und [in der Region]_{markable_22} gibt es Konkurrenz .
     '''
     opening, closing, markable2chain = gen_bracket_mappings(docgraph)
 
