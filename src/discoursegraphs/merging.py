@@ -13,6 +13,7 @@ import sys
 import argparse
 from networkx import write_dot
 
+import discoursegraphs as dg
 from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.util import create_dir
 
@@ -38,8 +39,8 @@ def merging_cli(debug=False):
                         help='MMAX2 file to be merged')
     parser.add_argument(
         '-o', '--output-format', default='dot',
-        help=('output format: dot, pickle, geoff, gexf, gml, graphml, neo4j, '
-              'exmaralda, conll, paula, no-output'))
+        help=('output format: brat, dot, pickle, geoff, gexf, gml, graphml, '
+              'neo4j, exmaralda, conll, paula, no-output'))
     parser.add_argument('output_file', nargs='?', default=sys.stdout)
 
     args = parser.parse_args(sys.argv[1:])
@@ -93,6 +94,8 @@ def merging_cli(debug=False):
 
     if args.output_format == 'dot':
         write_dot(discourse_docgraph, args.output_file)
+    elif args.output_format == 'brat':
+        dg.write_brat(discourse_docgraph, args.output_file)
     elif args.output_format == 'pickle':
         import cPickle as pickle
         with open(args.output_file, 'wb') as pickle_file:
