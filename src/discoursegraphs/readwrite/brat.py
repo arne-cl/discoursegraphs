@@ -18,6 +18,25 @@ import discoursegraphs as dg
 from discoursegraphs.readwrite.mmax2 import spanstring2text, spanstring2tokens
 
 
+ANNOTATION_CONF = u"""
+[entities]
+
+Markable
+
+[relations]
+
+Coreference\tArg1:Markable, Arg2:Markable, <REL-TYPE>:symmetric-transitive
+
+# "Markable" annotations can nest arbitrarily
+
+ENTITY-NESTING\tArg1:Markable, Arg2:Markable
+
+[events]
+
+[attributes]
+"""
+
+
 def brat_output(docgraph, layer=None):
     """
     converts a document graph with pointing chains into a string representation
@@ -35,10 +54,6 @@ def brat_output(docgraph, layer=None):
     -------
     ret_str : unicode
         the content of a brat *.ann file
-    anno_conf : unicode
-        the content of a brat annotation.conf file
-    visual_conf : unicode
-        the content of a brat visual.conf file
     """
     ret_str = u''
     pointing_chains = dg.get_pointing_chains(docgraph, layer=layer)
@@ -49,41 +64,42 @@ def brat_output(docgraph, layer=None):
     # map from a token ID to a (markable ID, markable text, span length) tuple of its span,
     # iff it is the first token of that span. Otherwise, it just maps to the markable ID
     token2markable = {}
-    for markable in markables:
+    markable2idx = {}
+    for midx, markable in enumerate(markables, 1):
         span_tokens = spanstring2tokens(docgraph, docgraph.node[markable][docgraph.ns+':span'])
         span_text = dg.tokens2text(docgraph, span_tokens)
         markable_strings.append(span_text)
-        token2markable[span_tokens[0]] = (markable, span_text, len(span_text))
+        token2markable[span_tokens[0]] = (markable, midx, span_text, len(span_text))
+        markable2idx[markable] = midx
 
         if len(span_tokens) > 1:
             for token_id in span_tokens[1:]:
                 token2markable[token_id] = markable
 
     onset = 0
-    for i, token_id in enumerate(docgraph.tokens, 1):
+    for token_id in docgraph.tokens:
         tok_len = len(docgraph.get_token(token_id))
         if token_id in token2markable:
             if isinstance(token2markable[token_id], tuple):
-                markable, mark_text, mark_len = token2markable[token_id]
-                ret_str += u"T{}\t{} {} {}\t{}\n".format(
-                    i, unidecode(mark_text), onset, onset+mark_len,
-                    mark_text)
+                markable, midx, mark_text, mark_len = token2markable[token_id]
+                ret_str += u"T{}\tMarkable {} {}\t{}\n".format(
+                    midx, onset, onset+mark_len, mark_text)
             else: # if the token is not the first token of the markable
                 pass
         onset += tok_len+1
-    return ret_str, create_annotation_conf(markable_strings), create_visual_conf(docgraph, pointing_chains)
 
-
-def create_annotation_conf(markable_strings):
-    """
-    given a list of markable strings, creates a brat
-    annotation.conf file (as a string)
-    """
-    ret_str = u'[entities]\n\n'
-    for markable_string in markable_strings:
-        ret_str += unidecode(markable_string) + '\n'
-    ret_str += '\n[relations]\n\n[events]\n\n[attributes]'
+    relation = 1
+    for chain in pointing_chains:
+        last_to_first_mention = list(reversed(chain))
+        for i in xrange(0, len(chain)-1):
+            ret_str += u"R{0}\tCoreference Arg1:T{1} Arg2:T{2}\n".format(
+                relation, markable2idx[last_to_first_mention[i]],
+                markable2idx[last_to_first_mention[i+1]])
+        relation += 1
     return ret_str
+
+
+
 
 
 def create_visual_conf(docgraph, pointing_chains):
@@ -118,15 +134,14 @@ def write_brat(docgraph, output_dir, layer=None):
                      'wb', encoding='utf-8') as txtfile:
         txtfile.write(dg.get_text(docgraph))
 
-    anno_str, anno_conf_str, visual_conf_str = brat_output(docgraph,
-                                                           layer=layer)
+    anno_str = brat_output(docgraph, layer=layer)
 
     with codecs.open(os.path.join(output_dir, 'annotation.conf'),
                      'wb', encoding='utf-8') as annotation_conf:
-        annotation_conf.write(anno_conf_str)
-    with codecs.open(os.path.join(output_dir, 'visual.conf'),
-                     'wb', encoding='utf-8') as visual_conf:
-        visual_conf.write(visual_conf_str)
+        annotation_conf.write(ANNOTATION_CONF)
+    #~ with codecs.open(os.path.join(output_dir, 'visual.conf'),
+                     #~ 'wb', encoding='utf-8') as visual_conf:
+        #~ visual_conf.write(visual_conf_str)
     with codecs.open(os.path.join(output_dir, doc_name+'.ann'),
                      'wb', encoding='utf-8') as annfile:
         annfile.write(anno_str)
