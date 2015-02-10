@@ -10,7 +10,9 @@ annotation ad-hoc format into a document graph.
 import os
 import re
 from itertools import chain
+import codecs
 
+import discoursegraphs as dg
 from discoursegraphs import DiscourseDocumentGraph
 from discoursegraphs.util import ensure_unicode
 from discoursegraphs.readwrite.generic import generic_converter_cli
@@ -29,6 +31,7 @@ ANNOTATION_TYPES = {'n': 'nominal',
                     'r': 'relative',
                     'p': 'pleonastic'}
 
+ANNOTATIONS = {val: key for key, val in ANNOTATION_TYPES.items()}
 
 class AnaphoraDocumentGraph(DiscourseDocumentGraph):
 
@@ -140,6 +143,30 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
         if connected:
             self.add_edge(self.root, token_id,
                           layers={self.ns, self.ns+':token'})
+
+
+def gen_anaphoricity_str(docgraph, anaphora='es'):
+    assert anaphora in ('das', 'es')
+    ret_str = u''
+    annotated_token_ids = [tok_id for tok_id in dg.select_nodes_by_layer(docgraph, docgraph.ns+':annotated')
+                           if docgraph.get_token(tok_id).lower() == anaphora]
+    for token_id in docgraph.tokens:
+        if token_id in annotated_token_ids:
+            certainty_str = '' if docgraph.ns+':certainty' == '1.0' else '?'
+            ret_str += u'{}/{}{} '.format(
+                docgraph.get_token(token_id),
+                ANNOTATIONS[docgraph.node[token_id][docgraph.ns+':annotation']],
+                certainty_str)
+        else:
+            ret_str += u'{} '.format(docgraph.get_token(token_id))
+    return ret_str
+
+
+def write_anaphoricity(docgraph, output_path, anaphora='das'):
+    outpath, _fname = os.path.split(output_path)
+    dg.util.create_dir(outpath)
+    with codecs.open(output_path, 'w', encoding='utf-8') as outfile:
+        outfile.write(gen_anaphoricity_str(docgraph, anaphora=anaphora))
 
 
 # pseudo-function to create a document graph from an anaphoricity file
