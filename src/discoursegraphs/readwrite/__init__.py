@@ -16,6 +16,7 @@ __all__ = [
 
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph, read_anaphoricity
 from discoursegraphs.readwrite.brackets import write_brackets
+from discoursegraphs.readwrite.brat import write_brat
 from discoursegraphs.readwrite.conano import ConanoDocumentGraph, read_conano
 from discoursegraphs.readwrite.conll import ConllDocumentGraph, read_conll, write_conll
 from discoursegraphs.readwrite.decour import DecourDocumentGraph, read_decour
