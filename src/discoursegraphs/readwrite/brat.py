@@ -11,6 +11,7 @@ import os
 import codecs
 import math
 import itertools
+from collections import defaultdict
 
 import brewer2mpl
 from unidecode import unidecode
@@ -37,7 +38,7 @@ ENTITY-NESTING\tArg1:Markable, Arg2:Markable
 """
 
 
-def brat_output(docgraph, layer=None):
+def brat_output(docgraph, layer=None, show_relations=True):
     """
     converts a document graph with pointing chains into a string representation
     of a brat *.ann file.
@@ -57,49 +58,41 @@ def brat_output(docgraph, layer=None):
     """
     ret_str = u''
     pointing_chains = dg.get_pointing_chains(docgraph, layer=layer)
-    markables = sorted(itertools.chain(*pointing_chains),
-                       key=dg.util.natural_sort_key)
-    markable_strings = []
 
-    # map from a token ID to a (markable ID, markable text, span length) tuple of its span,
-    # iff it is the first token of that span. Otherwise, it just maps to the markable ID
-    token2markable = {}
-    markable2idx = {}
-    for midx, markable in enumerate(markables, 1):
-        span_tokens = spanstring2tokens(docgraph, docgraph.node[markable][docgraph.ns+':span'])
-        span_text = dg.tokens2text(docgraph, span_tokens)
-        markable_strings.append(span_text)
-        token2markable[span_tokens[0]] = (markable, midx, span_text, len(span_text))
-        markable2idx[markable] = midx
+    # a token can be part of 1+ markable(s)
+    first_token2markables = defaultdict(list)
+    markable_dict = {}
+    markable_index = 1
 
-        if len(span_tokens) > 1:
-            for token_id in span_tokens[1:]:
-                token2markable[token_id] = markable
+    for pointing_chain in pointing_chains:
+        for markable in sorted(pointing_chain, key=dg.util.natural_sort_key):
+            span_tokens = spanstring2tokens(docgraph, docgraph.node[markable][docgraph.ns+':span'])
+            span_text = dg.tokens2text(docgraph, span_tokens)
+            first_token2markables[span_tokens[0]].append(markable)
+            markable_dict[markable] = (markable_index, span_text, len(span_text))
+            markable_index += 1
 
     onset = 0
     for token_id in docgraph.tokens:
         tok_len = len(docgraph.get_token(token_id))
-        if token_id in token2markable:
-            if isinstance(token2markable[token_id], tuple):
-                markable, midx, mark_text, mark_len = token2markable[token_id]
+        if token_id in first_token2markables:
+            for markable in first_token2markables[token_id]:
+                mark_index, mark_text, mark_len = markable_dict[markable]
                 ret_str += u"T{}\tMarkable {} {}\t{}\n".format(
-                    midx, onset, onset+mark_len, mark_text)
-            else: # if the token is not the first token of the markable
-                pass
+                    mark_index, onset, onset+mark_len, mark_text)
         onset += tok_len+1
 
-    relation = 1
-    for chain in pointing_chains:
-        last_to_first_mention = list(reversed(chain))
-        for i in xrange(0, len(chain)-1):
-            ret_str += u"R{0}\tCoreference Arg1:T{1} Arg2:T{2}\n".format(
-                relation, markable2idx[last_to_first_mention[i]],
-                markable2idx[last_to_first_mention[i+1]])
-        relation += 1
+    if show_relations:
+        relation = 1
+        for pointing_chain in pointing_chains:
+            last_to_first_mention = sorted(pointing_chain, key=dg.util.natural_sort_key, reverse=True)
+            for i in xrange(0, len(pointing_chain)-1):
+                chain_element = markable_dict[last_to_first_mention[i]][0]
+                prev_chain_element = markable_dict[last_to_first_mention[i+1]][0]
+                ret_str += u"R{0}\tCoreference Arg1:T{1} Arg2:T{2}\n".format(
+                    relation, chain_element, prev_chain_element)
+                relation += 1
     return ret_str
-
-
-
 
 
 def create_visual_conf(docgraph, pointing_chains):
@@ -127,14 +120,15 @@ def create_visual_conf(docgraph, pointing_chains):
     return ret_str
 
 
-def write_brat(docgraph, output_dir, layer=None):
+def write_brat(docgraph, output_dir, layer=None, show_relations=True):
     dg.util.create_dir(output_dir)
     doc_name = os.path.basename(docgraph.name)
     with codecs.open(os.path.join(output_dir, doc_name+'.txt'),
                      'wb', encoding='utf-8') as txtfile:
         txtfile.write(dg.get_text(docgraph))
 
-    anno_str = brat_output(docgraph, layer=layer)
+    anno_str = brat_output(docgraph, layer=layer,
+                           show_relations=show_relations)
 
     with codecs.open(os.path.join(output_dir, 'annotation.conf'),
                      'wb', encoding='utf-8') as annotation_conf:
