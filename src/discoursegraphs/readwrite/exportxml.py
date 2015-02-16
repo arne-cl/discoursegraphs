@@ -148,5 +148,23 @@ def parse_anaphora(anaphora, source_id):
     return relation.attrib['antecedent'], relation.attrib['type']
 
 
+'''
+WARNING: academic ad-hoc code to export to CoNLL using igraph instead of
+networkx.
+
+TODO: add markable span annotation to each antecedent/anaphora during import
+TODO: add edge_type to each edge
+
+needed functions / functionality
+--------------------------------
+
+get_pointing_chains(self.docgraph)
+select_nodes_by_layer(self.docgraph, 'mmax:markable')
+get_span(self.docgraph, markable_node_id)
+dg.sentences
+dg.node[sentence_id]['tokens']
+dg.get_token(tok_id)
+'''
+
 
 read_exportxml = ExportXMLDocumentGraph
