@@ -19,7 +19,7 @@ from discoursegraphs.discoursegraph import (
 from discoursegraphs.readwrite import (
     read_anaphoricity, write_brackets, read_conano, read_conll, write_conll,
     read_decour, read_exb, read_exmaralda, write_exmaralda, write_exb,
-    read_mmax2, write_neo4j, write_geoff, write_paula,
+    read_exportxml, read_mmax2, write_neo4j, write_geoff, write_paula,
     read_rst, read_rs3, read_tiger)
 from discoursegraphs.readwrite.dot import print_dot
 from discoursegraphs.statistics import info

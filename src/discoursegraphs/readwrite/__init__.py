@@ -21,6 +21,7 @@ from discoursegraphs.readwrite.conll import ConllDocumentGraph, read_conll, writ
 from discoursegraphs.readwrite.decour import DecourDocumentGraph, read_decour
 from discoursegraphs.readwrite.exmaralda import (
     ExmaraldaDocumentGraph, read_exb, read_exmaralda, write_exmaralda, write_exb)
+from discoursegraphs.readwrite.exportxml import read_exportxml
 from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph, read_mmax2
 from discoursegraphs.readwrite.neo4j import write_neo4j, write_geoff
 from discoursegraphs.readwrite.paulaxml.paula import PaulaDocument, write_paula
