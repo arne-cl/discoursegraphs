@@ -7,13 +7,6 @@ linguistic documents into a graph-based representation for further
 processing.
 """
 
-__all__ = [
-    'AnaphoraDocumentGraph', 'ConanoDocumentGraph', 'ConllDocumentGraph',
-    'DecourDocumentGraph', 'MMAXDocumentGraph', 'PaulaDocument',
-    'write_paula', 'RSTGraph', 'SaltDocument', 'SaltXMIGraph',
-    'TigerDocumentGraph'
-]
-
 from discoursegraphs.readwrite.anaphoricity import AnaphoraDocumentGraph, read_anaphoricity
 from discoursegraphs.readwrite.brackets import write_brackets
 from discoursegraphs.readwrite.brat import write_brat
@@ -25,6 +18,7 @@ from discoursegraphs.readwrite.exmaralda import (
 from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph, read_mmax2
 from discoursegraphs.readwrite.neo4j import write_neo4j, write_geoff
 from discoursegraphs.readwrite.paulaxml.paula import PaulaDocument, write_paula
+from discoursegraphs.readwrite.ptb import PTBDocumentGraph, read_ptb, read_mrg
 from discoursegraphs.readwrite.rst import RSTGraph, read_rst, read_rs3
 from discoursegraphs.readwrite.salt.saltxmi import SaltDocument, SaltXMIGraph
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph, read_tiger
