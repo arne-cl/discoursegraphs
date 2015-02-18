@@ -34,6 +34,7 @@ So far, the following formats can be imported and merged:
 
 * `TigerXML`_ (a format for representing tree-like syntax graphs with
   secondary edges)
+* `Penn Treebank <http://www.cis.upenn.edu/~treebank/>`_ format (an s-expressions/lisp/brackets format for representing syntax trees)
 * RS3 (a format used by `RSTTool`_ to
   annotate documents with Rhetorical Structure Theory)
 * `MMAX2`_ (a format / GUI tool for annotating spans and connections between
