@@ -10,7 +10,7 @@ TODO: add precedence edges if needed
 """
 
 import os
-import nltk
+import nltk # version 3.x is needed here (.labels() vs. .node)
 
 import discoursegraphs as dg
 
@@ -33,7 +33,7 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         sorted list of all token node IDs contained in this document graph
     """
     def __init__(self, ptb_filepath, name=None, namespace='ptb',
-                 tokenize=True, precedence=False, debug=True):
+                 tokenize=True, precedence=False, limit=None):
         """
         Creates an PTBDocumentGraph from a Penn Treebank *.mrg file and adds metadata
         to it.
@@ -51,6 +51,9 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         precedence : bool
             If True, add precedence relation edges
             (root precedes token1, which precedes token2 etc.)
+        limit : int or None
+            only parse the first n sentences of the input file into the
+            document graph
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(PTBDocumentGraph, self).__init__()
@@ -66,13 +69,30 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
 
         ptb_path, ptb_filename = os.path.split(ptb_filepath)
         document = nltk.corpus.BracketParseCorpusReader(ptb_path, [ptb_filename])
-        for sentence in document.parsed_sents():
-            self.sentences.append(self._node_id)
-            # add edge from document root to sentence root
-            self.add_edge(self.root, self._node_id, edge_type=dg.EdgeTypes.spanning_relation)
-            self._parse_sentencetree(sentence)
-            self._node_id += 1 # iterate after last subtree has been processed
+        parsed_sents_iter = document.parsed_sents()
+        
+        if limit:
+            for sentence in parsed_sents_iter[:limit]:
+                self._add_sentence(sentence)
+        else: # parse all sentences
+            for sentence in parsed_sents_iter:
+                self._add_sentence(sentence)
 
+    def _add_sentence(self, sentence):
+        """
+        add a sentence from the input document to the document graph.
+
+        Parameters
+        ----------
+        sentence : nltk.tree.Tree
+            a sentence represented by a Tree instance
+        """
+        self.sentences.append(self._node_id)
+        # add edge from document root to sentence root
+        self.add_edge(self.root, self._node_id, edge_type=dg.EdgeTypes.spanning_relation)
+        self._parse_sentencetree(sentence)
+        self._node_id += 1 # iterate after last subtree has been processed
+        
     def _parse_sentencetree(self, tree):
         def get_nodelabel(node):
             if isinstance(node, nltk.tree.Tree):
