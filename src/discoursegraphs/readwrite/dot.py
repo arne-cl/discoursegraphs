@@ -12,7 +12,7 @@ from tempfile import NamedTemporaryFile
 from networkx import write_dot
 
 
-def print_dot(docgraph):
+def print_dot(docgraph, ignore_node_labels=False):
     """
     converts a document graph into a dot file and returns it as a string.
 
@@ -29,9 +29,21 @@ def print_dot(docgraph):
     IPython notebook, run this command once::
 
         %load_ext gvmagic
+
+    Parameters
+    ----------
+    ignore_node_labels : bool
+        If True, use the ID of a node as its node label
     """
     tmp_file = NamedTemporaryFile()
-    write_dot(docgraph, tmp_file.name)
+    if ignore_node_labels:
+        tmpgraph = docgraph.copy()
+        for node, ndict in tmpgraph.nodes_iter(data=True):
+            ndict.pop('label', None)
+    else:
+        tmpgraph = docgraph
+
+    write_dot(tmpgraph, tmp_file.name)
     # write_dot does not seem to produce valid utf8 for all files, that's
     # why we're adding error handling here
     # 
