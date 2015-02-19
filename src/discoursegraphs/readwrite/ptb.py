@@ -60,12 +60,15 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
 
         self.name = name if name else os.path.basename(ptb_filepath)
         self.ns = namespace
-        self.root = self.ns+':root_node'
-        self.add_node(self.root, layers={self.ns})
+        self.root = 0
+        self.add_node(self.root, layers={self.ns}, label=self.ns+':root_node')
+        if 'discoursegraph:root_node' in self:
+            self.remove_node('discoursegraph:root_node')
+            
         self.sentences = []
         self.tokens = []
 
-        self._node_id = 0
+        self._node_id = 1
 
         ptb_path, ptb_filename = os.path.split(ptb_filepath)
         document = nltk.corpus.BracketParseCorpusReader(ptb_path, [ptb_filename])
