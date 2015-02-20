@@ -118,16 +118,22 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
             if isinstance(subtree, nltk.tree.Tree):
                 node_attrs = {'label': node_label}
                 edge_type = dg.EdgeTypes.dominance_relation
-            else: # isinstance(subtree, unicode); subtree is a token
-                node_attrs = {'label': node_label, self.ns+':token': node_label}
-                edge_type = dg.EdgeTypes.spanning_relation
-                self.tokens.append(self._node_id)
+                self.add_node(self._node_id, attr_dict=node_attrs)
+                self.add_edge(root_node_id, self._node_id, edge_type=edge_type)
 
-            self.add_node(self._node_id, attr_dict=node_attrs)
-            self.add_edge(root_node_id, self._node_id, edge_type=edge_type)
+            else: # isinstance(subtree, unicode); subtree is a token
+                # we'll have to modify the parent node of a token, since
+                # in NLTK Trees, even a leaf node (with its POS tag) is
+                # represented as a Tree (an iterator over a single unicode
+                # string), e.g. ``Tree('NNS', ['prices'])``
+                pos_tag = self.node[parent_node_id]['label']
+                self.node[parent_node_id] = {
+                    'label': node_label, self.ns+':token': node_label,
+                    self.ns+':pos': pos_tag}
+                self.tokens.append(parent_node_id)
 
             if isinstance(subtree, nltk.tree.Tree):
-                self._parse_sentencetree(subtree)
+                self._parse_sentencetree(subtree, parent_node_id=self._node_id)
 
 
 # pseudo-function(s) to create a document graph from a Penn Treebank *.mrg file
