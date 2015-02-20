@@ -11,6 +11,7 @@ a ``layers`` attribute (which maps to the set of layers (str) it belongs to).
 TODO: implement a DiscourseCorpusGraph
 """
 
+import sys
 import warnings
 from collections import defaultdict
 from enum import Enum
@@ -544,7 +545,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
             for token_id in self.tokens:
                 yield (token_id, self.get_token(token_id, token_attrib))
 
-    def merge_graphs(self, other_docgraph):
+    def merge_graphs(self, other_docgraph, verbose=False):
         """
         Merges another document graph into the current one, thereby adding all
         the necessary nodes and edges (with attributes, layers etc.).
@@ -553,7 +554,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
         tokenization.
         """
         # renaming the tokens of the other graph to match this one
-        rename_tokens(other_docgraph, self)
+        rename_tokens(other_docgraph, self, verbose=verbose)
         self.add_nodes_from(other_docgraph.nodes(data=True))
 
         # copy token node attributes to the current namespace
@@ -591,7 +592,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
                           edge_type=EdgeTypes.precedence_relation)
 
 
-def rename_tokens(docgraph_with_old_names, docgraph_with_new_names):
+def rename_tokens(docgraph_with_old_names, docgraph_with_new_names, verbose=False):
     """
     Renames the tokens of a graph (``docgraph_with_old_names``) in-place,
     using the token names of another document graph
@@ -601,7 +602,7 @@ def rename_tokens(docgraph_with_old_names, docgraph_with_new_names):
     This will only work, iff both graphs have the same tokenization.
     """
     old2new = create_token_mapping(docgraph_with_old_names,
-                                   docgraph_with_new_names)
+                                   docgraph_with_new_names, verbose=verbose)
     relabel_nodes(docgraph_with_old_names, old2new, copy=False)
     new_token_ids = old2new.values()
 
@@ -610,7 +611,8 @@ def rename_tokens(docgraph_with_old_names, docgraph_with_new_names):
         docgraph_with_old_names.tokens = new_token_ids
 
 
-def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names):
+def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names,
+                         verbose=False):
     """
     given two document graphs which annotate the same text and which use the
     same tokenization, creates a dictionary with a mapping from the token
@@ -646,6 +648,10 @@ def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names):
                     new_tok, old_tok).encode('utf-8'))
         else:
             old2new[old_tok_id] = new_tok_id
+            if verbose:
+                sys.stdout.write("{0} ({1}) vs. {2} ({3})\n".format(
+                    old_tok, docgraph_with_old_names.name,
+                    new_tok, docgraph_with_new_names.name))
     return old2new
 
 
