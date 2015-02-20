@@ -33,7 +33,8 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         sorted list of all token node IDs contained in this document graph
     """
     def __init__(self, ptb_filepath, name=None, namespace='ptb',
-                 tokenize=True, precedence=False, limit=None):
+                 tokenize=True, precedence=False, limit=None,
+                 ignore_traces=True):
         """
         Creates an PTBDocumentGraph from a Penn Treebank *.mrg file and adds metadata
         to it.
@@ -76,12 +77,12 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         
         if limit:
             for sentence in parsed_sents_iter[:limit]:
-                self._add_sentence(sentence)
+                self._add_sentence(sentence, ignore_traces=ignore_traces)
         else: # parse all sentences
             for sentence in parsed_sents_iter:
-                self._add_sentence(sentence)
+                self._add_sentence(sentence, ignore_traces=ignore_traces)
 
-    def _add_sentence(self, sentence):
+    def _add_sentence(self, sentence, ignore_traces=True):
         """
         add a sentence from the input document to the document graph.
 
@@ -93,10 +94,10 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         self.sentences.append(self._node_id)
         # add edge from document root to sentence root
         self.add_edge(self.root, self._node_id, edge_type=dg.EdgeTypes.spanning_relation)
-        self._parse_sentencetree(sentence)
+        self._parse_sentencetree(sentence, ignore_traces=ignore_traces)
         self._node_id += 1 # iterate after last subtree has been processed
         
-    def _parse_sentencetree(self, tree):
+    def _parse_sentencetree(self, tree, parent_node_id=None, ignore_traces=True):
         def get_nodelabel(node):
             if isinstance(node, nltk.tree.Tree):
                 return node.label()
@@ -111,6 +112,9 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         for subtree in tree:
             self._node_id += 1
             node_label = get_nodelabel(subtree)
+            # TODO: refactor this, so we don't need to query this all the time
+            if ignore_traces and node_label == '-NONE-': # ignore tokens annotated for traces
+                continue
             if isinstance(subtree, nltk.tree.Tree):
                 node_attrs = {'label': node_label}
                 edge_type = dg.EdgeTypes.dominance_relation
