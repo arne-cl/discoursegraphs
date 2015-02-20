@@ -71,8 +71,8 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         self._node_id = 1
 
         ptb_path, ptb_filename = os.path.split(ptb_filepath)
-        document = nltk.corpus.BracketParseCorpusReader(ptb_path, [ptb_filename])
-        parsed_sents_iter = document.parsed_sents()
+        self._parsed_doc = nltk.corpus.BracketParseCorpusReader(ptb_path, [ptb_filename])
+        parsed_sents_iter = self._parsed_doc.parsed_sents()
         
         if limit:
             for sentence in parsed_sents_iter[:limit]:
