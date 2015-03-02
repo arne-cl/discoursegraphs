@@ -127,9 +127,10 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
                 # represented as a Tree (an iterator over a single unicode
                 # string), e.g. ``Tree('NNS', ['prices'])``
                 pos_tag = self.node[parent_node_id]['label']
-                self.node[parent_node_id] = {
+                token_attrs = {
                     'label': node_label, self.ns+':token': node_label,
                     self.ns+':pos': pos_tag}
+                self.node[parent_node_id].update(token_attrs)
                 self.tokens.append(parent_node_id)
 
             if isinstance(subtree, nltk.tree.Tree):
