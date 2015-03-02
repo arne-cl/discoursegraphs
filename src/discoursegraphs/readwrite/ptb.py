@@ -130,7 +130,7 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
                 self.node[parent_node_id] = {
                     'label': node_label, self.ns+':token': node_label,
                     self.ns+':pos': pos_tag}
-                self.tokens.append(parent_node_id)
+                self.tokens.append(node_label)
 
             if isinstance(subtree, nltk.tree.Tree):
                 self._parse_sentencetree(subtree, parent_node_id=self._node_id)
