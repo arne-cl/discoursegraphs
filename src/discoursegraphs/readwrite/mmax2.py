@@ -319,6 +319,9 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
 
                     # handles both 'markable_n' and 'layer:markable_n'
                     antecedent_node_id = ante_split[-1]
+                    if len(ante_split) == 2:
+                        antecedent_layer = ante_split[0]
+                        default_layers.add('{}:{}'.format(self.ns, antecedent_layer))
 
                     # manually add antecedent node if it's not yet in the graph
                     # cf. issue #39
