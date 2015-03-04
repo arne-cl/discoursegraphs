@@ -46,10 +46,11 @@ def gen_bracket_mappings(docgraph, layer=None):
     opening = defaultdict(list)
     closing = defaultdict(list)
     for markable in markables:
-        span_tokens = spanstring2tokens(
-            docgraph, docgraph.node[markable][docgraph.ns+':span'])
-        opening[span_tokens[0]].append(markable)
-        closing[span_tokens[-1]].append(markable)
+        if docgraph.ns+':span' in docgraph.node[markable]:
+            span_tokens = spanstring2tokens(
+                docgraph, docgraph.node[markable][docgraph.ns+':span'])
+            opening[span_tokens[0]].append(markable)
+            closing[span_tokens[-1]].append(markable)
     return opening, closing, markable2chain
 
 
