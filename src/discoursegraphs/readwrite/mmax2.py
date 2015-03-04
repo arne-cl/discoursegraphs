@@ -459,13 +459,13 @@ def sort_sentences_by_token_order(sentence_root_nodes, token_nodes):
 def get_potential_markables(docgraph):
     """
     returns a list of all NPs and PPs in the given docgraph.
-    
+
     Parameters
     ----------
     docgraph : DiscourseDocumentGraph
         a document graph that (at least) contains syntax trees
         (imported from Tiger XML files)
-    
+
     Returns
     -------
     potential_markables : list of str or int
@@ -474,7 +474,7 @@ def get_potential_markables(docgraph):
         ID of the PP is returned.
     """
     potential_markables = []
-    
+
     for node_id, nattr in dg.select_nodes_by_layer(docgraph, 'tiger:syntax', data=True):
         if nattr['tiger:cat'] == 'NP':
             # if an NP is embedded into a PP, only print the PP
@@ -486,7 +486,7 @@ def get_potential_markables(docgraph):
                     pp_parent = True
             if not pp_parent:
                 potential_markables.append(node_id) # add NP phrase
-                
+
         elif nattr['tiger:cat'] == 'PP':
             potential_markables.append(node_id) # add PP phrase
     return potential_markables
