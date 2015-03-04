@@ -23,6 +23,15 @@ def gen_bracket_mappings(docgraph, layer=None):
     graph (or just from the specified layer). return dictionaries describing
     which token signals the beginning of markables, the end of markables,
     as well as a mapping from a markable to the chain it belongs to.
+
+    Parameters
+    ----------
+    layer : str or None
+        The layer from which the pointing chains/relations
+        (i.e. coreference relations) should be extracted.
+        If no layer is selected, all pointing relations will be considered.
+        (This might lead to errors, e.g. when the document contains Tiger
+        syntax trees with secondary edges.)
     """
     pointing_chains = dg.get_pointing_chains(docgraph, layer=layer)
     markables = sorted(itertools.chain(*pointing_chains),
@@ -52,7 +61,7 @@ def gen_closing_string(closing_dict, markable2chain, token_id, stack):
                                    for closing_id in closing_markable_ids)
 
 
-def gen_bracketed_output(docgraph):
+def gen_bracketed_output(docgraph, layer='mmax'):
     '''
 
     TODO: the order of the opening brackets should be determined (e.g. if
@@ -68,8 +77,17 @@ def gen_bracketed_output(docgraph):
     sind hoch . Jetzt wird es darum gehen , [die Halle]_{markable_21} so oft
     wie möglich zu füllen .
     Und [in der Region]_{markable_22} gibt es Konkurrenz .
+
+    Parameters
+    ----------
+    layer : str or None
+        The layer from which the pointing chains/relations
+        (i.e. coreference relations) should be extracted.
+        If no layer is selected, all pointing relations will be considered.
+        (This might lead to errors, e.g. when the document contains Tiger
+        syntax trees with secondary edges.)
     '''
-    opening, closing, markable2chain = gen_bracket_mappings(docgraph)
+    opening, closing, markable2chain = gen_bracket_mappings(docgraph, layer=layer)
 
     ret_str = u''
     stack = []
@@ -97,11 +115,20 @@ def gen_bracketed_output(docgraph):
     return ret_str
 
 
-def write_brackets(docgraph, output_file):
+def write_brackets(docgraph, output_file, layer='mmax'):
     """
     converts a document graph into a plain text file with brackets.
+
+    Parameters
+    ----------
+    layer : str or None
+        The layer from which the pointing chains/relations
+        (i.e. coreference relations) should be extracted.
+        If no layer is selected, all pointing relations will be considered.
+        (This might lead to errors, e.g. when the document contains Tiger
+        syntax trees with secondary edges.)
     """
-    bracketed_str = gen_bracketed_output(docgraph)
+    bracketed_str = gen_bracketed_output(docgraph, layer=layer)
     assert isinstance(output_file, (str, file))
     if isinstance(output_file, str):
         path_to_file = os.path.dirname(output_file)
