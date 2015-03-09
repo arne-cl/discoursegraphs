@@ -194,6 +194,9 @@ People who downloaded this also like
 
 - `SaltNPepper`_: a converter framework for various linguistic data formats
 - `educe`_: a library for handling discourse-annotated corpora (SDRT, RST and PDTB)
+- `treetools`_: a library for converting treebanks and grammar extraction (supports  
+  i.a. TigerXML and Negra/Tüba-Export formats)
 
 .. _`SaltNPepper`: https://korpling.german.hu-berlin.de/p/projects/saltnpepper/wiki/
 .. _`educe`: https://github.com/kowey/educe
+.. _`treetools`: https://github.com/wmaier/treetools
