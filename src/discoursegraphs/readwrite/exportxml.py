@@ -23,6 +23,10 @@ import discoursegraphs as dg
 
 
 class ExportXMLDocumentGraph(ig.Graph):
+    """
+    represents an ExportXML document (e.g. the Tüba-D/Z corpus as an igraph
+    directed graph).
+    """
     def __init__(self, exportxml_filepath, name=None, namespace='exportxml',
                  limit=None):
         """
