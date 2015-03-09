@@ -371,7 +371,8 @@ def extract_relationtypes(rs3_xml_tree):
         (str).
     """
     return {rel.attrib['name']: rel.attrib['type']
-            for rel in rs3_xml_tree.iterfind('//header/relations/rel')}
+            for rel in rs3_xml_tree.iterfind('//header/relations/rel')
+            if 'type' in rel.attrib}
 
 
 def get_rst_relation_root_nodes(docgraph, data=True, rst_namespace='rst'):

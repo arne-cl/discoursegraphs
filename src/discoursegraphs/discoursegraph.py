@@ -11,6 +11,7 @@ a ``layers`` attribute (which maps to the set of layers (str) it belongs to).
 TODO: implement a DiscourseCorpusGraph
 """
 
+import sys
 import warnings
 from collections import defaultdict
 from enum import Enum
@@ -544,7 +545,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
             for token_id in self.tokens:
                 yield (token_id, self.get_token(token_id, token_attrib))
 
-    def merge_graphs(self, other_docgraph):
+    def merge_graphs(self, other_docgraph, verbose=False):
         """
         Merges another document graph into the current one, thereby adding all
         the necessary nodes and edges (with attributes, layers etc.).
@@ -553,7 +554,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
         tokenization.
         """
         # renaming the tokens of the other graph to match this one
-        rename_tokens(other_docgraph, self)
+        rename_tokens(other_docgraph, self, verbose=verbose)
         self.add_nodes_from(other_docgraph.nodes(data=True))
 
         # copy token node attributes to the current namespace
@@ -591,7 +592,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
                           edge_type=EdgeTypes.precedence_relation)
 
 
-def rename_tokens(docgraph_with_old_names, docgraph_with_new_names):
+def rename_tokens(docgraph_with_old_names, docgraph_with_new_names, verbose=False):
     """
     Renames the tokens of a graph (``docgraph_with_old_names``) in-place,
     using the token names of another document graph
@@ -601,7 +602,7 @@ def rename_tokens(docgraph_with_old_names, docgraph_with_new_names):
     This will only work, iff both graphs have the same tokenization.
     """
     old2new = create_token_mapping(docgraph_with_old_names,
-                                   docgraph_with_new_names)
+                                   docgraph_with_new_names, verbose=verbose)
     relabel_nodes(docgraph_with_old_names, old2new, copy=False)
     new_token_ids = old2new.values()
 
@@ -610,7 +611,8 @@ def rename_tokens(docgraph_with_old_names, docgraph_with_new_names):
         docgraph_with_old_names.tokens = new_token_ids
 
 
-def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names):
+def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names,
+                         verbose=False):
     """
     given two document graphs which annotate the same text and which use the
     same tokenization, creates a dictionary with a mapping from the token
@@ -630,6 +632,13 @@ def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names):
         maps from a token ID used in ``docgraph_with_old_names`` to the token
         ID used in ``docgraph_with_new_names`` to reference the same token
     """
+    def kwic_string(docgraph, keyword_index):
+        tokens = [tok for (tokid, tok) in list(docgraph.get_tokens())]
+        before, keyword, after = get_kwic(tokens, keyword_index)
+        return "{0} (Index: {1}): {2} [[{3}]] {4}\n".format(
+            docgraph.name, keyword_index, ' '.join(before), keyword,
+            ' '.join(after))
+
     # generators of (token ID, token) tuples
     old_token_gen = docgraph_with_old_names.get_tokens()
     new_token_gen = docgraph_with_new_names.get_tokens()
@@ -638,6 +647,10 @@ def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names):
     for i, (new_tok_id, new_tok) in enumerate(new_token_gen):
         old_tok_id, old_tok = old_token_gen.next()
         if new_tok != old_tok:  # token mismatch
+            if verbose:
+                raise ValueError(u"Tokenization mismatch:\n{0}{1}".format(
+                    kwic_string(docgraph_with_old_names, i),
+                    kwic_string(docgraph_with_new_names, i)))
             raise ValueError(
                 u"Tokenization mismatch: {0} ({1}) vs. {2} ({3})\n"
                 "\t{4} != {5}".format(
@@ -648,6 +661,40 @@ def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names):
             old2new[old_tok_id] = new_tok_id
     return old2new
 
+
+
+
+def get_kwic(tokens, index, context_window=5):
+    """
+    keyword in context
+
+    Parameters
+    ----------
+    tokens : list of str
+        a text represented as a list of tokens
+    index : int
+        the index of the keyword in the token list
+    context_window : int
+        the number of preceding/succeding words of the keyword to be
+        retrieved
+
+    Returns
+    -------
+    before : list of str
+        the tokens preceding the keyword
+    keyword : str
+        the token at the index position
+    after : list of str
+        the tokens succeding the keyword
+    """
+    text_length = len(tokens)
+    start_before = max(0, index-context_window-1)
+    end_before = max(0, index)
+    before = tokens[start_before:end_before]
+    start_after = min(text_length, index+1)
+    end_after = min(text_length, index+context_window+1)
+    after = tokens[start_after:end_after]
+    return before, tokens[index], after
 
 
 def get_annotation_layers(docgraph):

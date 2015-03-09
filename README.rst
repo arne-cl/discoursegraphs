@@ -34,6 +34,7 @@ So far, the following formats can be imported and merged:
 
 * `TigerXML`_ (a format for representing tree-like syntax graphs with
   secondary edges)
+* `Penn Treebank <http://www.cis.upenn.edu/~treebank/>`_ format (an s-expressions/lisp/brackets format for representing syntax trees)
 * RS3 (a format used by `RSTTool`_ to
   annotate documents with Rhetorical Structure Theory)
 * `MMAX2`_ (a format / GUI tool for annotating spans and connections between
@@ -193,6 +194,9 @@ People who downloaded this also like
 
 - `SaltNPepper`_: a converter framework for various linguistic data formats
 - `educe`_: a library for handling discourse-annotated corpora (SDRT, RST and PDTB)
+- `treetools`_: a library for converting treebanks and grammar extraction (supports  
+  i.a. TigerXML and Negra/Tüba-Export formats)
 
 .. _`SaltNPepper`: https://korpling.german.hu-berlin.de/p/projects/saltnpepper/wiki/
 .. _`educe`: https://github.com/kowey/educe
+.. _`treetools`: https://github.com/wmaier/treetools

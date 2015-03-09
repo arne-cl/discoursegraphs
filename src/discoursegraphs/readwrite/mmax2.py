@@ -9,6 +9,8 @@ graph (``DiscourseDocumentGraph``).
 
 import os
 from lxml import etree
+
+import discoursegraphs as dg
 from discoursegraphs import (DiscourseDocumentGraph, EdgeTypes,
                              select_nodes_by_layer)
 from discoursegraphs.util import add_prefix, ensure_unicode, natural_sort_key
@@ -317,6 +319,9 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
 
                     # handles both 'markable_n' and 'layer:markable_n'
                     antecedent_node_id = ante_split[-1]
+                    if len(ante_split) == 2:
+                        antecedent_layer = ante_split[0]
+                        default_layers.add('{}:{}'.format(self.ns, antecedent_layer))
 
                     # manually add antecedent node if it's not yet in the graph
                     # cf. issue #39
@@ -452,6 +457,43 @@ def sort_sentences_by_token_order(sentence_root_nodes, token_nodes):
 
     sentence_token_tuples = zip(sentence_root_nodes, token_nodes)
     return sorted(sentence_token_tuples, key=sentence_sort_key)
+
+
+def get_potential_markables(docgraph):
+    """
+    returns a list of all NPs and PPs in the given docgraph.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        a document graph that (at least) contains syntax trees
+        (imported from Tiger XML files)
+
+    Returns
+    -------
+    potential_markables : list of str or int
+        Node IDs of all nodes that represent an NP/PP syntactical category/phrase
+        in the input document. If an NP is embedded in a PP, only the node
+        ID of the PP is returned.
+    """
+    potential_markables = []
+
+    for node_id, nattr in dg.select_nodes_by_layer(docgraph, 'tiger:syntax', data=True):
+        if nattr['tiger:cat'] == 'NP':
+            # if an NP is embedded into a PP, only print the PP
+            pp_parent = False
+            for source, target in docgraph.in_edges(node_id):
+                parent_node = docgraph.node[source]
+                if 'tiger:cat' in parent_node and parent_node['tiger:cat'] == 'PP':
+                    potential_markables.append(source) # add parent PP phrase
+                    pp_parent = True
+            if not pp_parent:
+                potential_markables.append(node_id) # add NP phrase
+
+        elif nattr['tiger:cat'] == 'PP':
+            potential_markables.append(node_id) # add PP phrase
+    return potential_markables
+
 
 
 # instanciate an MMAX document graph with a pseudo-function

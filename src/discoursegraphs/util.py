@@ -82,7 +82,7 @@ def natural_sort_key(s):
     ['A99', 'a1', 'a2', 'a10', 'a12', 'a24', 'a100']
     """
     return [int(text) if text.isdigit() else text
-            for text in re.split(INTEGER_RE, s)]
+            for text in re.split(INTEGER_RE, str(s))]
 
 
 def ensure_unicode(str_or_unicode):
