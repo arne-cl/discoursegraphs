@@ -7,7 +7,7 @@ This module converts an RS3 XML file (used by RSTTool to annotate
 rhetorical structure) into a networkx-based directed graph
 (``DiscourseDocumentGraph``).
 
-Warning: RS3 files considered harmful. Sement IDs appear ordered, but they
+Warning: RS3 files considered harmful. Segment IDs appear ordered, but they
 aren't. For example, after segment 1, there could be segment 19, followed by
 segment 2, 3 and 4 etc.
 """
@@ -378,7 +378,7 @@ def extract_relationtypes(rs3_xml_tree):
 def get_rst_relation_root_nodes(docgraph, data=True, rst_namespace='rst'):
     """
     yield all nodes that dominate one or more RST relations in the given
-    document graph.
+    document graph (in no particular order).
 
     Parameters
     ----------
@@ -406,10 +406,32 @@ def get_rst_relation_root_nodes(docgraph, data=True, rst_namespace='rst'):
 
 def get_rst_relations(docgraph):
     """
+    returns a dictionary with RST relation root node IDs (str, e.g. 'rst:23')
+    as keys and dictionaries describing these RST relations as values.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        a document graph which contains RST annotations
+
     Returns
     -------
     rst_relations : defaultdict(str)
-        keys: 'tokens', 'nucleus', 'satellites', 'multinuc'
+        possible keys: 'tokens', 'nucleus', 'satellites', 'multinuc'
+        maps from an RST relation root node ID (str, e.g. 'rst:23') to a
+        dictionary describing this RST relation.
+        The key 'tokens' maps to a list of token (node IDs) which the relation
+        spans.
+        If the dictionary contains the key 'multinuc', the relation is
+        multinuclear and the keys 'nucleus' and 'satellites' contain nothing.
+        The key 'multinuc' maps to a list of
+        (node ID (str), RST reltype (str), list of token node IDs) triples;
+        each one describes a nucleus.
+        The key 'nucleus' maps to a list of token (node IDs) which the relation
+        spans.
+        The key 'satellites' maps to a list of
+        (node ID (str), RST reltype (str), list of token node IDs) triples;
+        each one describes a satellite.
     """
     rst_relations = defaultdict(lambda : defaultdict(str))
 
@@ -453,6 +475,35 @@ def get_rst_relations(docgraph):
 
 def get_rst_spans(rst_graph):
     """
+    Returns a list of 5-tuples describing each RST span (i.e. the nucleus
+    or satellite of a relation) in the document. (This function is meant for
+    people who prefer to work with R / DataFrames / CSV files instead of
+    graphs.)
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        a document graph which contains RST annotations
+
+    Returns
+    -------
+    all_spans : list of (str, str, str, int, int)
+        each list element represents an RST span (i.e. the nucleus or satellite)
+        as a 5-tuple
+        (relation string, span type, relation type, token onset, token offset).
+        In the example ('rst:16-rst:2', 'N', 'evaluation-s', 9, 24), the
+        relation string 'rst:16-rst:2' consists of two parts, the relation root
+        node ID and the node ID of its nucleus (span type 'N').
+        In the example ('rst:16-rst:4-rst:3', 'N1', 'list', 20, 24), the
+        relation string consists of 3 parts, the relation root
+        node ID and the node IDs of its nucleii (span type 'N1', 'N2').
+
+    Examples
+    --------
+        [('rst:16-rst:4-rst:3', 'N1', 'list', 20, 24),
+        ('rst:16-rst:4-rst:3', 'N2', 'list', 9, 19),
+        ('rst:16-rst:2', 'N', 'evaluation-s', 9, 24),
+        ('rst:16-rst:2', 'S', 'evaluation-s', 4, 8)]
     """
     token_map = TokenMapper(rst_graph).id2index
     rst_relations = get_rst_relations(rst_graph)
