@@ -204,9 +204,14 @@ class RSTGraph(DiscourseDocumentGraph):
             group_attrs[self.ns+':segment_type'] = segment_type
             self.add_node(group_id, layers=group_layers,
                           attr_dict=group_attrs)
-        else:
+        else: # group node does already exist
             if segment_type != 'span':  # if it is an RST relation
                 group_attrs[self.ns+':segment_type'] = segment_type
+            else: # segment_type == 'span'
+                # if the group already has a segment type, we won't overwrite
+                # it, since 'span' is not very informative
+                if not self.ns+':segment_type' in self.node[group_id]:
+                    group_attrs[self.ns+':segment_type'] = segment_type
             self.node[group_id].update(group_attrs,
                                        layers={self.ns, self.ns+':group'})
 
@@ -232,7 +237,13 @@ class RSTGraph(DiscourseDocumentGraph):
         reltype = self.relations.get(relname) # 'span', 'multinuc' or None
 
         parent_id = self.ns+':'+element.attrib['parent']
-        parent_attrs = {self.ns+':rel_name': relname, self.ns+':segment_type': parent_segment_type}
+
+        if parent_segment_type:
+            parent_attrs = {self.ns+':rel_name': relname,
+                            self.ns+':segment_type': parent_segment_type}
+        else: # e.g. if the parent is a root node of a multinuc, we don't
+              # know what its segment type is
+            parent_attrs = {self.ns+':rel_name': relname}
 
         if parent_id not in self:
             self.add_node(parent_id, layers={self.ns}, attr_dict=parent_attrs)
@@ -295,7 +306,7 @@ class RSTGraph(DiscourseDocumentGraph):
             parent_segment_type = 'nucleus'
         elif reltype == 'multinuc':
            segment_type = 'nucleus'
-           parent_segment_type = 'nucleus'
+           parent_segment_type = None # we don't it's type, yet
         else:  # reltype == None
             # the segment is of unknown type, it is dominated by
             # a span group node
