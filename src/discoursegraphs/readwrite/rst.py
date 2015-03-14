@@ -221,7 +221,10 @@ class RSTGraph(DiscourseDocumentGraph):
             old_root_id = self.root
             self.root = group_id
             # the layers attribute is append-only
-            self.node[group_id].update(layers={self.ns+':root'})
+            # root segment type: always span
+            root_attrs = {'layers': {self.ns+':root'},
+                          self.ns+':segment_type': 'span'}
+            self.node[group_id].update(root_attrs)
             # copy metadata from old root node
             self.node[group_id]['metadata'] = self.node[old_root_id]['metadata']
         else:  # the group node is dominated by another group or segment
