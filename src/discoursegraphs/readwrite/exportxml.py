@@ -15,11 +15,15 @@ much faster.
 '''
 
 import os
+import re
 import sys
 from lxml import etree
 import igraph as ig
 
 import discoursegraphs as dg
+
+# example node ID: 's_1_n_506' -> sentence 1, node 506
+NODE_ID_REGEX = re.compile('s_(\d+)_n_(\d+)')
 
 
 class ExportXMLDocumentGraph(ig.Graph):
@@ -101,6 +105,37 @@ class ExportXMLDocumentGraph(ig.Graph):
                 sys.stderr.write("source: {}, target: {}\n".format(self.vs[edge_endpoints[0]]['node_type'],
                                                                    self.vs[edge_endpoints[1]]['node_type']))
 
+    def get_sentence_id(self, sentence):
+        """
+        retrieves a unique sentence ID consisting of the document ID and
+        the index of the sentence in that document.
+        """
+        first_node_id = sentence.iterchildren().next().attrib['id']
+        sent_index, numeric_node_id = NODE_ID_REGEX.match(first_node_id).groups()
+        return 'd_{}_s_{}'.format(self.get_document_id(sentence), sent_index)
+
+    def get_document_id(self, sentence):
+        return sentence.attrib['origin']
+
+    def get_element_id(self, element, document_id):
+        """
+        retrieves a unique element ID consisting of the document ID,
+        sentence index and node ID from the ExportXML file.
+        """
+        if element.tag == 'anaphora':
+            # <anaphora> don't have any attributes
+            # they are children of <word> or <node> elements
+            # and have one <relation> child
+            uniq_element_id = self.get_element_id(element.getparent(), document_id)
+        elif element.tag in ('node', 'word'):
+            elem_id = element.attrib['id']
+            uniq_element_id = 'd_{}_{}'.format(document_id, elem_id)
+        elif element.tag == 'sentence':
+            uniq_element_id = self.get_sentence_id(element)
+        else:
+            raise ValueError("Unexpected element type '{}' in document '{}'\n".format(element, document_id))
+        return uniq_element_id
+
     def add_sentence(self, sentence):
         """
         Parameters
@@ -109,7 +144,8 @@ class ExportXMLDocumentGraph(ig.Graph):
             etree representation of a sentence
             (syntax tree with coreference annotation)
         """
-        sent_root_id = sentence.attrib['origin']
+        sent_root_id = self.get_sentence_id(sentence)
+        doc_id = self.get_document_id(sentence)
         self.add_vertex(sent_root_id, label=sent_root_id,
                         node_type='sentence_root')
         edge = (self.root, sent_root_id)
@@ -117,15 +153,9 @@ class ExportXMLDocumentGraph(ig.Graph):
         self._edge_types[edge] = dg.EdgeTypes.dominance_relation
 
         for element in sentence.iter('node', 'word', 'anaphora'):
+            element_id = self.get_element_id(element, doc_id)
             parent_element = element.getparent()
-            # some <anaphora> are children of <word> elements
-            if parent_element.tag in ('node', 'word'):
-                parent_id = parent_element.attrib['id']
-            elif parent_element.tag == 'sentence':
-                parent_id = parent_element.attrib['origin']
-            else:
-                sys.stderr.write("Unexpected parent '{}' of element '{}'\n".format(parent_element, element))
-            element_id = element.attrib.get('id') # <anaphora> doesn't have an ID
+            parent_id = self.get_element_id(parent_element, doc_id)
 
             if element.tag in ('node', 'word'):
                 if element.tag == 'node':
@@ -144,12 +174,13 @@ class ExportXMLDocumentGraph(ig.Graph):
 
             else: # element.tag == 'anaphora'
                 # <anaphora> doesn't have an ID, but it's tied to its parent element
-                antecedent_str, relation_type = parse_anaphora(element, parent_id)
+                antecedent_str, relation_type = parse_anaphora(element)
 
                 if antecedent_str:
                     # there might be more than one antecedent
                     for antecedent_id in antecedent_str.split(','):
-                        edge = (parent_id, antecedent_id)
+                        uniq_antecedent_id = 'd_{}_{}'.format(doc_id, antecedent_id)
+                        edge = (parent_id, uniq_antecedent_id)
                         self._edges.append(edge)
                         self._edge_types[edge] = dg.EdgeTypes.pointing_relation
                         self._relations[edge] = relation_type
@@ -157,20 +188,17 @@ class ExportXMLDocumentGraph(ig.Graph):
                     # there's no antecedent in case of an expletive anaphoric relation
                     self._relations[(parent_id, None)] = relation_type
 
-
-def parse_anaphora(anaphora, source_id):
+def parse_anaphora(anaphora):
     """
     Parameters
     ----------
     anaphora : etree.Element
         an <anaphora> element
-    source_id : str
-        the node ID of the anaphora (points either to a <node> or a <word>)
 
     Returns
     -------
     antecedent : str
-        node ID of the antecedent, e.g. ``s_4_n_527``
+        node ID of the antecedent, e.g. ``s_4_n_527`` or ``s_4_n_527;s_4_n_529``
     relation_type : str
         anaphoric relation type, e.g. ``anaphoric`` or ``coreferential``
     """
