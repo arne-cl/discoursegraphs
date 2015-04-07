@@ -32,7 +32,7 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
     tokens : list of str
         sorted list of all token node IDs contained in this document graph
     """
-    def __init__(self, ptb_filepath, name=None, namespace='ptb',
+    def __init__(self, ptb_filepath=None, name=None, namespace='ptb',
                  tokenize=True, precedence=False, limit=None,
                  ignore_traces=True):
         """
@@ -59,12 +59,15 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         # super calls __init__() of base class DiscourseDocumentGraph
         super(PTBDocumentGraph, self).__init__()
 
+        if 'discoursegraph:root_node' in self:
+            self.remove_node('discoursegraph:root_node')
+        if not ptb_filepath:
+            return # create empty document graph
+
         self.name = name if name else os.path.basename(ptb_filepath)
         self.ns = namespace
         self.root = 0
         self.add_node(self.root, layers={self.ns}, label=self.ns+':root_node')
-        if 'discoursegraph:root_node' in self:
-            self.remove_node('discoursegraph:root_node')
             
         self.sentences = []
         self.tokens = []
