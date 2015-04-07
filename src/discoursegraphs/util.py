@@ -7,11 +7,13 @@ This module contains a number of helper functions.
 """
 
 import os
+import fnmatch
 import re
 from lxml import etree
 
 INTEGER_RE = re.compile('([0-9]+)')
 FORBIDDEN_XPOINTER_RE = re.compile(':')
+
 
 class TokenMapper(object):
     """
@@ -214,6 +216,20 @@ def create_dir(path):
             raise
         else:
             raise
+
+
+def find_files(directory, pattern):
+    """
+    find files recursively, e.g. all *.txt files
+    in a given directory (or its subdirectories)
+
+    source: http://stackoverflow.com/a/2186673
+    """
+    for root, dirs, files in os.walk(directory):
+        for basename in files:
+            if fnmatch.fnmatch(basename, pattern):
+                filename = os.path.join(root, basename)
+                yield filename
 
 
 def sanitize_string(string_or_unicode):
