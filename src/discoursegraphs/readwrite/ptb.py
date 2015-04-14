@@ -15,6 +15,14 @@ import nltk # version 3.x is needed here (.labels() vs. .node)
 import discoursegraphs as dg
 
 
+PTB_BRACKET_MAPPING = {'(': r'-LRB-',
+                       ')': r'-RRB-',
+                       '[': r'-LSB-',
+                       ']': r'-RSB-',
+                       '{': r'-LCB-',
+                       '}': r'-RCB-'}
+
+
 class PTBDocumentGraph(dg.DiscourseDocumentGraph):
     """
     A directed graph with multiple edges (based on a networkx
