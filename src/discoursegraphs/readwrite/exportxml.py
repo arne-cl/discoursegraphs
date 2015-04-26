@@ -26,6 +26,34 @@ import discoursegraphs as dg
 NODE_ID_REGEX = re.compile('s_(\d+)_n_(\d+)')
 
 
+class ExportXMLCorpus(object):
+    """
+    represents a corpus in ExportXML format (e.g. Tüba-D/Z corpus) as an
+    iterable over ExportXMLDocumentGraph instances.
+    
+    This class is used to 'parse' an ExportXML file. To retrieve the document
+    graphs of the documents contained in the corpus, simply iterate over
+    the class instance.
+    """
+    def __init__(self, exportxml_file):
+        self.__context = etree.iterparse(exportxml_file, events=('end',), tag='text', recover=True)
+
+    def __iter__(self):
+        return iter(self.element_iter(self.__context))
+
+    def next(self):
+        return self.__iter__().next()
+        
+    def element_iter(self, context):
+        for event, elem in context:
+            yield elem
+            # removes element (and references to it) from memory after processing it
+            elem.clear()
+            while elem.getprevious() is not None:
+                del elem.getparent()[0]
+        del context 
+
+
 class ExportXMLDocumentGraph(ig.Graph):
     """
     represents an ExportXML document (e.g. the Tüba-D/Z corpus as an igraph
@@ -187,6 +215,15 @@ class ExportXMLDocumentGraph(ig.Graph):
                 else:
                     # there's no antecedent in case of an expletive anaphoric relation
                     self._relations[(parent_id, None)] = relation_type
+
+
+def add_ns(key, ns='http://www.w3.org/XML/1998/namespace'):
+    """
+    adds a namespace prefix to a string, e.g. turns 'foo' into
+    '{http://www.w3.org/XML/1998/namespace}foo'
+    """
+    return '{{{namespace}}}{key}'.format(namespace=ns, key=key)
+
 
 def parse_anaphora(anaphora):
     """
