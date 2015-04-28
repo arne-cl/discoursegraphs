@@ -331,7 +331,7 @@ class Conll2009File(object):
     """
     This class converts a DiscourseDocumentGraph into a CoNLL 2009 file.
     """
-    def __init__(self, docgraph):
+    def __init__(self, docgraph, coreference_layer=None):
         """
         Parameters
         ----------
@@ -340,9 +340,9 @@ class Conll2009File(object):
         """
         self.docgraph = docgraph
         self.tok2markables, self.markable2toks, self.markable2chains = \
-            self.__build_markable_token_mapper()
+            self.__build_markable_token_mapper(coreference_layer=coreference_layer)
 
-    def __build_markable_token_mapper(self):
+    def __build_markable_token_mapper(self, coreference_layer=None):
         """
         Creates mappings from tokens to the markable spans they belong to
         and the coreference chains these markables are part of.
@@ -363,7 +363,8 @@ class Conll2009File(object):
         markable2toks = defaultdict(list)
         markable2chains = defaultdict(list)
 
-        coreference_chains = get_pointing_chains(self.docgraph)
+        coreference_chains = get_pointing_chains(self.docgraph,
+                                                 layer=coreference_layer)
         for chain_id, chain in enumerate(coreference_chains):
             for markable_node_id in chain:
                 markable2chains[markable_node_id].append(chain_id)
@@ -486,12 +487,13 @@ def traverse_dependencies_up(docgraph, node_id, node_attr=None):
 read_conll = ConllDocumentGraph
 
 
-def write_conll(docgraph, output_file):
+def write_conll(docgraph, output_file, coreference_layer=None):
     """
     converts a DiscourseDocumentGraph into a tab-separated CoNLL 2009 file and
     writes it to the given file (or file path).
     """
-    conll_file = Conll2009File(docgraph)
+    conll_file = Conll2009File(docgraph,
+                               coreference_layer=coreference_layer)
     assert isinstance(output_file, (str, file))
     if isinstance(output_file, str):
         path_to_file = os.path.dirname(output_file)

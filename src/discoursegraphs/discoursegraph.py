@@ -999,6 +999,14 @@ def get_pointing_chains(docgraph, layer=None):
     """
     returns a list of chained pointing relations (e.g. coreference chains)
     found in the given document graph.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        a text with annotations, represented by a document graph
+    layer : str or None
+        If layer is specifid, this function will only return pointing relations
+        belonging to that layer.
     """
     pointing_relations = select_edges_by(docgraph, layer=layer,
                                          edge_type=EdgeTypes.pointing_relation)
