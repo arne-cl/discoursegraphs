@@ -502,6 +502,34 @@ class DiscourseDocumentGraph(MultiDiGraph):
             self.add_edge(u, v, layers=all_layers, key=key,
                           attr_dict=updated_attrs)
 
+    def add_layer(self, element, layer):
+        """
+        add a layer to an existing node or edge
+
+        Parameters
+        ----------
+        element : str or (str, str)
+            the ID of a node (node ID str) or
+            edge (source node ID str, target node ID str)
+        layer : str
+            the layer that the element shall be added to
+        """
+        assert isinstance(layer, str), "Layers must be strings!"
+        if isinstance(element, str): # node
+            existing_layers = self.node[element]['layers']
+            existing_layers.add(layer)
+            self.node[element]['layers'] = existing_layers
+        elif isinstance(element, tuple): # edge repr. by (source, target)
+            assert len(element) == 2 and all(isinstance(node, str) for node in element)
+            source_id, target_id = element
+            # this class is based on a multi-digraph, so we'll have to iterate
+            # over all edges between the two nodes (even if there's just one)
+            edges = self.edge[source_id][target_id]
+            for edge in edges:
+                existing_layers = edges[edge]['layers']
+                existing_layers.add(layer)
+                edges[edge]['layers'] = existing_layers
+
     def get_token(self, token_node_id, token_attrib='token'):
         """
         given a token node ID, returns the token unicode string.
