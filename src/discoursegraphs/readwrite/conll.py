@@ -375,7 +375,7 @@ class Conll2009File(object):
         # markable2toks/tok2markables shall contains all markables, not only
         # those which are part of a coreference chain
         for markable_node_id in select_nodes_by_layer(self.docgraph,
-                                                      'mmax:markable'):
+                                                      self.docgraph.ns+':markable'):
             span = get_span(self.docgraph, markable_node_id)
             markable2toks[markable_node_id] = span
             for token_node_id in span:
