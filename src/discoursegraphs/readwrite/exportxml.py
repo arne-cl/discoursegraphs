@@ -3,166 +3,415 @@
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 '''
-The 'exportxml' module will convert a corpus in Negra ExportXML format [1]
-(e.g. Tüba-D/Z [2]) into a document graph. We can't base the code on networkx,
-as it can't handle large graphs (Tüba-D/Z contains 1.7 million nodes).
-
-[1] http://www.sfs.uni-tuebingen.de/en/ascl/resources/corpora/export-format.html
-[2] http://www.sfs.uni-tuebingen.de/en/ascl/resources/corpora/tueba-dz.html
-
-NB: Never, ever use add_edge() in igraph! Always use add_edges(), it is
-much faster.
+The ``exportxml`` module will convert a corpus in Negra ExportXML format [1]
+(e.g. Tüba-D/Z [2]) into a document graph.
 '''
 
 import os
 import re
 import sys
+import warnings
+
 from lxml import etree
-import igraph as ig
 
 import discoursegraphs as dg
+from discoursegraphs import DiscourseDocumentGraph
+
 
 # example node ID: 's_1_n_506' -> sentence 1, node 506
 NODE_ID_REGEX = re.compile('s_(\d+)_n_(\d+)')
 
 
 class ExportXMLCorpus(object):
-    """
-    represents a corpus in ExportXML format (e.g. Tüba-D/Z corpus) as an
-    iterable over ExportXMLDocumentGraph instances.
-    
-    This class is used to 'parse' an ExportXML file. To retrieve the document
-    graphs of the documents contained in the corpus, simply iterate over
-    the class instance.
-    """
-    def __init__(self, exportxml_file):
-        self.__context = etree.iterparse(exportxml_file, events=('end',), tag='text', recover=True)
+    def __init__(self, exportxml_file, debug=False):
+        """
+        represents an ExportXML formatted corpus (e.g. Tüba-D/Z) as an
+        iterable over ExportXMLDocumentGraph instances.
+
+        This class is used to 'parse' an ExportXML file iteratively, using as
+        little memory as possible. To retrieve the document graphs of the
+        documents contained in the corpus, simply iterate over the class
+        instance (or use the ``.next()`` method).
+
+        Parameters
+        ----------
+        exportxml_file : str
+            path to an ExportXML formatted corpus file
+        debug : bool
+            If True, yield the etree element representations of the <text>
+            elements found in the document.
+            If False, create an iterator that parses the documents
+            contained in the file into ExportXMLDocumentGraph instances.
+            (default: False)
+        """
+        self.debug = debug
+        # create an iterator over all documents in the file (i.e. all
+        # <text> elements). The recover parameter is used, as the Tüba-D/Z 8.0
+        # corpus used for testing isn't completely valid XML (i.e. there are two
+        # element IDs used twice)
+        self.__context = etree.iterparse(exportxml_file, events=('end',),
+                                         tag='text', recover=True)
 
     def __iter__(self):
-        return iter(self.element_iter(self.__context))
+        return iter(self.text_iter(self.__context))
 
     def next(self):
+        # to build an iterable, __iter__() would be sufficient,
+        # but adding a next() method is quite common
         return self.__iter__().next()
-        
-    def element_iter(self, context):
-        for event, elem in context:
-            yield elem
+
+    def text_iter(self, context):
+        """
+        iterates over all the elements in an iterparse context
+        (here: <text> elements) and yields an ExportXMLDocumentGraph instance
+        for each of them. for efficiency, the elements are removed from the
+        DOM / main memory after processing them.
+        """
+        for _event, elem in context:
+            if not self.debug:
+                yield ExportXMLDocumentGraph(elem)
+            else:
+                yield elem
             # removes element (and references to it) from memory after processing it
             elem.clear()
             while elem.getprevious() is not None:
                 del elem.getparent()[0]
-        del context 
+        del context
 
 
-class ExportXMLDocumentGraph(ig.Graph):
+class ExportXMLDocumentGraph(DiscourseDocumentGraph):
     """
-    represents an ExportXML document (e.g. the Tüba-D/Z corpus as an igraph
-    directed graph).
+    represents an ExportXML document as a document graph.
     """
-    def __init__(self, exportxml_filepath, name=None, namespace='exportxml',
-                 limit=None):
+    def __init__(self, text_element, name=None, namespace='exportxml',
+                 precedence=False):
+        """
+        creates a document graph from a <text> element from an ExportXML file.
+
+        Parameters
+        ----------
+        text_element : lxml.etree._Element
+            a <text> element from an ExportXML file parsed with lxml
+        name : str or None
+            the name or ID of the graph to be generated. If no name is
+            given, the xml:id of the <text> element is used
+        namespace : str
+            the namespace of the document (default: exportxml)
+        precedence : bool
+            If True, add precedence relation edges
+            (root precedes token1, which precedes token2 etc.)
+        """
+        # super calls __init__() of base class DiscourseDocumentGraph
+        super(ExportXMLDocumentGraph, self).__init__()
+
+        self.name = name if name else text_element.attrib[add_ns('id')]
+        self.ns = namespace
+        self.root = self.ns+':root_node'
+        self.add_node(self.root, layers={self.ns}, label=self.ns+':root_node')
+
+        self.sentences = []
+        self.tokens = []
+
+        self.parsers = {
+            'connective': self.add_connective,
+            'discRel': self.add_discrel,
+            'edu': self.add_edu,
+            'edu-range': self.add_edurange,
+            'ne': self.add_ne,
+            # add_node() is already present in graph classes
+            'node': self.add_node_element,
+            'relation': self.add_relation,
+            'secEdge': self.add_secedge,
+            'sentence': self.add_sentence,
+            'splitRelation': self.add_splitrelation,
+            'topic': self.add_topic,
+            'word': self.add_word
+        }
+
+        self.parse_descedant_elements(text_element)
+
+    def parse_child_elements(self, element):
+        '''parses all children of an etree element'''
+        for child in element.iterchildren():
+            self.parsers[child.tag](child)
+
+    def parse_descedant_elements(self, element):
+        '''parses all descendants of an etree element'''
+        for descendant in element.iterdescendants():
+            self.parsers[descendant.tag](descendant)
+
+    def add_connective(self, connective):
         """
         Parameters
         ----------
-        limit : int or None
-            only parse the first n sentences (to save time, RAM etc.)
+        connective : etree.Element
+            etree representation of a <connective> element
+            (annotates connective tokens)
 
-        Attributes
+        Example
+        -------
+          <word xml:id="s29_1" form="Als" pos="KOUS" lemma="als" func="-"
+                parent="s29_500" dephead="s29_14" deprel="KONJ">
+              <connective konn="als" rel1="Temporal" rel2="enable"/>
+          </word>
+        """
+        word_node_id = self.get_element_id(connective)
+        # add a key 'connective' to the token with add rel1/rel2 attributes as a dict and
+        # add the token to the namespace:connective layer
+        connective_attribs = {key: val for (key, val) in connective.attrib.items() if key != 'konn'}
+        word_node = self.node[word_node_id]
+        word_node['layers'].add(self.ns+':connective')
+        word_node.update({'connective': connective_attribs})
+
+    def add_discrel(self, discrel):
+        """
+        Parameters
         ----------
-        _edges : list of (str, str)
-            a list of edges, represented as (source
-            node ID, target node ID) tuples. this will be used to cache
-            edges, as add_edge() is much slower than add_edges() in ``igraph``.
-        _edge_types : dict
-            maps from an edge (i.e. (source node ID, target node ID)) to
-            an EdgeTypes enum
-        _relations : dict
-            maps from an edge (i.e. (source node ID, target node ID)) to
-            its anaphoric relation type (e.g. 'coreference',
-            'expletive')
+        add_discrel : etree.Element
+            etree representation of a <discRel> element
+            Describes the relation between two EDUs.
+            The ID of the other EDU is given in the arg2 attribute.
+            Note, that arg2 can either reference an EDU (e.g. edu_9_3_2
+            or an EDU range, e.g. edus9_3_1-5_0).
+
+        Example
+        -------
+
+           <edu xml:id="edu_9_3_0">
+            <discRel relation="Explanation-Speechact" marking="-" arg2="edus9_3_1-5_0"/>
+            <node xml:id="s128_504" cat="SIMPX" func="--">
+            ...
+            </node>
+            <word xml:id="s128_3" form=":" pos="$." lemma=":" func="--" deprel="ROOT"/>
+           </edu>
+
+             <edu xml:id="edu_9_3_1">
+              <discRel relation="Continuation" marking="-" arg2="edu_9_3_2"/>
+              <node xml:id="s128_506" cat="VF" func="-" parent="s128_525">
+              ...
+              </node>
+              ...
+             </edu>
         """
-        # super calls __init__() of base class ig.Graph
-        super(ExportXMLDocumentGraph, self).__init__(directed=True)
+        arg1_id = self.get_element_id(discrel)
+        arg2_id = discrel.attrib['arg2']
+        reltype = discrel.attrib['relation']
+        discrel_attribs = self.element_attribs_to_dict(discrel)
+        self.node[arg1_id].update(discrel_attribs)
+        self.add_layer(arg1_id, self.ns+':discourse')
+        self.add_layer(arg1_id, self.ns+':relation')
+        self.add_edge(arg1_id, arg2_id,
+                      layers={self.ns, self.ns+':discourse', self.ns+':relation'},
+                      edge_type=dg.EdgeTypes.pointing_relation,
+                      relation=reltype,
+                      label='discourse:'+reltype)
 
-        self.name = name if name else os.path.basename(exportxml_filepath)
-        self.ns = namespace
-        self.root = self.ns+':root_node'
-        self.add_vertex(self.root, layers={self.ns}, node_type='root')
-
-        # in igraph, adding a single edge is prohibitively slow,
-        # as the whole index of the graph has to be rebuild!
-        # to speed this up, store the edges in a list & call add_edges() once!
-        self._edges = []
-        self._edge_types = {}
-        self._relations = {}
-
-        treeiter = etree.iterparse(exportxml_filepath, tag='sentence')
-        if limit:
-            for i in xrange(limit):
-                try:
-                    _action, sentence = treeiter.next()
-                    self.add_sentence(sentence)
-                except StopIteration as e:
-                    break # we've already parsed all sentences in that file
-        else: # parse all sentences
-            for _action, sentence in treeiter:
-                self.add_sentence(sentence)
-        self.add_edges(self._edges)
-
-        # igraph doesn't store nodes/edge names in a dict, so a lookup would be O(n)
-        node_name2id = {node['name']: node.index for node in self.vs}
-        edge_endpoints2id = {(edge.source, edge.target): edge.index
-                             for edge in self.es}
-
-        for (source, target) in self._relations: # add relation types to anaphora
-            relation_type = self._relations[(source, target)]
-            if target:
-                edge_endpoints = (node_name2id[source], node_name2id[target])
-                self.es[edge_endpoints2id[edge_endpoints]]['exportxml:relation_type'] = relation_type
-            else:
-                # there's no antecedent in case of an expletive anaphoric relation
-                self.vs[node_name2id[source]]['exportxml:anaphora_type'] = relation_type
-
-        for (source, target) in self._edge_types: # add edge types to edges
-            edge_endpoints = (node_name2id[source], node_name2id[target])
-            edge_type = self._edge_types[(source, target)]
-            try:
-                self.es[edge_endpoints2id[edge_endpoints]]['edge_type'] = edge_type
-            except KeyError as e:
-                sys.stderr.write("Can't find edge '{}'. alledged type: {}\n".format(edge_endpoints, edge_type))
-                sys.stderr.write("source: {}, target: {}\n".format(self.vs[edge_endpoints[0]]['node_type'],
-                                                                   self.vs[edge_endpoints[1]]['node_type']))
-
-    def get_sentence_id(self, sentence):
+    def add_edu(self, edu):
         """
-        retrieves a unique sentence ID consisting of the document ID and
-        the index of the sentence in that document.
-        """
-        first_node_id = sentence.iterchildren().next().attrib['id']
-        sent_index, numeric_node_id = NODE_ID_REGEX.match(first_node_id).groups()
-        return 'd_{}_s_{}'.format(self.get_document_id(sentence), sent_index)
+        Parameters
+        ----------
+        edu : etree.Element
+            etree representation of a <edu> element
+            (annotates an EDU)
+            Note: the arg1 EDU has a discRel child, the arg2 doesn't
 
-    def get_document_id(self, sentence):
-        return sentence.attrib['origin']
+        Example
+        -------
+        <edu xml:id="edu_55_21_1">
+         <discRel relation="Explanation-Cause" marking="-|*um zu" arg2="edu_55_21_2"/>
+         <word xml:id="s905_9" form="und" pos="KON" lemma="und" func="-" parent="s905_526" dephead="s905_3" deprel="KON"/>
+         <node xml:id="s905_525" cat="FKONJ" func="KONJ" parent="s905_526" span="s905_10..s905_19">
 
-    def get_element_id(self, element, document_id):
+        ...
+
+       <edu xml:id="edu_55_21_2" span="s905_14..s905_20">
+        <node xml:id="s905_524" cat="NF" func="-" parent="s905_525">
         """
-        retrieves a unique element ID consisting of the document ID,
-        sentence index and node ID from the ExportXML file.
+        edu_id = self.get_element_id(edu)
+        edu_attribs = self.element_attribs_to_dict(edu) # contains 'span' or nothing
+        self.add_node(edu_id, layers={self.ns, self.ns+':edu'}, attr_dict=edu_attribs)
+
+        edu_token_ids = []
+        for word in edu.iterdescendants('word'):
+            word_id = self.get_element_id(word)
+            edu_token_ids.append(word_id)
+            self.add_edge(edu_id, word_id, layers={self.ns, self.ns+':edu'},
+                          edge_type=dg.EdgeTypes.spanning_relation)
+
+        self.node[edu_id]['tokens'] = edu_token_ids
+
+    def add_edurange(self, edurange):
         """
-        if element.tag == 'anaphora':
-            # <anaphora> don't have any attributes
-            # they are children of <word> or <node> elements
-            # and have one <relation> child
-            uniq_element_id = self.get_element_id(element.getparent(), document_id)
-        elif element.tag in ('node', 'word'):
-            elem_id = element.attrib['id']
-            uniq_element_id = 'd_{}_{}'.format(document_id, elem_id)
-        elif element.tag == 'sentence':
-            uniq_element_id = self.get_sentence_id(element)
+        Parameters
+        ----------
+        edurange : etree.Element
+            etree representation of a <edurange> element
+            (annotation that groups a number of EDUs)
+            <edu-range> seems to glue together a number of `<edu> elements,
+            which may be scattered over a number of sentences
+            <edu-range> may or may not contain a span attribute
+            (it seems that the span attribute is present, when <edu-range> is
+            a descendent of <sentence>)
+
+        Example
+        -------
+
+           <edu-range xml:id="edus9_3_1-5_0" span="s128_4..s130_7">
+            <node xml:id="s128_525" cat="SIMPX" func="--">
+             <edu xml:id="edu_9_3_1">
+              <discRel relation="Continuation" marking="-" arg2="edu_9_3_2"/>
+              <node xml:id="s128_506" cat="VF" func="-" parent="s128_525">
+               <node xml:id="s128_505" cat="NX" func="ON" parent="s128_506">
+                <relation type="expletive"/>
+                <word xml:id="s128_4" form="Es" pos="PPER" morph="nsn3" lemma="es" func="HD" parent="s128_505" dephead="s128_5" deprel="SUBJ"/>
+               </node>
+              </node>
+
+            ...
+
+          <edu-range xml:id="edus37_8_0-8_1">
+           <discRel relation="Restatement" marking="-" arg2="edu_37_9_0"/>
+           <sentence xml:id="s660">
+        """
+        edurange_id = self.get_element_id(edurange)
+        edurange_attribs = self.element_attribs_to_dict(edurange) # contains 'span' or nothing
+        self.add_node(edurange_id, layers={self.ns, self.ns+':edu:range'}, attr_dict=edurange_attribs)
+        for edu in edurange.iterdescendants('edu'):
+            edu_id = self.get_element_id(edu)
+            self.add_edge(edurange_id, edu_id, layers={self.ns, self.ns+':edu:range'},
+                          edge_type=dg.EdgeTypes.spanning_relation)
+
+    def add_ne(self, ne):
+        """
+        Parameters
+        ----------
+        ne : etree.Element
+            etree representation of a <ne> element
+            (marks a text span -- (one or more <node> or <word> elements) as a named entity)
+
+        Example
+        -------
+            <ne xml:id="ne_23" type="PER">
+             <word xml:id="s3_2" form="Ute" pos="NE" morph="nsf" lemma="Ute" func="-" parent="s3_501" dephead="s3_1" deprel="APP"/>
+             <word xml:id="s3_3" form="Wedemeier" pos="NE" morph="nsf" lemma="Wedemeier" func="-" parent="s3_501" dephead="s3_2" deprel="APP"/>
+            </ne>
+        """
+        ne_id = self.get_element_id(ne)
+        ne_label = 'ne:'+ne.attrib['type']
+        self.add_node(ne_id, layers={self.ns, self.ns+':ne'},
+                      attr_dict=self.element_attribs_to_dict(ne),
+                      label=ne_label)
+        # possible children: [('word', 78703), ('node', 11152), ('ne', 49)]
+        for child in ne.iterchildren():
+            child_id = self.get_element_id(child)
+            self.add_edge(ne_id, child_id, layers={self.ns, self.ns+':ne'},
+                          edge_type=dg.EdgeTypes.spanning_relation,
+                          label=ne_label)
+
+    def add_node_element(self, node):
+        """
+        Parameters
+        ----------
+        node : etree.Element
+            etree representation of a <node> element
+            A <node> describes an element of a syntax tree.
+            The root <node> element does not have a parent attribute,
+            while non-root nodes do
+
+        Example
+        -------
+        <node xml:id="s1_505" cat="SIMPX" func="--">
+            <node xml:id="s1_501" cat="LK" func="-" parent="s1_505">
+
+            # this is the root of the syntax tree of the sentence, but
+            # it is not the root node of the sentence, since there might
+            # be nodes outside of the tree which are children of the
+            # sentence root node (e.g. <word> elements representing a
+            # quotation mark)
+
+        """
+        node_id = self.get_element_id(node)
+        if 'parent' in node.attrib:
+            parent_id = self.get_parent_id(node)
         else:
-            raise ValueError("Unexpected element type '{}' in document '{}'\n".format(element, document_id))
-        return uniq_element_id
+            # <node> is the root of the syntax tree of a sentence,
+            # but it might be embedded in a <edu> or <edu-range>.
+            # we want to attach it directly to the <sentence> element
+            parent_id = self.get_sentence_id(node)
+        self.add_node(node_id, layers={self.ns, self.ns+':syntax'},
+                      attr_dict=self.element_attribs_to_dict(node),
+                      label=node.attrib['cat'])
+        self.add_edge(parent_id, node_id, edge_type=dg.EdgeTypes.dominance_relation)
+
+    def add_relation(self, relation):
+        """
+        Parameters
+        ----------
+        relation : etree.Element
+            etree representation of a <relation> element
+            A <relation> always has a type attribute and inherits
+            its ID from its parent element. In the case of a non-expletive
+            relation, it also has a target attribute.
+
+        Example
+        -------
+
+          <node xml:id="s29_501" cat="NX" func="ON" parent="s29_523">
+           <relation type="expletive"/>
+           <word xml:id="s29_2" form="es" pos="PPER" morph="nsn3" lemma="es"
+                 func="HD" parent="s29_501" dephead="s29_14" deprel="SUBJ"/>
+          </node>
+
+          ...
+
+         <node xml:id="s4_507" cat="NX" func="ON" parent="s4_513">
+          <relation type="coreferential" target="s1_502"/>
+          <node xml:id="s4_505" cat="NX" func="HD" parent="s4_507">
+          ...
+          </node>
+         </node>
+        """
+        parent_node_id = self.get_parent_id(relation)
+        reltype = relation.attrib['type']
+        # add relation type information to parent node
+        self.node[parent_node_id].update({'relation': reltype})
+        self.add_layer(parent_node_id, self.ns+':'+reltype)
+        if 'target' in relation.attrib:
+            # if the relation has no target, it is either 'expletive' or
+            # 'inherent_reflexive', both of which should not be part of the
+            # 'markable' layer
+            self.add_layer(parent_node_id, self.ns+':markable')
+            target_id = relation.attrib['target']
+            self.add_edge(parent_node_id, target_id,
+                          layers={self.ns, self.ns+':'+reltype,
+                                  self.ns+':coreference'},
+                          label=reltype,
+                          edge_type=dg.EdgeTypes.pointing_relation)
+            self.add_layer(target_id, self.ns+':markable')
+
+    def add_secedge(self, secedge):
+        """
+        Parameters
+        ----------
+        secedge : etree.Element
+            etree representation of a <secedge> element
+        A <secEdge> element has a cat and a parent attribute,
+        but inherits its ID from its parent element.
+        It describes a secondary edge in a tree-like syntax representation.
+
+        Example
+        -------
+           <node xml:id="s10_505" cat="VXINF" func="OV" parent="s10_507">
+            <secEdge cat="refvc" parent="s10_504"/>
+            <word xml:id="s10_6" form="worden" pos="VAPP" lemma="werden%passiv" func="HD" parent="s10_505" dephead="s10_7" deprel="AUX"/>
+           </node>
+        """
+        edge_source = self.get_parent_id(secedge)
+        edge_target = self.get_element_id(secedge)
+        self.add_edge(edge_source, edge_target,
+                      layers={self.ns, self.ns+':secedge'},
+                      label='secedge:'+secedge.attrib['cat'],
+                      edge_type=dg.EdgeTypes.pointing_relation)
 
     def add_sentence(self, sentence):
         """
@@ -172,49 +421,165 @@ class ExportXMLDocumentGraph(ig.Graph):
             etree representation of a sentence
             (syntax tree with coreference annotation)
         """
-        sent_root_id = self.get_sentence_id(sentence)
-        doc_id = self.get_document_id(sentence)
-        self.add_vertex(sent_root_id, label=sent_root_id,
-                        node_type='sentence_root')
-        edge = (self.root, sent_root_id)
-        self._edges.append(edge)
-        self._edge_types[edge] = dg.EdgeTypes.dominance_relation
+        sent_root_id = sentence.attrib[add_ns('id')]
+        # add edge from document root to sentence root
+        self.add_edge(self.root, sent_root_id, edge_type=dg.EdgeTypes.spanning_relation)
+        self.sentences.append(sent_root_id)
 
-        for element in sentence.iter('node', 'word', 'anaphora'):
-            element_id = self.get_element_id(element, doc_id)
-            parent_element = element.getparent()
-            parent_id = self.get_element_id(parent_element, doc_id)
+        sentence_token_ids = []
 
-            if element.tag in ('node', 'word'):
-                if element.tag == 'node':
-                    label = element.attrib['cat']
-                    node_type = 'cat'
-                else: # element.tag == 'word'
-                    label = element.attrib['form']
-                    node_type = 'token'
-                node_attrs = {'{}:{}'.format(self.ns, key):val
-                              for (key, val) in element.attrib.items()}
-                self.add_vertex(element_id, label=label, node_type=node_type,
-                                **node_attrs)
-                edge = (parent_id, element_id)
-                self._edges.append(edge)
-                self._edge_types[edge] = dg.EdgeTypes.dominance_relation
+        for descendant in sentence.iterdescendants('word'):
+            sentence_token_ids.append(self.get_element_id(descendant))
 
-            else: # element.tag == 'anaphora'
-                # <anaphora> doesn't have an ID, but it's tied to its parent element
-                antecedent_str, relation_type = parse_anaphora(element)
+        self.node[sent_root_id]['tokens'] = sentence_token_ids
 
-                if antecedent_str:
-                    # there might be more than one antecedent
-                    for antecedent_id in antecedent_str.split(','):
-                        uniq_antecedent_id = 'd_{}_{}'.format(doc_id, antecedent_id)
-                        edge = (parent_id, uniq_antecedent_id)
-                        self._edges.append(edge)
-                        self._edge_types[edge] = dg.EdgeTypes.pointing_relation
-                        self._relations[edge] = relation_type
-                else:
-                    # there's no antecedent in case of an expletive anaphoric relation
-                    self._relations[(parent_id, None)] = relation_type
+    def add_splitrelation(self, splitrelation):
+        """
+        Parameters
+        ----------
+        splitrelation : etree.Element
+            etree representation of a <splitRelation> element
+            A <splitRelation> annotates its parent element (e.g. as an anaphora).
+            Its parent can be either a <word> or a <node>.
+            A <splitRelation> has a target attribute, which describes
+            the targets (plural! e.g. antecedents) of the relation.
+
+        Example
+        -------
+            <node xml:id="s2527_528" cat="NX" func="-" parent="s2527_529">
+             <splitRelation type="split_antecedent" target="s2527_504 s2527_521"/>
+             <word xml:id="s2527_32" form="beider" pos="PIDAT" morph="gpf" lemma="beide" func="-" parent="s2527_528" dephead="s2527_33" deprel="DET"/>
+             <word xml:id="s2527_33" form="Firmen" pos="NN" morph="gpf" lemma="Firma" func="HD" parent="s2527_528" dephead="s2527_31" deprel="GMOD"/>
+            </node>
+
+            <word xml:id="s3456_12" form="ihr" pos="PPOSAT" morph="nsm" lemma="ihr" func="-" parent="s3456_507" dephead="s3456_14" deprel="DET">
+             <splitRelation type="split_antecedent" target="s3456_505 s3456_9"/>
+            </word>
+        """
+        source_id = self.get_element_id(splitrelation)
+        # the target attribute looks like this: target="s2527_504 s2527_521"
+        target_node_ids = splitrelation.attrib['target'].split()
+        # we'll create an additional node which spans all target nodes
+        target_span_id = '__'.join(target_node_ids)
+        reltype = splitrelation.attrib['type']
+        self.add_node(source_id,
+                      layers={self.ns, self.ns+':relation', self.ns+':'+reltype, self.ns+':markable'})
+        self.add_node(target_span_id,
+                      layers={self.ns, self.ns+':targetspan', self.ns+':'+reltype, self.ns+':markable'})
+        self.add_edge(source_id, target_span_id,
+                      layers={self.ns, self.ns+':coreference', self.ns+':'+reltype},
+                      edge_type=dg.EdgeTypes.pointing_relation)
+
+        for target_node_id in target_node_ids:
+            self.add_edge(target_span_id, target_node_id,
+                          layers={self.ns, self.ns+reltype},
+                          edge_type=dg.EdgeTypes.spanning_relation)
+
+    def add_topic(self, topic):
+        """
+        Parameters
+        ----------
+        topic : etree.Element
+            etree representation of a <topic> element
+            (topic annotation of a text span, e.g. a sentence, edu or edu-range)
+
+        Example
+        -------
+            <topic xml:id="topic_9_0" description="Kuli">
+                <sentence xml:id="s128">
+
+            ...
+
+            <topic xml:id="topic_37_1" description="Die Pläne der AG">
+                <edu-range xml:id="edus37_8_0-8_1">
+                    <discRel relation="Restatement" marking="-" arg2="edu_37_9_0"/>
+                        <sentence xml:id="s660">
+        """
+        topic_id = self.get_element_id(topic)
+        self.add_node(topic_id, layers={self.ns, self.ns+':topic'},
+                      description=topic.attrib['description'])
+        topic_tokens = []
+        for word in topic.iterdescendants('word'):
+            word_id = self.get_element_id(word)
+            topic_tokens.append(word_id)
+            self.add_edge(topic_id, word_id, layers={self.ns, self.ns+':topic'},
+                          edge_type=dg.EdgeTypes.spanning_relation)
+        self.node[topic_id]['tokens'] = topic_tokens
+
+    def add_word(self, word):
+        """
+        Parameters
+        ----------
+        word : etree.Element
+            etree representation of a <word> element
+            (i.e. a token, which might contain child elements)
+        """
+        word_id = self.get_element_id(word)
+        if word.getparent().tag in ('node', 'sentence'):
+            parent_id = self.get_parent_id(word)
+        else:
+            # ExportXML is an inline XML format. Therefore, a <word>
+            # might be embedded in weird elements. If this is the case,
+            # attach it directly to the closest <node> or <sentence> node
+            try:
+                parent = word.iterancestors(tag=('node', 'sentence')).next()
+                parent_id = self.get_element_id(parent)
+            except StopIteration as e:
+                # there's at least one weird edge case, where a <word> is
+                # embedded like this: (text (topic (edu (word))))
+                # here, we guess the sentence ID from the
+                parent_id = self.get_element_id(word).split('_')[0]
+
+        self.tokens.append(word_id)
+        # use all attributes except for the ID
+        word_attribs = self.element_attribs_to_dict(word)
+        # add the token string under the key namespace:token
+        token_str = word_attribs['form']
+        word_attribs.update({self.ns+':token': token_str, 'label': token_str})
+        self.add_node(word_id, layers={self.ns, self.ns+':token'}, attr_dict=word_attribs)
+        self.add_edge(parent_id, word_id, edge_type=dg.EdgeTypes.dominance_relation)
+        self.parse_child_elements(word)
+
+    def element_attribs_to_dict(self, element):
+        """
+        converts the .attrib attributes of an etree element (from ``lxml.etree._Attrib``)
+        into a dict, leaving out the xml:id attribute.
+        """
+        return {key: val for (key, val) in element.attrib.items()
+                if key != add_ns('id')}
+
+    def get_element_id(self, element):
+        """
+        Returns the ID of an element (or, if the element doesn't have one:
+        the ID of its parent). Returns an error, if both elements have no ID.
+        """
+        id_attrib_key = add_ns('id')
+        if id_attrib_key in element.attrib:
+            return element.attrib[id_attrib_key]
+        try:
+            return element.getparent().attrib[id_attrib_key]
+        except KeyError as e:
+            raise KeyError(
+                'Neither the element "{}" nor its parent "{}" '
+                'have an ID'.format(element, element.getparent()))
+
+    def get_parent_id(self, element):
+        """returns the ID of the parent of the given element"""
+        if 'parent' in element.attrib:
+            return element.attrib['parent']
+        else:
+            return element.getparent().attrib[add_ns('id')]
+
+    def get_sentence_id(self, element):
+        """returns the ID of the sentence the given element belongs to."""
+        try:
+            sentence_elem = element.iterancestors('sentence').next()
+        except StopIteration as e:
+            warnings.warn("<{}> element is not a descendant of a <sentence> "
+                          "We'll try to extract the sentence ID from the "
+                          "prefix of the element ID".format(element.tag))
+            return self.get_element_id(element).split('_')[0]
+        return self.get_element_id(sentence_elem)
 
 
 def add_ns(key, ns='http://www.w3.org/XML/1998/namespace'):
@@ -225,41 +590,4 @@ def add_ns(key, ns='http://www.w3.org/XML/1998/namespace'):
     return '{{{namespace}}}{key}'.format(namespace=ns, key=key)
 
 
-def parse_anaphora(anaphora):
-    """
-    Parameters
-    ----------
-    anaphora : etree.Element
-        an <anaphora> element
-
-    Returns
-    -------
-    antecedent : str
-        node ID of the antecedent, e.g. ``s_4_n_527`` or ``s_4_n_527;s_4_n_529``
-    relation_type : str
-        anaphoric relation type, e.g. ``anaphoric`` or ``coreferential``
-    """
-    # there's only one <relation> child element
-    relation = anaphora.getchildren()[0]
-    return relation.attrib['antecedent'], relation.attrib['type']
-
-
-'''
-WARNING: academic ad-hoc code to export to CoNLL using igraph instead of
-networkx.
-
-TODO: add markable span annotation to each antecedent/anaphora during import
-
-needed functions / functionality
---------------------------------
-
-get_pointing_chains(self.docgraph)
-select_nodes_by_layer(self.docgraph, 'mmax:markable')
-get_span(self.docgraph, markable_node_id)
-dg.sentences
-dg.node[sentence_id]['tokens']
-dg.get_token(tok_id)
-'''
-
-
-read_exportxml = ExportXMLDocumentGraph
+read_exportxml = ExportXMLCorpus
