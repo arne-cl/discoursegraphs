@@ -889,8 +889,9 @@ def select_nodes_by_layer(docgraph, layer, data=False):
     ----------
     docgraph : DiscourseDocumentGraph
         document graph from which the nodes will be extracted
-    layer : str or collection of str
-        name(s) of the layer(s)
+    layer : str or collection of str or None
+        name(s) of the layer(s) to select nodes from. If None, returns all
+        nodes
     data : bool
         If True, results will include node attributes.
 
@@ -902,7 +903,9 @@ def select_nodes_by_layer(docgraph, layer, data=False):
         dict) tuples.
     """
     for node_id, node_attribs in docgraph.nodes_iter(data=True):
-        if isinstance(layer, (str, unicode)):
+        if layer is None:
+            condition = True # don't filter nodes
+        elif isinstance(layer, (str, unicode)):
             condition = layer in node_attribs['layers']
         else:  # ``layer`` is a list/set/dict of layers
             condition = any(l in node_attribs['layers'] for l in layer)
