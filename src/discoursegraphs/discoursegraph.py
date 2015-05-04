@@ -806,16 +806,16 @@ def get_span(docgraph, node_id):
             "Maximum recursion depth may be exceeded.").format(node_id,
                                                                docgraph))
     span = []
+    if docgraph.ns+':token' in docgraph.node[node_id]:
+        span.append(node_id)
+
     for from_id, to_id, edge_attribs in docgraph.out_edges_iter(node_id,
                                                                 data=True):
         if from_id == to_id:
             pass  # ignore self-loops
         # ignore pointing relations
         if edge_attribs['edge_type'] != EdgeTypes.pointing_relation:
-            if docgraph.ns+':token' in docgraph.node[to_id]:
-                span.append(to_id)
-            else:
-                span.extend(get_span(docgraph, to_id))
+            span.extend(get_span(docgraph, to_id))
     return sorted(span, key=natural_sort_key)
 
 
