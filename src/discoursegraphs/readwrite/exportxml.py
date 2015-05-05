@@ -84,7 +84,8 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
     represents an ExportXML document as a document graph.
     """
     def __init__(self, text_element, name=None, namespace='exportxml',
-                 precedence=False):
+                 precedence=False, ignore_relations=False,
+                 ignore_secedges=False):
         """
         creates a document graph from a <text> element from an ExportXML file.
 
@@ -100,6 +101,12 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         precedence : bool
             If True, add precedence relation edges
             (root precedes token1, which precedes token2 etc.)
+        ignore_relations : bool
+            If True, don't add pointing relations representing coreferences
+            and discourse relations.
+        ignore_secedges : bool
+            If True, don't add pointing relations representing secondary
+            edges (between elements in a syntax tree)
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(ExportXMLDocumentGraph, self).__init__()
@@ -111,6 +118,10 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
 
         self.sentences = []
         self.tokens = []
+        
+        self.ignore_relations = ignore_relations
+        self.ignore_secedges = ignore_secedges
+        
 
         self.parsers = {
             'connective': self.add_connective,
@@ -193,18 +204,19 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
               ...
              </edu>
         """
-        arg1_id = self.get_element_id(discrel)
-        arg2_id = discrel.attrib['arg2']
-        reltype = discrel.attrib['relation']
-        discrel_attribs = self.element_attribs_to_dict(discrel)
-        self.node[arg1_id].update(discrel_attribs)
-        self.add_layer(arg1_id, self.ns+':discourse')
-        self.add_layer(arg1_id, self.ns+':relation')
-        self.add_edge(arg1_id, arg2_id,
-                      layers={self.ns, self.ns+':discourse', self.ns+':relation'},
-                      edge_type=dg.EdgeTypes.pointing_relation,
-                      relation=reltype,
-                      label='discourse:'+reltype)
+        if self.ignore_relations is False:
+            arg1_id = self.get_element_id(discrel)
+            arg2_id = discrel.attrib['arg2']
+            reltype = discrel.attrib['relation']
+            discrel_attribs = self.element_attribs_to_dict(discrel)
+            self.node[arg1_id].update(discrel_attribs)
+            self.add_layer(arg1_id, self.ns+':discourse')
+            self.add_layer(arg1_id, self.ns+':relation')
+            self.add_edge(arg1_id, arg2_id,
+                          layers={self.ns, self.ns+':discourse', self.ns+':relation'},
+                          edge_type=dg.EdgeTypes.pointing_relation,
+                          relation=reltype,
+                          label='discourse:'+reltype)
 
     def add_edu(self, edu):
         """
@@ -371,23 +383,24 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
           </node>
          </node>
         """
-        parent_node_id = self.get_parent_id(relation)
-        reltype = relation.attrib['type']
-        # add relation type information to parent node
-        self.node[parent_node_id].update({'relation': reltype})
-        self.add_layer(parent_node_id, self.ns+':'+reltype)
-        if 'target' in relation.attrib:
-            # if the relation has no target, it is either 'expletive' or
-            # 'inherent_reflexive', both of which should not be part of the
-            # 'markable' layer
-            self.add_layer(parent_node_id, self.ns+':markable')
-            target_id = relation.attrib['target']
-            self.add_edge(parent_node_id, target_id,
-                          layers={self.ns, self.ns+':'+reltype,
-                                  self.ns+':coreference'},
-                          label=reltype,
-                          edge_type=dg.EdgeTypes.pointing_relation)
-            self.add_layer(target_id, self.ns+':markable')
+        if self.ignore_relations is False:
+            parent_node_id = self.get_parent_id(relation)
+            reltype = relation.attrib['type']
+            # add relation type information to parent node
+            self.node[parent_node_id].update({'relation': reltype})
+            self.add_layer(parent_node_id, self.ns+':'+reltype)
+            if 'target' in relation.attrib:
+                # if the relation has no target, it is either 'expletive' or
+                # 'inherent_reflexive', both of which should not be part of the
+                # 'markable' layer
+                self.add_layer(parent_node_id, self.ns+':markable')
+                target_id = relation.attrib['target']
+                self.add_edge(parent_node_id, target_id,
+                              layers={self.ns, self.ns+':'+reltype,
+                                      self.ns+':coreference'},
+                              label=reltype,
+                              edge_type=dg.EdgeTypes.pointing_relation)
+                self.add_layer(target_id, self.ns+':markable')
 
     def add_secedge(self, secedge):
         """
@@ -406,12 +419,13 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             <word xml:id="s10_6" form="worden" pos="VAPP" lemma="werden%passiv" func="HD" parent="s10_505" dephead="s10_7" deprel="AUX"/>
            </node>
         """
-        edge_source = self.get_parent_id(secedge)
-        edge_target = self.get_element_id(secedge)
-        self.add_edge(edge_source, edge_target,
-                      layers={self.ns, self.ns+':secedge'},
-                      label='secedge:'+secedge.attrib['cat'],
-                      edge_type=dg.EdgeTypes.pointing_relation)
+        if self.ignore_seceges is False:
+            edge_source = self.get_parent_id(secedge)
+            edge_target = self.get_element_id(secedge)
+            self.add_edge(edge_source, edge_target,
+                          layers={self.ns, self.ns+':secedge'},
+                          label='secedge:'+secedge.attrib['cat'],
+                          edge_type=dg.EdgeTypes.pointing_relation)
 
     def add_sentence(self, sentence):
         """
@@ -456,24 +470,25 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
              <splitRelation type="split_antecedent" target="s3456_505 s3456_9"/>
             </word>
         """
-        source_id = self.get_element_id(splitrelation)
-        # the target attribute looks like this: target="s2527_504 s2527_521"
-        target_node_ids = splitrelation.attrib['target'].split()
-        # we'll create an additional node which spans all target nodes
-        target_span_id = '__'.join(target_node_ids)
-        reltype = splitrelation.attrib['type']
-        self.add_node(source_id,
-                      layers={self.ns, self.ns+':relation', self.ns+':'+reltype, self.ns+':markable'})
-        self.add_node(target_span_id,
-                      layers={self.ns, self.ns+':targetspan', self.ns+':'+reltype, self.ns+':markable'})
-        self.add_edge(source_id, target_span_id,
-                      layers={self.ns, self.ns+':coreference', self.ns+':'+reltype},
-                      edge_type=dg.EdgeTypes.pointing_relation)
+        if self.ignore_relations is False:
+            source_id = self.get_element_id(splitrelation)
+            # the target attribute looks like this: target="s2527_504 s2527_521"
+            target_node_ids = splitrelation.attrib['target'].split()
+            # we'll create an additional node which spans all target nodes
+            target_span_id = '__'.join(target_node_ids)
+            reltype = splitrelation.attrib['type']
+            self.add_node(source_id,
+                          layers={self.ns, self.ns+':relation', self.ns+':'+reltype, self.ns+':markable'})
+            self.add_node(target_span_id,
+                          layers={self.ns, self.ns+':targetspan', self.ns+':'+reltype, self.ns+':markable'})
+            self.add_edge(source_id, target_span_id,
+                          layers={self.ns, self.ns+':coreference', self.ns+':'+reltype},
+                          edge_type=dg.EdgeTypes.pointing_relation)
 
-        for target_node_id in target_node_ids:
-            self.add_edge(target_span_id, target_node_id,
-                          layers={self.ns, self.ns+reltype},
-                          edge_type=dg.EdgeTypes.spanning_relation)
+            for target_node_id in target_node_ids:
+                self.add_edge(target_span_id, target_node_id,
+                              layers={self.ns, self.ns+reltype},
+                              edge_type=dg.EdgeTypes.spanning_relation)
 
     def add_topic(self, topic):
         """
