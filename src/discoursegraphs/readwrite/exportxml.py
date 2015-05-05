@@ -85,7 +85,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
     """
     def __init__(self, text_element, name=None, namespace='exportxml',
                  precedence=False, ignore_relations=False,
-                 ignore_secedges=False):
+                 ignore_splitrelations=False, ignore_secedges=False):
         """
         creates a document graph from a <text> element from an ExportXML file.
 
@@ -104,6 +104,9 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         ignore_relations : bool
             If True, don't add pointing relations representing coreferences
             and discourse relations.
+        ignore_splitrelations : bool
+            If True, don't add pointing coreference relations where the
+            antecedent consists of non-adjacent tokens
         ignore_secedges : bool
             If True, don't add pointing relations representing secondary
             edges (between elements in a syntax tree)
@@ -419,7 +422,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             <word xml:id="s10_6" form="worden" pos="VAPP" lemma="werden%passiv" func="HD" parent="s10_505" dephead="s10_7" deprel="AUX"/>
            </node>
         """
-        if self.ignore_seceges is False:
+        if self.ignore_secedges is False:
             edge_source = self.get_parent_id(secedge)
             edge_target = self.get_element_id(secedge)
             self.add_edge(edge_source, edge_target,
@@ -470,7 +473,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
              <splitRelation type="split_antecedent" target="s3456_505 s3456_9"/>
             </word>
         """
-        if self.ignore_relations is False:
+        if self.ignore_relations is False and self.ignore_splitrelations is False:
             source_id = self.get_element_id(splitrelation)
             # the target attribute looks like this: target="s2527_504 s2527_521"
             target_node_ids = splitrelation.attrib['target'].split()
