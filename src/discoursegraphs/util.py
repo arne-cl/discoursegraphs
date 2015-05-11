@@ -9,6 +9,12 @@ This module contains a number of helper functions.
 import os
 import fnmatch
 import re
+from collections import Counter
+from operator import itemgetter
+from types import GeneratorType
+
+import matplotlib.pyplot as plt
+import numpy as np
 from lxml import etree
 
 INTEGER_RE = re.compile('([0-9]+)')
@@ -290,3 +296,44 @@ def make_labels_explicit(docgraph):
                         edge_attribs['edge_type']
         return docgraph
     return make_edgelabels_explicit(make_nodelabels_explicit(docgraph))
+
+
+def plot_attribute_distribution(docgraph, elements, attribute):
+    '''
+    creates a barplot for all values that an attribute can have,
+    e.g. counts of POS tags for all token nodes in a document graph.
+    '''
+    value_counts = Counter()
+
+    if isinstance(elements, GeneratorType):
+        elements = list(elements)
+
+    if isinstance(elements[0], (str, unicode, int)):
+        element_type = 'node'
+    elif isinstance(elements[0], tuple):
+        element_type = 'edge'
+    else:
+        raise ValueError('Unknown element type: '.format(element[0]))
+
+    if element_type == 'node':
+        for element in elements:
+            try:
+                value_counts[docgraph.node[element][attribute]] += 1
+            except KeyError:
+                value_counts['NOT_PRESENT'] += 1
+    else: # element_type == 'edge':
+        for element in elements:
+            source, target = element
+            try:
+                for edge in docgraph.edge[source][target]: # multidigraph
+                    value_counts[docgraph.edge[source][target][edge][attribute]] += 1
+            except KeyError:
+                value_counts['NOT_PRESENT'] += 1
+
+
+    sorted_value_counts = sorted(value_counts.iteritems(), key=itemgetter(1), reverse=True)
+
+    x = np.arange(len(sorted_value_counts))
+    plt.bar(x, [attrib_count for attrib_name, attrib_count in sorted_value_counts])
+    _xticks = plt.xticks(x + 0.5, [attrib_name for attrib_name, attrib_count in sorted_value_counts], rotation=90)
+    plt.show()
