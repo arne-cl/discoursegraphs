@@ -298,7 +298,7 @@ def make_labels_explicit(docgraph):
     return make_edgelabels_explicit(make_nodelabels_explicit(docgraph))
 
 
-def plot_attribute_distribution(docgraph, elements, attribute):
+def plot_attribute_distribution(docgraph, elements, attribute, ignore_missing=True):
     '''
     creates a barplot for all values that an attribute can have,
     e.g. counts of POS tags for all token nodes in a document graph.
@@ -320,7 +320,8 @@ def plot_attribute_distribution(docgraph, elements, attribute):
             try:
                 value_counts[docgraph.node[element][attribute]] += 1
             except KeyError:
-                value_counts['NOT_PRESENT'] += 1
+				if not ignore_missing:
+					value_counts['NOT_PRESENT'] += 1
     else: # element_type == 'edge':
         for element in elements:
             source, target = element
@@ -328,7 +329,8 @@ def plot_attribute_distribution(docgraph, elements, attribute):
                 for edge in docgraph.edge[source][target]: # multidigraph
                     value_counts[docgraph.edge[source][target][edge][attribute]] += 1
             except KeyError:
-                value_counts['NOT_PRESENT'] += 1
+				if not ignore_missing:
+					value_counts['NOT_PRESENT'] += 1
 
 
     sorted_value_counts = sorted(value_counts.iteritems(), key=itemgetter(1), reverse=True)
