@@ -49,9 +49,9 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
 
         Parameters
         ----------
-        ptb_filepath : str
+        ptb_filepath : str or None
             absolute or relative path to the Penn Treebank *.mrg file to be
-            parsed.
+            parsed. If no path is given, return an empty PTBDocumentGraph.
         name : str or None
             the name or ID of the graph to be generated. If no name is
             given, the basename of the input file is used.
