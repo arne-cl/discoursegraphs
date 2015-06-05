@@ -9,7 +9,7 @@ __version__ = '0.1.2'
 # flake8: noqa
 
 from networkx import (
-    write_dot, write_gml, write_gexf, write_gpickle, write_graphml)
+    write_dot, write_gexf, write_gpickle, write_graphml)
 
 from discoursegraphs.discoursegraph import (
     DiscourseDocumentGraph, EdgeTypes, create_token_mapping,
@@ -19,7 +19,7 @@ from discoursegraphs.discoursegraph import (
 from discoursegraphs.readwrite import (
     read_anaphoricity, write_brackets, write_brat, read_conano, read_conll, write_conll,
     read_decour, read_exb, read_exmaralda, write_exmaralda, write_exb,
-    read_exportxml, read_mmax2, write_neo4j, write_geoff, write_paula,
+    read_exportxml, write_gml, read_mmax2, write_neo4j, write_geoff, write_paula,
     read_ptb, read_mrg,
     read_rst, read_rs3, read_dis, read_tiger)
 from discoursegraphs.readwrite.dot import print_dot

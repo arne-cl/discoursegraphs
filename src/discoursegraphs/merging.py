@@ -112,14 +112,7 @@ def merging_cli(debug=False):
         attriblist2str(discourse_docgraph)
         write_gexf(discourse_docgraph, args.output_file)
     elif args.output_format == 'gml':
-        from networkx import write_gml
-        from discoursegraphs.readwrite.generic import ensure_ascii_labels
-        from discoursegraphs.readwrite.generic import (layerset2str,
-                                                       attriblist2str)
-        layerset2str(discourse_docgraph)
-        attriblist2str(discourse_docgraph)
-        ensure_ascii_labels(discourse_docgraph)
-        write_gml(discourse_docgraph, args.output_file)
+        dg.write_gml(discourse_docgraph, args.output_file)
     elif args.output_format == 'graphml':
         from networkx import write_graphml
         from discoursegraphs.readwrite.generic import (layerset2str,
