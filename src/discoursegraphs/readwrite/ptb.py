@@ -69,11 +69,12 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
 
         if 'discoursegraph:root_node' in self:
             self.remove_node('discoursegraph:root_node')
+
+        self.ns = namespace
         if not ptb_filepath:
             return # create empty document graph
 
         self.name = name if name else os.path.basename(ptb_filepath)
-        self.ns = namespace
         self.root = 0
         self.add_node(self.root, layers={self.ns}, label=self.ns+':root_node')
             

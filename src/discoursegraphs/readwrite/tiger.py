@@ -71,15 +71,15 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         # super calls __init__() of base class DiscourseDocumentGraph
         super(TigerDocumentGraph, self).__init__()
 
+        self.ns = namespace
         if not tiger_filepath:
-			return  # create empty document graph
+            return  # create empty document graph
 
         utf8_parser = etree.XMLParser(encoding="utf-8")
         tigerxml_tree = etree.parse(tiger_filepath, utf8_parser)
         tigerxml_root = tigerxml_tree.getroot()
 
         self.name = name if name else os.path.basename(tiger_filepath)
-        self.ns = namespace
         self.corpus_id = tigerxml_root.attrib['id']
 
         # add root node of TigerDocumentGraph
