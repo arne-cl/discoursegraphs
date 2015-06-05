@@ -52,7 +52,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
     tokens : list of str
         sorted list of all token node IDs contained in this document graph
     """
-    def __init__(self, tiger_filepath, name=None, namespace='tiger'):
+    def __init__(self, tiger_filepath=None, name=None, namespace='tiger'):
         """
         Creates a directed graph that represents all syntax annotated
         sentences in the given TigerXML file.
@@ -60,7 +60,8 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         Parameters
         ----------
         tiger_filepath : str
-            absolute or relative path to the TigerXML file to be parsed
+            absolute or relative path to the TigerXML file to be parsed.
+            If no path is given, return an empty TigerDocumentGraph.
         name : str or None
             the name or ID of the graph to be generated. If no name is
             given, the basename of the input file is used.
@@ -69,6 +70,9 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(TigerDocumentGraph, self).__init__()
+
+        if not tiger_filepath:
+			return  # create empty document graph
 
         utf8_parser = etree.XMLParser(encoding="utf-8")
         tigerxml_tree = etree.parse(tiger_filepath, utf8_parser)
