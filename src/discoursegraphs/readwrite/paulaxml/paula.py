@@ -34,7 +34,7 @@ XMLBASE = '{%s}base' % NSMAP['xml']
 XLINKHREF = '{%s}href' % NSMAP['xlink']
 
 IGNORED_EDGE_ATTRIBS = ('layers', 'label', 'tiger:idref')
-IGNORED_NODE_ATTRIBS = ('layers', 'label', 'tokens', 'tiger:id',
+IGNORED_NODE_ATTRIBS = ('layers', 'label', 'metadata', 'tokens', 'tiger:id',
                         'tiger:art_id', 'tiger:orig_id')
 IGNORED_TOKEN_ATTRIBS = IGNORED_NODE_ATTRIBS + ('tiger:token', 'tiger:word')
 
