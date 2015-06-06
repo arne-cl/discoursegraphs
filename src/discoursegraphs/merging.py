@@ -105,12 +105,7 @@ def merging_cli(debug=False):
         write_geoff(discourse_docgraph, args.output_file)
         print ''  # this is just cosmetic for stdout
     elif args.output_format == 'gexf':
-        from networkx import write_gexf
-        from discoursegraphs.readwrite.generic import (layerset2str,
-                                                       attriblist2str)
-        layerset2str(discourse_docgraph)
-        attriblist2str(discourse_docgraph)
-        write_gexf(discourse_docgraph, args.output_file)
+        dg.write_gexf(discourse_docgraph, args.output_file)
     elif args.output_format == 'gml':
         dg.write_gml(discourse_docgraph, args.output_file)
     elif args.output_format == 'graphml':
