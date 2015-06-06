@@ -34,6 +34,12 @@ def gen_bracket_mappings(docgraph, layer=None):
         (This might lead to errors, e.g. when the document contains Tiger
         syntax trees with secondary edges.)
     """
+    # we can't rely on the .ns attribute of a merged graph
+    if layer:
+        namespace = dg.layer2namespace(layer)
+    else:
+        namespace = docgraph.ns
+
     pointing_chains = dg.get_pointing_chains(docgraph, layer=layer)
     markables = sorted(itertools.chain(*pointing_chains),
                        key=dg.util.natural_sort_key)
@@ -47,9 +53,9 @@ def gen_bracket_mappings(docgraph, layer=None):
     opening = defaultdict(list)
     closing = defaultdict(list)
     for markable in markables:
-        if docgraph.ns+':span' in docgraph.node[markable]:
+        if namespace+':span' in docgraph.node[markable]:
             span_tokens = spanstring2tokens(
-                docgraph, docgraph.node[markable][docgraph.ns+':span'])
+                docgraph, docgraph.node[markable][namespace+':span'])
             opening[span_tokens[0]].append(markable)
             closing[span_tokens[-1]].append(markable)
     return opening, closing, markable2chain

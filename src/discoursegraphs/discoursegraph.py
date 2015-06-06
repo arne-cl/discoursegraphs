@@ -1044,3 +1044,11 @@ def get_pointing_chains(docgraph, layer=None):
                     for chain in chain_list]):
                         unique_chains.extend(from_id_chains)
     return unique_chains
+
+
+def layer2namespace(layer):
+    """
+    converts the name of a layer into the name of its namespace, e.g.
+    'mmax:token' --> 'mmax'
+    """
+    return layer.split(':')[0]

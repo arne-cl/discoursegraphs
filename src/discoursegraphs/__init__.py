@@ -14,8 +14,9 @@ from networkx import (
 from discoursegraphs.discoursegraph import (
     DiscourseDocumentGraph, EdgeTypes, create_token_mapping,
     get_annotation_layers, get_span,
-    get_text, istoken, select_neighbors_by_layer, select_nodes_by_layer,
-    select_edges_by, tokens2text, get_pointing_chains, get_top_level_layers)
+    get_text, istoken, layer2namespace, select_neighbors_by_layer,
+    select_nodes_by_layer, select_edges_by, tokens2text,
+    get_pointing_chains, get_top_level_layers)
 from discoursegraphs.readwrite import (
     read_anaphoricity, write_brackets, write_brat, read_conano, read_conll, write_conll,
     read_decour, read_exb, read_exmaralda, write_exmaralda, write_exb,
