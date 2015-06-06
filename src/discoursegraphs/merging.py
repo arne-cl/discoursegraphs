@@ -111,12 +111,7 @@ def merging_cli(debug=False):
     elif args.output_format == 'gml':
         dg.write_gml(discourse_docgraph, args.output_file)
     elif args.output_format == 'graphml':
-        from networkx import write_graphml
-        from discoursegraphs.readwrite.generic import (layerset2str,
-                                                       attriblist2str)
-        layerset2str(discourse_docgraph)
-        attriblist2str(discourse_docgraph)
-        write_graphml(discourse_docgraph, args.output_file)
+        dg.write_graphml(discourse_docgraph, args.output_file)
     elif args.output_format == 'neo4j':
         import requests
         from discoursegraphs.readwrite.neo4j import upload_to_neo4j
