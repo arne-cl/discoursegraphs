@@ -39,7 +39,7 @@ def merging_cli(debug=False):
                         help='MMAX2 file to be merged')
     parser.add_argument(
         '-o', '--output-format', default='dot',
-        help=('output format: brat, dot, pickle, geoff, gexf, gml, graphml, '
+        help=('output format: brackets, brat, dot, pickle, geoff, gexf, gml, graphml, '
               'neo4j, exmaralda, conll, paula, no-output'))
     parser.add_argument('output_file', nargs='?', default=sys.stdout)
 
@@ -96,6 +96,8 @@ def merging_cli(debug=False):
         write_dot(discourse_docgraph, args.output_file)
     elif args.output_format == 'brat':
         dg.write_brat(discourse_docgraph, args.output_file)
+    elif args.output_format == 'brackets':
+        dg.write_brackets(discourse_docgraph, args.output_file)
     elif args.output_format == 'pickle':
         import cPickle as pickle
         with open(args.output_file, 'wb') as pickle_file:
