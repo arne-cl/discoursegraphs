@@ -148,3 +148,24 @@ def ensure_utf8_graph(discoursegraph):
             for attrib in edge_dict[edge_id]:
                 if isinstance(edge_dict[edge_id][attrib], (str, unicode)):
                     edge_dict[edge_id][attrib] = ensure_utf8(attrib)
+
+
+def remove_root_metadata(docgraph):
+    """
+    removes the ``metadata`` attribute of the root node of a document graph.
+    this is necessary for some exporters, as the attribute may contain
+    (nested) dictionaries.
+    """
+    docgraph.node[docgraph.root].pop('metadata', None)
+    # delete metadata from the generic root node (which probably only exists
+    # when we merge graphs on the command line, cf. issue #89
+    if 'discoursegraph:root_node' in docgraph.node:
+        docgraph.node['discoursegraph:root_node'].pop('metadata', None)
+    # delete the metadata from all former root nodes which have been merged
+    # into this graph
+    if hasattr(docgraph, 'merged_rootnodes'):
+        for merged_rootnode in docgraph.merged_rootnodes:
+            try:  # some of these nodes may not exist any longer
+                docgraph.node[merged_rootnode].pop('metadata', None)
+            except:
+                pass

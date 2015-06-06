@@ -581,6 +581,13 @@ class DiscourseDocumentGraph(MultiDiGraph):
         NOTE: This will only work if both graphs have exactly the same
         tokenization.
         """
+        # keep track of all merged/old root nodes in case we need to
+        # delete them or their attributes (e.g. 'metadata')
+        if hasattr(self, 'merged_rootnodes'):
+            self.merged_rootnodes.append(other_docgraph.root)
+        else:
+            self.merged_rootnodes = [other_docgraph.root]
+
         # renaming the tokens of the other graph to match this one
         rename_tokens(other_docgraph, self, verbose=verbose)
         self.add_nodes_from(other_docgraph.nodes(data=True))
