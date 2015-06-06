@@ -10,6 +10,7 @@ between the spans (e.g. coreference chains).
 '''
 
 import os
+import codecs
 import itertools
 from collections import defaultdict
 
@@ -135,7 +136,7 @@ def write_brackets(docgraph, output_file, layer='mmax'):
         path_to_file = os.path.dirname(output_file)
         if not os.path.isdir(path_to_file):
             create_dir(path_to_file)
-        with open(output_file, 'w') as outfile:
+        with codecs.open(output_file, 'w', 'utf-8') as outfile:
             outfile.write(bracketed_str)
 
     else:  # output_file is a file object
