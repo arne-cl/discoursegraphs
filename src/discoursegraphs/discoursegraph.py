@@ -638,6 +638,14 @@ def rename_tokens(docgraph_with_old_names, docgraph_with_new_names, verbose=Fals
     """
     old2new = create_token_mapping(docgraph_with_old_names,
                                    docgraph_with_new_names, verbose=verbose)
+
+    # save the mappings from old to new token node IDs in the `renamed_nodes`
+    # attribute of the merged graph
+    if hasattr(docgraph_with_new_names, 'renamed_nodes'):
+        docgraph_with_new_names.renamed_nodes.update(old2new)
+    else:
+        docgraph_with_new_names.renamed_nodes = old2new
+
     relabel_nodes(docgraph_with_old_names, old2new, copy=False)
     new_token_ids = old2new.values()
 
