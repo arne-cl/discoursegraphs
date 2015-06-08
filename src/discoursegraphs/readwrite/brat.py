@@ -56,6 +56,12 @@ def brat_output(docgraph, layer=None, show_relations=True):
     ret_str : unicode
         the content of a brat *.ann file
     """
+    # we can't rely on the .ns attribute of a merged graph
+    if layer:
+        namespace = dg.layer2namespace(layer)
+    else:
+        namespace = docgraph.ns
+
     ret_str = u''
     pointing_chains = dg.get_pointing_chains(docgraph, layer=layer)
 
@@ -66,7 +72,7 @@ def brat_output(docgraph, layer=None, show_relations=True):
 
     for pointing_chain in pointing_chains:
         for markable in sorted(pointing_chain, key=dg.util.natural_sort_key):
-            span_tokens = spanstring2tokens(docgraph, docgraph.node[markable][docgraph.ns+':span'])
+            span_tokens = spanstring2tokens(docgraph, docgraph.node[markable][namespace+':span'])
             span_text = dg.tokens2text(docgraph, span_tokens)
             first_token2markables[span_tokens[0]].append(markable)
             markable_dict[markable] = (markable_index, span_text, len(span_text))
@@ -120,7 +126,7 @@ def create_visual_conf(docgraph, pointing_chains):
     return ret_str
 
 
-def write_brat(docgraph, output_dir, layer=None, show_relations=True):
+def write_brat(docgraph, output_dir, layer='mmax', show_relations=True):
     dg.util.create_dir(output_dir)
     doc_name = os.path.basename(docgraph.name)
     with codecs.open(os.path.join(output_dir, doc_name+'.txt'),
