@@ -361,6 +361,11 @@ def spanstring2tokens(docgraph, span_string):
     IDs (e.g. ['word_88', 'word_89', 'word_90', 'word_91']. Token IDs that
     do not occur in the given document graph will be filtered out.
 
+    Q: Why are some token IDs missing in a document graph?
+    A: They either have been removed manually (e.g. because someone thought
+       the annotation/tokenization was 'wrong') or have been renamed
+       during the merging of several document graphs.
+
     Parameters
     ----------
     docgraph : MMAXDocumentGraph
@@ -415,7 +420,17 @@ def spanstring2tokens(docgraph, span_string):
 
     tokens = convert_spanstring(span_string)
     existing_nodes = set(docgraph.nodes())
-    return [tok for tok in tokens if tok in existing_nodes]
+
+    existing_tokens = []
+    for tok in tokens:
+        if tok in existing_nodes:
+            existing_tokens.append(tok)
+        else: # we're trying to catch all token IDs that have been
+              # renamed during merging of document graphs / annotation layers
+            renamed_token_id = docgraph.renamed_nodes.get(tok)
+            if renamed_token_id in existing_nodes:
+                existing_tokens.append(renamed_token_id)
+    return existing_tokens
 
 
 def spanstring2text(docgraph, span_string):
