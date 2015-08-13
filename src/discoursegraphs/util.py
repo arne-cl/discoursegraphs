@@ -13,8 +13,6 @@ from collections import Counter
 from operator import itemgetter
 from types import GeneratorType
 
-import matplotlib.pyplot as plt
-import numpy as np
 from lxml import etree
 
 INTEGER_RE = re.compile('([0-9]+)')
@@ -303,6 +301,9 @@ def plot_attribute_distribution(docgraph, elements, attribute, ignore_missing=Tr
     creates a barplot for all values that an attribute can have,
     e.g. counts of POS tags for all token nodes in a document graph.
     '''
+    import matplotlib.pyplot as plt
+    import numpy as np
+
     value_counts = Counter()
 
     if isinstance(elements, GeneratorType):
