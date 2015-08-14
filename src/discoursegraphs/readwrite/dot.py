@@ -9,7 +9,21 @@ This module contains code to convert document graphs to graphviz graphs
 
 import codecs
 from tempfile import NamedTemporaryFile
-from networkx import write_dot
+
+from networkx.drawing.nx_pydot import to_pydot
+
+try:
+	import pydot
+except ImportError:
+	raise ImportError("write_dot() requires pydot",
+					  "http://code.google.com/p/pydot/")
+
+
+def write_dot(G, output_file):
+    """write a NetworkX graph G to a Graphviz dot file (UTF-8)."""
+    P=to_pydot(G)
+    with codecs.open(output_file, mode='w', encoding='utf8') as out:
+		out.write(P.to_string())
 
 
 def print_dot(docgraph, ignore_node_labels=False):
@@ -46,7 +60,7 @@ def print_dot(docgraph, ignore_node_labels=False):
     write_dot(tmpgraph, tmp_file.name)
     # write_dot does not seem to produce valid utf8 for all files, that's
     # why we're adding error handling here
-    # 
+    #
     # maz-10175.rs3, maz-10374.rs3 and maz-13758.rs3 cause this
     # error: UnicodeDecodeError: 'utf8' codec can't decode byte 0xc3 in
     # position ...: invalid continuation byte
