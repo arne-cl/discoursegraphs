@@ -9,23 +9,7 @@ This module contains code to convert document graphs to graphviz graphs
 
 import codecs
 from tempfile import NamedTemporaryFile
-#~ from networkx import write_dot
-from networkx.drawing.nx_pydot import to_pydot
-
-
-def write_dot(G, output_file):
-    """Write NetworkX graph G to a Graphviz dot format file.
-    """
-    try:
-        import pydot
-    except ImportError:
-        raise ImportError("write_dot() requires pydot",
-                          "http://code.google.com/p/pydot/")
-    P=to_pydot(G)
-    
-    with codecs.open(output_file, mode='w', encoding='utf8') as out:
-		out.write(P.to_string())
-    return
+from networkx import write_dot
 
 
 def print_dot(docgraph, ignore_node_labels=False):
