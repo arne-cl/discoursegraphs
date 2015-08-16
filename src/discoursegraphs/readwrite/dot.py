@@ -7,26 +7,78 @@ This module contains code to convert document graphs to graphviz graphs
 ("dot files") and manipulate them.
 """
 
+import re
 import codecs
 from tempfile import NamedTemporaryFile
 
-from networkx.drawing.nx_pydot import to_pydot
-
-try:
-	import pydot
-except ImportError:
-	raise ImportError("write_dot() requires pydot",
-					  "http://code.google.com/p/pydot/")
+import networkx as nx
 
 
-def write_dot(G, output_file):
-    """write a NetworkX graph G to a Graphviz dot file (UTF-8)."""
-    P=to_pydot(G)
-    with codecs.open(output_file, mode='w', encoding='utf8') as out:
-		out.write(P.to_string())
+QUOTE_RE = re.compile('"') # a single "-char
+UNQUOTE_RE = re.compile('^"(.*)"$') # a string beginning and ending with a "-char
 
 
-def print_dot(docgraph, ignore_node_labels=False):
+def quote_for_pydot(string):
+    """
+    takes a string and encloses it with "-chars. if the string contains "-chars
+    itself, they will be escaped.
+    """
+    escaped_str = QUOTE_RE.sub(r'\\"', string)
+    return u'"{}"'.format(escaped_str)
+
+
+def unquote_from_pydot(string):
+    """removes the "-char from the beginning and end of a pydot-quoted string"""
+    return UNQUOTE_RE.match(quoted_str).groups()[0]
+
+
+def _preprocess_nodes_for_pydot(nodes_with_data):
+    """throw away all node attributes, except for 'label'"""
+    for (node_id, attrs) in nodes_with_data:
+        if 'label' in attrs:
+            yield (quote_for_pydot(node_id),
+                   {'label': quote_for_pydot(attrs['label'])})
+        else:
+            yield (quote_for_pydot(node_id), {})
+
+
+def _preprocess_edges_for_pydot(edges_with_data):
+    """throw away all edge attributes, except for 'label'"""
+    for (source, target, attrs) in edges_with_data:
+        if 'label' in attrs:
+            yield (quote_for_pydot(source), quote_for_pydot(target),
+                   {'label': quote_for_pydot(attrs['label'])})
+        else:
+            yield (quote_for_pydot(source), quote_for_pydot(target), {})
+
+
+def preprocess_for_pydot(docgraph):
+    """
+    takes a document graph and strips all the information that aren't
+    necessary for visualizing it with graphviz. ensures that all
+    node/edge names and labels are properly quoted.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        a document graph
+    Returns
+    -------
+    stripped_graph : networkx.MultiDiGraph
+        a graph containing only information that is needed for graphviz
+    """
+    stripped_graph = nx.MultiDiGraph()
+    stripped_graph.name = docgraph.name
+
+    nodes = _preprocess_nodes_for_pydot(docgraph.nodes_iter(data=True))
+    edges = _preprocess_edges_for_pydot(docgraph.edges_iter(data=True))
+
+    stripped_graph.add_nodes_from(nodes)
+    stripped_graph.add_edges_from(edges)
+    return stripped_graph
+
+
+def print_dot(docgraph):
     """
     converts a document graph into a dot file and returns it as a string.
 
@@ -43,25 +95,6 @@ def print_dot(docgraph, ignore_node_labels=False):
     IPython notebook, run this command once::
 
         %load_ext gvmagic
-
-    Parameters
-    ----------
-    ignore_node_labels : bool
-        If True, use the ID of a node as its node label
     """
-    tmp_file = NamedTemporaryFile()
-    if ignore_node_labels:
-        tmpgraph = docgraph.copy()
-        for node, ndict in tmpgraph.nodes_iter(data=True):
-            ndict.pop('label', None)
-    else:
-        tmpgraph = docgraph
-
-    write_dot(tmpgraph, tmp_file.name)
-    # write_dot does not seem to produce valid utf8 for all files, that's
-    # why we're adding error handling here
-    #
-    # maz-10175.rs3, maz-10374.rs3 and maz-13758.rs3 cause this
-    # error: UnicodeDecodeError: 'utf8' codec can't decode byte 0xc3 in
-    # position ...: invalid continuation byte
-    return codecs.open(tmp_file.name, encoding='utf8', errors='replace').read()
+    stripped_graph = preprocess_for_pydot(docgraph)
+    return nx.to_pydot(stripped_graph).to_string()
