@@ -26,7 +26,8 @@ class ExportXMLCorpus(object):
     def __init__(self, exportxml_file, debug=False):
         """
         represents an ExportXML formatted corpus (e.g. Tüba-D/Z) as an
-        iterable over ExportXMLDocumentGraph instances.
+        iterable over ExportXMLDocumentGraph instances (or an iterable over
+        <text> elements if ``debug`` is set to ``True``).
 
         This class is used to 'parse' an ExportXML file iteratively, using as
         little memory as possible. To retrieve the document graphs of the
@@ -62,10 +63,14 @@ class ExportXMLCorpus(object):
 
     def text_iter(self, context):
         """
-        iterates over all the elements in an iterparse context
+        Iterates over all the elements in an iterparse context
         (here: <text> elements) and yields an ExportXMLDocumentGraph instance
-        for each of them. for efficiency, the elements are removed from the
+        for each of them. For efficiency, the elements are removed from the
         DOM / main memory after processing them.
+        
+        If ``self.debug`` is set to ``True`` (in the ``__init__`` method),
+        this method will yield <text> elements, which can be used to construct
+        ``ExportXMLDocumentGraph``s manually.
         """
         for _event, elem in context:
             if not self.debug:
