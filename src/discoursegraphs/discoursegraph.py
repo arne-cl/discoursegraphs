@@ -81,6 +81,89 @@ class DiscourseDocumentGraph(MultiDiGraph):
         self.sentences = []
         self.tokens = []
 
+    def add_offsets(self, offset_ns=None):
+        """
+        adds the onset and offset to each token in the document graph, i.e.
+        the character position where each token starts and ends.
+        """
+        if offset_ns is None:
+            offset_ns = self.ns
+
+        onset = 0
+        offset = 0
+
+        for token_id, token_str in self.get_tokens():
+            offset = onset + len(token_str)
+            self.node[token_id]['{}:{}'.format(offset_ns, 'onset')] = onset
+            self.node[token_id]['{}:{}'.format(offset_ns, 'offset')] = offset
+            onset = offset + 1
+
+    def get_offsets(self, token_node_id=None, offset_ns=None):
+        """
+        returns the offsets (character starting and end position) of a token
+        or of all tokens occurring in the document.
+
+        Parameters
+        ----------
+        token_node_id : str or None
+            Node ID of a token from which we want to retrieve the start and end
+            position. If no node ID is given, this method will yield
+            (token node ID, start pos, end pos) tuples containing data for all
+            tokens in the document
+        offset_ns : str or None
+            The namespace from which the offsets will be retrieved. If no
+            namespace is given, the default namespace of this document graph is
+            chosen
+
+        Returns
+        -------
+        offsets : tuple(int, int) or generator(tuple(str, int, int))
+            If a token node ID is given, a (character onset int, character
+            offset int) tuple is returned. Otherwise, a generator of (token
+            node ID str, character onset int, character offset int) tuples
+            will be returned, representing all the tokens in the order they
+            occur in the document.
+        """
+        if offset_ns is None:
+            offset_ns = self.ns
+
+        try:
+            if token_node_id:
+                onset = self.node[token_node_id]['{}:{}'.format(offset_ns, 'onset')]
+                offset = self.node[token_node_id]['{}:{}'.format(offset_ns, 'offset')]
+                return (onset, offset)
+            else:  # return offsets for all tokens in the document
+                return self._get_all_offsets(offset_ns)
+
+        # if the document doesn't have offsets: add them and rerun this method
+        except KeyError as e:
+            self.add_offsets(offset_ns)
+            return self.get_offsets(token_node_id, offset_ns)
+
+    def _get_all_offsets(self, offset_ns=None):
+        """
+        returns all token offsets of this document as a generator of
+        (token node ID str, character onset int, character offset int) tuples.
+
+        Parameters
+        ----------
+        offset_ns : str or None
+            The namespace from which the offsets will be retrieved. If no
+            namespace is given, the default namespace of this document graph is
+            chosen
+
+        Returns
+        -------
+        offsets : generator(tuple(str, int, int))
+            a generator of (token node ID str, character onset int, character
+            offset int) tuples, which represents all the tokens in the order
+            they occur in the document.
+        """
+        for token_id, _token_str in self.get_tokens():
+            onset = self.node[token_id]['{}:{}'.format(offset_ns, 'onset')]
+            offset = self.node[token_id]['{}:{}'.format(offset_ns, 'offset')]
+            yield (token_id, onset, offset)
+
     def add_node(self, n, layers=None, attr_dict=None, **attr):
         """Add a single node n and update node attributes.
 
