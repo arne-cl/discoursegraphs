@@ -128,6 +128,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         self.tokens = []
         
         self.ignore_relations = ignore_relations
+        self.ignore_splitrelations = ignore_splitrelations
         self.ignore_secedges = ignore_secedges
         
 
