@@ -105,9 +105,15 @@ Install from source
 
 ::
 
+    sudo apt-get install python-dev libxml2-dev libxslt-dev pkg-config graphviz-dev libgraphviz-dev -y
+    sudo easy_install -U setuptools
+    git clone https://arne-cl@github.com/arne-cl/neonx.git # TODO: submit that patch upstream
+    cd neonx
+    sudo python setup.py install
+    cd ..
     git clone https://github.com/arne-cl/discoursegraphs.git
     cd discoursegraphs
-    python setup.py install # prepend 'sudo' if needed
+    sudo python setup.py install
 
 
 Usage
