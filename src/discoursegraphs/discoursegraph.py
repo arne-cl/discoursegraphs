@@ -164,6 +164,15 @@ class DiscourseDocumentGraph(MultiDiGraph):
             offset = self.node[token_id]['{}:{}'.format(offset_ns, 'offset')]
             yield (token_id, onset, offset)
 
+    def get_phrases(self, ns=None, layer='syntax', cat_key='cat', cat_val='NP'):
+        """yield all node IDs that dominate the given phrase type, e.g. all NPs"""
+        if not ns:
+            ns = self.ns
+
+        for node_id in select_nodes_by_layer(self, '{}:{}'.format(ns, layer)):
+            if self.node[node_id][cat_key] == cat_val:
+                yield node_id
+
     def add_node(self, n, layers=None, attr_dict=None, **attr):
         """Add a single node n and update node attributes.
 
