@@ -906,21 +906,23 @@ def get_span_offsets(docgraph, node_id):
     except KeyError as _:
         raise KeyError("Node '{}' doesn't span any tokens.".format(node_id))
 
-def get_span(docgraph, node_id):
+def get_span(docgraph, node_id, debug=False):
     """
     returns all the tokens that are dominated or in a span relation with
-    the given node.
+    the given node. If debug is set to True, you'll get a warning if the
+    graph is cyclic.
 
     Returns
     -------
     span : list of str
         sorted list of token nodes (token node IDs)
     """
-    if not is_directed_acyclic_graph(docgraph):
-        warnings.warn(
-            ("Can't reliably extract span '{0}' from cyclical graph'{1}'."
-            "Maximum recursion depth may be exceeded.").format(node_id,
-                                                               docgraph))
+    if debug is True:
+        if is_directed_acyclic_graph(docgraph) is False:
+            warnings.warn(
+                ("Can't reliably extract span '{0}' from cyclical graph'{1}'."
+                "Maximum recursion depth may be exceeded.").format(node_id,
+                                                                   docgraph))
     span = []
     if docgraph.ns+':token' in docgraph.node[node_id]:
         span.append(node_id)
