@@ -888,6 +888,24 @@ def get_edge_annotation_layers(docgraph):
     return all_layers
 
 
+def get_span_offsets(docgraph, node_id):
+    """
+    returns the character start and end position of the span of text that
+    the given node spans or dominates.
+
+    Returns
+    -------
+    offsets : tuple(int, int)
+        character onset and offset of the span
+    """
+    try:
+        span = get_span(docgraph, node_id)
+        span_onset, _ = docgraph.get_offsets(span[0])
+        _, span_offset = docgraph.get_offsets(span[-1])
+        return (span_onset, span_offset)
+    except KeyError as _:
+        raise KeyError("Node '{}' doesn't span any tokens.".format(node_id))
+
 def get_span(docgraph, node_id):
     """
     returns all the tokens that are dominated or in a span relation with
