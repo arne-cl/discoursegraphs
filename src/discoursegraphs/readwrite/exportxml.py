@@ -22,6 +22,25 @@ from discoursegraphs import DiscourseDocumentGraph
 NODE_ID_REGEX = re.compile('s_(\d+)_n_(\d+)')
 
 
+class TextCountTarget(object):
+    '''
+    counts all <text> elements in the XML document to be parsed.
+    adapted from Listing 2 on
+    http://www.ibm.com/developerworks/library/x-hiperfparse/
+    '''
+    def __init__(self):
+        self.count = 0
+    def start(self, tag, attrib):
+        if tag == 'text':
+            self.count +=1
+    def end(self, tag):
+        pass
+    def data(self, data):
+        pass
+    def close(self):
+        return self.count
+
+
 class ExportXMLCorpus(object):
     def __init__(self, exportxml_file, debug=False):
         """
@@ -45,13 +64,34 @@ class ExportXMLCorpus(object):
             contained in the file into ExportXMLDocumentGraph instances.
             (default: False)
         """
+        self._num_of_documents = None
+        self.exportxml_file = exportxml_file
         self.debug = debug
         # create an iterator over all documents in the file (i.e. all
         # <text> elements). The recover parameter is used, as the Tüba-D/Z 8.0
         # corpus used for testing isn't completely valid XML (i.e. there are two
         # element IDs used twice)
-        self.__context = etree.iterparse(exportxml_file, events=('end',),
+        self.__context = etree.iterparse(self.exportxml_file, events=('end',),
                                          tag='text', recover=True)
+
+    def __len__(self):
+        if self._num_of_documents is not None:
+            return self._num_of_documents
+        else:
+            return self._get_num_of_documents()
+
+    def _get_num_of_documents(self):
+        '''
+        counts the number of documents in an ExportXML file.
+        adapted from Listing 2 on
+        http://www.ibm.com/developerworks/library/x-hiperfparse/
+        '''
+        parser = etree.XMLParser(target = TextCountTarget())
+        # When iterated over, 'results' will contain the output from
+        # target parser's close() method
+        num_of_documents = etree.parse(self.exportxml_file, parser)
+        self._num_of_documents = num_of_documents
+        return num_of_documents
 
     def __iter__(self):
         return iter(self.text_iter(self.__context))
@@ -67,7 +107,7 @@ class ExportXMLCorpus(object):
         (here: <text> elements) and yields an ExportXMLDocumentGraph instance
         for each of them. For efficiency, the elements are removed from the
         DOM / main memory after processing them.
-        
+
         If ``self.debug`` is set to ``True`` (in the ``__init__`` method),
         this method will yield <text> elements, which can be used to construct
         ``ExportXMLDocumentGraph``s manually.
@@ -126,11 +166,11 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
 
         self.sentences = []
         self.tokens = []
-        
+
         self.ignore_relations = ignore_relations
         self.ignore_splitrelations = ignore_splitrelations
         self.ignore_secedges = ignore_secedges
-        
+
 
         self.parsers = {
             'connective': self.add_connective,
