@@ -321,8 +321,8 @@ def plot_attribute_distribution(docgraph, elements, attribute, ignore_missing=Tr
             try:
                 value_counts[docgraph.node[element][attribute]] += 1
             except KeyError:
-				if not ignore_missing:
-					value_counts['NOT_PRESENT'] += 1
+                if not ignore_missing:
+                    value_counts['NOT_PRESENT'] += 1
     else: # element_type == 'edge':
         for element in elements:
             source, target = element
@@ -330,8 +330,8 @@ def plot_attribute_distribution(docgraph, elements, attribute, ignore_missing=Tr
                 for edge in docgraph.edge[source][target]: # multidigraph
                     value_counts[docgraph.edge[source][target][edge][attribute]] += 1
             except KeyError:
-				if not ignore_missing:
-					value_counts['NOT_PRESENT'] += 1
+                if not ignore_missing:
+                    value_counts['NOT_PRESENT'] += 1
 
 
     sorted_value_counts = sorted(value_counts.iteritems(), key=itemgetter(1), reverse=True)
