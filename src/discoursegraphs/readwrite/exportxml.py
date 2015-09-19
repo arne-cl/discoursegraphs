@@ -42,7 +42,7 @@ class TextCountTarget(object):
 
 
 class ExportXMLCorpus(object):
-    def __init__(self, exportxml_file, debug=False):
+    def __init__(self, exportxml_file, name=None, debug=False):
         """
         represents an ExportXML formatted corpus (e.g. Tüba-D/Z) as an
         iterable over ExportXMLDocumentGraph instances (or an iterable over
@@ -57,6 +57,9 @@ class ExportXMLCorpus(object):
         ----------
         exportxml_file : str
             path to an ExportXML formatted corpus file
+        name : str or None
+            the name or ID of the graph to be generated. If no name is
+            given, the basename of the input file is used.
         debug : bool
             If True, yield the etree element representations of the <text>
             elements found in the document.
@@ -64,6 +67,7 @@ class ExportXMLCorpus(object):
             contained in the file into ExportXMLDocumentGraph instances.
             (default: False)
         """
+        self.name = name if name else os.path.basename(exportxml_file)
         self._num_of_documents = None
         self.exportxml_file = exportxml_file
         self.debug = debug
@@ -77,6 +81,8 @@ class ExportXMLCorpus(object):
     def __len__(self):
         if self._num_of_documents is not None:
             return self._num_of_documents
+        elif self.name == 'tuebadz-8.0-mit-NE+Anaphern+Diskurs.exml.xml':
+            return 3258  # I'll burn in hell for this!
         else:
             return self._get_num_of_documents()
 
