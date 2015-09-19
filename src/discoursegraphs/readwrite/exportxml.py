@@ -142,8 +142,9 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
 
         Parameters
         ----------
-        text_element : lxml.etree._Element
-            a <text> element from an ExportXML file parsed with lxml
+        text_element : lxml.etree._Element or str
+            a <text> element from an ExportXML file parsed with lxml or
+            a path to a file containing a <text> element
         name : str or None
             the name or ID of the graph to be generated. If no name is
             given, the xml:id of the <text> element is used
@@ -164,6 +165,10 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(ExportXMLDocumentGraph, self).__init__()
+
+        if isinstance(text_element, str):
+            _event, text_element = etree.iterparse(
+                text_element, events=('end',), tag='text', recover=True).next()
 
         self.name = name if name else text_element.attrib[add_ns('id')]
         self.ns = namespace
