@@ -296,14 +296,23 @@ def make_labels_explicit(docgraph):
     return make_edgelabels_explicit(make_nodelabels_explicit(docgraph))
 
 
-def plot_attribute_distribution(docgraph, elements, attribute, ignore_missing=True):
+def plot_attribute_distribution(docgraph, elements, attribute,
+                                ignore_missing=True):
     '''
-    creates a barplot for all values that an attribute can have,
-    e.g. counts of POS tags for all token nodes in a document graph.
-    '''
-    import matplotlib.pyplot as plt
-    import numpy as np
+    creates and prints a barplot (using matplotlib) for all values that an
+    attribute can have, e.g. counts of POS tags for all token nodes in a
+    document graph.
 
+    docgraph : DiscourseDocumentGraph
+        the document graph from which we'll extract node/edge attributes
+    elements : collections.Iterable
+        an iterable of nodes or edges
+    attribute : str
+        name of the attribute to count (e.g. ``penn:pos``)
+    ignore_missing : bool
+        If True, doesn't count all those elements that don't have the given
+        attribute. If False, counts them using the attribute ``NOT_PRESENT``.
+    '''
     value_counts = Counter()
 
     if isinstance(elements, GeneratorType):
@@ -317,6 +326,7 @@ def plot_attribute_distribution(docgraph, elements, attribute, ignore_missing=Tr
         raise ValueError('Unknown element type: '.format(element[0]))
 
     if element_type == 'node':
+        # count all nodes with the given attribute
         for element in elements:
             try:
                 value_counts[docgraph.node[element][attribute]] += 1
@@ -324,6 +334,7 @@ def plot_attribute_distribution(docgraph, elements, attribute, ignore_missing=Tr
                 if not ignore_missing:
                     value_counts['NOT_PRESENT'] += 1
     else: # element_type == 'edge':
+        # count all edges with the given attribute
         for element in elements:
             source, target = element
             try:
@@ -333,10 +344,16 @@ def plot_attribute_distribution(docgraph, elements, attribute, ignore_missing=Tr
                 if not ignore_missing:
                     value_counts['NOT_PRESENT'] += 1
 
+    sorted_value_counts = sorted(value_counts.iteritems(), key=itemgetter(1),
+                                 reverse=True)
 
-    sorted_value_counts = sorted(value_counts.iteritems(), key=itemgetter(1), reverse=True)
-
+    # generate plot
     x = np.arange(len(sorted_value_counts))
     plt.bar(x, [attrib_count for attrib_name, attrib_count in sorted_value_counts])
-    _xticks = plt.xticks(x + 0.5, [attrib_name for attrib_name, attrib_count in sorted_value_counts], rotation=90)
+    # set positions of the attribute value labels on the x-axis
+    # (shifted to the right, words arranged upwards)
+    _xticks = plt.xticks(
+        x + 0.5,
+        [attrib_name for attrib_name, attrib_count in sorted_value_counts],
+        rotation=90)
     plt.show()
