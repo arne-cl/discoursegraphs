@@ -939,7 +939,7 @@ def get_span(docgraph, node_id, debug=False):
     for from_id, to_id, edge_attribs in docgraph.out_edges_iter(node_id,
                                                                 data=True):
         if from_id == to_id:
-            pass  # ignore self-loops
+            continue  # ignore self-loops
         # ignore pointing relations
         if edge_attribs['edge_type'] != EdgeTypes.pointing_relation:
             span.extend(get_span(docgraph, to_id))
