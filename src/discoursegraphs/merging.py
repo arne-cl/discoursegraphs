@@ -60,8 +60,7 @@ def merging_cli(debug=False):
         discourse_docgraph.merge_graphs(tiger_docgraph)
 
     if args.rst_file:
-        from discoursegraphs.readwrite.rst import RSTGraph
-        rst_graph = RSTGraph(args.rst_file)
+        rst_graph = dg.read_rs3(args.rst_file)
         discourse_docgraph.merge_graphs(rst_graph)
 
     if args.anaphoricity_file:
