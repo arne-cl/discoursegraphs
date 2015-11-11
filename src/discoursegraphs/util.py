@@ -222,14 +222,18 @@ def create_dir(path):
             raise
 
 
-def find_files(directory, pattern):
+def find_files(directory, pattern='*'):
     """
     find files recursively, e.g. all *.txt files
     in a given directory (or its subdirectories)
 
-    source: http://stackoverflow.com/a/2186673
+    adapted from: http://stackoverflow.com/a/2186673
     """
-    for root, dirs, files in os.walk(directory):
+    import os
+    import fnmatch
+
+    abspath = os.path.abspath(os.path.expanduser(directory))
+    for root, dirs, files in os.walk(abspath):
         for basename in files:
             if fnmatch.fnmatch(basename, pattern):
                 filename = os.path.join(root, basename)
