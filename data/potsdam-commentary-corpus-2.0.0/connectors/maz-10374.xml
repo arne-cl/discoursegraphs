@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Fürchtet euch nicht ! Die einstige Fußball-Weltmacht zittert vor einem Winzling . Mit seinem Tor zum 1:0 für die Ukraine stürzte der 1,62 Meter große Gennadi Subow die deutsche Nationalelf vorübergehend in ein Trauma .
+   <unit type="int" id="1">
+      <connective id="1" relation="successive">Nachdem</connective>
+      den tapfer kämpfenden Gästen der Ausgleich gelungen war ,
+   </unit>
+   <unit type="ext" id="1">
+      wechselte der wie eine Mumie auf der Bank sitzende ukrainische Coach noch zwei ähnliche Leichtgewichte ein .
+   </unit>
+   Was soll das erst morgen Abend im zweiten Spiel werden ?
+   <unit type="int" id="3">
+      <connective id="3" relation="condition">Wenn</connective>
+      die drei Knirpse von Anbeginn wirbeln ,
+   </unit>
+   <unit type="ext" id="3">könnte der um Ehre und Reputation kämpfenden Mannschaft von Rudi Völler der Weg zur Weltmeisterschaft endgültig verbaut sein .</unit>
+   <unit type="ext" id="5"><connective id="5" relation="addition">Je</connective> kleiner die Kicker daherkommen ,</unit> <unit type="int" id="5"><connective id="5" relation="addition">desto</connective> größer wird der Gegner geredet .</unit>
+   <unit type="ext" id="8">Die Fußball-Kleinmacht vom Dnepr steht kurz davor , das scheinbar mit einem Dauerabonnement für die WM ausgestattete Team in der schwarz-weißen Kluft und eine ganze Nation in das Tal der Tränen zu treiben .</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="concession">Dabei</connective>
+      haben die deutschen Nationalkicker einen " Rudi Riese " auf der Bank und einen Franz Beckenbauer mit heißem Draht zum Fußballgott .
+   </unit>
+   Fürchtet euch nicht !
+</discourse>
+

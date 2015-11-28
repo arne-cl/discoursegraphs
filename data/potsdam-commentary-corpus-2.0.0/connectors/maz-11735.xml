@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Frei und unbehelligt
+   Eine gute Idee , künftig weltweit Terroristen das Geld zu sperren . Sowohl die G-20 Gruppe , in der die Industrieländer sowie die mächtigsten Schwellenländer vertreten sind , als auch die 183 IWF-Staaten haben sich in Ottawa darauf verständigt , gemeinsam gegen Geldwäsche und die Finanzierung von Terrornetzen vorzugehen .
+   <unit type="ext" id="12">
+      <unit type="ext" id="9">
+         Mehr als eine Willensbekundung ist das
+         <connective id="9" relation="concession">zwar</connective>
+         noch nicht
+      </unit>
+      -
+      <unit type="int" id="9">
+         <connective id="9" relation="concession">aber</connective>
+         immerhin .
+      </unit>
+   </unit>
+   <unit type="int" id="12">
+      Der unbeteiligte Beobachter fragt sich
+      <connective id="12" relation="concession">allerdings</connective>
+      , warum erst jetzt ?
+   </unit>
+   Jahrelang wurde die Ausrede kultiviert , schärfere Kontrollen schadeten einem Finanzstandort . Kapital müsse frei und unbehelligt fließen können . Erst nach dem 11. September hat man offenbar begriffen , dass nicht jede Geldanlage den Wohlstand der Nationen mehrt . Die USA präsentierten sogar jüngst eine Liste verdächtiger Gesellschaften .
+   <unit type="ext" id="14">Dumm nur , dass auf der die selben Kandidaten standen , vor denen die Uno schon seit Jahren warnt .</unit>
+   <unit type="int" id="14">
+      <connective id="14" relation="contrast">Doch</connective>
+      nach Ottawa soll ja alles anders werden .
+   </unit>
+   Die Staaten haben versprochen , <unit type="ext" id="15">im Zweifelsfall nicht mehr beide Augen zuzudrücken ,</unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="condition">wenn</connective>
+      es um Standortvorteile geht - hoffentlich .
+   </unit>
+</discourse>
+

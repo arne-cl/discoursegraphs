@@ -1,0 +1,76 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Aufheben</segment>
+    <segment id="13" parent="23" relname="joint">
+
+Die Blankenfelder Gemeindevertreter haben ihren Beschluss , die Straßenlampen in der Nacht für vier Stunden auszuschalten , mit der heißen Nadel gestrickt .</segment>
+    <segment id="2" parent="23" relname="joint">  Das sicherlich gut gemeinte Anliegen , nämlich Energiekosten zu sparen , könnte ihnen teuer zu stehen kommen .</segment>
+    <segment id="3" parent="22" relname="list">
+
+Dunkle Straßen in der Nacht sorgen nun mal nicht gerade für ein tolles Sicherheitsgefühl .</segment>
+    <segment id="4" parent="22" relname="list">  Auch erkennt man nicht , wohin man tritt .</segment>
+    <segment id="5" parent="21" relname="span">  Im schlimmsten Fall stößt man gegen eine Müll- oder Papiertonne ,</segment>
+    <segment id="14" parent="5" relname="e-elaboration"> die ja laut Abfallzweckverband bereits am Vorabend des jeweiligen Abholetages an den Straßenrand zu stellen ist .</segment>
+    <segment id="6" parent="24" relname="span">  Doch nicht allein die Fragen der Unfälle und der Haftung im Falle der Fälle sind unklar .</segment>
+    <segment id="7" parent="6" relname="reason">  Denn die Kommune muss damit rechnen , dass bei Lampen-Abschaltungen der Vertrag mit Edis über eine sehr günstige Tarifgestaltung hinfällig wird .</segment>
+    <segment id="8" parent="19" relname="concession">
+
+Bei einem Defizit von einer Million Mark ist eine Gemeinde gezwungen , alle Register zu ziehen .</segment>
+    <segment id="9" parent="17" relname="joint">  Doch mit dem Abschalte-Beschluss nimmt der Gemeinderat Angst und Unsicherheit in Kauf .</segment>
+    <segment id="10" parent="17" relname="joint">  Mehr noch , er befördert den Ort ins Mittelalter zurück .</segment>
+    <segment id="11" parent="16" relname="span">  Der Gemeinderat sollte den unseligen Beschluss aufheben ,</segment>
+    <segment id="15" parent="11" relname="otherwise"> ehe sich die Bürger mit Taschenlampen versorgen .</segment>
+    <segment id="12" parent="18" relname="reason">  Schließlich , wir leben im 21. Jahrhundert .</segment>
+<group id="16" type="span" parent="18" relname="span" />
+<group id="17" type="multinuc" parent="16" relname="reason" />
+<group id="18" type="span" parent="19" relname="span" />
+<group id="19" type="span" parent="20" relname="span" />
+<group id="20" type="span" parent="26" relname="span" />
+<group id="21" type="span" parent="22" relname="list" />
+<group id="22" type="multinuc" parent="23" relname="reason" />
+<group id="23" type="multinuc" parent="25" relname="span" />
+<group id="24" type="span" parent="23" relname="reason" />
+<group id="25" type="span" parent="20" relname="reason" />
+<group id="26" type="span" />
+  </body>
+</rst>

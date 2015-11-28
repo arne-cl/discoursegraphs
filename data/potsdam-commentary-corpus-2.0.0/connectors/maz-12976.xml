@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Normal-Krise
+   Umweltminister Jürgen Trittin hat es erst gestern wieder unumwunden ausgesprochen : Die Krise ist bei den Grünen der Normalzustand .
+         <unit type="int" id="2">
+            So schonungslose Offenheit ist an sich
+            <connective id="2" relation="concession">zwar</connective>
+            bemerkenswert ,
+         </unit>
+         <unit type="ext" id="2">
+               sie beantwortet
+               <connective id="2" relation="concession">aber</connective>
+               nicht die Frage , weshalb man eine " Krisenpartei " in der Bundesregierung braucht .
+         </unit>
+      <unit type="int" id="6">
+         <connective id="6" relation="condition">Wenn</connective>
+         die Vorzeichen nicht trügen ,
+      </unit>
+      <unit type="ext" id="6">
+         <connective id="6" relation="condition">so</connective>
+         könnte in Rostock in der Tat wieder einmal ein klassischer Kompromiss herauskommen - gegen den Militär-Einsatz und für die weitere Beteiligung an der Bundesregierung .
+      </unit>
+   Außenminister Joschka Fischer freilich darf seiner Basis solche politischen Kindereien nicht durchgehen lassen .
+   <unit type="ext" id="9">Es kann nicht sein , dass die Basis gewissermaßen die Moral pachtet</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="addition">und</connective>
+      ihn die realpolitische Schmutzarbeit machen lässt .
+   </unit>
+   Den Einsatz " zur Kenntnis zu nehmen " , wie Brandenburgs Grüne dies wollen , ist der Gipfel parteipolitischer Bigotterie :
+      <unit type="ext" id="8">
+         <connective id="8" relation="alternation">Entweder</connective>
+         die Basis stützt den Minister
+            <unit type="int" id="8">
+               <connective id="8" relation="alternation">oder</connective>
+               sie stürzt ihn .
+            </unit>
+         </unit>
+   Dazwischen gibt es nichts .
+</discourse>
+

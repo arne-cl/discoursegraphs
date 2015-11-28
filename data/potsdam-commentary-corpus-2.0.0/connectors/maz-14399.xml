@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Aufstand der Vegetarier
+   <unit type="ext" id="4">
+      <unit type="ext" id="3">Wer zwei Frischlinge " Schnitzel " und " Kotelett " nennt -
+      <unit type="int" id="3">
+         <connective id="3" relation="addition">so</connective>
+         gelesen im Internettagebuch eines Jägers -
+      </unit>
+     wollte vielleicht nur witzig sein .</unit>
+   </unit>
+   <unit type="int" id="4">
+      <unit type="ext" id="6">
+         Das Lachen kann empfindsamen Seelen
+         <connective id="4" relation="concession">aber</connective>
+         vergehen ,
+      </unit>
+      <unit type="int" id="6">
+         <connective id="6" relation="condition">wenn</connective>
+         sie die Internetseite des Zentralorgans der deutschen Jäger , " Wild und Hund " , aufrufen :
+      </unit>
+   </unit>
+   In einer Animation werden Patronen abgeschossen , dazu erscheint der Werbeslogan " Jeder Klick ein Treffer " . Solche martialischen Töne einzelner Weidmänner bieten den Gegnern der Jägerei eine ideale Angriffsfläche . Heute demonstriert die " Initiative zur Abschaffung der Jagd " wieder in Berlin .
+   <unit type="ext" id="9">Ein Lehrer aus Baden-Württemberg verschickt eifrig so genannte " Lusttöter " , die zeigen sollen , dass das Grauen zwei Beine und ein Gewehr in Händen hat .</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="contrast">Doch</connective>
+      auch dieser Tierschützer befindet sich auf verlorenem Posten .
+   </unit>
+   Selbst Ökologen bestreiten nicht , dass das natürliche Gleichgewicht durch menschliche Eingriffe wieder hergestellt werden muss .
+   Übrigens ist das Ansinnen der Jagdgegner genauso sinnlos , als wenn Vegetarier Fleischesser überzeugen wollten .
+</discourse>
+

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Schwere Zeiten Die Wiederwahl von Landrat Schröder galt schon vor der gestrigen Wahl als sicher . Neben den nur wenig bestrittenen Qualitäten des Verwaltungschefs dürfte auch ein anderer Punkt den Ausschlag gegeben dafür haben , dass sich kein Konkurrent um den Posten gefunden hat : Die Zeiten werden nicht leichter .
+   <unit type="ext" id="7">Sicher waren früheren " Schlachten " ( O-Ton Schröder ) um Kreissitz , MBS , Verkehrsbetriebe oder Verwaltungsbauten auch keine einfachen ,</unit>
+   <unit type="int" id="7">
+      gemessen an den kommenden wirken sie
+      <connective id="7" relation="concession">aber</connective>
+      wie Sandkastenspiele .
+   </unit>
+   Waren die Auseinandersetzungen früher laut , emotional und leidenschaftlich , werden sie nun subtil und diffizil .
+   <unit type="ext" id="9">Jetzt kämpft man nicht mehr um Meinungen ,</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="contrast">sondern</connective>
+      um Geld und die Freiräume , wenigstens noch etwas gestalten zu können .
+   </unit>
+   Einen Vorgeschmack hat die Verwaltungsspitze aktuell bekommen .
+   Hatte sie es von ' 94 bis ' 99 mühselig geschafft , 14 Millionen Defizit der Altkreise abzubauen , 
+   <unit type="ext" id="11">
+      klaffen nun immer neue Millionenlöcher ,
+      <unit type="int" id="11">
+         <connective id="11" relation="addition">beispielsweise</connective>
+         im Sozialetat , 
+      </unit>
+      die kaum noch zu stopfen sind .
+   </unit>
+   Schwere Zeiten .
+</discourse>
+

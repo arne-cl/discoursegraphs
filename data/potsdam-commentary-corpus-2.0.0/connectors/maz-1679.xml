@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Stadtkern aufwerten Im Streit zwischen der Stadt Wittstock und dem Landesstraßenbauamt Kyritz hat Bürgermeister Lutz Scheidemann einen klaren Sieg errungen
+   <unit type="ext" id="5">
+      .
+      <unit type="ext" id="3">Wittstock wird in einigen Jahren frei von Lkw-Verkehr sein , eine Umgehung entlastet die Innenstadt .</unit>
+   <unit type="ext" id="4">
+      <unit type="int" id="3">
+         Klirrende Gläser in den Wohnzimmerschränken sind
+         <connective id="3" relation="successive">dann</connective>
+         Geschichte .
+      </unit>
+   </unit>
+   <unit type="int" id="4">
+      Wer sein Haus bereits saniert hat , muss
+      <connective id="4" relation="addition">auch</connective>
+      nicht mehr befürchten , dass der Putz von der Fassade fällt .
+   </unit>
+   </unit>
+   <unit type="int" id="5">
+      Mit der Einigung kommt
+      <connective id="5" relation="concession">aber</connective>
+      auf die Wittstocker eine große Herausforderung zu .
+   </unit>
+   Sie sind aufgefordert , über neue , sinnvolle Verkehrsabläufe in der Innenstadt nachzudenken .
+      <unit type="ext" id="8">
+         <unit type="ext" id="7">
+            <unit type="int" id="6">
+               Die Entlastungsstraße für Lkw führt
+               <connective id="6" relation="concession">zwar</connective>
+               um die Altstadt herum , 
+            </unit>
+         </unit>
+         <unit type="int" id="7">
+            <unit type="ext" id="6">
+               <connective id="7" relation="contrast">doch</connective>
+               eine autofreie Stadt wird es nicht geben .
+            </unit>
+         </unit>
+      </unit>
+   <unit type="ext" id="9">   
+   <unit type="int" id="8">
+      <connective id="8" relation="condition">So</connective>
+      braucht sich auch kein Geschäftsmann vor einer leeren Altstadt zu fürchten .
+   </unit>
+   </unit>
+   <unit type="int" id="9">
+      Gut beraten ist
+      <connective id="9" relation="concession">allerdings</connective>
+      , wer sich jetzt ernsthafte Gedanken um kundenfreundliche Parkmöglichkeiten macht .
+   </unit>
+   <unit type="ext" id="11">
+      <unit type="ext" id="10">Auch Flaniermeilen in der Wittstocker Altstadt sind gefragt .</unit>
+      <unit type="int" id="10">
+         <connective id="10" relation="consequence">Denn</connective>
+         ohne Lkw-Verkehr wird es ruhiger werden , der Stadtbummel kann wieder Spaß machen .
+      </unit>
+   </unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="consequence">Deshalb</connective>
+      müssen neue Ideen her , um die Wittstocker Altstadt lebenswerter zu machen .
+   </unit>
+</discourse>
+

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Noch Zeit
+   So lange der Vorrat reicht .
+   <unit type="ext" id="2">Dieser Zusatz wird gern in der Werbung verwendet ,</unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="purpose">um</connective>
+      den letzten Unentschlossenen doch für den Kauf der lammfellgefütterten Hosenträger , der Kaffeetasse für Linkshänder oder des automatischen Korkenziehers zu bewegen .
+   </unit>
+   Nein , mit dem Euro hat das alles nichts zu tun , fast nichts . <unit type="ext" id="3">Es gab die ersten blanken Münzen gestern eben so lange ,</unit> <unit type="int" id="3"><connective id="3" relation="condition">bis</connective> sie vergriffen waren .</unit> Ob noch mal neue eingetütet nachkommen , wusste kein Bänker so genau zu sagen . Ist ja eigentlich auch egal . Wer sich den Fahrplan für die Ablösung der einen Währung durch die andere genau angesehen hat , weiß : Zahlungsprobleme kriegen nur die , die sie schon immer hatten . Sieht man mal von der Ausnahme kreisliche Busgesellschaft ab , die schon ab Neujahr nur noch die Einheitswährung zulassen will , kann jeder seine eigene Mark-Epoche ganz langsam austrudeln lassen .
+   Erst zum Märzbeginn 2002 muss man damit fertig geworden sein . So gesehen waren die Schlangen gestern ziemlich unverständlich .
+   Ein Mann in der Sparkasse brachte die Widersprüchlichkeit auf den Punkt , als er sagte : "
+   <unit type="ext" id="11">
+      <unit type="ext" id="13">Den Euro habe ich nie gewollt</unit>
+   </unit>
+   <unit type="int" id="13">
+      <unit type="int" id="11">
+         <connective id="11" relation="addition">und</connective>
+         <connective id="13" relation="concession">dennoch</connective>
+         stehe ich hier
+      </unit>
+   </unit>
+   . "
+</discourse>
+

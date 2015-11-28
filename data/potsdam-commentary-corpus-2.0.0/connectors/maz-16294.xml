@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Ein bisschen dafür
+   Der Ausbau des Flughafens Schönefeld wird nun auch für die PDS zu einer echten Gretchenfrage . Kaum haben sich ihre Verhandlungsführer in Berlin mit der SPD darauf geeinigt , reiben sich die Genossen in der Region verwundert die Augen .
+   <unit type="ext" id="3">Sicher , entschieden ist noch lange nichts .</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="contrast">Doch</connective>
+      was jetzt an Nachrichten aus der Hauptstadt ins Dahmeland hinüber schwappt , hört sich so ganz anders an als das , was PDS-Spitzen unlängst noch im Bürgermeisterwahlkampf verkündeten .
+   </unit>
+   Den Standort Schönefeld lehnten sie kategorisch ab .
+   <unit type="ext" id="6">
+      <connective id="6" relation="concession">Zwar</connective>
+      immer mit dem leisen Hinweis darauf , dass man sich stets auch an dem zu orientieren habe , was in den Planungen längst auf den Weg gebracht ist .
+   </unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="concession">Aber</connective>
+      immer noch deutlich genug , dass die vielen Standortgegner in den Gemeinden die Botschaft wohl verstanden :
+   </unit>
+   die PDS-Leute setzen sich für unsere Interessen ein , sie sind in der Politik unsere Verbündeten . Jetzt sind sie doch ein bisschen dafür . Prompt spricht der Bürgerverein BVBB von " politisch-moralischer Verkommenheit " , ist Schulzendorfs Bürgermeister enttäuscht , sieht Königs Wusterhausens künftiger Bürgermeister Widersprüchliches . Die Genossen von der PDS haben jetzt einiges aufzuarbeiten .
+</discourse>
+

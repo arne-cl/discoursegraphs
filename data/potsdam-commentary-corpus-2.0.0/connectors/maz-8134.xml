@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Ernst nehmen
+   <unit type="ext" id="3">So friedlich wie am Montag war schon lange keine Stadtverordneten-Sitzung mehr ,</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="successive">seit</connective>
+      Karwe gedroht hat , sich von Neuruppin zu trennen .
+   </unit>
+   Die Abgeordneten waren bemüht , den Konflikt zu schlichten , die Karwer schienen froh , dass man sie erhört . Selbst Worte des Dankes sprach die Ortsbürgermeisterin .
+   <unit type="ext" id="4">Dank für Dinge , die eigentlich selbstverständlich sein sollten .</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="contrast">Doch</connective>
+      sie sind es noch nicht .
+   </unit>
+   Allen Besserungs-Versprechen aus Rathaus und Ratssaal zum Trotz : Zwischen Neuruppin und den Dörfern steht es nicht zum Besten . Auch das hat sich am Montag gezeigt . Gleich zwei Ortsbürgermeister beklagten sich über die Zusammenarbeit mit dem Rathaus .
+   <unit type="ext" id="12">Die knappe Antwort des Bürgermeisters stimmte sie dabei nicht gerade zufriedener ,</unit>
+   <unit type="int" id="12">
+      <connective id="12" relation="contrast">doch</connective>
+      mehr gab es erst einmal nicht .
+   </unit>
+   <unit type="ext" id="13">Karwe bekommt per Beschluss mehr Geld aus dem Haushalt ,</unit>
+   <unit type="int" id="13">
+      <connective id="13" relation="contrast">doch</connective>
+      das Problem löst die Finanzspritze nicht .
+   </unit>
+   <unit type="ext" id="8">Die Ortsteile wollen , dass die Abgeordneten mit ihnen sprechen , ihre Sorgen anhören , sich dafür interessieren -</unit> <unit type="int" id="8"><connective id="8" relation="addition">ohne</connective> dass ihnen jemand die Pistole auf die Brust setzt .</unit> 
+   <unit type="ext" id="15">
+      Sie fordern auch Geld .
+   </unit>
+   <unit type="int" id="15">
+      Vor allem
+      <connective id="15" relation="concession">aber</connective>
+      wollen sie ernst genommen werden .
+   </unit>
+   <unit type="int" id="16">
+      <connective id="16" relation="condition">Wenn</connective>
+      man das in Neuruppin nicht erkennt ,
+   </unit>
+   <unit type="ext" id="16">droht irgendwann der nächste Ort mit Scheidung .</unit>
+</discourse>
+

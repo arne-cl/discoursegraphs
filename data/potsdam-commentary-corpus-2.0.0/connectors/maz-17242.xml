@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Alle Wetter !
+   <unit type="ext" id="5">
+      Also nee , wissense nee , als ich heute Morgen wie immer in der letzten Minute
+      <unit type="ext" id="3">aus dem Haus huschte</unit>
+      <unit type="int" id="3">
+         <connective id="3" relation="addition">und</connective>
+         flugs in das in der Garage eingemummelte Auto stieg ,
+      </unit>
+      <unit type="ext" id="6">hatte ich die miesen Grade noch gar nicht richtig mitgeschnitten .</unit>
+   </unit>
+   <unit type="ext" id="30">
+      <unit type="int" id="5">
+         <unit type="int" id="6">
+            <connective id="5" relation="concession">Aber</connective>
+            <connective id="6" relation="successive">dann</connective>
+            begegnete ich einem Geisterfahrer ,
+         </unit>
+         <unit type="ext" id="7">der verstohlen durch einen Schlitz in der Sichtscheibe schielte</unit>
+         <connective id="7" relation="addition">und</connective>
+         <unit type="ext" id="8"><unit type="int" id="7">beim Abbiegen nach links vorsichtshalber das Seitenfenster öffnete ,</unit> <unit type="int" id="8"><connective id="8" relation="consequence">um</connective> nicht in den Gegenverkehr zu brettern .</unit></unit>
+      </unit>
+   </unit>
+   <unit type="ext" id="9">
+         Da wusste ich : Es wintert .
+      </unit>
+   <unit type="int" id="9">
+      <unit type="ext" id="15">
+         <unit type="ext" id="12">
+            <connective id="9" relation="addition">Und</connective>
+            wie immer haben die einen die Zeit völlig verpasst
+         </unit>
+         <unit type="int" id="12">
+            <connective id="12" relation="addition">und</connective>
+            rasen jetzt nach Winterrreifen rum ,
+         </unit>
+      </unit>
+      die anderen wollten schon lange Fensterspray kaufen , in den Schuhgeschäften werden die warmen Stiefel nun endlich doch anprobiert ,
+   </unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="addition">und</connective>
+      die Hompage der Standheizungsbauer hatte bald so viel Besuch wie die der Wetterkarten .
+   </unit>
+   Übrigens ertappte ich unter dem Stichwort " Winterwetter " im Internet echte Witzbolde .
+   <unit type="ext" id="24">
+      <unit type="ext" id="20">
+         <unit type="ext" id="18">Da wird der Surfer auf " Scherze " gelenkt</unit>
+      </unit>
+      <unit type="int" id="18">
+         <unit type="int" id="20">
+            <connective id="18" relation="addition">und</connective>
+            hat
+            <connective id="20" relation="successive">dann</connective>
+            je nach Lust und Laune auch was zu lachen .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="24">
+      <unit type="ext" id="25">
+         <connective id="24" relation="alternation">Oder</connective>
+         zu zittern ,
+      </unit>
+      <unit type="int" id="25">
+         <connective id="25" relation="consequence">denn</connective>
+         ein schnatterndes Gebiss ist immer dabei .
+      </unit>
+   </unit>
+   Jedenfalls im Winter , meint eure Jette .
+</discourse>
+

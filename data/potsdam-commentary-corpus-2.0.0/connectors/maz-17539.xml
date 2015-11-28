@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Gewissensfrage
+   Schwerer hätten sich die Güterfelder Gemeindevertreter wohl kaum aus ihrer Eigenständigkeit verabschieden können . 
+         In ihrer letzten Sitzung vor der Eingemeindung nach Stahnsdorf stehen sie heute vor der Gewissensfrage , sich zum Ausgliederungsverfahren für das Gewerbegebiet im Priesterweg aus dem Landschaftsschutzgebiet " Parforceheide " positionieren zu müssen . Auch in Güterfelde gibt es dazu bekanntlich gegensätzliche Meinungen . 
+      <unit type="ext" id="3">
+         Dabei geht es nicht allein um den Bauernmarkt , mit dem einige Abgeordnete nach den jüngsten Ereignissen wohl sowieso schon längst abgeschlossen haben .
+   </unit>
+       <unit type="int" id="3">
+         Es wird <connective id="3" relation="elaboration">auch</connective> die Zukunft der anderen Betriebe zu bewerten sein , die <unit type="ext" id="5">keine Nutzungsuntersagung erhielten ,</unit>
+    <unit type="int" id="5">
+      <connective id="5" relation="contrast">aber</connective>
+      seinerzeit auch nicht durch einen Bauantrag auffielen .
+  </unit> 
+  </unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="concession">Trotz</connective>
+      der rechtlichen Verfehlungen , die dem Marktbetreiber Jürgen Wache sicher vorzuwerfen sind ,
+   </unit>
+   <unit type="ext" id="7">sollte den Güterfelder Gemeindevertretern bei ihrer heutigen Entscheidung eines klar sein : Wer fest entschlossen zurück zur Natur will , hat jetzt auch das Schicksal von Menschen zu verantworten , deren Arbeitsplätze er dafür gleichzeitig opfert .</unit>
+   Egal , ob öffentlich oder insgeheim - diesem Gewissenskonflikt wird sich jeder Volksvertreter zu stellen haben .
+</discourse>
+

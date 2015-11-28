@@ -1,0 +1,73 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Gewissensfrage</segment>
+    <segment id="8" parent="23" relname="interpretation">
+
+Schwerer hätten sich die Güterfelder Gemeindevertreter wohl kaum aus ihrer Eigenständigkeit verabschieden können .</segment>
+    <segment id="2" parent="23" relname="span">  In ihrer letzten Sitzung vor der Eingemeindung nach Stahnsdorf stehen sie heute vor der Gewissensfrage , sich zum Ausgliederungsverfahren für das Gewerbegebiet im Priesterweg aus dem Landschaftsschutzgebiet &quot; Parforceheide &quot; positionieren zu müssen .</segment>
+    <segment id="3" parent="2" relname="elaboration">  Auch in Güterfelde gibt es dazu bekanntlich gegensätzliche Meinungen .</segment>
+    <segment id="4" parent="18" relname="span">
+
+Dabei geht es nicht allein um den Bauernmarkt ,</segment>
+    <segment id="9" parent="4" relname="e-elaboration"> mit dem einige Abgeordnete nach den jüngsten Ereignissen wohl sowieso schon längst abgeschlossen haben .</segment>
+    <segment id="5" parent="20" relname="span">  Es wird auch die Zukunft der anderen Betriebe zu bewerten sein ,</segment>
+    <segment id="10" parent="11" relname="concession"> die keine Nutzungsuntersagung erhielten ,</segment>
+    <segment id="11" parent="19" relname="span"> aber seinerzeit auch nicht durch einen Bauantrag auffielen .</segment>
+    <segment id="6" parent="16" relname="concession">  Trotz der rechtlichen Verfehlungen , die dem Marktbetreiber Jürgen Wache sicher vorzuwerfen sind ,</segment>
+    <segment id="12" parent="16" relname="span"> sollte den Güterfelder Gemeindevertretern bei ihrer heutigen Entscheidung eines klar sein :</segment>
+    <segment id="13" parent="14" relname="condition">  Wer fest entschlossen zurück zur Natur will ,</segment>
+    <segment id="14" parent="15" relname="span"> hat jetzt auch das Schicksal von Menschen zu verantworten , deren Arbeitsplätze er dafür gleichzeitig opfert .</segment>
+    <segment id="7" parent="17" relname="interpretation">  Egal , ob öffentlich oder insgeheim - diesem Gewissenskonflikt wird sich jeder Volksvertreter zu stellen haben .</segment>
+<group id="15" type="span" parent="12" relname="elaboration" />
+<group id="16" type="span" parent="17" relname="span" />
+<group id="17" type="span" parent="22" relname="span" />
+<group id="18" type="span" parent="21" relname="list" />
+<group id="19" type="span" parent="5" relname="e-elaboration" />
+<group id="20" type="span" parent="21" relname="list" />
+<group id="21" type="multinuc" parent="17" relname="circumstance" />
+<group id="22" type="span" parent="25" relname="span" />
+<group id="23" type="span" parent="24" relname="span" />
+<group id="24" type="span" parent="22" relname="background" />
+<group id="25" type="span" />
+  </body>
+</rst>

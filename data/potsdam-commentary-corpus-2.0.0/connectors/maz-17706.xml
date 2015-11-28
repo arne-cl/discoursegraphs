@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Zwiespältig
+   <unit type="ext" id="2">Christian Gildes Wiederwahl als Landrat war ein Erfolg .</unit>
+   <unit type="int" id="2">
+      <unit type="ext" id="3">
+         <connective id="2" relation="contrast">Doch</connective>
+         was dieser wirklich wert ist , zeigt sich erst im Tagesgeschäft .
+      </unit>
+   </unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="addition">Und</connective>
+      das weiß Gilde auch :
+   </unit>
+   Schon bei der ersten Personalie vertraut er nicht auf seine Macht ; er sucht den Kompromiss . Es geht um den Job des Vize-Landrats , des zweitmächtigsten Mannes der Kreisverwaltung . Bislang ist das Klaus-Peter Appel .
+   <unit type="ext" id="7">Geht es nach Gilde , bliebe das so .</unit>
+   <unit type="int" id="7">
+      <unit type="ext" id="8">
+         <connective id="7" relation="contrast">Doch</connective>
+         fragt er sich , ob der Kreistag das genauso sieht .
+      </unit>
+   </unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="consequence">Deshalb</connective>
+      signalisiert er vorab , dass er durchaus einen anderen als seinen Lieblingskandidaten zur Wahl im Kreistag vorschlagen würde .
+   </unit>
+   Das ist eine zwiespältige Entscheidung .
+   <unit type="ext" id="10">
+      <connective id="10" relation="contrast">Einerseits</connective>
+      ist es vernünftig .
+   </unit>
+   <unit type="ext" id="11">Im Falle einer Abstimmungs-Niederlage würde er ebenso wie sein Kandidat beschädigt .</unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="addition">Zudem</connective>
+      ist es schlau , Kritiker ins Boot zu holen .
+   </unit>
+   <unit type="int" id="10">
+      <unit type="ext" id="13">
+         <connective id="10" relation="contrast">Andererseits</connective>
+         begibt sich Gilde damit in die Hände des Kreistags .
+      </unit>
+   </unit>
+   <unit type="int" id="13">
+      <unit type="ext" id="15">
+         <connective id="13" relation="addition">Und</connective>
+         der könnte Gefallen daran finden , ihm einen unbequemen Aufpasser an die Seite zu stellen .
+      </unit>
+   </unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="alternation">Oder</connective>
+      , was weitaus unangenehmer wäre , einen ehrgeizigen Konkurrenten , der Gilde - möglichst schnell - beerben will .
+   </unit>
+   <unit type="ext" id="16">Der Landrat hat die Wahl gewonnen ,</unit>
+   <unit type="int" id="16">
+      <connective id="16" relation="contrast">doch</connective>
+      sich auf seinen Lorbeeren ausruhen - das kann er nicht .
+   </unit>
+</discourse>
+

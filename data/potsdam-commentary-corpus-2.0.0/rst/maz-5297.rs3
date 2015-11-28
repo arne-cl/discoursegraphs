@@ -1,0 +1,69 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Siamesische Zwillinge</segment>
+    <segment id="2" parent="3" relname="evidence">
+
+Die Lausitzer Braunkohle AG ( Laubag ) hat im abgelaufenen Geschäftsjahr mit der Förderung und dem Verkauf von Braunkohle erstmals Verluste gemacht .</segment>
+    <segment id="3" parent="18" relname="span">  Damit wird erneut deutlich , dass eine Neuordnung der Energiewirtschaft in Ostdeutschland überfällig ist .</segment>
+    <segment id="4" parent="17" relname="span">  Denn die Laubag und ihr wichtigster Kunde , die Veag , hängen wie siamesische Zwillinge voneinander ab .</segment>
+    <segment id="5" parent="6" relname="circumstance">  Als die Veag wegen der Liberalisierung des Strommarktes unter Druck geriet und ihre Strompreise senken musste ,</segment>
+    <segment id="6" parent="15" relname="span"> hielt sie sich bei ihrem Lieferanten schadlos .</segment>
+    <segment id="7" parent="14" relname="span">  Die Laubag musste Preiszugeständnisse machen ,</segment>
+    <segment id="8" parent="7" relname="e-elaboration"> die sie nun selbst in Bedrängnis bringen .</segment>
+    <segment id="9" parent="19" relname="span">  Einziger Weg aus dem Dilemma ist die Bildung eines neuen Energiekonzerns aus Rohstofflieferanten , Stromerzeugern und Endversorgern ,</segment>
+    <segment id="10" parent="9" relname="e-elaboration"> in dem Risiken besser verteilt werden können .</segment>
+    <segment id="11" parent="20" relname="concession">  Die Idee , auch einen Gasversorger mit ins Boot zu holen , ist im Prinzip nicht schlecht .</segment>
+    <segment id="12" parent="13" relname="reason">  Allerdings gilt auch hier , dass zu viele Köche den Brei verderben können .</segment>
+    <segment id="13" parent="20" relname="span">  Zumindest muss klar sein , wer im neuen Konzern das Sagen hat .</segment>
+<group id="14" type="span" parent="15" relname="elaboration" />
+<group id="15" type="span" parent="16" relname="span" />
+<group id="16" type="span" parent="4" relname="evidence" />
+<group id="17" type="span" parent="3" relname="reason" />
+<group id="18" type="span" parent="22" relname="solutionhood" />
+<group id="19" type="span" parent="22" relname="span" />
+<group id="20" type="span" parent="21" relname="span" />
+<group id="21" type="span" parent="19" relname="elaboration" />
+<group id="22" type="span" parent="23" relname="span" />
+<group id="23" type="span" />
+  </body>
+</rst>

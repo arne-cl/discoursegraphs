@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Lebensader gedeiht
+   <unit type="ext" id="3">Luckenwalde kann bekanntlich aus den Millionen des Urban-Projektes in den nächsten Jahren einen zweckmäßigen und modernen Stadtumbau gestalten .</unit>
+   <unit type="int" id="3">
+      <unit type="ext" id="9">
+         <unit type="ext" id="6">
+            <connective id="3" relation="contrast">Doch</connective>
+            der würde wenig nützen ,
+         </unit>
+         <unit type="int" id="6">
+            <connective id="6" relation="condition">wenn</connective>
+            sich wie derzeit auch in einigen Jahren immer noch die B 101 durch die Stadt schlängeln würde .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="9">
+      <unit type="ext" id="11">
+         <connective id="9" relation="consequence">Also</connective>
+         kann es nur gut sein ,
+      </unit>
+      <unit type="int" id="11">
+         <connective id="11" relation="condition">wenn</connective>
+         die Ortsumgehung so schnell wie möglich fertig wird .
+      </unit>
+   </unit>
+   Auf dem Weg dorthin wurde gestern mit der feierlichen Grundsteinlegung für die Baumaßnahmen zur Ortsumgehung ein wichtiger Meilenstein gelegt .
+   <unit type="ext" id="13">In gut zwei Jahren soll alles fertig sein .</unit>
+   <unit type="int" id="13">
+      <connective id="13" relation="successive">Dann</connective>
+      sorgt die neue B 101 als Lebensader der Region nicht nur für eine schnelle Anbindung an die Autobahn .
+   </unit>
+   <unit type="ext" id="14">Die Ortsumgehung garantiert , dass mehr Ruhe in die Stadt einkehrt , Luckenwalde als Wohnort immer attraktiver wird .</unit>
+   <unit type="int" id="14">
+      <connective id="14" relation="contrast">Doch</connective>
+      Ruhe ist keinesfalls im Wirtschaftsbereich angesagt .
+   </unit>
+   <unit type="ext" id="16">Die neue Straße soll ja gerade auch Investoren locken .</unit>
+   <unit type="int" id="16">
+      Moderne verkehrliche Infrastruktur ist
+      <connective id="16" relation="concession">aber</connective>
+      auch nur als Signal an die Wirtschaft zu verstehen , sich hier oder dort niederzulassen .
+   </unit>
+   Wichtig ist vor allem , Investoren überzeugend klar zu machen , warum Luckenwalde für sie ein lohnenswerter Standort sein kann .
+</discourse>
+

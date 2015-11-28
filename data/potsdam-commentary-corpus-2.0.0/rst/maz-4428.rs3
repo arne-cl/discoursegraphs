@@ -1,0 +1,90 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Es wird</segment>
+    <segment id="2" parent="3" relname="reason">
+
+Westernreiter kennen sich aus mit dem Überwinden von Stock und Stein .</segment>
+    <segment id="3" parent="23" relname="span">  Also dürften sie kein Problem haben , die zurzeit noch katastrophale Parkfläche an der Graf-von-Lindenau-Halle in Kauf zu nehmen .</segment>
+    <segment id="4" parent="24" relname="span">
+
+Sie machen das auch ,</segment>
+    <segment id="5" parent="6" relname="antithesis"> wenngleich wir uns dessen bewusst sind , dass hier böser Sarkasmus die Zeilen prägt ,</segment>
+    <segment id="6" parent="22" relname="span"> der aber seine Berechtigung in absehbarer Zeit verloren hat .</segment>
+    <segment id="7" parent="38" relname="joint">  Am Parkplatz , der von Anfang an ein Ärgernis war , tut sich nämlich etwas .</segment>
+    <segment id="8" parent="37" relname="span">  Die Initiative dazu ging von der Neustädter Verwaltung aus .</segment>
+    <segment id="9" parent="36" relname="span">  Die hatte auch gar keine andere Wahl ,</segment>
+    <segment id="10" parent="34" relname="reason"> nachdem das juristische Tauziehen mit dem bauausführenden Betrieb verloren worden war .</segment>
+    <segment id="11" parent="34" relname="span">  Was blieb , war die total misslungene Abstellfläche ,</segment>
+    <segment id="12" parent="11" relname="e-elaboration"> bei der sich zu spät herausstellte , dass die vielen Besucher für die Halle einfach zu viel waren .</segment>
+    <segment id="13" parent="30" relname="sequence">  War schon in der Zeitung zu lesen , dass Geld lockergemacht worden ist ,</segment>
+    <segment id="14" parent="15" relname="preparation"> so ist nun von einem ersten Ergebnis zu berichten .</segment>
+    <segment id="15" parent="28" relname="span">  Man baut .</segment>
+    <segment id="16" parent="27" relname="interpretation">
+
+Das geht nicht von jetzt auf gleich .</segment>
+    <segment id="17" parent="18" relname="circumstance">  Dieses Jahr wird vergehen ,</segment>
+    <segment id="18" parent="27" relname="span"> bis auch bei Regen die stiefelfreie Zeit für alle Besucher anbricht .</segment>
+    <segment id="19" parent="31" relname="span">  Beim CSI , dem hochdotierten Reitturnier im Januar , sollen die Nägel Köpfe haben .</segment>
+    <segment id="20" parent="26" relname="span">  Bis dahin müssen sich alle dreinfügen -</segment>
+    <segment id="21" parent="20" relname="e-elaboration"> wie die Westernreiter und ihre Fans .</segment>
+<group id="22" type="span" parent="4" relname="concession" />
+<group id="23" type="span" parent="24" relname="circumstance" />
+<group id="24" type="span" parent="25" relname="span" />
+<group id="25" type="span" parent="39" relname="background" />
+<group id="26" type="span" parent="31" relname="evaluation-s" />
+<group id="27" type="span" parent="29" relname="span" />
+<group id="28" type="span" parent="30" relname="sequence" />
+<group id="29" type="span" parent="19" relname="concession" />
+<group id="30" type="multinuc" parent="32" relname="circumstance" />
+<group id="31" type="span" parent="32" relname="span" />
+<group id="32" type="span" parent="33" relname="span" />
+<group id="33" type="span" parent="39" relname="span" />
+<group id="34" type="span" parent="35" relname="span" />
+<group id="35" type="span" parent="9" relname="reason" />
+<group id="36" type="span" parent="8" relname="reason" />
+<group id="37" type="span" parent="38" relname="joint" />
+<group id="38" type="multinuc" parent="33" relname="background" />
+<group id="39" type="span" parent="40" relname="span" />
+<group id="40" type="span" />
+  </body>
+</rst>

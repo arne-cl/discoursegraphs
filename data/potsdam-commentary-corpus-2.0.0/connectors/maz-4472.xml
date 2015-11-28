@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Zu spät Die Ketziner und Paretzer werden heute aus der Zeitung erfahren , dass sie ab Mittwoch nach Uetz , Marquardt und Potsdam nur noch über Falkenrehde fahren können . Weder das Wasserstraßenneubauamt Berlin als Bauherr , noch die bauausführende Firma oder die Straßenverkehrsbehörde Nauen hatten bis gestern Informationen dazu veröffentlicht .
+   <unit type="ext" id="8">Abgesehen von der in Paretz herrschenden generellen Ablehnung gegen den Havelausbau</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="addition">und</connective>
+      den damit verbundenen Brückenneubau
+   </unit>
+   - die Bürger quasi bis fünf Minuten vor Zwölf im Regen stehen zu lassen , ist nicht zu fassen bei solch einem Großprojekt .
+   <unit type="ext" id="11">
+      <unit type="ext" id="10">
+            <connective id="10" relation="concession">Zwar</connective>
+            ist die Umleitung laut Bauherr nur 4,5 Kilometer lang .
+      </unit>
+      <unit type="int" id="10">
+            <connective id="10" relation="concession">Aber</connective>
+            was machen die Wanderer und Radfahrer ?
+      </unit>
+   </unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="addition">Und</connective>
+      noch schlimmer - wie kommen die Landwirte mit ihren Traktoren ab Mittwoch auf die Felder jenseits des Kanals ?
+   </unit>
+   <unit type="ext" id="16">Hier hat das Wasserstraßenneubauamt versagt - ohne Wenn und Aber .</unit>
+   <unit type="int" id="16">
+      Wofür die Behörde
+      <connective id="16" relation="contrast">jedoch</connective>
+      nichts kann , ist der unglückliche Zeitpunkt des Baubeginns so kurz nach der Wiedereröffnung des Schlosses .
+   </unit>
+   Seit einem Jahr ist klar , dass es nach der Buga los geht . Der enorme Zeitverzug beim Schloss war nicht vorhersehbar .
+</discourse>
+

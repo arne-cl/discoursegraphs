@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<corpus id="ID_maz-6488">
+<body>
+<s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1768" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1768_500">
+<terminals>
+<t id="s1768_1" word="Da" lemma="da" pos="ADV" morph="--"/>
+<t id="s1768_2" word="fehlt" lemma="fehlen" pos="VVFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1768_3" word="noch" lemma="noch" pos="ADV" morph="--"/>
+<t id="s1768_4" word="was" lemma="was" pos="PIS" morph="*.*.Neut"/>
+</terminals>
+<nonterminals>
+<nt id="s1768_500" cat="S">
+<edge label="MO" idref="s1768_1"/>
+<edge label="HD" idref="s1768_2"/>
+<edge label="MO" idref="s1768_3"/>
+<edge label="SB" idref="s1768_4"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1769" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1769_508">
+<terminals>
+<t id="s1769_1" word="Als" lemma="als" pos="KOUS" morph="--"/>
+<t id="s1769_2" word="1999" lemma="1999" pos="CARD" morph="--"/>
+<t id="s1769_3" word="die" lemma="der" pos="ART" morph="Nom.Sg.Fem"/>
+<t id="s1769_4" word="im" lemma="in" pos="APPRART" morph="Dat.Sg.Masc"/>
+<t id="s1769_5" word="Rahmen" lemma="Rahmen" pos="NN" morph="Dat.Sg.Masc"/>
+<t id="s1769_6" word="der" lemma="der" pos="ART" morph="Gen.Sg.Fem"/>
+<t id="s1769_7" word="Dorferneuerung" lemma="Dorferneuerung" pos="NN" morph="Gen.Sg.Fem"/>
+<t id="s1769_8" word="neu" lemma="neu" pos="ADJD" morph="Pos"/>
+<t id="s1769_9" word="gestaltete" lemma="gestaltet" pos="ADJA" morph="Pos.Nom.Sg.Fem"/>
+<t id="s1769_10" word="Radeweger" lemma="Radeweger" pos="ADJA" morph="Pos.*.*.*"/>
+<t id="s1769_11" word="Ablage" lemma="Ablage" pos="NN" morph="Nom.Sg.Fem"/>
+<t id="s1769_12" word="inklusive" lemma="inklusive" pos="APPR" morph="--"/>
+<t id="s1769_13" word="Seebrücke" lemma="Seebrücke" pos="NN" morph="Dat.Sg.Fem"/>
+<t id="s1769_14" word="mit" lemma="mit" pos="APPR" morph="--"/>
+<t id="s1769_15" word="viel" lemma="viel" pos="PIAT" morph="*.*.*"/>
+<t id="s1769_16" word="Pomp" lemma="Pomp" pos="NN" morph="Dat.Sg.Masc"/>
+<t id="s1769_17" word="eingeweiht" lemma="einweihen" pos="VVPP" morph="Psp"/>
+<t id="s1769_18" word="wurde" lemma="werden" pos="VAFIN" morph="3.Sg.Past.Ind"/>
+<t id="s1769_19" word="," lemma="," pos="$," morph="--"/>
+<t id="s1769_20" word="war" lemma="sein" pos="VAFIN" morph="3.Sg.Past.Ind"/>
+<t id="s1769_21" word="klar" lemma="klar" pos="ADJD" morph="Pos"/>
+<t id="s1769_22" word=":" lemma=":" pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1769_500" cat="NP">
+<edge label="NK" idref="s1769_6"/>
+<edge label="NK" idref="s1769_7"/>
+ </nt>
+<nt id="s1769_501" cat="PP">
+<edge label="AC" idref="s1769_12"/>
+<edge label="NK" idref="s1769_13"/>
+ </nt>
+<nt id="s1769_502" cat="PP">
+<edge label="AC" idref="s1769_14"/>
+<edge label="NK" idref="s1769_15"/>
+<edge label="NK" idref="s1769_16"/>
+ </nt>
+<nt id="s1769_503" cat="PP">
+<edge label="AC" idref="s1769_4"/>
+<edge label="NK" idref="s1769_5"/>
+<edge label="AG" idref="s1769_500"/>
+ </nt>
+<nt id="s1769_504" cat="VP">
+<edge label="MO" idref="s1769_2"/>
+<edge label="HD" idref="s1769_17"/>
+<edge label="MO" idref="s1769_501"/>
+<edge label="MO" idref="s1769_502"/>
+ </nt>
+<nt id="s1769_505" cat="AP">
+<edge label="MO" idref="s1769_8"/>
+<edge label="HD" idref="s1769_9"/>
+<edge label="MO" idref="s1769_503"/>
+ </nt>
+<nt id="s1769_506" cat="NP">
+<edge label="NK" idref="s1769_3"/>
+<edge label="NK" idref="s1769_10"/>
+<edge label="NK" idref="s1769_11"/>
+<edge label="NK" idref="s1769_505"/>
+ </nt>
+<nt id="s1769_507" cat="S">
+<edge label="CP" idref="s1769_1"/>
+<edge label="HD" idref="s1769_18"/>
+<edge label="OC" idref="s1769_504"/>
+<edge label="SB" idref="s1769_506"/>
+ </nt>
+<nt id="s1769_508" cat="S">
+<edge label="HD" idref="s1769_20"/>
+<edge label="PD" idref="s1769_21"/>
+<edge label="MO" idref="s1769_507"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1770" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1770_500">
+<terminals>
+<t id="s1770_1" word="Da" lemma="da" pos="ADV" morph="--"/>
+<t id="s1770_2" word="fehlt" lemma="fehlen" pos="VVFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1770_3" word="noch" lemma="noch" pos="ADV" morph="--"/>
+<t id="s1770_4" word="was" lemma="was" pos="PIS" morph="*.*.Neut"/>
+<t id="s1770_5" word="." lemma="." pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1770_500" cat="S">
+<edge label="MO" idref="s1770_1"/>
+<edge label="HD" idref="s1770_2"/>
+<edge label="MO" idref="s1770_3"/>
+<edge label="SB" idref="s1770_4"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1771" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1771_507">
+<terminals>
+<t id="s1771_1" word="Wer" lemma="wer" pos="PWS" morph="Nom.Sg.Masc"/>
+<t id="s1771_2" word="die" lemma="der" pos="ART" morph="Acc.Sg.Fem"/>
+<t id="s1771_3" word="Infrastruktur" lemma="Infrastruktur" pos="NN" morph="Acc.Sg.Fem"/>
+<t id="s1771_4" word="für" lemma="für" pos="APPR" morph="--"/>
+<t id="s1771_5" word="den" lemma="der" pos="ART" morph="Acc.Sg.Masc"/>
+<t id="s1771_6" word="Wassertourismus" lemma="Wassertourismus" pos="NN" morph="Acc.Sg.Masc"/>
+<t id="s1771_7" word="vorantreiben" lemma="vorantreiben" pos="VVINF" morph="Inf"/>
+<t id="s1771_8" word="will" lemma="wollen" pos="VMFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1771_9" word="," lemma="," pos="$," morph="--"/>
+<t id="s1771_10" word="darf" lemma="dürfen" pos="VMFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1771_11" word="nicht" lemma="nicht" pos="PTKNEG" morph="--"/>
+<t id="s1771_12" word="nur" lemma="nur" pos="ADV" morph="--"/>
+<t id="s1771_13" word="bis" lemma="bis" pos="APPR" morph="--"/>
+<t id="s1771_14" word="zum" lemma="zu" pos="APPRART" morph="Dat.Sg.Masc"/>
+<t id="s1771_15" word="nächsten" lemma="nächster" pos="ADJA" morph="Pos.Dat.Sg.Masc"/>
+<t id="s1771_16" word="Steg" lemma="Steg" pos="NN" morph="Dat.Sg.Masc"/>
+<t id="s1771_17" word="denken" lemma="denken" pos="VVINF" morph="Inf"/>
+<t id="s1771_18" word="." lemma="." pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1771_500" cat="NP">
+<edge label="NK" idref="s1771_2"/>
+<edge label="NK" idref="s1771_3"/>
+ </nt>
+<nt id="s1771_501" cat="PP">
+<edge label="AC" idref="s1771_4"/>
+<edge label="NK" idref="s1771_5"/>
+<edge label="NK" idref="s1771_6"/>
+ </nt>
+<nt id="s1771_502" cat="AVP">
+<edge label="NG" idref="s1771_11"/>
+<edge label="HD" idref="s1771_12"/>
+ </nt>
+<nt id="s1771_503" cat="VP">
+<edge label="HD" idref="s1771_7"/>
+<edge label="OA" idref="s1771_500"/>
+<edge label="MO" idref="s1771_501"/>
+ </nt>
+<nt id="s1771_504" cat="PP">
+<edge label="AC" idref="s1771_13"/>
+<edge label="AC" idref="s1771_14"/>
+<edge label="NK" idref="s1771_15"/>
+<edge label="NK" idref="s1771_16"/>
+<edge label="MO" idref="s1771_502"/>
+ </nt>
+<nt id="s1771_505" cat="S">
+<edge label="SB" idref="s1771_1"/>
+<edge label="HD" idref="s1771_8"/>
+<edge label="OC" idref="s1771_503"/>
+ </nt>
+<nt id="s1771_506" cat="VP">
+<edge label="HD" idref="s1771_17"/>
+<edge label="MO" idref="s1771_504"/>
+ </nt>
+<nt id="s1771_507" cat="S">
+<edge label="HD" idref="s1771_10"/>
+<edge label="SB" idref="s1771_505"/>
+<edge label="OC" idref="s1771_506"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1772" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1772_503">
+<terminals>
+<t id="s1772_1" word="Sanitäre" lemma="sanitär" pos="ADJA" morph="Pos.Nom.Pl.Fem"/>
+<t id="s1772_2" word="Anlagen" lemma="Anlage" pos="NN" morph="Nom.Pl.Fem"/>
+<t id="s1772_3" word="gehören" lemma="gehören" pos="VVFIN" morph="3.Pl.Pres.Ind"/>
+<t id="s1772_4" word="heute" lemma="heute" pos="ADV" morph="--"/>
+<t id="s1772_5" word="zum" lemma="zu" pos="APPRART" morph="Dat.Sg.Masc"/>
+<t id="s1772_6" word="Standard" lemma="Standard" pos="NN" morph="Dat.Sg.Masc"/>
+<t id="s1772_7" word="großer" lemma="groß" pos="ADJA" morph="Pos.Gen.Pl.Masc"/>
+<t id="s1772_8" word="Liegeplätze" lemma="Liegeplatz" pos="NN" morph="Gen.Pl.Masc"/>
+<t id="s1772_9" word="." lemma="." pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1772_500" cat="NP">
+<edge label="NK" idref="s1772_1"/>
+<edge label="NK" idref="s1772_2"/>
+ </nt>
+<nt id="s1772_501" cat="NP">
+<edge label="NK" idref="s1772_7"/>
+<edge label="NK" idref="s1772_8"/>
+ </nt>
+<nt id="s1772_502" cat="PP">
+<edge label="AC" idref="s1772_5"/>
+<edge label="NK" idref="s1772_6"/>
+<edge label="AG" idref="s1772_501"/>
+ </nt>
+<nt id="s1772_503" cat="S">
+<edge label="HD" idref="s1772_3"/>
+<edge label="MO" idref="s1772_4"/>
+<edge label="SB" idref="s1772_500"/>
+<edge label="OP" idref="s1772_502"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1773" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1773_501">
+<terminals>
+<t id="s1773_1" word="Doch" lemma="doch" pos="KON" morph="--"/>
+<t id="s1773_2" word="mit" lemma="mit" pos="APPR" morph="--"/>
+<t id="s1773_3" word="der" lemma="der" pos="ART" morph="Dat.Sg.Fem"/>
+<t id="s1773_4" word="Nachrüstung" lemma="Nachrüstung" pos="NN" morph="Dat.Sg.Fem"/>
+<t id="s1773_5" word="tut" lemma="tun" pos="VVFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1773_6" word="sich" lemma="sich" pos="PRF" morph="3.Acc.Sg"/>
+<t id="s1773_7" word="Radewege" lemma="Radewege" pos="NE" morph="Nom.Sg.*"/>
+<t id="s1773_8" word="schwer" lemma="schwer" pos="ADJD" morph="Pos"/>
+<t id="s1773_9" word="." lemma="." pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1773_500" cat="PP">
+<edge label="AC" idref="s1773_2"/>
+<edge label="NK" idref="s1773_3"/>
+<edge label="NK" idref="s1773_4"/>
+ </nt>
+<nt id="s1773_501" cat="S">
+<edge label="JU" idref="s1773_1"/>
+<edge label="HD" idref="s1773_5"/>
+<edge label="OA" idref="s1773_6"/>
+<edge label="SB" idref="s1773_7"/>
+<edge label="MO" idref="s1773_8"/>
+<edge label="MO" idref="s1773_500"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1774" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1774_503">
+<terminals>
+<t id="s1774_1" word="Was" lemma="was" pos="PWS" morph="Nom.Sg.Neut"/>
+<t id="s1774_2" word="einst" lemma="einst" pos="ADV" morph="--"/>
+<t id="s1774_3" word="beschlossen" lemma="beschließen" pos="VVPP" morph="Psp"/>
+<t id="s1774_4" word="wurde" lemma="werden" pos="VAFIN" morph="3.Sg.Past.Ind"/>
+<t id="s1774_5" word="," lemma="," pos="$," morph="--"/>
+<t id="s1774_6" word="zählt" lemma="zählen" pos="VVFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1774_7" word="nicht" lemma="nicht" pos="PTKNEG" morph="--"/>
+<t id="s1774_8" word="mehr" lemma="mehr" pos="ADV" morph="--"/>
+<t id="s1774_9" word="." lemma="." pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1774_500" cat="VP">
+<edge label="MO" idref="s1774_2"/>
+<edge label="HD" idref="s1774_3"/>
+ </nt>
+<nt id="s1774_501" cat="AVP">
+<edge label="HD" idref="s1774_7"/>
+<edge label="MO" idref="s1774_8"/>
+ </nt>
+<nt id="s1774_502" cat="S">
+<edge label="SB" idref="s1774_1"/>
+<edge label="HD" idref="s1774_4"/>
+<edge label="OC" idref="s1774_500"/>
+ </nt>
+<nt id="s1774_503" cat="S">
+<edge label="HD" idref="s1774_6"/>
+<edge label="NG" idref="s1774_501"/>
+<edge label="SB" idref="s1774_502"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1775" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1775_507">
+<terminals>
+<t id="s1775_1" word="Zu" lemma="zu" pos="PTKA" morph="--"/>
+<t id="s1775_2" word="teuer" lemma="teuer" pos="ADJD" morph="Pos"/>
+<t id="s1775_3" word="," lemma="," pos="$," morph="--"/>
+<t id="s1775_4" word="zu" lemma="zu" pos="PTKA" morph="--"/>
+<t id="s1775_5" word="hässlich" lemma="hässlich" pos="ADJD" morph="Pos"/>
+<t id="s1775_6" word="sei" lemma="sein" pos="VAFIN" morph="3.Sg.Pres.Subj"/>
+<t id="s1775_7" word="die" lemma="der" pos="ART" morph="Nom.Sg.Fem"/>
+<t id="s1775_8" word="Anlage" lemma="Anlage" pos="NN" morph="Nom.Sg.Fem"/>
+<t id="s1775_9" word="," lemma="," pos="$," morph="--"/>
+<t id="s1775_10" word="sagen" lemma="sagen" pos="VVFIN" morph="3.Pl.Pres.Ind"/>
+<t id="s1775_11" word="die" lemma="der" pos="ART" morph="Nom.Pl.Masc"/>
+<t id="s1775_12" word="Meinungsführer" lemma="Meinungsführer" pos="NN" morph="Nom.Pl.Masc"/>
+<t id="s1775_13" word="im" lemma="in" pos="APPRART" morph="Dat.Sg.Masc"/>
+<t id="s1775_14" word="Gemeinderat" lemma="Gemeinderat" pos="NN" morph="Dat.Sg.Masc"/>
+<t id="s1775_15" word="." lemma="." pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1775_500" cat="AP">
+<edge label="MO" idref="s1775_1"/>
+<edge label="HD" idref="s1775_2"/>
+ </nt>
+<nt id="s1775_501" cat="AP">
+<edge label="MO" idref="s1775_4"/>
+<edge label="HD" idref="s1775_5"/>
+ </nt>
+<nt id="s1775_502" cat="NP">
+<edge label="NK" idref="s1775_7"/>
+<edge label="NK" idref="s1775_8"/>
+ </nt>
+<nt id="s1775_503" cat="PP">
+<edge label="AC" idref="s1775_13"/>
+<edge label="NK" idref="s1775_14"/>
+ </nt>
+<nt id="s1775_504" cat="CAP">
+<edge label="CJ" idref="s1775_500"/>
+<edge label="CJ" idref="s1775_501"/>
+ </nt>
+<nt id="s1775_505" cat="NP">
+<edge label="NK" idref="s1775_11"/>
+<edge label="NK" idref="s1775_12"/>
+<edge label="MNR" idref="s1775_503"/>
+ </nt>
+<nt id="s1775_506" cat="S">
+<edge label="HD" idref="s1775_6"/>
+<edge label="SB" idref="s1775_502"/>
+<edge label="PD" idref="s1775_504"/>
+ </nt>
+<nt id="s1775_507" cat="S">
+<edge label="HD" idref="s1775_10"/>
+<edge label="SB" idref="s1775_505"/>
+<edge label="OC" idref="s1775_506"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1776" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1776_512">
+<terminals>
+<t id="s1776_1" word="Beschlüsse" lemma="Beschluss" pos="NN" morph="Acc.Pl.Masc"/>
+<t id="s1776_2" word="zu" lemma="zu" pos="PTKZU" morph="--"/>
+<t id="s1776_3" word="überdenken" lemma="überdenken" pos="VVINF" morph="Inf"/>
+<t id="s1776_4" word="ist" lemma="sein" pos="VAFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1776_5" word="legitim" lemma="legitim" pos="ADJD" morph="Pos"/>
+<t id="s1776_6" word="," lemma="," pos="$," morph="--"/>
+<t id="s1776_7" word="doch" lemma="doch" pos="KON" morph="--"/>
+<t id="s1776_8" word="nur" lemma="nur" pos="ADV" morph="--"/>
+<t id="s1776_9" word="von" lemma="von" pos="APPR" morph="--"/>
+<t id="s1776_10" word="Alternativen" lemma="Alternative" pos="NN" morph="Dat.Pl.Fem"/>
+<t id="s1776_11" word="zu" lemma="zu" pos="PTKZU" morph="--"/>
+<t id="s1776_12" word="reden" lemma="reden" pos="VVINF" morph="Inf"/>
+<t id="s1776_13" word="," lemma="," pos="$," morph="--"/>
+<t id="s1776_14" word="ohne" lemma="ohne" pos="KOUI" morph="--"/>
+<t id="s1776_15" word="brauchbare" lemma="brauchbar" pos="ADJA" morph="Pos.Acc.Pl.Masc"/>
+<t id="s1776_16" word="Vorschläge" lemma="Vorschlag" pos="NN" morph="Acc.Pl.Masc"/>
+<t id="s1776_17" word="auf" lemma="auf" pos="APPR" morph="--"/>
+<t id="s1776_18" word="den" lemma="der" pos="ART" morph="Acc.Sg.Masc"/>
+<t id="s1776_19" word="Tisch" lemma="Tisch" pos="NN" morph="Acc.Sg.Masc"/>
+<t id="s1776_20" word="zu" lemma="zu" pos="PTKZU" morph="--"/>
+<t id="s1776_21" word="legen" lemma="legen" pos="VVINF" morph="Inf"/>
+<t id="s1776_22" word="," lemma="," pos="$," morph="--"/>
+<t id="s1776_23" word="ist" lemma="sein" pos="VAFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1776_24" word="zu" lemma="zu" pos="PTKA" morph="--"/>
+<t id="s1776_25" word="billig" lemma="billig" pos="ADJD" morph="Pos"/>
+<t id="s1776_26" word="." lemma="." pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1776_500" cat="VZ">
+<edge label="PM" idref="s1776_2"/>
+<edge label="HD" idref="s1776_3"/>
+ </nt>
+<nt id="s1776_501" cat="PP">
+<edge label="MO" idref="s1776_8"/>
+<edge label="AC" idref="s1776_9"/>
+<edge label="NK" idref="s1776_10"/>
+ </nt>
+<nt id="s1776_502" cat="VZ">
+<edge label="PM" idref="s1776_11"/>
+<edge label="HD" idref="s1776_12"/>
+ </nt>
+<nt id="s1776_503" cat="NP">
+<edge label="NK" idref="s1776_15"/>
+<edge label="NK" idref="s1776_16"/>
+ </nt>
+<nt id="s1776_504" cat="PP">
+<edge label="AC" idref="s1776_17"/>
+<edge label="NK" idref="s1776_18"/>
+<edge label="NK" idref="s1776_19"/>
+ </nt>
+<nt id="s1776_505" cat="VZ">
+<edge label="PM" idref="s1776_20"/>
+<edge label="HD" idref="s1776_21"/>
+ </nt>
+<nt id="s1776_506" cat="AP">
+<edge label="MO" idref="s1776_24"/>
+<edge label="HD" idref="s1776_25"/>
+ </nt>
+<nt id="s1776_507" cat="VP">
+<edge label="OA" idref="s1776_1"/>
+<edge label="HD" idref="s1776_500"/>
+ </nt>
+<nt id="s1776_508" cat="VP">
+<edge label="CP" idref="s1776_14"/>
+<edge label="OA" idref="s1776_503"/>
+<edge label="MO" idref="s1776_504"/>
+<edge label="HD" idref="s1776_505"/>
+ </nt>
+<nt id="s1776_509" cat="S">
+<edge label="HD" idref="s1776_4"/>
+<edge label="PD" idref="s1776_5"/>
+<edge label="SB" idref="s1776_507"/>
+ </nt>
+<nt id="s1776_510" cat="VP">
+<edge label="OP" idref="s1776_501"/>
+<edge label="HD" idref="s1776_502"/>
+<edge label="MO" idref="s1776_508"/>
+ </nt>
+<nt id="s1776_511" cat="S">
+<edge label="HD" idref="s1776_23"/>
+<edge label="PD" idref="s1776_506"/>
+<edge label="SB" idref="s1776_510"/>
+ </nt>
+<nt id="s1776_512" cat="CS">
+<edge label="CD" idref="s1776_7"/>
+<edge label="CJ" idref="s1776_509"/>
+<edge label="CJ" idref="s1776_511"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1777" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1777_508">
+<terminals>
+<t id="s1777_1" word="Ein" lemma="ein" pos="ART" morph="Nom.Sg.Neut"/>
+<t id="s1777_2" word="multifunktionales" lemma="multifunktional" pos="ADJA" morph="Pos.Nom.Sg.Neut"/>
+<t id="s1777_3" word="Objekt" lemma="Objekt" pos="NN" morph="Nom.Sg.Neut"/>
+<t id="s1777_4" word="mit" lemma="mit" pos="APPR" morph="--"/>
+<t id="s1777_5" word="Umkleide-" lemma="Umkleide" pos="TRUNC" morph="--"/>
+<t id="s1777_6" word="und" lemma="und" pos="KON" morph="--"/>
+<t id="s1777_7" word="Treffmöglichkeiten" lemma="Treffmöglichkeit" pos="NN" morph="Dat.Pl.Fem"/>
+<t id="s1777_8" word="als" lemma="als" pos="APPR" morph="--"/>
+<t id="s1777_9" word="angeblich" lemma="angeblich" pos="ADJD" morph="Pos"/>
+<t id="s1777_10" word="bessere" lemma="gut" pos="ADJA" morph="Comp.Nom.Sg.Fem"/>
+<t id="s1777_11" word="Variante" lemma="Variante" pos="NN" morph="Nom.Sg.Fem"/>
+<t id="s1777_12" word="ist" lemma="sein" pos="VAFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1777_13" word="bisher" lemma="bisher" pos="ADV" morph="--"/>
+<t id="s1777_14" word="nicht" lemma="nicht" pos="PTKNEG" morph="--"/>
+<t id="s1777_15" word="mehr" lemma="mehr" pos="PIS" morph="*.*.*"/>
+<t id="s1777_16" word="als" lemma="als" pos="KOKOM" morph="--"/>
+<t id="s1777_17" word="eine" lemma="ein" pos="ART" morph="Nom.Sg.Fem"/>
+<t id="s1777_18" word="fiktive" lemma="fiktiv" pos="ADJA" morph="Pos.Nom.Sg.Fem"/>
+<t id="s1777_19" word="Idee" lemma="Idee" pos="NN" morph="Nom.Sg.Fem"/>
+<t id="s1777_20" word="geblieben" lemma="bleiben" pos="VVPP" morph="Psp"/>
+<t id="s1777_21" word="." lemma="." pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1777_500" cat="CNP">
+<edge label="CJ" idref="s1777_5"/>
+<edge label="CD" idref="s1777_6"/>
+<edge label="CJ" idref="s1777_7"/>
+ </nt>
+<nt id="s1777_501" cat="AP">
+<edge label="MO" idref="s1777_9"/>
+<edge label="HD" idref="s1777_10"/>
+ </nt>
+<nt id="s1777_502" cat="NP">
+<edge label="CM" idref="s1777_16"/>
+<edge label="NK" idref="s1777_17"/>
+<edge label="NK" idref="s1777_18"/>
+<edge label="NK" idref="s1777_19"/>
+ </nt>
+<nt id="s1777_503" cat="PP">
+<edge label="AC" idref="s1777_4"/>
+<edge label="NK" idref="s1777_500"/>
+ </nt>
+<nt id="s1777_504" cat="PP">
+<edge label="AC" idref="s1777_8"/>
+<edge label="NK" idref="s1777_11"/>
+<edge label="NK" idref="s1777_501"/>
+ </nt>
+<nt id="s1777_505" cat="NP">
+<edge label="NK" idref="s1777_15"/>
+<edge label="CC" idref="s1777_502"/>
+ </nt>
+<nt id="s1777_506" cat="NP">
+<edge label="NK" idref="s1777_1"/>
+<edge label="NK" idref="s1777_2"/>
+<edge label="NK" idref="s1777_3"/>
+<edge label="MNR" idref="s1777_503"/>
+<edge label="MNR" idref="s1777_504"/>
+ </nt>
+<nt id="s1777_507" cat="VP">
+<edge label="MO" idref="s1777_13"/>
+<edge label="NG" idref="s1777_14"/>
+<edge label="HD" idref="s1777_20"/>
+<edge label="PD" idref="s1777_505"/>
+ </nt>
+<nt id="s1777_508" cat="S">
+<edge label="HD" idref="s1777_12"/>
+<edge label="SB" idref="s1777_506"/>
+<edge label="OC" idref="s1777_507"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1778" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1778_502">
+<terminals>
+<t id="s1778_1" word="Und" lemma="und" pos="KON" morph="--"/>
+<t id="s1778_2" word="ob" lemma="ob" pos="KOUS" morph="--"/>
+<t id="s1778_3" word="diese" lemma="dieser" pos="PDS" morph="Nom.Sg.Fem"/>
+<t id="s1778_4" word="billiger" lemma="billig" pos="ADJD" morph="Comp"/>
+<t id="s1778_5" word="wird" lemma="werden" pos="VAFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1778_6" word="," lemma="," pos="$," morph="--"/>
+<t id="s1778_7" word="steht" lemma="stehen" pos="VVFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1778_8" word="auf" lemma="auf" pos="APPR" morph="--"/>
+<t id="s1778_9" word="einem" lemma="ein" pos="ART" morph="Dat.Sg.Neut"/>
+<t id="s1778_10" word="anderen" lemma="anderer" pos="ADJA" morph="Pos.Dat.Sg.Neut"/>
+<t id="s1778_11" word="Blatt" lemma="Blatt" pos="NN" morph="Dat.Sg.Neut"/>
+<t id="s1778_12" word="." lemma="." pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1778_500" cat="S">
+<edge label="CP" idref="s1778_2"/>
+<edge label="SB" idref="s1778_3"/>
+<edge label="PD" idref="s1778_4"/>
+<edge label="HD" idref="s1778_5"/>
+ </nt>
+<nt id="s1778_501" cat="PP">
+<edge label="AC" idref="s1778_8"/>
+<edge label="NK" idref="s1778_9"/>
+<edge label="NK" idref="s1778_10"/>
+<edge label="NK" idref="s1778_11"/>
+ </nt>
+<nt id="s1778_502" cat="S">
+<edge label="JU" idref="s1778_1"/>
+<edge label="HD" idref="s1778_7"/>
+<edge label="SB" idref="s1778_500"/>
+<edge label="MO" idref="s1778_501"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1779" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1779_512">
+<terminals>
+<t id="s1779_1" word="Außerdem" lemma="außerdem" pos="PROAV" morph="--"/>
+<t id="s1779_2" word="hat" lemma="haben" pos="VAFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1779_3" word="Radewege" lemma="Radewege" pos="NE" morph="Nom.Sg.*"/>
+<t id="s1779_4" word="mit" lemma="mit" pos="APPR" morph="--"/>
+<t id="s1779_5" word="dem" lemma="der" pos="ART" morph="Dat.Sg.Neut"/>
+<t id="s1779_6" word="nicht" lemma="nicht" pos="PTKNEG" morph="--"/>
+<t id="s1779_7" word="weit" lemma="weit" pos="ADJD" morph="Pos"/>
+<t id="s1779_8" word="entfernten" lemma="entfernt" pos="ADJA" morph="Pos.Dat.Sg.Neut"/>
+<t id="s1779_9" word="Haus" lemma="Haus" pos="NN" morph="Dat.Sg.Neut"/>
+<t id="s1779_10" word="des" lemma="der" pos="ART" morph="Gen.Sg.Masc"/>
+<t id="s1779_11" word="Beetzseetreffs" lemma="Beetzseetreff" pos="NN" morph="Gen.Sg.Neut"/>
+<t id="s1779_12" word="e." lemma="e." pos="ADJA" morph="Pos.Nom.Sg.Masc" comment="TOK: 2 Tokens &quot;e. V.&quot;"/>
+<t id="s1779_13" word="V." lemma="V." pos="NN" morph="Nom.Sg.Masc"/>
+<t id="s1779_14" word="ein" lemma="ein" pos="ART" morph="Acc.Sg.Neut"/>
+<t id="s1779_15" word="Gebäude" lemma="Gebäude" pos="NN" morph="Acc.Sg.Neut"/>
+<t id="s1779_16" word="," lemma="," pos="$," morph="--"/>
+<t id="s1779_17" word="das" lemma="der" pos="PRELS" morph="Nom.Sg.Neut"/>
+<t id="s1779_18" word="vielen" lemma="vieler" pos="PIAT" morph="Dat.Pl.Neut"/>
+<t id="s1779_19" word="Freizeitbedürfnissen" lemma="Freizeitbedürfnis" pos="NN" morph="Dat.Pl.Neut"/>
+<t id="s1779_20" word="gerecht" lemma="gerecht" pos="ADJD" morph="Pos"/>
+<t id="s1779_21" word="werden" lemma="werden" pos="VAINF" morph="Inf"/>
+<t id="s1779_22" word="kann" lemma="können" pos="VMFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1779_23" word="." lemma="." pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1779_500" cat="AP">
+<edge label="NG" idref="s1779_6"/>
+<edge label="HD" idref="s1779_7"/>
+ </nt>
+<nt id="s1779_501" cat="NP">
+<edge label="NK" idref="s1779_12"/>
+<edge label="NK" idref="s1779_13"/>
+ </nt>
+<nt id="s1779_502" cat="NP">
+<edge label="NK" idref="s1779_18"/>
+<edge label="NK" idref="s1779_19"/>
+ </nt>
+<nt id="s1779_503" cat="AP">
+<edge label="HD" idref="s1779_8"/>
+<edge label="MO" idref="s1779_500"/>
+ </nt>
+<nt id="s1779_504" cat="NP">
+<edge label="NK" idref="s1779_11"/>
+<edge label="NK" idref="s1779_501"/>
+ </nt>
+<nt id="s1779_505" cat="AP">
+<edge label="HD" idref="s1779_20"/>
+<edge label="DA" idref="s1779_502"/>
+ </nt>
+<nt id="s1779_506" cat="PN">
+<edge label="PNC" idref="s1779_504"/>
+ </nt>
+<nt id="s1779_507" cat="VP">
+<edge label="HD" idref="s1779_21"/>
+<edge label="PD" idref="s1779_505"/>
+ </nt>
+<nt id="s1779_508" cat="NP">
+<edge label="NK" idref="s1779_10"/>
+<edge label="NK" idref="s1779_506"/>
+ </nt>
+<nt id="s1779_509" cat="S">
+<edge label="SB" idref="s1779_17"/>
+<edge label="HD" idref="s1779_22"/>
+<edge label="OC" idref="s1779_507"/>
+ </nt>
+<nt id="s1779_510" cat="PP">
+<edge label="AC" idref="s1779_4"/>
+<edge label="NK" idref="s1779_5"/>
+<edge label="NK" idref="s1779_9"/>
+<edge label="NK" idref="s1779_503"/>
+<edge label="AG" idref="s1779_508"/>
+ </nt>
+<nt id="s1779_511" cat="NP">
+<edge label="NK" idref="s1779_14"/>
+<edge label="NK" idref="s1779_15"/>
+<edge label="RC" idref="s1779_509"/>
+ </nt>
+<nt id="s1779_512" cat="S">
+<edge label="MO" idref="s1779_1"/>
+<edge label="HD" idref="s1779_2"/>
+<edge label="SB" idref="s1779_3"/>
+<edge label="MO" idref="s1779_510"/>
+<edge label="OA" idref="s1779_511"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1780" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1780_509">
+<terminals>
+<t id="s1780_1" word="Kommt" lemma="kommen" pos="VVFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1780_2" word="der" lemma="der" pos="ART" morph="Nom.Sg.Masc"/>
+<t id="s1780_3" word="Sanitärtrakt" lemma="Sanitärtrakt" pos="NN" morph="Nom.Sg.Masc"/>
+<t id="s1780_4" word="nicht" lemma="nicht" pos="PTKNEG" morph="--"/>
+<t id="s1780_5" word="spätestens" lemma="spätestens" pos="ADV" morph="--"/>
+<t id="s1780_6" word="zur" lemma="zu" pos="APPRART" morph="Dat.Sg.Fem"/>
+<t id="s1780_7" word="nächsten" lemma="nächster" pos="ADJA" morph="Pos.Dat.Sg.Fem"/>
+<t id="s1780_8" word="Saison" lemma="Saison" pos="NN" morph="Dat.Sg.Fem"/>
+<t id="s1780_9" word="," lemma="," pos="$," morph="--"/>
+<t id="s1780_10" word="droht" lemma="drohen" pos="VVFIN" morph="3.Sg.Pres.Ind"/>
+<t id="s1780_11" word="Radewege" lemma="Radewege" pos="NE" morph="Nom.Sg.*"/>
+<t id="s1780_12" word="," lemma="," pos="$," morph="--"/>
+<t id="s1780_13" word="den" lemma="der" pos="ART" morph="Acc.Sg.Masc"/>
+<t id="s1780_14" word="Wettbewerb" lemma="Wettbewerb" pos="NN" morph="Acc.Sg.Masc"/>
+<t id="s1780_15" word="um" lemma="um" pos="APPR" morph="--"/>
+<t id="s1780_16" word="Freizeitkapitäne" lemma="Freizeitkapitän" pos="NN" morph="Acc.Pl.Masc"/>
+<t id="s1780_17" word="auf" lemma="auf" pos="APPR" morph="--"/>
+<t id="s1780_18" word="dem" lemma="der" pos="ART" morph="Dat.Sg.Masc"/>
+<t id="s1780_19" word="Beetzsee" lemma="Beetzsee" pos="NE" morph="Dat.Sg.Masc"/>
+<t id="s1780_20" word="mit" lemma="mit" pos="APPR" morph="--"/>
+<t id="s1780_21" word="anderen" lemma="anderer" pos="ADJA" morph="Pos.Dat.Pl.Masc"/>
+<t id="s1780_22" word="Anbietern" lemma="Anbieter" pos="NN" morph="Dat.Pl.Masc"/>
+<t id="s1780_23" word="zu" lemma="zu" pos="PTKZU" morph="--"/>
+<t id="s1780_24" word="verlieren" lemma="verlieren" pos="VVINF" morph="Inf"/>
+<t id="s1780_25" word="." lemma="." pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1780_500" cat="NP">
+<edge label="NK" idref="s1780_2"/>
+<edge label="NK" idref="s1780_3"/>
+ </nt>
+<nt id="s1780_501" cat="PP">
+<edge label="MO" idref="s1780_5"/>
+<edge label="AC" idref="s1780_6"/>
+<edge label="NK" idref="s1780_7"/>
+<edge label="NK" idref="s1780_8"/>
+ </nt>
+<nt id="s1780_502" cat="PP">
+<edge label="AC" idref="s1780_17"/>
+<edge label="NK" idref="s1780_18"/>
+<edge label="NK" idref="s1780_19"/>
+ </nt>
+<nt id="s1780_503" cat="PP">
+<edge label="AC" idref="s1780_20"/>
+<edge label="NK" idref="s1780_21"/>
+<edge label="NK" idref="s1780_22"/>
+ </nt>
+<nt id="s1780_504" cat="VZ">
+<edge label="PM" idref="s1780_23"/>
+<edge label="HD" idref="s1780_24"/>
+ </nt>
+<nt id="s1780_505" cat="S">
+<edge label="HD" idref="s1780_1"/>
+<edge label="NG" idref="s1780_4"/>
+<edge label="SB" idref="s1780_500"/>
+<edge label="MO" idref="s1780_501"/>
+ </nt>
+<nt id="s1780_506" cat="PP">
+<edge label="AC" idref="s1780_15"/>
+<edge label="NK" idref="s1780_16"/>
+<edge label="MNR" idref="s1780_502"/>
+ </nt>
+<nt id="s1780_507" cat="NP">
+<edge label="NK" idref="s1780_13"/>
+<edge label="NK" idref="s1780_14"/>
+<edge label="MNR" idref="s1780_503"/>
+<edge label="MNR" idref="s1780_506"/>
+ </nt>
+<nt id="s1780_508" cat="VP">
+<edge label="HD" idref="s1780_504"/>
+<edge label="OA" idref="s1780_507"/>
+ </nt>
+<nt id="s1780_509" cat="S">
+<edge label="HD" idref="s1780_10"/>
+<edge label="SB" idref="s1780_11"/>
+<edge label="MO" idref="s1780_505"/>
+<edge label="OC" idref="s1780_508"/>
+ </nt>
+</nonterminals>
+</graph>
+</s><s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s1781" art_id="6488" orig_id="ID_maz-6488">
+<graph root="s1781_502">
+<terminals>
+<t id="s1781_1" word="Dabei" lemma="dabei" pos="PROAV" morph="--"/>
+<t id="s1781_2" word="hätte" lemma="haben" pos="VAFIN" morph="3.Sg.Past.Subj"/>
+<t id="s1781_3" word="das" lemma="der" pos="ART" morph="Nom.Sg.Neut"/>
+<t id="s1781_4" word="Dorf" lemma="Dorf" pos="NN" morph="Nom.Sg.Neut"/>
+<t id="s1781_5" word="jede" lemma="jeder" pos="PIAT" morph="Acc.Sg.Fem"/>
+<t id="s1781_6" word="Einnahme" lemma="Einnahme" pos="NN" morph="Acc.Sg.Fem"/>
+<t id="s1781_7" word="nötig" lemma="nötig" pos="ADJD" morph="Pos"/>
+<t id="s1781_8" word="." lemma="." pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s1781_500" cat="NP">
+<edge label="NK" idref="s1781_3"/>
+<edge label="NK" idref="s1781_4"/>
+ </nt>
+<nt id="s1781_501" cat="NP">
+<edge label="NK" idref="s1781_5"/>
+<edge label="NK" idref="s1781_6"/>
+ </nt>
+<nt id="s1781_502" cat="S">
+<edge label="MO" idref="s1781_1"/>
+<edge label="HD" idref="s1781_2"/>
+<edge label="MO" idref="s1781_7"/>
+<edge label="SB" idref="s1781_500"/>
+<edge label="OA" idref="s1781_501"/>
+ </nt>
+</nonterminals>
+</graph>
+</s></body></corpus>

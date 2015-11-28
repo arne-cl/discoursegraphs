@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Bürger-Entscheid
+   Soll das Stadtteilfest , so der Streit derzeit in der Brandenburger Vorstadt ,
+   <unit type="ext" id="1">jährlich stattfinden</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="alternation">oder</connective>
+      in größerem Abstand ?
+   </unit>
+   <unit type="ext" id="2">So einfach die Frage ist ,</unit>
+   <unit type="int" id="2">
+      so laufen die Beteiligten
+      <connective id="2" relation="contrast">doch</connective>
+      Gefahr , sich vor Gericht zu treffen .
+   </unit>
+   Eine bedauerliche Eskalation .
+   <unit type="ext" id="4">Das Fest , das tausende Besucher anlockt , hat es nicht verdient , als Zankapfel herzuhalten .</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">Zumal</connective>
+      alle Beteiligten ehrenwerte Ziele verfolgen .
+   </unit>
+   <unit type="ext" id="5">Der Verein Brandenburger Vorstadt plädiert für ein Fest von Bürgern für Bürger .</unit>
+   <unit type="int" id="5">
+      Ein gutes Konzept , das sich
+      <connective id="5" relation="concession">aber</connective>
+      - da rein ehrenamtlich - nur in größeren Abständen verwirklichen lässt .
+   </unit>
+   <unit type="ext" id="6">Der Aktionskreis um Martin Zühlke zieht die Grenzen lockerer</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="addition">und</connective>
+      votiert für jährliche Termine .
+   </unit>
+   Beide Ansätze orientieren sich am Bürger , worin eine mögliche Lösung liegt .
+   <unit type="int" id="8">
+      Der Verein hat
+      <connective id="8" relation="concession">zwar</connective>
+      Rechte am Namen von " Affe , Schaf und Känguru " ,
+   </unit>
+   <unit type="ext" id="8">das Hausrecht für den Stadtteil hat er nicht .</unit>
+   Andere Feste ( selbst semi-professionelle ) kann er nicht untersagen . Zühlke bietet einen jährlichen Wechsel an - ein Schnitt , der Frieden bringen könnte . 
+   <unit type="int" id= "9">
+      <connective id="9" relation="">Da</connective> sich beide Seiten auf die Bürger berufen , 
+   </unit>
+   <unit type="ext" id="9">
+      sollten sie die auch entscheiden lassen :
+   </unit>
+   Lehnen sie Zühlkes Fest ab , hat sich der Spaß nach einem Jahr erledigt . Wird die Sache ein Erfolg , muss der Verein dies als Votum akzeptieren .
+</discourse>
+

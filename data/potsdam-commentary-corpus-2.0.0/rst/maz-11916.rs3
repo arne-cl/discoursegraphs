@@ -1,0 +1,75 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Steuer frei !</segment>
+    <segment id="11" parent="16" relname="evidence"> 
+
+Tabak- , Alkohol- , Gewerbe- , Einkommens- , Grund- , Vergnügungs- , Kfz- , Kapitalertrags- und nun ab 1. Januar 2002 auch noch eine Bauabzugssteuer .</segment>
+    <segment id="2" parent="12" relname="interpretation">  Deutschland ist nicht bescheiden ,</segment>
+    <segment id="12" parent="15" relname="span"> wenn es darum geht , seinen Bürgern und Investoren das Geld aus den Taschen zu ziehen .</segment>
+    <segment id="3" parent="16" relname="joint">
+
+Gründe für die Einführung neuer Steuern findet der Fiskus immer .</segment>
+    <segment id="4" parent="17" relname="span">  Die Kapitalertragssteuer war eingeführt worden ,</segment>
+    <segment id="13" parent="4" relname="purpose"> um die Schwarzgeld-Wäsche zu erschweren .</segment>
+    <segment id="5" parent="6" relname="concession">  Die Bauabzugssteuer nun soll angeblich dazu dienen , Schwarzarbeit auf die Schliche zu kommen .</segment>
+    <segment id="6" parent="18" relname="span">  Doch werden beispielsweise die vielen &quot; Freunde &quot; , die schwarzen Schafen unter den Bauherren offiziell nur &quot; helfen &quot; , tatsächlich aber unversteuertes Geld in die Hand kassieren , weiterhin ihr Unwesen treiben .</segment>
+    <segment id="7" parent="14" relname="preparation">  Einen Effekt wird die Bauabzugssteuer sicher haben :</segment>
+    <segment id="14" parent="22" relname="span">  Die Finanzbeamten haben noch mehr Papier zu bewegen , kontrollieren und bescheiden .</segment>
+    <segment id="8" parent="23" relname="span">
+
+Was auf keinen Fall passieren darf , ist , dass die Bearbeitungszeiten für Steuersachen noch länger dauern als bisher .</segment>
+    <segment id="9" parent="21" relname="span">  Noch immer warten zum Beispiel Steuerzahler , die im Oranienburger Finanzamt im Mai 2001 ihre Einkommenssteuererklärungen abgegeben haben , auf die Bescheide .</segment>
+    <segment id="10" parent="9" relname="e-elaboration">  Oftmals sind es die , die was zurück bekommen .</segment>
+<group id="15" type="span" parent="16" relname="joint" />
+<group id="16" type="multinuc" parent="20" relname="span" />
+<group id="17" type="span" parent="19" relname="list" />
+<group id="18" type="span" parent="19" relname="list" />
+<group id="19" type="multinuc" parent="16" relname="evidence" />
+<group id="20" type="span" parent="24" relname="background" />
+<group id="21" type="span" parent="8" relname="evidence" />
+<group id="22" type="span" parent="24" relname="joint" />
+<group id="23" type="span" parent="24" relname="joint" />
+<group id="24" type="multinuc" parent="25" relname="span" />
+<group id="25" type="span" />
+  </body>
+</rst>

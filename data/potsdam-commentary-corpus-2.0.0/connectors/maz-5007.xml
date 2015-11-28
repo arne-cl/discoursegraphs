@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Abwägen
+   <unit type="ext" id="8">
+      <unit type="ext" id="9">Richtig , als Nicht-Teschendorfer erlebt man die Sorgen und Nöte um den Lkw-Verkehr im Griebener Weg nicht jeden Tag hautnah und live mit .</unit>
+   </unit>
+   <unit type="int" id="9">
+      <unit type="int" id="8">
+         <connective id="8" relation="concession">Aber</connective>
+         <connective id="9" relation="consequence">
+            <modifier>gerade</modifier>
+            deshalb
+         </connective>
+         ist es einem Auswärtigen wohl ganz gut möglich , sich ein objektives Bild von der Situation vor Ort zu machen .
+      </unit>
+   </unit>
+   <unit type="ext" id="11">Häufigen Lkw-Verkehr vor der Haustür finde ich auch nicht gerade toll .</unit>
+   <unit type="int" id="11">
+      <unit type="ext" id="18">
+         <unit type="int" id="13">
+            <connective id="11" relation="addition">Und</connective>
+            <connective id="13" relation="condition">wenn</connective>
+            sich die Brummis nicht an die Geschwindigkeitsbegrenzung von 30 km/h halten ,
+         </unit>
+         <unit type="ext" id="13">sind Lärm und Ärger vorprogrammiert .</unit>
+      </unit>
+   </unit>
+   <unit type="ext" id="19">
+      <unit type="int" id="18">
+         Ordentliche Straßen und Tempokontrollen zu fordern , ist
+         <connective id="18" relation="consequence">deshalb</connective>
+         völlig legitim .
+      </unit>
+   </unit>
+   <unit type="int" id="19">
+      <connective id="19" relation="addition">Und</connective>
+      die Gemeinde hat bereits signalisiert , die Anlieger dabei unterstützen zu wollen .
+   </unit>
+   Nun zu den Argumenten der Gegenseite . Ein Zweischichtsystem ohne wirtschaftliche Notwendigkeit auf eine Schicht reduzieren zu müssen , bringt gegenüber der Konkurrenz zwangsläufig Nachteile mit sich , die bis zur Unrentabilität , Aufgabe des Firmenstandortes und den Verlust von Arbeitsplätzen führen . Bleibt unterm Strich die Frage aller Fragen :
+   <unit type="ext" id="24">Sozialer Frieden für rund 200 Arbeitnehmer und deren Angehörige</unit>
+   <unit type="int" id="24">
+      <connective id="24" relation="alternation">oder</connective>
+      private Ruhe für etwa zehn Anlieger ?
+   </unit>
+   <unit type="ext" id="25">
+      Ehrlich , ich ziehe Arbeit vor . 
+   </unit>
+   <unit type="int" id="25">
+      <connective id="25" relation="addition">Und</connective> 
+      wie würden Sie entscheiden ?
+   </unit>
+</discourse>
+

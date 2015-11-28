@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Feigenblatt
+   Die Jugendlichen in Zossen wollen ein Musikcafé . 
+   <unit type="ext" id="1">Das forderten sie bei der ersten Zossener Runde am Dienstagabend . Dass die Politiker der Stadt dafür Verständnis haben , ist löblich .</unit>
+   <unit type="int" id="1">
+      Mit dem Treffen im Rathaus ist
+      <connective id="1" relation="consequence">somit</connective>
+      auch ein Dialog zwischen den Generationen angestoßen .
+   </unit>
+
+      <unit type="ext" id="3">
+         Dass die beiden geladenen Jugendlichen im Laufe des Abends immer weniger zu Wort kamen , war sicher keine böse Absicht , 
+      </unit>
+   <unit type="ext" id="2">
+      <unit type="int" id="3">
+         ärgerlich ist es
+         <connective id="3" relation="concession">trotzdem</connective>
+         .
+      </unit>
+   </unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="addition">Und</connective> 
+      aberwitzig dazu .
+   </unit>
+   <unit type="ext" id="7">
+      <unit type="ext" id="4">
+         <unit type="ext" id="5">Es entbehrt nicht der Komik ,</unit>
+         <unit type="int" id="5">
+            <connective id="5" relation="condition">wenn</connective>
+            sich drei Erwachsene - Karola Andrae ( Bürgerbündnis/FDP ) , Susanne Michler ( CDU ) und Joachim Zanow ( SPD ) - darüber streiten , was Jugendliche wollen und brauchen , ohne auf die Idee zu kommen , sie selbst zu fragen .
+         </unit>
+      </unit>
+      <unit type="int" id="4">
+         <unit type="ext" id="6">
+            <connective id="4" relation="addition">Und</connective> 
+            das ,
+         </unit>
+         <unit type="int" id="6">
+            <connective id="6" relation="concession">obwohl</connective>
+            sie ihnen gegenüber sitzen .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="7">
+      Die Jugendlichen wurden
+      <connective id="7" relation="consequence">somit</connective>
+      zum bloßen Feigenblatt degradiert .
+   </unit>
+   <unit type="ext" id="8">Nicht über
+   <unit type="int" id="8">
+      <connective id="8" relation="contrast">sondern</connective>
+      mit ihnen</unit> hätten die Politiker reden sollen .
+   </unit>
+   Damit ist eine große Chance vertan . Vielleicht klappt es bei der nächsten Runde Anfang 2002 . Dann werden auch mehr Jugendliche eingeladen .
+   <unit type="ext" id="10">In der Gruppe können sie sich hoffentlich mehr Gehör verschaffen .</unit>
+   <unit type="int" id="10">
+      Vielleicht finden
+      <connective id="10" relation="successive">dann</connective>
+      auch Vertreter von PDS und Gewerbeverein ihren Weg ins Rathaus .
+   </unit>
+   Die glänzten diesmal noch mit Abwesenheit .
+</discourse>
+

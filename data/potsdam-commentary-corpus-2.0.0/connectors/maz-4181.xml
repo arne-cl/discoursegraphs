@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Fingerspitzengefühl Der Euro kommt - schon bald . Manche Geschäftsleute bereiten sich auf die Währungsumstellung vor . Sie besuchen Informationsveranstaltungen , wie sie von der Handwerkskammer veranstaltet werden .
+   <unit type="ext" id="6">
+      Dort erfahren die Dienstleister , <unit type="ext" id="3">was sie erwartet ,</unit>
+      <unit type="int" id="3">
+         <connective id="3" relation="condition">wenn</connective>
+         sie sich nicht rechtzeitig auf die Euroeinführung vorbereiten :
+      </unit>
+      Chaos und eventuell das Aus .
+   </unit>
+  <unit type="ext" id="13">
+   <unit type="int" id="6">
+      <connective id="6" relation="consequence">Denn</connective>
+      zu beachten ist - neben der eindeutigen Auszeichnung der Waren - auch die " richtige " Umrechnung von Mark in Euro .
+   </unit>
+   Der Umrechnungskurs für den Euro steht fest . Daran darf nicht gerüttelt werden .
+   <unit type="ext" id="10">Auf- und abgerundet wird zwei Stellen hinter dem Komma - nach kaufmännischem Prinzip .</unit>
+   <unit type="int" id="10">
+      <unit type="ext" id="11">
+         Dies kann
+         <connective id="10" relation="contrast">jedoch</connective>
+         bei den Gewerbetreibenden zu Einnahmeverlusten führen .
+      </unit>
+   </unit>
+   
+<unit type="int" id="11">
+      <connective id="11" relation="consequence">Denn</connective>
+      auch Kleinvieh macht ja bekanntlich Mist .
+   </unit>
+  </unit>
+
+      <unit type="int" id="13">
+         Gut beraten ist
+         <connective id="13" relation="consequence">deshalb</connective>
+         , wer sich schon rechtzeitig mit der Rechnerei beschäftigt .
+      </unit>
+      Vielleicht wird ja der abgerundete Bonbonpreis durch den aufgerundeten Schokoladenpreis wieder wettgemacht . 
+   <unit type="ext" id="14">
+     Unbegründete und panische Preiserhöhungen vergraulen nur die Kunden .
+   </unit>
+   <unit type="ext" id="16">
+   <unit type="int" id="14">
+      <connective id="14" relation="contrast">Doch</connective>
+      wer zu lange wartet , um sich mit den Rechnereien zu beschäftigen , verliert bei der Euroumstellung den Überblick . 
+      </unit>
+<unit type="int" id="16"> <connective id="16" relation="addition">Und</connective> riskiert damit das Vertrauen seiner Kunden .</unit>
+   </unit>
+</discourse>
+

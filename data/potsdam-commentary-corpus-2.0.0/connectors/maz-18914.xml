@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Alarmsignal
+   Mit Helga Kaden streicht eine der namhaftesten Geschäftsleute der Stadt die Segel .
+   <unit type="ext" id="1">Sie konnte ihr traditionsreiches Geschäft
+   <unit type="int" id="1">
+      <connective id="1" relation="consequence">wegen</connective>
+      der anhaltenden Kundenflaute
+   </unit>
+   nicht mehr über Wasser halten .</unit>
+   <unit type="ext" id="2">Mag sein , das ihr Konzept nicht aufging . Die exklusiven Sachen hatten ihren Preis .</unit> <unit type="int" id="2"><connective id="2" relation="concession">Nur</connective> - es gab ja Zeiten , da verkaufte sich das sehr gut .</unit> Es wird schon gemunkelt , dass weitere dem Beispiel folgen werden . <unit type="ext" id="3">Ausgerechnet in der schönen Weihnachtszeit offenbart sich das Elend des innerstädtischen Einzelhandels .</unit> <unit type="int" id="3"><connective id="3" relation="addition">Und zwar</connective> an einer Ecke , die eine Art Aushängeschild für die Stadt ist .</unit> Ein leerer Laden ist alles andere als einladend für den Schwenk in die City . Ein Alarmsignal für den neuen Bürgermeister .
+   <unit type="ext" id="5">Die Stadt kann nur bedingt helfen ,</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="contrast">aber</connective>
+      sie muss es endlich tun .
+   </unit>
+   Erstens : Die Parkgebühren in der Einkaufszone müssen weg . Zweitens : Ein anziehender Branchenmix muss her - wo es die Stadt nicht selbst in der Hand hat , muss sie es mehr fordern , notfalls den Eigentümern geeignete gewerbliche Mieter selbst vermitteln . Drittens :
+   <unit type="ext" id="6">Im Umgang mit hilfesuchenden Händlern muss der Grundsatz gelten - nichts ist unmöglich .</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="condition">So</connective>
+      lässt sich das schlingernde City-Schiff vielleicht doch noch auf einen erfolgversprechenden Kurs bringen .
+   </unit>
+</discourse>
+

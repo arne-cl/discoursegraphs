@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Zwei Wahrheiten
+   <unit type="ext" id="1">
+      Man muss über keine großen Prognosequalitäten verfügen ,
+      <unit type="int" id="1">
+         <connective id="1" relation="purpose">um</connective>
+         heute schon vorauszusagen , wer den Wahlspot der CDU ausfüllen wird :
+      </unit>
+   </unit>
+   Gerhard Schröders leichtsinniger Satz wird es sein , nach dem er sich " am Erfolg beim Abbau der Arbeitslosigkeit messen lassen " werde . Der hing ihm auch in der Debatte über den Bundeshaushalt wie eine Klette an .
+   <unit type="ext" id="6">Gewiss können der Kanzler und seine Minister die Verunsicherung der Verbraucher seit dem 11. September anführen , den verschärften Konjunktureinbruch , den noch vor einem Jahr kein Wirtschaftsinstitut so vorausgesehen hatte .</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="contrast">Doch</connective>
+      ebenso zutreffend ist , dass der Regierung von Anfang an der Mut fehlte , den Arbeitsmarkt zu deregulieren .
+   </unit>
+   Die Probe aufs Exempel steht noch immer aus . Die Regierung Schröder ist der Großindustrie und den Gewerkschaften entgegengekommen , nicht dem Mittelstand .
+   <unit type="int" id="7">
+      <connective id="7" relation="contrast">Statt</connective>
+      dereguliert
+   </unit>
+   <unit type="ext" id="7">hat sie noch etwas mehr reglementiert .</unit>
+   Wer unter diesen Rahmenbedingungen erwartet haben sollte , dass kleine und mittlere Unternehmen sowie Handwerksbetriebe bei Einstellungen etwas riskieren , der muss die teilnehmende Beobachtung schon seit längerem eingestellt haben .
+</discourse>
+

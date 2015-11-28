@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Euro-Cash for Kids In der MAZ-Lokalredaktion Luckenwalde wurde inzwischen bereits die zweite Sammelbox für restliches Urlaubsgeld aus aller Herren Länder aufgestellt . <unit type="ext" id="4">Die erste Box war schneller als gedacht prall gefüllt und schwer ,</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">und</connective>
+      sie konnte bereits an den Initiator der Sammelaktion , den Internationalen Bund ( IB ) , übergeben werden .
+   </unit>
+   <unit type="ext" id="6">Hintergrund der Idee war die bevorstehende Euro-Einführung .</unit>
+   <unit type="int" id="6">
+      <unit type="ext" id="3">Wohin
+      <connective id="6" relation="successive">dann</connective>
+      mit den vom Urlaub übrig gebliebenen Münzen , die bald sowieso nichts mehr wert sind ?
+   </unit></unit>
+   Warum sollten sie nicht noch einen guten Zweck erfüllen können ? <unit type="ext" id="5"><unit type="int" id="3"><connective id="3" relation="consequence">So</connective> wurde die Aktion " Euro-Cash for Kids " gestartet ,</unit></unit> <unit type="int" id="5"><connective id="5" relation="addition">und</connective> sie fand speziell in Luckenwalde und Umgebung eine riesige Resonanz .</unit> Dafür ein herzliches Dankeschön . <unit type="ext" id="11">Vielleicht kommen ja jetzt nach den Herbstferien noch einige Münzen zusammen ,</unit> <unit type="int" id="11">in der zweiten Box ist <connective id="11" relation="addition">jedenfalls</connective> noch Platz dafür vorhanden .</unit>
+   <unit type="ext" id="7">Noch bis zum Jahresende besteht die Möglichkeit , restliche Urlaubsmoneten in der MAZ-Lokalredaktion abzugeben .</unit>
+   <unit type="int" id="7">
+      <unit type="ext" id="8">
+         <connective id="7" relation="successive">Danach</connective>
+         <unit type="ext" id="9">wird das Geld umgetauscht</unit> <unit type="int" id="9"><connective id="9" relation="addition">und</connective> es soll für die Intensivierung des internationalen Austausches von Jugendlichen besonders mit Ländern Osteuropas eingesetzt werden
+      </unit></unit>
+      -
+      <unit type="int" id="8">
+         vor allem
+         <connective id="8" relation="addition">auch</connective>
+         als Ersatz für ausgebliebene staatliche Förderung .
+      </unit>
+   </unit>
+</discourse>
+

@@ -1,0 +1,86 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Wohltäter</segment>
+    <segment id="13" parent="2" relname="antithesis">
+
+Durch Arbeit wird man selten reich .</segment>
+    <segment id="2" parent="35" relname="span">  Eher schon durchs Glücksspiel .</segment>
+    <segment id="3" parent="36" relname="span">  Doch der große Wurf gelingt bekanntlich nur den allerwenigsten .</segment>
+    <segment id="4" parent="14" relname="antithesis">  Die Masse hofft und hofft -</segment>
+    <segment id="14" parent="24" relname="span"> und geht doch am Ende leer aus .</segment>
+    <segment id="5" parent="15" relname="preparation">  All jenen sei gesagt :</segment>
+    <segment id="15" parent="31" relname="span">  Ihr Einsatz ist mehr als eine zerplatzte Illusion .</segment>
+    <segment id="6" parent="16" relname="condition">  Wer zum Beispiel an der &quot; Glücksspirale &quot; dreht ,</segment>
+    <segment id="16" parent="25" relname="span"> beweist sich indirekt als Wohltäter .</segment>
+    <segment id="7" parent="33" relname="joint">  Denn seit 1991 wurden 105 Millionen Mark der Einnahmen der &quot; Glücksspirale &quot; zweckgebunden an die Stiftung Denkmalschutz weitergereicht .</segment>
+    <segment id="8" parent="27" relname="span">  Die wiederum förderte damit 264 Bauten im Brandenburgischen ,</segment>
+    <segment id="17" parent="26" relname="list"> um den Verfall zu stoppen ,</segment>
+    <segment id="18" parent="26" relname="list"> ihre Schönheit zu bewahren ,</segment>
+    <segment id="19" parent="26" relname="list"> sie den Menschen wieder zugänglich zu machen .</segment>
+    <segment id="9" parent="20" relname="list">  Der Bogen reicht dabei von den ganz Großen wie dem Brandenburger Dom bis zu den ganz Kleinen wie der winzigen Dorfkirche von Kanin .</segment>
+    <segment id="10" parent="20" relname="list">  Gefördert werden sowohl technische Denkmale wie der Beelitzer Wasserturm , als auch kunsthistorisch wertvolle Wohnhäuser wie Haus Friedrichshuld in Philippsthal .</segment>
+    <segment id="11" parent="30" relname="conjunction">  Unterstützt werden Bauherren , die ein stimmiges Nutzungs- und Finanzierungskonzept vorlegen</segment>
+    <segment id="21" parent="30" relname="conjunction"> und sich selbst einbringen - mit Geld , Muskelhypothek und ihrem Herzblut .</segment>
+    <segment id="12" parent="28" relname="condition">  Falls Sie also an diesem Wochenende wieder leer ausgehen :</segment>
+    <segment id="22" parent="28" relname="span">  Alles halb so schlimm ,</segment>
+    <segment id="23" parent="22" relname="reason"> Sie taten Gutes</segment>
+<group id="24" type="span" parent="3" relname="restatement" />
+<group id="25" type="span" parent="34" relname="span" />
+<group id="26" type="multinuc" parent="8" relname="purpose" />
+<group id="27" type="span" parent="32" relname="span" />
+<group id="28" type="span" parent="29" relname="span" />
+<group id="29" type="span" parent="38" relname="interpretation" />
+<group id="30" type="multinuc" parent="27" relname="elaboration" />
+<group id="20" type="multinuc" parent="27" relname="elaboration" />
+<group id="31" type="span" parent="34" relname="interpretation" />
+<group id="32" type="span" parent="33" relname="joint" />
+<group id="33" type="multinuc" parent="25" relname="reason" />
+<group id="34" type="span" parent="37" relname="span" />
+<group id="35" type="span" parent="3" relname="concession" />
+<group id="36" type="span" parent="37" relname="background" />
+<group id="37" type="span" parent="38" relname="span" />
+<group id="38" type="span" parent="39" relname="span" />
+<group id="39" type="span" />
+  </body>
+</rst>

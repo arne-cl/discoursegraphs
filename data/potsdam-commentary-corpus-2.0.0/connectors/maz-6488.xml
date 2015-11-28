@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Downloads/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Da fehlt noch was
+   <unit type="int" id="2">
+      <connective id="2" relation="simultaneous">Als</connective>
+      1999 die im Rahmen der Dorferneuerung neu gestaltete Radeweger Ablage inklusive Seebrücke mit viel Pomp eingeweiht wurde ,
+   </unit>
+   <unit type="ext" id="2">war klar : Da fehlt noch was .</unit>
+   Wer die Infrastruktur für den Wassertourismus vorantreiben will , darf nicht nur bis zum nächsten Steg denken .
+   <unit type="ext" id="4">Sanitäre Anlagen gehören heute zum Standard großer Liegeplätze .</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="contrast">Doch</connective>
+      mit der Nachrüstung tut sich Radewege schwer .
+   </unit>
+   Was einst beschlossen wurde , zählt nicht mehr . Zu teuer , zu hässlich sei die Anlage , sagen die Meinungsführer im Gemeinderat .
+   <unit type="ext" id="5">Beschlüsse zu überdenken ist legitim ,</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="contrast">doch</connective>
+      <unit type="ext" id="6">nur von Alternativen zu reden , <unit type="int" id="6"><connective id="6" relation="addition">ohne</connective> brauchbare Vorschläge auf den Tisch zu legen ,</unit> ist zu billig .</unit>
+   </unit>
+<unit type="ext" id="7">
+   <unit type="ext" id="10">Ein multifunktionales Objekt mit Umkleide- und Treffmöglichkeiten als angeblich bessere Variante ist bisher nicht mehr als eine fiktive Idee geblieben .</unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="addition">Und</connective>
+      ob diese billiger wird , steht auf einem anderen Blatt .
+   </unit>
+</unit>
+      <unit type="int" id="7">
+   <connective id="7" relation="addition">Außerdem</connective> hat Radewege mit dem nicht weit entfernten Haus des Beetzseetreffs e. V. ein Gebäude , das vielen Freizeitbedürfnissen gerecht werden kann .</unit>
+   <unit type="ext" id="12">Kommt der Sanitärtrakt nicht spätestens zur nächsten Saison , droht Radewege , den Wettbewerb um Freizeitkapitäne auf dem Beetzsee mit anderen Anbietern zu verlieren .</unit>
+   <unit type="int" id="12">
+      <connective id="12" relation="concession">Dabei</connective>
+      hätte das Dorf jede Einnahme nötig .
+   </unit>
+</discourse>
+

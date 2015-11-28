@@ -1,0 +1,85 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Wendefehler</segment>
+    <segment id="17" parent="32" relname="joint">
+
+Heranwachsende haben seit jeher und überall ein Problem gehabt :</segment>
+    <segment id="18" parent="32" relname="joint">  Sie sind rebellisch und machen dumme Sachen .</segment>
+    <segment id="2" parent="33" relname="span">  Sie wegzuschließen , scheint eine Lösung zu sein .</segment>
+    <segment id="3" parent="34" relname="span">  Aber nicht alle Jugendlichen lassen sich während schwieriger Lebensphasen einfach wegsperren .</segment>
+    <segment id="4" parent="35" relname="span">  Deshalb ist es sehr lobenswert , dass sich auch in Königs Wusterhausen der Verein Jugendrechtshaus gegründet hat .</segment>
+    <segment id="5" parent="4" relname="elaboration">  38 Männer und Frauen aus dem Ort erklärten sich bereit ohne Gegenleistung in die Zukunft zu investieren : in Kinder und Jugendliche .</segment>
+    <segment id="6" parent="30" relname="list">  Sie wollen Rechtsbewusstsein lehren ,</segment>
+    <segment id="19" parent="30" relname="list"> Ansprechpartner sein</segment>
+    <segment id="20" parent="30" relname="list"> und die jungen Leute an die Regeln des menschlichen Zusammenlebens heranführen .</segment>
+    <segment id="7" parent="31" relname="span">  Auch weil Elternhäuser und Schulen dies nicht immer schaffen .</segment>
+    <segment id="8" parent="23" relname="concession">  Orientierungslose Menschen gibt es überall .</segment>
+    <segment id="9" parent="22" relname="span">  Vielen Ostdeutschen wurde wendebedingt jedoch eingeredet :  Ihr habt alles falsch gemacht !</segment>
+    <segment id="16" parent="9" relname="interpretation">  Und das irritiert .</segment>
+    <segment id="10" parent="24" relname="span">  Zudem verlor ein Großteil der ehemaligen DDR-Bürger die Arbeit ,</segment>
+    <segment id="21" parent="10" relname="result"> damit den sozialen Halt .</segment>
+    <segment id="11" parent="12" relname="reason">  Eltern , die selbst um ihr Gleichgewicht kämpfen , haben mit sich selbst zu tun .</segment>
+    <segment id="12" parent="26" relname="span">  Sie können nur bedingt Gesprächspartner und Vorbilder sein .</segment>
+    <segment id="13" parent="28" relname="evaluation-n">  Die Vereinsmitglieder des Jugendrechtshauses wollen zuhören .</segment>
+    <segment id="14" parent="28" relname="joint">  Und das ist ein guter erster Schritt .</segment>
+    <segment id="15" parent="28" relname="joint">  Hoffentlich folgen weitere .</segment>
+<group id="22" type="span" parent="23" relname="list" />
+<group id="23" type="multinuc" parent="25" relname="span" />
+<group id="24" type="span" parent="23" relname="list" />
+<group id="25" type="span" parent="26" relname="background" />
+<group id="26" type="span" parent="27" relname="span" />
+<group id="27" type="span" parent="7" relname="reason" />
+<group id="28" type="multinuc" parent="29" relname="span" />
+<group id="29" type="span" parent="38" relname="interpretation" />
+<group id="30" type="multinuc" parent="37" relname="joint" />
+<group id="31" type="span" parent="37" relname="reason" />
+<group id="32" type="multinuc" parent="2" relname="solutionhood" />
+<group id="33" type="span" parent="3" relname="antithesis" />
+<group id="34" type="span" parent="35" relname="reason" />
+<group id="35" type="span" parent="36" relname="span" />
+<group id="36" type="span" parent="37" relname="joint" />
+<group id="37" type="multinuc" parent="38" relname="span" />
+<group id="38" type="span" parent="39" relname="span" />
+<group id="39" type="span" />
+  </body>
+</rst>

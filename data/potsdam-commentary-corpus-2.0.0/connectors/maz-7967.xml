@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Strausberg siegt Die Schönfließer Straße in Glienicke war bereits vor zweieinhalb Jahren fertig . Zumindest die Fassade : <unit type="ext" id="2">Das Strausberger Straßenbauamt hatte im Zuge des Planfeststellungsverfahrens die Entwürfe offen gelegt . Angeblich ,</unit> <unit type="int" id="2"><connective id="2" relation="purpose">damit</connective> Bürger Anregungen formulieren konnten .</unit>
+   <unit type="ext" id="3">
+      Tatsächlich
+      <unit type="ext" id="1">haben sich Anlieger in die Materie eingearbeitet</unit>
+      <unit type="int" id="1">
+         <connective id="1" relation="addition">und</connective>
+         auf konkrete Probleme hingewiesen .
+      </unit>
+   </unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="condition">So</connective>
+      auf die unterschiedlichen Grundstücksfluchten .
+   </unit>
+   Das Tiefbauamt der Gemeinde hat die Einwände für richtig befunden und den Strausbergern empfohlen , den Besitzern einen Teil ihres Landes abzukaufen .
+   <unit type="ext" id="5"><unit type="ext" id="4">Die Arbeiten sind noch nicht abgeschlossen .</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="contrast">Doch</connective>
+      der Putz bröckelt bereits erheblich : Deutlich wird , dass Strausberg alle Hinweise in den Wind geschlagen hat .
+   </unit></unit>
+   <unit type="int" id="5"><connective id="5" relation="consequence">Drum</connective> wird die Straße - zum Nachteil von Verkehrssicherheit , Baupreis und Ortsbild - kurviger als nötig .</unit> Ob klare Worte des Bürgermeisters daran etwas ändern können ? Wahrscheinlich ist auch Joachim Bienert zu lange dem Strausberger Blendwerk aufgesessen . Kleiner Trost : Er ist , siehe Schildow , nicht der Einzige . Die Lehre daraus ? <unit type="ext" id="6">Frechheit siegt . Zumindest ,</unit> <unit type="int" id="6"><connective id="6" relation="temporal">bis</connective> personelle Konsequenzen gezogen werden .</unit> Minister Meyer , übernehmen Sie .
+</discourse>
+

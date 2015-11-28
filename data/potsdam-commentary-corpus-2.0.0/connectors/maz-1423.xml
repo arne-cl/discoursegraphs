@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+
+   Zum Angewöhnen
+   Die Diskussion , wie teuer die neue Wittstocker Stadthalle für Vereine und Veranstalter wird , hat einige Zeit in Anspruch genommen . Bei der jüngsten Sitzung haben die Stadtverordneten entschieden .
+
+   <unit type="ext" id="4">
+      Vor allem kommerzielle Veranstalter werden ab 2002 gut zur Kasse gebeten .
+   </unit>
+
+   <unit type="int" id="4">
+      Die Einnahmen sind
+      <connective id="4" relation="concession">
+         dennoch
+      </connective>
+      nur ein Tropfen auf den heißen Stein .
+   </unit>
+
+   Die Betriebskosten für den schmucken Veranstaltungsort sind hoch . Jetzt wird es darum gehen , die Halle so oft wie möglich zu füllen .
+
+   <unit type="ext" id="7">
+
+      <unit type="int" id="11">
+         <connective id="11" relation="">
+            Je 
+         </connective>
+         mehr Veranstaltungen stattfinden ,
+      </unit>
+
+      <connective id="11" relation="">
+         desto 
+      </connective>
+
+      <unit type="ext" id="11">
+         weniger wird der Stadthaushalt belastet . 
+      </unit>
+      Die Halle muss ausgelastet sein .
+   </unit>
+
+   <unit type="int" id="7">
+      <unit type="ext" id="9">
+         <connective id="7" relation="addition">
+            Und
+         </connective>
+         in der Region gibt es Konkurrenz .
+      </unit>
+   </unit>
+
+   <unit type="ext" id="10">
+      <unit type="int" id="9">
+         <connective id="9" relation="addition">
+            Auch
+         </connective>
+         die Nachbarstädte bieten Veranstaltern genügend Platz .
+      </unit>
+   </unit>
+
+   <unit type="int" id="10">
+      Wittstock
+      <connective id="10" relation="contrast">
+         dagegen
+      </connective>
+      muss sich erst einen Namen machen .
+   </unit>
+
+   Das Oktoberfest hat gezeigt , dass es eine Anlaufzeit braucht . Die Gäste aus nah und fern müssen sich erst daran gewöhnen , nach Wittstock und Richtung Gymnasium zu pilgern . Fest steht , dass die Dosse-Stadt als Mittelzentrum ohne einen ansehnlichen Veranstaltungsort mit ausreichend Platz fürs Publikum nicht auskommt . Ohne die Halle würde Wittstock bald ins Hintertreffen geraten .
+
+</discourse>
+

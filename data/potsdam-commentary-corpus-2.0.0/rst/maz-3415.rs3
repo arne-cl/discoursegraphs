@@ -1,0 +1,93 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Der aufgezwungene Krieg</segment>
+    <segment id="14" parent="34" relname="antithesis">
+
+Der Krieg , der jetzt in Afghanistan ausgefochten wird , hat nicht erst am Sonntag Abend begonnen .</segment>
+    <segment id="2" parent="34" relname="span">  Er begann am 11. September mit den Anschlägen von New York und Washington ,</segment>
+    <segment id="15" parent="2" relname="e-elaboration"> die in ihrer Wirkung einem geballten Raketenangriff durchaus vergleichbar sind .</segment>
+    <segment id="3" parent="39" relname="span">  Wenn sich hierzulande dennoch vielerorts Zweifel an Sinn und Richtigkeit der Militärschläge breitmachen ,</segment>
+    <segment id="16" parent="38" relname="joint"> liegt das nicht zuletzt daran , dass Freiheit und Toleranz zu den tief verwurzelten Grundwerten unserer Gesellschaft gehören :</segment>
+    <segment id="17" parent="38" relname="joint">  Wir sind es gewohnt , dass durch friedliche Verhandlungen und Kompromiss-Suche Konflikte aus der Welt zu räumen sind .</segment>
+    <segment id="4" parent="18" relname="cause">  Gewaltverzicht und Deeskalation sind uns so sehr in Fleisch und Blut übergegangen ,</segment>
+    <segment id="18" parent="33" relname="span"> dass wir uns schwer damit abfinden können , dass diese Prinzipien in einem einzigen Fall versagen :</segment>
+    <segment id="19" parent="5" relname="reason">  Fanatismus darf und kann man nicht mit Liberalität begegnen .</segment>
+    <segment id="5" parent="36" relname="span">  Mit einem Selbstmord-Attentäter kann man keinen Kompromiss schließen .</segment>
+    <segment id="6" parent="31" relname="span">
+
+Auch das Suchen nach möglichen Motiven der Täter hilft da nicht weiter .</segment>
+    <segment id="7" parent="20" relname="antithesis">  Sie beklagen den andauernden Konflikt zwischen Israelis und Palästinensern ,</segment>
+    <segment id="20" parent="25" relname="span"> dabei engagiert sich der Westen seit Jahren mit viel Geld und Krisendiplomatie für ein Ende der Gewalt .</segment>
+    <segment id="8" parent="21" relname="antithesis">  Sie beklagen die Armut der arabischen Welt ,</segment>
+    <segment id="21" parent="26" relname="span"> dabei stehen die autokratischen und nicht selten korrupten Eliten dort meist selbst jedem Aufschwung im Weg .</segment>
+    <segment id="9" parent="22" relname="antithesis">  Sie beklagen die Militärpräsenz der USA in Saudi-Arabien ,</segment>
+    <segment id="22" parent="27" relname="span"> dann hätten sie die dortige Königsfamilie attackieren müssen .</segment>
+    <segment id="10" parent="23" relname="antithesis">  Sie geißeln den westlichen &quot; Kulturimperialismus &quot;</segment>
+    <segment id="23" parent="28" relname="span"> und verkennen , dass sie sich entscheiden müssen zwischen wirtschaftlichem Austausch und damit einhergehendem Wohlstand auf der einen und fundamentalistischer Abschottung auf der anderen Seite .</segment>
+    <segment id="11" parent="24" relname="antithesis">  Sie klagen den Westen an wegen der Sanktionsopfer im Irak</segment>
+    <segment id="24" parent="29" relname="span"> und unterschlagen die aggressive Aufrüstung Saddam Husseins .</segment>
+    <segment id="12" parent="13" relname="concession">
+
+Diesen Krieg hat im Westen niemand gewollt .</segment>
+    <segment id="13" parent="32" relname="span">  Deshalb aber dem Terror das Heft des Handelns zu überlassen , wäre auch keine Lösung .</segment>
+<group id="25" type="span" parent="30" relname="list" />
+<group id="26" type="span" parent="30" relname="list" />
+<group id="27" type="span" parent="30" relname="list" />
+<group id="28" type="span" parent="30" relname="list" />
+<group id="29" type="span" parent="30" relname="list" />
+<group id="30" type="multinuc" parent="6" relname="reason" />
+<group id="31" type="span" parent="37" relname="list" />
+<group id="32" type="span" parent="41" relname="summary" />
+<group id="33" type="span" parent="38" relname="joint" />
+<group id="34" type="span" parent="35" relname="span" />
+<group id="35" type="span" parent="40" relname="background" />
+<group id="36" type="span" parent="37" relname="list" />
+<group id="37" type="multinuc" parent="40" relname="span" />
+<group id="38" type="multinuc" parent="3" relname="reason" />
+<group id="39" type="span" parent="37" relname="antithesis" />
+<group id="40" type="span" parent="41" relname="span" />
+<group id="41" type="span" parent="42" relname="span" />
+<group id="42" type="span" />
+  </body>
+</rst>

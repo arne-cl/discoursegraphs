@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Politisches Signal Derzeit bestimmen die Parteien , wen sie in den Wahlkreisen der Region für die Bundestagswahl 2002 in das Rennen schicken werden . Dies geschieht eher beiläufig , zumindest ohne Beteiligung einer breiten Öffentlichkeit .
+   <unit type="ext" id="2">Die Einwohner von Städten und Gemeinden erfahren meist erst kurz vor dem Entscheid auf Bundesebene , wer ihr direkter politischer Ansprechpartner in Berlin sein könnte . Dann ist es oft schon zu spät , die inhaltlichen Schwerpunkte der Kandidaten zu bestimmen . Welche Haltungen sie zu spezifischen örtlichen Problemen einnehmen , bleibt für viele Wähler zunächst im Dunkeln .</unit>
+   <unit type="int" id="2">
+      Sich frühzeitig mit den Vorstellungen der Bundestagsaspiranten vertraut zu machen , ist
+      <connective id="2" relation="consequence">deshalb</connective>
+      sinnvoll .
+   </unit>
+   In manchen Fällen ist ihr Einfluss auf höchster Ebene wichtig .
+   <unit type="ext" id="3">Das gilt besonders bei Projekten , die der Bund selbst in den Regionen vorantreibt ,</unit>
+   <unit type="int" id="3">
+      genannt seien
+      <connective id="3" relation="addition">zum Beispiel</connective>
+      die Umgehungsstraßen und das Verkehrsprojekt Deutsche Einheit Nr. 17 - der Havelausbau .
+   </unit>
+   Letzterer ist im Potsdamer Umland umstritten . Ohne Übertreibung lässt sich sagen , dass die Gegner des Projekts klar in der Mehrheit sind . Für sie muss die Haltung der Wahlkreiskandidaten zu diesem Thema auch ein politisches Signal sein .
+</discourse>
+

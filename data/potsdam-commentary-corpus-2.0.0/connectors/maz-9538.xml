@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Reise ins Ungewisse
+   <unit type="ext" id="1">Eine Entscheidung von einiger Tragweite müssen heute die Mitglieder des Prignitzer Kreistages fällen .</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="consequence">Denn</connective>
+      sie besetzen nichts weniger als die oberste Verwaltungsposition im Landkreis .
+   </unit>
+   Der amtierende Landrat Hans Lange ( CDU ) tritt gegen Margarete Vierjahn an , die sich die Unterstützung der SPD erworben hat .
+  <unit type="ext" id="14">
+   <unit type="ext" id="4"><unit type="ext" id="2">Würde die Position wie die der hauptamtlichen Bürgermeister per Volksabstimmung besetzt ,</unit> wäre das Ergebnis wohl klar .</unit>
+  </unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="consequence">Denn</connective>
+      <unit type="int" id="2">Hans Lange dürfte vor allem im westlichen Teil des Kreises <connective id="2" relation="condition">dann</connective> mit großer Unterstützung rechnen dürfen .</unit>
+   </unit>
+      <unit type="ext" id="9">
+         <unit type="ext" id="8">
+            <unit type="ext" id="6">Bei ihm weiß der Bürger , was er hat -</unit>
+            <unit type="int" id="6">
+               <connective id="6" relation="alternation">oder</connective>
+               auch nicht .
+            </unit>
+         </unit>
+      </unit>
+   <unit type="ext" id="10">
+      <unit type="int" id="9">
+         <unit type="int" id="8">
+            Mit einigem Recht kann man
+            <connective id="8" relation="concession">aber</connective>
+            <connective id="9" relation="addition">auch</connective>
+            sagen , dass er mit seinem Amt gewachsen ist .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="10">
+      <unit type="ext" id="11">
+            Margarete Vierjahn
+            <connective id="10" relation="contrast">hingegen</connective>
+            hat
+            <connective id="11" relation="concession">zwar</connective>
+            ohne Zweifel die Qualifikation für die höhere Verwaltungstätigkeit .
+      </unit>
+   </unit>
+   <unit type="int" id="11">
+         Wofür sie
+         <connective id="11" relation="concession">aber</connective>
+         letztlich steht , ist zumindest öffentlich noch nicht ganz klar geworden .
+   </unit>
+   <unit type="ext" id="17">
+      <unit type="int" id="14">
+         <unit type="ext" id="15">
+            Die Entscheidung fällt
+            <connective id="14" relation="concession">aber</connective>
+            nun einmal im Kreistag
+       </unit>
+         <unit type="int" id="15">
+            <connective id="15" relation="addition">und</connective>
+            ist noch offen
+         </unit>
+      </unit>
+         ,
+   </unit>
+   <unit type="int" id="17">
+      <connective id="17" relation="addition">zumal</connective>
+      angesichts geheimer Wahl .
+   </unit>
+   <unit type="ext" id="20">
+   <unit type="ext" id="21">
+      <unit type="ext" id="19">Dabei kommt den kleinen Fraktionen
+      <unit type="int" id="19">
+         <connective id="19" relation="consequence">aufgrund</connective>
+         der obwaltenden Konstellation
+      </unit>
+      eine Schlüsselrolle zu .
+      </unit>
+   </unit>
+   </unit>
+   <unit type="int" id="20">
+   <unit type="int" id="21">
+      <connective id="21" relation="consequence">Und</connective>
+      <connective id="20" relation="consequence">so</connective>
+      steht den Prignitzern vielleicht nicht nur heute eine Reise ins Ungewisse ins Haus .
+   </unit>
+   </unit>
+</discourse>
+

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Nachahmenswert
+   Integration ist ein wichtiges Anliegen . Ja , heutzutage ist es sogar wichtiger denn je , dass gesellschaftliche Gruppen nicht ausgegrenzt werden .
+   <unit type="ext" id="5">
+      <unit type="int" id="2">
+         Angesichts der
+         <connective id="2" relation="successive">seit</connective>
+         Jahren obwaltenden rechtsradikalen Umtriebe
+      </unit>
+      <unit type="ext" id="2">sind insbesondere die Bemühungen um die Integration hier lebender Nicht-Deutscher und Aussiedler wichtig .</unit>
+   </unit>
+   <unit type="ext" id="8">
+   <unit type="int" id="5">
+      <connective id="5" relation="addition">Und</connective>
+      wie könnte so etwas besser funktionieren als über gemeinsame sportliche Aktivitäten ?
+   </unit>
+   </unit>
+   <unit type="int" id="8">
+   <unit type="ext" id="12">
+      <unit type="ext" id="10"><connective id="8" relation="consequence">So</connective> ist es aller Ehren wert ,</unit>
+      <unit type="int" id="10">
+         <connective id="10" relation="condition">wenn</connective>
+         der Verein Freizeitpark Wittenberge die Integrationsprogramme der Brandenburgischen Sportjugend seit Jahren intensiv unterstützt .
+      </unit>
+   </unit>
+   </unit>
+   <unit type="int" id="12">
+      <unit type="ext" id="16">
+         <connective id="12" relation="addition">Und zwar</connective>
+         so intensiv , dass deren Funktionäre bereits eine Vorliebe für die Prignitz entwickelt haben .
+      </unit>
+   </unit>
+   <unit type="int" id="16">
+      <connective id="16" relation="concession">Aber</connective>
+      darüber hinaus gibt es in diesem Kreis ebenso ehrenamtliches Engagement im Dienste dieser guten Sache .
+   </unit>
+<unit type="ext" id="15">
+   Einer , der sie sich zu eigen gemacht hat , erhielt am Sonnabend eine Auszeichnung : Der Pritzwalker Harry Stüwe , regelmäßigen Lesern unserer Lokal-Sportseiten bestens bekannt , wird in der Urkunde eine schöne Bestätigung für sein Engagement sehen . 
+</unit>
+<unit type="int" id="15">
+  <connective id="15" relation="addition">Und</connective> zum Weitermachen :
+   <unit type="ext" id="17">Solche Aktivitäten sind nicht nur nachahmenswert ,</unit>
+   <unit type="int" id="17">
+      <connective id="17" relation="contrast">sondern</connective>
+      auch ein Aushängeschild für die Region .
+   </unit>
+   Sie bedürfen unser aller Unterstützung .
+</unit>
+</discourse>
+

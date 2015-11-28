@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PoCoS scheme implementation, tried to keep compatibility with HTC scheme as great as possible -->
+<!-- Changes:
+        050315: referentiality
+        050209: restricted to core scheme
+        050208: restricted to primary markables: pronomina, definita, namen
+                bridging relations and sub-features of np_form etc. cannot be hidden
+                removed discont. markable (> groups)
+    041229: added repetition, ambig-rel-ante, down-ward compatible
+    041228: added ZERO pronouns and a global comment field, anaphoric as pointing relations
+    041214: first implemented: anaphoric as set-membership -->
+
+<!-- Notes: 
+     1) discontinuous markables had been implemented by a special relation annotated according to chain principle
+    if to be marked as antecedent or anaphor, always use the first part
+    BUT THEN: be careful not to mess up discontinuous markables with a sub-markable 
+
+        thus, we're awaiting the MMAX update that provides discontinuous markables
+
+     2) tried to implement grammar as a meta-feature controlling the visibility of grammatical features, but this
+        doesn't work since next="XY" can only refer to one successor attribute
+        instead, we apply restricted scheme variants
+-->
+<annotationscheme>
+
+<attribute id="level_referentiality" name="referentiality" type="nominal_button" text="Is the markable a referring expression, generic, or underspecified with respect to its referentiality ?">
+    <value id="value_ref_unspec" name="not_specified"/>
+    <value id="value_ref_underspec" name="discourse_cataphor"/>
+    <!-- value id="value_ref_generic" name="generic"/ TO OTHER -->
+    <value id="value_ref_ref" name="referring"/>
+    <value id="value_ref_discourse-new" name="discourse-new"/>
+    <value id="value_ref_other" name="other"/>
+</attribute>
+
+<attribute id="level_dir_speech" name="dir_speech" type="nominal_button" text="Is the markable embedded into ordinary text ?">
+    <value id="value_dir_none" name="text_level"/>
+    <value id="value_dir_dir" name="direct_speech"/>
+    <value id="value_dir_indir" name="indirect_speech"/>
+    <!--value id="value_dir_quotation" name="quotation"/-->
+</attribute>
+
+<attribute id="level_phrase_type" name="phrase_type" type="nominal_button" text="NP/PP/clausal/other">
+   <value id="value_phrase_type_np" name="np"/>
+   <value id="value_phrase_type_pp" name="pp"/>
+   <!-- value id="value_phrase_type_clausal" name="clausal"/-->
+   <value id="value_phrase_type_other" name="other"/>
+</attribute>
+
+ <attribute id="level_np_form" name="np_form" type="nominal_button" text="Choose noun phrase form!">
+  <value id="value_np_form_none" name="none"/>
+  <value id="value_np_form_NE" name="NE"/> <!-- proper name -->
+  <value id="value_np_form_defNP" name="defNP"/>
+  <value id="value_np_form_PPER" name="PPER"/>
+  <value id="value_np_form_PPOS" name="PPOS"/>
+  <value id="value_np_form_padv" name="PADV"/>
+  <value id="value_np_form_PDS" name="PDS"/>
+  <value id="value_np_form_other" name="other"/> 
+ </attribute>
+
+<attribute id="level_ambiguity" name="ambiguity" type="nominal_button" text="Is the pointing relation ambiguous ?">
+    <value id="value_ambig_not" name="not_ambig"/>
+    <value id="value_ambig_ante" name="ambig_ante"/>
+    <value id="value_ambig_rel" name="ambig_rel"/>
+    <value id="value_ambig_rel_ante" name="ambig_rel_ante"/>
+    <value id="value_ambig_idiom" name="ambig_idiom"/>
+    <value id="value_ambig_expl" name="ambig_expl"/>
+    <value id="value_ambig_other" name="ambig_other"/>
+</attribute>
+
+<!-- new implementation of coreference as pointing relation - CC 041228 -->
+ <attribute id="level_anaphorantecedent" name="Anaphor_antecedent" type="markable_pointer" color="green" width="2" style="lcurve" max_size="" point_to_markable_text="Mark as coreferent" remove_pointer_to_markable_text="Unmark as coreferent">
+  <value id="value_ana_antecedent" name="not_set" />
+  <value id="value_ana_antecedent" name="set"/>
+ </attribute>
+
+
+ <attribute id="level_type" name="Type" type="nominal_list" text="Choose type of expression!">
+  <value id="value_type_none" name="none"/>
+  <value id="value_type_anaphoric" name="anaphoric" next="level_anaphor_type"/>
+  <!--value id="value_type_bridging" name="bridging"/-->
+  <!--value id="value_type_discont" name ="discontinuous markable" next="level_discont"/-->
+ </attribute>
+
+ <attribute id="level_anaphor_type" name="anaphor_type" type="nominal_button" text="What kind of anaphoric relation ?">
+     <value id="value_anaphor_nominal" name="anaphor_nominal"/>
+     <!--value id="value_anaphor_event" name="anaphor_event"/-->
+     <!--value id="value_anaphor_spatio-temporal" name="spatio-temporal"/-->
+ </attribute>
+ 
+<!-- additional features -->
+<attribute id="level_complex-np" name="complex_np" type="nominal_button" text="Is the description complex or not ?">
+    <value id="value_complex_unspec" name="not_specified"/>
+    <value id="value_complex_yes" name="yes"/>
+    <value id="value_complex_no" name="no"/>
+</attribute>
+
+ <attribute id="level_grammatical_role" name="grammatical_role" type="nominal_button" text="">
+  <value id="value_grammatical_role_unspec" name="not_specified"/>
+  <value id="value_grammatical_role_SBJ" name="SBJ"/>
+  <value id="value_grammatical_role_dir-OBJ" name="DIR-OBJ"/>
+  <value id="value_grammatical_role_ind-OBJ" name="INDIR-OBJ"/>
+  <value id="value_grammatical_role_other" name="other"/>
+ </attribute>
+
+<attribute id="level_comment" name="comment" text="Add your comment and own specifications here!" type="freetext">
+        <value id="value_1" name="comment"/>
+</attribute>
+
+</annotationscheme>

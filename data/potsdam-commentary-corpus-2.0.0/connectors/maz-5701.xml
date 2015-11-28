@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Am Boden Die Nachrichtenlage ist unsicher .
+   <unit type="ext" id="5">
+      <unit type="ext" id="1">
+         Aus taktischen Gründen
+      </unit>
+      <unit type="int" id="1">
+         <connective id="1" relation="addition">und</connective>
+               um ihre Soldaten zu schützen , 
+      </unit>
+      äußern sich die USA nicht zu Berichten über den Beginn der Boden-Operation in Afghanistan .
+   </unit>
+   <unit type="int" id="5">
+      Experten gehen
+      <connective id="5" relation="contrast">jedoch</connective>
+      davon aus , dass Spezialkräfte längst am Hindukusch aktiv sind .
+   </unit>
+   <unit type="ext" id="7">
+   <unit type="ext" id="6">Gestützt wird diese These durch Angriffe auf Ziele in den afghanischen Bergen , die wohl nur durch Aufklärung am Boden zu treffen waren .</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="addition">Auch</connective>
+      erscheint nach dem Erringen der Lufthoheit über dem verwüsteten Land weiter andauerndes Bombardement kaum sinnvoll .
+   </unit>
+   </unit>
+   <unit type="int" id="7">Dass der Beginn von begrenzten Boden-Operationen im Westen vielerorts erwartet wird , hat
+      <connective id="7" relation="concession">aber</connective>
+      auch andere Ursachen :</unit>
+      <unit type="ext" id="9">Es wäre ein Zeichen dafür , dass der Zerstörung gegnerischer Einrichtungen nun ein gezielter Einsatz gegen die Terror-Netzwerke folgt .</unit>
+
+   <unit type="int" id="9">
+      <connective id="9" relation="consequence">Denn</connective>
+      eines ist klar : Die Militärschläge der USA verlieren mit jedem Tag weiteren Bombardements schleichend an Glaubwürdigkeit .
+   </unit>
+         Mit flächenhafter Zerstörung sind weder die Taliban noch bin Laden zu treffen .
+   <unit type="ext" id="14">Sollte der Luftkrieg als bloße Drohkulisse gedacht gewesen sein , verlöre er spätestens mit dem einsetzenden Winter und der unausbleiblichen humanitären Katastrophe seine Legitimation .</unit>
+   <unit type="int" id="14">
+      <connective id="14" relation="addition">Und</connective>
+      die USA ihren Rückhalt in Westeuropa .
+   </unit>
+</discourse>
+

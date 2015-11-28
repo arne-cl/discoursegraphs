@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Unbestechliche Zeugen
+   Die Rathenower Polizeibeamten haben gestern enorme Verstärkung erhalten . Drei hochmoderne Videokameras werden sie bei der Beobachtung des Dancehouse-Geländes unterstützen .
+   <unit type="ext" id="1">Vorbei die Zeiten , in denen ein Einsatzbus mit mehreren Beamten auf dem Parkplatz stundenlang Position beziehen musste ,</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="purpose">um</connective>
+      mögliche Gewalttäter von ihrem Tun abzuhalten .
+   </unit>
+   Vorbei auch die Zeiten , in denen <unit type="ext" id="3">gewaltbereite Jugendliche ihr Katz- und Maus-Spielchen mit den Polizisten trieben ,</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="manner">indem</connective>
+      sie provozierten , ohne straffällig zu werden .
+   </unit>
+   Vorbei . Wer sich jetzt etwas zu Schulden kommen lässt , muss damit rechnen , unverzüglich und beweiskräftig überführt zu werden . Die Kameras sind unbestechlich . 
+   <unit type="ext" id="4">
+      Aus der Distanz beobachten sie das Geschehen 
+   </unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">und</connective>
+      geben den Beamten an den Monitoren die Möglichkeit , die Lage nüchtern und mit klarem Kopf einzuschätzen . 
+      </unit>
+   <unit type="ext" id="6">
+      Provokateuren wird das Objekt ihrer Aggression genommen , ihre Sticheleien laufen ins Leere . 
+   </unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="addition">Und</connective>
+      wer straffällig wird , der braucht nicht darauf zu hoffen , dass sein Tun unbemerkt bleibt . 
+   </unit>
+   <unit type="ext" id="7">
+      Die technischen Augen sehen alles 
+   </unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="addition">und</connective> 
+      liefern die entsprechenden Beweise . 
+   </unit>
+   Das ist das Ziel der Videoüberwachung . Einwände dagegen zu finden , fällt schwer .
+</discourse>
+

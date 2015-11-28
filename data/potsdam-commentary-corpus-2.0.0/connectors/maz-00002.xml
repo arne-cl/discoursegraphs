@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Das Büchergeld Die Litanei ist nicht neu :
+   <unit type="ext" id="1">Eltern beschweren sich über veraltete Schulbücher , Kommunen jammern über leere Kassen</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="addition">und</connective>
+      Schulbuchverlage beklagen Umsatzeinbrüche .
+   </unit>
+   <unit type="ext" id="3">Trommeln gehört halt zum Geschäft .</unit>
+   <unit type="ext" id="5">
+      <unit type="int" id="3">
+         <connective id="3" relation="contrast">Doch</connective>
+         unterm Strich stehen Brandenburgs Schulen ganz gut da .
+      </unit>
+   </unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="contrast">Zum einen</connective>
+      wurden nach der Wende fast alle Schulbuchbestände ausgetauscht ,
+   </unit>
+   <unit type="ext" id="2">
+       <connective id="2" relation="contrast">zum anderen</connective> 
+       müssen sich märkische Eltern am Buchkauf beteiligen .
+   </unit>
+   <unit type="ext" id="4">Dafür gibt es sogar Lob von den Schulbuchverlagen .</unit>
+      <unit type="int" id="4">
+         <connective id="4" relation="consequence">Denn</connective>
+         in vielen alten Bundesländern gilt noch immer die Lernmittelfreiheit : 
+      </unit>
+   Eltern müssen nichts zuzahlen . Der Preis dafür ist hoch - gerade dort wird oft mit völlig veraltetem Material gearbeitet .
+   <unit type="int" id="5">
+      <connective id="5" relation="contrast">Doch</connective>
+      auch Brandenburg muss aufpassen .
+   </unit>
+   <unit type="ext" id="9">
+      <unit type="int" id="8">
+         <connective id="8" relation="condition">Wenn</connective>
+         immer mehr Kommunen finanziell ausbluten ,
+      </unit>
+      <unit type="ext" id="8">wird die regelmäßige Schulbucherneuerung zur Illusion .</unit>
+   </unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="consequence">Deshalb</connective>
+      ist auch die Landesregierung gefragt :
+   </unit>
+Es kann nicht sein , dass
+   <unit type="ext" id="13">für teure Modellprojekte wie Schnellläuferklassen oder Ganztagsschulen Geld locker gemacht ,</unit>
+   <unit type="int" id="13">
+      <connective id="13" relation="contrast">aber</connective>
+      an der Grundausstattung gespart wird .
+   </unit>
+</discourse>
+

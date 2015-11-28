@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE markables SYSTEM "markables.dtd">
+<markables xmlns="www.eml.org/NameSpaces/secmark">
+<markable id="markable_1000196" span="word_55..word_62" grammatical_role="dir-obj"  mmax_level="secmark"  referentiality="discourse-new"  ambiguity="not_ambig"  complex_np="yes"  dir_speech="text_level"  np_form="indefnp"  phrase_type="np" />
+<markable id="markable_1000200" span="word_100..word_101" grammatical_role="sbj"  mmax_level="secmark"  referentiality="discourse-new"  ambiguity="not_ambig"  complex_np="no"  dir_speech="text_level"  np_form="indefnp"  phrase_type="np" />
+</markables>

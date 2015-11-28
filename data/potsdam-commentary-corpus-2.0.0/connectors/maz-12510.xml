@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Wunsch nach Frieden
+   <unit type="ext" id="2">Der Wunsch nach Frieden wächst in Zeiten des Krieges . Erst recht ,</unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="condition">wenn</connective>
+      der Krieg dem eigenen Land gefährlich nahe rückt .
+   </unit>
+   <unit type="ext" id="3">Afghanistan ist
+   <unit type="int" id="3">
+      <connective id="3" relation="successive">seit</connective>
+      dem vom Bundestag abgesegneten Bündnis-Marschbefehl 
+   </unit>
+   für deutsche Soldaten näher , als es viele wahrhaben wollen .
+   </unit>
+   Diese Situation beschäftigt auch die MAZ-Jugendredakteure . Wen lässt ein heißer Krieg mit deutscher Beteiligung kalt ? ! Diesem Szenario setzen die Nachwuchsjournalisten eine Seite und den Wunsch nach Frieden entgegen . Eben dem verleihen Menschen seit vielen Generationen Ausdruck mit Symbolen : Peace-Zeichen , Friedenspfeife , Regenbogen , Olivenzweig , Kerzen , Friedenstaube ... Wann werden Friedenstauben weltweit fliegen ? Wohl nie .
+   <unit type="ext" id="7">Dazu ist das Unrecht auf unserem Planeten viel zu groß ,</unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="addition">wie</connective>
+      Kriegsberichte aus Afghanistan , Israel und Afrika täglich im Fernsehen verdeutlichen .
+   </unit>
+   <unit type="ext" id="9">Zu weit klafft die Schere zwischen Arm und Reich auseinander . Sozialer Sprengstoff , der Unmenschen wie bin Laden stark und unberechenbar gemacht hat . Das haben die Anschläge vom 11. September gezeigt .</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="contrast">Aber</connective>
+      heiligt der Kampf gegen den Top-Terroristen und seine Helfer jedes kriegerische Mittel ?
+   </unit>
+   Auch diese Frage muss erlaubt sein .
+</discourse>
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Ungemütliche Jahreszeit
+   <unit type="ext" id="2">Jetzt steht es fest , das "Goldene-Oktober"-Wetter geht seinem Ende entgegen .</unit>
+   <unit type="int" id="2">
+      Mit der ungemütlichen Jahreszeit nehmen
+      <connective id="2" relation="addition">auch</connective>
+      die Gefahren auf den Straßen zu , darauf weist die Polizei mit Nachdruck hin .
+   </unit>
+   <unit type="ext" id="4">Die Mitarbeiter der Verkehrsunfallbekämpfung im Schutzbereich Teltow-Fläming haben eine Reihe von Hinweisen für eine gute Fahrt durch den Herbst parat .</unit>
+   <unit type="int" id="4">
+      Sie wissen
+      <connective id="4" relation="addition">beispielsweise</connective>
+      , dass jetzt wieder verstärkt
+      <unit type="ext" id="5">Wild die Straßen überquert</unit>
+      <unit type="int" id="5">
+         <connective id="5" relation="addition">und</connective>
+         plötzlich vor Fahrzeugen auftauchen kann .
+      </unit>
+   </unit>
+   Vor allem beim Durchfahren von Waldstücken sollte darauf geachtet werden .
+   <unit type="ext" id="12">
+      <unit type="ext" id="10">Auch bei Laub-"Matten" auf der Fahrbahn ist Vorsicht angesagt</unit>
+      <unit type="int" id="10">
+         , vor allem ,
+         <connective id="10" relation="condition">wenn</connective>
+         sie durch Regen oder Tau nass sind .
+      </unit>
+   </unit>
+   <unit type="int" id="12">
+      Besonders in Kurven kann zu schnelles Fahren
+      <connective id="12" relation="successive">dann</connective>
+      dazu führen , dass Fahrzeuge ausbrechen .
+   </unit>
+   Besondere Aufmerksamkeit ist bei Nebel geboten . " Dicke Suppe " ist immer ein Zeichen dafür ,
+      <unit type="ext" id="13">die Geschwindigkeit zu drosseln</unit>
+      <unit type="int" id="13">
+         <connective id="13" relation="addition">und</connective>
+         den Sichtverhältnissen anzupassen .
+      </unit>
+      Bei weiter fortschreitender Jahreszeit ist dann auch schon mit Bodenfrösten und Straßenglätte zu rechnen .
+   Sicher ,
+   <unit type="ext" id="20">
+      <unit type="ext" id="18">wir haben das alles schon gehört</unit>
+      <unit type="int" id="18">
+         <connective id="18" relation="addition">und</connective>
+         wissen theoretisch Bescheid - 
+      </unit>
+   </unit>
+   <unit type="int" id="20">
+      in der Realität
+      <connective id="20" relation="concession">aber</connective>
+      enden leider zu viele Fahrten aus den genannten Gründen verhängnisvoll .
+   </unit>
+</discourse>
+

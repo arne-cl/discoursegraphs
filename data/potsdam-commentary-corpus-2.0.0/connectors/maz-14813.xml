@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Knebelvertrag
+   Eigentlich können wir es nicht mehr sehen :
+   <unit type="ext" id="4">Harry-Potter-Tassen , Potter T-Shirts , kleine Potter-Legomännchen und so weiter .</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">Und</connective>
+      nun folgt gleich das zweite Mega-Kinoereignis : " Der Herr der Ringe " .
+   </unit>
+   Bereits in jedem siebten Kinderüberraschungsei findet sich ein Frodo oder eine Elbenkönigin .
+   <unit type="ext" id="11">
+      <unit type="ext" id="9">Da boomt die Industrie gewaltig , mag man so denken</unit>
+      <connective id="9" relation="addition">und</connective>
+      <unit type="int" id="9">die gebeutelten Kinos bekommen auch noch einen dicken Batzen ab .</unit>
+   </unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="concession">Aber</connective>
+      was macht ein Lichtspieltheaterchef in der Provinz , der erst abends seine Pforten öffnen kann ?
+   </unit>
+   <unit type="ext" id="16">
+      <unit type="int" id="12">
+         <connective id="12" relation="purpose">Um</connective>
+         Harry Potter spielen
+         <connective id="12" relation="purpose">zu</connective>
+         können ,
+      </unit>
+      <unit type="ext" id="12">muss er sich verpflichten , die Kopie an sieben Tagen dreimal hintereinander zu zeigen .</unit>
+      Egal wie viele Zuschauer kommen . Das hat viele Kinobesitzer empört .
+      <unit type="int" id="15">
+         <connective id="15" relation="condition">Wenn</connective>
+         sie jetzt wieder einen Knebelvertrag beim " Herrn der Ringe " unterschreiben sollen ,
+      </unit>
+      <unit type="ext" id="15">erwägt so mancher , sich dem einfach zu verweigern .</unit>
+   </unit>
+   <unit type="int" id="16">
+      <connective id="16" relation="addition">Außerdem</connective> wird man sich nicht nur in katholischen Gegenden kaum zwingen lassen , Heiligabend und Silvester das Fantasiespektakel abzuspielen .
+   </unit>
+   Der Verleih Warner Bros muss sich schon etwas anderes einfallen lassen .
+</discourse>
+

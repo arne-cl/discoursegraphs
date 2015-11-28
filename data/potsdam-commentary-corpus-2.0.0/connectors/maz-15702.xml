@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Eigentlich fehlt ja keiner ...
+   <unit type="ext" id="1">Von spektakulären Ausbrüchen aus den Gefängnissen ist Justizminister Schelter bislang verschont geblieben .</unit>
+   <unit type="int" id="1">
+      Für seine Amtszeit verbucht die Justizchronik nun
+      <connective id="1" relation="concession">aber</connective>
+      einen Vorgang der besonderen Art .
+   </unit>
+   Die Haftanstalt in Spremberg hat am Dienstag einen Häftling freigelassen , der gar nicht zur Entlassung anstand .
+   <unit type="ext" id="2"><unit type="ext" id="5">Schlicht <unit type="int" id="5"><connective id="5" relation="consequence">durch</connective> eine Namensverwechslung</unit> konnte der verurteilte Dieb das Gefängnistor passieren .</unit></unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="successive">Seither</connective>
+      ist er verschwunden .
+   </unit>
+   <unit type="ext" id="3">Gefährlich sei er nicht , beeilte sich das Justizministerium gestern mitzuteilen ,</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="concession">aber</connective>
+      - klar doch - in die Freiheit gehört er auch noch nicht .
+   </unit>
+   Der Minister muss sich natürlich fragen lassen , was in Spremberg los ist .
+   <unit type="ext" id="4">
+      <unit type="ext" id="6">
+         Da bekommt einer Entlassungspapiere ,
+      </unit>
+      <unit type="int" id="6">
+         <connective id="6" relation="consequence">
+            <modifier>nur</modifier>
+            weil
+         </connective>
+         er zufällig den selben Nachnamen wie ein Mitgefangener trägt .
+      </unit>
+   </unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">Und</connective>
+      hätte die Frau des eigentlich zu Entlassenden nicht nachgefragt , wo ihr Mann eigentlich bleibt , wäre der falsche Abgänger vielleicht noch immer nicht aufgefallen . 
+   </unit>
+   In Spremberg verfahren die Wärter offenbar nach der einfachen Rechnung :
+   <unit type="ext" id="8">Hauptsache die Gesamtzahl stimmt ,</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="condition">wenn</connective>
+      abends zugeschlossen wird .
+   </unit>
+</discourse>
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Ein schöner Start
+   Es hätte für Luckenwaldes designierte Bürgermeisterin Elisabeth Herzog-von_der_Heide nicht besser kommen können .
+   <unit type="ext" id="5">
+         <unit type="ext" id="1">Gleich am ersten Tag nach ihrem Wahlsieg kam -
+         <unit type="int" id="1">
+            <connective id="1" relation="addition">so</connective>
+            als ob es so geplant gewesen wäre
+         </unit>
+         - der EU-Kommissar für Regionalpolitik aus Brüssel ,</unit>
+   </unit>
+   <unit type="int" id="5">
+         <connective id="5" relation="purpose">um</connective>
+         hier mit Vertretern der letzten drei deutschen Urban-Städte die Programm-Verträge
+         <connective id="5" relation="purpose">zu</connective>
+         unterzeichnen .
+      </unit>
+   <unit type="ext" id="8">Natürlich war es so nicht geplant gewesen ,</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="contrast">sondern</connective>
+      ein rein zufälliges Zusammentreffen zweier für Luckenwalde bedeutsamer Ereignisse , an denen Elisabeth Herzog nicht unbeteiligt war .
+   </unit>
+   <unit type="ext" id="13">
+      <unit type="ext" id="12">Dass Luckenwalde als kleinste von insgesamt zwölf deutschen Städten vom Urban-II-Projekt profitiert , ist ganz wesentlich der 2. Beigeordneten und künftigen Bürgermeisterin zu verdanken ,</unit>
+      <unit type="int" id="12">
+         was ihr im Wahlkampf sicherlich
+         <connective id="12" relation="addition">auch</connective>
+         geholfen hat .
+      </unit>
+   </unit>
+   <unit type="int" id="13">
+      Brandenburgs Städtebauminister Hartmut Meyer meinte
+      <connective id="13" relation="successive">dann</connective>
+      auch gestern :
+      <unit type="ext" id="17">" Es ist ein guter Start ,</unit>
+      <unit type="int" id="17">
+         <connective id="17" relation="condition">wenn</connective>
+         man gleich am ersten Tag 38 Millionen Mark bekommt .
+      </unit>
+      Wenn das so weiter geht ... "
+   </unit>
+   <unit type="ext" id="19">Natürlich geht es nicht so weiter , jedenfalls nicht Tag für Tag .</unit>
+   <unit type="int" id="19">
+      <unit type="ext" id="21">
+         <connective id="19" relation="addition">Und</connective>
+         nach all den Vorschusslorbeeren </unit>
+	 meinte Minister Meyer
+      <unit type="int" id="21">
+         <connective id="21" relation="successive">dann</connective>
+         auch zur künftigen Bürgermeisterin : " Jetzt werden Sie erst einmal an Ihren Taten gemessen . "
+      </unit>
+   </unit>
+</discourse>
+

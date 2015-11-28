@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Keine schlechte Wahl Die Idee ist gut : Die Stadt stellt Blumenzwiebeln en masse zur Verfügung , <unit type="ext" id="1">Schüler bringen sie in die Erde</unit>
+   <connective id="1" relation="addition">und</connective>
+   <unit type="int" id="1">sorgen dafür , dass es im Frühjahr noch bunter ist als sonst auf kommunalen Flächen .</unit>
+   Der Auftakt , den die Grundschüler gestern gaben , ist gelungen . Real- und Gesamtschüler setzen in diesen Tagen die Arbeiten an anderen Stellen fort , wie MAZ gestern berichtete .
+   <unit type="ext" id="2">Es machte schon Spaß zuzusehen , mit welchem Eifer die Mädchen und Jungen auf der großen Freifläche in der Berliner Straße zu Werke gingen .</unit>
+      <unit type="int" id="2">
+         <connective id="2" relation="addition">Und</connective>
+         das Ganze hat mit Sicherheit auch einen erzieherischen Nutzen :
+      </unit>
+      <unit type="ext" id="6">Wer weiß , wie viel Arbeit in solch einer Pflanzaktion steckt , schätzt das Ergebnis am Ende umso mehr .</unit>
+      <unit type="int" id="6">
+         <connective id="6" relation="addition">Und</connective>
+         es weckt den Stolz darauf , etwas für die Allgemeinheit getan zu haben , schafft Verbundenheit mit der Stadt .
+      </unit>
+   Das ist heutzutage , wo Vandalismus längst zum Alltag gehört , nicht zu unterschätzen . Die 30 Mädchen und Jungen haben sich eher zufällig in der Neigungsgruppe Biologie und Umwelt zusammengefunden . Viele aus Interesse , 
+   <unit type="ext" id="7">einige , </unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="consequence">weil</connective>
+      es in anderen Gruppen keinen Platz mehr gab .
+   </unit>
+   Vielleicht fanden auch die gestern die Bestätigung , dass sie letztlich doch gar keine so schlechte Wahl getroffen haben .
+</discourse>
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Zu kurz gedacht
+   Auch das gab es : Johannes B. Kerner hatte nichts zu sagen in seiner gleichnamigen ZDF-Talkshow . 
+   <unit type="ext" id="4">
+      Die emanzipierte Verona Feldbusch und die Emanze Alice Schwarzer machten den Talkmaster mit ihrem verbalen Gefecht über das gängige Frauenbild mundtot .
+   </unit>
+   <unit type="int" id="4">
+      <unit type="ext" id="1">
+         Die staunenden Zuschauer störte das
+         <connective id="4" relation="contrast">aber</connective>
+         überhaupt nicht .
+      </unit>
+   </unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="addition">Und</connective>
+      die Quoten steigen und steigen .
+   </unit>
+   <unit type="ext" id="2">Da dachten sich die Mainzelmänner , warum sollen wir unser Zugpferd Kerner nur einmal die Woche loslassen ?</unit>
+   <unit type="int" id="2">
+   <unit type="ext" id="5">
+      <connective id="2" relation="addition">Und</connective>
+      beschlossen , dass der Sympathieträger gleich vier Mal in der Woche zu später Stunde seine Prominenten und weniger Prominenten befragt .
+   </unit>
+   </unit>
+      <unit type="int" id="5">Auf diesen Sendeplätzen <connective id="5" relation="consequence">laufen</connective> nämlich Wiederholungen ,
+         die ohnehin kein Mensch sieht .</unit>
+  <unit type="ext" id="7">
+     <unit type="int" id="6">
+         Das mag
+         <connective id="6" relation="concession">zwar</connective>
+         dem Zweiten unterm Quotenstrich mehr bringen ,
+      </unit>
+  </unit>
+   <unit type="ext" id="6">
+      <unit type="int" id="7">
+         <connective id="7" relation="concession">trotzdem</connective>
+         darf bezweifelt werden , ob das der Sendung selbst und ihrer " Allzweckwaffe " Kerner wirklich zu Gute kommt .
+      </unit>
+   </unit>
+   Wie schnell sich Talkshows verschleißen , haben wir hinlänglich erlebt .
+   <unit type="ext" id="9">Es wäre schade ,</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="condition">wenn</connective>
+      durch kurzfristiges Quotendenken ein so beliebtes Format verheizt wird .
+   </unit>
+</discourse>
+

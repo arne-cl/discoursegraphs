@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<annotationscheme>
+<attribute id="type_level" name="type" type="freetext">
+<value id="type_level_value" name="type"/>
+</attribute>
+</annotationscheme>

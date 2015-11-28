@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Alles hübsch vertraulich Nun ist Schwarz auf Weiß zu lesen ,
+   <unit type="ext" id="1">was Insider längst wussten</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="addition">und</connective>
+      die Bürger dieser Stadt seit langem ahnten
+   </unit>
+   : Die Stadt als Eigentümerin der hochverschuldeten Wohnungsbaugesellschaft hat ihre Pflichten grob vernachlässigt . Das weist der geheime Prüfbericht des Rechnungsprüfungsamtes zur Rolle der Stadt als Gesellschafter des Unternehmens aus . Von Kontrolle der Geschäftsführung keine Spur . Sie konnte offenbar jahrelang nach Belieben schalten und walten . Starke Kostenüberschreitungen wurden nicht untersucht , eine geregelte Ausschreibungspraxis gab es nicht .
+   <unit type="ext" id="10">Nicht einmal die Vertreter der Stadt in Gesellschafterversammlung und Aufsichtsrat wurden von der Verwaltung ausreichend geschult .</unit>
+   <unit type="int" id="10">
+      <unit type="ext" id="12">
+         <connective id="10" relation="addition">Obendrein</connective>
+         legte die Kämmerei , als für die Vermögensverwaltung der Stadt zuständige Stelle , die Hände in den Schoß .
+      </unit>
+   </unit>
+   <unit type="int" id="12">
+         Das Schlimmste
+         <connective id="12" relation="concession">aber</connective>
+         ist , dass noch heute versucht wird , zu mauscheln .
+   </unit>
+   <unit type="ext" id="13">
+      Bürgermeister Jochen Wagner zieht sich auf die Vertraulichkeit zurück .
+   </unit>
+   <unit type="int" id="13">
+      <unit type="ext" id="15">
+         <connective id="13" relation="concession">Dabei</connective>
+         erwarten die Bürger nach diesem Vertrauensbruch klare Antworten darauf , welche Konsequenzen aus diesem Desaster gezogen wurden .
+      </unit>
+   </unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="contrast">Doch</connective>
+      was bekommen sie zu hören ?
+   </unit>
+   Die höchst vertrauenserweckende Antwort : Alles hübsch vertraulich .
+</discourse>
+

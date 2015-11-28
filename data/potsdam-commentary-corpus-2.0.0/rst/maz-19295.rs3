@@ -1,0 +1,71 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+K-Frage</segment>
+    <segment id="14" parent="2" relname="list">
+
+Angenommen , nur mal angenommen , der CDU-Landesvorsitzende S. im Land B. hätte sich für Edmund Stoiber als Kanzlerkandidaten der Union entschieden .</segment>
+    <segment id="4" parent="2" relname="list">  Nehmen wir weiter an , dass die CDU-Basis im Bundesland B. eher ihrer Parteichefin Angela Merkel zuneigt ,</segment>
+    <segment id="5" parent="3" relname="span"> dürfte Landeschef S. dann guten Gewissens im CDU-Bundesvorstand für Stoiber votieren ?</segment>
+    <segment id="13" parent="3" relname="interpretation">  Alles nur Gedankenspiele .</segment>
+    <segment id="7" parent="18" relname="span">  Niemand wagt sich bislang aus der Deckung .</segment>
+    <segment id="8" parent="6" relname="cause">  Tatsächlich ist die Kür des Kanzlerkandidaten so streng geheim ,</segment>
+    <segment id="6" parent="17" relname="span"> dass sie nur unter dem Code-Wort &quot; K-Frage &quot; gehandelt wird .</segment>
+    <segment id="9" parent="22" relname="span">  Bei Lichte und mit dem nötigen Ernst betrachtet , gibt es bei den Spitzenkandidaturen ein Legitimationsproblem .</segment>
+    <segment id="10" parent="21" relname="list">  Mitglieder-Entscheide haben schon oft - siehe Berliner SPD - den falschen Frontmann auf den Schild gehoben .</segment>
+    <segment id="11" parent="21" relname="list">  Kungelrunden gehen bewusst an der Basis vorbei .</segment>
+    <segment id="12" parent="15" relname="preparation">  Die Lösung des Problems ist ebenso schlicht wie anspruchsvoll :</segment>
+    <segment id="15" parent="20" relname="span"> unbezweifelbare , überzeugende Autorität .</segment>
+<group id="2" type="multinuc" parent="5" relname="condition" />
+<group id="3" type="span" parent="16" relname="span" />
+<group id="16" type="span" parent="19" relname="joint" />
+<group id="17" type="span" parent="7" relname="elaboration" />
+<group id="18" type="span" parent="19" relname="joint" />
+<group id="19" type="multinuc" parent="23" relname="background" />
+<group id="20" type="span" parent="23" relname="span" />
+<group id="21" type="multinuc" parent="9" relname="evidence" />
+<group id="22" type="span" parent="20" relname="solutionhood" />
+<group id="23" type="span" parent="24" relname="span" />
+<group id="24" type="span" />
+  </body>
+</rst>

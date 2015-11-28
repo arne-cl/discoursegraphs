@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Nagelprobe
+<unit type="ext" id="2">
+   <unit type="ext" id="1">37 Millionen Mark gibt die Stadt 2001 für die Unterhaltung eigener Immobilien aus .</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="addition">Und</connective>
+      der Wert der Liegenschaften beläuft sich auf eine halbe Milliarde Mark .
+   </unit>
+</unit>
+   <unit type="ext" id="3"><unit type="int" id="2"><connective id="2" relation="consequence">Damit</connective> ist die Stadt gar nicht so arm wie sie tut .</unit></unit> <unit type="int" id="3"><unit type="ext" id="4"><connective id="3" relation="contrast">Nur</connective> muss sie ihr Vermögen richtig einsetzen</unit> <unit type="int" id="4"><connective id="4" relation="addition">und</connective> verwalten .</unit></unit>
+   Das will Bürgermeister Langerwisch mit dem " zentralen Gebäude- und Liegenschaftsmanagement " tun .
+   <unit type="ext" id="11">Mit dem Konzept lassen sich Unterhalts- und Personalkosten einsparen</unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="addition">und</connective>
+      gleichzeitig bleibt Geld für die Sanierung der oft maroden kommunalen Gebäude übrig .
+   </unit>
+   Ob und wie Langerwisch die Umsetzung gelingt , bleibt abzuwarten . Auch in der Verwaltung haben sich über Jahre Pfründe und Abhängigkeiten gebildet ,
+   <unit type="ext" id="19">die nicht einfach aufgegeben werden</unit>
+   <unit type="int" id="19">
+      <connective id="19" relation="addition">und</connective>
+      die einer Zentralisierung im Wege stehen .
+   </unit>
+   <unit type="ext" id="22">Bisher sprang noch jeder Strukturreformer in der Verwaltung als Tiger</unit>
+   <unit type="int" id="22">
+      <connective id="22" relation="addition">und</connective>
+      landete als Bettvorleger .
+   </unit>
+   <unit type="ext" id="25">Schon die Nichteinbringung der Fachbereichsstruktur durch den OB hat Langerwisch gezeigt ,</unit>
+   <unit type="int" id="25">
+      <connective id="25" relation="simultaneous">wie</connective>
+      dünn das Eis des Erfolges ist , das ihn trug .
+   </unit>
+   Scheitert er nun auch mit dem zweifellos guten Liegenschaftskonzept , spräche dies für einen drastisch geschwundenen Einfluss in der Verwaltung und in der SVV , was die Stadt noch unregierbarer werden ließe .
+</discourse>
+

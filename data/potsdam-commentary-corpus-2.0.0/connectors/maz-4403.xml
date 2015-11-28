@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Scheibchenweise Es ist eine erfreuliche Serie : Am Donnerstag vergangener Woche nahmen die Klimafolgenforscher auf dem Telegrafenberg einen Supercomputer in Betrieb , gestern startete eine Hightech-Anlage in den Roten Kasernen , heute wird am Griebnitzsee das Hasso-Plattner-Institut eröffnet ...
+   <unit type="ext" id="1">So betrachtet , reiht sich das gestern gestartete Projekt der PanMedium-Stiftung in der Nedlitzer Straße nahtlos in die expandierende Potsdamer Hochtechnologie-Landschaft ein .</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="addition">Und</connective>
+      das auf hoffnungsvolle Weise .
+   </unit>
+   <unit type="ext" id="3">
+   Nur zu gut ist das Debakel um ein ähnlich hochgestecktes Wirtschafts-Computerprojekt in Erinnerung : Das FX-Center , das kaum aus den Negativ-Schlagzeilen heraus ist .
+   </unit>
+      <unit type="int" id="3">
+      Im Vergleich zum Hightech-Kollegen in der Medienstadt ist das PanMedium-Unternehmen
+         <connective id="3" relation="contrast">aber</connective>
+         von Anfang an bescheidener ausgelegt .
+      </unit>
+   <unit type="ext" id="6">Nicht nur bei der Förderung ( 19,5 statt 93 Millionen Mark bei einer Gesamtinvestition von 29 statt 104 Millionen ) ,</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="addition">auch</connective>
+      im Konzept geht PanMedium andere Wege .
+   </unit>
+   <unit type="ext" id="7">Der Computer startet in verhältnismäßig kleinem Umfang ,</unit>
+   <unit type="int" id="7">
+      wächst
+      <connective id="7" relation="concession">aber</connective>
+      bei Kundennachfrage mit .
+   </unit>
+   <unit type="ext" id="8">Das klingt nicht nur technisch sinnvoll ,</unit>
+   <unit type="int" id="8">
+      das gibt der Wirtschaft
+      <connective id="8" relation="addition">auch</connective>
+      finanziell halbwegs die Garantie , kein neues Dienstleister-Fiasko wie bei FX zu erleben .
+   </unit>
+</discourse>
+

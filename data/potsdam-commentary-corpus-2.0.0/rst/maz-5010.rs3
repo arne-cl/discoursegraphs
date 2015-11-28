@@ -1,0 +1,69 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Augenschein</segment>
+    <segment id="2" parent="21" relname="span">
+
+Die US-Regierung macht dieser Tage Druck auf Fernsehstationen , Video-Ansprachen Osama bin Ladens gar nicht mehr oder nur stark gekürzt zu senden .</segment>
+    <segment id="3" parent="14" relname="contrast">  Das ist natürlich ein Eingriff in die Pressefreiheit</segment>
+    <segment id="4" parent="14" relname="contrast"> und doch ist nicht auszuschließen , dass versteckte Botschaften zum &quot; Aufwecken &quot; so genannter &quot; Schläfer &quot; darin verborgen sind .</segment>
+    <segment id="5" parent="17" relname="circumstance">  Eine westliche Journalistengruppe besucht auf Einladung der Taliban ein zerstörtes Dorf in Afghanistan .</segment>
+    <segment id="6" parent="16" relname="antithesis">  Ein authentischer Ortstermin</segment>
+    <segment id="7" parent="16" relname="span"> und doch wissen die Berichterstatter nicht wirklich , was sie da mit eigenen Augen sehen :</segment>
+    <segment id="8" parent="15" relname="list">  Was war bereits zerstört ?</segment>
+    <segment id="9" parent="15" relname="list">  Wer hat es zerstört ?</segment>
+    <segment id="10" parent="15" relname="list">  Und zu wessen Werkzeug werden ihre Reportagen am Ende ?</segment>
+    <segment id="11" parent="18" relname="interpretation">  Allzu präzise Treffer-Bilder aus Washington machen ebenso stutzig wie verblüffend rasche Meldungen aus dem afghanischen Chaos über hohe Opferzahlen unter der Zivilbevölkerung .</segment>
+    <segment id="12" parent="19" relname="span">  Bei Nachrichten aus nur einer Quelle verhält es sich dieser Tage wie mit den Lotto-Zahlen :</segment>
+    <segment id="13" parent="12" relname="elaboration">  Es gibt keine Gewähr .</segment>
+<group id="14" type="multinuc" parent="2" relname="evaluation-s" />
+<group id="15" type="multinuc" parent="7" relname="elaboration" />
+<group id="16" type="span" parent="17" relname="span" />
+<group id="17" type="span" parent="18" relname="span" />
+<group id="18" type="span" parent="20" relname="span" />
+<group id="19" type="span" parent="22" relname="interpretation" />
+<group id="20" type="span" parent="22" relname="list" />
+<group id="21" type="span" parent="22" relname="list" />
+<group id="22" type="multinuc" parent="23" relname="span" />
+<group id="23" type="span" />
+  </body>
+</rst>

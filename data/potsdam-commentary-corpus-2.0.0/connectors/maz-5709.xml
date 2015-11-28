@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Bucklig Davon können die bevölkerungsreichen Wohngebiete Schlaatz , Stern und Drewitz nur träumen : Der Bauausschuss widmete seine ganze Aufmerksamkeit zum wiederholten Male und diesmal geschlagene anderthalb Stunden der kuscheligen Eigenheimsiedlung Parforceheide .
+   <unit type="ext" id="5">
+   <unit type="int" id="3"><connective id="3" relation="temporal">Während</connective> es rund um die Plattenbauten an allen Ecken hapert , dem Schlaatz gerade Mittel entzogen werden müssen ,</unit> <unit type="ext" id="3">soll die neue Straße An der Parforceheide durch Buckel ergänzt werden , die den Steuerzahler 40_000 Mark kosten .</unit></unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="concession">Dabei</connective>
+      sind es vor allem Anwohner , die mit mehr als den erlaubten 7 km/h durch die ausgewiesene Spielstraße fahren .
+   </unit>
+   <unit type="ext" id="7">Hier , wo sich die Namensschilder wie ein Potsdamer " Who is who ? " kluger Menschen lesen ,</unit>
+   <unit type="int" id="7">
+      ist man
+      <connective id="7" relation="concession">aber</connective>
+      offenbar nicht in der Lage , miteinander zu reden und eine Lösung zu finden .
+   </unit>
+   <unit type="ext" id="11">Lieber gründet man Bürgerbewegung und Antibewegung ,</unit> <unit type="int" id="11"><connective id="11" relation="addition">wobei</connective> die Buckelgegner öffentlich als kinderfeindlich gebrandmarkt werden .</unit>
+   <unit type="ext" id="9">Die Stadt wäre gut beraten , sich diesem moralischen Imperativ nicht zu beugen .</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="contrast">Anderenfalls</connective>
+      müsste sie vor jeder Schule und jeder Kita Bremsbuckel aufpflastern .
+   </unit>
+   <unit type="ext" id="10">Das wäre vielleicht wünschenswert ,</unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="addition">zugleich</connective>
+      aber unbezahlbar .
+   </unit>
+</discourse>
+

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Unverständlicher Streit um Religion
+   Eine Kollegin meinte kürzlich : " Bei uns an der Schule ist das doch zum Glück kein Problem mehr ! Unsere Schüler können ja frei wählen zwischen LER und Religion . " Leider musste ich sie eines Schlechteren belehren :
+   <unit type="ext" id="5">Der Gesetzgeber hinkt dieser Wirklichkeit weit hinterher .</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="addition">Und</connective>
+      nun scheint sogar unsere Landesregierung entschlossen , diese ( scheinbare ! ) Gleichbehandlung der beiden Fächer endgültig zu beseitigen .
+   </unit>
+   <unit type="ext" id="7">
+         Stolpe , Reiche &amp; Co. sagen
+         <connective id="7" relation="concession">zwar</connective>
+         Ja zu einem möglichen Kompromissangebot aus Karlsruhe ,
+   </unit>
+   <unit type="int" id="7">
+         dekretieren
+         <connective id="7" relation="concession">aber</connective>
+         : Einen Wahlpflichtbereich LER / Religion kann es nicht geben .
+   </unit>
+   Wer versteht da noch Debatte und dahinter stehende Interessen ? Die Schulpolitik in Brandenburg scheint zur Spielwiese für profilierungssüchtige Politiker zu verkommen .
+   <unit type="int" id="12">
+      <connective id="12" relation="contrast">Statt</connective>
+      für eine solide finanzierte , langfristige Bildungspolitik zu sorgen ,
+      <unit type="ext" id="13">die ruhiges Arbeiten erlaubt</unit>
+      <unit type="int" id="13">
+         <connective id="13" relation="addition">und</connective>
+         sich an Bedürfnissen orientiert ,
+      </unit>
+   </unit>
+   <unit type="ext" id="12">wird hektisch auf jeden Trend reagiert : Medienoffensive , Schnellläuferklassen , Zentralabitur ... </unit>
+   Demokratische Prozesse von unten werden nicht abgewartet . Leidtragende sind die Lehrer und Schüler .
+   <unit type="ext" id="19"><unit type="ext" id="22">LER- und Religionslehrer haben sich mit persönlichem Einsatz weitergebildet ,</unit> <unit type="int" id="22"> <connective id="22" relation="purpose">um</connective> ihr Fach unterrichten zu können -</unit></unit>
+   <unit type="int" id="19">
+      <connective id="19" relation="addition">und</connective>
+      die Regierung schiebt die Anerkennung einer sich bewährenden Praxis hinaus .
+   </unit>
+   <unit type="ext" id="21">Man muss ihr unterstellen , kein Interesse am kirchlichen Mitwirken in der Schule zu haben .</unit>
+   <unit type="int" id="21">
+      <connective id="21" relation="concession">Dabei</connective>
+      sollte sie alle begrüßen , die zur qualifizierten Mitarbeit in dieser Problemzone unserer Gesellschaft bereit sind .
+   </unit>
+</discourse>
+

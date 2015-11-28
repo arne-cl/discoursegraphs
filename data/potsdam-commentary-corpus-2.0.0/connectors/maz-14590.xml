@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Verpasste Chance
+   Heute wird in Potsdam der brandenburgische Kunstpreis überreicht . Die mit 30_000 Mark dotierte Auszeichnung sollte dieses Jahr einer Person zukommen , die sich für das märkische Musikleben stark gemacht hat . Die Wahl fiel auf Ulrike Liedtke , Musikwissenschaftlerin und Leiterin der Bundesmusikakademie Rheinsberg . Verdientermaßen :
+   <unit type="ext" id="3">Zu nennen ist ihr Einsatz für den Wiederaufbau des Rheinsberger Schlosstheaters , die Entdeckung preußischer Komponisten , das zeitgenössische Musiktheater und den Musikstandort Rheinsberg .</unit>
+   <unit type="int" id="3">
+     <unit type="ext" id="4">
+      <connective id="3" relation="concession">Dennoch</connective>
+      hinterlässt das Votum der Jury einen faden Nachgeschmack :</unit> <unit type="int" id="4">Für all das hat sich in Rheinsberg <connective id="4" relation="consequence">nämlich</connective> auch Siegfried Matthus eingesetzt , Komponist und Leiter der dortigen Kammeroper .</unit>
+   </unit>
+   <unit type="ext" id="6">
+      <unit type="int" id="5">
+         <connective id="5" relation="condition">Wenn</connective>
+         der Preis schon nach Rheinsberg gehen soll ,
+      </unit>
+      <unit type="ext" id="5">hätte man beide bedenken müssen .</unit>
+   </unit>
+   <unit type="int" id="6">
+      <unit type="ext" id="7">
+         <connective id="6" relation="addition">Zumal</connective>
+         sie in herzlicher Feindschaft verbunden sind .
+      </unit>
+   </unit>
+   <unit type="int" id="7">
+         <connective id="7" relation="contrast">Doch</connective>
+	 <unit type="int" id="8">
+         <connective id="8" relation="contrast">statt</connective>
+         zur Versöhnung aufzurufen ,
+      </unit>
+      <unit type="ext" id="8">könnte diese Entscheidung die Wunden noch tiefer reißen .</unit>
+   </unit>
+   Eine verpasste Chance .
+</discourse>
+

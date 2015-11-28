@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Schätze gehoben
+   <unit type="int" id="1">
+      <connective id="1" relation="simultaneous">Als</connective>
+      Raubritter Bassewitz die Kyritzer einst bedrängte ,
+   </unit>
+   <unit type="ext" id="1">sollen sich die Bewohner mit Knatterkrapfen gestärkt haben .</unit>
+   <unit type="ext" id="2">
+      Der Kyritzer Bäckermeister Thomas Haupt brachte gestern zum Spezialitätenwettbewerb der Prignitzer Bäcker-Innung eine Tafel mit , auf der von dieser Begebenheit berichtet wird . Die Rezeptur für seinen Knatterkrapfen hat er von seiner Großmutter übernommen . 
+   </unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="elaboration">Auch</connective> die anderen Bäckermeister stellten Rezepturen vor , die so wohl kaum bekannt waren . 
+   </unit>
+   <unit type="ext" id="4">
+      <unit type="ext" id="3">
+         Einmalig dürfte das geflochtene Bunte Brot von Winfried Höfler aus Perleberg sein , 
+      </unit>
+      <unit type="int" id="3">
+         <connective id="3" relation="sequence">ebenso</connective> einmalig wie die Elbwelle von Wolfgang Grünberg aus Lenzen . 
+      </unit>
+   </unit>
+   <unit type="int" id="4">
+      Eine Neuentwicklung präsentierte <connective id="4" relation="elaboration">auch</connective> der Fretzdorfer Thomas Hausbalk mit seinem Schrotbrot ,
+   </unit>
+   <unit type="ext" id="5">dass sich nicht nur lange frisch hält ,</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="contrast">sondern</connective>
+      auch den Ansprüchen gesunder Ernährung entspricht .
+   </unit>
+   <unit type="ext" id="7">
+      <unit type="ext" id="6">
+         Die Meister werden nun ihre Spezialitäten auf der Grünen Woche vorstellen 
+      </unit>
+      <unit type="int" id="6">
+         <connective id="6" relation="addition">und</connective>
+         damit für die Prignitz werben .
+      </unit>
+   </unit>
+   <unit type="int" id="7">
+      Der Wettbewerb hat
+      <connective id="7" relation="contrast">jedoch</connective>
+      auch gezeigt , dass im Handwerk verborgene Schätze schlummern - mehr als man sich denkt .
+   </unit>
+   <unit type="ext" id="10">Oft fehlt es nur am Mut , mit diesen Schätzen an die Öffentlichkeit zu gehen .</unit>
+   <unit type="int" id="10">
+      Mit der PR-Aktion wurde
+      <connective id="10" relation="consequence">
+         <modifier>eben</modifier>
+         auch
+      </connective>
+      eine Hemmschwelle überwunden .
+   </unit>
+</discourse>
+

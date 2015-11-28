@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+    Kurzsichtig
+
+    <unit type="ext" id="1">
+        Containerplätze sind zweckmäßig ,
+    </unit>
+    
+    <unit type="int" id="1">
+        <connective id="1" relation="contrast">
+            doch
+        </connective>
+        leider funktionieren sie nicht so richtig .
+    </unit>
+
+    <unit type="ext" id="2">
+    Das ist bei anderen Einrichtungen auch der Fall , die auf Selbstdisziplin und Bürgersinn bauen .
+    </unit>
+    
+    <unit type="int" id="2">
+        <unit type="ext" id="7">
+            Viele Menschen schaffen es 
+            <connective id="2" relation="consequence">
+                nämlich
+            </connective> 
+            nicht , ihren Müll korrekt in die doch einfach gekennzeichneten Behälter zu werfen .
+        </unit>
+    </unit>
+    
+    <unit type="int" id="7">
+        <unit type="int" id="5">
+            <connective id="7" relation="consequence">
+                So
+            </connective>
+        gehen Kunststoff und Glas oft durcheinander ,
+        </unit>
+        <unit type="ext" id="5">
+            <connective id="5" relation="addition">
+                auch
+            </connective> 
+            bei der Farbunterscheidung von Flaschen haben einige Zeitgenossen offensichtlich ihre Probleme .
+        </unit>
+    </unit>
+    
+    Die Rethmann-Mitarbeiter haben sogar schon Teppiche aus dem Papiercontainer gezogen . 
+    
+    <unit type="ext" id="8">
+        Egal , ob nun mutwillig oder aus Unwissenheit - ersteres ist moralisch sicherlich verwerflicher - rund die Hälfte der Abfälle gerät in den falschen Kreislauf .
+    </unit>
+    
+   <unit type="ext" id="12">
+        <unit type="int" id="8">
+            <connective id="8" relation="consequence">
+                Da
+            </connective> 
+            ist es nur logisch , dass die Rethmänner jetzt so nach und nach das Sammelsystem umstellen . 
+        </unit>
+        Schmuddelige Containerplätze sollen so bald der Vergangenheit angehören .
+   </unit>
+   
+    <unit type="int" id="12">
+        Unverständlich ist
+        <connective id="12" relation="consequence">
+            deshalb
+        </connective>
+        die mit 37 Prozent doch recht hohe Anzahl der Bürger vom Görden , sich dem neuen System - gelbe Säcke und Papiertonnen - zu versagen .
+    </unit>
+   
+    <unit type="ext" id="14">
+        Sie sollten ihre Entscheidung noch einmal überdenken ,
+    </unit>
+    
+    <unit type="int" id="14">
+        <connective id="14" relation="consequence">
+            denn
+        </connective>
+        neben dem Effekt , dass die Schmuddelecken verschwinden , ist der Weg mit dem gelben Sack vor die Haustür kürzer als die Fahrt zum Container .
+    </unit>
+</discourse>
+

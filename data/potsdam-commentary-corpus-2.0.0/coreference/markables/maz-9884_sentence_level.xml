@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE markables SYSTEM "markables.dtd">
+<markables xmlns="www.eml.org/NameSpaces/sentence">
+<markable id="markable_5000" span="word_1"/>
+  <markable id="markable_1" span="word_2..word_3" type="eol"/>
+  <markable id="markable_2" span="word_4..word_9" type="eol"/>
+  <markable id="markable_3" span="word_10..word_16" type="eol"/>
+  <markable id="markable_4" span="word_17..word_20" type="eol"/>
+  <markable id="markable_5" span="word_21..word_30" type="eol"/>
+  <markable id="markable_6" span="word_31..word_32" type="eol"/>
+  <markable id="markable_7" span="word_33..word_41" type="eol"/>
+  <markable id="markable_8" span="word_42..word_49" type="eol"/>
+  <markable id="markable_9" span="word_50..word_53" type="eol"/>
+  <markable id="markable_10" span="word_54..word_58" type="eol"/>
+  <markable id="markable_11" span="word_59..word_76" type="eol"/>
+  <markable id="markable_12" span="word_77..word_78" type="eol"/>
+  <markable id="markable_13" span="word_79..word_85" type="eol"/>
+  <markable id="markable_14" span="word_86..word_91" type="eol"/>
+  <markable id="markable_15" span="word_92..word_97" type="eol"/>
+  <markable id="markable_16" span="word_98..word_105" type="eol"/>
+  <markable id="markable_95" span="word_133..word_139"/>
+  <markable id="markable_96" span="word_123..word_131"/>
+  <markable id="markable_17" span="word_106..word_110" type="eol"/>
+  <markable id="markable_18" span="word_111..word_117" type="eol"/>
+  <markable id="markable_19" span="word_118..word_122" type="eol"/>
+  <markable id="markable_21" span="word_140..word_143" type="eol"/>
+  <markable id="markable_22" span="word_144..word_149" type="eol"/>
+  <markable id="markable_23" span="word_150..word_163" type="eol"/>
+  <markable id="markable_24" span="word_164..word_172" type="eol"/>
+  <markable id="markable_25" span="word_173..word_180" type="eol"/>
+  <markable id="markable_26" span="word_181..word_197" type="eol"/>
+  <markable id="markable_27" span="word_198..word_201" type="eol"/>
+  <markable id="markable_28" span="word_202..word_219" type="eol"/>
+  <markable id="markable_29" span="word_220..word_229" type="eol"/>
+  <markable id="markable_30" span="word_230..word_236" type="eol"/>
+  <markable id="markable_31" span="word_237..word_246" type="eol"/>
+</markables>

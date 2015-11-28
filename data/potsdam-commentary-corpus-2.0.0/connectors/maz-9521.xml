@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Posse um Bosse Kichern und Prusten auf dem Fraktionsgestühl .
+   <unit type="ext" id="4">Zurecht</unit>
+   ,
+   <unit type="int" id="4">
+      <connective id="4" relation="consequence">denn</connective>
+      was der Oberbürgermeister den Stadtverordneten gestern bot , war eine konsequent inszenierte Posse .
+   </unit>
+   Freilich braucht man für derbe Späße ein Opfer . Finanzstadtrat Bosse hatte vor Wochen aus der Zeitung erfahren müssen , dass er im Sommer 2002 zugunsten eines CDU-Kandidaten in die Wüste geschickt wird . Gestern nun
+   <unit type="ext" id="6">lobte ihn sein Chef als " alten Fahrensmann "</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="addition">und</connective>
+      erklärte dem Publikum wortreich , warum schon im Januar ein Nachfolger bestellt sein muss
+   </unit>
+   :
+   <unit type="ext" id="8">Nicht etwa</unit>
+   ,
+   <unit type="int" id="8">
+      <connective id="8" relation="consequence">weil</connective>
+      die Regierungsabsprache mit den Christdemokraten soeben perfekt war ;
+   </unit>
+   davon kein Wort . Nein , der Neue könne schon mal seinen Umzug nach Potsdam vorbereiten , die Kinderlein umschulen , das Aufgabenfeld ansehen ... Alle spielten die Stegreifkomödie mit . Der Preis für die schönste Pointe geht wieder einmal an CDU-Fraktionschef Kapuste : Auch Bosse bekomme nun schließlich mehr persönliche Planungssicherheit . Nur das Opferlamm schmiss seine Rolle . Der Noch-Beigeordnete reichte das Manuskript seiner Haushaltsrede aus . Es ist mit einer Karikatur verziert : Matthias Platzeck trägt das Transparent " Unverschuldet in Not geraten " .
+</discourse>
+

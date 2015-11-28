@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE markables SYSTEM "markables.dtd">
+<markables xmlns="www.eml.org/NameSpaces/secmark">
+<markable id="markable_1000189" span="word_160" grammatical_role="sbj"  mmax_level="secmark"  referentiality="other"  ambiguity="not_ambig"  complex_np="no"  dir_speech="text_level"  comment="inferentieller bezug zu den gewerbetreibenden"  np_form="other"  phrase_type="np" />
+<markable id="markable_1000186" span="word_8..word_9" grammatical_role="sbj"  mmax_level="secmark"  referentiality="discourse-new"  ambiguity="not_ambig"  dir_speech="text_level"  complex_np="no"  phrase_type="np"  np_form="indefnp" />
+</markables>

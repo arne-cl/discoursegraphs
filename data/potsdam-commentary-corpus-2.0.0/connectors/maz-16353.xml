@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Wohlfühl-Aroma
+<unit type="ext" id="2">
+<unit type="ext" id="1">
+   Kräftig spucken die Arbeiter von Säbu derzeit in Blumenow in die Hände . Sie wissen , dass Eile geboten ist .</unit>
+   </unit>
+   <unit type="int" id="1"><connective id="1" relation="consequence">Schließlich</connective> ziehen sie einen Anbau in die Höhe , in dem sich künftig nicht irgendwer , sondern die jüngsten Einwohner wohlfühlen sollen .</unit>
+   <unit type="int" id="2">
+      Bei aller hektischen Geschäftigkeit lassen sie
+      <connective id="2" relation="concession">aber</connective>
+      auch die Qualität nicht aus dem Auge .
+   </unit>
+   Immerhin stampfen sie ein Haus aus dem Boden , das nicht in klassischer Bauweise - Stein auf Stein - , sondern in so genannter Holztafelbauweise entsteht .
+   Auf der Suche nach Profis mussten sich die Blumenower sich nicht weit weg begeben . Kompetente Partner fanden sie in Gransee , bei Säbu . Für die Qualität der Arbeit sprechen zahlreiche Objekte landesweit . Allein im Kreis Oberhavel hat Säbu einen guten Ruf . Neue Klassenräume wurden ebenso in Containerbauweise hochgezogen wie jüngst eine komplette Kindertagesstätte in Schönfließ .
+   <unit type="int" id="7">
+      <connective id="7" relation="concession">Auch</connective>
+      <connective id="7" relation="concession">wenn</connective>
+      noch Wochen ins Land gehen , ehe die Mädchen und Jungen das erste Mal ausgelassen im neuen Raum spielen .
+   </unit>
+   <unit type="ext" id="7">
+      Eins ist klar :
+      <unit type="ext" id="12">Zu danken ist das Projekt vielen ,</unit>
+      <unit type="int" id="12">
+         in erster Linie
+         <connective id="12" relation="concession">aber</connective>
+         der Eigeninitiative der Dorfbewohner .
+      </unit>
+   </unit>
+   <unit type="ext" id="10">
+   <unit type="ext" id="13">Sie gaben nicht klein bei</unit>
+   <unit type="int" id="13">
+      <connective id="13" relation="addition">und</connective>
+      machten Geld locker .</unit>
+   </unit>
+   <unit type="int" id="10"><connective id="10" relation="consequence">Damit</connective> sich ihre Sprösslinge wohlfühlen . Rundum .</unit>
+</discourse>
+

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Ganz schön mutig
+   <unit type="ext" id="1">Es herrscht kein Wohnungsnotstand in Wusterhausen .</unit>
+   <unit type="ext" id="2">
+      <unit type="int" id="1">
+         <connective id="1" relation="concession">Dennoch</connective>
+         war sich die Gemeindevertretung sicher , dass man ein neues Wohngebiet ausweisen müsse .
+      </unit>
+   </unit>
+   <unit type="int" id="2">
+      Was nach der Idee kam , ging
+      <connective id="2" relation="successive">dann</connective>
+      erstaunlich schnell .
+   </unit>
+   Nicht einmal ein Jahr ist seit Fassen des Aufstellungsbeschlusses und Beginn der Erschließungsarbeiten vergangen . Demnächst wird man schon trockenen Fußes voll erschlossene Parzellen in Augenschein nehmen können . Martina Vogel , die Bauamtsleiterin in der Großgemeinde , zu der ja auch die Stadt gehört , erhofft sich davon Ködereffekt .
+   <unit type="ext" id="10">
+      <unit type="int" id="8">
+         <connective id="8" relation="condition">Wenn</connective>
+         die Leute übersichtlich angeboten bekommen , was sie mal selber nutzen können ,
+      </unit>
+      <unit type="ext" id="8">kriegen sie leichter Appetit ,</unit> so die Hoffnung .
+   </unit>
+   <unit type="int" id="10">
+     <unit type="ext" id="4">
+      Das wird
+      <connective id="10" relation="addition">auch</connective>
+      notwendig sein ,</unit> <unit type="int" id="4"><connective id="4" relation="consequence">denn</connective> die Gemeinde ist erst einmal mit 1,2 Millionen Mark in Vorleistung gegangen .</unit>
+   </unit>
+   In der löblichen Absicht ,
+   <unit type="ext" id="13">
+      besonders
+      <unit type="ext" id="11">jungen Familien das Hierbleiben lukrativ zu machen</unit>
+   </unit>
+   <unit type="int" id="13">
+      <unit type="int" id="11">
+         <connective id="11" relation="addition">und</connective>
+         <connective id="13" relation="consequence">somit</connective>
+         einer Pflicht nachzukommen , die jede Kommune hat
+      </unit>
+   </unit>
+   , ist Risiko nie auszuschließen .
+    <unit type="ext" id="17">
+         <unit type="ext" id="14">In Wusterhausen erhöht es sich noch ,</unit>
+	 <unit type="ext" id="18">   
+      <unit type="int" id="14">
+            <connective id="14" relation="consequence">weil</connective>
+            man auch im nahen Bantikow Bauplätze findet ,
+         </unit>
+         </unit>
+         <unit type="int" id="18">
+            <connective id="18" relation="concession">wenngleich</connective>
+            nicht zu diesem Preis .
+      </unit>
+   </unit>
+   <unit type="int" id="17">
+      <connective id="17" relation="consequence">Also</connective>
+      haben die Gemeindevertreter Mut gezeigt . 
+   </unit>
+   Möge er belohnt werden .
+</discourse>
+

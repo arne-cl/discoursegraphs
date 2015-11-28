@@ -1,0 +1,78 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Absicht</segment>
+    <segment id="2" parent="15" relname="sequence">
+
+Erst rührt sich niemand unter den Dallgower Kommunalpolitikern ,</segment>
+    <segment id="3" parent="15" relname="sequence"> nun überschlagen sich alle mit Anträgen zur Gemeindereform und den vorausgehenden Verhandlungen mit den südlichen Nachbarn .</segment>
+    <segment id="4" parent="22" relname="interpretation">
+
+Nicht klar wird zum jetzigen Zeitpunkt , welche Absichten hinter dem plötzlichen Aktionismus stehen :</segment>
+    <segment id="5" parent="18" relname="contrast">  Will die SPD-Fraktion - bisher völlig uneins über Dallgows Zukunft - wirklich faire Verhandlungen anstreben ?</segment>
+    <segment id="6" parent="17" relname="span">  Warum stellt sie dann schier unannehmbare Bedingungen ,</segment>
+    <segment id="7" parent="8" relname="cause"> indem sie den Bürgermeister mit einem solch eng geschnürten Verhandlungsmandat ausstattet ,</segment>
+    <segment id="8" parent="16" relname="span"> dass dieser nur noch das Wie der Eingemeindung klären darf .</segment>
+    <segment id="9" parent="19" relname="span">  Warum beharrt die CDU auf einer neuerlichen Einwohnerversammlung ?</segment>
+    <segment id="10" parent="28" relname="span">  Warten die Christdemokraten nur darauf , genügend Claqueure zusammenzubekommen ,</segment>
+    <segment id="27" parent="10" relname="e-elaboration"> die sie in ihrer Ablehnung zu jeglichen Fusionen bestätigen ?</segment>
+    <segment id="11" parent="20" relname="interpretation">
+
+Allein eine Fraktion , die der Freien Wählergemeinschaft , ist bisher mit einer einheitlichen und nachvollziehbaren Argumentationslinie aufgetreten ,</segment>
+    <segment id="12" parent="20" relname="conjunction"> bekennt sich zum Dreierbund</segment>
+    <segment id="13" parent="20" relname="conjunction"> und lässt Spielraum für die Art des Zustandekommens .</segment>
+    <segment id="14" parent="24" relname="evaluation-s">  Die anderen werden am nächsten Mittwoch beweisen müssen , dass sie es ehrlich meinen .</segment>
+<group id="15" type="multinuc" parent="25" relname="background" />
+<group id="16" type="span" parent="6" relname="means" />
+<group id="17" type="span" parent="18" relname="contrast" />
+<group id="18" type="multinuc" parent="22" relname="list" />
+<group id="19" type="span" parent="22" relname="list" />
+<group id="20" type="multinuc" parent="21" relname="span" />
+<group id="21" type="span" parent="24" relname="span" />
+<group id="22" type="multinuc" parent="23" relname="span" />
+<group id="23" type="span" parent="21" relname="antithesis" />
+<group id="24" type="span" parent="25" relname="span" />
+<group id="25" type="span" parent="26" relname="span" />
+<group id="26" type="span" />
+<group id="28" type="span" parent="9" relname="reason" />
+  </body>
+</rst>

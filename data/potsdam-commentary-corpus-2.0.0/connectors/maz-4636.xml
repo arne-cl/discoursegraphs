@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Nicht erst seit gestern Erst einmal tief durchatmen .
+   <unit type="ext" id="3">
+      <unit type="ext" id="2">Im benachbarten Berlin hat es keinen Anschlag mit Milzbrand-Erregern gegeben .</unit>
+      <unit type="int" id="2">
+         In Bayern
+         <connective id="2" relation="addition">auch</connective>
+         nicht .
+      </unit>
+   </unit>
+   <unit type="int" id="3">
+      <unit type="ext" id="6">
+         <connective id="3" relation="concession">Aber</connective>
+         die Bilder von Männern in Mondanzügen und Atemschutzmasken haben durchaus etwas von Ausnahmezustand , ja Katastrophenalarm .
+      </unit>
+   </unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="concession">Dennoch</connective>
+      ist Panikmache unverantwortlich .
+   </unit>
+   Was wir sehen , ist der spektakuläre , aber routinierte Einsatz von Profis . Zu einer Zeit , in der alles Denkbare auch machbar erscheint , ist es beruhigend zu wissen , dass die Rettungskräfte sich nicht erst seit gestern damit befassen , wie sie die Bürger vor Katastrophen schützen können .
+   <unit type="ext" id="13">
+      Ein eingespieltes Team von Spezialisten hält Ausrüstung und Fachleute bereit ,
+   </unit>
+   <unit type="int" id="13">
+         <connective id="13" relation="purpose">um</connective>
+         schnell und umfassend handeln
+         <connective id="13" relation="purpose">zu</connective>
+         können .
+   </unit>
+   <unit type="ext" id="18">
+      Dass sie unter normalen Umständen kaum in Erscheinung treten ,
+      <unit type="ext" id="17">ist ihrem steten Bemühen um Vorbeugung zu danken - </unit>
+      <unit type="int" id="17">
+         <connective id="17" relation="addition">zum Beispiel</connective>
+         im Brandschutz
+      </unit>
+      , wo die Feuerwehr schon in der Planung eines Gebäudes mitwirkt .
+   </unit>
+   <unit type="int" id="18">
+      <connective id="18" relation="concession">Trotzdem</connective>
+      sollte der Zivilschutz verbessert werden .
+   </unit>
+   Manches Vehikel im Gerätehaus gehört längst ins Technikmuseum .
+   <unit type="ext" id="20">
+      <unit type="int" id="19">
+         <connective id="19" relation="condition">Wenn</connective>
+         landesweit die Polizei aufgerüstet wird ,
+      </unit>
+      <unit type="ext" id="19">sollten die Rettungskräfte nicht das Nachsehen haben .</unit>
+   </unit>
+   <unit type="int" id="20">
+      <connective id="20" relation="condition">Falls</connective>
+      es doch einmal kein mieser Scherz war .
+   </unit>
+</discourse>
+

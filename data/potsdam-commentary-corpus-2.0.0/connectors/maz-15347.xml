@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Unterschiede
+   Auch bei den Senioren hatte sie zugeschlagen : die ABM-Lücke . Immer wieder sorgen die Übergangszeiten zwischen zwei Maßnahmen für Ungewissheit . Was wird aus uns ,
+   <unit type="ext" id="2">geht es überhaupt weiter</unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="alternation">oder</connective>
+      steht eine Schließung bevor ?
+   </unit>
+   <unit type="ext" id="6">Solche Fragen beschäftigten auch die Besucher , die regelmäßig in den Klub in der Papenbrucher Chaussee kommen .</unit>
+   <unit type="int" id="6">
+      Ähnliche Probleme kennt man
+      <connective id="6" relation="addition">zum Beispiel</connective>
+      auch vom Arbeitslosentreff in der Rheinsberger Straße oder dem Frauen- und Mädchentreff am Marktplatz .
+   </unit>
+   <unit type="ext" id="13">
+      <unit type="ext" id="11">ABM sind immer nur Übergangslösungen ,</unit>
+      <unit type="int" id="11">
+         <connective id="11" relation="consequence">deshalb</connective>
+         sind sie auch nur kurzfristig angelegt .
+      </unit>
+   </unit>
+   <unit type="int" id="13">
+      <connective id="13" relation="contrast">Doch</connective>
+      nicht jede ABM ist gleich .
+   </unit>
+   <unit type="int" id="12">
+   <unit type="ext" id="14">Zumindest bei Stellen im sozialen Bereich , die die Betreuung von Menschen betreffen , sollten schon Unterschiede gemacht werden .
+   </unit>
+   </unit>
+   <unit type="int" id="14">
+     <unit type="ext" id="12">
+      <unit type="ext" id="15">
+         <connective id="12" relation="consequence">Schließlich</connective> geht es
+         <connective id="14" relation="successive">dann</connective>
+         nicht einfach um das Erledigen von Arbeiten ,
+      </unit>
+      <unit type="int" id="15">
+         <connective id="15" relation="contrast">sondern</connective>
+         auch um Vertrauen und Nähe .
+      </unit>
+   </unit>
+   </unit>
+   <unit type="ext" id="19">Das heißt nicht , dass der Nachfolger es nicht ebenso gut machen kann .</unit>
+   <unit type="int" id="19">
+      <unit type="ext" id="20">
+         <connective id="19" relation="concession">Aber</connective>
+         er muss wieder von ganz vorn anfangen .
+      </unit>
+   </unit>
+   <unit type="int" id="20">
+      <connective id="20" relation="addition">Und</connective>
+      das ist der Sache im Allgemeinen nicht zuträglich .
+   </unit>
+   So schön wie es ist , dass der Treff für ein weiteres Jahr gesichert ist :
+   <unit type="ext" id="22">Arno Rentsch hat recht ,</unit>
+   <unit type="int" id="22">
+      <connective id="22" relation="condition">wenn</connective>
+      er sagt , dass ABM noch nicht die endgültige Lösung ist .
+   </unit>
+</discourse>
+

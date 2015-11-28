@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Wohltäter 
+  Durch Arbeit wird man selten reich . <unit type="ext" id="1">Eher schon durchs Glücksspiel .
+   </unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="contrast">Doch</connective>
+      der große Wurf gelingt bekanntlich nur den allerwenigsten .
+   </unit>
+   <unit type="ext" id="5">
+      <unit type="ext" id="4">
+         <unit type="ext" id="2">Die Masse hofft</unit>
+         <unit type="int" id="2">
+            <connective id="2" relation="addition">und</connective>
+            hofft -
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="5">
+   <unit type="int" id="4">
+         <connective id="4" relation="addition">und</connective>
+         geht <connective id="5" relation="contrast">doch</connective> am Ende leer aus .
+   </unit></unit>
+<unit type="ext" id="8">
+   All jenen sei gesagt : Ihr Einsatz ist mehr als eine zerplatzte Illusion .</unit>
+   <unit type="ext" id="10">
+      <unit type="int" id="8">
+         Wer
+         <connective id="8" relation="addition">zum Beispiel</connective>
+         an der " Glücksspirale " dreht , beweist sich indirekt als Wohltäter .</unit>
+   </unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="consequence">Denn</connective>
+      seit 1991 wurden 105 Millionen Mark der Einnahmen der " Glücksspirale " zweckgebunden an die Stiftung Denkmalschutz weitergereicht .
+   </unit>
+   <unit type="ext" id="11">Die wiederum förderte damit 264 Bauten im Brandenburgischen ,</unit> <unit type="int" id="11"><connective id="11" relation="purpose">um</connective> den Verfall zu stoppen , ihre Schönheit zu bewahren , sie den Menschen wieder zugänglich zu machen .</unit> Der Bogen reicht dabei von den ganz Großen wie dem Brandenburger Dom bis zu den ganz Kleinen wie der winzigen Dorfkirche von Kanin . Gefördert werden sowohl technische Denkmale wie der Beelitzer Wasserturm , als auch kunsthistorisch wertvolle Wohnhäuser wie Haus Friedrichshuld in Philippsthal .
+   <unit type="ext" id="15">Unterstützt werden Bauherren , <unit type="ext" id="12">die ein stimmiges Nutzungs- und Finanzierungskonzept vorlegen</unit> <unit type="int" id="12"><connective id="12" relation="addition">und</connective> sich selbst einbringen - mit Geld , Muskelhypothek und ihrem Herzblut .</unit></unit>
+   <unit type="int" id="15">
+      <unit type="int" id="14">
+         <connective id="14" relation="condition">Falls</connective>
+         Sie
+         <connective id="15" relation="consequence">also</connective>
+         an diesem Wochenende wieder leer ausgehen :
+      </unit>
+   </unit>
+   <unit type="ext" id="14">Alles halb so schlimm , Sie taten Gutes</unit>
+</discourse>
+

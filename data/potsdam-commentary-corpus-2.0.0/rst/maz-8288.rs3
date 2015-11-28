@@ -1,0 +1,77 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+In der Favoritenrolle</segment>
+    <segment id="12" parent="21" relname="sequence">
+
+Gestern begann das Raumordnungsverfahren für die Autobahntrasse zur A2 .</segment>
+    <segment id="2" parent="21" relname="sequence">  Ab heute kann jeder Interessierte die Unterlagen vier Wochen in den Ämtern einsehen .</segment>
+    <segment id="3" parent="20" relname="span">  In den Planungsvarianten für einen A_2-Zubringer spielt das Havelstädtchen Pritzerbe eine Schlüsselrolle .</segment>
+    <segment id="4" parent="18" relname="conjunction">  Während eine Anbindung der Rathenower Region über Milow als unwahrscheinlich gilt</segment>
+    <segment id="13" parent="18" relname="conjunction"> und die Döberitzer Variante aus Gründen des Naturschutzes abwegig ist ,</segment>
+    <segment id="14" parent="19" relname="span"> muss Pritzerbe mit seiner Favoritenrolle klarkommen .</segment>
+    <segment id="5" parent="27" relname="joint">  Für die Stadtverordneten heißt das öffentlich Position zu beziehen .</segment>
+    <segment id="6" parent="27" relname="joint">  Diese muss nicht stur für oder gegen eine Havelbrücke ausfallen .</segment>
+    <segment id="7" parent="24" relname="span">  Diplomatisches Geschick und politischer Weitblick sind gefragt ,</segment>
+    <segment id="15" parent="7" relname="circumstance"> wenn es um die Verhandlungsmasse geht .</segment>
+    <segment id="8" parent="28" relname="reason">  Was die Kommune oder Bürger an Anregungen und Bedenken einreichen , hat Auswirkungen für die nächsten hundert Jahre und darüber hinaus .</segment>
+    <segment id="9" parent="26" relname="span">  Positive Effekte einer Havelbrücke lassen sich für Pritzerbe gar nicht abschätzen .</segment>
+    <segment id="10" parent="25" relname="contrast">  Ein Gewerbeboom ist kaum zu erwarten .</segment>
+    <segment id="11" parent="23" relname="span">  Dafür könnte die Region vom Wirtschaftsstandort Premnitz/Rathenow mit Arbeitsplätzen profitieren -</segment>
+    <segment id="16" parent="22" relname="span"> wenn er denn überhaupt kommt , der Aufschwung ,</segment>
+    <segment id="17" parent="16" relname="e-elaboration"> den havelländische Firmen vom A_2-Zubringer abhängig machen .</segment>
+<group id="18" type="multinuc" parent="14" relname="antithesis" />
+<group id="19" type="span" parent="3" relname="elaboration" />
+<group id="20" type="span" parent="30" relname="span" />
+<group id="21" type="multinuc" parent="20" relname="background" />
+<group id="22" type="span" parent="11" relname="condition" />
+<group id="23" type="span" parent="25" relname="contrast" />
+<group id="24" type="span" parent="27" relname="elaboration" />
+<group id="25" type="multinuc" parent="9" relname="reason" />
+<group id="26" type="span" parent="28" relname="reason" />
+<group id="27" type="multinuc" parent="28" relname="span" />
+<group id="28" type="span" parent="29" relname="span" />
+<group id="29" type="span" parent="31" relname="span" />
+<group id="30" type="span" parent="29" relname="background" />
+<group id="31" type="span" />
+  </body>
+</rst>

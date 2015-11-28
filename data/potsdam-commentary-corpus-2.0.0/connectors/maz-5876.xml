@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Einmalig
+   <unit type="ext" id="1">
+      Unvorstellbar ,
+      <unit type="int" id="1">
+         <connective id="1" relation="contrast">aber</connective>
+         wahr</unit> : Eine Medizinerin lässt ihre Patienten , ihr Personal und die Kassenärztliche Vereinigung völlig im Unklaren .
+   </unit>
+   Niemand weiß , warum sie nicht kommt , wer sie vertritt , wann oder ob sie wiederkommt . Ein solcher Fall wie in Ludwigsfelde sei ihm in den sieben Jahren , die er jetzt Pressesprecher der Kassenärztlichen Vereinigung Brandenburg ist , " noch nicht bekannt geworden " , sagt Ralf Herre .  <unit type="ext" id="2">Mediziner stehen im Land nicht Schlange ,</unit> <unit type="int" id="2"><connective id="2" relation="purpose">um</connective> sich niederzulassen .</unit> 132 allgemeinärztliche und 60 fachärztliche Praxen könnten noch besetzt werden .
+   <unit type="ext" id="8">Das hat ganz sicher damit zu tun , dass in Brandenburg die niedrigsten Arzthonorare der ganzen Bundesrepublik gezahlt werden .</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="contrast">Doch</connective>
+      das , was sich bei 3600 Praxen im Land in dieser einen Praxis in Ludwigsfelde abspielt , das geht rein menschlich nicht .
+   </unit>
+   Weder in der Familie noch unter Kollegen oder Freunden lässt man Leute einfach stehen . Abgesehen vom Verfahren über den Zulassungsentzug und davon , dass eine nicht anwesende Ärztin nicht helfen kann - <unit type="ext" id="3"><unit type="int" id="4"><connective id="4" relation="addition">ohne</connective> Verabredungen einzuhalten</unit> <unit type="ext" id="4">steht auch eine noch so gute Medizinerin auf dem Abstellgleis .</unit></unit> <unit type="int" id="3"><connective id="3" relation="addition">Und</connective> Sprechzeiten sind für Patienten und Personal eine solche feste Verabredung .</unit>
+</discourse>
+

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Radfahrer zählen nicht " Tschühüs , kommt gut nach Hause . Ruft mal an , auch ! " - Türenklappern , das widerwillige Aufjaulen des Motors . Wie oft hat man das an der Feiertagen gehört ?
+   <unit type="int" id="3">
+      <connective id="3" relation="concession">Trotz</connective>
+      geschlossener Eisdecke auf Autobahnen und Landstraßen
+   </unit>
+   <unit type="ext" id="3">kamen die meisten lieben Weihnachtsgäste am ersten Feiertag wohlbehalten wieder heim .</unit>
+   <unit type="ext" id="6">Nur bei unseren Behördern vermisst man das " Kommt gut nach Hause ! " leider -</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="condition">sofern</connective>
+      man mit dem Fahrrad unterwegs ist .
+   </unit>
+   <unit type="ext" id="13">An der viel und schnell befahrenen Landesstraße zwischen Wustrau und Dammkrug - einem häufig benutzten Schulweg - sehen Straßenbauamt und Verkehrsministerium für einen Radweg " keinen Bedarf " .</unit>
+   <unit type="ext" id="17">
+   <unit type="ext" id="19">
+      <unit type="int" id="13">
+         <connective id="13" relation="addition">Und</connective>
+         auf der im Winter vereisten Brücke in Altfriesack hat das Straßenbauamt Kyritz gar
+         <unit type="ext" id="15">den Gehweg beseitigt</unit>
+         <unit type="int" id="15">
+            <connective id="15" relation="addition">und</connective>
+            durch eine Leitplanke ersetzt
+         </unit>
+      </unit>
+      ( ähnlich wie das Autobahnamt in Tarmow ) -
+   </unit>
+   </unit>
+   <unit type="int" id="17">
+      <unit type="ext" id="18">
+         <connective id="17" relation="concession">obwohl</connective>
+         die Altfriesacker Brücke innerorts liegt
+      </unit>
+      <unit type="int" id="18">
+         <connective id="18" relation="addition">und</connective>
+         <unit type="int" id="19"><connective id="19" relation="concession">obwohl</connective> es schon eines erheblichen Maßes an fahrerischem Unvermögen bedarf , um hier bei Tempo 50
+         <unit type="ext" id="21">von der Straße abzukommen</unit>
+         <unit type="int" id="21">
+            <connective id="21" relation="addition">und</connective>
+            durchs Geländer in den Rhin zu stürzen .
+         </unit>
+      </unit>
+      </unit>
+   </unit>
+   <unit type="ext" id="24">Für die Verkehrsplaner zählen Menschenleben offenbar nur ,</unit>
+   <unit type="int" id="24">
+      <connective id="24" relation="condition">wenn</connective>
+      sie in einer Blechkiste sitzen .
+   </unit>
+   Übrigens : Auch Fahrradfahrer und Eltern zahlen Steuern .
+</discourse>
+

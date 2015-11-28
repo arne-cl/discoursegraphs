@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Am Wasser Dass die " Platte " nicht so schlecht ist wie ihr Ruf , hat ja schon das Zentrum Ost bewiesen . Gerade eben feierten dort Anwohner die Wiederherstellung ihres - noch immer namenlosen - Stadtplatzes , schon trifft man sich auch am Kiewitt zum Bürgerfest .
+   <unit type="ext" id="4">30 Jahre zählt das Neubauwohngebiet ,</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">und</connective>
+      etwa jeder dritte Kiewitter ist von Anfang an dabei
+   </unit>
+   . Was die Menschen hier hält , ist durchaus
+   <unit type="ext" id="7">nicht nur die Unlust , die oft kleinen Räume im Alter noch gegen größere zu tauschen .</unit>
+   <unit type="ext" id="9">
+      <unit type="int" id="7">
+         <connective id="7" relation="contrast">Vielmehr</connective>
+         gibt es hier Wohnungen am Wasser , die man auch nach Sanierung heute noch bezahlen kann
+      </unit>
+   </unit>
+   .
+   <unit type="int" id="9">
+      Für die treuen Kiezbewohner sind
+      <connective id="9" relation="consequence">daher</connective>
+      Überlegungen schwer nachvollziehbar ,
+      <unit type="ext" id="10">die Hochhäuser abzustocken</unit>
+      <unit type="int" id="10">
+         <connective id="10" relation="alternation">oder</connective>
+         gar ganz zu schleifen
+      </unit>
+   </unit>
+   .
+   <unit type="ext" id="12">Nur in der Berliner Vorstadt wohnen vergleichbar viele Leute so nah an der Havel ,</unit>
+   <unit type="int" id="12">
+      <connective id="12" relation="contrast">doch</connective>
+      seien es die hohen Auflagen von Denkmalpflegern , sei es der Drang nach Maximalgewinn bei den neuen Eigentümern 
+
+   :
+   <unit type="ext" id="14">
+      <unit type="ext" id="13">
+         <unit type="int" id="13">
+            <connective id="13" relation="consequence">Wegen</connective>
+            hoher Mieten
+         </unit>
+         weichen große Teile der Stammbevölkerung den besser Verdienenden .
+      </unit>
+   </unit>
+   </unit>
+   <unit type="int" id="14">
+      Am Kiewitt
+      <connective id="14" relation="contrast">dagegen</connective>
+      pflegt man Bodenständigkeit
+   </unit>
+   :
+   <unit type="ext" id="15">Die Platte hat sich inwendig erneuert</unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="addition">und</connective>
+      äußerlich Farbe aufgelegt
+   </unit>
+   . Nun sollte man im Umfeld nachziehen - die Treuhand mit der Ufergaststätte etwa .
+</discourse>
+

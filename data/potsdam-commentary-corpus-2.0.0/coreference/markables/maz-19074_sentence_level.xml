@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="windows-1250"?>
+<!DOCTYPE markables SYSTEM "markables.dtd">
+<markables xmlns="www.eml.org/NameSpaces/sentence">
+  <markable id="markable_1" span="word_1..word_3" type="eol"/>
+  <markable id="markable_2" span="word_4..word_15" type="eol"/>
+  <markable id="markable_3" span="word_16..word_21" type="eol"/>
+  <markable id="markable_4" span="word_22..word_29" type="eol"/>
+  <markable id="markable_5" span="word_30..word_33" type="eol"/>
+  <markable id="markable_6" span="word_34..word_36" type="eol"/>
+  <markable id="markable_7" span="word_37..word_41" type="eol"/>
+  <markable id="markable_10" span="word_48..word_56" type="eol"/>
+  <markable id="markable_8" span="word_42..word_44" type="eol"/>
+  <markable id="markable_9" span="word_45..word_47" type="eol"/>
+  <markable id="markable_11" span="word_57..word_65" type="eol"/>
+  <markable id="markable_12" span="word_66..word_75" type="eol"/>
+  <markable id="markable_13" span="word_76..word_83" type="eol"/>
+  <markable id="markable_14" span="word_84..word_92" type="eol"/>
+  <markable id="markable_15" span="word_93..word_103" type="eol"/>
+  <markable id="markable_16" span="word_104..word_109" type="eol"/>
+  <markable id="markable_17" span="word_110..word_122" type="eol"/>
+  <markable id="markable_18" span="word_123..word_132" type="eol"/>
+  <markable id="markable_19" span="word_133..word_149" type="eol"/>
+  <markable id="markable_20" span="word_150..word_160" type="eol"/>
+  <markable id="markable_21" span="word_161..word_165" type="eol"/>
+</markables>

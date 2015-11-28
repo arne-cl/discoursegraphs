@@ -1,0 +1,85 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Alle Wetter !</segment>
+    <segment id="9" parent="10" relname="circumstance"> 
+
+Also nee , wissense nee , als ich heute Morgen wie immer in der letzten Minute aus dem Haus huschte und flugs in das in der Garage eingemummelte Auto stieg ,</segment>
+    <segment id="10" parent="32" relname="span"> hatte ich die miesen Grade noch gar nicht richtig mitgeschnitten .</segment>
+    <segment id="2" parent="31" relname="span">  Aber dann begegnete ich einem Geisterfahrer ,</segment>
+    <segment id="11" parent="30" relname="conjunction"> der verstohlen durch einen Schlitz in der Sichtscheibe schielte</segment>
+    <segment id="12" parent="29" relname="span"> und beim Abbiegen nach links vorsichtshalber das Seitenfenster öffnete ,</segment>
+    <segment id="13" parent="12" relname="purpose"> um nicht in den Gegenverkehr zu brettern .</segment>
+    <segment id="3" parent="14" relname="preparation">  Da wusste ich :</segment>
+    <segment id="14" parent="28" relname="span">  Es wintert .</segment>
+    <segment id="4" parent="25" relname="cause">
+
+Und wie immer haben die einen die Zeit völlig verpasst</segment>
+    <segment id="25" parent="26" relname="span"> und rasen jetzt nach Winterrreifen rum ,</segment>
+    <segment id="15" parent="27" relname="list"> die anderen wollten schon lange Fensterspray kaufen ,</segment>
+    <segment id="16" parent="27" relname="list"> in den Schuhgeschäften werden die warmen Stiefel nun endlich doch anprobiert ,</segment>
+    <segment id="17" parent="27" relname="list"> und die Hompage der Standheizungsbauer hatte bald so viel Besuch wie die der Wetterkarten .</segment>
+    <segment id="5" parent="23" relname="interpretation">
+
+Übrigens ertappte ich unter dem Stichwort &quot; Winterwetter &quot; im Internet echte Witzbolde .</segment>
+    <segment id="6" parent="22" relname="conjunction">  Da wird der Surfer auf &quot; Scherze &quot; gelenkt</segment>
+    <segment id="18" parent="22" relname="conjunction"> und hat dann je nach Lust und Laune auch was zu lachen .</segment>
+    <segment id="7" parent="20" relname="span">  Oder zu zittern ,</segment>
+    <segment id="19" parent="7" relname="cause"> denn ein schnatterndes Gebiss ist immer dabei .</segment>
+    <segment id="8" parent="20" relname="elaboration">  Jedenfalls im Winter , meint eure Jette .</segment>
+<group id="20" type="span" parent="21" relname="span" />
+<group id="21" type="span" parent="22" relname="elaboration" />
+<group id="22" type="multinuc" parent="23" relname="span" />
+<group id="23" type="span" parent="24" relname="span" />
+<group id="24" type="span" parent="35" relname="joint" />
+<group id="26" type="span" parent="27" relname="list" />
+<group id="27" type="multinuc" parent="35" relname="joint" />
+<group id="28" type="span" parent="33" relname="span" />
+<group id="29" type="span" parent="30" relname="conjunction" />
+<group id="30" type="multinuc" parent="2" relname="e-elaboration" />
+<group id="31" type="span" parent="28" relname="cause" />
+<group id="32" type="span" parent="33" relname="antithesis" />
+<group id="33" type="span" parent="34" relname="span" />
+<group id="34" type="span" parent="35" relname="joint" />
+<group id="35" type="multinuc" />
+  </body>
+</rst>

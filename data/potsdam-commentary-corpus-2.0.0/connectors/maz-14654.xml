@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Herz-Dame sticht
+   <unit type="ext" id="1">Ein Wahlausgang , der beide Wahlgegner zufrieden stellt - das ist eine Seltenheit !</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="contrast">Doch</connective>
+      am gestrigen Abend zeigten sich beide Bürgermeisterkandidaten durchaus zufrieden .
+   </unit>
+   <unit type="ext" id="3">Elisabeth Herzog-von_der_Heide ( SPD ) freute sich über das Wahlergebnis , das ihr mehr als 60 Prozent einbrachte ,</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="addition">und</connective>
+      Hans-Jürgen Akuloff ( PDS ) war 's zufrieden , dass er das bisher beste Ergebnis für die PDS einfuhr .
+   </unit>
+   <unit type="ext" id="4">Das war natürlich um so leichter ,</unit> <unit type="int" id="4"><connective id="4" relation="consequence">da</connective> es diesmal nur einen Gegenkandidaten gab .</unit>
+   <unit type="ext" id="9">Die Parteienlandschaft in Luckenwalde ist natürlich nach wie vor breiter gefächert .</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="consequence">Deshalb</connective>
+      brauchen jetzt weder SPD- noch PDS-Anhänger einen Höhenflug zu bekommen .
+   </unit>
+   <unit type="ext" id="11">Der gestrige Wahlausgang ist das persönliche Ergebnis der beiden Kandidaten ,</unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="successive">nachdem</connective>
+      sie einen dritten im ersten Wahlgang ausgestochen hatten .
+   </unit>
+   Mehr nicht und auch nicht weniger .
+   <unit type="ext" id="14">Nach der ersten " Skat-Runde "</unit>
+   <unit type="int" id="14">
+      hat
+      <connective id="14" relation="successive">dann</connective>
+      in der zweiten " Mau-Mau-Runde " Herz-Dame Herzog gestochen .
+   </unit>
+   <unit type="ext" id="15">Kein überraschendes , auch kein wahnsinnig überragendes ,</unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="contrast">aber</connective>
+      ein deutliches Stichwahl-Ergebnis .
+   </unit>
+   <unit type="ext" id="16">Die extreme Spannung war sowieso raus ,</unit>
+   <unit type="int" id="16">
+      <connective id="16" relation="consequence">denn</connective>
+      die erste Wahl hatte sowieso die Vorentscheidung gebracht , die jetzt durch die Stichwahl nur noch bestätigt wurde .
+   </unit>
+</discourse>
+

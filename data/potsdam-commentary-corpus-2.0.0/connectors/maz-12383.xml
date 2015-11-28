@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+    Aber doch nicht bei uns !
+    
+    Wie naiv können manche Schulleiter eigentlich sein ? " Drogen ? An unserer Schule kein Problem " , hört man immer wieder .
+    
+    <unit type="ext" id="4">
+        Die Polizei weiß es besser .
+    </unit>
+  
+    <unit type="ext" id="1">
+        <unit type="int" id="4">
+            <connective id="4" relation="addition">
+                Und
+            </connective>
+            mancher Rektor weiß es auch .
+        </unit>
+    </unit>
+   
+    <unit type="int" id="1">
+        <connective id="1" relation="concession">
+            Bloß 
+        </connective>
+        :
+        <unit type="ext" id="13">
+            <unit type="ext" id="7">
+                Es soll nichts nach außen dringen ,
+            </unit>
+            <unit type="int" id="7">
+                <connective id="7" relation="consequence">
+                    weil
+                </connective>
+                <unit type="ext" id="12">
+                    <unit type="ext" id="9">
+                        die Schülerzahlen sinken
+                    </unit>
+                    <unit type="int" id="9">
+                        <connective id="9" relation="addition">
+                            und
+                        </connective>
+                        die Schließung droht ,
+                    </unit>
+                </unit>
+                <unit type="int" id="12">
+                    <connective id="12" relation="condition">
+                        wenn
+                    </connective>
+                    die Schule erst einmal in Verruf kommt .
+                </unit>
+            </unit>
+        </unit>
+    </unit>
+
+    <unit type="int" id="13">
+        Durch Verschweigen bekommt man das Problem
+        <connective id="13" relation="concession">
+            allerdings
+        </connective>
+        nicht aus der Welt .
+    </unit>
+
+    Unter dem Deckmantel des Wegschauens und Verheimlichens blüht der Drogenhandel und -konsum noch viel ungestörter als dort ,
+
+    <unit type="ext" id="19">
+        wo alle die Augen offen halten
+    </unit>
+
+    <unit type="int" id="19">
+        <connective id="19" relation="addition">
+            und
+        </connective>
+        über das Problem sprechen .
+    </unit>
+
+    <unit type="ext" id="25">
+        <unit type="ext" id="21">
+            Die riesigen Gewinnspannen des Drogenhandels locken Kriminelle an
+        </unit>
+        <unit type="int" id="21">
+            <connective id="21" relation="addition">
+                und
+            </connective>
+            die immensen Preise für illegale Drogen zwingen die Abhängigen , sich das Geld durch Einbrüche und Überfälle zu verschaffen .
+        </unit>
+    </unit>
+
+    <unit type="int" id="25">
+        Schade ist es
+        <connective id="25" relation="consequence">
+            deshalb
+        </connective>
+        auch , dass sich die Eltern der Jugendlichen im Amtsbereich Temnitz am Dienstag so wenig für die Tipps der Polizei interessierten .
+    </unit>
+
+    <unit type="ext" id="27">
+        Wie ein Joint eigentlich aussieht
+    </unit>
+
+    <unit type="int" id="27">
+        <connective id="27" relation="addition">
+            und
+        </connective>
+        riecht ,
+    </unit>
+
+   was erweiterte Pupillen verraten ,
+
+    <unit type="ext" id="31">
+        die sich auch
+        <connective id="31" relation="condition">
+            dann
+        </connective>
+        nicht schließen ,
+    </unit>
+
+    <unit type="int" id="31">
+        <connective id="31" relation="condition">
+            wenn
+        </connective>
+        man der Tochter mit der Taschenlampe ins Auge leuchtet -
+    </unit>
+
+    all dieses Wissen könnte manch ahnungsloser Mutter die Augen öffnen .
+</discourse>
+

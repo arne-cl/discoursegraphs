@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Einsteins Lorbeeren
+   <unit type="ext" id="3">Unter den vielen Lobreden wäre gestern am neuen Hauptsitz des Instituts für Klimafolgenforschung fast die Tatsache in Vergessenheit geraten , dass dessen Direktor Schellnhuber kürzlich um ein Haar ins Ausland abgewandert wäre .</unit>
+   <unit type="int" id="3">
+      Dass er
+      <connective id="3" relation="contrast">doch</connective>
+      geblieben ist , hat vordergründig mit mehr Geld fürs Institut zu tun :
+   </unit>
+   Wieso Spitzenforscher aus aller Welt in Potsdam arbeiten wollen , erklärt das alleine nicht .
+   <unit type="ext" id="4">Die Stadt hat was .</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="concession">Aber</connective>
+      was ?
+   </unit>
+   Legendäre Wissenschaftstempel wie das astrophysikalische Institut haben Tradition und Flair - das treibt dem ehemaligen AIP-Direktor Hasinger die Gänsehaut in den Nacken .
+   <unit type="ext" id="8">Die Nähe zur Landesregierung ist ein Standortvorteil , wie das Tauziehen um Schellnhuber beweist .</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="addition">Und</connective>
+      kaum eine Region Deutschlands hat ein derart dichtes Netz von kooperierenden Wissenschaftseinrichtungen zu bieten - der Erfolg des interdisziplinären Helmholtz-Instituts für die Schulung an Supercomputern spricht Bände .
+   </unit>
+   <unit type="ext" id="11">Nun kommt es darauf an , sich nicht auf Einsteins Lorbeeren auszuruhen .</unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="consequence">Denn</connective>
+      weiche Standortfaktoren allein reichen nicht aus .
+   </unit>
+   Brandenburg muss endlich die rote Laterne in der Wissenschaftsförderung abgeben .
+</discourse>
+

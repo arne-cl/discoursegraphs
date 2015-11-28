@@ -1,0 +1,74 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Verlorenes Vertrauen</segment>
+    <segment id="12" parent="25" relname="conjunction">
+
+Deutschland steht am Rande einer Rezession ,</segment>
+    <segment id="13" parent="25" relname="conjunction"> und die Aussichten werden immer düsterer .</segment>
+    <segment id="2" parent="24" relname="list">  Schon im zweiten Quartal des laufenden Jahres hat sich die Wirtschaft nicht mehr bewegt .</segment>
+    <segment id="3" parent="24" relname="list">  Auch für das dritte Quartal , dessen Ergebnisse heute vorgestellt werden , ist nicht mit einem Wiederanziehen des Wachstums zu rechnen .</segment>
+    <segment id="4" parent="5" relname="evaluation-n">  Zu diesen eher objektiven Zahlen kommen nun die subjektiven - die individuellen Erwartungen .</segment>
+    <segment id="5" parent="23" relname="span">  Und da sieht es immer schlechter aus .</segment>
+    <segment id="6" parent="22" relname="span">  Denn inzwischen haben auch die Unternehmer den Mut verloren .</segment>
+    <segment id="7" parent="6" relname="evidence">  Nach dem Münchener Geschäftsklima-Index beurteilen sie die Aussichten der nächsten sechs Monate schlechter als noch im September .</segment>
+    <segment id="8" parent="19" relname="reason">  Wirtschaft basiert aber auf Vertrauen .</segment>
+    <segment id="9" parent="14" relname="condition">  Sehen die Unternehmen keine Perspektive ,</segment>
+    <segment id="14" parent="19" relname="span"> schieben sie ihre Investitionen auf .</segment>
+    <segment id="10" parent="21" relname="span">  Das ist alarmierend ,</segment>
+    <segment id="15" parent="18" relname="list"> zumal sich auch der im ersten Halbjahr noch starke private Konsum abgeschwächt hat .</segment>
+    <segment id="11" parent="17" relname="span">  Gleichzeitig ist der Export eingebrochen ,</segment>
+    <segment id="16" parent="11" relname="e-elaboration"> der traditionell die deutsche Konjunktur beflügelt hat .</segment>
+<group id="17" type="span" parent="18" relname="list" />
+<group id="18" type="multinuc" parent="10" relname="evidence" />
+<group id="19" type="span" parent="20" relname="span" />
+<group id="20" type="span" parent="10" relname="reason" />
+<group id="21" type="span" parent="27" relname="list" />
+<group id="22" type="span" parent="5" relname="reason" />
+<group id="23" type="span" parent="27" relname="list" />
+<group id="24" type="multinuc" parent="25" relname="evidence" />
+<group id="25" type="multinuc" parent="26" relname="span" />
+<group id="26" type="span" parent="27" relname="list" />
+<group id="27" type="multinuc" />
+  </body>
+</rst>

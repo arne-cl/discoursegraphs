@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Letzte Bastion
+   <unit type="ext" id="1">Amerikaner würden sich bei dieser Frage wahrscheinlich auf den Boden werfen</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="addition">und</connective>
+      lauthals lachen :
+   </unit>
+   Rauchen in einer Stadthalle , in der die meiste Zeit über
+   <unit type="ext" id="5">Kinder und Jugendliche Sport treiben</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="addition">und</connective>
+      dabei kräftig atmen ?
+   </unit>
+   Schon der Gedanke daran wäre undenkbar in einem Land , in dem der Nikotinkonsum in öffentlichen Gebäuden , auf Flughäfen und auch in Restaurants ( sogar an Tischen im Freien mitten in Manhattan ! ) unter Strafe steht . Und Deutschland ?
+   <unit type="ext" id="10"><unit type="ext" id="6">Ungehemmtes Qualmen und Paffen überall ,</unit> <unit type="int" id="6"><connective id="6" relation="addition">und</connective> oft schlägt einem Nichtraucher sogar noch Aggression entgegen , weist er freundlich darauf hin , dass es unerträglich müffelt ...</unit></unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="addition">Insofern</connective>
+      ist die Beharrlichkeit zu loben , mit der die Falkenseer Stadtverwaltung einer Berliner Musikgruppe die Konzerterlaubnis für die Stadthalle - quasi eine der letzten rauchfreien Bastionen - eben nicht erteilt .
+   </unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="concession">Auch</connective>
+      <connective id="11" relation="concession">wenn</connective>
+      es übertrieben klingen mag :
+   </unit>
+   <unit type="ext" id="11">Wer ernsthaft über Jugendschutz redet ( Stichwort Suchtgefahren ) , der sollte kleine Leute nicht an einen Ort zum Bodenturnen schicken , in dem es riecht wie in einer Kneipe am Morgen nach der Weihnachtsfeier .</unit>
+   Dieses Prinzip ist den Verantwortlichen zu Recht so teuer , dass sie es sich für ein paar Mark Hallenmiete nicht abkaufen lassen .
+</discourse>
+

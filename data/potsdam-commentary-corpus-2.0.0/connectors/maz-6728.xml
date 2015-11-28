@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Ansturm Das Schulmuseum in Reckahn erlebt einen wahren Besucheransturm . War das von Friedrich Eberhard von Rochow initiierte Haus im 18. und 19. Jahrhundert Vorbild für die Entwicklung der Volksschulen , wollen heute Tausende das Flair eines historischen Klassenzimmers kennen lernen , wie sie nur noch wenige in Deutschland existieren .
+   <unit type="ext" id="4">Ohne Zweifel profitiert die vom Landkreis getragene Einrichtung von der im August im benachbarten Barockschloss eröffneten Ausstellung zur brandenburgisch-preußischen Schulgeschichte .</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="consequence">Denn</connective>
+      wer das mit großem Aufwand sanierte Schloss besucht , kommt zwangsläufig an der alten Dorfschule vorbei .
+   </unit>
+   In diesen knapp drei Monaten wurden 2700 Gäste durch das Museum geführt . Viele von ihnen kamen übers Wochenende nach Reckahn , was wohl auf die kompakte Werbung für das Preußenjahr zurückzuführen ist . Der Verein " Historisches Reckahn " mit seinem Vorsitzenden Otto-Günther Beckmann kann stolz auf die große Resonanz seiner Arbeit in der Öffentlichkeit sein . Er hat Reckahn mit unermüdlichem Engagement weit über den Kreis hinaus bekannt gemacht .
+   <unit type="ext" id="5">Das Preußenjahr geht zu Ende ,</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="contrast">doch</connective>
+      Schloss- und Schulmuseum werden weiter von sich reden machen .
+   </unit>
+</discourse>
+

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Ä(E)hrenvoll
+   <unit type="ext" id="2">
+      <unit type="ext" id="1">Während der vergangenen Monate -
+      </unit>
+      <unit type="int" id="1">
+         <connective id="1" relation="addition">und</connective>
+         das gilt auch für die Wochenenden -
+      </unit>
+      <unit type="ext" id="1">waren sie selten daheim anzutreffen , die Landwirte und Wiedereinrichter .
+      </unit>
+      In der Erntezeit wird eben jede Schönwetterstunde bis zur letzten Minute ausgenutzt .
+     Ganz gleich , ob Ähren vom Halm oder Kartoffeln aus dem Boden zu holen sind .
+       <unit type="int" id="2">
+          <connective id="2" relation="addition">Und</connective>
+          <unit type="int" id="9">
+             auch ,
+             <connective id="9" relation="condition">wenn</connective>
+             nicht alle Blütenträume gereift sind ,
+          </unit>
+          <unit type="ext" id="9">   
+             zeigen sich die Landwirte nicht unzufrieden .
+          </unit>
+       </unit>
+       " Da " , so heißt es in diesen Tagen , " haben wir schon ganz andere Jahre erlebt . "
+       <unit type="ext" id="12">Wer die Arbeit dieser Frauen und Männer übers Jahr verfolgt , versteht , warum sie sich</unit>
+       <unit type="int" id="12">
+          <connective id="12" relation="concession">trotz</connective>
+          vieler Mühen
+       </unit>
+       <unit type="ext" id="12">das Erntefest nie entgehen lassen .</unit>
+       <unit type="ext" id="13">Es ist nicht nur ein alter Brauch .</unit>
+       <unit type="int" id="13">
+          <unit type="ext" id="17">
+             Es ist
+             <connective id="13" relation="addition">zugleich</connective>
+             eine Bühne , auf der sich mit berechtigtem Stolz ausrufen lässt : Seht her , was Mensch , Tier und Technik der Natur abgerungen haben
+          </unit>
+          .
+       </unit>
+       <unit type="int" id="17">
+           <connective id="17" relation="addition">Und</connective>
+             die Freude in den Gesichtern der Leute , 
+          <unit type="ext" id="14">
+    die Handwagen ziehen , Pferdegespanne führen
+          </unit>
+          <unit type="int" id="14">
+             <connective id="14" relation="alternation">oder</connective>
+             Erntemaschinen lenken ,
+          </unit>
+          ist mindestens genau so groß wie der Ehrgeiz , mit dem sie sich im kommenden Jahr wieder in die Arbeit stürzen
+       </unit>
+       .
+       <unit type="ext" id="16">Irre ich mich ,</unit>
+       <unit type="int" id="16">
+          <connective id="16" relation="alternation">oder</connective>
+          werden es von Jahr zu Jahr mehr Menschen , die dem lustigen Landvolk winken und applaudieren
+       </unit>
+       ? Recht so ! Ä(E)hre , wem Ä(E)hre gebührt .
+   </unit>
+</discourse>
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Glückliche Hühner Um die deutschen Legehennen ist heftiger politischer Streit entbrannt .
+   <unit type="ext" id="3">Bundesagrarministerin Renate Künast will das Halten der Tiere in engen Legebatterien bereits vom Jahr 2006 an verbieten . In den EU-Nachbarländern soll das erst fünf Jahre später gelten .</unit>
+   Eier-Produzenten aus der ganzen Republik machen gegen Künasts Pläne mobil . Die Betriebe im Osten fürchten , dass die hohen Investitionen , die sie in moderne Legebatterien nach europäischem Standard gesteckt haben , umsonst gewesen sind .
+   <unit type="int" id="3">
+      Im Westen herrscht die Sorge vor , ausländische Konkurrenten könnten
+      <connective id="3" relation="successive">dann</connective>
+      mit Billig-Eiern aus Legebatterien den deutschen Markt überschwemmen .
+   </unit>
+   Beide Bedenken sind nicht einfach von der Hand zu weisen . Ministerin Künast muss zumindest über längere Übergangsfristen nachdenken . Am Grundsatz , die Käfighaltung abzuschaffen , sollte sie nicht rütteln .
+   <unit type="ext" id="4">Artgerechte Tierhaltung gehört schließlich zu den Eckpunkten der von ihr propagierten Agrarwende .</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">Und</connective>
+      schließlich greifen immer mehr Verbraucher beim Einkauf bewußt zu den tierfreundlich erzeugten Eiern .
+   </unit>
+</discourse>
+

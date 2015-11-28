@@ -1,0 +1,71 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Verpasste Chance</segment>
+    <segment id="10" parent="11" relname="joint">
+
+Heute wird in Potsdam der brandenburgische Kunstpreis überreicht .</segment>
+    <segment id="2" parent="11" relname="joint">  Die mit 30_000 Mark dotierte Auszeichnung sollte dieses Jahr einer Person zukommen , die sich für das märkische Musikleben stark gemacht hat .</segment>
+    <segment id="3" parent="23" relname="contrast">  Die Wahl fiel auf Ulrike Liedtke , Musikwissenschaftlerin und Leiterin der Bundesmusikakademie Rheinsberg .</segment>
+    <segment id="4" parent="12" relname="evaluation-s">  Verdientermaßen :</segment>
+    <segment id="12" parent="21" relname="span"> Zu nennen ist ihr Einsatz für den Wiederaufbau des Rheinsberger Schlosstheaters , die Entdeckung preußischer Komponisten , das zeitgenössische Musiktheater und den Musikstandort Rheinsberg .</segment>
+    <segment id="5" parent="13" relname="result">  Dennoch hinterlässt das Votum der Jury einen faden Nachgeschmack :</segment>
+    <segment id="13" parent="20" relname="span">  Für all das hat sich in Rheinsberg nämlich auch Siegfried Matthus eingesetzt , Komponist und Leiter der dortigen Kammeroper .</segment>
+    <segment id="6" parent="14" relname="condition">  Wenn der Preis schon nach Rheinsberg gehen soll ,</segment>
+    <segment id="14" parent="18" relname="span"> hätte man beide bedenken müssen .</segment>
+    <segment id="7" parent="18" relname="reason">  Zumal sie in herzlicher Feindschaft verbunden sind .</segment>
+    <segment id="8" parent="15" relname="antithesis">  Doch statt zur Versöhnung aufzurufen ,</segment>
+    <segment id="15" parent="16" relname="span"> könnte diese Entscheidung die Wunden noch tiefer reißen .</segment>
+    <segment id="9" parent="16" relname="interpretation">  Eine verpasste Chance .</segment>
+<group id="16" type="span" parent="17" relname="span" />
+<group id="17" type="span" parent="19" relname="interpretation" />
+<group id="18" type="span" parent="19" relname="span" />
+<group id="19" type="span" parent="25" relname="span" />
+<group id="20" type="span" parent="22" relname="span" />
+<group id="21" type="span" parent="20" relname="concession" />
+<group id="22" type="span" parent="23" relname="contrast" />
+<group id="11" type="multinuc" parent="23" relname="background" />
+<group id="23" type="multinuc" parent="24" relname="span" />
+<group id="24" type="span" parent="19" relname="reason" />
+<group id="25" type="span" />
+  </body>
+</rst>

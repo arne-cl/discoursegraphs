@@ -1,0 +1,3 @@
+<!ELEMENT markables (markable*)>
+<!ATTLIST markable id ID #REQUIRED>
+<!ATTLIST markables xmlns CDATA #IMPLIED>

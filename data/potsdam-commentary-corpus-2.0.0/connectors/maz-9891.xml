@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Durchhalten Manchmal sind die Zehdenicker zähe Brocken .
+   Jetzt wollen sich die Stadtverordneten sogar mit der Denkmalpflege anlegen .
+   <unit type="ext" id="1">Nicht alles einfach so hinnehmen , was Behördenmitarbeiter vorgeben , lautet ihre Devise .</unit>
+   <unit type="ext" id="3">
+      <unit type="int" id="1">
+         <connective id="1" relation="addition">Und</connective>
+         das ist gut so .
+      </unit>
+   </unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="consequence">Denn</connective>
+      die Ansicht der Denkmalpfleger ist kaum nachzuvollziehen .
+   </unit>
+   Überall wird darauf gedrängt , 
+   <unit type="ext" id="5">historische Orte in ihrem Urzustand zu belassen</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="alternation">oder</connective>
+      wieder so herzustellen .
+   </unit>
+   <unit type="ext" id="10"><unit type="ext" id="6">Da kommt ein innerstädtischer Straßenbau oft gerade Recht ,</unit> <unit type="int" id="6">kann man <connective id="6" relation="consequence">doch</connective> dabei auch löchrige Asphaltpisten oder buckliges Pflaster durch ordentlich verlegte passende Pflastersteine ersetzen .</unit></unit>
+   <unit type="int" id="10">
+      Warum soll nun
+      <connective id="10" relation="concession">aber</connective>
+      direkt an der Zehdenicker Kirche , wo das Kopfsteinpflaster derzeit zugegebenermaßen 
+      <unit type="ext" id="11">sehr hügelig ist</unit>
+      <unit type="int" id="11">
+         <connective id="11" relation="addition">und</connective>
+         laute Rollgeräusche verursacht , 
+      </unit>
+      ein Asphaltbelag drauf ?
+   </unit>
+   <unit type="ext" id="15">Dass sich die Zehdenicker dagegen wehren , ist mehr als verständlich .</unit>
+   <unit type="int" id="15">
+         <connective id="15" relation="concession">Allerdings</connective>
+         müssen sie sich bewusst sein , dass <unit type="ext" id="16">so ein " Kampf " nur durchzustehen ist ,
+      </unit>
+      <unit type="int" id="16">
+         <connective id="16" relation="condition">wenn</connective>
+         sich alle einig sind .
+      </unit>
+   </unit>
+   Es darf nicht passieren , dass einer oder mehrere Abgeordnete im Nachhinein " umfallen " . Der Kampf 
+   <unit type="ext" id="18">kann sehr lange dauern</unit>
+   <unit type="int" id="18">
+      <connective id="18" relation="addition">und</connective>
+      das Bauvorhaben verzögern .
+   </unit>
+   Das muss in Kauf genommen werden .
+</discourse>
+

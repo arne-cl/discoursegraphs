@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   System
+   <unit type="ext" id="1">Der Rausschmiss der Öffentlichkeit aus dem Kita-Untersuchungs-Ausschuss mag für sich genommen nur ein Stück aus dem Tollhaus sein .</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="contrast">Doch</connective>
+      aufgefädelt auf die Kette vieler Ereignisse rund um das Versagen der Verwaltung in Sachen Kitas ist dieser Akt nur die nächste Perle .
+   </unit>
+   Es begann damit , dass die Eltern Druck machen mussten , damit überhaupt etwas geschieht . Die Verwaltung 
+   <unit type="ext" id="2">versprach Transparenz</unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="addition">und</connective>
+      hat es bis heute nicht geschafft , die Eltern Kita für Kita präzise und detailliert über den Zustand der Häuser zu informieren .
+   </unit>
+   Offenbar selbst unzureichend in Kenntnis gesetzt , bietet das Jugendamt unverbindliche Auskünfte - zuletzt im Jugendhilfeausschuss . Die Eltern forderten einen Ausschuss , der den Skandal erhellt . Sie hatten die Rechnung ohne SPD-Mann Kurt Kreisel gemacht , der gegen das Gremium schoss und zumindest erreichte , dass der Ausschuss nach Proporz besetzt wird .
+   <unit type="ext" id="3">Verhindern konnte Kreisel den Ausschuss nicht ,</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="contrast">aber</connective>
+      verzögern .
+   </unit> 
+   <unit type="ext" id="4">Gefragt , was er gegen den Ausschuss habe , stellte er sich bockig und schwieg .</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">Und</connective>
+      nun erklärt das Rechtsamt , dass der Ausschuss geschlossen zu tagen habe .
+   </unit>
+   Wer dahinter kein System vermutet , ist wahrlich mit dem Klammerbeutel gepudert worden .
+</discourse>
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Auf dem Totenbett
+   Lebt das Bündnis für Arbeit überhaupt noch ? Für BDA-Chef Dieter Hundt " existiert es faktisch nicht mehr " . IG-Metall-Vize Jürgen Peters spricht von " Elefantenrunden " , bei denen " nichts herumkommt " . Die Ergebnisse waren bislang in der Tat dürftig .
+   <unit type="ext" id="1">Das Wenige , das Tarifparteien und Bundesregierung vereinbarten , wurde oft nicht mal umgesetzt .</unit>
+   <unit type="int" id="1">
+      <unit type="ext" id="3">
+         <unit type="ext" id="2">
+            <connective id="1" relation="addition">So</connective>
+            sind etwa die Gewerkschaften zu Recht sauer ,
+         </unit>
+         <unit type="int" id="2">
+            <connective id="2" relation="consequence">weil</connective>
+            die Zusage der Unternehmer , Überstunden abzubauen , nicht eingehalten wurde .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="3">
+      <unit type="ext" id="4">
+         Der jüngst geplatzte Termin geht
+         <connective id="3" relation="contrast">jedoch</connective>
+         auf das Gewerkschaftskonto .
+      </unit>
+   </unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="consequence">Denn</connective>
+      die Strategie der IG Metall ist durchsichtig .
+   </unit>
+   <unit type="ext" id="5">Sie will heute hohe Tarifforderungen verkünden können , </unit> <unit type="int" id="5"><connective id="5" relation="addition">ohne</connective> auf die Bündnispartner Rücksicht nehmen zu müssen .</unit> Der Geldbeutel der eigenen Mitglieder ist wieder einmal wichtiger als die Sorgen der Arbeitslosen . Das erste Bündnis für Arbeit ging durch die Unfähigkeit der Kohl-Regierung in die Brüche . Diesmal könnte es ausgerechnet sein Erfinder , IG-Metall-Chef Klaus Zwickel , sein , der ihm den Totenschein ausstellt .
+</discourse>
+

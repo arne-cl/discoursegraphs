@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Was wirklich zählt
+   <unit type="ext" id="1">Es ist zweifellos ein großer Zugewinn , dass Eltern heute unter Kindertagesstätten wählen können , die unterschiedliche pädagogische Konzepte bieten .</unit>
+   <unit type="int" id="1">
+      <unit type="ext" id="2">
+         Es ist
+         <connective id="1" relation="addition">auch</connective>
+         von Vorteil , dass die Kitas einer strengen Aufsicht unterliegen , die über die räumlichen Bedingungen wacht .
+      </unit>
+   </unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="contrast">Doch</connective>
+      wichtiger als die Quadratmetergrößen von Spielzimmern , die Qualität von Bodenbelägen und aseptische Waschräume erachten die meisten Eltern andere Richtwerte .
+   </unit>
+   Sie wollen vor allem , dass ihr Kind in einer harmonischen Umgebung den Tag verbringt , dass es ständige Bezugspersonen hat , die ihm Liebe und Wärme und Konsequenz entgegen bringen .
+   <unit type="int" id="12">
+      <connective id="12" relation="condition">Wenn</connective>
+      die Knirpse herausgewachsen sind ,
+   </unit>
+   <unit type="ext" id="12">
+      erinnern sie sich vor allem ,
+      <unit type="ext" id="15">ob sie in ihrem Kindergarten glücklich waren , ob sie die Tanten leiden mochten</unit>
+      <unit type="int" id="15">
+         <connective id="15" relation="alternation">oder</connective>
+         nur sehnsüchtig den Abend herbeisehnten .
+      </unit>
+   </unit>
+   <unit type="ext" id="19">
+      <unit type="ext" id="16">Im " Spatzennest " Groß Glienicke gehört das Klima zu den Stärken des Hauses ,</unit>
+      <unit type="int" id="16">
+         <connective id="16" relation="concession">auch</connective>
+         <connective id="16" relation="concession">wenn</connective>
+         das manchmal nach Essen riecht .
+      </unit>
+   </unit>
+   <unit type="int" id="19">
+         <connective id="19" relation="contrast">Aber</connective>
+         die Kinder 
+         <unit type="ext" id="21">
+            sehen noch , wie gekocht wird ,
+         </unit>
+      <unit type="int" id="21">
+         <connective id="21" relation="contrast">anstatt</connective>
+         mit Assiettenkost abgespeist zu werden .
+      </unit>
+   </unit>
+   <unit type="ext" id="22">All das weiß man im Ort zu schätzen ,</unit>
+   <unit type="int" id="22">
+      <connective id="22" relation="consequence">darum</connective>
+      setzt nun , da ein Betrugsskandal das Haus erschüttert , eine Rettungsaktion ein , der man nur Erfolg wünschen kann .
+   </unit>
+</discourse>
+

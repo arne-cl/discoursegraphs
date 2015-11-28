@@ -1,0 +1,75 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Weihnachtsmann Völler</segment>
+    <segment id="13" parent="17" relname="joint">
+
+Ja , ist denn heut&apos; schon Weihnachten ?</segment>
+    <segment id="12" parent="14" relname="concession">  Eigentlich nicht ,</segment>
+    <segment id="14" parent="16" relname="span"> doch für Fußball-Deutschland gab es gestern schon die schönste Bescherung .</segment>
+    <segment id="2" parent="18" relname="cause">  Rudolf Völler , den Volkes Mund liebevoll &quot; Ruuuuudi &quot; ruft , hat sein Ja-Wort als nationaler Teamchef bis zum WM-Finale 2006 in Berlin gegeben -</segment>
+    <segment id="15" parent="5" relname="result"> und den Faxgeräten in der Frankfurter DFB-Zentrale damit den K.o. versetzt .</segment>
+    <segment id="5" parent="18" relname="span">  Womöglich sind mehr Glückwunschschreiben eingetickert als in einem Stadion Grashalme wachsen .</segment>
+    <segment id="6" parent="29" relname="span">  Keine Frage , Rudi ist der Richtige .</segment>
+    <segment id="7" parent="22" relname="concession">  Obschon längst kein Taktik-Guru ,</segment>
+    <segment id="4" parent="22" relname="conjunction"> hat der ehemalige Torjäger mit der WM-Qualifikation seines Teams für Fernost enorm an Profil gewonnen</segment>
+    <segment id="3" parent="22" relname="conjunction"> und das Image des unverbindlichen &quot; Ich-versuch&apos;s-einfach-mal&quot;-Typen verloren .</segment>
+    <segment id="8" parent="24" relname="list">  Der grauhaarige Hanauer hat sich zum Mann der Nähe , der Integration , der Kontinuität entwickelt .</segment>
+    <segment id="9" parent="24" relname="list">  Völler kann Fußballnationalspieler , Fans und Fernsehen hinter sich vereinen ,</segment>
+    <segment id="25" parent="24" relname="list"> schafft Perspektiven</segment>
+    <segment id="26" parent="27" relname="span"> und verspricht , &quot; dass wieder attraktiver Fußball gespielt wird &quot; .</segment>
+    <segment id="10" parent="11" relname="condition">  Am besten schon bei der nächsten WM .</segment>
+    <segment id="11" parent="21" relname="span">  Dann wäre selbst im Juni Weihnachten .</segment>
+<group id="16" type="span" parent="17" relname="joint" />
+<group id="17" type="multinuc" parent="19" relname="evaluation-s" />
+<group id="18" type="span" parent="19" relname="span" />
+<group id="19" type="span" parent="20" relname="span" />
+<group id="20" type="span" parent="6" relname="background" />
+<group id="21" type="span" parent="26" relname="elaboration" />
+<group id="22" type="multinuc" parent="23" relname="span" />
+<group id="23" type="span" parent="24" relname="list" />
+<group id="24" type="multinuc" parent="28" relname="span" />
+<group id="27" type="span" parent="24" relname="list" />
+<group id="28" type="span" parent="6" relname="reason" />
+<group id="29" type="span" />
+  </body>
+</rst>

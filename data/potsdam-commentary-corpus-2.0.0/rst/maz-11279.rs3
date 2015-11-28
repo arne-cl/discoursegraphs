@@ -1,0 +1,78 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Kompliziertes Erbe</segment>
+    <segment id="10" parent="26" relname="interpretation">
+
+Das FX-Center ist fast wieder auf dem Stand von 1999 .</segment>
+    <segment id="2" parent="31" relname="span">  Damals brauchte man nach dem Konkurs der ersten Betreibergesellschaft Monate ,</segment>
+    <segment id="30" parent="2" relname="circumstance"> bis man mit Artemedia einen Nachfolger gefunden hatte .</segment>
+    <segment id="3" parent="24" relname="span">  Einen hungrigen Nachfolger , dem die hoch subventionierte Infrastruktur des Hauses ebenso zupass kam wie sein Leumund , mit dem Technik-Inventar absolut auf der Höhe der Zeit zu sein .</segment>
+    <segment id="4" parent="3" relname="interpretation">  Ein Bonuspunkt , mit dem Artemedia beim Börsengang trumpfen wollte .</segment>
+    <segment id="5" parent="23" relname="conjunction">  Aus dem Börsengang wurde nichts ,</segment>
+    <segment id="11" parent="23" relname="conjunction"> auch Artemedia selbst scheint nun am Ende .</segment>
+    <segment id="6" parent="21" relname="joint">  Wie 1999 schweben nun die Verpflichtungen , die sich aus der Förderung von Land und EU ergeben , als Damoklesschwert über dem FX-Center :</segment>
+    <segment id="12" parent="19" relname="list">  Wenn man seinen Betrieb nicht aufrecht hält ,</segment>
+    <segment id="13" parent="19" relname="list"> wenn man nicht dem Förderzweck gemäß handelt ,</segment>
+    <segment id="14" parent="20" relname="span"> haben die Geldgeber das Recht ( im Interesse der Steuerzahler die Pflicht ) , ihre Beiträge zurückzufordern .</segment>
+    <segment id="7" parent="18" relname="span">  Ein Unterschied zu 1999 aber besteht .</segment>
+    <segment id="8" parent="16" relname="antithesis">  Damals , mitten im Landtagswahlkampf , war das FX-Center Chefsache der SPD-Staatskanzlei .</segment>
+    <segment id="9" parent="16" relname="span">  Nun muss der CDU-Wirtschaftsminister regeln , was seine heutigen Koalitionspartner einst einbrockten :</segment>
+    <segment id="15" parent="9" relname="interpretation">  Denn noch immer ist nicht erwiesen , ob das FX-Center , wie man es einst haben wollte , überhaupt funktionieren kann .</segment>
+<group id="16" type="span" parent="17" relname="span" />
+<group id="17" type="span" parent="22" relname="span" />
+<group id="18" type="span" parent="17" relname="preparation" />
+<group id="19" type="multinuc" parent="14" relname="condition" />
+<group id="20" type="span" parent="21" relname="joint" />
+<group id="21" type="multinuc" parent="28" relname="contrast" />
+<group id="22" type="span" parent="28" relname="contrast" />
+<group id="23" type="multinuc" parent="26" relname="span" />
+<group id="24" type="span" parent="31" relname="e-elaboration" />
+<group id="25" type="span" parent="23" relname="antithesis" />
+<group id="26" type="span" parent="27" relname="span" />
+<group id="27" type="span" parent="28" relname="background" />
+<group id="28" type="multinuc" parent="29" relname="span" />
+<group id="29" type="span" />
+<group id="31" type="span" parent="25" relname="span" />
+  </body>
+</rst>

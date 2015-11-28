@@ -1,0 +1,68 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Glückliche Hühner</segment>
+    <segment id="12" parent="16" relname="interpretation">
+
+Um die deutschen Legehennen ist heftiger politischer Streit entbrannt .</segment>
+    <segment id="2" parent="13" relname="contrast">  Bundesagrarministerin Renate Künast will das Halten der Tiere in engen Legebatterien bereits vom Jahr 2006 an verbieten .</segment>
+    <segment id="3" parent="13" relname="contrast">  In den EU-Nachbarländern soll das erst fünf Jahre später gelten .</segment>
+    <segment id="4" parent="15" relname="span">  Eier-Produzenten aus der ganzen Republik machen gegen Künasts Pläne mobil .</segment>
+    <segment id="5" parent="14" relname="list">  Die Betriebe im Osten fürchten , dass die hohen Investitionen , die sie in moderne Legebatterien nach europäischem Standard gesteckt haben , umsonst gewesen sind .</segment>
+    <segment id="6" parent="14" relname="list">  Im Westen herrscht die Sorge vor , ausländische Konkurrenten könnten dann mit Billig-Eiern aus Legebatterien den deutschen Markt überschwemmen .</segment>
+    <segment id="7" parent="19" relname="reason">  Beide Bedenken sind nicht einfach von der Hand zu weisen .</segment>
+    <segment id="8" parent="19" relname="joint">  Ministerin Künast muss zumindest über längere Übergangsfristen nachdenken .</segment>
+    <segment id="9" parent="18" relname="span">  Am Grundsatz , die Käfighaltung abzuschaffen , sollte sie nicht rütteln .</segment>
+    <segment id="10" parent="17" relname="list">  Artgerechte Tierhaltung gehört schließlich zu den Eckpunkten der von ihr propagierten Agrarwende .</segment>
+    <segment id="11" parent="17" relname="list">  Und schließlich greifen immer mehr Verbraucher beim Einkauf bewußt zu den tierfreundlich erzeugten Eiern .</segment>
+<group id="13" type="multinuc" parent="15" relname="cause" />
+<group id="14" type="multinuc" parent="4" relname="elaboration" />
+<group id="15" type="span" parent="16" relname="span" />
+<group id="16" type="span" parent="21" relname="span" />
+<group id="17" type="multinuc" parent="9" relname="reason" />
+<group id="18" type="span" parent="19" relname="joint" />
+<group id="19" type="multinuc" parent="20" relname="span" />
+<group id="20" type="span" parent="22" relname="span" />
+<group id="21" type="span" parent="20" relname="evaluation-n" />
+<group id="22" type="span" />
+  </body>
+</rst>

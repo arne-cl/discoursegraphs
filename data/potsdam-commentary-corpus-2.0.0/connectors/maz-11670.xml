@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Tränen
+   <unit type="ext" id="2">
+      Tränen flossen gestern zum Volkstrauertag auf dem Friedhof von Langen . Noch mehr als 56 Jahre nach dem Ende des Zweiten Weltkriegs trauern Menschen um den Verlust eines geliebten Mannes , Vaters oder Kindes .
+   </unit>
+   <unit type="int" id="2">
+      Mit dem Krieg beschäftigte sich am Sonnabend <connective id="2" relation="addition">auch</connective> die Kreissynode der Evangelischen Kirche .
+   </unit>
+   Sie verabschiedete eine Resolution gegen den Krieg in Afghanistan .
+   <unit type="ext" id="5">Das Papier ist - zugegeben - vorsichtig gefasst ,</unit>
+   <unit type="int" id="5">
+      vielleicht gab es 
+      <connective id="5" relation="consequence"><modifier>auch</modifier> deshalb</connective>
+      keine Gegenstimme .
+   </unit>
+   <unit type="ext" id="6">
+      Die Stimmung hat sich gewandelt ,</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="successive">seit</connective>
+      klar ist , was vielen vorher klar war :
+      <unit type="ext" id="8">" Saubere chirurgische Schnitte " gegen Terroristen gibt es mit Flächenbombardements nicht</unit>
+      <unit type="int" id="8">
+         <connective id="8" relation="addition">und</connective>
+         selbst High-Tech-Bomben verfehlen oft genug ihr Ziel .
+      </unit>
+   </unit>
+   In Afghanistan sterben Frauen und alte Männer . Bombensplitter zerfetzen afghanische Kinder , die in ihren armseligen Hütten von einem New York noch nie etwas gehört haben .
+   <unit type="ext" id="13">Alle , die Krieg für notwendig halten , nehmen auch diese unschuldigen Opfer in Kauf .</unit>
+   <unit type="int" id="13">
+         <connective id="13" relation="concession">Dabei</connective>
+         sollten wir uns gerade am Volkstrauertag erinnern können ,
+         <unit type="ext" id="15">
+            wie es sich anfühlt ,
+         </unit>
+         <unit type="int" id="15">
+
+               <connective id="15" relation="condition">wenn</connective>
+               das tote Kind auf dem Fernsehschirm 
+            <unit type="ext" id="16">nicht mehr " irgendein Asiate " ist ,
+            </unit>
+            <unit type="int" id="16">
+               <connective id="16" relation="contrast">sondern</connective>
+               unser eigenes Kind .
+            </unit>
+         </unit>
+      </unit>
+</discourse>
+

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE markables SYSTEM "markables.dtd">
+<markables xmlns="www.eml.org/NameSpaces/primmark">
+  <markable id="markable_1" span="word_5..word_7" phrase_type="np" np_form="defNP" complex_np="no" grammatical_role="SBJ"/>
+  <markable id="markable_5" span="word_18..word_20" phrase_type="pp" np_form="defNP" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_7" span="word_26,word_27" phrase_type="np" np_form="NE" complex_np="yes" grammatical_role="not_specified"/>
+  <markable id="markable_8" span="word_28..word_30" phrase_type="np" np_form="defNP" complex_np="no" grammatical_role="DIR-OBJ"/>
+  <markable id="markable_10" span="word_16..word_20" phrase_type="pp" np_form="defNP" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_12" span="word_13..word_20" phrase_type="pp" np_form="defNP" complex_np="yes" grammatical_role="not_specified"/>
+  <markable id="markable_13" span="word_22..word_27" phrase_type="np" np_form="defNP" complex_np="yes" grammatical_role="SBJ"/>
+  <markable id="markable_17" span="word_41,word_42" phrase_type="np" np_form="defNP" complex_np="no" grammatical_role="SBJ"/>
+  <markable id="markable_19" span="word_51..word_53" phrase_type="pp" np_form="defNP" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_21" span="word_37..word_40" phrase_type="np" np_form="defNP" complex_np="no" grammatical_role="INDIR-OBJ"/>
+  <markable id="markable_24" span="word_47..word_56" phrase_type="np" np_form="defNP" complex_np="yes" grammatical_role="SBJ"/>
+  <markable id="markable_30" span="word_69..word_71" phrase_type="pp" np_form="defNP" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_33" span="word_75..word_77" phrase_type="np" np_form="defNP" complex_np="no" grammatical_role="SBJ"/>
+  <markable id="markable_36" span="word_91,word_92" phrase_type="np" np_form="NE" complex_np="yes" grammatical_role="not_specified"/>
+  <markable id="markable_37" span="word_95,word_96" phrase_type="pp" np_form="defNP" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_41" span="word_93..word_96" phrase_type="np" np_form="defNP" complex_np="yes" grammatical_role="SBJ"/>
+  <markable id="markable_43" span="word_83..word_92" phrase_type="np" np_form="defNP" complex_np="yes" grammatical_role="INDIR-OBJ"/>
+  <markable id="markable_49" span="word_103,word_104" phrase_type="np" np_form="defNP" complex_np="no" grammatical_role="SBJ"/>
+  <markable id="markable_50" span="word_110,word_111" phrase_type="np" np_form="defNP" complex_np="no" grammatical_role="SBJ"/>
+  <markable id="markable_57" span="word_116,word_117" phrase_type="pp" np_form="defNP" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_58" span="word_127..word_129" phrase_type="pp" np_form="defNP" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_59" span="word_132..word_135" phrase_type="pp" np_form="defNP" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_61" span="word_143,word_144" phrase_type="np" np_form="defNP" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_63" span="word_114..word_117" phrase_type="np" np_form="defNP" complex_np="yes" grammatical_role="SBJ"/>
+  <markable id="markable_65" span="word_140..word_144" phrase_type="pp" np_form="defNP" complex_np="yes" grammatical_role="not_specified"/>
+  <markable id="markable_67" span="word_122..word_135" phrase_type="np" np_form="defNP" complex_np="yes" grammatical_role="not_specified"/>
+  <markable id="markable_68" span="word_122..word_139" phrase_type="np" np_form="defNPindefNP" complex_np="yes" grammatical_role="DIR-OBJ"/>
+  <markable id="markable_73" span="word_150..word_152" phrase_type="np" np_form="defNP" complex_np="no" grammatical_role="SBJ"/>
+  <markable id="markable_75" span="word_158..word_160" phrase_type="pp" np_form="defNP" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_76" span="word_163,word_164" phrase_type="np" np_form="NE" complex_np="yes" grammatical_role="not_specified"/>
+  <markable id="markable_77" span="word_168,word_169" phrase_type="pp" np_form="defNP" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_78" span="word_155,word_156" phrase_type="np" np_form="NE" complex_np="yes" grammatical_role="not_specified"/>
+  <markable id="markable_82" span="word_153,word_155..word_156,word_158..word_169" phrase_type="np" np_form="indefNPindefNP" complex_np="yes" grammatical_role="DIR-OBJ"/>
+  <markable id="markable_100010" span="word_14" phrase_type="np" np_form="PPOS" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_100016" span="word_20" phrase_type="np" np_form="NE" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_100022" span="word_26" phrase_type="np" np_form="NE" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_100023" span="word_27" phrase_type="np" np_form="NE" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_100061" span="word_65" phrase_type="np" np_form="PDS" complex_np="no" grammatical_role="SBJ"/>
+  <markable id="markable_100087" span="word_91" phrase_type="np" np_form="NE" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_100088" span="word_92" phrase_type="np" np_form="NE" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_1000113" span="word_117" phrase_type="np" np_form="NE" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_1000116" span="word_120" phrase_type="pp" np_form="PADV" complex_np="no" grammatical_role="other"/>
+  <markable id="markable_1000144" span="word_148" phrase_type="pp" np_form="PADV" complex_np="no" grammatical_role="other"/>
+  <markable id="markable_1000151" span="word_155" phrase_type="np" np_form="NE" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_1000159" span="word_163" phrase_type="np" np_form="NE" complex_np="no" grammatical_role="not_specified"/>
+  <markable id="markable_1000160" span="word_164" phrase_type="np" np_form="NE" complex_np="no" grammatical_role="not_specified"/>
+</markables>

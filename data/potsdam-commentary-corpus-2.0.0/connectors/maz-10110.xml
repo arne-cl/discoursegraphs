@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Zukunftsinvestitionen
+   <unit type="ext" id="6">
+         Wie schwierig es ist , in dieser Region einen Ausbildungsplatz zu finden
+         , haben wir an dieser und anderer Stelle oft und ausführlich bewertet .
+   </unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="concession">Trotzdem</connective>
+      bemühen sich Unternehmen sowie die Industrie- und Handelskammer Potsdam den Schulabgängern Wege in die Ausbildung aufzuzeigen .
+   </unit>
+   Der " Berufemarkt " - erstmals in der Aula der Gesamtschule " Am Weinberg " angeboten - war ein guter und sinnvoller Beitrag . Das hat allein das Interesse der Schülerinnen und Schüler bewiesen .
+   Noch etwas hat der " Berufemarkt " ans Licht gebracht .
+   <unit type="ext" id="14">Die Vertreter der " Null-Bock-Generation " mag es wohl geben ,</unit>
+   <unit type="int" id="14">
+      viele - wohl die meisten - 
+      <unit type="ext" id="15">
+         wollen es
+         <connective id="14" relation="concession">aber</connective>
+         mit einer Lehre versuchen
+      </unit>
+      <unit type="int" id="15">
+         <connective id="15" relation="addition">und</connective>
+         sind guten Willens sich bei der Suche nach einem Ausbildungsplatz entsprechend anzustrengen .
+      </unit>
+   </unit>
+   <unit type="ext" id="18">
+      <unit type="ext" id="17">
+         Das sollte honoriert werden
+      </unit>
+      <unit type="int" id="17">
+         <connective id="17" relation="manner">indem</connective>
+         möglichst viele Betriebe - 
+         <unit type="int" id="18">
+            <connective id="18" relation="contrast">trotz</connective> 
+            aller wirtschaftlichen Probleme , die in den nächsten zwei Jahren vor der Türe stehen
+         </unit>
+         - intensiv ausbilden .
+      </unit>
+   </unit>
+   <unit type="ext" id="19">Längst ist der Zeitpunkt absehbar , zu dem  <unit type="int" id="19">gute Facharbeiter ins Land geholt werden müssen ,</unit>
+      <connective id="19" relation="purpose">um</connective>
+      Lücken in Unternehmen zu füllen .
+   </unit>
+   <unit type="ext" id="20">Das wäre überflüssig ,</unit>
+   <unit type="int" id="20">
+      <connective id="20" relation="condition">wenn</connective>
+      deutsche Fachkräfte jetzt ausgebildet werden .
+   </unit>
+</discourse>
+

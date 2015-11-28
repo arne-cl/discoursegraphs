@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE markables SYSTEM "markables.dtd">
+	<markables xmlns="www.eml.org/NameSpaces/sentence">
+<markable id="markable_5000" span="word_1..word_3"/>
+	<markable id="markable_5001" span="word_4..word_24"/>
+	<markable id="markable_5002" span="word_25..word_55"/>
+	<markable id="markable_5003" span="word_56..word_75"/>
+	<markable id="markable_5004" span="word_76..word_90"/>
+	<markable id="markable_5005" span="word_91..word_107"/>
+	<markable id="markable_5006" span="word_108..word_129"/>
+	<markable id="markable_5007" span="word_130..word_143"/>
+	<markable id="markable_5008" span="word_144..word_174"/>
+	<markable id="markable_5009" span="word_175..word_193"/>
+	<markable id="markable_50010" span="word_194..word_207"/>
+        </markables>
+  

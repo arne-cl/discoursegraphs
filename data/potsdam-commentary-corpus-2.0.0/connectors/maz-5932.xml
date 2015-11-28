@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Das kleinere Übel Es hat lange gedauert , bis sich im Bereich des Amtes Dahme etwas bewegt hat . Die zahlreichen Appelle , die in der Landeshauptstadt Potsdam formuliert wurden , verhallten in der Provinz meist ohne Wirkung zu zeigen . Die lokalen Akteure legten bei der Bildung größerer Gemeinden wahrlich keine Eile an den Tag . Hauptgrund für dieses Zaudern :
+   <unit type="ext" id="2">Die als hoch verschuldet geltende Stadt Dahme erschien den umliegenden Dörfern kein geeigneter Partner zu sein .</unit>
+   <unit type="int" id="2">
+      Mittlerweile haben sich <connective id="2" relation="concessive">indes</connective> auch in der Dahmer Region neue politische Strukturen manifestiert .
+   </unit>
+   Beschlossene Sache ist die Fusion von Ihlow , Illmersdorf , Rietdorf , Niendorf , Bollensdorf und Mehlsdorf zu Groß-Ihlow . Dieses neue Gebilde ist sowohl von den Bürgern als auch durch den Kreistag legitimiert . <unit type="ext" id="3">Was die anderen größeren Gemeinden betrifft ,</unit> <unit type="int" id="3"><connective id="3" relation="addition">so</connective> wird sich beim Urnengang am nächsten Sonntag erweisen , ob sie dem Willen der Einwohner entsprechen .</unit>
+   <unit type="ext" id="6">Große Ämter und Gemeinden sind sicherlich nicht der Weisheit letzter Schluss .</unit>
+   <unit type="int" id="6">
+      Im Vergleich zur bislang praktizierten Kleinstaaterei im ländlich geprägten Süden des Kreisgebietes sind sie
+      <connective id="6" relation="contrast">jedoch</connective>
+      das kleinere Übel .
+   </unit>
+</discourse>
+

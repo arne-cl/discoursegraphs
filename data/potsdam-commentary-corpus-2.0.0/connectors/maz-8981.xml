@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Überfällig
+   Frischluftfans ist der Donau-Radwanderweg genauso ein Begriff wie auch der Münsterland-Radwanderweg . Warum sollte da nicht der Landkreis Teltow-Fläming für alle Sportbegeisterten Brandenburgs oder gar Deutschlands einmal der Inbegriff für Inline-Skaten werden ? <unit type="ext" id="1">Dieser Anspruch besteht jetzt ( noch ) nicht .</unit> <unit type="ext" id="2"><unit type="int" id="1"><connective id="1" relation="addition">Zum einen</connective> würden dafür die rund 100 Kilometer langen Rad- und Skatewege im Süden des Kreises lange nicht reichen .</unit></unit>
+   <unit type="ext" id="5"><unit type="int" id="2"><connective id="2" relation="addition">Außerdem</connective> müsste hinter solch einem Angebot die gesamte Region in aller Konsequenz stehen .</unit></unit>
+   <unit type="int" id="5">
+      <unit type="ext" id="6">
+         <connective id="5" relation="consequence">Denn</connective>
+         <unit type="ext" id="4">
+            sollte wirklich einmal Inline-Skaten den Kreis Teltow-Fläming über die Grenzen hinaus anziehend machen ,
+         </unit>
+      </unit>
+      <unit type="int" id="6">
+         <unit type="int" id="4">
+            <connective id="4" relation="condition">so</connective> 
+            müsste man
+            <connective id="6" relation="succession">vorher</connective>
+            die gesamte Infrastruktur darauf ausrichten , um diese Sportart als eine touristische Attraktion anzubieten .
+         </unit>
+      </unit>
+   </unit>
+   Im Moment sollte man sich erst einmal über die zaghaften Versuche im Norden freuen , Radwege im Verbund auf die Reihe zu bringen . <unit type="ext" id="13">Die sind längst überfällig</unit> <unit type="int" id="13"><connective id="13" relation="addition">und</connective> würden den Einwohnern endlich den Alltag leichter machen .</unit>
+   <unit type="ext" id="12">
+      <unit type="int" id="10">
+         <connective id="10" relation="condition">Wenn</connective>
+         damit auch gleichzeitig den Touristen mehr Wege erschlossen werden ,
+      </unit>
+      <unit type="ext" id="10">ist das nur gut .</unit>
+   </unit>
+   <unit type="int" id="12">
+      <connective id="12" relation="consequence">Denn</connective>
+      es wäre wenigstens erst einmal ein Anfang .
+   </unit>
+   Ein kleiner Stein , in Bewegung gesetzt , kann ja durchaus eine Lawine auslösen .
+</discourse>
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Spatz in der Hand
+   <unit type="ext" id="1">Rüdiger Kadatz hat seine Meinung zum Rheinsberger Thermalbad ,</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="addition">und</connective>
+      er will sie nicht in Frage stellen :
+   </unit>
+   <unit type="int" id="2"><connective id="2" relation="temporal">Nach</connective> einem Jahr Verhandelns</unit><unit type="ext" id="2"> habe Rheinsbergs Favorit Rogner verspielt .</unit>
+   <unit type="ext" id="3">Ein neuer Investor muss her ,</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="addition">und</connective>
+      den hatte Kadatz am Mittwochabend in der Stadtverordnetenversammlung parat - die Lielje-Gruppe .
+   </unit>
+   Dass die nur ein Bad , kein Hotel bauen will , interessierte Kadatz weniger . Auch nicht die letzten Gespräche mit Rogner .
+   Neue Entwicklungen ? Wozu noch ? Für Kadatz war klar : Lieber den Spatz in der Hand als die Taube auf dem Dach .
+   <unit type="ext" id="7">Eine verständliche Einstellung -</unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="condition">wenn</connective>
+      es denn einen Spatz gäbe .
+   </unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="condition">Wenn</connective>
+      man genauer hinsieht ,
+   </unit>
+   <unit type="ext" id="9">halten die Rheinsberger vom zweiten Thermalbad-Bewerber nicht mehr in der Hand als vom ersten .</unit>
+   <unit type="ext" id="11">Ein paar vage mündliche Finanzierungs-Versprechen , die Skizze des einzigen anderen Bades , das ist alles , was Lielje vorweisen kann . Eine echte Alternative sieht anders aus .</unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="contrast">Doch</connective>
+      immerhin bewegt sich etwas im Rheinsberger Thermalbad-Rennen .
+   </unit>
+   Rogner ist willig , Finanziers sind gefunden . Es wäre unverantwortlich , Rogner so kurz vor der Ziellinie die Luft aus den Reifen zu lassen . Am Ende steht Rheinsberg ohne Investor da .
+</discourse>
+

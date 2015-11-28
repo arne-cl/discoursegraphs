@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Der dritte Kandidat
+   Dietmar Zigan ist ein Glückspilz - zumindest im Vergleich zu seinem Wittenberger Amts- und Parteikollegen Klaus Petry . Nicht nur , dass SPD-Mann Zigan seine Wiederwahl schon hinter sich hat : Angesichts von nur einem Gegenkandidaten hatte er auch vor der Abstimmung schon einigermaßen ruhig schlafen können .
+   <unit type="ext" id="8">
+      <unit type="ext" id="6">Anders wäre es gewesen ,</unit>
+      <unit type="int" id="6">
+         <connective id="6" relation="condition">wenn</connective>
+         auch die CDU einen guten Kandidaten ins Rennen geschickt hätte .
+      </unit>
+   </unit>
+   <unit type="int" id="8">
+      <unit type="ext" id="9">
+         <connective id="8" relation="successive">Dann</connective>
+         hätte Zigan durchaus ein zweiter Wahlgang mit ungewissem Ausgang geblüht .
+      </unit>
+   </unit>
+   <unit type="int" id="9">
+      <unit type="ext" id="10">
+         Das
+         <connective id="9" relation="concession">aber</connective>
+         könnte Petry passieren .
+      </unit>
+   </unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="consequence">Denn</connective>
+      neben dem CDU-Kandidaten Karl-Heinz Straßburg ist nun ein zweiter ernst zu nehmender Gegner da :
+   </unit>
+   <unit type="ext" id="11">Die UBG hat Horst Jaruczewski aufgestellt .</unit> <unit type="int" id="11"><connective id="11" relation="consequence">Damit</connective> ist ein Sprecher derjenigen , die schon vor einem Jahr Petry aus dem Amt heben wollten , erneut in den Ring gestiegen .</unit>
+   <unit type="ext" id="13">Die Aussichten , dem gleichen Anliegen mehr Nachdruck zu verleihen , sind dabei deutlich besser als damals :</unit>
+   <unit type="ext" id="16">
+      <unit type="int" id="13">
+         <unit type="ext" id="14">
+	   <unit type="ext" id="15">
+            <connective id="13" relation="consequence">Denn</connective>
+            Petrys Haupttrumpfkarte , die Ansiedlung eines Industriepark Holz , wird wohl nicht stechen
+         </unit>
+	 </unit>
+         <unit type="int" id="14">
+            <connective id="14" relation="addition">und</connective>
+            <unit type="int" id="15"><connective id="15" relation="consequence">damit</connective> dem Vorwurf , er sei nicht der richtige Mann für einen Aufschwung Wittenberges , neue Nahrung verleihen .</unit>
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="16">
+      <connective id="16" relation="addition">Und</connective>
+      : Im Gegensatz zu damals haben Petrys Kontrahenten jetzt ein Gesicht .
+   </unit>
+</discourse>
+

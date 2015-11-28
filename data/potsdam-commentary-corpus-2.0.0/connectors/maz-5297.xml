@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/C:/Arbeit/Annotationen/Konnektoren/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+    Siamesische Zwillinge
+    <unit type="ext" id="1">
+        Die Lausitzer Braunkohle AG ( Laubag ) hat im abgelaufenen Geschäftsjahr mit der Förderung und dem Verkauf von Braunkohle erstmals Verluste gemacht .
+    </unit>
+
+    <unit type="ext" id="3">
+        <unit type="int" id="1">
+            <connective id="1" relation="consequence">
+                Damit
+            </connective>
+            wird erneut deutlich , dass eine Neuordnung der Energiewirtschaft in Ostdeutschland überfällig ist .
+        </unit>
+    </unit>
+    
+    <unit type="int" id="3">
+        <connective id="3" relation="consequence">
+            Denn
+        </connective>
+        die Laubag und ihr wichtigster Kunde , die Veag , hängen wie siamesische Zwillinge voneinander ab .
+    </unit>
+   
+    <unit type="ext" id="7">
+        <unit type="int" id="2">
+            <connective id="2" relation="temporal">
+                Als
+            </connective>
+            die Veag
+
+            <unit type="int" id="7">
+                <connective id="7" relation="consequence">
+                    wegen
+                </connective>
+                der Liberalisierung des Strommarktes
+            </unit>
+
+            unter Druck geriet und ihre Strompreise senken musste ,
+        </unit>
+
+        <unit type="ext" id="2">
+            hielt sie sich bei ihrem Lieferanten schadlos .
+        </unit>
+    </unit>
+
+Die Laubag musste Preiszugeständnisse machen , die sie nun selbst in Bedrängnis bringen . Einziger Weg aus dem Dilemma ist die Bildung eines neuen Energiekonzerns aus Rohstofflieferanten , Stromerzeugern und Endversorgern , in dem Risiken besser verteilt werden können .
+
+    <unit type="ext" id="9">
+        Die Idee , auch einen Gasversorger mit ins Boot zu holen , ist im Prinzip nicht schlecht .
+    </unit>
+   
+    <unit type="int" id="9">
+        <connective id="9" relation="concession">
+            Allerdings
+        </connective>
+        gilt auch hier , dass zu viele Köche den Brei verderben können .
+   </unit>
+
+Zumindest muss klar sein , wer im neuen Konzern das Sagen hat .
+
+</discourse>
+

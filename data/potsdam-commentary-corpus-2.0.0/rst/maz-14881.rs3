@@ -1,0 +1,83 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Schildbürger</segment>
+    <segment id="11" parent="26" relname="joint">
+
+Lange geplant , endlich gebaut - und nun doch an der Realität vorbei ?</segment>
+    <segment id="9" parent="26" relname="joint">  Der Bürger schüttelt verständnislos den Kopf über so viel Unverstand .</segment>
+    <segment id="2" parent="12" relname="condition">
+
+Wenn die geplanten Bushaltestellen für die B_96-Ortsdurchfahrt Groß Machnow ungünstig sind -</segment>
+    <segment id="12" parent="27" relname="span"> warum hat dann die Verkehrsgesellschaft nicht rechtzeitig während der Planungsphase ihre Einwände erhoben und Vorschläge gemacht ?</segment>
+    <segment id="10" parent="13" relname="preparation">
+
+Die Antwort :</segment>
+    <segment id="13" parent="28" relname="span"> Man hat das wohl schlichtweg verschlafen .</segment>
+    <segment id="3" parent="24" relname="preparation">  Mit ärgerlichen Folgen :</segment>
+    <segment id="14" parent="23" relname="conjunction"> Die Fahrgäste stehen teilweise im Gras</segment>
+    <segment id="15" parent="23" relname="conjunction"> und müssen bei Schlechtwetter über einen schlammigen Trampelpfad zum nächsten befestigten Bürgersteig laufen .</segment>
+    <segment id="4" parent="24" relname="list">  Beim Neubau hätten gleich Bustaschen , Bussteige und Wartehäuschen entstehen können .</segment>
+    <segment id="5" parent="24" relname="list">  Eine Fußgänger-insel wäre sinnvollerweise dort gebaut worden , wo sich der Busbetrieb jetzt die Haltestelle wünscht .</segment>
+    <segment id="6" parent="22" relname="span">  Die extra breit für den Bus ausgelegten Ein- und Ausfahrten scheinen nun für die Katz&apos; .</segment>
+    <segment id="7" parent="6" relname="interpretation">  Der Steuerzahler hat &apos;s ja .</segment>
+    <segment id="8" parent="20" relname="condition">
+
+Wenn jetzt nachträglich woanders Haltestellen gebaut werden müssen ,</segment>
+    <segment id="16" parent="20" relname="span"> so wirkt das wie jener Streich der Schildbürger ,</segment>
+    <segment id="17" parent="19" relname="span"> die Licht ins Rathaus tragen wollten ,</segment>
+    <segment id="18" parent="17" relname="cause"> weil sie die Fenster vergessen hatten .</segment>
+<group id="19" type="span" parent="16" relname="e-elaboration" />
+<group id="20" type="span" parent="21" relname="span" />
+<group id="21" type="span" parent="30" relname="evaluation-s" />
+<group id="22" type="span" parent="24" relname="list" />
+<group id="23" type="multinuc" parent="24" relname="list" />
+<group id="24" type="multinuc" parent="25" relname="span" />
+<group id="25" type="span" parent="29" relname="result" />
+<group id="26" type="multinuc" parent="29" relname="interpretation" />
+<group id="27" type="span" parent="29" relname="joint" />
+<group id="28" type="span" parent="29" relname="joint" />
+<group id="29" type="multinuc" parent="30" relname="span" />
+<group id="30" type="span" parent="31" relname="span" />
+<group id="31" type="span" />
+  </body>
+</rst>

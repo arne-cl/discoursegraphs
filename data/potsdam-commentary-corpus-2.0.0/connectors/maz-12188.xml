@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Weitsicht
+   Die Idee besticht .
+      <unit type="ext" id="1">Die drei Grundschulen Hohenstückens gehen zusammen ,</unit>
+      <unit type="int" id="1">
+         <connective id="1" relation="addition">und zwar</connective>
+         so schnell wie möglich .
+      </unit>
+      <unit type="ext" id="2">
+         <unit type="int" id="4">
+            <connective id="4" relation="consequence">Weil</connective>
+            für dann rund 500 Schüler nur im Schulhaus am Marktplatz genügend Raum ist ,
+         </unit>
+         <unit type="ext" id="4">nistet sich die dann neue Schule erst einmal dort ein .</unit>
+      </unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="addition">Und</connective>
+      nun hat die künftige Schulkonferenz genügend Zeit , den endgültigen Standort zu wählen .
+   </unit>
+   <unit type="ext" id="8">
+   Dass die Marktplatz-Schule nicht in Frage kommt , ist seit Jahren klar .
+   Doppelschulen , und dazu gehört dieses Gebäude , will die Stadt nicht sanieren .
+   </unit>
+   <unit type="int" id="8">Der Vorschlag , den die Verwaltung jetzt den Stadtverordneten unterbreiten will , wäre
+      <connective id="8" relation="concession">allerdings</connective>
+      nicht ohne die Weitsicht der drei Schulkonferenzen zustande gekommen .
+   </unit>
+   Sie haben sich für die Fusion und einen schnellstmöglichen Vollzug ausgesprochen . Gehen die Abgeordneten mit , <unit type="ext" id="9">haben die Schüler und Lehrer gewonnen -</unit> <unit type="int" id="9"><connective id="9" relation="consequence">nämlich</connective> <unit type="ext" id="10">die nötige Ruhe , Zuversicht und Planungssicherheit ,</unit> <unit type="int" id="10"><connective id="10" relation="consequence">um</connective> Unterricht vernünftig gestalten zu können .</unit></unit> 
+      Ob in wenigen Jahren die Grimm- oder die Vierjahreszeiten-Schule endgültiges Domizil wird , hängt auch von der Entwicklung der jeweiligen Gebäude-Mitnutzer ab . 
+   Die Realschule , die sich mit den Grimm-Schülern das Haus teilt , sieht zumindest ab dem Jahr 2004 einer gefährdeten Existenz entgegen .
+</discourse>
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Naive PDS
+   <unit type="ext" id="1">Die innenpolitische Situation in Deutschland hat sich</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="successive">seit</connective>
+      den Terroranschlägen in den USA 
+   </unit>
+   <unit type="ext" id="1">grundlegend gewandelt :</unit>
+   Wohl niemand hätte sich vor dem 11. September vorstellen können , dass die in den 70er Jahren gegen die RAF erprobte und bewährte Rasterfahndung innerhalb kürzester Zeit wieder eingeführt würde - und dass diese Maßnahme sogar selbst von den Grünen begrüßt wird .
+   <unit type="ext" id="5">
+      <unit type="int" id="2">
+         <connective id="2" relation="concession">Auch</connective>
+         <connective id="2" relation="concession">wenn</connective>
+         die Basis murrt , 
+      </unit>
+      <unit type="ext" id="2">haben sie den Ernst der Lage erkannt .</unit>
+   </unit>
+   <unit type="int" id="5">
+      Die PDS stellt in diesen Tagen
+      <connective id="5" relation="contrast">hingegen</connective>
+      erneut unter Beweis , dass sie noch immer nicht im vereinten Deutschland angekommen ist .
+   </unit>
+   Wer in einem Parteitagsantrag feststellt , dass der international operierende Terrorismus allein mit " innerem Frieden und gesellschaftlichem Ausgleich " bekämpft werden kann ,
+   <unit type="int" id="7">
+      ist
+      <connective id="7" relation="alternation">entweder</connective>
+      grenzenlos naiv
+   </unit>
+   <unit type="ext" id="7">
+      <connective id="7" relation="alternation">oder</connective>
+      nimmt sich selbst nicht ernst .
+   </unit>
+   Es bleibt abzuwarten , ob das realitätsferne Herumlavieren der Partei bereits bei der Berlin-Wahl am 21. Oktober Folgen haben wird .
+</discourse>
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Ein übles Verbrechen Angst kann das Leben von Menschen zerstören . Angst zu schüren ist die makabere " coole " Absicht von Trittbrettfahrern in diesen Wochen .
+      Denen muss es offenbar imponieren , dass in Amerika
+      <unit type="ext" id="1">gefährliche Krankheitserreger eingetütet</unit>
+      <unit type="int" id="1">
+         <connective id="1" relation="addition">und</connective>
+         ohne jede Ehrfurcht vor menschlichem Leben in einen tödlichen Kreislauf geschickt werden .
+      </unit>
+Auch hierzulande gibt 's Menschen , die Pulver oder Puder an Bekannte oder Ungeliebte schicken .
+   <unit type="ext" id="7">Vielleicht stehen sie ganz in der Nähe rum ,</unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="condition">wenn</connective>
+      <unit type="ext" id="9">die Briefe geöffnet werden</unit>
+      <unit type="int" id="9">
+         <connective id="9" relation="addition">und</connective>
+         Schrecken verbreiten ,
+      </unit>
+      zu aufwändigen Sicherheitsmaßnahmen zwingen .
+   </unit>
+   Die Angst erfasst nicht nur die Empfänger .
+   <unit type="ext" id="12">Zumindest gemischte Gefühle beschleichen auch die Mitarbeiter des Hennigsdorfer Briefzentrums ,</unit>
+   <unit type="int" id="12">
+      <connective id="12" relation="condition">wenn</connective>
+      sie Briefe mit merkwürdigen Anschriften , arabischen Lettern oder fühlbar ungewöhnlichem Inhalt feststellen .
+   </unit>
+   Bisher waren in Deutschland Trittbrettfahrer am Werk . Einer davon wurde in München gefasst . Ein junger Mensch , der viele Jahre zu tun haben wird , um die Rechnung für seine Untat , immerhin ein mindestens fünfstelliger hoher Betrag , abzuzahlen .
+   <unit type="ext" id="14">Abgelten kann er sie nicht ,</unit>
+   <unit type="int" id="14">
+      <connective id="14" relation="consequence">denn</connective>
+      andere Menschen in Angst zu versetzen , das ist ein übles Verbrechen .
+   </unit>
+</discourse>
+

@@ -1,0 +1,72 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Uneinsichtig</segment>
+    <segment id="2" parent="13" relname="joint">
+
+Im Streit um die fragwürdige Spendenpraxis der stadteigenen Kommunalen Wohnungsbaugesellschaft ( KWR ) schlugen gestern Abend im Stadtparlament die Wogen erneut hoch .</segment>
+    <segment id="3" parent="13" relname="joint">  Die eigentlich sachlich zu führende Auseinandersetzung um die Parteispenden von KWR-Chef Richter an Bürgermeister Lünsers Politverein Pro Rathenow wird zunehmend emotionaler .</segment>
+    <segment id="4" parent="24" relname="sequence">
+
+Knapp einen Monat nach Ausbruch der Rathenower Parteispendenaffäre</segment>
+    <segment id="23" parent="24" relname="sequence"> scheint sich nunmehr aber wenigstens der Gedanke durchzusetzen , die Spenden als moralisch nicht akzeptabel zu werten .</segment>
+    <segment id="5" parent="15" relname="span">  Nachdem nach langem Zögern auch die CDU-Fraktion sich dieser Auffassung anschloss</segment>
+    <segment id="6" parent="5" relname="result"> und Bürgermeister Lünser damit von der Fahne wich ,</segment>
+    <segment id="7" parent="16" relname="span"> hat das Umdenken nun auch in Teilen von Pro Rathenow eingesetzt .</segment>
+    <segment id="8" parent="7" relname="elaboration">  Als erster seiner Fraktion sprach gestern der Abgeordnete Otto Timm von einem Fehler .</segment>
+    <segment id="9" parent="19" relname="antithesis">  Während Timm mit diesem Verhalten Pro Rathenow helfen dürfte ,</segment>
+    <segment id="10" parent="18" relname="span"> nimmt das Verhalten von Bürgermeister Lünser langsam groteske Züge an .</segment>
+    <segment id="11" parent="10" relname="evidence">  Als Legitimation für die Spenden will er nun Belege vorlegen , dass in Potsdam kommunale Betriebe jahrelang Parteien sponserten .</segment>
+    <segment id="12" parent="18" relname="evaluation-s">  Für Einsicht in Unrecht spricht auch das erneut nicht .</segment>
+<group id="13" type="multinuc" parent="24" relname="antithesis" />
+<group id="15" type="span" parent="17" relname="sequence" />
+<group id="16" type="span" parent="17" relname="sequence" />
+<group id="17" type="multinuc" parent="20" relname="circumstance" />
+<group id="18" type="span" parent="19" relname="span" />
+<group id="19" type="span" parent="20" relname="span" />
+<group id="20" type="span" parent="21" relname="span" />
+<group id="21" type="span" parent="22" relname="span" />
+<group id="22" type="span" />
+<group id="24" type="multinuc" parent="14" relname="span" />
+<group id="14" type="span" parent="21" relname="background" />
+  </body>
+</rst>

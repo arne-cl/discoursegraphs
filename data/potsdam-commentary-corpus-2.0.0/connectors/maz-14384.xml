@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Nostalgie und frische Luft
+   <unit type="ext" id="14">
+      <unit type="int" id="4">
+         <connective id="4" relation="condition">Wenn</connective>
+         ältere Pritzwalker aufs Hainholz zu sprechen kommen ,
+      </unit>
+      <unit type="ext" id="4">da können sie schon in Erinnerungen schwelgen .</unit>
+   </unit>
+   <unit type="ext" id="6">Voll des Lobes waren Mitglieder des Pritzwalker Bauausschusses am Mittwoch ,</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="simultaneous">als</connective>
+      ein Bericht über die Bewirtschaftung des Stadtforstes auf der Tagesordnung ihrer Sitzung stand .
+   </unit>
+   " Pritzwalk kann auf seinen Stadtwald stolz sein .
+   <unit type="ext" id="7">Sowas gibt es selten " , schwärmte etwa Wolfgang Eichhorst .</unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="addition">Und</connective>
+      Dietrich Kurtz sagte : " Früher als Jungs und mit der Clique sind wir oft ins Hainholz gegangen .
+   </unit>
+   Das war damals für die Jugend selbstverständlich . " Ob sie sich da vielleicht heimlich mit Mädchen getroffen hätten , wollten neugierige Sitzungsteilnehmer wissen : " Klar sind da auch mal Mädels dabei gewesen " , gestand Kurtz .
+   <unit type="int" id="14">
+      Der wunderbare Mischwald am Rande der Stadt entfaltet
+      <connective id="14" relation="concession">aber</connective>
+      nicht nur eine nostalgische Wirkung auf die Menschen .
+   </unit>
+   <unit type="ext" id="15">
+      <unit type="ext" id="16">Er ist nach wie vor Anziehungspunkt für Spaziergänger , Radler , Läufer und Naturliebhaber jeden Alters -</unit>
+      <unit type="int" id="16">
+         <connective id="16" relation="concession">wenngleich</connective>
+         es vielleicht nicht mehr so ist wie früher .
+      </unit>
+   </unit>
+   <unit type="int" id="15">
+      <unit type="ext" id="19">
+            <connective id="15" relation="concession">Aber</connective>
+            vielleicht täuscht dieser Eindruck nur und 
+	    <unit type="ext" id="18">man nimmt die vielen , Erholung suchenden Leute im Hainholz gar nicht wahr ,
+         </unit>
+         <unit type="int" id="18">
+            <connective id="18" relation="consequence">weil</connective>
+            man selbst zu selten dort ist .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="19">
+      <connective id="19" relation="consequence">Also</connective>
+      , was hält Sie von einem Dezemberausflug ins Grüne ab ?
+   </unit>
+</discourse>
+

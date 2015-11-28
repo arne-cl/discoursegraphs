@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Alles beim Alten Nun ist es heraus : Wie schon auf Kreisebene , so bleibt auch an der Verwaltungsspitze der Städte Perleberg und Pritzwalk alles beim Alten . Die Amtsinhaber sind beide im ersten Wahlgang in ihren Ämtern bestätigt worden - Gratulation an beide dazu natürlich auch von der MAZ . Das konnte man so erwarten .
+   <unit type="ext" id="9">
+      <unit type="ext" id="8">Lediglich in Pritzwalk hatte die Möglichkeit eines zweiten Wahlgangs bestanden ,</unit>
+      <unit type="int" id="8">
+         sie schien angesichts dreier Kandidaten
+         <connective id="8" relation="addition">auch</connective>
+         nicht unbedingt unwahrscheinlich .
+      </unit>
+   </unit>
+   <unit type="int" id="9">
+         <connective id="9" relation="contrast">Doch</connective>
+         die Dömnitzstädter 
+      <unit type="ext" id="10">
+         setzten nicht auf Wechsel , bescherten Wolfgang Brockmann einen großartigen Erfolg
+      </unit>
+      <unit type="int" id="10">
+         <connective id="10" relation="addition">und</connective>
+         sorgten für klare Verhältnisse .
+      </unit>
+   </unit>
+   Mit denen war in Perleberg sowieso zu rechnen . Angesichts dessen aber hat sich der junge Herausforderer Thomas Domres gegen Bürgermeister Dietmar Zigan durchaus achtbar geschlagen .
+   <unit type="ext" id="14">
+      Das kann bedeuten , dass
+      <unit type="ext" id="12">
+         die Bürger
+         <connective id="12" relation="concession">zwar</connective>
+         Kontinuität wollten ,
+         <unit type="int" id="12">
+            <connective id="12" relation="concession">aber</connective>
+            mit einem simplen " Weiter so " eben nicht einverstanden wären .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="14">
+      <connective id="14" relation="concession">Gleichwohl</connective>
+      hat auch Zigan sich acht weitere Jahre im Amt gesichert , die er nach eigenem Bekunden auch voll erfüllen will .
+   </unit>
+   Bleibt zu hoffen dass sich mit den alten Namen der Amtsträger künftig auch neue , die Region weiterführende Ideen verbinden .
+</discourse>
+

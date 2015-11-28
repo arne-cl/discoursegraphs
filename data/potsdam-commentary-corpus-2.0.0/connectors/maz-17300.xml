@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Wette verloren
+   Jeder mit halbwegs Durchblick in der Kreispolitik hätte den Inhalt seines Adventskalenders dafür verwettet , dass die Kandidatur von Schulrat Dolatkiewicz bei der Landratswahl am Donnerstag den Abend verlängern würde . Erst die Stichwahl zwischen Wolfgang Engel und Christian Gilde , so stand es im Kaffeegrund , würde die Entscheidung bringen . Denkste ! 27 Stimmen nach der ersten Runde waren eine mehr , als Gilde für die " Titelverteidigung " brauchte . <unit type="ext" id="1">Er selbst will von Beginn an ein gutes Gefühl gehabt haben .</unit>
+   <unit type="int" id="1"><unit type="ext" id="5">Seinen Zuhörern in der Aula des Oberstufenzentrums kamen <connective id="1" relation="consequence">jedenfalls</connective> alle guten Gefühle abhanden ,</unit></unit>
+   <unit type="int" id="5">
+   <unit type="ext" id="2">
+      <connective id="5" relation="simultaneous">als</connective>
+      Gilde <unit type="int" id="2"><connective id="2" relation="addition">ohne</connective> Eingehen auf die eigene Person</unit> seinen Rechenschaftsbericht runterspulte .
+   </unit></unit>
+   <unit type="ext" id="6">Das war gegenüber CDU-Mann Wolfgang Engel , der überraschend viel Sicherheit ausstrahlte , eine schwache Kür .</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="concession">Dennoch</connective>
+      <unit type="ext" id="3">bleibt Gilde im Rennen</unit> <unit type="int" id="3"><connective id="3" relation="addition">und</connective> Engel ist draußen .</unit>
+   </unit>
+   Die CDU fragt sich vielleicht jetzt schon , ob sie nicht besser einen weniger umstrittenen Kandidaten hätte ins Rennen schicken sollen .
+   <unit type="ext" id="7">Ablehnung gab es nämlich nicht für den Mann ,</unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="contrast">sondern</connective>
+      für seinen Posten , der ihn zum Befürworter des Bombodroms machen muss .
+   </unit>
+</discourse>
+

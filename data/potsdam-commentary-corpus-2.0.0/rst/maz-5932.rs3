@@ -1,0 +1,75 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Das kleinere Übel</segment>
+    <segment id="11" parent="14" relname="span">
+
+Es hat lange gedauert , bis sich im Bereich des Amtes Dahme etwas bewegt hat .</segment>
+    <segment id="2" parent="11" relname="elaboration">  Die zahlreichen Appelle , die in der Landeshauptstadt Potsdam formuliert wurden , verhallten in der Provinz meist ohne Wirkung zu zeigen .</segment>
+    <segment id="3" parent="15" relname="span">  Die lokalen Akteure legten bei der Bildung größerer Gemeinden wahrlich keine Eile an den Tag .</segment>
+    <segment id="4" parent="12" relname="preparation">  Hauptgrund für dieses Zaudern :</segment>
+    <segment id="12" parent="16" relname="span"> Die als hoch verschuldet geltende Stadt Dahme erschien den umliegenden Dörfern kein geeigneter Partner zu sein .</segment>
+    <segment id="5" parent="20" relname="span">
+
+Mittlerweile haben sich indes auch in der Dahmer Region neue politische Strukturen manifestiert .</segment>
+    <segment id="6" parent="19" relname="span">  Beschlossene Sache ist die Fusion von Ihlow , Illmersdorf , Rietdorf , Niendorf , Bollensdorf und Mehlsdorf zu Groß-Ihlow .</segment>
+    <segment id="7" parent="6" relname="elaboration">  Dieses neue Gebilde ist sowohl von den Bürgern als auch durch den Kreistag legitimiert .</segment>
+    <segment id="8" parent="13" relname="preparation">  Was die anderen größeren Gemeinden betrifft ,</segment>
+    <segment id="13" parent="18" relname="span"> so wird sich beim Urnengang am nächsten Sonntag erweisen , ob sie dem Willen der Einwohner entsprechen .</segment>
+    <segment id="9" parent="10" relname="concession">
+
+Große Ämter und Gemeinden sind sicherlich nicht der Weisheit letzter Schluss .</segment>
+    <segment id="10" parent="17" relname="span">  Im Vergleich zur bislang praktizierten Kleinstaaterei im ländlich geprägten Süden des Kreisgebietes sind sie jedoch das kleinere Übel .</segment>
+<group id="14" type="span" parent="3" relname="interpretation" />
+<group id="16" type="span" parent="15" relname="reason" />
+<group id="17" type="span" parent="24" relname="span" />
+<group id="18" type="span" parent="20" relname="elaboration" />
+<group id="19" type="span" parent="5" relname="evidence" />
+<group id="20" type="span" parent="22" relname="span" />
+<group id="15" type="span" parent="21" relname="span" />
+<group id="21" type="span" parent="23" relname="joint" />
+<group id="22" type="span" parent="23" relname="joint" />
+<group id="23" type="multinuc" parent="17" relname="evaluation-n" />
+<group id="24" type="span" />
+  </body>
+</rst>

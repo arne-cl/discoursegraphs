@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Erfolgsverwöhnt
+   Erneut sorgt das renommierte Unternehmen Parmalat mit einem Paukenschlag für positive Schlagzeilen . Eine der modernsten Produktionslinien ist gestern offiziell gestartet worden , mit deren Hilfe frische Milch aus dem Brandenburgischen auf dem Frühstückstisch italienischer Familien landet . Zu Recht ist die Chefetage des Milchgiganten zufrieden . Unbestritten ist die Geschichte von Parmalat in Gransee eine Erfolgsstory .
+   <unit type="ext" id="3">Zu danken ist dies natürlich in erster Linie den engagierten Mitarbeitern und der Investitionsfreudigkeit des Konzerns .</unit>
+   <unit type="int" id="3">
+      <unit type="ext" id="6">
+         <connective id="3" relation="concession">Aber</connective>
+         auch Gransees Stadtväter trugen als unbürokratische Wegbereiter ihr Scherflein zum Erfolg bei .
+      </unit>
+   </unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="addition">Und</connective>
+      das macht Mut .
+   </unit>
+   Mut , mit dem die Milchverarbeiter
+   <unit type="ext" id="8">optimistisch in die Zukunft blicken</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="addition">und</connective>
+      weitere Investitionen anvisieren .
+   </unit>
+   <unit type="ext" id="10">Natürlich hoffen die Mitarbeiter , dass sich die millionenschweren Investionen bezahlt machen .</unit>
+   <unit type="int" id="10">
+      <unit type="ext" id="13">
+         <connective id="10" relation="addition">Und</connective>
+         wer weiß , vielleicht steht frische Milch aus Gransee eines Tages tatsächlich auf dem Tisch von Einheimischen .
+      </unit>
+   </unit>
+   <unit type="int" id="13">
+      <unit type="ext" id="15">
+         Ob dies
+         <connective id="13" relation="concession">aber</connective>
+         mehr als ein Wunschtraum ist , bleibt abzuwarten .
+      </unit>
+   </unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="consequence">Denn</connective>
+      letztlich liegt die Entscheidung über den Erfolg eines Produkts einzig und allein beim Verbraucher .
+   </unit>
+</discourse>
+

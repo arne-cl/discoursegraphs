@@ -1,0 +1,82 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Radfahrer zählen nicht</segment>
+    <segment id="12" parent="29" relname="sequence">
+
+&quot; Tschühüs , kommt gut nach Hause .</segment>
+    <segment id="2" parent="29" relname="sequence">  Ruft mal an , auch ! &quot; -</segment>
+    <segment id="9" parent="29" relname="sequence"> Türenklappern , das widerwillige Aufjaulen des Motors .</segment>
+    <segment id="3" parent="30" relname="joint">  Wie oft hat man das an der Feiertagen gehört ?</segment>
+    <segment id="11" parent="30" relname="elaboration">  Trotz geschlossener Eisdecke auf Autobahnen und Landstraßen kamen die meisten lieben Weihnachtsgäste am ersten Feiertag wohlbehalten wieder heim .</segment>
+    <segment id="4" parent="25" relname="span">
+
+Nur bei unseren Behördern vermisst man das &quot; Kommt gut nach Hause ! &quot; leider -</segment>
+    <segment id="10" parent="4" relname="condition"> sofern man mit dem Fahrrad unterwegs ist .</segment>
+    <segment id="5" parent="26" relname="conjunction">  An der viel und schnell befahrenen Landesstraße zwischen Wustrau und Dammkrug - einem häufig benutzten Schulweg - sehen Straßenbauamt und Verkehrsministerium für einen Radweg &quot; keinen Bedarf &quot; .</segment>
+    <segment id="6" parent="20" relname="conjunction">  Und auf der im Winter vereisten Brücke in Altfriesack hat das Straßenbauamt Kyritz gar den Gehweg beseitigt</segment>
+    <segment id="13" parent="20" relname="conjunction"> und durch eine Leitplanke ersetzt ( ähnlich wie das Autobahnamt in Tarmow ) -</segment>
+    <segment id="14" parent="21" relname="list"> obwohl die Altfriesacker Brücke innerorts liegt</segment>
+    <segment id="19" parent="23" relname="span"> und obwohl es schon eines erheblichen Maßes an fahrerischem Unvermögen bedarf ,</segment>
+    <segment id="15" parent="18" relname="conjunction"> um hier bei Tempo 50 von der Straße abzukommen</segment>
+    <segment id="16" parent="18" relname="conjunction"> und durchs Geländer in den Rhin zu stürzen .</segment>
+    <segment id="7" parent="22" relname="span">  Für die Verkehrsplaner zählen Menschenleben offenbar nur ,</segment>
+    <segment id="17" parent="7" relname="condition"> wenn sie in einer Blechkiste sitzen .</segment>
+    <segment id="8" parent="32" relname="interpretation">  Übrigens : Auch Fahrradfahrer und Eltern zahlen Steuern .</segment>
+<group id="18" type="multinuc" parent="19" relname="purpose" />
+<group id="20" type="multinuc" parent="24" relname="span" />
+<group id="21" type="multinuc" parent="20" relname="concession" />
+<group id="22" type="span" parent="27" relname="span" />
+<group id="23" type="span" parent="21" relname="list" />
+<group id="24" type="span" parent="26" relname="conjunction" />
+<group id="25" type="span" parent="27" relname="interpretation" />
+<group id="26" type="multinuc" parent="22" relname="evidence" />
+<group id="27" type="span" parent="28" relname="span" />
+<group id="28" type="span" parent="32" relname="span" />
+<group id="29" type="multinuc" parent="30" relname="joint" />
+<group id="30" type="multinuc" parent="31" relname="span" />
+<group id="31" type="span" parent="28" relname="background" />
+<group id="32" type="span" parent="33" relname="span" />
+<group id="33" type="span" />
+  </body>
+</rst>

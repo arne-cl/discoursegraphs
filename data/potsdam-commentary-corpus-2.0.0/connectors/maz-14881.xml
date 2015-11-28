@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Schildbürger
+   <unit type="ext" id="1">Lange geplant , endlich gebaut -</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="addition">und</connective>
+      nun doch an der Realität vorbei ?
+   </unit>
+   Der Bürger schüttelt verständnislos den Kopf über so viel Unverstand .
+   <unit type="ext" id="5">
+      <connective id="5" relation="condition">Wenn</connective>
+      die geplanten Bushaltestellen für die B_96-Ortsdurchfahrt Groß Machnow ungünstig sind -
+   </unit>
+   <unit type="int" id="5">
+      warum hat
+      <connective id="5" relation="condition">dann</connective>
+      die Verkehrsgesellschaft nicht rechtzeitig während der Planungsphase 
+      <unit type="ext" id="8">ihre Einwände erhoben</unit>
+      <unit type="int" id="8">
+         <connective id="8" relation="addition">und</connective>
+         Vorschläge gemacht ?
+      </unit>
+   </unit>
+   Die Antwort : Man hat das wohl schlichtweg verschlafen . Mit ärgerlichen Folgen :
+   <unit type="ext" id="10">Die Fahrgäste stehen teilweise im Gras</unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="addition">und</connective>
+      müssen bei Schlechtwetter über einen schlammigen Trampelpfad zum nächsten befestigten Bürgersteig laufen .
+   </unit>
+   Beim Neubau hätten gleich Bustaschen , Bussteige und Wartehäuschen entstehen können . Eine Fußgänger-insel wäre sinnvollerweise dort gebaut worden , wo sich der Busbetrieb jetzt die Haltestelle wünscht . Die extra breit für den Bus ausgelegten Ein- und Ausfahrten scheinen nun für die Katz' . Der Steuerzahler hat 's ja .
+   <unit type="ext" id="17">
+      <unit type="int" id="16">
+         <connective id="16" relation="condition">Wenn</connective>
+         jetzt nachträglich woanders Haltestellen gebaut werden müssen ,
+      </unit>
+   </unit>
+   <unit type="ext" id="16">
+      <unit type="int" id="17">
+            <connective id="17" relation="condition">so</connective>
+            wirkt das wie jener Streich der Schildbürger , 
+         <unit type="ext" id="19">die Licht ins Rathaus tragen wollten ,
+         </unit>
+         <unit type="int" id="19">
+            <connective id="19" relation="consequence">weil</connective>
+            sie die Fenster vergessen hatten .
+         </unit>
+      </unit>
+   </unit>
+</discourse>
+

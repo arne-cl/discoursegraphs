@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Bitte keine Scheinheiligkeit Die Palette , sich ehrenamtlich zu betätigen , ist riesig . Diese nicht neue Erkenntnis konnte der Markt der Möglichkeiten am Sonnabend in Treuenbrietzen bestens unterstreichen .
+   <unit type="int" id="2">
+         Schon allein
+         <connective id="2" relation="purpose">um</connective>
+         an diese freiwillige Tätigkeit
+         <connective id="2" relation="purpose">zu</connective>
+         erinnern ,
+   </unit>
+   <unit type="ext" id="2">
+      ist es eine sinnvolle Veranstaltung ,
+   </unit> die im Kreis Potsdam-Mittelmark in diesem Jahr bereits ihre vierte Auflage erlebt hat .
+   Neben der Präsentation ist es eine gute Möglichkeit , Mitglieder zu werben .
+   <unit type="ext" id="10">
+   <unit type="ext" id="9">
+      Das wiederum sollten die Mitglieder der Vereine und Selbsthilfegruppen wirklich selbst machen .
+   </unit>
+   <unit type="int" id="9">
+ Ihr Engagement für soziale , kulturelle und sportliche Belange ist <connective id="9" relation="consequence">nämlich</connective>
+      <unit type="ext" id="8">nicht nur Einsicht in die Notwendigkeit</unit>
+      ,
+      <unit type="int" id="8">
+         <connective id="8" relation="contrast">sondern</connective>
+         - das war spürbar - auch Begeisterung .
+      </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="10">
+      Die Politik
+      <connective id="10" relation="contrast">hingegen</connective>
+      , die sich in diesem Jahr Aktionismus in Kampagnen mit Ehrenpreisen , Gründung von Freiwilligenagenturen und ähnlichen Initiativen verordnet hat , sollte sich tunlichst zurückhalten .
+   </unit>
+   Wer
+   <unit type="ext" id="13">Sozialabbau betreibt ( etwa die Streichung des Gehörlosengeldes plant ) , Sport-Unternehmen subventioniert ( Lausitzring )</unit>
+   <connective id="13" relation="addition">und</connective>
+   <unit type="int" id="13">Kultur stets nur auf Rentabilität prüft</unit>
+   ( Volkshoch- und Musikschule ) , sollte nicht scheinheilig die unentgeltliche , aber ehrlich gemeinte Tätigkeit loben .
+</discourse>
+

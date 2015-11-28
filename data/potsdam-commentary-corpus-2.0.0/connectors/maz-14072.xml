@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Schlammspritzer
+   <unit type="ext" id="1">
+      <unit type="ext" id="5">Dass Wahlen wie Freundschaftsspiele ablaufen , kann wohl niemand ernsthaft erwarten .</unit>
+      <unit type="ext" id="6">
+         <unit type="int" id="5">
+            Dass Auseinandersetzungen um die Besetzung eines so wichtigen Postens wie des Bürgermeisters mit Streicheleinheiten einher gehen ,
+            <connective id="5" relation="addition">auch</connective>
+            nicht .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="1">
+      <unit type="int" id="6">
+            <connective id="1" relation="addition">Und</connective>
+            <connective id="6" relation="contrast">doch</connective>
+            schien es vor dem ersten Wahltag auch in Velten so , als sei der Streit um die Sache am wichtigsten ,
+      </unit>
+      nicht so sehr der Treffer am Mann oder an der Frau .
+   </unit>
+   Das hat sich gründlich geändert .
+   <unit type="ext" id="13">Was weniger an den Kandidaten selbst liegt ,</unit>
+   <unit type="int" id="13">
+      <connective id="13" relation="contrast">sondern</connective>
+      an denen , die hinter ihnen die Strippen ziehen .
+   </unit>
+   Das ganze Programm wird abgespielt .
+   <unit type="ext" id="14">Auf der einen Seite privatrechtliche Probleme auf einmal zur öffentlichen Angelegenheit hochstilisiert , auf der anderen Seite ein Lebenslauf auf eine Art durchleuchtet , die auch die Autoren in schlechtes Licht bringt .</unit>
+   <unit type="int" id="14">
+      <unit type="ext" id="15">
+         <connective id="14" relation="addition">Und</connective>
+         es gibt Rechenkünstler , die das Wahlergebnis vom 11. November so ummodeln , dass am 2. Dezember der Sieg des eigenen Kandidaten herauskommt .
+      </unit>
+   </unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="addition">Und</connective>
+      <connective id="15" relation="contrast">doch</connective>
+      machen sich einige Veltener echt Sorgen um den Verfall der Sitten und wollen eine Entscheidung , die der Stadt hilft .
+   </unit>
+   Nicht dem Ego .
+</discourse>
+

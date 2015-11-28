@@ -1,0 +1,96 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Alles wie gehabt</segment>
+    <segment id="16" parent="28" relname="joint">
+
+Der Kurzfilm zu Silvester ist immer noch ein Renner .</segment>
+    <segment id="2" parent="27" relname="conjunction">  Eine Frau von Adel sitzt mit unsichtbaren Gästen am Tisch</segment>
+    <segment id="17" parent="27" relname="conjunction"> und trinkt sich langsam aber sicher ins Abseits .</segment>
+    <segment id="3" parent="25" relname="preparation">  Sie betont jedoch :</segment>
+    <segment id="18" parent="25" relname="span">  &quot; Same procedure as every year &quot; ,</segment>
+    <segment id="19" parent="18" relname="interpretation"> alles soll so ablaufen , wie jedes Jahr .</segment>
+    <segment id="4" parent="29" relname="span">  Der Satz trifft auch auf die Wittstocker Region zu .</segment>
+    <segment id="5" parent="41" relname="interpretation">
+
+Die Bürgerinitiative Freie Heide lässt nicht locker .</segment>
+    <segment id="6" parent="40" relname="circumstance">  Der Streit um den Schießplatz dauert nun schon ein Jahrzehnt .</segment>
+    <segment id="7" parent="40" relname="span">  Die Meldung in der Zeitung , dass es am Neujahrstag wieder eine Protestwanderung gibt , wäre gar nicht nötig .</segment>
+    <segment id="8" parent="7" relname="reason">  Es ist bekannt : same procedure .</segment>
+    <segment id="9" parent="20" relname="preparation">
+
+Deshalb könnte auch der gleiche Kommentar abgegeben werden :</segment>
+    <segment id="20" parent="38" relname="span">  Der Streit muss endlich entschieden werden .</segment>
+    <segment id="10" parent="37" relname="conjunction">  Er nutzt keinem - weder der Bundeswehr noch den Schießplatzgemeinden und der Region .</segment>
+    <segment id="11" parent="34" relname="span">  Und die Stadt Wittstock hat mit einem schlechten Image zu kämpfen .</segment>
+    <segment id="12" parent="33" relname="contrast">  Den Streit kennt fast jeder ,</segment>
+    <segment id="21" parent="33" relname="contrast"> die Stadt selbst nicht .</segment>
+    <segment id="13" parent="35" relname="span">
+
+Aber irgendwann ist der Platz sowieso nicht mehr nötig .</segment>
+    <segment id="14" parent="31" relname="span">  Dann muss kein Tornado mehr üben ,</segment>
+    <segment id="22" parent="30" relname="conjunction"> weil Geschosse unbemannt fliegen</segment>
+    <segment id="23" parent="30" relname="conjunction"> und via Satellit ins Ziel gebracht werden .</segment>
+    <segment id="15" parent="24" relname="concession">  Das ist zwar auch keine angenehme Zukunftsvision ,</segment>
+    <segment id="24" parent="32" relname="span"> aber der Streit wäre dann endlich vom Tisch .</segment>
+<group id="25" type="span" parent="26" relname="span" />
+<group id="27" type="multinuc" parent="28" relname="joint" />
+<group id="26" type="span" parent="28" relname="joint" />
+<group id="28" type="multinuc" parent="4" relname="background" />
+<group id="29" type="span" parent="43" relname="background" />
+<group id="30" type="multinuc" parent="14" relname="cause" />
+<group id="31" type="span" parent="13" relname="reason" />
+<group id="32" type="span" parent="35" relname="interpretation" />
+<group id="33" type="multinuc" parent="11" relname="reason" />
+<group id="34" type="span" parent="37" relname="conjunction" />
+<group id="35" type="span" parent="36" relname="span" />
+<group id="36" type="span" parent="39" relname="interpretation" />
+<group id="37" type="multinuc" parent="38" relname="reason" />
+<group id="38" type="span" parent="39" relname="span" />
+<group id="39" type="span" parent="43" relname="span" />
+<group id="40" type="span" parent="41" relname="span" />
+<group id="41" type="span" parent="42" relname="span" />
+<group id="42" type="span" parent="39" relname="reason" />
+<group id="43" type="span" parent="44" relname="span" />
+<group id="44" type="span" />
+  </body>
+</rst>

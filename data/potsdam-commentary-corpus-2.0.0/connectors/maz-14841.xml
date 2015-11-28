@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Auf und Ab
+   <unit type="ext" id="3">Noch 29 Tage ,</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="successive">dann</connective>
+      ist unsere geliebte D-Mark keine offizielle Währung mehr .
+   </unit>
+   <unit type="ext" id="4">Mit der Einführung des Euros wird vieles teurer ,</unit>
+   <unit type="int" id="4">
+      <unit type="ext" id="5">
+         <connective id="4" relation="consequence">weil</connective>
+         Pfennig- zu Centbeträge sicher eher auf-
+      </unit>
+      <unit type="int" id="5">
+         <connective id="5" relation="contrast">statt</connective>
+         abgerundet werden .
+      </unit>
+   </unit>
+   <unit type="ext" id="7">Manche Geschäftsleute werden vor der Währungsumstellung noch schnell ihre Ware verteuern ,</unit> <unit type="int" id="7"><connective id="7" relation="consequence">damit</connective> sie sich besser umrechnen lässt .</unit>
+   <unit type="ext" id="6">
+      <unit type="ext" id="8">Da ist es um so erfreulicher ,</unit>
+      <unit type="int" id="8">
+         <connective id="8" relation="condition">wenn</connective>
+         ausnahmsweise etwas billiger wird .
+      </unit>
+   </unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="addition">Und</connective>
+      noch dazu etwas , dass jeder braucht .
+   </unit>
+   <unit type="ext" id="9">Die Gasversorgung Zehdenick wird den Erdgaspreis senken .</unit>
+   <unit type="int" id="9">
+      Ein vierköpfiger Haushalt spart
+      <connective id="9" relation="successive">dann</connective>
+      im kommenden Jahr immerhin etwa 57,50 Mark gegenüber 2001 .
+   </unit>
+   <unit type="ext" id="11">
+         <unit type="ext" id="10">Beim Strom ließ sich die Preissteigerung
+         <unit type="int" id="10">
+            <connective id="10" relation="consequence">wegen</connective>
+            der neuen Ökosteuer-Stufe
+         </unit>
+            <connective id="11" relation="concession">zwar</connective>
+            nicht stabil halten .
+         </unit>
+   </unit>
+   <unit type="int" id="11">
+         <unit type="ext" id="14">
+            Die Stadtwerke haben
+            <connective id="11" relation="concession">aber</connective>
+            auf den Preis ausschließlich die Ökosteuererhöhung umgelegt .
+         </unit>
+   </unit>
+   <unit type="int" id="14">
+      Preiserhöhungen des Zulieferers
+      <connective id="14" relation="contrast">dagegen</connective>
+      blieben unberücksichtigt .
+   </unit>
+   Die schwierige Wirtschaftslage jedenfalls muss nicht zwangsläufig zu Preissteigerungen führen . Für den Verbraucher wächst die Hoffnung , dass es vielleicht auch der Bäcker , Frisör und Kaufmannsladen nebenan halten wie die Stadtwerke Zehdenick :
+   <unit type="ext" id="15">Preise runter</unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="alternation">oder</connective>
+      wenigstens nur das Nötigste umlegen .
+   </unit>
+</discourse>
+

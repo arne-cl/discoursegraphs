@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Schwierige Geburt
+   <unit type="ext" id="1">Die Geburt war denkbar schwer ,</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="contrast">doch</connective>
+      jetzt hat das Kind sogar schon einen Namen : Ein " Humboldt-Forum " soll anstelle des einstigen Berliner Stadtschlosses entstehen .
+   </unit>
+   Diese Empfehlung sprach gestern die Expertenkomission " Historische Mitte Berlins " aus . <unit type="ext" id="2">Das Forum soll die Fassade und die Dimensionen des 1950 gesprengten Schlosses erhalten</unit> <unit type="int" id="2"><connective id="2" relation="addition">und</connective> die Berliner Landesbibliothek , Museen und Konzertsäle aufnehmen .</unit> Endlich eine Perspektive für den Schlossplatz nach einem Jahrzehnt der Agonie , möchte man aufseufzen . Die mühselige Debatte um das ob und wie der Schloss-Rekonstruktion gehört zu den ärgerlichsten Episoden der Berliner Stadtentwicklungspolitik .
+   <unit type="ext" id="11">Es ist ja richtig , über diese Dinge zu streiten ,</unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="contrast">doch</connective>
+      welche andere Hauptstadt würde es sich leisten , ausufernden Grundsatzdebatten zuliebe ihre " gute Stube " für zehn Jahre dem Unkraut zu überlassen ?
+   </unit>
+   Mit ihrer Entscheidungsschwäche in Sachen Schloss hat sich die Berliner Stadtpolitik ein Armutszeugnis ausgestellt . Jetzt ist die Zeit des Diskutierens abgelaufen - wichtig ist , dass endlich etwas passiert .
+</discourse>
+

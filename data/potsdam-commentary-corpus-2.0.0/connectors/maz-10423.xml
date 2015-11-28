@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Toter Weg
+   <unit type="ext" id="3"><unit type="ext" id="2"><unit type="ext" id="1">
+      Die von den Elstalern lange herbei gesehnte Umgehungsstraße für den historischen Ortskern ist fertig .</unit>
+      <unit type="int" id="1"><connective id="1" relation="consequence">Damit</connective> ist eines der wichtigsten Straßenbauvorhaben der Gemeinde verwirklicht .</unit></unit>
+   </unit>
+   <unit type="int" id="3">
+      <unit type="ext" id="4">
+         <unit type="int" id="2">
+            <connective id="2" relation="addition">Und</connective>
+            <connective id="3" relation="contrast">doch</connective>
+            ist die Freude nicht ganz ungetrübt .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="consequence">Weil</connective>
+      die Bahnhofstraße ihrem Namen nicht gerecht wird .
+   </unit>
+   Bis jetzt ist die Fahrbahn nichts weiter als ein Weg zu einer Bahnstation , an der keine Züge halten . 
+   <unit type="ext" id="7">Daran wird sich bis Frühjahr nächsten Jahres auch nichts ändern .</unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="consequence">Also</connective>
+      sieht man in nächster Zeit wohl eher Inline-Skater als Autofahrer auf der Fahrbahn .
+   </unit>
+   <unit type="ext" id="8">Schön für die Freizeitsportler ,</unit>
+   <unit type="int" id="8">
+         <connective id="8" relation="contrast">aber</connective>
+         für die Elstaler heißt das , sie müssen vorerst weiterhin damit leben , dass Autos durch ihre unter Denkmalschutz stehende Ortsmitte brausen .
+   </unit>
+   
+    <unit type="ext" id="12">
+
+        <unit type="ext" id="13">
+
+            <unit type="int" id="11">
+                Erst
+                <connective id="11" relation="condition">
+                    wenn
+                </connective>
+                der Bahnhaltepunkt wieder eröffnet ist ,
+            </unit>
+
+            <unit type="ext" id="11">
+                
+                <unit type="ext" id="10">
+                    wird die Straße ihren eigentlichen Zweck erfüllen ,
+
+                    <unit type="int" id="10">
+                        <connective id="10" relation="addition">
+                            nämlich 
+                        </connective>
+                        den Verkehr aus dem Ort fern zu halten .
+                    </unit>
+
+                </unit>
+
+            </unit>
+
+        </unit>
+        
+        <unit type="int" id="12">
+
+            <unit type="int" id="13">
+                <connective id="13" relation="consequence">
+                    Damit 
+                </connective>
+                ist
+                <connective id="12" relation="addition">
+                    auch 
+                </connective>
+                gleichzeitig der anstehende Generalverkehrsplan nichts weiter als ein " hohler Vogel " .
+            </unit>
+
+        </unit>
+
+        <unit type="int" id="14">
+            <connective id="14" relation="condition">
+                Wenn 
+            </connective>
+            Demex im Zuge der neuen Investitionen am Designer Outlet Center auch noch den " Alten Spandauer Weg " zumachen will ,
+        </unit>
+
+        <unit type="ext" id="14">
+            muss der Außenring funktionieren .
+        </unit>
+
+    </unit>
+
+</discourse>
+

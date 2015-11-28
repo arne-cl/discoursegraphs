@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Es wird
+   <unit type="ext" id="3">Westernreiter kennen sich aus mit dem Überwinden von Stock und Stein .</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="consequence">Also</connective>
+      dürften sie kein Problem haben , die zurzeit noch katastrophale Parkfläche an der Graf-von-Lindenau-Halle in Kauf zu nehmen .
+   </unit>
+   <unit type="ext" id="5">Sie machen das auch ,</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="concession">wenngleich</connective>
+      wir uns dessen bewusst sind ,
+      <unit type="ext" id="6">dass hier böser Sarkasmus die Zeilen prägt ,</unit>
+   </unit>
+   <unit type="ext" id="9">
+   <unit type="int" id="6">
+      der
+      <connective id="6" relation="concession">aber</connective>
+      seine Berechtigung in absehbarer Zeit verloren hat .
+   </unit>
+   </unit>
+<unit type="int" id="9">
+   Am Parkplatz , der von Anfang an ein Ärgernis war , tut sich <connective id="9" relation="consequence">nämlich</connective> etwas .</unit> Die Initiative dazu ging von der Neustädter Verwaltung aus .
+   <unit type="ext" id="8">Die hatte auch gar keine andere Wahl ,</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="successive">nachdem</connective>
+      das juristische Tauziehen mit dem bauausführenden Betrieb verloren worden war .
+   </unit>
+   Was blieb , war die total misslungene Abstellfläche , bei der sich zu spät herausstellte , dass die vielen Besucher für die Halle einfach zu viel waren . 
+   <unit type="ext" id="10">
+War schon in der Zeitung zu lesen , dass Geld lockergemacht worden ist ,</unit> 
+   <unit type="int" id="10">
+<connective id="10" relation="condition">so</connective> ist nun von einem ersten Ergebnis zu berichten .
+</unit>
+ Man baut . Das geht nicht von jetzt auf gleich . Dieses Jahr wird vergehen , bis auch bei Regen die stiefelfreie Zeit für alle Besucher anbricht . Beim CSI , dem hochdotierten Reitturnier im Januar , sollen die Nägel Köpfe haben . Bis dahin müssen sich alle dreinfügen - wie die Westernreiter und ihre Fans .
+</discourse>
+

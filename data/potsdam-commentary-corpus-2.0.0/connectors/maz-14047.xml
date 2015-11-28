@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Zuschlag für den Besseren
+   Die Anhörung zur Zukunft des Paracelsus-Krankenhauses ist vorbei .
+   <unit type="ext" id="3">Die Kreistagsabgeordneten im Kreis- und Krankenhausausschuss haben viele Argumente gehört</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="addition">und</connective>
+      müssen sich nun entscheiden .
+   </unit>
+   <unit type="ext" id="5">Landrat Burkhard Schröder hat bereits angedeutet , dass er diese Entscheidungen den Mitgliedern des Kreistages überlassen will .</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="condition">So</connective>
+      darf man auf die Vorlage aus der Kreisverwaltung gespannt sein .
+   </unit>
+   Es gibt zwei Möglichkeiten :
+   <unit type="ext" id="6">
+      <connective id="6" relation="alternation">Entweder</connective>
+      das Paracelsus-Krankenhaus bildet einen regionalen Klinikverbund mit der Nauener Havellandklinik unter dem Dach einer kreiseigenen GmbH
+      <unit type="int" id="6">
+         <connective id="6" relation="alternation">oder</connective>
+         das Rathenower Krankenhaus wird an einen Freien Träger abgegeben .
+      </unit>
+   </unit>
+      <unit type="ext" id="9">Will der Kreistag auch in Rathenow seinen Einfluss auf die Krankenhausentwicklung behalten , wird er sich kaum für einen Freien Träger entscheiden können .</unit>
+      <unit type="int" id="9">
+         <connective id="9" relation="contrast">Doch</connective>
+         das allein darf nicht Grundlage für diesen wichtigen Beschluss sein .
+      </unit>
+   <unit type="ext" id="10">
+   <unit type="ext" id="11">
+Das Krankenhaus soll der bekommen , der die wohnortnahe Versorgung von Patienten in Rathenow sicherstellen kann
+</unit>
+</unit> 
+<unit type="int" id="10">
+<unit type="int" id="11">
+<connective id="10" relation="addition">und</connective> <connective id="11" relation="addition">darüberhinaus</connective> die betriebswirtschaftliche und medizinische Qualität des Paracelsus-Krankenhauses <unit type="ext" id="13">nicht nur erhält</unit> <unit type="int" id="13"><connective id="13" relation="contrast">sondern</connective> stabilisiert .</unit>
+</unit>
+</unit>
+   <unit type="ext" id="12">
+      <connective id="12" relation="condition">Wenn</connective>
+      ein Freier Träger das besser kann als eine Kreis-GmbH ,
+      <unit type="int" id="12">
+         <connective id="12" relation="condition">dann</connective>
+         soll er das Krankenhaus haben .
+      </unit>
+   </unit>
+</discourse>
+

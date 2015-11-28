@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Nicht vergessen !
+   Alle Jahre wieder Stress vor dem Fest .
+   <unit type="ext" id="2">Am Sonnabend hetzten nicht wenige noch von Geschäft zu Geschäft ,</unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="purpose">um</connective>
+      die letzten Einkäufe zu erledigen .
+   </unit>
+   <unit type="ext" id="3">Manchem schien erst jetzt eingefallen zu sein , dass man am heutigen Heiligen Abend seinen Lieben etwas schenken könnte .</unit>
+      <unit type="int" id="3">
+         <connective id="3" relation="contrast">Doch</connective>
+         nicht nur wegen solcher Vergesslichkeit werden auch heute Abend wieder viele Menschen ohne eine Liebesgabe auskommen müssen .
+   </unit>
+   Häufig werden sie über all dem Feiertagstrubel wirklich vergessen , die Alten und Einsamen , die Flüchtlinge und Asylsuchenden , die Heimatlosen , Hungernden , Kranken . Die Erinnerung an diese Verlierer unserer Zeit sollte niemandem sein Weihnachtsfest vermiesen . Ganz im Gegenteil : Vielleicht machen ein paar Gedanken an diejenigen , die es heute nicht so gut haben , einem das eigene Glück ja noch deutlicher bewusst .
+   <unit type="ext" id="12"><unit type="ext" id="9">Vielleicht halten solche Gedanken auch wach ,</unit> <unit type="int" id="9"><connective id="9" relation="consequence">damit</connective> man nicht verpasst zu helfen ,</unit>
+   <unit type="int" id="12">
+      <connective id="12" relation="condition">wenn</connective>
+      sich die Gelegenheit dazu bietet .
+   </unit></unit>
+   Wer will daran zweifeln : Weihnachten sollte mehr sein als fettes Essen und Geschenke . In diesem Sinne wünscht die MAZ allen Lesern ein ebenso fröhliches wie besinnliches Fest .
+</discourse>
+

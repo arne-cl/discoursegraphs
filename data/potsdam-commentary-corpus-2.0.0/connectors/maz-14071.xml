@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Sie bleiben Wittstocker
+   Die Haushaltsdiskussion in Wittstock ist in vollem Gange .
+   <unit type="ext" id="5">
+      <unit type="ext" id="4">
+         Derzeit will jeder Fachausschuss die eigenen finanziellen Interessen sichern -
+      </unit>
+      <unit type="int" id="4">
+         <connective id="4" relation="addition">zum Beispiel</connective> Eigenmittel für Investitionen oder Zuschüsse für Betriebs- und Unterhaltskosten von Einrichtungen freier Träger .
+      </unit>
+   </unit>
+   <unit type="ext" id="6">
+      <unit type="int" id="5">
+         <connective id="5" relation="contrast">Andererseits</connective>
+         muss der Haushalt ausgeglichen sein .
+      </unit>
+      Ohne Rotstift wird wohl die Rechnerei nicht aufgehen .
+   </unit>
+   <unit type="ext" id="7">
+      <unit type="int" id="6">
+         Kein Wunder
+         <connective id="6" relation="consequence">also</connective>
+         , dass jetzt jeder einzelne Haushaltsposten auf den Prüfstand kommt .
+      </unit>
+   </unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="addition">Auch</connective> für das kaum öffentlich gemachte Thema der Sozialfürsorgepflicht der Kommune kann keine Schranke gelten .
+   </unit>
+   Vom eigenen Obdachlosenheim hat sich die Stadt vor über einem Jahr getrennt .
+   <unit type="ext" id="8"><unit type="ext" id="9">Die obdachlosen Wittstocker kamen nach Heinrichsfelde</unit> <unit type="int" id="9"><connective id="9" relation="addition">und</connective> müssen demnächst nach Kyritz ziehen .</unit> Geld an den Betreiber der Unterkünfte zu zahlen , ist für die Stadt billiger .</unit>
+   <unit type="int" id="8">
+      Die soziale Lage der Betroffenen ändert sich bei diesem Rechenbeispiel
+      <connective id="8" relation="concession">aber</connective>
+      nicht .
+   </unit>
+   Die moralische Verantwortung bleibt außen vor .
+   <unit type="ext" id="10">
+      Die Frage stellt sich , ob nicht die Randgruppe der Obdachlosen auch mit dem neuen Quartier in Kyritz weiter auf das Abstellgleich geschoben werden .
+   </unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="consequence">Denn</connective>
+      eigentlich sind sie ja in Wittstock zu Hause .
+   </unit>
+</discourse>
+

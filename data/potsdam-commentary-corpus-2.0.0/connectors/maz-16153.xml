@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Alles offen
+   <unit type="ext" id="15">
+      In Berlin haben die rot-roten Verhandlungspartner eine wichtige Regel von Koalitionsrunden befolgt ,
+   </unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="addition">nämlich</connective> die " heißen Eisen " möglichst gleich anzupacken . 
+   </unit>
+   Olympia war ein " heißes Eisen " , das andere der Ausbau Schönefelds . <unit type="ext" id="11">Die Absage an eine Olympiabewerbung</unit> <unit type="int" id="11"><connective id="11" relation="addition">und</connective> der Verweis auf die desolate Haushaltslage</unit> sind einleuchtend . Weit verwirrender ist das Flughafen-Votum .
+   <unit type="ext" id="1">Nach außen wird der Eindruck vermittelt , ein Streitthema sei vom Tisch , die PDS habe klein beigegeben .</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="contrast">Doch</connective>
+      beim genauen Lesen des Beschlusses wird deutlich : Die Verhandlungspartner haben eine geschickte , weil weit interpretierbare Formel gefunden , mit der sie sich gegen alle Risiken absichern .
+   </unit>
+      <unit type="ext" id="3">
+         <unit type="ext" id="4">
+            <connective id="3" relation="concession">Zwar</connective>
+            wird das Planfeststellungsverfahren fortgesetzt ,
+         </unit>
+         <unit type="int" id="4">
+            <connective id="4" relation="consequence">weil</connective>
+            auch die PDS erkennen musste , dass es kein Zurück gibt ,
+         </unit>
+      </unit>
+      <unit type="int" id="3">
+         <connective id="3" relation="contrast">doch</connective>
+         die Bedenken bleiben .
+      </unit>
+   <unit type="ext" id="8">Wie es weitergeht ,
+   <unit type="int" id="8">
+      <connective id="8" relation="condition">wenn</connective>
+      die Privatisierung der Flughafengesellschaft nicht zustande kommt
+   </unit>
+   , steht in den Sternen .</unit>
+</discourse>
+

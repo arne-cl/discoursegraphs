@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Wie Blücher
+   Angriff ist die beste Verteidigung . <unit type="ext" id="2">Wer wüsste das besser als die Strategen von der Bundeswehr .</unit>
+   <unit type="ext" id="3"><unit type="int" id="2">In Sachen Bombodrom orientieren sich die Militärs <connective id="2" relation="consequence">jedenfalls</connective> ungeniert am Vorbild des alten " Marschalls Vorwärts " namens Blücher .</unit></unit>
+   <unit type="int" id="3">
+      <unit type="ext" id="4">
+         <connective id="3" relation="consequence">Denn</connective>
+         eines der Hauptargumente der Schießplatz-Gegner - die Gefahr für den Tourismus - wollen sie mit einem Frontalangriff aus dem Weg räumen .
+      </unit>
+   </unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">So</connective>
+      heißt es in einem Bundeswehr-Papier knapp , dass das Bombodrom " keine relevanten Auswirkungen " auf den Tourismus haben wird .
+   </unit>
+   Problem erledigt . - Das ist schon dreist .
+   <unit type="ext" id="7">Nun könnte man ein halbes Stündchen lang mutmaßen , wo die Militärs denn so Urlaub machen .</unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="contrast">Doch</connective>
+      werden sich Zivilisten und Uniformträger dabei nicht wirklich unterscheiden .
+   </unit>
+   Zwei Wochen mit Halbpension unter einer Autobahnbrücke , neben einem Flugplatz , inmitten einer Techno-Disko ? Nein , das tut sich niemand an . Namentlich nicht die Leute , die in der Nähe von Berlin Ruhe und Natur suchen .
+   <unit type="ext" id="11">
+      <unit type="ext" id="9">Die werden nicht
+      <unit type="int" id="9">
+         <connective id="9" relation="consequence">wegen</connective>
+         spektakulärer Tiefflüge
+      </unit>
+      an den Ruppiner See oder zum Rheinsberger Schloss strömen .</unit>
+   </unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="addition">Insofern</connective>
+      wird wieder mal deutlich , dass die Bundeswehr die Region mit ihren Sorgen und mit ihren Chancen überhaupt nicht ernst nimmt .
+   </unit>
+</discourse>
+

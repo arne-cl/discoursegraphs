@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Gebt endlich Gummi ! Eine Kunststoffbahn am Schwedendamm würde eine Million Mark kosten . Die Brücke über den Stadtkanal wird auch so teuer . Das Erneuern der Wege auf dem Weinberg kostet zwei Millionen . Die Havellandhalle hat 5,5 Millionen gekostet . Der neue Spielplatz in Ost schlug mit 1,5 Millionen zu Buche . Für 1,5 Millionen soll das Gebiet vor der Kaufhalle Ost umgestaltet werden .
+   <unit type="ext" id="3">Vergleiche hinken , mag sein</unit>
+   .
+   <unit type="int" id="3">
+      <connective id="3" relation="concession">Aber</connective>
+      es soll keiner sagen , es sei kein Geld da
+   </unit>
+   . Was für die Verantwortlichen gerade am wichtigsten ist , wird gebaut .
+   <unit type="ext" id="4">So einfach ist das ,</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">und</connective>
+      man nennt es " Politik " .
+   </unit>
+   Nie zuvor holten Leichtathleten aus Rathenow und Premnitz so oft wie in diesem Jahr bei Deutschen Meisterschaften vordere Plätze . Sie haben sich ihr Tartan wirklich verdient . Auf Asche kann im Höchstfall von April bis September gelaufen werden , auf Kunststoff immer . Die Sprunganlagen am Schwedendamm sind eine Zumutung .
+   <unit type="ext" id="14">
+      <unit type="ext" id="10">Wer endlich ein ordentliches Stadion baut , ist eigentlich nur auf der Höhe der Zeit .</unit>
+      <unit type="int" id="10">
+         Schulsport findet im Jahn-Sportpark
+         <connective id="10" relation="addition">ebenfalls</connective>
+         statt
+      </unit>
+      .
+   </unit>
+   <unit type="int" id="14">
+      Für alle Kinder und Jugendlichen wäre
+      <connective id="14" relation="consequence">also</connective>
+      etwas Gutes getan
+   </unit>
+   .
+   <unit type="ext" id="15">Sie wären nach dem Sport viel sauberer ,</unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="addition">und</connective>
+      bessere Zeiten rennen sie auf Gummi auch
+   </unit>
+   .
+</discourse>
+

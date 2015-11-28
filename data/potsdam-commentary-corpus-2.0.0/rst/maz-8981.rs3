@@ -1,0 +1,78 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Überfällig</segment>
+    <segment id="12" parent="25" relname="background">
+
+Frischluftfans ist der Donau-Radwanderweg genauso ein Begriff wie auch der Münsterland-Radwanderweg .</segment>
+    <segment id="2" parent="25" relname="joint">  Warum sollte da nicht der Landkreis Teltow-Fläming für alle Sportbegeisterten Brandenburgs oder gar Deutschlands einmal der Inbegriff für Inline-Skaten werden ?</segment>
+    <segment id="11" parent="25" relname="joint">
+
+Dieser Anspruch besteht jetzt ( noch ) nicht .</segment>
+    <segment id="3" parent="20" relname="list">  Zum einen würden dafür die rund 100 Kilometer langen Rad- und Skatewege im Süden des Kreises lange nicht reichen .</segment>
+    <segment id="4" parent="19" relname="span">  Außerdem müsste hinter solch einem Angebot die gesamte Region in aller Konsequenz stehen .</segment>
+    <segment id="5" parent="17" relname="condition">  Denn sollte wirklich einmal Inline-Skaten den Kreis Teltow-Fläming über die Grenzen hinaus anziehend machen ,</segment>
+    <segment id="13" parent="17" relname="span"> so müsste man vorher die gesamte Infrastruktur darauf ausrichten ,</segment>
+    <segment id="14" parent="13" relname="purpose"> um diese Sportart als eine touristische Attraktion anzubieten .</segment>
+    <segment id="6" parent="24" relname="span">
+
+Im Moment sollte man sich erst einmal über die zaghaften Versuche im Norden freuen , Radwege im Verbund auf die Reihe zu bringen .</segment>
+    <segment id="7" parent="21" relname="list">  Die sind längst überfällig und würden den Einwohnern endlich den Alltag leichter machen .</segment>
+    <segment id="8" parent="15" relname="condition">  Wenn damit auch gleichzeitig den Touristen mehr Wege erschlossen werden ,</segment>
+    <segment id="15" parent="16" relname="span"> ist das nur gut .</segment>
+    <segment id="9" parent="22" relname="span">  Denn es wäre wenigstens erst einmal ein Anfang .</segment>
+    <segment id="10" parent="9" relname="elaboration">  Ein kleiner Stein , in Bewegung gesetzt , kann ja durchaus eine Lawine auslösen .</segment>
+<group id="16" type="span" parent="23" relname="span" />
+<group id="17" type="span" parent="18" relname="span" />
+<group id="18" type="span" parent="4" relname="reason" />
+<group id="19" type="span" parent="20" relname="list" />
+<group id="20" type="multinuc" parent="25" relname="evidence" />
+<group id="22" type="span" parent="16" relname="reason" />
+<group id="23" type="span" parent="21" relname="list" />
+<group id="21" type="multinuc" parent="6" relname="reason" />
+<group id="24" type="span" parent="27" relname="contrast" />
+<group id="25" type="multinuc" parent="26" relname="span" />
+<group id="26" type="span" parent="27" relname="contrast" />
+<group id="27" type="multinuc" />
+  </body>
+</rst>

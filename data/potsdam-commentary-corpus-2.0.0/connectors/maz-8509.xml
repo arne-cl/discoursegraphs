@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Barbies im Laubsack Reste vom Sonntagsbraten , leere Milchtüten oder die alte Barbiepuppe gehören nicht in den Laubsack .
+   <unit type="ext" id="2">Das weiß jedes Kind ,</unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="contrast">aber</connective>
+      nicht jeder hält sich daran .
+   </unit>
+<unit type="ext" id="4">
+   Alle Jahre wieder findet sich in vielen Säcken Unrat und so manche Kuriosität .</unit>
+<unit type="int" id="4"><unit type="ext" id="6">In Nauen <connective id="4" relation="addition">beispielsweise</connective> bleibt inzwischen jeder sechste der jährlich anfallenden 4000 Säcke an der Straße zurück ,</unit>
+   <unit type="int" id="6">
+     <connective id="6" relation="consequence">weil</connective>
+         <unit type="ext" id="7">er nicht mit Laub von Straßenbäumen ,
+      </unit>
+      <unit type="int" id="7">
+         <connective id="7" relation="contrast">sondern</connective>
+         mit Garten- oder Hausabfällen gefüllt ist .
+      </unit>
+   </unit>
+</unit>
+   Tendenz steigend . Immer mehr verantwortungslose Zeitgenossen versuchen ,
+   <unit type="ext" id="9">ihren Müll illegal loszuwerden</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="contrast">statt</connective>
+      ihn ordnungsgemäß zu entsorgen .
+   </unit>
+   <unit type="ext" id="10">Das wird letztlich alle teuer zu stehen kommen .</unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="consequence">Denn</connective>
+ <unit type="int" id="11">
+      <connective id="11" relation="consequence">angesichts</connective> des zunehmenden Missbrauchs und leerer Kassen</unit>  <unit type="ext" id="11">ist es nur noch eine Frage der Zeit , bis die Stadtväter die für den Bürger kostenlose Laubentsorgung einstellen .</unit>
+   </unit>
+   Immerhin rund 26_000 Mark ließen sich damit pro Jahr einsparen , Geld , das an anderen Stellen dringend benötigt wird .
+   <unit type="ext" id="13">Entsorgung nur noch gegen Vorkasse , das könnte schon bald Realität werden .</unit>
+   <unit type="int" id="13">
+      <connective id="13" relation="consequence">Denn</connective>
+      <unit type="ext" id="14">
+         seit Jahren appelliert die Stadt an die Einsicht ihrer Bürger ,
+      </unit>
+      <unit type="int" id="14">
+         <connective id="14" relation="addition">und</connective>
+         jedes Jahr aufs Neue zeigt sich , dass diese Appelle ( bisher ) umsonst sind .
+      </unit>
+   </unit>
+</discourse>
+

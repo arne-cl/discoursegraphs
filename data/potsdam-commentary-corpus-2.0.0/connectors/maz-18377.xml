@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Offene Fragen
+   Die Kränzliner , Mankerer , Wustrauer , Walchower und Protzener fühlen sich ungerecht behandelt .
+   <unit type="ext" id="7">
+      Sie sind schon seit Jahren an Klärwerke angeschlossen . Die Klärwerke beziehungsweise die Druckleitungen wurden bereits von der Gemeinde und damit von den Steuern der Bürger bezahlt .
+   </unit>
+   <unit type="int" id="7">
+      <unit type="ext" id="8">
+         Warum
+         <connective id="7" relation="consequence">also</connective>
+         sollen sie jetzt noch einmal Klärbeiträge bezahlen ,
+      </unit>
+      <unit type="int" id="8">
+         <connective id="8" relation="consequence">
+            <modifier>nur</modifier>
+            weil
+         </connective>
+         sie von einem Klärwerk an ein anderes umgeleitet werden ?
+      </unit>
+   </unit>
+   Die übrigen Fehrbelliner Verbandgemeinden fühlen sich ebenso im Recht :
+   <unit type="ext" id="9">Warum sollen sie höhere Abwassergebühren in Kauf nehmen ,</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="consequence">
+         <modifier>bloß</modifier>
+         weil
+      </connective>
+      einige Mitglieder der Solidargemeinschaft keinen Klärbeitrag zahlen möchten ?
+   </unit> 
+  <unit type="ext" id="12">In sich schlüssig sind beide Argumentationen .</unit> <unit type="int" id="12">Die einen hatten <connective id="12" relation="consequence">eben</connective> Glück , dass ihr Bürgermeister cleverer oder schneller war als andere .
+ </unit>
+   <unit type="ext" id="11">Die anderen wiederum haben sich zuerst zur Solidargemeinschaft Zweckverband zusammengeschlossen</unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="addition">und</connective>
+      die Regeln bestimmt , denen sich nun auch die zu fügen haben , die später dazugekommen sind .
+      </unit> 
+      Wie der Streit ausgeht , entscheidet am Ende wohl ein Gericht . Komisch ist nur :
+   <unit type="int" id="14">
+      <connective id="14" relation="condition">Wenn</connective>
+      der Ärger über Klärbeiträge so gewaltig ist ,
+   </unit>
+   <unit type="ext" id="14">warum fand am Mittwoch nicht ein einziger Kränzliner den Weg zur Verbandsversammlung ?</unit>
+</discourse>
+

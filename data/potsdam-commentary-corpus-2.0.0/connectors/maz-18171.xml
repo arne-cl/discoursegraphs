@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Sündensuche im Hinterhof
+   <unit type="ext" id="3">Bekanntlich ist Vertrauen gut und Kontrolle besser .</unit>
+   <unit type="int" id="3">
+      Manchmal hilft es
+      <connective id="3" relation="concession">aber</connective>
+      auch , mit dem Bürger einfach zu reden .
+   </unit>
+   <unit type="ext" id="6">
+      <unit type="ext" id="5">Das hatte die Bauaufsicht nicht getan ,</unit>
+      <unit type="int" id="5">
+         <connective id="5" relation="simultaneous">als</connective>
+         sie ihren unbegründeten Baustopp-Bescheid gegen einen Grundbesitzer abschickte .
+      </unit>
+   </unit>
+   <unit type="int" id="6">
+      <unit type="ext" id="8">
+	<unit type="ext" id="9">
+         <connective id="6" relation="contrast">Statt dessen</connective>
+         stiefelte ein Mitarbeiter auf das Grundstück , knipste , was ihm verdächtig vorkam
+      </unit>
+     </unit>
+      <unit type="int" id="9">
+         <unit type="int" id="8"><connective id="9" relation="addition">und</connective> löste
+         <connective id="8" relation="successive">dann</connective>
+         den bürokratischen Gang der Dinge aus .</unit>
+      </unit>
+   </unit>
+   Ein Anruf oder eine kurze Nachforschung hätte den Sachverhalt aufklären können :
+   <unit type="ext" id="14">
+      <unit type="ext" id="10">
+         Dass das Hinterhofgebäude
+         <connective id="10" relation="concession">zwar</connective>
+         reichlich baubedürftig aussieht ,
+      </unit>
+      <unit type="int" id="10">
+         dort
+         <connective id="10" relation="concession">aber</connective>
+         seit der Wende kein Handschlag mehr getan wurde ,
+      </unit>
+   </unit>
+   <unit type="int" id="14">
+      <connective id="14" relation="consequence">folglich</connective>
+      gar keine Baustelle existiert , die gestoppt werden könnte .
+   </unit>
+   <unit type="ext" id="15">Nun gut , Fehler kommen vor und die Bauaufsicht hat den Bescheid inzwischen zurückgenommen .</unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="contrast">Doch</connective>
+      es geht um mehr als einen Einzelfall .
+   </unit>
+   Die Bauverwaltung ist personell offenbar so gut ausgestattet , dass es sich ihre Mitarbeiter leisten können , auf der Suche nach Bausündern systematisch alle Straßen und Hinterhöfe zu durchkämmen .
+   <unit type="ext" id="19">Natürlich sind Kontrollen notwendig .</unit>
+   <unit type="int" id="19">
+      <unit type="ext" id="20">
+         Viele Bürger hätten
+         <connective id="19" relation="concession">aber</connective>
+         mehr davon ,
+      </unit>
+      <unit type="int" id="20">
+         <connective id="20" relation="condition">wenn</connective>
+         <unit type="ext" id="21">in den Amtsstuben etwas mehr Vertrauen waltete</unit>
+         <unit type="int" id="21">
+            <connective id="21" relation="addition">und</connective>
+            die überschüssige Kraft in die schnelle Bearbeitung von Bauanträgen gesteckt würde .
+         </unit>
+      </unit>
+   </unit>
+</discourse>
+

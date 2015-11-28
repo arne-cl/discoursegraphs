@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   In der Favoritenrolle Gestern begann das Raumordnungsverfahren für die Autobahntrasse zur A2 . Ab heute kann jeder Interessierte die Unterlagen vier Wochen in den Ämtern einsehen . In den Planungsvarianten für einen A_2-Zubringer spielt das Havelstädtchen Pritzerbe eine Schlüsselrolle .
+   <unit type="int" id="1">
+   <connective id="1" relation="temporal">Während</connective> 
+   <unit type="ext" id="2">
+      eine Anbindung der Rathenower Region über Milow als unwahrscheinlich gilt</unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="addition">und</connective>
+      die Döberitzer Variante aus Gründen des Naturschutzes abwegig ist
+   </unit></unit>
+       , <unit type="ext" id="1">muss Pritzerbe mit seiner Favoritenrolle klarkommen .</unit> Für die Stadtverordneten heißt das öffentlich Position zu beziehen . Diese muss nicht stur für oder gegen eine Havelbrücke ausfallen .
+   <unit type="ext" id="7">Diplomatisches Geschick und politischer Weitblick sind gefragt ,</unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="condition">wenn</connective>
+      es um die Verhandlungsmasse geht .
+   </unit>
+   Was die Kommune oder Bürger an Anregungen und Bedenken einreichen , hat Auswirkungen für die nächsten hundert Jahre und darüber hinaus . <unit type="ext" id="9">Positive Effekte einer Havelbrücke lassen sich für Pritzerbe gar nicht abschätzen . Ein Gewerbeboom ist kaum zu erwarten .</unit>
+   <unit type="int" id="9"><unit type="ext" id="11"><connective id="9" relation="addition">Dafür</connective> könnte die Region vom Wirtschaftsstandort Premnitz/Rathenow mit Arbeitsplätzen profitieren</unit>
+   -
+   <unit type="int" id="11">
+      <connective id="11" relation="condition">wenn</connective>
+      er denn überhaupt kommt , der Aufschwung , den havelländische Firmen vom A_2-Zubringer abhängig machen .</unit>
+   </unit>
+</discourse>
+

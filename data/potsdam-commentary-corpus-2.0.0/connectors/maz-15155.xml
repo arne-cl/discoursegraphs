@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   WG-tauglich
+   Wohngemeinschaften sind keine Frage des Alters .
+   <unit type="ext" id="6">
+      <unit type="ext" id="3">Sicher , die Wahrscheinlichkeit , dass sich Teens und Twens auf eine gemeinsame Bude einlassen , ist größer ,</unit>
+      <unit type="int" id="3">
+         <connective id="3" relation="simultaneous">als</connective>
+         <unit type="ext" id="8">dass sich Oldies ein Leben mit Gemeinschaftsküche und Einkaufsdienst antun .</unit>
+      </unit>
+   </unit>
+   <unit type="int" id="6">
+      <unit type="ext" id="9">
+         <unit type="int" id="8">
+            <connective id="6" relation="addition">Und</connective>
+            <connective id="8" relation="contrast">doch</connective>
+            tun sie es ,
+         </unit>
+      </unit>
+      <unit type="int" id="9">
+         <connective id="9" relation="addition">wie</connective>
+         das Beispiel des Senioren-Hauses im Bornstedter Feld beweist .
+      </unit>
+   </unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="concession">Wenngleich</connective>
+      das Anliegen der Jungen dem der Alten gleicht ,
+   </unit>
+   <unit type="ext" id="10">hat sich die Form der WG gewandelt .</unit>
+   Jeder Rentner hat dort seine eigene Wohnung mit Bad und Küche . Topfgucker und Vereinsmeierei sind unerwünscht . Dafür stehen Kontakt und unbedingte Nachbarschaftshilfe im mündlich vereinbarten " Vertrag " .
+   <unit type="ext" id="17">Da spart der eine einen teuren Handwerker</unit>
+   <unit type="int" id="17">
+      <connective id="17" relation="addition">und</connective>
+      der andere eine Fahrt zum Baumarkt .
+   </unit>
+   Rentieren soll es sich für jeden mal . So war das Ziel .
+   <unit type="ext" id="23">
+      <unit type="ext" id="19">Fürs Erste scheint das Konzept aufzugehen .</unit>
+      <unit type="int" id="19">
+         Neben baulichen Unzulänglichkeiten bleibt
+         <connective id="19" relation="concession">aber</connective>
+         auch der Wermutstropfen , dass nicht wirklich jene ,
+         <unit type="ext" id="21">die am wenigsten Rente haben</unit>
+         <unit type="int" id="21">
+            <connective id="21" relation="addition">und</connective>
+            sich viele Zukunftssorgen machen könnten ,
+         </unit>
+         in die geförderten Wohnungen ziehen durften .
+      </unit>
+      Hier hat die Stadt nicht mitgespielt .
+   </unit>
+   <unit type="int" id="23">
+      <unit type="ext" id="24">
+         <connective id="23" relation="concession">Dennoch</connective>
+         , das Experiment ist beachtenswert .
+      </unit>
+   </unit>
+   <unit type="int" id="24">
+         <connective id="24" relation="addition">Und</connective>
+         wem 's nicht mehr passt , der kann ja wieder ausziehen .
+   </unit>
+      Wie aus jeder anderen WG auch .
+</discourse>
+

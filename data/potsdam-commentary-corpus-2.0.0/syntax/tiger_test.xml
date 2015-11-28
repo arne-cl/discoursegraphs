@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<corpus id="ID_maz-9725">
+<body>
+<s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="s2104" art_id="9725" orig_id="ID_maz-9725">
+<graph root="s2104_502">
+<terminals>
+<t id="s2104_1" word="Der" lemma="--" pos="ART" morph="--"/>
+<t id="s2104_2" word="rot-grünen" lemma="--" pos="ADJA" morph="--"/>
+<t id="s2104_3" word="Koalition" lemma="--" pos="NN" morph="--"/>
+<t id="s2104_4" word="steht" lemma="--" pos="VVFIN" morph="--"/>
+<t id="s2104_5" word="eine" lemma="--" pos="ART" morph="--"/>
+<t id="s2104_6" word="Zerreißprobe" lemma="--" pos="NN" morph="--"/>
+<t id="s2104_7" word="bevor" lemma="--" pos="PTKVZ" morph="--"/>
+<t id="s2104_8" word=":" lemma="--" pos="$." morph="--"/>
+</terminals>
+<nonterminals>
+<nt id="s2104_500" cat="NP">
+<edge label="NK" idref="s2104_1"/>
+<edge label="NK" idref="s2104_2"/>
+<edge label="NK" idref="s2104_3"/>
+ </nt>
+<nt id="s2104_501" cat="NP">
+<edge label="NK" idref="s2104_5"/>
+<edge label="NK" idref="s2104_6"/>
+ </nt>
+<nt id="s2104_502" cat="S">
+<edge label="HD" idref="s2104_4"/>
+<edge label="SVP" idref="s2104_7"/>
+<edge label="DA" idref="s2104_500"/>
+<edge label="SB" idref="s2104_501"/>
+ </nt>
+</nonterminals>
+</graph>
+</s></body></corpus>

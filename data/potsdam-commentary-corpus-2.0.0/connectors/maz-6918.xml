@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Natürliche Rückeroberung
+   <unit type="ext" id="3">Der Naturpark , der zwischen Jüterbog , Luckenwalde und Treuenbrietzen entsteht , ist außerhalb der Region noch viel zu wenig bekannt .</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="consequence">Deshalb</connective>
+      ist es zu begrüßen , dass Manfred Stolpe dem weiträumigen Areal vorgestern einen Besuch abstattete .
+   </unit>
+   Ein beabsichtigter Effekt solcher Dienstreisen des Ministerpräsidenten in die Provinz ist es , möglichst viel öffentliche Aufmerksamkeit auf bestimmte Vorhaben zu lenken . 
+   <unit type="ext" id="4">
+      Um den etwa 7000 Hektar großen Naturpark soll ein Rundweg angelegt werden . 
+   </unit>
+   Das wäre ein bedeutender Schritt zum erklärten Ziel , den ehemaligen Truppenübungsplatz touristisch zu erschließen . Die Wanderdüne bei Forst Zinna ist schon jetzt ein bei Auswärtigen und Einheimischen gleichermaßen beliebtes Ausflugsziel . Diese Art der Konversion - die Natur erobert frühere Militärflächen zurück - ist vergleichsweise billig .
+   <unit type="int" id="4">
+      Die Abschnitte , auf denen möglicherweise weiterhin gefährliche Munition lagert , bleiben
+      <connective id="4" relation="concession">allerdings</connective>
+      Sperrgebiet .
+   </unit>
+   Ob bei der touristischen Erschließung der Konversionsflächen auf lange Sicht neue Arbeitsplätze entstehen , hängt vor allem davon ab , wie viele Neugierige kommen werden . Wie gesagt : Stolpe war schon da .
+</discourse>
+

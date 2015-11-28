@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   In Sorge Schon machen die ersten Witze die Runde . Darin kommt weißes Pulver vor . Makabres wird immer aus todernster Wirklichkeit geboren . Es hat wieder den Anschein ,
+ als würden Menschen nur galgenhumorig Tatsachen ins Auge sehen können , denen sie machtlos ausgeliefert sind .
+   Jetzt haben sich auch die Verantwortlichen des Landkreises mit der Weltlage beschäftigen müssen .
+   <unit type="ext" id="3">Der zuständige Stab kennt Gefahrenlagen , die von schweren Unglücken ausgehen können ,</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="addition">zum Beispiel</connective>
+      mit Zügen .
+   </unit>
+   Auf dem Bahnhof Neustadt hat man <unit type="ext" id="6">schon mehrfach Szenarien durchgespielt</unit> 
+<unit type="int" id="6"> <connective id="6" relation="addition">und</connective> Gegenmaßnahmen geprobt .
+</unit> 
+   <unit type="ext" id="4">
+   <unit type="ext" id="7">
+      Das reicht nicht mehr aus . 
+   </unit>
+   </unit>
+   <unit type="int" id="4">
+   <unit type="int" id="7">
+      <connective id="7" relation="addition">Und</connective>
+      <connective id="4" relation="cause">so</connective>
+      muss Landrat Christian Gilde jetzt eine gewisse Hilflosigkeit erkennen lassen , was das Reagieren auf möglichen Terror und seine Folgen angeht . 
+   </unit>
+   </unit>  
+   Da ist nichts vorzuwerfen . Niemand hat verschlampt , was er besser hätte vorbereiten sollen . Keiner hat sich schließlich vor dem 11. September vorstellen können , wozu Menschen , von Fanatismus getrieben , fähig sind . Nun wird der Katastrophenschutz einen neuen Stellenwert bekommen .
+   Der Landkreis und die Kommunen ,  
+   <unit type="ext" id="5">vordergründig bedroht</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="addition">oder</connective> 
+      einfach nur in verständlicher Sorge
+   </unit>
+   , sind auf Hilfe angewiesen .
+</discourse>
+

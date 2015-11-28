@@ -1,0 +1,73 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Ansturm</segment>
+    <segment id="10" parent="24" relname="span">
+
+Das Schulmuseum in Reckahn erlebt einen wahren Besucheransturm .</segment>
+    <segment id="2" parent="22" relname="contrast">  War das von Friedrich Eberhard von Rochow initiierte Haus im 18. und 19. Jahrhundert Vorbild für die Entwicklung der Volksschulen ,</segment>
+    <segment id="11" parent="21" relname="span"> wollen heute Tausende das Flair eines historischen Klassenzimmers kennen lernen ,</segment>
+    <segment id="12" parent="11" relname="e-elaboration"> wie sie nur noch wenige in Deutschland existieren .</segment>
+    <segment id="3" parent="23" relname="span">  Ohne Zweifel profitiert die vom Landkreis getragene Einrichtung von der im August im benachbarten Barockschloss eröffneten Ausstellung zur brandenburgisch-preußischen Schulgeschichte .</segment>
+    <segment id="4" parent="13" relname="condition">  Denn wer das mit großem Aufwand sanierte Schloss besucht ,</segment>
+    <segment id="13" parent="20" relname="span"> kommt zwangsläufig an der alten Dorfschule vorbei .</segment>
+    <segment id="5" parent="19" relname="span">  In diesen knapp drei Monaten wurden 2700 Gäste durch das Museum geführt .</segment>
+    <segment id="6" parent="18" relname="span">  Viele von ihnen kamen übers Wochenende nach Reckahn ,</segment>
+    <segment id="14" parent="6" relname="reason"> was wohl auf die kompakte Werbung für das Preußenjahr zurückzuführen ist .</segment>
+    <segment id="7" parent="17" relname="span">  Der Verein &quot; Historisches Reckahn &quot; mit seinem Vorsitzenden Otto-Günther Beckmann kann stolz auf die große Resonanz seiner Arbeit in der Öffentlichkeit sein .</segment>
+    <segment id="8" parent="7" relname="reason">  Er hat Reckahn mit unermüdlichem Engagement weit über den Kreis hinaus bekannt gemacht .</segment>
+    <segment id="9" parent="15" relname="antithesis">  Das Preußenjahr geht zu Ende ,</segment>
+    <segment id="15" parent="16" relname="span"> doch Schloss- und Schulmuseum werden weiter von sich reden machen .</segment>
+<group id="16" type="span" parent="26" relname="summary" />
+<group id="17" type="span" parent="26" relname="span" />
+<group id="18" type="span" parent="5" relname="elaboration" />
+<group id="19" type="span" parent="24" relname="evidence" />
+<group id="20" type="span" parent="3" relname="reason" />
+<group id="21" type="span" parent="22" relname="contrast" />
+<group id="22" type="multinuc" parent="10" relname="cause" />
+<group id="23" type="span" parent="24" relname="reason" />
+<group id="24" type="span" parent="25" relname="span" />
+<group id="25" type="span" parent="17" relname="reason" />
+<group id="26" type="span" parent="27" relname="span" />
+<group id="27" type="span" />
+  </body>
+</rst>

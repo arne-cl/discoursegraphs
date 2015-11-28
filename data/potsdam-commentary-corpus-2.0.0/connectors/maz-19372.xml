@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Alles wie gehabt 
+   Der Kurzfilm zu Silvester ist immer noch ein Renner .
+   <unit type="ext" id="5">
+      <unit type="ext" id="3">Eine Frau von Adel sitzt mit unsichtbaren Gästen am Tisch</unit>
+      <unit type="int" id="3">
+         <connective id="3" relation="addition">und</connective>
+         trinkt sich langsam aber sicher ins Abseits .
+      </unit>
+   </unit>
+   <unit type="int" id="5">
+      Sie betont
+      <connective id="5" relation="contrast">jedoch</connective> :
+      " Same procedure as every year " , alles soll so ablaufen , wie jedes Jahr .
+   </unit>
+   Der Satz trifft auch auf die Wittstocker Region zu . Die Bürgerinitiative Freie Heide lässt nicht locker . Der Streit um den Schießplatz dauert nun schon ein Jahrzehnt . Die Meldung in der Zeitung , dass es am Neujahrstag wieder eine Protestwanderung gibt , wäre gar nicht nötig .
+   <unit type="ext" id="10">Es ist bekannt : same procedure .</unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="consequence">Deshalb</connective>
+      könnte auch der gleiche Kommentar abgegeben werden :
+   </unit>
+   <unit type="ext" id="30">
+      Der Streit muss endlich entschieden werden . Er nutzt keinem - weder der Bundeswehr noch den Schießplatzgemeinden und der Region . 
+   </unit>
+   <unit type="int" id="30">
+      <connective id="30" relation="addition">Und</connective> die Stadt Wittstock hat mit einem schlechten Image zu kämpfen .
+   </unit>
+   <unit type="ext" id="13">Den Streit kennt fast jeder , die Stadt selbst nicht .</unit>
+   <unit type="int" id="13">
+      <unit type="ext" id="14">
+         <connective id="13" relation="contrast">Aber</connective>
+         irgendwann ist der Platz sowieso nicht mehr nötig .
+      </unit>
+   </unit>
+   <unit type="int" id="14">
+      <unit type="ext" id="20">
+         <unit type="ext" id="15">
+            <connective id="14" relation="successive">Dann</connective>
+            muss kein Tornado mehr üben ,
+         </unit>
+         <unit type="int" id="15">
+            <connective id="15" relation="consequence">weil</connective>
+            <unit type="ext" id="17">Geschosse unbemannt fliegen</unit> <unit type="int" id="17"><connective id="17" relation="addition">und</connective> via Satellit ins Ziel gebracht werden .</unit>
+         </unit>
+      </unit>
+   </unit>
+   <unit type="ext" id="16">
+         Das ist
+         <connective id="16" relation="concession">zwar</connective>
+         auch keine angenehme Zukunftsvision ,
+         <unit type="int" id="20">
+            <unit type="int" id="16">
+                  <connective id="16" relation="concession">aber</connective>
+                  der Streit wäre
+                  <connective id="20" relation="successive">dann</connective>
+                  endlich vom Tisch .
+            </unit>
+         </unit>
+   </unit>
+</discourse>
+

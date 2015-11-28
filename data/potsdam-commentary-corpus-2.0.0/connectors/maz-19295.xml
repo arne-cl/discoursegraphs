@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   K-Frage
+   <unit type="ext" id="2">
+	   Angenommen , nur mal angenommen , der CDU-Landesvorsitzende S. im Land B. hätte sich für Edmund Stoiber als Kanzlerkandidaten der Union entschieden .
+	   Nehmen wir weiter an , dass die CDU-Basis im Bundesland B. eher ihrer Parteichefin Angela Merkel zuneigt ,
+	</unit>
+   <unit type="int" id="2">
+      dürfte Landeschef S.
+      <connective id="2" relation="successive">dann</connective>
+      guten Gewissens im CDU-Bundesvorstand für Stoiber votieren ?
+   </unit>
+   Alles nur Gedankenspiele . Niemand wagt sich bislang aus der Deckung . Tatsächlich ist die Kür des Kanzlerkandidaten so streng geheim , dass sie nur unter dem Code-Wort " K-Frage " gehandelt wird . Bei Lichte und mit dem nötigen Ernst betrachtet , gibt es bei den Spitzenkandidaturen ein Legitimationsproblem . Mitglieder-Entscheide haben schon oft - siehe Berliner SPD - den falschen Frontmann auf den Schild gehoben . Kungelrunden gehen bewusst an der Basis vorbei . Die Lösung des Problems ist ebenso schlicht wie anspruchsvoll : unbezweifelbare , überzeugende Autorität .
+</discourse>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   " Schmierentheater "
+   Er stänkert gerne .
+   <unit type="ext" id="1">Gunnar Lade ist unbequem , das steht außer Frage .</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="contrast">Doch</connective>
+      diesmal ist das gut so .
+   </unit>
+   <unit type="ext" id="4">Als einziger Stadtverordneter zeigte er nämlich Courage am Montag in der Sitzung des Hauptausschusses ,</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="simultaneous">als</connective>
+      <unit type="ext" id="6">es um die Abstimmung zum lang diskutierten Schulthema ging</unit>
+      <unit type="int" id="6">
+         <connective id="6" relation="addition">und</connective>
+         eine klare Aussage gefordert war ,
+      </unit>
+   </unit>
+   die sonst offenbar niemand zu treffen wagte .
+   <unit type="ext" id="10">
+      Es scheint fast so , als wolle es sich kein Abgeordneter mit denen , die da von Entscheidungen betroffen sein könnten , verscherzen .
+   </unit>
+   <unit type="int" id="10">
+      <unit type="ext" id="13">
+         <unit type="ext" id="11">
+            Man mag es Gunnar Lade
+            <connective id="10" relation="consequence">daher</connective>
+            nicht verübeln ,
+         </unit>
+         <unit type="int" id="11">
+            <connective id="11" relation="condition">wenn</connective>
+            er diese Szenerie als " Schmierentheater " bezeichnete .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="13">
+      Fest steht
+      <connective id="13" relation="consequence">doch</connective>
+      : Kein Lehrer verliert seinen Job , kein Schüler wird schlechter unterrichtet als vorher .
+   </unit>
+   <unit type="ext" id="18">Wirklich betroffen könnten Erzieher und technisches Personal sein .</unit>
+   <unit type="int" id="18">
+      <connective id="18" relation="concession">Gleichwohl</connective>
+      sollte es neben wirtschaftlichen und Kapazitätsgründen um gute Schulkonzepte gehen .
+   </unit>
+   <unit type="ext" id="21">Wozu gibt es die ,</unit>
+   <unit type="int" id="21">
+      <connective id="21" relation="condition">wenn</connective>
+      sie unbeachtet bleiben bei derart wichtigen Entscheidungen ?
+   </unit>
+   Da stellt sich die Frage , wer es hier wem recht machen will .
+   <unit type="ext" id="22">Freilich , Außenstehende haben gut reden .</unit>
+   <unit type="int" id="22">
+      <connective id="22" relation="contrast">Doch</connective>
+      wer sich wählen lässt , sollte die Courage aufbringen , <unit type="ext" id="20">unpopuläre Entscheidungen zu treffen ,</unit> <unit type="int" id="20"><connective id="20" relation="addition">ohne</connective> sich ein schlechtes Gewissen einreden zu lassen .</unit>
+   </unit>
+</discourse>
+

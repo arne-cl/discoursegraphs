@@ -1,0 +1,80 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Zukunftsinvestitionen</segment>
+    <segment id="10" parent="2" relname="concession">
+
+Wie schwierig es ist , in dieser Region einen Ausbildungsplatz zu finden , haben wir an dieser und anderer Stelle oft und ausführlich bewertet .</segment>
+    <segment id="2" parent="24" relname="span">  Trotzdem bemühen sich Unternehmen sowie die Industrie- und Handelskammer Potsdam den Schulabgängern Wege in die Ausbildung aufzuzeigen .</segment>
+    <segment id="3" parent="25" relname="span">  Der &quot; Berufemarkt &quot; - erstmals in der Aula der Gesamtschule &quot; Am Weinberg &quot; angeboten - war ein guter und sinnvoller Beitrag .</segment>
+    <segment id="4" parent="3" relname="reason">  Das hat allein das Interesse der Schülerinnen und Schüler bewiesen .</segment>
+    <segment id="5" parent="27" relname="preparation">
+
+Noch etwas hat der &quot; Berufemarkt &quot; ans Licht gebracht .</segment>
+    <segment id="6" parent="17" relname="concession">  Die Vertreter der &quot; Null-Bock-Generation &quot; mag es wohl geben ,</segment>
+    <segment id="11" parent="17" relname="conjunction"> viele - wohl die meisten - wollen es aber mit einer Lehre versuchen</segment>
+    <segment id="12" parent="17" relname="conjunction"> und sind guten Willens sich bei der Suche nach einem Ausbildungsplatz entsprechend anzustrengen .</segment>
+    <segment id="7" parent="19" relname="span">
+
+Das sollte honoriert werden</segment>
+    <segment id="13" parent="7" relname="means"> indem möglichst viele Betriebe - trotz aller wirtschaftlichen Probleme , die in den nächsten zwei Jahren vor der Türe stehen - intensiv ausbilden .</segment>
+    <segment id="8" parent="20" relname="circumstance">  Längst ist der Zeitpunkt absehbar ,</segment>
+    <segment id="15" parent="20" relname="span"> zu dem gute Facharbeiter ins Land geholt werden müssen ,</segment>
+    <segment id="14" parent="15" relname="purpose"> um Lücken in Unternehmen zu füllen .</segment>
+    <segment id="9" parent="22" relname="span">  Das wäre überflüssig ,</segment>
+    <segment id="16" parent="9" relname="condition"> wenn deutsche Fachkräfte jetzt ausgebildet werden .</segment>
+<group id="17" type="multinuc" parent="18" relname="span" />
+<group id="18" type="span" parent="19" relname="evaluation-n" />
+<group id="19" type="span" parent="27" relname="span" />
+<group id="20" type="span" parent="21" relname="span" />
+<group id="21" type="span" parent="23" relname="span" />
+<group id="22" type="span" parent="21" relname="interpretation" />
+<group id="23" type="span" parent="19" relname="reason" />
+<group id="24" type="span" parent="25" relname="background" />
+<group id="25" type="span" parent="26" relname="span" />
+<group id="26" type="span" parent="28" relname="background" />
+<group id="27" type="span" parent="28" relname="span" />
+<group id="28" type="span" parent="29" relname="span" />
+<group id="29" type="span" />
+  </body>
+</rst>

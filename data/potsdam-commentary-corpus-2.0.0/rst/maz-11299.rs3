@@ -1,0 +1,83 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Feigenblatt</segment>
+    <segment id="17" parent="21" relname="span">
+
+Die Jugendlichen in Zossen wollen ein Musikcafé .</segment>
+    <segment id="2" parent="17" relname="elaboration">  Das forderten sie bei der ersten Zossener Runde am Dienstagabend .</segment>
+    <segment id="3" parent="4" relname="reason">  Dass die Politiker der Stadt dafür Verständnis haben , ist löblich .</segment>
+    <segment id="4" parent="22" relname="span">  Mit dem Treffen im Rathaus ist somit auch ein Dialog zwischen den Generationen angestoßen .</segment>
+    <segment id="5" parent="24" relname="span">  Dass die beiden geladenen Jugendlichen im Laufe des Abends immer weniger zu Wort kamen , war sicher keine böse Absicht ,</segment>
+    <segment id="18" parent="23" relname="conjunction"> ärgerlich ist es trotzdem .</segment>
+    <segment id="6" parent="23" relname="conjunction">  Und aberwitzig dazu .</segment>
+    <segment id="7" parent="27" relname="evaluation-s">  Es entbehrt nicht der Komik ,</segment>
+    <segment id="20" parent="26" relname="span"> wenn sich drei Erwachsene - Karola Andrae ( Bürgerbündnis/FDP ) , Susanne Michler ( CDU ) und Joachim Zanow ( SPD ) - darüber streiten , was Jugendliche wollen und brauchen ,</segment>
+    <segment id="19" parent="20" relname="elaboration"> ohne auf die Idee zu kommen , sie selbst zu fragen .</segment>
+    <segment id="8" parent="26" relname="elaboration">  Und das , obwohl sie ihnen gegenüber sitzen .</segment>
+    <segment id="9" parent="28" relname="restatement">  Die Jugendlichen wurden somit zum bloßen Feigenblatt degradiert .</segment>
+    <segment id="10" parent="30" relname="span">  Nicht über sondern mit ihnen hätten die Politiker reden sollen .</segment>
+    <segment id="11" parent="10" relname="evaluation-s">  Damit ist eine große Chance vertan .</segment>
+    <segment id="12" parent="35" relname="span">  Vielleicht klappt es bei der nächsten Runde Anfang 2002 .</segment>
+    <segment id="13" parent="14" relname="reason">  Dann werden auch mehr Jugendliche eingeladen .</segment>
+    <segment id="14" parent="34" relname="span">  In der Gruppe können sie sich hoffentlich mehr Gehör verschaffen .</segment>
+    <segment id="15" parent="33" relname="span">  Vielleicht finden dann auch Vertreter von PDS und Gewerbeverein ihren Weg ins Rathaus .</segment>
+    <segment id="16" parent="15" relname="elaboration">  Die glänzten diesmal noch mit Abwesenheit .</segment>
+<group id="21" type="span" parent="22" relname="circumstance" />
+<group id="22" type="span" parent="25" relname="span" />
+<group id="23" type="multinuc" parent="5" relname="evaluation-s" />
+<group id="24" type="span" parent="32" relname="joint" />
+<group id="25" type="span" parent="32" relname="background" />
+<group id="26" type="span" parent="27" relname="span" />
+<group id="27" type="span" parent="28" relname="span" />
+<group id="28" type="span" parent="29" relname="span" />
+<group id="29" type="span" parent="31" relname="span" />
+<group id="30" type="span" parent="29" relname="interpretation" />
+<group id="31" type="span" parent="32" relname="joint" />
+<group id="32" type="multinuc" parent="36" relname="span" />
+<group id="33" type="span" parent="12" relname="elaboration" />
+<group id="34" type="span" parent="12" relname="elaboration" />
+<group id="35" type="span" parent="32" relname="interpretation" />
+<group id="36" type="span" />
+  </body>
+</rst>

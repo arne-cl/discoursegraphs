@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Gejagt Wer es angesichts der Festlichkeiten zum 40. Stadtjubiläum vergessen haben sollte :
+   <unit type="ext" id="2">In Falkensee ist derzeit vor allem eines - Bürgermeister-Wahlkampf .</unit>
+   <unit type="ext" id="6">
+      <unit type="int" id="2">
+         Da kündigt Jürgen Bigalke ( SPD )
+         <connective id="2" relation="consequence">also</connective>
+         an ,
+         <unit type="ext" id="3">die mit Finanzdezernentin Ruth Schulz besetzte Stelle der 1. Beigeordneten ( stellvertretende Bürgermeisterin ) nicht öffentlich ausschreiben</unit>
+         <unit type="int" id="3">
+            <connective id="3" relation="addition">und</connective>
+            dies noch vor dem 11. November bestätigen lassen zu wollen .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="6">
+      <unit type="ext" id="9">
+         Acht weitere Jahre könnte die Sozialdemokratin
+         <connective id="6" relation="successive">dann</connective>
+         amtieren - selbst </unit>
+	 <connective id="9" relation="condition">dann</connective> ,
+      <unit type="int" id="9">
+         <unit type="ext" id="10">
+	 <unit type="ext" id="11">  
+            <connective id="9" relation="condition">wenn</connective>
+            der Rathauschef abgewählt werden
+         </unit>
+         </unit>
+         <unit type="int" id="10">
+	 <unit type="int" id="11">  
+            <connective id="10" relation="addition">und</connective>
+            <connective id="11" relation="consequence">damit</connective> die Ein-Stimmen-Mehrheit der SPD/FDP-Zählgemeinschaft in der Stadtverordenten-Versammlung zusammenbrechen sollte .
+         </unit>
+	 </unit>
+      </unit>
+   </unit>
+   Das ist der Knackpunkt :
+   <unit type="ext" id="16">Grüne und Christdemokraten wären schlechte Herausforderer , würden sie dieses Ansinnen nicht als " schlechten Stil " und als " Erbhof-Sicherung " zerreißen ,</unit>
+   <unit type="int" id="16">
+      <connective id="16" relation="concession">auch</connective>
+      <connective id="16" relation="concession">wenn</connective>
+      die Sache rechtlich in Ordnung ginge .
+   </unit>
+   So bleiben Fragen :
+   <unit type="ext" id="23">
+      <unit type="ext" id="21">Sind Bigalke und die Seinen wirklich so naiv</unit>
+      <unit type="int" id="21">
+         <connective id="21" relation="addition">und</connective>
+         denken , diese wichtige Personalie geräuschlos durchzukriegen ?
+      </unit>
+   </unit>
+   <unit type="int" id="23">
+      <connective id="23" relation="alternation">Oder</connective>
+      handeln sie kaltschnäuzig nach dem Motto : Augen zu und durch ?
+   </unit>
+   Wie auch immer .
+   <unit type="ext" id="28">Der Bürgermeister hat aus einer Mücke einen Elefanten gemacht -</unit>
+   <unit type="int" id="28">
+      <connective id="28" relation="addition">und</connective>
+      ihn in den Porzellanladen gejagt .
+   </unit>
+</discourse>
+

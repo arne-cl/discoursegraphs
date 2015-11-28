@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Muffensausen
+   Fast möchte man meinen , Gerd Stuckenbrok macht jetzt Wahlkampf für die CDU .
+   <unit type="ext" id="1">Was hat den SPD-Chef geritten ,
+   <unit type="int" id="1">
+      <connective id="1" relation="concession">obwohl</connective>
+      ihm seine Fraktion die Zustimmung dafür verweigerte ,
+      </unit> 
+einen derart beleidigenden Brief über die OB-Kandidatin Tiemann in die Welt zu schicken ?
+   </unit>
+   <unit type="ext" id="5">
+      Süffisant , lächelnd und mit feinem Florett hätte er ihr aufs Brot schmieren können , dass
+      <unit type="ext" id="4">sie wohl ein wenig vorschnell gewesen sei ,</unit>
+      <unit type="int" id="4">
+         <connective id="4" relation="simultaneous">als</connective>
+         sie den Markt noch vor Weihnachten zuschütten wollte .
+      </unit>
+   </unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="concession">Aber</connective>
+      nein :
+      <unit type="ext" id="6">Stuckenbrok nahm den Krummsäbel</unit>
+      <unit type="int" id="6">
+         <connective id="6" relation="addition">und</connective>
+         schlug zu .
+      </unit>
+   </unit>
+   Getroffen hat er nur sich .
+   <unit type="ext" id="8">Mit den Sprüchen vom " RFT - Reichtum für Tiemann " schafft er es nicht einmal die Lufthoheit über die Stammtische zu bekommen .</unit>
+<unit type="ext" id="12">
+   <unit type="int" id="8">
+      <connective id="8" relation="addition">Und</connective>
+      auch die Seitenhiebe auf die " einzige örtliche Tageszeitung " ,
+      <unit type="ext" id="11">die sich von Havel-Berlusconi Tiemann domestizieren lasse</unit>
+      <unit type="int" id="11">
+         <connective id="11" relation="addition">und</connective>
+         mit ins Loch steige ,
+      </unit>
+      wird ihm niemand abnehmen .
+   </unit>
+</unit>
+   <unit type="int" id="12">Ist <connective id="12" relation="consequence">doch</connective> hinlänglich bekannt , dass es keine Partei intensiver versucht hat als die SPD - über welchen Umweg auch immer - Einfluss auf kritische Berichterstattung zu nehmen .</unit> <unit type="ext" id="13">Rational ist Gerd Stuckenbroks verbaler Schnellschuss mit Tendenz zur Beleidigung nicht zu erklären .</unit> 
+<unit type="int" id="13"><connective id="13" relation="alternation">Es sei denn</connective> ,
+   <unit type="ext" id="17">der Genosse bekommt Muffensausen ,</unit>
+   <unit type="int" id="17">
+      <connective id="17" relation="consequence">weil</connective>
+      ihm die Felle davonschwimmen ...
+   </unit>
+</unit>
+</discourse>
+

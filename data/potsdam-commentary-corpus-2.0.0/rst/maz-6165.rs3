@@ -1,0 +1,80 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Aktionskreise</segment>
+    <segment id="8" parent="9" relname="concession">
+
+Am liebsten würde die Feuerwehr ja schon in fünf Minuten an jedem Ort der Stadt sein ,</segment>
+    <segment id="9" parent="18" relname="span"> aber derzeit sind es bestenfalls acht .</segment>
+    <segment id="2" parent="10" relname="condition">  Rechnet man noch fünf Minuten drauf zwischen Alarm und Start ,</segment>
+    <segment id="10" parent="19" relname="span"> kommen die Retter schon an ihre Grenzen :</segment>
+    <segment id="11" parent="19" relname="cause">  Ab 18 Minuten kommt für Menschen in einer verqualmten Wohnung jede Hilfe zu spät .</segment>
+    <segment id="3" parent="26" relname="span">  Also kann es für die Feuerwehr beim Wegzug aus der Seelenbinderstraße nur einen Maßstab geben : Schnelligkeit .</segment>
+    <segment id="4" parent="25" relname="span">  Die aber scheint nur bei zwei Standorten an der Berliner Straße garantiert :</segment>
+    <segment id="12" parent="13" relname="span">  Nahe der Schnellstraße wäre man hier , nahe am Klinikum und nahe am Wasser -</segment>
+    <segment id="14" parent="12" relname="elaboration"> auch dort will man helfen können .</segment>
+    <segment id="5" parent="15" relname="condition">
+
+Wenn nun der CDU-Abgeordnete Peter Lehmann das Wasserwirtschaftsareal an der Friedrich-Engels-Straße für die Feuerwache Potsdam fordert ,</segment>
+    <segment id="15" parent="21" relname="span"> mag er in zwei Punkten Recht haben :</segment>
+    <segment id="16" parent="22" relname="conjunction">  Zwischen Berliner Straße und der Havel kann man prima Wohnungen bauen ,</segment>
+    <segment id="17" parent="22" relname="conjunction"> und das Wasserbetriebsgelände harrt einer besseren Nutzung .</segment>
+    <segment id="6" parent="27" relname="span">
+
+Wie aber die Einsatzfahrzeuge von der Friedrich-Engels-Straße aus das Dauerproblem Bau und Stau auf der Langen Brücke umfahren sollen , das sagt er nicht .</segment>
+    <segment id="7" parent="29" relname="span">  Mithin kann die neue Wache - zumal bereits eine Berufswache in Babelsberg besteht - nur nördlich der Havel liegen .</segment>
+<group id="18" type="span" parent="24" relname="joint" />
+<group id="19" type="span" parent="20" relname="span" />
+<group id="20" type="span" parent="24" relname="joint" />
+<group id="13" type="span" parent="4" relname="reason" />
+<group id="21" type="span" parent="23" relname="span" />
+<group id="22" type="multinuc" parent="21" relname="elaboration" />
+<group id="23" type="span" parent="6" relname="concession" />
+<group id="24" type="multinuc" parent="3" relname="reason" />
+<group id="25" type="span" parent="28" relname="span" />
+<group id="26" type="span" parent="25" relname="background" />
+<group id="27" type="span" parent="7" relname="reason" />
+<group id="28" type="span" parent="7" relname="reason" />
+<group id="29" type="span" />
+  </body>
+</rst>

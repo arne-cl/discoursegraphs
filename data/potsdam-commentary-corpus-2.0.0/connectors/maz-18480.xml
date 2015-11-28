@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Anders als gedacht
+   <unit type="ext" id="5">So träge wie allgemein oft angenommen , scheint die Jugend im Fläming nun doch nicht zu sein .</unit>
+   <unit type="int" id="7">
+      <unit type="int" id="5">
+         <connective id="5" relation="consequence">Denn</connective>
+         <connective id="7" relation="condition">wenn</connective>
+         sich jetzt unterstützt von Schülern auch in Wiesenburg ein Förderverein für die Grund- und Gesamtschule gründet ,
+   </unit>
+   <unit type="ext" id="7">
+      zeigt dies , welchen Stellenwert einer guten schulischen Ausbildung inzwischen eingeräumt wird .</unit>
+   </unit>
+      <unit type="int" id="8"><connective id="8" relation="simultaneous">Wie</connective> anderswo bereits seit längerem erfolgreich praktiziert ,</unit> <unit type="ext" id="8">wird die Schule so stärker in den Mittelpunkt der Gesellschaft gerückt .</unit>
+   <unit type="ext" id="11">Sie ist kein abgeschottetetes Gebilde mehr ,</unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="contrast">sondern</connective>
+      Teil der Kommunen .
+   </unit>
+   An die Stelle von " die da oben müssten mal ... " ist Eigeninitiative getreten . <unit type="ext" id="10">Selbst etwas anpacken</unit> <unit type="int" id="10"><connective id="10" relation="addition">und</connective> nicht auf Allmosen warten</unit> , scheint nun die Devise zu sein . Das ist gut so .
+   <unit type="ext" id="12">Bleibt zu hoffen , dass sich nicht nur dem Wiesenburger Förderverein möglichst viele Menschen aus diversen Gruppen der Gesellschaft anschließen .</unit>
+   <unit type="ext" id="14">
+     <unit type="int" id="12">
+         <unit type="ext" id="13">
+            <connective id="12" relation="addition">Beispielsweise</connective>
+            könnten Handwerker und Betriebe der Region so frühzeitig Kontakte zu künftigen Lehrlingen knüpfen
+         </unit>
+         <unit type="int" id="13">
+            <connective id="13" relation="alternation">oder</connective>
+            im Gespräch mit Lehrern ihre Anforderungen an die oft krititisierte Ausbildung in den Schulen verdeutlichen .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="14">
+      Dass für eigentlich normale Dinge im Schulalltag
+      <connective id="14" relation="concession">dennoch</connective>
+      immer auch Spendengeld nötig bleibt , ist ein Wermutstropfen .
+   </unit>
+</discourse>
+

@@ -1,0 +1,82 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Nicht erst seit gestern</segment>
+    <segment id="2" parent="16" relname="evaluation-s">
+
+Erst einmal tief durchatmen .</segment>
+    <segment id="3" parent="16" relname="list">  Im benachbarten Berlin hat es keinen Anschlag mit Milzbrand-Erregern gegeben .</segment>
+    <segment id="4" parent="16" relname="list">  In Bayern auch nicht .</segment>
+    <segment id="5" parent="18" relname="concession">  Aber die Bilder von Männern in Mondanzügen und Atemschutzmasken haben durchaus etwas von Ausnahmezustand , ja Katastrophenalarm .</segment>
+    <segment id="6" parent="18" relname="span">  Dennoch ist Panikmache unverantwortlich .</segment>
+    <segment id="7" parent="6" relname="reason">  Was wir sehen , ist der spektakuläre , aber routinierte Einsatz von Profis .</segment>
+    <segment id="8" parent="24" relname="span">
+
+Zu einer Zeit , in der alles Denkbare auch machbar erscheint , ist es beruhigend zu wissen , dass die Rettungskräfte sich nicht erst seit gestern damit befassen , wie sie die Bürger vor Katastrophen schützen können .</segment>
+    <segment id="9" parent="32" relname="span">  Ein eingespieltes Team von Spezialisten hält Ausrüstung und Fachleute bereit ,</segment>
+    <segment id="31" parent="9" relname="purpose"> um schnell und umfassend handeln zu können .</segment>
+    <segment id="21" parent="22" relname="span">  Dass sie unter normalen Umständen kaum in Erscheinung treten , ist ihrem steten Bemühen um Vorbeugung zu danken -</segment>
+    <segment id="10" parent="21" relname="elaboration"> zum Beispiel im Brandschutz , wo die Feuerwehr schon in der Planung eines Gebäudes mitwirkt .</segment>
+    <segment id="11" parent="28" relname="span">
+
+Trotzdem sollte der Zivilschutz verbessert werden .</segment>
+    <segment id="12" parent="27" relname="span">  Manches Vehikel im Gerätehaus gehört längst ins Technikmuseum .</segment>
+    <segment id="13" parent="14" relname="circumstance">  Wenn landesweit die Polizei aufgerüstet wird ,</segment>
+    <segment id="14" parent="25" relname="span"> sollten die Rettungskräfte nicht das Nachsehen haben .</segment>
+    <segment id="15" parent="25" relname="evaluation-s">  Falls es doch einmal kein mieser Scherz war .</segment>
+<group id="16" type="multinuc" parent="17" relname="span" />
+<group id="17" type="span" parent="19" relname="background" />
+<group id="18" type="span" parent="19" relname="span" />
+<group id="19" type="span" parent="20" relname="span" />
+<group id="20" type="span" parent="29" relname="background" />
+<group id="22" type="span" parent="23" relname="joint" />
+<group id="23" type="multinuc" parent="8" relname="evidence" />
+<group id="24" type="span" parent="29" relname="contrast" />
+<group id="25" type="span" parent="26" relname="span" />
+<group id="26" type="span" parent="12" relname="elaboration" />
+<group id="27" type="span" parent="11" relname="reason" />
+<group id="28" type="span" parent="29" relname="contrast" />
+<group id="29" type="multinuc" parent="30" relname="span" />
+<group id="30" type="span" />
+<group id="32" type="span" parent="23" relname="joint" />
+  </body>
+</rst>

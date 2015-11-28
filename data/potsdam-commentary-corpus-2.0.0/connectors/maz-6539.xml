@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Riesenstaatsmann Alles hängt wieder einmal mit allem zusammen .
+   <unit type="ext" id="4">
+      <unit type="ext" id="1">Der Kanzler gibt seinen Berliner Genossen den entscheidenden Fingerzeig in Richtung rot-gelb-grüner Ampel-Koalition ,</unit>
+      <unit type="int" id="1">
+         <connective id="1" relation="consequence">weil</connective>
+         er sich die Liberalen als möglichen Koalitionspartner für die Bundestagswahl im kommenden Jahr warmhalten möchte .
+      </unit>
+   </unit>
+   <unit type="int" id="4">
+      <unit type="ext" id="3">
+            <connective id="4" relation="addition">Und</connective>
+            FDP-Luftikus Jürgen W. Möllemann bereist seinerseits schon jetzt eifrig den Nahen Osten ,
+            <unit type="int" id="3">
+                  <connective id="3" relation="purpose">um</connective>
+                  <unit type="ext" id="5">
+                     für diesen Fall gerüstet
+                     <connective id="3" relation="purpose">zu</connective>
+                     sein
+                  </unit>
+            </unit>
+      </unit>
+      <unit type="int" id="5">
+         <connective id="5" relation="addition">und</connective>
+         sich als neuer liberaler Außenminister zu empfehlen .
+      </unit>
+   </unit>
+   " Riesenstaatsmann Mümmelmann " , wie Franz-Josef Strauß den schnauzbärtigen Fallschirmspringer aus Münster einmal titulierte , ist auch schon voll im Geschäft und wird nicht müde , Israels Politik der " präventiven Liquidierungen " als " Staatsterrorismus " zu geißeln .
+   <unit type="ext" id="8">Unter rechtsstaatlichen Gesichtspunkten sollte diese Methode der Hinrichtungen auf Verdacht in der Tat besser nicht Schule machen ,</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="contrast">doch</connective>
+      ist ein Möchtegern-Chefdiplomat womöglich besser beraten , nicht schon vor Amtsantritt verbrannte Erde ausgerechnet in Israel zu hinterlassen .
+   </unit>
+   Das mit Glück und einigem Geschick von Außenminister Joschka Fischer erarbeitete Gewicht Deutschlands in der Krisenregion sollte auch ein Oppositionspolitiker nicht leichtfertig verspielen .
+</discourse>
+

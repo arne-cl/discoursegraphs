@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Wendefehler Heranwachsende haben seit jeher und überall ein Problem gehabt :
+   <unit type="ext" id="4">Sie sind rebellisch</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">und</connective>
+      machen dumme Sachen
+   </unit>
+   .
+   <unit type="ext" id="6">Sie wegzuschließen , scheint eine Lösung zu sein .</unit>
+   <unit type="int" id="6">
+      <unit type="ext" id="7">
+         <connective id="6" relation="concession">Aber</connective>
+         nicht alle Jugendlichen lassen sich während schwieriger Lebensphasen einfach wegsperren
+      </unit>
+      .
+   </unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="consequence">Deshalb</connective>
+      ist es sehr lobenswert , dass sich auch in Königs Wusterhausen der Verein Jugendrechtshaus gegründet hat
+   </unit>
+   . 38 Männer und Frauen aus dem Ort erklärten sich bereit ohne Gegenleistung in die Zukunft zu investieren : in Kinder und Jugendliche .
+ <unit type="ext" id="16">
+      <unit type="ext" id="14">Sie wollen Rechtsbewusstsein lehren , Ansprechpartner sein</unit>
+      <unit type="int" id="14">
+         <connective id="14" relation="addition">und</connective>
+         die jungen Leute an die Regeln des menschlichen Zusammenlebens heranführen .
+      </unit>
+ </unit>
+      <unit type="int" id="16">
+         <connective id="16" relation="consequence">
+	 <modifier>Auch</modifier> weil</connective>
+         Elternhäuser und Schulen dies nicht immer schaffen .
+      </unit>
+   <unit type="ext" id="19">
+      Orientierungslose Menschen gibt es überall .
+   </unit>
+   <unit type="ext" id="22">
+      <unit type="ext" id="20"><unit type="int" id="19">
+         Vielen Ostdeutschen wurde wendebedingt
+         <connective id="19" relation="contrast">jedoch</connective>
+         eingeredet :
+         Ihr habt alles falsch gemacht !</unit>
+      </unit>
+      <unit type="int" id="20">
+         <connective id="20" relation="addition">Und</connective>
+         das irritiert .
+      </unit>
+   </unit>
+   <unit type="int" id="22">
+   <unit type="ext" id="24">
+      <connective id="22" relation="addition">Zudem</connective>
+      verlor ein Großteil der ehemaligen DDR-Bürger die Arbeit ,</unit>  <unit type="int" id="24"><connective id="24" relation="consequence">damit</connective> den sozialen Halt .
+   </unit></unit>
+   Eltern , die selbst um ihr Gleichgewicht kämpfen , haben mit sich selbst zu tun . Sie können nur bedingt Gesprächspartner und Vorbilder sein .
+   <unit type="ext" id="25">Die Vereinsmitglieder des Jugendrechtshauses wollen zuhören .</unit>
+   <unit type="int" id="25">
+      <connective id="25" relation="addition">Und</connective>
+      das ist ein guter erster Schritt .
+   </unit>
+   Hoffentlich folgen weitere .
+</discourse>
+

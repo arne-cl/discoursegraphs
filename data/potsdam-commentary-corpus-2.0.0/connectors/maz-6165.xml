@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Aktionskreise
+   <unit type="ext" id="1">Am liebsten würde die Feuerwehr ja schon in fünf Minuten an jedem Ort der Stadt sein ,</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="contrast">aber</connective>
+      derzeit sind es bestenfalls acht .
+   </unit>
+   <unit type="ext" id="4">Rechnet man noch fünf Minuten drauf zwischen Alarm und Start , kommen die Retter schon an ihre Grenzen : Ab 18 Minuten kommt für Menschen in einer verqualmten Wohnung jede Hilfe zu spät .</unit>
+   <unit type="int" id="4">
+      <unit type="ext" id="5">
+         <connective id="4" relation="consequence">Also</connective>
+         kann es für die Feuerwehr beim Wegzug aus der Seelenbinderstraße nur einen Maßstab geben : Schnelligkeit .
+      </unit>
+   </unit>
+   <unit type="int" id="5">
+      Die
+      <connective id="5" relation="concession">aber</connective>
+      scheint nur bei zwei Standorten an der Berliner Straße garantiert : Nahe der Schnellstraße wäre man hier , nahe am Klinikum und nahe am Wasser - auch dort will man helfen können .
+      </unit>
+   <unit type="ext" id="15">
+      <unit type="int" id="9">
+         <connective id="9" relation="condition">Wenn</connective>
+         nun der CDU-Abgeordnete Peter Lehmann das Wasserwirtschaftsareal an der Friedrich-Engels-Straße für die Feuerwache Potsdam fordert ,
+      </unit>
+      <unit type="ext" id="9">
+         mag er in zwei Punkten Recht haben :
+         <unit type="ext" id="12">Zwischen Berliner Straße und der Havel kann man prima Wohnungen bauen ,</unit>
+         <unit type="int" id="12">
+            <connective id="12" relation="addition">und</connective>
+            das Wasserbetriebsgelände harrt einer besseren Nutzung .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="15">
+      <unit type="ext" id="18">
+         Wie
+         <connective id="15" relation="concession">aber</connective>
+         die Einsatzfahrzeuge von der Friedrich-Engels-Straße aus das Dauerproblem Bau und Stau auf der Langen Brücke umfahren sollen , das sagt er nicht .
+      </unit>
+   </unit>
+   <unit type="int" id="18">
+      <unit type="ext" id="19">
+         <connective id="18" relation="consequence">Mithin</connective>
+         kann die neue Wache -
+      </unit>
+      <unit type="int" id="19">
+         <connective id="19" relation="addition">zumal</connective>
+         bereits eine Berufswache in Babelsberg besteht -
+      </unit>
+      <unit type="ext" id="19">nur nördlich der Havel liegen .</unit>
+   </unit>
+</discourse>
+

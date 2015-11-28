@@ -1,0 +1,90 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+&quot; Schmierentheater &quot;</segment>
+    <segment id="14" parent="25" relname="list">
+
+Er stänkert gerne .</segment>
+    <segment id="2" parent="24" relname="span">  Gunnar Lade ist unbequem ,</segment>
+    <segment id="15" parent="2" relname="interpretation"> das steht außer Frage .</segment>
+    <segment id="3" parent="26" relname="span">  Doch diesmal ist das gut so .</segment>
+    <segment id="4" parent="29" relname="span">  Als einziger Stadtverordneter zeigte er nämlich Courage am Montag in der Sitzung des Hauptausschusses ,</segment>
+    <segment id="16" parent="28" relname="conjunction"> als es um die Abstimmung zum lang diskutierten Schulthema ging</segment>
+    <segment id="17" parent="27" relname="span"> und eine klare Aussage gefordert war ,</segment>
+    <segment id="18" parent="17" relname="e-elaboration"> die sonst offenbar niemand zu treffen wagte .</segment>
+    <segment id="5" parent="30" relname="reason">  Es scheint fast so , als wolle es sich kein Abgeordneter mit denen , die da von Entscheidungen betroffen sein könnten , verscherzen .</segment>
+    <segment id="6" parent="19" relname="evaluation-s">  Man mag es Gunnar Lade daher nicht verübeln ,</segment>
+    <segment id="19" parent="30" relname="span"> wenn er diese Szenerie als &quot; Schmierentheater &quot; bezeichnete .</segment>
+    <segment id="7" parent="32" relname="preparation">  Fest steht doch :</segment>
+    <segment id="20" parent="32" relname="list">  Kein Lehrer verliert seinen Job ,</segment>
+    <segment id="21" parent="32" relname="list"> kein Schüler wird schlechter unterrichtet als vorher .</segment>
+    <segment id="8" parent="32" relname="list">  Wirklich betroffen könnten Erzieher und technisches Personal sein .</segment>
+    <segment id="9" parent="35" relname="circumstance">
+
+Gleichwohl sollte es neben wirtschaftlichen und Kapazitätsgründen um gute Schulkonzepte gehen .</segment>
+    <segment id="10" parent="22" relname="interpretation">  Wozu gibt es die ,</segment>
+    <segment id="22" parent="35" relname="span"> wenn sie unbeachtet bleiben bei derart wichtigen Entscheidungen ?</segment>
+    <segment id="13" parent="38" relname="joint">  Da stellt sich die Frage , wer es hier wem recht machen will .</segment>
+    <segment id="11" parent="34" relname="antithesis">  Freilich , Außenstehende haben gut reden .</segment>
+    <segment id="12" parent="34" relname="joint">  Doch wer sich wählen lässt , sollte die Courage aufbringen , unpopuläre Entscheidungen zu treffen ,</segment>
+    <segment id="23" parent="34" relname="joint"> ohne sich ein schlechtes Gewissen einreden zu lassen .</segment>
+<group id="24" type="span" parent="25" relname="list" />
+<group id="25" type="multinuc" parent="3" relname="evaluation-n" />
+<group id="26" type="span" parent="29" relname="interpretation" />
+<group id="27" type="span" parent="28" relname="conjunction" />
+<group id="28" type="multinuc" parent="4" relname="circumstance" />
+<group id="29" type="span" parent="39" relname="span" />
+<group id="30" type="span" parent="31" relname="span" />
+<group id="31" type="span" parent="40" relname="span" />
+<group id="32" type="multinuc" parent="33" relname="span" />
+<group id="33" type="span" parent="38" relname="joint" />
+<group id="34" type="multinuc" parent="37" relname="span" />
+<group id="35" type="span" parent="36" relname="span" />
+<group id="36" type="span" parent="38" relname="joint" />
+<group id="37" type="span" parent="38" relname="joint" />
+<group id="38" type="multinuc" parent="40" relname="reason" />
+<group id="39" type="span" parent="31" relname="background" />
+<group id="40" type="span" parent="41" relname="span" />
+<group id="41" type="span" />
+  </body>
+</rst>

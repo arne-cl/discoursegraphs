@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Kühlen Kopf bewahren
+   Der Millionen-Kredit des Landes Brandenburg ist für den Abwasserzweckverband Emster tatsächlich eine " historische Chance " . 
+   <unit type="ext" id="2">Da ist Manfred Meske zuzustimmen .</unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="addition">Zumal</connective>
+      das Land bereits im vorigen Jahr mehr als 30 Millionen Mark in die Sanierung des AZV steckte .
+   </unit>
+   Geld , das woanders auch nötig gewesen wäre . Die Verantwortlichen in den Gemeinden sollten jetzt Nägel mit Köpfen machen . Die Region aus der Abwasser-Debatte herauszuholen , ist ihre Pflicht . Dazu bedarf es auch  der transparenten Öffentlichkeitsarbeit . In Brandenburg ist die Abwasser-Debatte um hoch verschuldetete Zweckverbände in ruhigere Gewässer gekommen . Das Land hat mit seinem Schuldenmanagement bereits vielen Verbänden aus der Misere geholfen .
+   <unit type="ext" id="8">Beispiel ist der Lehniner Trink- und Abwasserzweckverband , der jetzt schuldenfrei ist .</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="successive">Zuvor</connective>
+      hatten die fünf zugehörigen Gemeinden über Jahre hohe , die Haushalte schmerzende Umlagen gezahlt .
+   </unit>
+   <unit type="ext" id="9">Jetzt ruhig Blut bewahren</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="addition">und</connective>
+      die Bürgerinitiative klug mit einzubinden
+   </unit>
+   , ist Gebot der Stunde . Die wiederum sollte nun gleichfalls nicht aus dem Bauch heraus agieren . Bleibt abzuwarten , ob das jahrelange Ringen um hohe Millionen-Schulden bald vor dem Abschluss steht .
+</discourse>
+

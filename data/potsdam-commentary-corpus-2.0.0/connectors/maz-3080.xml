@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Falsche Bilder Das Zusammenleben von Ausländern und Deutschen hier in Brandenburg , wo der Anteil der Menschen aus anderen Ländern verschwindend gering ist , war auch vor dem 11. September 2001 nicht ohne Probleme . Im Gegenteil . Wer etwa in den alten Bundesländern unterwegs war , der musste erleben , dass " Brandenburg " und " Ausländerfeindlichkeit " oft als Synonyme betrachtet wurden - durchaus kein angenehmer Zustand .
+   <unit type="ext" id="4">Nach den Anschlägen in Amerika wurde dieser Zustand leider noch verschärft .</unit>
+   <unit type="int" id="4">
+      <unit type="ext" id="7">
+         <connective id="4" relation="consequence">Denn</connective>
+         inzwischen hatte sich der wachsame Deutsche bekanntlich im Kopf sein eigenes Bild des islamistischen Kämpfers zurechtgelegt
+      </unit>
+   </unit>
+   .
+   <unit type="int" id="7">
+      <connective id="7" relation="addition">Und</connective>
+      wehe dem , der diesem Bild auch nur im entferntesten ähnelte ... 
+   </unit>
+   Es schien , als sei das Bemühen um ein friedliches Miteinandern um Jahre zurückgeworfen worden . Es schien , als hätten diejenigen verspielt , die das Multikulturelle gesellschaftsfähig machen wollten .
+   <unit type="ext" id="8">Gut , dass inzwischen wieder länger nachgedacht wird . Gut , dass Veranstaltungen wie die Interkulturelle Woche in Ludwigsfelde weitergeführt und als Forum der Verständigung für Deutsche und Ausländer genutzt werden .</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="consequence">Denn</connective>
+      nur so , mit Beharrlichkeit , werden falsche Bilder in den Köpfen zurechtgerückt .
+   </unit>
+</discourse>
+

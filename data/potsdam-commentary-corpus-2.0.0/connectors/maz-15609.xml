@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Aufheben
+   Die Blankenfelder Gemeindevertreter haben ihren Beschluss , die Straßenlampen in der Nacht für vier Stunden auszuschalten , mit der heißen Nadel gestrickt . <unit type="ext" id="2">Das sicherlich gut gemeinte Anliegen ,</unit> <unit type="int" id="2"><connective id="2" relation="consequence">nämlich</connective> Energiekosten zu sparen ,</unit> könnte ihnen teuer zu stehen kommen .
+   <unit type="ext" id="1">Dunkle Straßen in der Nacht sorgen nun mal nicht gerade für ein tolles Sicherheitsgefühl .</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="addition">Auch</connective>
+      erkennt man nicht , wohin man tritt .
+   </unit>
+   <unit type="ext" id="3">Im schlimmsten Fall stößt man gegen eine Müll- oder Papiertonne , die ja laut Abfallzweckverband bereits am Vorabend des jeweiligen Abholetages an den Straßenrand zu stellen ist .</unit>
+   <unit type="int" id="3">
+      <unit type="ext" id="5">
+         <connective id="3" relation="contrast">Doch</connective>
+         nicht allein die Fragen der Unfälle und der Haftung im Falle der Fälle sind unklar .
+      </unit>
+   </unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="consequence">Denn</connective>
+      die Kommune muss damit rechnen , dass bei Lampen-Abschaltungen der Vertrag mit Edis über eine sehr günstige Tarifgestaltung hinfällig wird .
+   </unit>
+   <unit type="ext" id="6">Bei einem Defizit von einer Million Mark ist eine Gemeinde gezwungen , alle Register zu ziehen .</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="contrast">Doch</connective>
+      mit dem Abschalte-Beschluss nimmt der Gemeinderat Angst und Unsicherheit in Kauf .
+   </unit>
+   <unit type="ext" id="7">
+      Mehr noch , er befördert den Ort ins Mittelalter zurück . 
+<unit type="ext" id="8">Der Gemeinderat sollte den unseligen Beschluss aufheben ,</unit> <unit type="int" id="8"><connective id="8" relation="condition">ehe</connective> sich die Bürger mit Taschenlampen versorgen .</unit> 
+   </unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="consequence">Schließlich</connective> , wir leben im 21. Jahrhundert .
+   </unit>
+</discourse>
+

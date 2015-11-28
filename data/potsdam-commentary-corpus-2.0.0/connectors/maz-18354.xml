@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Des einen Freud ...
+   Die Drohung wurde nicht wahr .
+   <unit type="ext" id="1">Im August dieses Jahres entlud sich auf einer Einwohnerversammlung der Zorn der Klosteraner in der Ankündigung , den Bau der neuen Bundesstraße und der Ortsumgehung Jüterbog zu stoppen .</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="concession">Aber</connective>
+      seit gestern graben sich am östlichen Rand Jüterbogs die Baumaschinen ins Erdreich .
+   </unit>
+   <unit type="ext" id="4">
+      <unit type="ext" id="5">Die Trasse ist abgesteckt ,</unit>
+      <unit type="int" id="5">
+         <unit type="ext" id="3">
+            <connective id="5" relation="addition">und</connective>
+            die führt nicht um Kloster herum ,
+         </unit>
+      </unit>
+      <unit type="int" id="3">
+         <connective id="3" relation="contrast">sondern</connective>
+         eher direkt in den Ort hinein .
+      </unit>
+   </unit>
+   <unit type="int" id="4">
+      Klar
+      <connective id="4" relation="consequence">also</connective> ,
+      dass es gestern beim ersten Spatenstich nicht nur fröhliche Mienen und gute Worte gab .
+   </unit>
+   <unit type="ext" id="6">
+      <unit type="ext" id="7">Übrigens auch nicht nur bei den anwesenden Leuten der Kloster Zinnaer Bürgerinitiative ,</unit>
+   </unit>
+   <unit type="int" id="7">
+      <unit type="int" id="6">
+         <connective id="6" relation="contrast">sondern</connective>
+         <connective id="7" relation="addition">zum Beispiel</connective>
+         auch bei Jüterbogs Vorkämpferin für eine Verkehrsberuhigung in Innenstadt und Schloßstraße .
+      </unit>
+   </unit>
+   Hildegard Uebe nutzte die Gelegenheit , mit dem Chef des Straßenbauamtes Wünsdorf mal persönlich ein ernstes Wort über die trotz Umgehung bleibenden Probleme zu reden .
+   Der euphorischen Stimmung tat das keinen Abbruch . Eher fröhlich vertröstete Minister Meyer die Klosteraner erneut auf den nächsten Bundesverkehrswegeplan . Vor 2006 sei da nichts drin . Eher süß-sauer die Mienen der Klosteraner . Des einen Freud bleibt wohl auch hier des anderen Leid .
+</discourse>
+

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Kontrolle ist besser Jeder , der sein Kind in einen Schulbus einsteigen sieht , hofft , dass es am Ende der Fahrt heil und gesund wieder aussteigt . Die Kampagne des Amtes für Arbeitsschutz , Bus und Fahrer vor Beginn einer Klassenfahrt zu prüfen , ist wichtig :
+   <unit type="ext" id="3">Kontrollen dieser Art erhöhen die Sicherheit der jungen Passagiere .</unit>
+   <unit type="int" id="3">
+      Übermüdete Fahrer sind
+      <connective id="3" relation="contrast">jedoch</connective>
+      nur eine Gefahr , die gebannt werden muss .
+   </unit>
+   Wie das Unglück von Altlandsberg vor zwei Jahren zeigt , stellen auch übermütige , schlecht beaufsichtigte Kinder ein Risiko dar . Dazu kommen noch die Fehler der anderen Verkehrsteilnehmer . Absolute Sicherheit kann es nicht geben .
+   <unit type="int" id="5">
+      Selbst
+      <connective id="5" relation="condition">wenn</connective>
+      <unit type="ext" id="4">
+         der Bus tipptopp in Schuss ist , die Fahrer ausgeruht , die Kinder gesittet 
+      </unit>
+      <unit type="int" id="4">
+         <connective id="4" relation="addition">und</connective> 
+         alle anderen Autofahrer rücksichtsvoll sind ,
+      </unit>
+   </unit>
+   <unit type="ext" id="6">
+      <unit type="ext" id="5">besteht immer noch die Gefahr von höherer Gewalt</unit>
+      - der sprichwörtliche Blitzschlag lässt sich nicht vermeiden .
+   </unit>
+   <unit type="int" id="6">
+      Die Wahrscheinlichkeit solcher Unglücke tendiert
+      <connective id="6" relation="contrast">jedoch</connective>
+      gegen Null .
+   </unit>
+   <unit type="ext" id="8">
+   Größer ist die Bedrohung durch so genanntes menschliches und technisches Versagen .
+   </unit>
+   <unit type="int" id="8">
+   <unit type="ext" id="7">
+   <connective id="8" relation="addition">Und</connective> die kann man vermeiden :</unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="manner">Indem</connective>
+      man die Fahrtüchtigkeit aller , die am Verkehrsgeschehen beteiligt sind - Fahrer , Passagiere und Fahrzeuge - prüft .
+   </unit>
+   </unit>
+</discourse>
+

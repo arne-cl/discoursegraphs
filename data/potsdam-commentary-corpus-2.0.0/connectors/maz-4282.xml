@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Steilpass Wunder gibt es immer wieder !
+      <unit type="ext" id="2">
+         <unit type="ext" id="1">
+            Erst spielen die Dallgower Gemeindevertreter so statisch und verzagt wie die deutsche Abwehrreihe der Fußballkicker . 
+         </unit>
+      </unit>
+   <unit type="ext" id="4">
+      <unit type="int" id="2">
+         <unit type="int" id="1">
+            <connective id="1" relation="addition">Und</connective> 
+            <connective id="2" relation="successive">dann</connective>
+            kommt aus der Tiefe solch ein fulminanter Steilpass , von dem man hofft , dass die Seeburger oder Groß-Glienicker Mitspieler ihn aufnehmen können .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="4">
+      <unit type="ext" id="5">
+         Ein Befreiungsschlag ist es
+         <connective id="4" relation="concession">allerdings</connective>
+         nicht ,
+      </unit>
+      <unit type="int" id="5">
+         <connective id="5" relation="consequence">weil</connective>
+         es vorerst keine Gefahr fürs Dallgower Tor gab .
+      </unit>
+   </unit>
+   <unit type="ext" id="6">
+      Die Seeburger und einige Groß-Glienicker haben 
+      <unit type="ext" id="3">
+         den Ball erst zurückgespielt 
+      </unit>
+   </unit>
+   <unit type="int" id="6">
+      <unit type="int" id="3">
+         <connective id="6" relation="addition">und</connective>
+         <connective id="3" relation="successive">dann</connective>
+         um so drängender wieder gefordert .
+      </unit> 
+   </unit>
+   Nun sollen sie zeigen , wie sie die Chance verwerten . 
+   <unit type="ext" id="7">
+      Eine Diskussion , wo künftig die Trainerkabine stehen soll , wäre in der jetzigen Spielsituation verheerend . 
+   </unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="addition">Und</connective> 
+      eine Parallele zu den deutschen Grotten-Kickern gibt es immer noch .
+   </unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="concession">Auch</connective>
+      <connective id="8" relation="concession">wenn</connective>
+      die Spieler aus den verschiedenen Vereinen zusammengewürfelt sind ,
+   </unit>
+   <unit type="ext" id="12">
+   <unit type="ext" id="8">sie müssen sich daran gewöhnen , dass sie nun in einer Mannschaft " Döberitzer Heide " spielen .</unit></unit>
+<unit type="int" id="12">
+   <connective id="12" relation="addition">Und</connective> das heißt gemeinsam und nicht gegeneinander .
+</unit>
+   <unit type="ext" id="11">Ermahnungen von der Seitenlinie , miteinander fair umzugehen und sich nicht beim kleinsten Schubser gegenseitig zu zerfleischen , sind normalerweise überflüssig .</unit>
+   <unit type="int" id="11">
+      Vorerst
+      <connective id="11" relation="concession">allerdings</connective>
+      hilfreich .
+   </unit>
+</discourse>
+

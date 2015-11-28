@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Allianz mit Fragezeichen Manchmal sind es die kleinen Meldungen am Rande , die mehr über diesen Krieg aussagen als die Erfolgsberichte der Militärs .
+   <unit type="ext" id="2"><unit type="int" id="3"><connective id="3" relation="successive">Nach</connective> dem Fall von Masar-i-Scharif</unit> <unit type="ext" id="3">sollen sich vor den Friseurläden der Stadt lange Schlangen von Männern gebildet haben , die sich ihre Bärte abrasieren lassen wollten ,</unit> hieß es gestern .</unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="addition">Auch</connective>
+      sei aus den Restaurants laute Musik zu hören gewesen , was unter dem Regime der Taliban verboten war .
+   </unit>
+   Einige Frauen hätten sich sogar getraut , ohne Schleier auf die Straße zu gehen .
+   <unit type="ext" id="5"><unit type="int" id="4"><connective id="4" relation="consequence">Bei</connective> solchen Nachrichten</unit> <unit type="ext" id="4">kann man sich ein rasches Vorrücken der Nordallianz auf Kabul eigentlich nur wünschen .</unit></unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="condition">Wenn</connective>
+      da nicht die politischen Bedenken wären , dass der Krieg gegen die Taliban sich zu einem neuen Bürgerkrieg ausweiten könnte .
+   </unit>
+   <unit type="ext" id="7">Sollte die Nordallianz sich als Herrscher Afghanistans gebärden ,</unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="successive">dann</connective>
+      wäre nichts gewonnen .
+   </unit>
+  Das lose Bündnis aus Minderheiten , das schon einmal brutal die Macht über die Paschtunen-Mehrheit ausübte , ist eben  <unit type="ext" id="8">nicht nur Teil der Lösung ,</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="contrast">sondern</connective>
+      auch Teil des Problems .
+   </unit>
+   Das Problem der Amerikaner ist es nun ,
+   <unit type="ext" id="10">die Nordallianz zu bremsen</unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="addition">und</connective>
+      deren alleinige Machtübernahme zu verhindern .
+   </unit>
+   Gelingt das nicht , steht die Glaubwürdigkeit der gesamten Anti-Terror-Operation auf dem Spiel .
+</discourse>
+

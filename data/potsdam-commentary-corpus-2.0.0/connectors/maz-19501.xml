@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Es bleibt spannend
+   Die Deutsche Bahn AG macht es richtig spannend .
+   <unit type="ext" id="3">
+      <unit type="ext" id="2">Sie hatte das Ergebnis der Wirtschaftlichkeitsrechnung für den Betrieb der Stammbahn von Potsdam nach Berlin in diesem Jahr immer wieder angekündigt</unit>
+      <unit type="int" id="2">
+         <connective id="2" relation="addition">und</connective>
+         verschob die Bekanntgabe der Zahlen mit schöner Regelmäßigkeit .
+      </unit>
+   </unit>
+   <unit type="int" id="3">
+      Das Unternehmen nährte
+      <connective id="3" relation="consequence">dadurch</connective>
+      Spekulationen , dass die bis 1945 existierende Bahnstrecke wohl doch keine Chance auf Wiederaufbau habe .
+   </unit>
+   <unit type="ext" id="8">Glaubt man den neuesten Verlautbarungen des Bahnsprechers und der Kleinmachnower Initiative " Stammbahn " ist dem nicht so .</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="contrast">Vielmehr</connective>
+      brütet man über einer abgespeckten Variante , die 
+      <unit type="ext" id="9">Kosten sparen</unit>
+      <unit type="int" id="9">
+         <connective id="9" relation="addition">und</connective>
+         die Belastungen für die Länder Berlin und Brandenburg minimieren 
+      soll .
+      </unit>
+   </unit>
+   <unit type="ext" id="13">Für die Realisierung des Projekts wird die Zeit langsam knapp .</unit>
+   <unit type="ext" id="15">
+   <unit type="int" id="13">
+      <unit type="ext" id="14">
+         <connective id="13" relation="consequence">Denn</connective>
+         der Bund ging bereits mit 50 Millionen Mark in Vorleistung ,
+      </unit>
+      <unit type="int" id="14">
+         <connective id="14" relation="purpose">um</connective>
+         die Einführung der Gleise in den Berliner Tiergartentunnel
+         <connective id="14" relation="purpose">zu</connective>
+         gewährleisten .
+      </unit>
+   </unit>
+   Fährt die Stammbahn bis 2006 nicht , muss die Deutsche Bahn AG dieses Geld zurückerstatten .
+   </unit>
+   <unit type="ext" id="16">
+     <unit type="int" id="15">Der Klärung bedarf <connective id="15" relation="addition">außerdem</connective> , wie das Problem des Schallschutzes für betroffene Anwohner in Kleinmachnow und Berlin gelöst werden soll .</unit>
+   </unit>
+   <unit type="int" id="16">
+      Es bleibt
+      <connective id="16" relation="consequence">also</connective>
+      spannend beim Endlos-Thema " Stammbahn " .
+   </unit>
+</discourse>
+

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+
+   Schäubles Unschuld Nun ist es offiziell : Die Berliner Staatsanwaltschaft hat ihr Ermittlungsverfahren gegen Wolfgang Schäuble eingestellt . Der ehemalige CDU-Chef fühlt sich nun offenbar wieder zu Höherem berufen .
+
+   <unit type="ext" id="4">
+      Auf den Vorstoß von CSU-Landesgruppenchef Michael Glos , auch Schäuble komme als Kanzlerkandidat in Frage , reagierte er 
+      <unit type="ext" id="3">
+         mit keinem Dementi ,
+      </unit>
+      <unit type="int" id="3">
+         <connective id="3" relation="contrast">
+            sondern
+         </connective>
+         mit offensichtlicher Zufriedenheit .
+      </unit>
+   </unit>
+
+   <unit type="int" id="4">
+      <connective id="4" relation="contrast">
+         Doch
+      </connective>
+      Schäuble sollte auf der Hut sein .
+   </unit>
+
+   <unit type="ext" id="5">
+      Glos setzt bei allem Respekt nicht ernsthaft auf einen Kanzlerkandidaten Schäuble ,
+   </unit>
+
+   <unit type="int" id="5">
+      <connective id="5" relation="contrast">
+         sondern
+      </connective>
+      will mit seinem Alleingang Bayerns Ministerpräsidenten Edmund Stoiber entlasten , 
+   </unit>
+
+   auf den in der Unionsfraktion der Druck immer stärker wird , bald seinen Anspruch auf die Kanzlerkandidatur zu erklären .
+
+   <unit type="ext" id="9">
+      <unit type="ext" id="7">
+         Auch Glos weiß ,
+         <unit type="ext" id="8">
+            dass Schäuble im Frühjahr 2000 nicht
+         </unit>
+         <unit type="int" id="7">
+            <connective id="7" relation="consequence">
+               wegen
+            </connective>
+            des Ermittlungsverfahrens ,
+         </unit>
+      </unit>
+      <unit type="ext" id="7">
+         <unit type="int" id="8">
+            <connective id="8" relation="contrast">
+               sondern
+            </connective>
+         </unit>
+         <unit type="int" id="9">
+            <connective id="9" relation="consequence">
+               wegen
+            </connective>
+            politischer Fehler 
+         </unit>
+         <unit type="ext" id="9">
+            stürzte : 
+         </unit>
+      </unit>
+   </unit>
+
+   <unit type="ext" id="11">
+      Er hatte den Bundestag über die Annahme einer 100_000-Mark-Spende vom Waffenhändler Schreiber belogen
+   </unit>
+
+   <unit type="int" id="11">
+      <connective id="11" relation="addition">
+         und
+      </connective>
+      seine Konflikte mit Kanzler Kohl und der früheren CDU-Schatzmeisterin Baumeister auf extreme Weise eskalieren lassen .
+   </unit>
+
+   <unit type="ext" id="10">
+      Schäuble ist ein kluger Kopf , vielleicht sogar der klügste , den die Union zu bieten hat .
+   </unit>
+
+   <unit type="int" id="10">
+      <connective id="10" relation="contrast">
+         Doch
+      </connective>
+      er muss aufpassen , nicht plötzlich zwischen allen Stühlen zu sitzen .
+   </unit>
+</discourse>
+

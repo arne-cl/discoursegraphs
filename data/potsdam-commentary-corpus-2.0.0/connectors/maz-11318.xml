@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   So nicht noch einmal
+   Es passieren schlimme Dinge auf dieser Welt .
+   <unit type="ext" id="3">Furchtbar ,</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="condition">wenn</connective>
+      Menschen in einem Krieg sterben müssen .
+   </unit>
+   Schrecklich , bei einem Unfall ums Leben zu kommen . Schlimm , einen guten Freund zu verlieren . Nicht zum Aushalten , <unit type="ext" id="1">Zeuge eines Dramas zu werden
+      </unit>
+      <unit type="int" id="1">
+         <connective id="1" relation="addition">und</connective> nichts dagegen ausrichten zu können .
+      </unit>
+      <unit type="ext" id="6">
+        So muss es Werner Fresdorf ergangen sein ,
+      </unit>
+      <unit type="int" id="6">
+         <connective id="6" relation="simultaneous">als</connective>
+         er den schleichenden Tod eines Vierbeiners mit seiner Kamera dokumentierte .
+      </unit>
+   <unit type="ext" id="7"><unit type="ext" id="9">
+Sein Nachbar hatte den Hund an eine kurze Kette gelegt</unit></unit>
+   <unit type="int" id="7">
+     <unit type="int" id="9">
+      <connective id="9" relation="addition">und</connective> sich
+      <connective id="7" relation="successive">dann</connective>
+      nicht mehr um das Tier gekümmert .
+   </unit>
+   </unit>
+   Einzige Ausnahme : Dem Schäferhund wurde noch das Fressen hingestellt .
+   <unit type="ext" id="8">Werner Fresdorf hatte über diese Zustände die Behörden informiert .</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="contrast">Doch</connective>
+      die Reaktionen lassen zu wünschen übrig .
+   </unit>
+   <unit type="ext" id="11">
+      <unit type="ext" id="10">
+         <unit type="ext" id="12">
+            Nur ein Ortstermin fand statt 
+         </unit>
+         <unit type="int" id="12">
+            <connective id="12" relation="addition">und</connective> man gab sich zufrieden ,
+         </unit>
+      </unit>
+      <unit type="int" id="10">
+         <connective id="10" relation="concession">obwohl</connective>
+         der Hundehalter nicht angetroffen wurde .
+      </unit>
+   </unit>
+   <unit type="int" id="11">
+      Ein zweiter Besuch wäre
+      <connective id="11" relation="contrast">jedoch</connective>
+      dringend notwendig gewesen .
+   </unit>
+   Nun ist es zu spät . Das Tier lebt nicht mehr . Eine Bestrafung des Hundehalters wird offensichtlich nicht angestrebt . Gut , dass der Bürgermeister wenigstens nun angewiesen hat , solche Anzeigen sofort an die zuständige Behörde im Kreis weiterzuleiten .
+</discourse>
+

@@ -1,0 +1,82 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Herz-Dame sticht</segment>
+    <segment id="12" parent="26" relname="span">
+
+Ein Wahlausgang , der beide Wahlgegner zufrieden stellt -</segment>
+    <segment id="13" parent="12" relname="interpretation"> das ist eine Seltenheit !</segment>
+    <segment id="11" parent="31" relname="span">  Doch am gestrigen Abend zeigten sich beide Bürgermeisterkandidaten durchaus zufrieden .</segment>
+    <segment id="2" parent="27" relname="span">  Elisabeth Herzog-von_der_Heide ( SPD ) freute sich über das Wahlergebnis ,</segment>
+    <segment id="14" parent="2" relname="e-elaboration"> das ihr mehr als 60 Prozent einbrachte ,</segment>
+    <segment id="15" parent="28" relname="conjunction"> und Hans-Jürgen Akuloff ( PDS ) war &apos;s zufrieden , dass er das bisher beste Ergebnis für die PDS einfuhr .</segment>
+    <segment id="3" parent="4" relname="concession">
+
+Das war natürlich um so leichter , da es diesmal nur einen Gegenkandidaten gab .</segment>
+    <segment id="4" parent="29" relname="span">  Die Parteienlandschaft in Luckenwalde ist natürlich nach wie vor breiter gefächert .</segment>
+    <segment id="5" parent="30" relname="span">  Deshalb brauchen jetzt weder SPD- noch PDS-Anhänger einen Höhenflug zu bekommen .</segment>
+    <segment id="6" parent="22" relname="span">  Der gestrige Wahlausgang ist das persönliche Ergebnis der beiden Kandidaten ,</segment>
+    <segment id="16" parent="6" relname="elaboration"> nachdem sie einen dritten im ersten Wahlgang ausgestochen hatten .</segment>
+    <segment id="7" parent="22" relname="interpretation">  Mehr nicht und auch nicht weniger .</segment>
+    <segment id="8" parent="24" relname="span">
+
+Nach der ersten &quot; Skat-Runde &quot; hat dann in der zweiten &quot; Mau-Mau-Runde &quot; Herz-Dame Herzog gestochen .</segment>
+    <segment id="9" parent="21" relname="span">  Kein überraschendes , auch kein wahnsinnig überragendes , aber ein deutliches Stichwahl-Ergebnis .</segment>
+    <segment id="10" parent="20" relname="span">  Die extreme Spannung war sowieso raus ,</segment>
+    <segment id="17" parent="19" relname="span"> denn die erste Wahl hatte sowieso die Vorentscheidung gebracht ,</segment>
+    <segment id="18" parent="17" relname="e-elaboration"> die jetzt durch die Stichwahl nur noch bestätigt wurde .</segment>
+<group id="19" type="span" parent="10" relname="reason" />
+<group id="20" type="span" parent="9" relname="evidence" />
+<group id="21" type="span" parent="8" relname="interpretation" />
+<group id="22" type="span" parent="23" relname="span" />
+<group id="23" type="span" parent="25" relname="joint" />
+<group id="24" type="span" parent="25" relname="joint" />
+<group id="25" type="multinuc" parent="28" relname="interpretation" />
+<group id="26" type="span" parent="11" relname="antithesis" />
+<group id="27" type="span" parent="28" relname="conjunction" />
+<group id="28" type="multinuc" parent="32" relname="span" />
+<group id="29" type="span" parent="5" relname="interpretation" />
+<group id="30" type="span" parent="28" relname="interpretation" />
+<group id="31" type="span" parent="28" relname="interpretation" />
+<group id="32" type="span" />
+  </body>
+</rst>

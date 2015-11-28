@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Spaß in der ersten Reihe
+   <unit type="ext" id="1">Das ganze Leben ist ein Quiz</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="addition">und</connective>
+      wir sind nur die Kandidaten ,
+   </unit>
+   sang bereits vor zehn Jahren Hape Kerkeling . Nun bestätigt eine Studie den weitsichtigen Entertainer : Die Entwicklung - vor allem im öffentlich-rechtlichen Fernsehen - geht stramm in Richtung Unterhaltung .
+   <unit type="ext" id="3">Der Anteil politischer Sendungen am Programm hat weiter abgenommen</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="addition">und</connective>
+      ein Ende ist nicht in Sicht .
+   </unit>
+   <unit type="ext" id="5">Dass private Anbieter , die sich nur durch Werbung finanzieren , publikumswirksame Unterhaltungssendungen in den Vordergrund stellen , ist verständlich .</unit>
+   <unit type="int" id="5">
+      <unit type="ext" id="7">
+         Dass
+         <connective id="5" relation="concession">aber</connective>
+         die gebührenfinanzierten Programme ihren Auftrag - die fernsehpublizistische und politische Grundversorgung zu sichern - zunehmend ignorieren , ist mehr als bedenklich .
+      </unit>
+   </unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="consequence">Denn</connective>
+      das öffentliche Mandat fordert eine gesunde Mischung von Unterhaltung und Information .
+   </unit>
+   Dafür zahlen wir Gebühren .
+   <unit type="int" id="9">
+      <connective id="9" relation="condition">Wenn</connective>
+      an Katastrophen-Tagen Sondersendungen wie der " ARD-Brennpunkt " laufen ,
+   </unit>
+   <unit type="ext" id="9">kann das nicht darüber hinwegtäuschen , dass die Spaßgesellschaft längst auch beim öffentlich-rechtlichen Rundfunk den Ton angibt .</unit>
+</discourse>
+

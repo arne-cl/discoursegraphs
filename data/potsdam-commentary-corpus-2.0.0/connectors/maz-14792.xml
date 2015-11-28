@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Böse , die nicht böse sind
+   Die Bösen sind längst gefunden . Wer sich kritisch zur Finanzierung der Landesgartenschau äußert , der ist ein Nestbeschmutzer . Das müssen in diesem Tagen alle erfahren , die unangenehme Fragen stellen und Antworten erwarten . Wer sich über die Finanzierung der Landesgartenschau genauer informieren will , dem haftet sofort an , die Veranstaltung gar nicht zu wollen .
+   Nun sind die Bösen gar nicht so böse , wie allgemein angenommen . Die Landesgartenschau wird auch von ihnen nicht infrage gestellt . Der Bürgermeister hat die Finanzsituation , in der sich die Stadt befindet als " schwierig aber beherrschbar " bezeichnet .
+   <unit type="ext" id="6">
+      <connective id="6" relation="condition">Wenn</connective>
+      das so ist ,
+      <unit type="int" id="6">
+         <connective id="6" relation="condition">dann</connective>
+         müssen Konzepte zur Landesgartenschau jetzt mit nachvollziehbaren Zahlen untersetzt werden .
+      </unit>
+   </unit>
+   <unit type="ext" id="7">Warum wird im Landwirtschaftsministerium ein städtischer Eigenanteil an Laga-Vorhaben mit 7,5 Millionen Mark berechnet ,</unit> <unit type="int" id="7"><connective id="7" relation="contrast">während</connective> im Laga-Finanzierungskonzept der Stadt gerade 5 Millionen Mark hineingeschrieben wurden ?</unit>
+   <unit type="ext" id="9">Eben dieses Verwirrspiel ist es , was diejenigen in Sorge treibt , die jetzt die Landesgartenschau konkreter hinterfragen .</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="consequence">Denn</connective>
+      auch sie wollen , dass in Rathenow eine gut vorbereitete Laga 2006 stattfindet .
+   </unit>
+</discourse>
+

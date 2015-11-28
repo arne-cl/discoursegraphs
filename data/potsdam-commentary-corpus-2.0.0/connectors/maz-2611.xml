@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Uneinsichtig Im Streit um die fragwürdige Spendenpraxis der stadteigenen Kommunalen Wohnungsbaugesellschaft ( KWR ) schlugen gestern Abend im Stadtparlament die Wogen erneut hoch .
+   <unit type="ext" id="5">Die eigentlich sachlich zu führende Auseinandersetzung um die Parteispenden von KWR-Chef Richter an Bürgermeister Lünsers Politverein Pro Rathenow wird zunehmend emotionaler .</unit>
+   <unit type="int" id="5">
+      Knapp einen Monat nach Ausbruch der Rathenower Parteispendenaffäre scheint sich nunmehr
+      <connective id="5" relation="concession">aber</connective>
+      wenigstens der Gedanke durchzusetzen , die Spenden als moralisch nicht akzeptabel zu werten .
+   </unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="successive">Nachdem</connective>
+      nach langem Zögern auch
+      <unit type="ext" id="9">die CDU-Fraktion sich dieser Auffassung anschloss</unit>
+      <unit type="int" id="9">
+         <connective id="9" relation="addition">und</connective>
+         Bürgermeister Lünser damit von der Fahne wich ,
+      </unit>
+   </unit>
+   <unit type="ext" id="7">hat das Umdenken nun auch in Teilen von Pro Rathenow eingesetzt .</unit>
+   Als erster seiner Fraktion sprach gestern der Abgeordnete Otto Timm von einem Fehler . 
+   <unit type="int" id="8">
+      <connective id="8" relation="joint">Während</connective> 
+      Timm mit diesem Verhalten Pro Rathenow helfen dürfte , 
+   </unit>
+   <unit type="ext" id="8">
+      nimmt das Verhalten von Bürgermeister Lünser langsam groteske Züge an .
+   </unit>
+   Als Legitimation für die Spenden will er nun Belege vorlegen , dass in Potsdam kommunale Betriebe jahrelang Parteien sponserten .
+   Für Einsicht in Unrecht spricht auch das erneut nicht .
+</discourse>
+

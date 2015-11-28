@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Schnee zu Heiligabend
+   <unit type="ext" id="1">Der Traum vieler Menschen von der weißen Weihnacht ist diesmal in der Prignitz teilweise wahr geworden .</unit>
+   <unit type="ext" id="2">
+      <unit type="int" id="1">
+         <connective id="1" relation="consequence">Denn</connective>
+         an Heiligabend hüllte sich die Landschaft in ein Schneekleid .
+      </unit>
+   </unit>
+   <unit type="int" id="2">
+      <unit type="ext" id="7">
+         <unit type="int" id="4">
+            <connective id="2" relation="addition">Und</connective>
+            <connective id="4" relation="concession">auch</connective>
+            <connective id="4" relation="concession">wenn</connective>
+            an den beiden Feiertagen ein Großteil wieder weg getaut ist ,
+         </unit>
+      </unit>
+      <unit type="int" id="7">
+         <unit type="ext" id="4">
+            <connective id="7" relation="addition">so</connective>
+            dürften sich vor allem die Kinder über ein standesgemäßes Fest gefreut haben .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="ext" id="8">Übrigens zum zweiten Mal nacheinander .</unit>
+   <unit type="int" id="8">
+      <unit type="ext" id="11">
+         <connective id="8" relation="consequence">Denn</connective>
+         wer erinnert sich nicht an den Schneeeinbruch im Vorjahr ,
+         <unit type="ext" id="10">der rechtzeitig zum Fest die Prignitz erreichte</unit>
+         <unit type="int" id="10">
+            <connective id="10" relation="addition">und</connective>
+            sogar über die Feiertage hinaus für eine Winterlandschaft sorgte ?
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="11">
+      Es kann
+      <connective id="11" relation="consequence">also</connective>
+      keine Rede davon sein , dass die weiße Weihnacht ein Phänomen ist , das der Vergangenheit angehört .
+   </unit>
+   In diesem Jahr reichte sie bis weit in den Süden .
+   <unit type="ext" id="12">Selbst auf Mallorca lag zum Fest Schnee</unit>
+   -
+   <unit type="int" id="12">
+      <connective id="12" relation="concession">wenn</connective>
+      <connective id="12" relation="concession">auch</connective>
+      nur in 1000 Meter Höhe .
+   </unit>
+   Anderswo wiederum wird des Fest immer bei sengender Hitze gefeiert - unvorstellbar für uns .
+   <unit type="ext" id="15">Immerhin bleiben den Menschen in diesen Regionen die Wetterunbilden auf den Straßen erspart .</unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="contrast">Doch</connective>
+   <unit type="ext" id="14">
+      folgt man dem Polizeibericht ,</unit> <unit type="int" id="14"><connective id="14" relation="condition">so</connective> hielten sich die Folgen in der Prignitz in Grenzen .</unit>
+   </unit>
+   <unit type="ext" id="16">Die meisten Menschen waren wohl auf den Wetterumschwung eingestellt .</unit>
+   <unit type="int" id="16">
+     <unit type="ext" id="17">
+      <connective id="16" relation="alternation">Oder</connective>
+      blieben ganz einfach zu Hause , 
+     </unit>
+     <unit type="int" id="17"><connective id="17" relation="addition">wie</connective> sich das zu Weihnachten gehört .
+     </unit>
+   </unit>
+</discourse>
+

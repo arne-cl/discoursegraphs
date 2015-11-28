@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Umgedacht
+   Wie schnell sich Meinungen ändern können ! Den Brief an die gemeinsame Landesplanung , in dem gegen den geplanten Luft-Boden-Schießplatz in der Kyritz-Ruppiner Heide protestiert wird , hatte Stadtverordnetenvorsitzender Thomas Settgast bereits auf der Sitzung am 14. November vorgelegt . Der Beschluss , ihn abzuschicken , wurde auf Dezember vertagt . Besonders Mario Neubauer von der CDU-Fraktion hatte sich dafür ausgesprochen .
+   <unit type="ext" id="3">Mehr noch , er war überhaupt dagegen , dass die Stadtverordneten eine gemeinsame Position beziehen .</unit>
+   <unit type="ext" id="7">
+      <unit type="int" id="3">
+         <unit type="ext" id="6">
+            Besser wäre es
+            <connective id="3" relation="contrast">doch</connective>
+            ,
+         </unit>
+         <unit type="int" id="6">
+            <connective id="6" relation="condition">wenn</connective>
+            solch ein Papier fraktionsweise verabschiedet würde ,
+         </unit>
+         so Neubauer am 14. November .
+      </unit>
+   </unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="contrast">Doch</connective>
+      , Überraschung :
+      <unit type="ext" id="10">
+         Am Mittwochabend kündigte die CDU-Fraktion an , während der Sitzung
+         <unit type="ext" id="8">eine Erklärung abgeben zu wollen</unit>
+         <unit type="int" id="8">
+            <connective id="8" relation="addition">und</connective>
+            dies mit in die Tagesordnung aufzunehmen .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="10">
+      Aus der Erklärung wurde
+      <connective id="10" relation="successive">dann</connective>
+      ein Geschäftsordnungsantrag .
+   </unit>
+   <unit type="ext" id="12">Auf einmal sollte doch die gesamte Stadtverordnetenversammlung Stellung beziehen ,</unit>
+   <unit type="int" id="12">
+      <unit type="ext" id="13">
+         <connective id="12" relation="contrast">doch</connective>
+         nicht gegen ,
+      </unit>
+      <unit type="int" id="13">
+         <connective id="13" relation="contrast">sondern</connective>
+         für den Bombenabwurfplatz .
+      </unit>
+   </unit>
+   <unit type="ext" id="16">
+   <unit type="ext" id="15">
+   Geklappt hat das nicht . 
+   </unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="consequence"><modifier>Wohl auch ,</modifier> weil</connective>
+      die Argumente nicht überzeugten .
+   </unit>
+   </unit>
+   <unit type="int" id="16">Dass solch ein Schießplatz mehr Vor- als Nachteile bringt , lässt sich <connective id="16" relation="consequence">eben</connective> schlecht glauben .</unit>
+</discourse>
+

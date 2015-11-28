@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Nicht mehr so lax
+   Der Ton macht die Musik . Das zeigt sich wohl auch gerade jetzt , wo die Sache mit den Urlaubsscheinen für Asylbewerber nicht mehr so lax gehandhabt wird .
+   <unit type="ext" id="9">
+      <unit type="ext" id="5">Schön ist es ja nun wirklich nicht ,</unit>
+      <unit type="int" id="5">
+         <unit type="ext" id="8">
+            <connective id="5" relation="condition">wenn</connective>
+            man als Beamter
+            <unit type="ext" id="7">jemandem einen Konzertbesuch</unit>
+            <unit type="int" id="7">
+               <connective id="7" relation="alternation">oder</connective>
+               eine Geburtstagsfete vermasseln muss , 
+            </unit>
+         </unit>
+         <unit type="int" id="8">
+            <connective id="8" relation="consequence">weil</connective>
+            die allgemeine Weltlage das gegenwärtig nicht zulässt .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="9">
+         Da spielt
+         <connective id="9" relation="addition">
+            <modifier>eben</modifier>
+            auch
+         </connective>
+         eine Rolle , 
+         <unit type="ext" id="11">
+            wie menschlich man sich in solchen Situationen verhält
+         </unit>
+         <unit type="int" id="11">
+            <connective id="11" relation="addition">und</connective>
+            mit welchen Worten man das rüberbringt .
+         </unit>
+      </unit>
+   Dass sich manches auch in Deutschland nach dem 11. September verändert hat , dafür gibt es ja auch bei den oft abgeschottet lebenden Asylbewerbern Verständnis . <unit type="ext" id="13">Schade ist nur bei all diesen strengeren Regelungen , dass es wohl wieder mal zum großen Teil die Falschen trifft .</unit> 
+<unit type="int" id="13">
+  <unit type="ext" id="15"><connective id="13" relation="consequence">Nämlich</connective> jene , die sich artig an die Spielregeln halten , sich in Deutschland integrieren wollen</unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="addition">und</connective>
+      <unit type="ext" id="17">vorschriftsmäßig ihre geplanten Fahrten bei den zuständigen Stellen ankündigen</unit>
+      <unit type="int" id="17">
+         <connective id="17" relation="addition">und</connective>
+         genehmigen lassen wollen .
+      </unit>
+   </unit>
+</unit>
+   <unit type="ext" id="19">Wer durch die Gegend fährt</unit>
+   <unit type="int" id="19">
+      <connective id="19" relation="addition">und</connective>
+      auf alle nunmal existierenden Vorschriften pfeift ,
+   </unit>
+   wird wohl kaum gemerkt haben , dass irgend etwas anders ist .
+</discourse>
+

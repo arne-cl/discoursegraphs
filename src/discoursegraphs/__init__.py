@@ -8,6 +8,8 @@ __version__ = '0.1.2'
 
 # flake8: noqa
 
+import os
+
 from networkx import (
     write_dot, write_gpickle, write_graphml)
 
@@ -26,4 +28,10 @@ from discoursegraphs.readwrite import (
     read_rst, read_rs3, read_dis, read_tiger)
 from discoursegraphs.readwrite.dot import print_dot
 from discoursegraphs.statistics import info
-from discoursegraphs.util import xmlprint, make_labels_explicit
+from discoursegraphs.util import xmlprint, make_labels_explicit, find_files
+
+
+SRC_ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
+PACKAGE_ROOT_DIR = os.path.abspath(os.path.join(SRC_ROOT_DIR, '..'))
+DATA_ROOT_DIR = os.path.join(PACKAGE_ROOT_DIR, 'data')
+

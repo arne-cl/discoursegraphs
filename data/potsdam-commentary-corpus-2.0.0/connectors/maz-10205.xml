@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Keine Autoritäten Unter den namhaften deutschen Schriftstellern , die von Gerhard Schröder am Samstagabend empfangen wurden , war kein faltenloses Gesicht . <unit type="ext" id="1">Das ist kein Zufall ,</unit> <unit type="int" id="1">nervt <connective id="1" relation="consequence">doch</connective> die meisten jüngeren Autoren die ewige Besserwisserei der Altgedienten .</unit>
+   <unit type="ext" id="4">
+      <unit type="int" id="2">
+         <connective id="2" relation="condition">Wenn</connective>
+         sich Günter Grass , Christa Wolf oder Stefan Heym in politischen Angelegenheiten zu Wort melden ,
+      </unit>
+      <unit type="ext" id="2">hört ein großer Teil der deutschen Intellektuellen inzwischen bewusst weg .</unit>
+   </unit>
+   <unit type="int" id="4">
+      <unit type="ext" id="8">
+            <connective id="4" relation="contrast">Doch</connective>
+            Schröder hat Angst , dass
+	    <unit type="ext" id="6">
+            <unit type="ext" id="5">
+               die öffentliche Meinung
+               <unit type="int" id="6">
+                  <connective id="6" relation="consequence">wegen</connective>
+               der Kriegsteilnahme 
+               </unit>
+               kippt 
+            </unit>
+            <unit type="int" id="5">
+               <connective id="5" relation="addition">und</connective>
+               sich gegen ihn wendet .
+            </unit>
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="8">
+      <unit type="ext" id="9">
+         <connective id="8" relation="consequence">Deshalb</connective>
+         versucht er , die Tuchfühlung zu den Meinungsführern nicht zu verlieren .
+      </unit>
+   </unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="contrast">Doch</connective>
+      wo und wer sind sie ?
+   </unit>
+   Die jungen Autoren 
+   <unit type="ext" id="12">
+      wollen nur noch gute Bücher schreiben</unit>
+   <connective id="12" relation="addition">und</connective>
+   <unit type="int" id="12">behaupten nicht , dass sie dem Kanzler Ratschläge erteilen können , die besser sind als die von Normalbürgern .</unit>
+   <unit type="ext" id="15">Die Nation hat sich bisher keine neuen Klassensprecher gewählt ,</unit>
+   <unit type="int" id="15">
+      <connective id="15" relation="consequence">also</connective>
+      ging der Bundeskanzler noch einmal auf die alten zu .
+   </unit>
+   Die lasen dem Enkel von Willy Brandt nun die Leviten . Glück für Schröder , dass die großen Namen nur noch wenig Autorität besitzen .
+</discourse>
+

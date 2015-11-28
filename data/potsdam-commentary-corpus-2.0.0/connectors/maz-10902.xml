@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+    In die Offensive Drogenprobleme an der Schule : Offen wird darüber nicht gerne geredet .
+    <unit type="ext" id="5">
+
+        <unit type="ext" id="1">
+            Welcher Schulleiter hat es schon gerne ,
+        </unit>
+
+        <unit type="int" id="1">
+            <connective id="1" relation="condition">
+                wenn
+            </connective>
+            man sich den Mund darüber zerreißt , dass man auf dem Schulhof von Crack bis Graß alles bekommen kann , was man zu einem Tripp in die Welt der Träume braucht ?
+        </unit>
+        
+    </unit>
+    
+    <unit type="int" id="5">
+        <connective id="5" relation="consequence">
+            Schließlich 
+        </connective>
+        will man ja zu Beginn eines neuen Schuljahres genügend Schüler bekommen .
+    </unit>
+    
+    <unit type="ext" id="2">
+        Auf eine Schule , von der jeder weiß , hier gibt es Drogen aller Art , werden Eltern ihre Sprösslinge kaum schicken wollen .
+    </unit>
+
+    <unit type="int" id="2">
+        <connective id="2" relation="consequence">
+            Deshalb
+        </connective>
+        ist die Diskussion , die ein Eltern-Stammtisch des Jahn-Gymnasiums jetzt gemeinsam mit PIRA angestoßen hat 
+
+        <unit type="ext" id="3">
+            bemerkenswert
+        </unit>
+
+        <unit type="int" id="3">
+            <connective id="3" relation="addition">und</connective>
+            deutlich höher zu bewerten , als eine kleine Randnotiz .
+        </unit>
+        
+    </unit>
+
+    Erstmals wird versucht , das Problem offensiv zu bewerten .
+
+    <unit type="ext" id="7">
+
+        <unit type="ext" id="6">Das Versteckspiel soll aufhören
+        </unit>
+        
+        <unit type="int" id="6">
+            <connective id="6" relation="addition">und </connective>
+            eine sachliche Debatte geführt werden , an deren Ende Hilfsangebote für betroffene Schüler und Eltern stehen könnten .
+        </unit>
+
+    </unit>
+
+    <unit type="int" id="7">
+        <connective id="7" relation="addition">Und </connective>
+        alle anderen müssen mitmachen .
+    </unit>
+    
+    <unit type="ext" id="4">
+        Es darf nicht sein , dass Zehnjährige zum Glimmstängel und zum Bier greifen ,
+    </unit>
+
+    <unit type="int" id="4">
+        <connective id="4" relation="consequence">weil</connective>
+        sie es ohne Probleme bekommen .
+    </unit>
+
+    Der Elternstammtisch des Jahn-Gymnasiums und PIRA sind in eine Vorreiterrolle geschlüpft .
+
+</discourse>
+

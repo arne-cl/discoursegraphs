@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Wichtige Botschaft
+   <unit type="ext" id="12">
+      <unit type="ext" id="1">Lange hat sich die Europäische Zentralbank gesträubt .</unit>
+      <unit type="int" id="1">
+         <connective id="1" relation="contrast">Doch</connective>
+         gestern hat sie auf die schwache Konjunktur mit einer kräftigen Leitzinssenkung um 0,5 Prozentpunkte auf 3,25 Prozent reagiert .
+      </unit>
+      <unit type="ext" id="7">
+         <unit type="int" id="4">
+            <connective id="4" relation="concession">Auch</connective>
+            <connective id="4" relation="concession">wenn</connective>
+            sich EZB-Chef Wim Duisenberg weiter weigert , das böse R-Wort " Rezession " in den Mund zu nehmen
+         </unit>
+         -
+         <unit type="ext" id="4">dass die Weltwirtschaft in eine schwere Krise rutscht , bestreitet niemand mehr .</unit>
+      </unit>
+      <unit type="int" id="7">
+         <unit type="ext" id="9">
+            Fraglich ist
+            <connective id="7" relation="concession">aber</connective>
+            , ob niedrige Zinsen und damit billigeres Geld für mehr Investitionen und Konsum
+         </unit>
+         <unit type="int" id="9">
+            <connective id="9" relation="addition">und</connective>
+            so für den erhofften raschen Aufschwung sorgen .
+         </unit>
+      </unit>
+      <unit type="ext" id="10">Die Verunsicherung von Verbrauchern und Unternehmern ist seit dem 11. September weniger ökonomisch als psychologisch begründet .</unit> <unit type="int" id="10"><connective id="10" relation="addition">Außerdem</connective> wirkt Geldpolitik erfahrungsgemäß erst nach einem Jahr .</unit>
+   </unit>
+   <unit type="int" id="12">
+      Die wichtigste Botschaft der Zinsentscheidung ist
+      <connective id="12" relation="consequence">deshalb</connective>
+      eine andere :
+   </unit>
+   <unit type="ext" id="13">Die Währungshüter haben ihren Teil getan , jetzt können die Politiker nicht mehr die Verantwortung abschieben ,</unit>
+   <unit type="int" id="13">
+      <connective id="13" relation="contrast">sondern</connective>
+      müssen selbst mit ihren Mitteln aktiv werden .
+   </unit>
+</discourse>
+

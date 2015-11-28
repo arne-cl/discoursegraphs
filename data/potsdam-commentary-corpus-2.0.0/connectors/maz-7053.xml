@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Unangenehm aber fair Im Löwenberger Land steht eine Änderung der Kita-Öffnungszeiten bevor . Die Verwaltung reagiert damit auf eine Analyse , die sich vor allem mit der Anzahl betreuter Kinder zu den verschiedenen Tageszeiten beschäftigt . Wer hinter den neuen Betreuungszeiten Sparabsichten vermutet , liegt richtig . Bekanntlich sitzt der Landesregierung beim Thema Kinderbetreuung der Rotstift nach wie vor viel zu locker . Mit den Folgen müssen sich die Verwaltungen vor Ort herumplagen . Unpopuläre Entscheidungen , die bis zur Schließung führen , sind die Folge . Davon wissen auch die Löwenberger ein trauriges Lied zu singen . Die eingangs erwähnte Analyse ist der Versuch , auf weniger Geld für Kinderbetreuung möglichst objektiv zu reagieren .
+   <unit type="ext" id="7">Nunmehr soll eine Kita öffnen ,</unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="condition">wenn</connective>
+      zwischen zehn und 15 Prozent ( schon diese Spanne ist ein Zugeständnis ) der insgesamt betreuten Mädchen und Jungen in der Einrichtung sind .
+   </unit>
+   Die Einrichtung schließt , werden die Zahlen unterschritten .
+   <unit type="ext" id="17">
+      Aus demokratischer Sicht ( die Mehrheit entscheidet ) und auch unter wirtschaftlichem Aspekt (
+      <unit type="ext" id="15">woher nehmen</unit>
+      <unit type="int" id="15">
+         <connective id="15" relation="addition">und</connective>
+         nicht stehlen ?
+      </unit>
+       ) eine faire Entscheidung ,
+   </unit>
+   <unit type="int" id="17">
+      die
+      <connective id="17" relation="addition">zudem</connective>
+      bei veränderten Kinderzahlen jederzeit korrigierbar ist .
+   </unit>
+</discourse>
+

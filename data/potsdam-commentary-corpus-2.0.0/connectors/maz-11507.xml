@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+    Bauernregeln sind passé
+
+    Land- , Forst- und Tierwirte sind nicht nur mit Kordhut , Blaumann und Gummistiefeln unterwegs , fahren nicht nur tagein , tagaus mit dem Traktor über das Feld . Heute ist ihr Job , der kein Berufszweig für Romantiker ohne Zukunft ist , ein anderer .
+
+    <unit type="ext" id="5">
+        <unit type="ext" id="6">
+            Die Landwirtschaft stellt in Brandenburg - 
+            <unit type="int" id="5">
+                <connective id="5" relation="concession">
+                    trotz
+                </connective>
+                des hohen Beschäftigungsrückgangs nach der Wende -
+            </unit>
+            noch immer einen wichtigen Wirtschaftszweig dar ,
+        </unit>
+        
+        <unit type="int" id="6">
+            der 
+            <connective id="6" relation="addition">
+                darüber hinaus
+            </connective> 
+            viele Arbeits- und Ausbildungsplätze schafft .
+        </unit>
+    </unit>
+    
+    Jeder achte Job hängt im Land von der Agrarwirtschaft ab , die ein Fünftel des Bruttosozialproduktes erbringt . 
+    
+    <unit type="ext" id="7">
+        80 Prozent der Fläche Brandenburgs wird nach Angaben des Landesamtes für Agarwirtschaft derzeit landwirtschaftlich genutzt .
+    </unit>
+    
+    <unit type="ext" id="9">
+        <unit type="ext" id="8">
+            <unit type="int" id="7">
+                <connective id="7" relation="addition">
+                    Darüber hinaus
+                </connective> 
+                belebt der Wirtschaftszweig den dörflichen Raum .
+            </unit>
+        </unit>
+    </unit>
+
+    <unit type="int" id="9">
+        <unit type="int" id="8">
+            <unit type="ext" id="10">
+                In Zeiten von BSE müssen Agrarwirte
+                <connective id="8" relation="contrast">
+                    jedoch
+                </connective>
+                <connective id="9" relation="addition">
+                    auch
+                </connective>
+                umdenken , sich auf neue extensive Produktionsformen einlassen
+            </unit>
+         
+            <unit type="int" id="10">
+                <connective id="10" relation="addition">
+                    und
+                </connective>
+                andere Vermarktungsmöglichkeiten erschließen .
+            </unit>
+        </unit>
+    </unit>
+    
+    <unit type="int" id="11">
+        <connective id="11" relation="consequence">
+            Damit
+        </connective> 
+        das gelingt ,
+    </unit>
+    
+    <unit type="ext" id="11">
+        sollte die Ausbildung stimmen .
+    </unit> 
+    
+    Egal ob mit einem Diplom oder Meisterbrief ausgestattet , muss ein Landwirt ständig dazulernen . Die Zeiten der Bauernregeln sind passé . Heute sind Kenntnisse in Management und Unternehmensführung genauso wichtig wie Fachwissen .
+</discourse>
+

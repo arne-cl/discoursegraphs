@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Traurige Geschichte 
+   Das Thema Tourismus bleibt in der größten Stadt des Kreises eine traurige Geschichte . Das jüngste Kapitel : Die in den letzten Jahren zaghaft gewachsene , im Bewusstsein vieler Interessierter dennoch etablierte Informationsstelle in der Stadthalle muss am Jahresende schließen .
+   Die bisherige Förderung vom Arbeitsamt läuft aus ; Stadt und Tourismusverband konnten sich nicht auf einen finanziellen Kompromiss verständigen . Und nun ? Bald leben 40_000 Menschen in Falkensee , die früher oder später ein gewisses Besucher-Potenzial nach sich ziehen werden .
+<unit type="ext" id="10">
+   Wie ernst ist vor diesem Hintergrund ein Tourismusverband Havelland zu nehmen , dem es nicht gelingt , in seinem schon wegen der Nähe zur Hauptstadt nicht unattraktiven östlichen Teil
+   <unit type="ext" id="7">Fuß zu fassen</unit>
+   <unit type="int" id="7">
+      <connective id="7" relation="addition">und</connective>
+      dauerhaft Präsenz zu zeigen ?
+   </unit>
+</unit>
+<unit type="int" id="10">Die Verantwortlichen im Falkenseer Rathaus <connective id="10" relation="contrast">indessen</connective> müssen sich fragen lassen ,
+   <unit type="ext" id="12">ob es nicht doch sinnvoll wäre , im Haushalt mehr Geld als bisher für diese Belange aufzutreiben ,</unit>
+   <unit type="int" id="12">
+      <connective id="12" relation="consequence">zumal</connective>
+      ja ein sündhaft teures " Touristik-Konzept " bereits vorhanden ist .
+   </unit>
+</unit>
+   <unit type="ext" id="17">
+      <unit type="int" id="13">
+         Bescheidene Werbung ist
+         <connective id="13" relation="concession">zwar</connective>
+         besser als keine .
+      </unit>
+   </unit>
+   <unit type="int" id="17">
+      <unit type="ext" id="13">
+         <connective id="13" relation="concession">Aber</connective>
+         <connective id="17" relation="contrast">andererseits</connective>
+         hängt Erfolg immer auch von Image und von Selbstbewusstsein ab - 
+      </unit>
+   </unit>
+   es mangelt an beidem .
+</discourse>
+

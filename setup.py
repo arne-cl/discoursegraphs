@@ -4,12 +4,12 @@
 #   * `Python Project Howto <http://infinitemonkeycorps.net/docs/pph/>`_
 
 from setuptools import setup, find_packages
-import sys, os
+import os
+import sys
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 NEWS = open(os.path.join(here, 'NEWS.rst')).read()
-
 
 version = '0.1.2'
 
@@ -20,6 +20,19 @@ install_requires = [
     "nltk", "enum", "lxml", "networkx", "pygraphviz",
     "brewer2mpl", "unidecode", "neonx", "pydot2"
 ]
+
+
+def gen_data_files(src_dir):
+    fpaths = []
+
+    for root, dirs, files in os.walk(src_dir):
+        files_in_dir = [os.path.join(root, fname) for fname in files]
+        fpaths.append((root, files_in_dir))
+    return fpaths
+
+
+distribution_files = [('.', ['./NEWS.rst', './Makefile', './LICENSE', './README.rst', './Dockerfile'])]
+corpora_files = gen_data_files('data')
 
 
 setup(name='discoursegraphs',
@@ -43,7 +56,9 @@ setup(name='discoursegraphs',
     url='https://github.com/arne-cl/discoursegraphs',
     license='3-Clause BSD License',
     packages=find_packages("src"),
-    package_dir = {'': "src"},include_package_data=True,
+    package_dir = {'': "src"},
+    include_package_data=True,
+    data_files = distribution_files + corpora_files,
     zip_safe=False,
     install_requires=install_requires,
     entry_points={

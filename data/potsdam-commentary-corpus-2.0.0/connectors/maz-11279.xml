@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Kompliziertes Erbe Das FX-Center ist fast wieder auf dem Stand von 1999 . <unit type="ext" id="5">Damals brauchte man nach dem Konkurs der ersten Betreibergesellschaft Monate ,</unit> <unit type="int" id="5"><connective id="5" relation="temporal">bis</connective> man mit Artemedia einen Nachfolger gefunden hatte .</unit> Einen hungrigen Nachfolger , dem die hoch subventionierte Infrastruktur des Hauses ebenso zupass kam wie sein Leumund , mit dem Technik-Inventar absolut auf der Höhe der Zeit zu sein . Ein Bonuspunkt , mit dem Artemedia beim Börsengang trumpfen wollte . Aus dem Börsengang wurde nichts , auch Artemedia selbst scheint nun am Ende . Wie 1999 schweben nun die Verpflichtungen , die sich aus der Förderung von Land und EU ergeben , als Damoklesschwert über dem FX-Center :
+   <unit type="ext" id="3">
+      <unit type="int" id="1">
+         <connective id="1" relation="condition">Wenn</connective>
+         man seinen Betrieb nicht aufrecht hält ,
+      </unit>
+      <unit type="ext" id="1">
+         <unit type="int" id="2">
+            <connective id="2" relation="condition">wenn</connective>
+            man nicht dem Förderzweck gemäß handelt
+         </unit>
+         <unit type="ext" id="2">, haben die Geldgeber das Recht ( im Interesse der Steuerzahler die Pflicht ) , ihre Beiträge zurückzufordern .</unit>
+      </unit>
+   </unit>
+   <unit type="int" id="3">
+      Ein Unterschied zu 1999
+      <connective id="3" relation="contrast">aber</connective>
+      besteht .
+   </unit>
+   Damals , mitten im Landtagswahlkampf , war das FX-Center Chefsache der SPD-Staatskanzlei . 
+   <unit type="ext" id="4">
+      Nun muss der CDU-Wirtschaftsminister regeln , was seine heutigen Koalitionspartner einst einbrockten :
+   </unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="consequence">Denn</connective>
+      noch immer ist nicht erwiesen , ob das FX-Center , wie man es einst haben wollte , überhaupt funktionieren kann .
+   </unit>
+</discourse>
+

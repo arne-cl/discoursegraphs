@@ -1,0 +1,83 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Ganz schön mutig</segment>
+    <segment id="13" parent="2" relname="concession">
+
+Es herrscht kein Wohnungsnotstand in Wusterhausen .</segment>
+    <segment id="2" parent="28" relname="span">  Dennoch war sich die Gemeindevertretung sicher , dass man ein neues Wohngebiet ausweisen müsse .</segment>
+    <segment id="3" parent="29" relname="span">  Was nach der Idee kam , ging dann erstaunlich schnell .</segment>
+    <segment id="4" parent="27" relname="sequence">  Nicht einmal ein Jahr ist seit Fassen des Aufstellungsbeschlusses und Beginn der Erschließungsarbeiten vergangen .</segment>
+    <segment id="5" parent="27" relname="sequence">  Demnächst wird man schon trockenen Fußes voll erschlossene Parzellen in Augenschein nehmen können .</segment>
+    <segment id="6" parent="24" relname="span">
+
+Martina Vogel , die Bauamtsleiterin in der Großgemeinde , zu der ja auch die Stadt gehört , erhofft sich davon Ködereffekt .</segment>
+    <segment id="7" parent="15" relname="condition">  Wenn die Leute übersichtlich angeboten bekommen , was sie mal selber nutzen können ,</segment>
+    <segment id="15" parent="23" relname="span"> kriegen sie leichter Appetit , so die Hoffnung .</segment>
+    <segment id="8" parent="22" relname="span">
+
+Das wird auch notwendig sein ,</segment>
+    <segment id="14" parent="8" relname="evidence"> denn die Gemeinde ist erst einmal mit 1,2 Millionen Mark in Vorleistung gegangen .</segment>
+    <segment id="9" parent="31" relname="means">  In der löblichen Absicht , besonders jungen Familien das Hierbleiben lukrativ zu machen</segment>
+    <segment id="31" parent="21" relname="span"> und somit einer Pflicht nachzukommen , die jede Kommune hat , ist Risiko nie auszuschließen .</segment>
+    <segment id="10" parent="20" relname="span">  In Wusterhausen erhöht es sich noch ,</segment>
+    <segment id="16" parent="19" relname="span"> weil man auch im nahen Bantikow Bauplätze findet ,</segment>
+    <segment id="17" parent="16" relname="concession"> wenngleich nicht zu diesem Preis .</segment>
+    <segment id="11" parent="18" relname="joint">  Also haben die Gemeindevertreter Mut gezeigt .</segment>
+    <segment id="12" parent="18" relname="joint">  Möge er belohnt werden .</segment>
+<group id="18" type="multinuc" parent="26" relname="evaluation-s" />
+<group id="19" type="span" parent="10" relname="cause" />
+<group id="20" type="span" parent="21" relname="e-elaboration" />
+<group id="22" type="span" parent="24" relname="evaluation-s" />
+<group id="23" type="span" parent="6" relname="elaboration" />
+<group id="24" type="span" parent="25" relname="span" />
+<group id="25" type="span" parent="26" relname="joint" />
+<group id="26" type="multinuc" parent="30" relname="span" />
+<group id="27" type="multinuc" parent="3" relname="evidence" />
+<group id="28" type="span" parent="3" relname="evaluation-n" />
+<group id="29" type="span" parent="26" relname="background" />
+<group id="30" type="span" />
+<group id="21" type="span" parent="32" relname="span" />
+<group id="32" type="span" parent="26" relname="joint" />
+  </body>
+</rst>

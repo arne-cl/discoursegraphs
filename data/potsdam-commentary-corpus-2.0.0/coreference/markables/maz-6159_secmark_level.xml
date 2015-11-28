@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE markables SYSTEM "markables.dtd">
+<markables xmlns="www.eml.org/NameSpaces/secmark">
+<markable id="markable_100028" span="word_32" phrase_type="np"  complex_np="no"  np_form="other"  referentiality="discourse-new"  grammatical_role="other"  ambiguity="not_ambig"  dir_speech="direct_speech" />
+<markable id="markable_1" span="word_5,word_6" phrase_type="np"  complex_np="no"  np_form="indefnp"  referentiality="discourse-new"  grammatical_role="sbj"  ambiguity="not_ambig"  dir_speech="text_level" />
+<markable id="markable_80" span="word_174..word_176" phrase_type="np"  complex_np="yes"  np_form="indefnp"  referentiality="discourse-new"  grammatical_role="sbj"  ambiguity="not_ambig"  dir_speech="text_level" />
+<markable id="markable_1000102" span="word_106" phrase_type="np"  complex_np="no"  np_form="indefnp"  referentiality="discourse-new"  grammatical_role="dir-obj"  ambiguity="not_ambig"  dir_speech="text_level" />
+<markable id="markable_66" span="word_126..word_129,word_131..word_132,word_136..word_144" phrase_type="pp"  complex_np="yes"  np_form="indefnp"  referentiality="discourse-new"  grammatical_role="other"  ambiguity="not_ambig"  dir_speech="text_level" />
+<markable id="markable_100030" span="word_34" phrase_type="np"  complex_np="no"  np_form="other"  referentiality="discourse-new"  grammatical_role="other"  ambiguity="not_ambig"  dir_speech="direct_speech" />
+</markables>

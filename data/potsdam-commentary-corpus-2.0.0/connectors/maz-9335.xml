@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+    
+    Unökonomisches Angebot Die Stimmung im Pritzwalker Minimal-Markt ist auf einem Tiefpunkt angelangt . 15 feste Mitarbeiter stehen vor der Entlassung . Wohl die wenigsten werden ein Übernahmeangebot in einen anderen Markt des Rewe-Konzerns akzeptieren .
+    
+    <unit type="ext" id="3">
+        <unit type="ext" id="1">
+            Sie werden es nicht akzeptieren können :
+        </unit>
+    </unit>
+
+    <unit type="int" id="4">
+        <unit type="int" id="1">
+            <unit type="ext" id="2">
+                <connective id="1" relation="consequence">
+                    Denn
+                </connective>
+                <unit type="int" id="3">
+                    <connective id="3" relation="addition">
+                        zum einen 
+                    </connective>
+                    sind es zumeist Frauen mit Kindern , die im Einzelhandel arbeiten .
+                </unit>
+            </unit>
+        </unit>
+        <unit type="int" id="2">
+            <connective id="2" relation="addition">
+                Und
+            </connective>
+            die sind nun einmal nicht so mobil , wie es alleinstehende Arbeitnehmer sind .
+        </unit>
+    </unit>
+
+    <unit type="ext" id="4">
+        <unit type="ext" id="8">
+            <connective id="4" relation="addition">
+                Zum anderen 
+            </connective>
+            sind auch die Löhne im Einzelhandel nicht so hoch ,
+        </unit>
+        <unit type="int" id="8">
+            <connective id="8" relation="simultaneous">
+                als
+            </connective>
+            dass sich täglich eine weite Fahrt zur Arbeit für die Mitarbeiter lohnen würde .
+        </unit>
+    </unit>
+
+    Eine einfache Frage der Ökonomie : Frisst der Sprit den Lohn auf , kann man daheim bleiben . " co op " hat den Beschäftigten kein Übernahmeangebot unterbreitet . Unter den Beschäftigten im Minimal wird gemunkelt , dass man dort künftig nur noch geringfügig Beschäftigte anstellen will . Ob dies den Tatsachen entspricht , bleibt dahingestellt .
+
+    <unit type="ext" id="9">
+        Der Konzern will sich heute noch nicht zu seinen Plänen äußern .
+    </unit>
+   
+    <unit type="int" id="9">
+        Sicher ist
+        <connective id="9" relation="contrast">
+            jedoch
+        </connective>
+        , dass
+        <unit type="ext" id="12">
+            bei einer Übernahme
+            <unit type="ext" id="10">
+                die alten Verträge übernommen werden müssten
+            </unit>
+        </unit>
+        ,
+        <unit type="int" id="12">
+            <unit type="int" id="10">
+                <connective id="10" relation="addition">
+                    und
+                </connective>
+                der neue Inhaber bei Lohnverhandlungen
+                <connective id="12" relation="successive">
+                    dann
+                </connective>
+                keinen Spielraum hätte .
+            </unit>
+        </unit>
+    </unit>
+    
+</discourse>
+

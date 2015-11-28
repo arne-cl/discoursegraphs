@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Notsignale
+   Die Oranienburger Mittelstadt kann sich glücklich schätzen , dass sie zu den 15 ausgewählten Stadtteilen im Land Brandenburg gehört , die in den nächsten fünf Jahren vom 220 Millionen Mark schweren EU-Förderprogramm " Zukunft im Stadtteil " ( ZiS ) profitieren werden . Eine erste Bestandsaufnahme der Situation in der Mittelstadt brachte nun ein überraschend negatives Bild .
+   <unit type="ext" id="1">
+      Bisher wurde ihr Zustand
+      <connective id="1" relation="concession">zwar</connective>
+      als nicht unproblematisch eingeschätzt ,
+   </unit>
+   <unit type="int" id="1">
+      <unit type="ext" id="6">
+         einen Vergleich mit schwer gebeutelten Neubaugebieten , wie etwa Velten-Süd , hätten Kommunalpolitiker
+         <connective id="1" relation="concession">aber</connective>
+         abgelehnt .
+      </unit>
+   </unit>
+   <unit type="int" id="6">
+      Eine Bürgerbefragung ergab
+      <connective id="6" relation="contrast">jedoch</connective>
+      , dass mehr als die Hälfte der Bewohner der Mittelstadt schon über den Wegzug nachgedacht hat .
+   </unit>
+   Eine bedeutende Minderheit schätzt die Wohnqualität als " schlecht " oder " sehr schlecht " ein . Als deutliches Zeichen für den beginnenen Abstieg wird der Einbau von Sperrgittern an Durchgängen zu Wohnanlagen gewertet . Einwohner sprechen von ständigem Vandalismus im Umfeld der Schulen .
+   <unit type="ext" id="11">Dass es nach den Notsignalen wieder Zeichen der Hoffnung gibt , dafür könnte das ZiS-Programm sorgen .</unit>
+   <unit type="int" id="11">
+      Das
+      <connective id="11" relation="concession">aber</connective>
+      wird ohne ein Mitwirken der Mieter und Vermieter in der Mittelstadt nicht funktionieren .
+   </unit>
+</discourse>
+

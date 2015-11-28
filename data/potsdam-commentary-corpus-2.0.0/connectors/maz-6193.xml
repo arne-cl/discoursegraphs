@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Honigsüße Nachricht Sollte es Wirklichkeit werden , was die Procurand AG gestern verkündete , wäre es fast zu schön , um wahr zu sein . 40 neue Jobs - allein diese Nachricht ist Honig auf den Lippen vieler Mittelmärker .
+   <unit type="ext" id="4">Wünschenswert wäre nicht nur das ,</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="contrast">sondern</connective>
+      auch , dass mit der Investruine am Görnsee endlich etwas geschieht .
+   </unit>
+   Nie ist das halbfertige Hotel bezogen worden . Im Erdgeschoss und vermutlich nicht nur dort , macht sich Schimmel breit . 
+   <unit type="ext" id="8">
+      Mit anderen Worten , die Bausubstanz wird durch den Leerstand nicht besser .
+   </unit>
+   <unit type="ext" id="12">
+   <unit type="int" id="8">
+      <connective id="8" relation="addition">Zudem</connective>
+      erinnert der wuchtige Mehrgeschosser an ein Kapitel der jüngsten Grebser Geschichte , die nicht nur die Gemeindevertreter nur zu gerne langsam vergessen würden .
+   </unit></unit>
+   <unit type="int" id="12">
+     Gebaut hat das Hotel <connective id="12" relation="consequence">nämlich</connective> ein Investor mit Geld , das er sich von der Kommune erschlich . Fördergeld aus einem Kommunalkredit .</unit>
+   <unit type="ext" id="11">
+      <unit type="ext" id="9">
+         Der Mann bezahlte viele Handwerker nicht
+      </unit>
+      <unit type="int" id="9">
+         <connective id="9" relation="addition">und</connective>
+         wurde voriges Jahr zu einer mehrjährigen Haftstrafe verurteilt .
+      </unit>
+   </unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="contrast">Doch</connective>
+      seine Vergangenheit schien wie ein Fluch über dem Hotelkomplex zu liegen .
+   </unit>
+   Jahrelang hatte das Amtsgericht Potsdam umsonst versucht , es an den Mann zu bringen . 
+   <unit type="ext" id="13">
+      Einmal schien es schon geglückt zu sein .
+   </unit>
+   <unit type="int" id="13">
+      <connective id="13" relation="contrast">Doch</connective>
+      der Käufer zahlte nicht .
+   </unit>
+   Jetzt könnte das Seniorenheim dem Haus einen Sinn geben .
+</discourse>
+

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Diener vieler Herren
+   Wer es allen Recht machen möchte , hat es schwer . Wer es allen Recht machen muss noch mehr . Die Regionale Verkehrsgesellschaft Dahme-Spreewald ( RVS ) befördert täglich Menschen mit unterschiedlichen Bedürfnissen :
+   <unit type="ext" id="1">Da sind Berufstätige , die pünktlich zur Arbeit erscheinen müssen . Sie sind oft auf einen guten Bahnanschluss angewiesen .</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="successive">Dann</connective>
+      wären da noch die Schüler .
+   </unit>
+   <unit type="ext" id="2">Sie brauchen die RVS .</unit>
+   <unit type="int" id="2">
+      <connective id="2" relation="consequence">Denn</connective>
+      Minderjährige haben keine Wahl zwischen Pkw und Bus .
+   </unit>
+   Den dritten Schwerpunkt bilden Rentner , die häufig ihre Einkäufe oder Arztbesuche per Bus erledigen .
+   <unit type="ext" id="6">Den Interessen aller drei Fahrgastgruppen gerecht zu werden , scheint unmöglich .</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="consequence">Denn</connective>
+      die RVS muss wirtschaftlich arbeiten .
+   </unit>
+   <unit type="ext" id="8">
+      <unit type="ext" id="7">Busse können nur eingesetzt werden ,</unit>
+      <unit type="int" id="7">
+         <connective id="7" relation="condition">wenn</connective>
+         sie ausgelastet sind .
+      </unit>
+   </unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="consequence">Deshalb</connective>
+      ist es lobenswert , dass die RVS sich bemüht , so schnell wie möglich auf Kundenbeschwerden zu reagieren .
+   </unit>
+   <unit type="ext" id="10">Die Berufstätigen forderten bessere Bahnanschlüsse :</unit>
+   <unit type="int" id="10">
+      <unit type="ext" id="15">
+         <unit type="ext" id="13">
+            Die RVS stellte
+            <connective id="10" relation="consequence">deswegen</connective>
+            einen Busfahrplan um .
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="13">
+      <unit type="ext" id="14">
+         <connective id="13" relation="successive">Daraufhin</connective>
+         schimpften Eltern ,
+      </unit>
+      <unit type="int" id="15">
+         <unit type="int" id="14">
+            <connective id="14" relation="consequence">weil</connective>
+            ihre Kinder
+            <connective id="15" relation="consequence">dadurch</connective>
+            zu lange vor Schulbeginn warten müssen .
+         </unit>
+      </unit>
+   </unit>
+   Nun wird ab Montag ein Sonderbus die Schüler befördern . Mal sehen , wer sich am Dienstag beschwert .
+</discourse>
+

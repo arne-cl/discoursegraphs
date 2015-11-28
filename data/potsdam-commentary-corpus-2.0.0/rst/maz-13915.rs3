@@ -1,0 +1,76 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Nagelprobe</segment>
+    <segment id="12" parent="27" relname="conjunction">
+
+37 Millionen Mark gibt die Stadt 2001 für die Unterhaltung eigener Immobilien aus .</segment>
+    <segment id="2" parent="27" relname="conjunction">  Und der Wert der Liegenschaften beläuft sich auf eine halbe Milliarde Mark .</segment>
+    <segment id="3" parent="4" relname="concession">  Damit ist die Stadt gar nicht so arm wie sie tut .</segment>
+    <segment id="4" parent="26" relname="span">  Nur muss sie ihr Vermögen richtig einsetzen und verwalten .</segment>
+    <segment id="5" parent="25" relname="span">  Das will Bürgermeister Langerwisch mit dem &quot; zentralen Gebäude- und Liegenschaftsmanagement &quot; tun .</segment>
+    <segment id="6" parent="24" relname="conjunction">  Mit dem Konzept lassen sich Unterhalts- und Personalkosten einsparen</segment>
+    <segment id="15" parent="24" relname="conjunction"> und gleichzeitig bleibt Geld für die Sanierung der oft maroden kommunalen Gebäude übrig .</segment>
+    <segment id="13" parent="23" relname="span">  Ob und wie Langerwisch die Umsetzung gelingt , bleibt abzuwarten .</segment>
+    <segment id="8" parent="21" relname="span">  Auch in der Verwaltung haben sich über Jahre Pfründe und Abhängigkeiten gebildet ,</segment>
+    <segment id="7" parent="20" relname="conjunction"> die nicht einfach aufgegeben werden</segment>
+    <segment id="14" parent="20" relname="conjunction"> und die einer Zentralisierung im Wege stehen .</segment>
+    <segment id="9" parent="22" relname="list">  Bisher sprang noch jeder Strukturreformer in der Verwaltung als Tiger und landete als Bettvorleger .</segment>
+    <segment id="10" parent="22" relname="list">  Schon die Nichteinbringung der Fachbereichsstruktur durch den OB hat Langerwisch gezeigt , wie dünn das Eis des Erfolges ist , das ihn trug .</segment>
+    <segment id="11" parent="18" relname="condition">  Scheitert er nun auch mit dem zweifellos guten Liegenschaftskonzept ,</segment>
+    <segment id="16" parent="18" relname="span"> spräche dies für einen drastisch geschwundenen Einfluss in der Verwaltung und in der SVV ,</segment>
+    <segment id="17" parent="16" relname="interpretation"> was die Stadt noch unregierbarer werden ließe .</segment>
+<group id="18" type="span" parent="19" relname="span" />
+<group id="19" type="span" parent="25" relname="interpretation" />
+<group id="20" type="multinuc" parent="8" relname="e-elaboration" />
+<group id="21" type="span" parent="22" relname="list" />
+<group id="22" type="multinuc" parent="13" relname="evidence" />
+<group id="23" type="span" parent="25" relname="interpretation" />
+<group id="24" type="multinuc" parent="5" relname="e-elaboration" />
+<group id="25" type="span" parent="29" relname="span" />
+<group id="26" type="span" parent="28" relname="span" />
+<group id="27" type="multinuc" parent="26" relname="reason" />
+<group id="28" type="span" parent="25" relname="background" />
+<group id="29" type="span" />
+  </body>
+</rst>

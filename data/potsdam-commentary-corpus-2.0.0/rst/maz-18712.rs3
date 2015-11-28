@@ -1,0 +1,82 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Ein Fels</segment>
+    <segment id="10" parent="2" relname="concession">
+
+Es war sicher nicht die letzte Lobpreisung für Hans-Joachim Giersberg .</segment>
+    <segment id="2" parent="29" relname="span">  Doch dürfte ihm die Ehrenbürgerwürde , die ihm Potsdam gestern verlieh , wertvoller sein als mancher Preis , der da noch kommen mag .</segment>
+    <segment id="3" parent="26" relname="interpretation">  Ist es doch die Anerkennung dafür ,</segment>
+    <segment id="15" parent="25" relname="antithesis"> dass der frühere Generaldirektor der Schlösserstiftung nicht allein von der Sorge um die anvertrauten Kunstschätze getrieben war ,</segment>
+    <segment id="11" parent="25" relname="span"> sondern von der Vision einer Stadt ,</segment>
+    <segment id="16" parent="11" relname="e-elaboration"> die durch diese Kunst lebt .</segment>
+    <segment id="4" parent="23" relname="span">
+
+So stand Giersberg nicht nur wie der Fels in der Brandung ,</segment>
+    <segment id="12" parent="4" relname="circumstance"> als die Kommerzialisierungswogen an die Schlossmauern schlugen .</segment>
+    <segment id="5" parent="22" relname="span">  Sein stilles , aber nachhaltiges Eintreten für die Qualitäten der Kulturlandschaft außerhalb seiner Gärten , allzuoft als Sichtachsen-Fetischismus benörgelt , hat dazu beigetragen , die Landeshauptstadt als Gesamtkunstwerk erfahrbar zu machen .</segment>
+    <segment id="6" parent="5" relname="evaluation-s">  Dafür hat ihm Potsdam zu danken .</segment>
+    <segment id="7" parent="21" relname="span">
+
+Mit seinem Ja zu den Schlössernächten übersprang er am Ende sogar den Schatten des nur ängstlichen Bewahrers ,</segment>
+    <segment id="20" parent="7" relname="e-elaboration"> als der er lange galt .</segment>
+    <segment id="8" parent="18" relname="interpretation">  Dennoch endet mit Giersberg eine Ära .</segment>
+    <segment id="9" parent="17" relname="antithesis">  Sein Nachfolger wird nicht allein am Kunstsinn gemessen werden ,</segment>
+    <segment id="13" parent="17" relname="joint"> er wird mehr von dem haben müssen , was Giersberg lästig war :</segment>
+    <segment id="14" parent="17" relname="joint"> Sinn für das Geld - und damit für alle &quot; niederen &quot; Bedürfnisse .</segment>
+<group id="17" type="multinuc" parent="18" relname="span" />
+<group id="18" type="span" parent="19" relname="span" />
+<group id="19" type="span" parent="31" relname="contrast" />
+<group id="21" type="span" parent="24" relname="list" />
+<group id="22" type="span" parent="24" relname="list" />
+<group id="23" type="span" parent="24" relname="list" />
+<group id="24" type="multinuc" parent="27" relname="evidence" />
+<group id="25" type="span" parent="26" relname="span" />
+<group id="26" type="span" parent="27" relname="span" />
+<group id="27" type="span" parent="28" relname="span" />
+<group id="28" type="span" parent="30" relname="span" />
+<group id="29" type="span" parent="28" relname="interpretation" />
+<group id="30" type="span" parent="31" relname="contrast" />
+<group id="31" type="multinuc" />
+  </body>
+</rst>

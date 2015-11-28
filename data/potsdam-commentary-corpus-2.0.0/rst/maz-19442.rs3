@@ -1,0 +1,87 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Briefkästen trockenlegen</segment>
+    <segment id="11" parent="33" relname="interpretation">
+
+Heißer als in anderen Nächten geht es Silvester zu .</segment>
+    <segment id="2" parent="33" relname="span">  Manche netten Mitmenschen verspüren erfahrungsgemäß gerade in den letzten Stunden des alten Jahres verstärkt den Drang zu neuen Streichen .</segment>
+    <segment id="3" parent="2" relname="elaboration">  Vor allem Briefkästen , in denen Feuerwerkskörper noch mal so schön wie an frischer Luft knallen , haben es ihnen angetan .</segment>
+    <segment id="4" parent="12" relname="cause">  Weil die Polizei das weiß ,</segment>
+    <segment id="12" parent="20" relname="span"> richten sich die Beamten am Neujahrstag auf viele Anzeigen wegen Sachbeschädigung ein .</segment>
+    <segment id="5" parent="21" relname="condition">
+
+Wer sich den Gang zur Polizei ersparen will ,</segment>
+    <segment id="13" parent="21" relname="conjunction"> sollte versuchen , dummen Knallfröschen das Wasser abzugraben</segment>
+    <segment id="19" parent="21" relname="conjunction"> und seinen Briefkasten trockenzulegen .</segment>
+    <segment id="6" parent="30" relname="list">  Beispielsweise mit einer Sandfüllung .</segment>
+    <segment id="7" parent="29" relname="span">  Besser wäre es , den Kasten ganz abzubauen .</segment>
+    <segment id="8" parent="7" relname="reason">  ( Post wird sowieso erst wieder am 2. Januar ausgetragen )</segment>
+    <segment id="14" parent="27" relname="condition"> Wenn das nicht geht ,</segment>
+    <segment id="15" parent="27" relname="span"> einfach die Entleerungsklappe offen lassen ,</segment>
+    <segment id="16" parent="15" relname="purpose"> damit der Druck beim Explodieren pyrotechnischer Erzeugnisse entweichen kann .</segment>
+    <segment id="9" parent="25" relname="condition">
+
+Wer sein Posteinwurfbehältnis einmal mit ganz anderen Augen sehen will ,</segment>
+    <segment id="17" parent="25" relname="span"> könnte seine künstlerische Ader ausleben ,</segment>
+    <segment id="18" parent="24" relname="conjunction"> den Briefkasten komplett in stabiles Material hüllen</segment>
+    <segment id="23" parent="24" relname="conjunction"> und mit Klebeband versehen .</segment>
+    <segment id="10" parent="31" relname="interpretation">  Gut möglich , dass so dem einen oder anderen Knallfrosch der Spaß daran vergeht , anderen Menschen Sach-Schaden zuzufügen .</segment>
+<group id="20" type="span" parent="34" relname="result" />
+<group id="21" type="multinuc" parent="22" relname="span" />
+<group id="22" type="span" parent="31" relname="span" />
+<group id="24" type="multinuc" parent="17" relname="means" />
+<group id="25" type="span" parent="26" relname="span" />
+<group id="26" type="span" parent="30" relname="list" />
+<group id="27" type="span" parent="28" relname="span" />
+<group id="28" type="span" parent="30" relname="list" />
+<group id="29" type="span" parent="30" relname="list" />
+<group id="30" type="multinuc" parent="22" relname="elaboration" />
+<group id="31" type="span" parent="32" relname="span" />
+<group id="32" type="span" parent="36" relname="span" />
+<group id="33" type="span" parent="34" relname="span" />
+<group id="34" type="span" parent="35" relname="span" />
+<group id="35" type="span" parent="32" relname="background" />
+<group id="36" type="span" />
+  </body>
+</rst>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Ungefährlicher Verkauf
+   <unit type="ext" id="1">Fast möchte man Andreas Wansing , den Geschäftsführer der Wobra , händeringend bitten , von seinem Plan Abstand zu nehmen , aus dem Bestand der Wobra hinaus Wohnungen zu verkaufen .</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="consequence">Denn</connective>
+      noch heute sind die schmerzlichen Folgen jederzeit in der Stadt präsent , den die unüberlegten Wobra-Verkäufe an die Aubis auslösten .
+   </unit>
+   <unit type="ext" id="2">Dass die Aubis letztlich den Berliner Senat stürzte ,</unit>
+   <unit type="int" id="2">
+      <unit type="ext" id="4">
+         in Brandenburg
+         <connective id="2" relation="concession">aber</connective>
+         kein Politiker auch nur eine Spur Verantwortung übernehmen musste -
+      </unit>
+   </unit>
+   <unit type="int" id="4">
+      <unit type="ext" id="5">
+         <connective id="4" relation="concession">obwohl</connective>
+         Geld verschleudert
+      </unit>
+      <unit type="int" id="5">
+         <connective id="5" relation="addition">und</connective>
+         Mieter verramscht wurden -
+      </unit>
+   </unit>
+   ist nur noch eine stadtgeschichtliche Fußnote .
+   Zum Beweis :
+   <unit type="ext" id="7">Die damalige Aufsichtsratschefin Margit Spielmann wird am Samstag -
+      <unit type="int" id="7">
+         <unit type="ext" id="8">
+            <connective id="7" relation="concession">obwohl</connective>
+            sie bis heute nicht für ihre Wobra-Arbeit entlastet wurde
+         </unit>
+         <unit type="int" id="8">
+            <connective id="8" relation="addition">und</connective>
+            Schliesing noch im Vorjahr mit der Möglichkeit einer Klage gegen sie drohte -
+         </unit>
+      </unit>
+      von der SPD wieder als Brandenburger Bundestagsabgeordnete nominiert .
+   </unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="consequence">Deshalb</connective>
+      muss sich Wansing auch nicht vor Folgen des Verkaufs fürchten :
+   </unit>
+   <unit type="ext" id="11">Zum einen ist es möglich , dass der Verkauf vernünftig vorbereitet und mit den Mietern abgesprochen ist . Zum anderen musste außer Mietern und Mitarbeitern bei der Wobra noch niemand für die Fehler des Managements und des Aufsichtsrates ernsthaft büßen</unit>
+   .
+</discourse>
+

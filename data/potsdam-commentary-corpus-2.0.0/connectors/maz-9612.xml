@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Alle sind es nicht Die Bundeswehr geht davon aus , dass ihre geplanten Aktivitäten aus der Luft " keine relevanten Auswirkungen auf die Entwicklung der Region im touristischen Bereich " haben werden . <unit type="ext" id="3">Jahrelange Erfahrungen in anderen Gebieten der Bundesrepublik hätten gezeigt , dass militärische Einrichtungen durchaus mit den Interessen des Tourismus in Einklang zu bringen seien .</unit> <unit type="int" id="3">So <connective id="3" relation="addition">jedenfalls</connective> steht es in der Erläuterung zum Luft/Bodenschießplatz bei Wittstock .</unit> Dazu werden in der kommenden Woche die betroffenen Gemeinden angehört . Stopp , die Aussage ist nicht ganz korrekt .
+   <unit type="ext" id="2">Alle werden es nicht sein</unit>
+   ,
+   <unit type="int" id="2">
+      <connective id="2" relation="consequence">denn</connective>
+      es liegt auf der Hand , dass sich auch wenigstens Teile des ehemaligen Kreises Kyritz darüber Gedanken machen müssen , wie sie mit den Überfliegern klarkommen .
+   </unit>
+   Massiver Widerstand hat sich bisher nicht geregt .
+   <unit type="ext" id="5">Spät werden jetzt vereinzelt Proteste laut ,</unit>
+   <unit type="int" id="5">
+      angeregt und unterstützt
+      <connective id="5" relation="concession">allerdings</connective>
+      auch nur von Einzelpersonen .
+   </unit>
+   Die Kommunen sind bisher sehr gelassen mit dem Problem umgegangen . Sie haben es dem Landkreis Ost-prignitz-Ruppin überlassen , die nichtmilitärische Nutzung der Kyritz-Ruppiner Heide einzufordern . Überzeugung oder einfach nur Verdrängung - die Frage bleibt offen .
+</discourse>
+

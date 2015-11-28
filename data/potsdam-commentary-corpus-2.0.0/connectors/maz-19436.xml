@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Taktik
+   <unit type="ext" id="1">Die Berliner PDS lässt sich bei den Koalitionsverhandlungen mit der regierenden SPD in puncto Flughafenausbau in Schönefeld alles offen</unit>
+   -
+   <unit type="int" id="1">
+      <connective id="1" relation="concession">obwohl</connective>
+      im Wahlkampf ein klares Nein verkündet wurde .
+   </unit>
+   <unit type="ext" id="3">
+      Aha ,
+      <unit type="ext" id="2">alle Politiker lügen ,</unit>
+      <unit type="int" id="2">
+         <connective id="2" relation="simultaneous">sobald</connective>
+         sie die Macht riechen ,
+      </unit>
+      könnte man sagen .
+   </unit>
+   <unit type="ext" id="5">
+      <unit type="int" id="3">
+         <connective id="3" relation="addition">Und</connective>
+         natürlich ist es so , dass Kompromisse machen muss , wer in einer Koalition mitregieren will .
+      </unit>
+   </unit>
+   <unit type="ext" id="8">
+      <unit type="int" id="5">
+            Es kommt
+            <connective id="5" relation="concession">allerdings</connective>
+            darauf an , wie wichtig die Sache ist , in der man nachgibt .
+      </unit>
+   </unit>
+   <unit type="ext" id="10">
+      <unit type="int" id="8">
+         <connective id="8" relation="addition">Und</connective>
+         an der Flughafen-Frage hängt schon viel Glaubwürdigkeit der PDS .
+      </unit>
+   </unit>
+   <unit type="int" id="10">
+      Die gemäßigte Reaktion der Parteibasis lässt
+      <connective id="10" relation="concession">aber</connective>
+      noch eine andere Vermutung zu :
+   </unit>
+   <unit type="ext" id="12">Gysi will die Chance der PDS zum Mitregieren in der Bundeshauptstadt nicht für etwas vertun , was sich in einem Jahr womöglich von allein erledigt .</unit>
+   <unit type="int" id="12">
+      <connective id="12" relation="consequence">Denn</connective>
+      dass der Flughafenausbau in der ursprünglich vom Bund und von den Ländern Berlin und Brandenburg geplanten Dimension noch zum Tragen kommt , das glauben wohl nur noch die Wenigsten - geschweige denn ein Jurist wie Gysi .
+   </unit>
+   Nicht umsonst hat er mehrfach auf die zu erwartenden Gerichtsprozesse um den geplanten Flughafen verwiesen . Wer wollte ihm da seine Taktik verübeln ?
+   <unit type="int" id="15">
+      <connective id="15" relation="condition">Wenn</connective>
+      diese Taktik aufgeht ,
+   </unit>
+   <unit type="ext" id="15">war sie richtig .</unit>
+</discourse>
+

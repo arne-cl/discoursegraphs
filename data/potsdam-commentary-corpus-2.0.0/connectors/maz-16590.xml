@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Von wegen Förderung
+   Zu Jahresbeginn sorgte wochenlanges Tauziehen um 30 Mark mehr Kindergeld für Schlagzeilen .
+   <unit type="int" id="4">
+      <connective id="4" relation="simultaneous">Als</connective>
+      der Bundestag Anfang Juli den Beschluss darüber fasste ,
+   </unit>
+   <unit type="ext" id="4">wurde dies als Sieg verkauft .</unit>
+   Jetzt , <unit type="int" id="5"><connective id="5" relation="simultaneous">da</connective> das gesamte Paket an Neuerungen zur Familienförderung ab 2002 für die Betroffenen überschaubar wird ,</unit> <unit type="ext" id="5">erweist es sich als Mogelpackung .</unit> Mit den Steuerkarten fürs neue Jahr in den Händen ahnen Eltern , was auf sie zu kommt : höhere Abgaben für nicht wenige von ihnen . Im Zuge der Abschaffung des Haushaltsfreibetrages bis 2005 finden sich ausgerechnet die allein Erziehenden künftig mit jenen , die keine Kinder aufziehen , in der höchsten Steuerklasse wieder .
+   <unit type="ext" id="8">Selbst Familien profitieren erst ab einem Jahreseinkommen von 120_000 Mark von dem neuen Recht .</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="concession">Dabei</connective>
+      hatte das Bundesverfassungsgericht eine Entlastung ausdrücklich für alle Familien gefordert .
+   </unit>
+   <unit type="ext" id="10">
+   <unit type="ext" id="9">
+      Den Betroffenen bleibt nur , erneut vor Gericht zu ziehen .
+      </unit>
+      <unit type="int" id="9">
+            <connective id="9" relation="addition">Und</connective>
+            das dauert .
+      </unit>
+   </unit>
+   <unit type="int" id="10">
+      Die Kinder
+      <connective id="10" relation="contrast">aber</connective>
+      werden älter und kosten immer mehr .
+   </unit>
+</discourse>
+

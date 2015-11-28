@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Absicht Erst rührt sich niemand unter den Dallgower Kommunalpolitikern , nun überschlagen sich alle mit Anträgen zur Gemeindereform und den vorausgehenden Verhandlungen mit den südlichen Nachbarn . Nicht klar wird zum jetzigen Zeitpunkt , welche Absichten hinter dem plötzlichen Aktionismus stehen :
+   <unit type="ext" id="3">Will die SPD-Fraktion - bisher völlig uneins über Dallgows Zukunft - wirklich faire Verhandlungen anstreben ?</unit>
+   <unit type="int" id="3">
+      <unit type="ext" id="4">
+         Warum stellt sie
+         <connective id="3" relation="successive">dann</connective>
+         schier unannehmbare Bedingungen ,
+      </unit>
+      <unit type="int" id="4">
+         <connective id="4" relation="manner">indem</connective>
+         sie den Bürgermeister mit einem solch eng geschnürten Verhandlungsmandat ausstattet , dass dieser nur noch das Wie der Eingemeindung klären darf .
+      </unit>
+   </unit>
+   Warum beharrt die CDU auf einer neuerlichen Einwohnerversammlung ? Warten die Christdemokraten nur darauf , genügend Claqueure zusammenzubekommen , die sie in ihrer Ablehnung zu jeglichen Fusionen bestätigen ? Allein eine Fraktion , die der Freien Wählergemeinschaft , ist bisher mit einer einheitlichen und nachvollziehbaren Argumentationslinie aufgetreten , bekennt sich zum Dreierbund und lässt Spielraum für die Art des Zustandekommens . Die anderen werden am nächsten Mittwoch beweisen müssen , dass sie es ehrlich meinen .
+</discourse>
+

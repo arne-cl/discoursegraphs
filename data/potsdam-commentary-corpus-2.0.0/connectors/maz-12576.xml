@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Defizit
+   Bisher war die geplante Abwahl der Kyritzer Bürgermeisterin Bärbel Stewin eine relativ klare Sache . Die Fakten :
+   <unit type="ext" id="1">Über 850 Einwohner unterschreiben Listen</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="addition">und</connective>
+      fordern die Stadtverordneten auf , das Abwahlbegehren in Gang zu setzen .
+   </unit>
+   <unit type="ext" id="4">
+      <unit type="ext" id="3">Sie tun ,</unit>
+      <unit type="int" id="3">
+         <connective id="3" relation="simultaneous">wie</connective>
+         ihnen geheißen ,
+      </unit>
+   </unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">und</connective>
+      stimmen sechs Wochen später darüber ab .
+   </unit>
+   Das Resultat ist bekannt . Ausnahmslos ist man dafür , den Bürgerentscheid anzusetzen . Am 13. Januar wird abgestimmt . Und nun ?
+   Nun erheben sich erste Stimmen , die fordern , man möge doch bitteschön mal klar sagen , weshalb man Frau Stewin für nicht mehr tragbar hält , die Stadt zu verwalten . Es reiche nicht aus , ein auf Gegenseitigkeit beruhendes Missverhältnis zu bestätigen .
+   <unit type="ext" id="10">Heute stellt sich der Kyritzer FDP-Ortsvorsitzende Kai Müller hinter den Beschluss der Stadtverordneten vom 14. November</unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="addition">und</connective>
+      tritt mit einer Aufforderung an die Öffentlichkeit .
+   </unit>
+   <unit type="ext" id="13">Jeder Kyritzer möge sich doch bei den Abgeordneten über die Tatsachen informieren , die eine Abwahl aus ihrer Sicht unabwendbar erscheinen lassen .</unit>
+   <unit type="int" id="13">
+      Aufklärungsarbeit im 4-Augen-Gespräch ist
+      <connective id="13" relation="concession">aber</connective>
+      schwer vorstellbar .
+   </unit>
+   <unit type="ext" id="14">Der Wähler will umfassend informiert werden ,</unit>
+   <unit type="int" id="14">
+      <connective id="14" relation="successive">bevor</connective>
+      er das letzte Wort hat .
+   </unit>
+</discourse>
+

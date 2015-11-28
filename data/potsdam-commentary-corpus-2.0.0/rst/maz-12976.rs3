@@ -1,0 +1,72 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Normal-Krise</segment>
+    <segment id="8" parent="9" relname="preparation">
+
+Umweltminister Jürgen Trittin hat es erst gestern wieder unumwunden ausgesprochen :</segment>
+    <segment id="9" parent="24" relname="span">  Die Krise ist bei den Grünen der Normalzustand .</segment>
+    <segment id="2" parent="10" relname="concession">  So schonungslose Offenheit ist an sich zwar bemerkenswert ,</segment>
+    <segment id="10" parent="22" relname="span"> sie beantwortet aber nicht die Frage , weshalb man eine &quot; Krisenpartei &quot; in der Bundesregierung braucht .</segment>
+    <segment id="3" parent="11" relname="condition">  Wenn die Vorzeichen nicht trügen ,</segment>
+    <segment id="11" parent="19" relname="span"> so könnte in Rostock in der Tat wieder einmal ein klassischer Kompromiss herauskommen - gegen den Militär-Einsatz und für die weitere Beteiligung an der Bundesregierung .</segment>
+    <segment id="4" parent="20" relname="span">  Außenminister Joschka Fischer freilich darf seiner Basis solche politischen Kindereien nicht durchgehen lassen .</segment>
+    <segment id="5" parent="18" relname="conjunction">  Es kann nicht sein , dass die Basis gewissermaßen die Moral pachtet</segment>
+    <segment id="17" parent="18" relname="conjunction"> und ihn die realpolitische Schmutzarbeit machen lässt .</segment>
+    <segment id="6" parent="16" relname="span">  Den Einsatz &quot; zur Kenntnis zu nehmen &quot; , wie Brandenburgs Grüne dies wollen , ist der Gipfel parteipolitischer Bigotterie :</segment>
+    <segment id="12" parent="14" relname="conjunction">  Entweder die Basis stützt den Minister</segment>
+    <segment id="13" parent="14" relname="conjunction"> oder sie stürzt ihn .</segment>
+    <segment id="7" parent="14" relname="elaboration">  Dazwischen gibt es nichts .</segment>
+<group id="14" type="multinuc" parent="15" relname="span" />
+<group id="15" type="span" parent="6" relname="reason" />
+<group id="16" type="span" parent="23" relname="joint" />
+<group id="18" type="multinuc" parent="4" relname="reason" />
+<group id="19" type="span" parent="20" relname="evaluation-n" />
+<group id="20" type="span" parent="21" relname="span" />
+<group id="21" type="span" parent="23" relname="joint" />
+<group id="22" type="span" parent="25" relname="span" />
+<group id="23" type="multinuc" parent="26" relname="span" />
+<group id="24" type="span" parent="22" relname="evaluation-n" />
+<group id="25" type="span" parent="23" relname="background" />
+<group id="26" type="span" />
+  </body>
+</rst>

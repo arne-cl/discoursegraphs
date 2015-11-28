@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Spendenjagd Ein Hilfstransport jagt den nächsten . In regelmäßigen Abständen sind in den Zeitungen neue Spendenaufrufe oder Berichte von Hilfstransporten zu lesen . Überall starten Sendungen , Vereine engagieren sich , Kirchengruppen , Familien . Die Aktion der Kirchengemeinden Templin und Lindow für ein Siebenbürger Krankenhaus ist ein Körnchen im Sandberg . Nach dem Motto " jeden Tag eine gute Tat " werden die Sammelaktionen immer mehr . Hilfe für die Krankenhäuser in Rumänien , Unterstützung für die hungernden Menschen im Sudan , Geld für die Opfer einer vernichtenden Überschwemmung , Spenden , um die Kinder in Afghanistan durch den Winter zu bringen : Die verwirrende Zahl von Spendenbegehren kann einen schnell verzweifeln lassen . Da muss mancher zweifeln , ob denn so viele Spendenappelle nötig sind . Für Dirk Bock und alle anderen Helfer ist das keine Frage . Wer erlebt hat , 
+   <unit type="ext" id="10">
+    in welchem Elend andere Menschen leben , wie sie hungern , keine Kleidung haben
+   </unit>
+   <unit type="int" id="10">
+    <connective id="10" relation="alternation">oder</connective>
+    ein Kinderkrankenhaus einfach ohne Lebensmittel dasteht
+   </unit>
+   , für den ist das ganz klar : Von selbst können sich die Ärmsten der Armen nicht retten . Es kommt weniger darauf an , wem man hilft , wichtig ist vor allem , dass man hilft .
+</discourse>
+

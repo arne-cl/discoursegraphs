@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Politiker
+   Auch Politik hat ihre Grenzen . "
+   <unit type="int" id="2">
+      Ich kann mir
+      <connective id="2" relation="concession">zwar</connective>
+      die Meinung von 220_000 Menschen in meinem Wahlkreis anhören ,
+   </unit>
+   <unit type="ext" id="2">
+      <connective id="2" relation="concession">aber</connective>
+      nicht jede Ansicht berücksichtigen
+   </unit>
+   " , verteidigte sich Ernst Bahr am Montagabend . Es fiel auf , dass sich der SPD-Mann als Einziger aus dem Trio der Gesprächspartner Unmut zuzog .
+   <unit type="ext" id="6">Lag es am klaren Bekenntnis zur Politik des Bundeskanzlers , am uneingeschränkten Verteidigen der Kosovo- und Mazedonien-Einsätze der Bundeswehr</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="alternation">oder</connective>
+      einfach daran , dass die etwa 60 Leute im Raum allzu kritikloses Bewerten der Regierenden zu erkennen glaubten ?
+   </unit>
+   Wahrscheinlich machte es die Summe .
+   <unit type="ext" id="8">
+      <unit type="int" id="7">
+         Es förderte
+         <connective id="7" relation="addition">auch</connective>
+         nicht unbedingt die Sympathien ,
+      </unit>
+   </unit>
+   <unit type="int" id="8">
+      <unit type="ext" id="7">
+         <connective id="8" relation="simultaneous">als</connective>
+         sich Bahr mit einem " auch ein Minister muss sich irren können " verbal vor Rudolf Scharping stellte .
+      </unit>
+   </unit>
+   <unit type="ext" id="10">
+      <unit type="ext" id="11">
+         Es ging um das Bombodrom in der Kyritz-Ruppiner Heide , das der einstige Kanzlerkandidat abschaffen wollte , wovon er als Verteidigungsminister heute nichts mehr wissen will .
+      </unit>
+      <unit type="int" id="11">
+         <connective id="11" relation="alternation">Oder</connective>
+         darf .
+      </unit>
+   </unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="addition">Und</connective>
+      da schließt sich der Kreis .
+   </unit>
+   Politik hat an Glaubwürdigkeit verloren . Natürlich gilt , was am Montag ebenfalls gesagt wurde : " Politiker sind auch nur Menschen . "
+   Nur haben sie im Gegensatz zu ihren Wählern Entscheidungen zu treffen . Menschliche .
+</discourse>
+

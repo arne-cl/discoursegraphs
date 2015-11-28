@@ -1,0 +1,116 @@
+
+Potsdam Commentary Corpus 2.0
+=============================
+
+The Potsdam Commentary Corpus 2.0 (PCC 2.0) is a revised and extended version
+of the Potsdam Commentary Corpus (Stede 2004), a collection of 175 German
+newspaper commentaries (op-ed pieces) that has been annotated with syntax trees
+and three layers of discourse-level information: nominal coreference,
+connectives and their arguments (similar to the PDTB, Prasad et al. 2008), and
+trees reflecting discourse structure according to Rhetorical Structure Theory
+(Mann/Thompson 1988).
+
+Connectives have been annotated with the help of a semi-automatic tool, Conano
+(Stede/Heintze 2004), which identifies most connectives and suggests arguments
+based on their syntactic category. The other layers have been created manually
+with dedicated annotation tools.
+
+
+License
+-------
+
+The Potsdam Commentary Corpus 2.0 is released under a Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International License. You can find a
+human-readable summary of the licence agreement here:
+
+http://creativecommons.org/licenses/by-nc-sa/4.0/
+
+If you are using our corpus for research purposes, please cite the following
+paper:
+
+Stede, M. and Neumann, A. (2014). Potsdam Commentary Corpus 2.0:
+Annotation for Discourse Research. Proc. of the Language Resources and
+Evaluation Conference (LREC), Reykjavik.
+
+@InProceedings{stede2014pcc,
+  author = {Manfred Stede and Arne Neumann},
+  title = {Potsdam Commentary Corpus 2.0: Annotation for Discourse Research},
+  booktitle = {Proceedings of the Ninth International Conference on Language
+               Resources and Evaluation (LREC'14)},
+  year = {2014},
+  month = {may},
+  date = {26-31},
+  address = {Reykjavik, Iceland},
+  publisher = {European Language Resources Association (ELRA)},
+  isbn = {978-2-9517408-8-4},
+  language = {english}
+} 
+
+
+Corpus Directory Layout
+-----------------------
+.
+├── connectors		connectors and their arguments, annotated with Conano
+│			(Stede and Heintze 2004) in Conano XML format
+│
+├── coreference		coreference, annotated with MMAX2 (Müller and Strube 2006)
+│   │                   in MMAX2 XML format
+│   ├── basedata
+│   ├── customization
+│   ├── markables
+│   ├── schemes
+│   └── styles
+│
+├── metadata		metadata for each document (author, title, publication
+│                       date, document ID)
+│
+├── primary-data	original, untokenized documents in plain text UTF-8
+│
+├── rst			rhetorical structure, annotated with RSTTool
+│                       (O'Donnell 2000) in RS3 format
+│
+├── syntax		sentence syntax following the Tiger scheme (Brants et al. 2004)
+│                       in TigerXML format
+│
+└── tokenized		tokenized documents in plain text UTF-8
+
+
+Version History
+---------------
+
+2.0.0 (2014-06-24)
+~~~~~~~~~~~~~~~~~~
+
+* release contains the PCC 2.0 corpus as described in Stede and Neumann (2014)
+* annotation layers: syntax, rhetorical structure, coreference as well as
+  connectors and their arguments
+
+
+Bibliography
+------------
+
+Brants, S., Dipper, S., Eisenberg, P., Hansen, S., König, E., Lezius, W.,
+Rohrer, C., Smith, G., and Uszkoreit, H. (2004).
+TIGER: Linguistic interpretation of a German corpus.
+Research on Language and Computation, 2(4):597–620.
+
+Müller, C. and Strube, M. (2006). Multi-level annotation of linguistic data
+with MMAX2. In Braun, S., Kohn, K., and Mukherjee, J., editors, 
+Corpus Technology and Language Pedagogy: New Resources, New Tools, New Methods,
+pages 197–214. Peter Lang, Frankfurt.
+
+O’Donnell, M. (2000). RSTTool 2.4 – a markup tool for Rhetorical Structure
+Theory. In Proceedings of the International Natural Language Generation
+Conference, pages 253–256, Mizpe Ramon/Israel.
+
+Stede, M. (2004). The Potsdam Commentary Corpus. In Proceedings of the ACL
+Workshop on Discourse Annotation, pages 96–102.
+Association for Computational Linguistics.
+
+Stede, M. and Heintze, S. (2004). Machine-assisted rhetorical structure
+annotation. In Proc. of the 20th International Conference on Computational
+Linguistics, pages 425–431, Geneva.
+
+Stede, M. and Neumann, A. (2014). Potsdam Commentary Corpus 2.0:
+Annotation for Discourse Research. Proc. of the Language Resources and
+Evaluation Conference (LREC), Reykjavik. 

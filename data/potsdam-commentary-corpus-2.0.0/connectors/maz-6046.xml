@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Veronas Tränen Seit dem 11. September ist alles anders ? Von wegen .
+   <unit type="ext" id="3">Bin Laden hat Amerika getroffen , die westliche Welt herausgefordert</unit>
+   <unit type="int" id="3">
+      <connective id="3" relation="addition">und</connective>
+      Krieg ausgelöst
+   </unit>
+   - die deutsche Spaßkultur widersteht ihm .
+   <unit type="ext" id="5">Deutschland diskutiert : Waren Veronas Tränen echt ?</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="addition">Und</connective>
+      Johannes B. Kerner gibt Interviews über seine Vermittlerrolle im Ehekrieg , gegen die Bushs Medienauftritte alt aussehen .
+   </unit>
+   Wer gehofft hatte , dass uns künftig wenigstens Veronas Tränen und Dieters Geschwätz auf dem Bildschirm erspart bleiben , sieht sich getäuscht .
+   <unit type="ext" id="9">Es muss wohl mehr passieren ,</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="successive">bevor</connective>
+      der Boulevard sich von seinen Schießbudenfiguren trennt .
+   </unit>
+   <unit type="int" id="11">
+   <connective id="11" relation="temporal">Solange</connective> wir <unit type="ext" id="10">sie sehen , lesen , kaufen</unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="addition">und</connective>
+      darüber reden wollen ,
+   </unit></unit>
+   <unit type="ext" id="11">werden wir damit leben müssen .</unit> Einen Trost gibt es : Veronas Tränen sind stärker als bin Ladens Schläfer . Berlusconi hat schon Recht : Der Westen ist dem Islam überlegen .
+</discourse>
+

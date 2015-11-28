@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Augenschein Die US-Regierung macht dieser Tage Druck auf Fernsehstationen ,
+   <unit type="ext" id="1">Video-Ansprachen Osama bin Ladens gar nicht mehr</unit>
+   <unit type="int" id="1">
+      <connective id="1" relation="alternation">oder</connective>
+      nur stark gekürzt zu senden .
+   </unit>
+ <unit type="ext" id="10">
+   <unit type="ext" id="2">Das ist natürlich ein Eingriff in die Pressefreiheit</unit> 
+ </unit>
+  <unit type="int" id="10">
+   <unit type="int" id="2">
+      <connective id="2" relation="addition">und</connective>
+      <connective id="10" relation="contrast">doch</connective>
+      ist nicht auszuschließen , dass versteckte Botschaften zum " Aufwecken " so genannter " Schläfer " darin verborgen sind .
+   </unit>
+   </unit>
+   Eine westliche Journalistengruppe besucht auf Einladung der Taliban ein zerstörtes Dorf in Afghanistan .
+   <unit type="ext" id="8">
+      <unit type="ext" id="6">Ein authentischer Ortstermin</unit>
+   </unit>
+   <unit type="int" id="8">
+      <unit type="int" id="6">
+         <connective id="6" relation="addition">und</connective>
+         <connective id="8" relation="contrast">doch</connective>
+         wissen die Berichterstatter nicht wirklich , was sie da mit eigenen Augen sehen :
+      </unit>
+   </unit>
+   <unit type="ext" id="9">Was war bereits zerstört ? Wer hat es zerstört ?</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="addition">Und</connective>
+      zu wessen Werkzeug werden ihre Reportagen am Ende ?
+   </unit>
+   Allzu präzise Treffer-Bilder aus Washington machen ebenso stutzig wie verblüffend rasche Meldungen aus dem afghanischen Chaos über hohe Opferzahlen unter der Zivilbevölkerung . Bei Nachrichten aus nur einer Quelle verhält es sich dieser Tage wie mit den Lotto-Zahlen : Es gibt keine Gewähr .
+</discourse>
+

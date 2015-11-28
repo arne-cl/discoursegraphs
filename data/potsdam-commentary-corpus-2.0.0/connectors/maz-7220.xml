@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Vielleicht geht 's gut Einen Reim konnten sich auch die Außen- und Sicherheitsexperten in Berlin gestern auf die Äußerungen von US-Verteidigungsminister Donald Rumsfeld nicht machen .
+   <unit type="ext" id="5">Im Außenamt zog man sich nach einiger Bedenkzeit auf die bekannte Formel zurück , wonach Wortmeldungen von Bündnispartnern nicht kommentiert werden .</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="addition">Und</connective>
+      auch in den Fraktionen des Bundestags herrschte Ratlosigkeit .
+   </unit>
+   <unit type="ext" id="9">Rumsfeld , der von Anfang an als Hardliner innerhalb der US-Regierung in Erscheinung trat , habe wohl klarmachen wollen , dass es sich um einen längeren Feldzug handeln werde , hieß es vage .</unit>
+   <unit type="int" id="9">
+      Sicher sei
+      <connective id="9" relation="addition">allenfalls</connective>
+      , dass die " harten Fakten " dieses Krieges gewiss nicht in der Öffentlichkeit diskutiert würden .
+   </unit>
+   Was auch immer das im Einzelnen heißen mag .
+   <unit type="ext" id="11">Betrachtet man die Äußerungen im Kontext des geradezu naiv anmutenden Eingeständnisses des Washingtoner Stabes , man sei verblüfft über die Hartnäckigkeit des Taliban-Widerstands ,</unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="condition">so</connective>
+      schleichen sich unwillkürlich Zweifel an der realistischen Kalkulation des Afghanistan-Einsatzes ein .
+   </unit>
+   <unit type="ext" id="12">
+      <connective id="12" relation="addition">Weder</connective>
+      motivieren solche Einlassungen die eigenen Soldaten ,
+      <unit type="int" id="12">
+         <connective id="12" relation="addition">noch</connective>
+         fördern sie den Zusammenhalt im Bündnis .
+      </unit>
+   </unit>
+</discourse>
+

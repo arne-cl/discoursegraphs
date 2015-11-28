@@ -1,0 +1,85 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Aber doch nicht bei uns !</segment>
+    <segment id="10" parent="31" relname="interpretation"> 
+
+Wie naiv können manche Schulleiter eigentlich sein ?</segment>
+    <segment id="11" parent="2" relname="antithesis">  &quot; Drogen ?  An unserer Schule kein Problem &quot; , hört man immer wieder .</segment>
+    <segment id="2" parent="31" relname="span">  Die Polizei weiß es besser .</segment>
+    <segment id="3" parent="20" relname="concession">  Und mancher Rektor weiß es auch .</segment>
+    <segment id="4" parent="20" relname="span">  Bloß : Es soll nichts nach außen dringen , weil die Schülerzahlen sinken und die Schließung droht ,</segment>
+    <segment id="12" parent="4" relname="circumstance"> wenn die Schule erst einmal in Verruf kommt .</segment>
+    <segment id="5" parent="29" relname="span">
+
+Durch Verschweigen bekommt man das Problem allerdings nicht aus der Welt .</segment>
+    <segment id="6" parent="22" relname="span">  Unter dem Deckmantel des Wegschauens und Verheimlichens blüht der Drogenhandel und -konsum noch viel ungestörter als dort ,</segment>
+    <segment id="13" parent="21" relname="conjunction"> wo alle die Augen offen halten</segment>
+    <segment id="14" parent="21" relname="conjunction"> und über das Problem sprechen .</segment>
+    <segment id="7" parent="23" relname="conjunction">
+
+Die riesigen Gewinnspannen des Drogenhandels locken Kriminelle an</segment>
+    <segment id="15" parent="23" relname="conjunction"> und die immensen Preise für illegale Drogen zwingen die Abhängigen , sich das Geld durch Einbrüche und Überfälle zu verschaffen .</segment>
+    <segment id="8" parent="30" relname="span">  Schade ist es deshalb auch , dass sich die Eltern der Jugendlichen im Amtsbereich Temnitz am Dienstag so wenig für die Tipps der Polizei interessierten .</segment>
+    <segment id="9" parent="26" relname="list">  Wie ein Joint eigentlich aussieht und riecht ,</segment>
+    <segment id="16" parent="25" relname="span"> was erweiterte Pupillen verraten ,</segment>
+    <segment id="17" parent="24" relname="span"> die sich auch dann nicht schließen ,</segment>
+    <segment id="18" parent="17" relname="circumstance"> wenn man der Tochter mit der Taschenlampe ins Auge leuchtet -</segment>
+    <segment id="19" parent="27" relname="joint"> all dieses Wissen könnte manch ahnungsloser Mutter die Augen öffnen .</segment>
+<group id="20" type="span" parent="28" relname="span" />
+<group id="21" type="multinuc" parent="6" relname="e-elaboration" />
+<group id="22" type="span" parent="5" relname="reason" />
+<group id="23" type="multinuc" parent="8" relname="reason" />
+<group id="24" type="span" parent="16" relname="elaboration" />
+<group id="25" type="span" parent="26" relname="list" />
+<group id="26" type="multinuc" parent="27" relname="joint" />
+<group id="27" type="multinuc" parent="8" relname="reason" />
+<group id="28" type="span" parent="5" relname="antithesis" />
+<group id="29" type="span" parent="33" relname="joint" />
+<group id="30" type="span" parent="33" relname="joint" />
+<group id="31" type="span" parent="32" relname="span" />
+<group id="32" type="span" parent="33" relname="background" />
+<group id="33" type="multinuc" parent="34" relname="span" />
+<group id="34" type="span" />
+  </body>
+</rst>

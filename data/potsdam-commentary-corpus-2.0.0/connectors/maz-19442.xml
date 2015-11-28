@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Briefkästen trockenlegen
+   Heißer als in anderen Nächten geht es Silvester zu . Manche netten Mitmenschen verspüren erfahrungsgemäß gerade in den letzten Stunden des alten Jahres verstärkt den Drang zu neuen Streichen . Vor allem Briefkästen , in denen Feuerwerkskörper noch mal so schön wie an frischer Luft knallen , haben es ihnen angetan .
+   <unit type="int" id="4">
+      <connective id="4" relation="consequence">Weil</connective>
+      die Polizei das weiß ,
+   </unit>
+   <unit type="ext" id="4">
+      richten sich die Beamten am Neujahrstag auf viele Anzeigen wegen Sachbeschädigung ein .
+   </unit>
+   <unit type="ext" id="6">Wer sich den Gang zur Polizei ersparen will , sollte versuchen , <unit type="ext" id="5">dummen Knallfröschen das Wasser abzugraben</unit> <unit type="int" id="5"><connective id="5" relation="addition">und</connective> seinen Briefkasten trockenzulegen .</unit></unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="addition">Beispielsweise</connective>
+      mit einer Sandfüllung .
+   </unit>
+   Besser wäre es , den Kasten ganz abzubauen . ( Post wird sowieso erst wieder am 2. Januar ausgetragen )
+   <unit type="int" id="7">
+      <connective id="7" relation="condition">Wenn</connective>
+      das nicht geht ,
+   </unit>
+   <unit type="ext" id="7"><unit type="ext" id="8">einfach die Entleerungsklappe offen lassen ,</unit> <unit type="int" id="8"><connective id="8" relation="purpose">damit</connective> der Druck beim Explodieren pyrotechnischer Erzeugnisse entweichen kann .</unit>
+   </unit>
+   Wer sein Posteinwurfbehältnis einmal mit ganz anderen Augen sehen will , könnte seine künstlerische Ader ausleben , <unit type="ext" id="9">den Briefkasten komplett in stabiles Material hüllen</unit> <unit type="int" id="9"><connective id="9" relation="addition">und</connective> mit Klebeband versehen .</unit> Gut möglich , dass so dem einen oder anderen Knallfrosch der Spaß daran vergeht , anderen Menschen Sach-Schaden zuzufügen .
+</discourse>
+

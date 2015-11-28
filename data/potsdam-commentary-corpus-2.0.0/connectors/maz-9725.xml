@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Ernstfall Der rot-grünen Koalition steht eine Zerreißprobe bevor : Rund 15 grüne Bundestagsabgeordnete haben erhebliche Zweifel , ob sie der Bereitstellung von Bundeswehrsoldaten für den Anti-Terror-Kampf zustimmen können .
+   <unit type="int" id="3">
+      <connective id="3" relation="consequence">Da</connective>
+      es auch in der SPD Abweichler gibt ,
+   </unit>
+   <unit type="ext" id="3">ist die eigene Mehrheit der Koalition gefährdet .</unit>
+   Es ist offensichtlich , dass dieser Bundeswehr-Einsatz bei vielen Grünen an die Wurzeln ihrer Identität rührt .
+   <unit type="ext" id="5">
+      <unit type="ext" id="4">
+         Konnte der Kosovo-Krieg noch mit dem Kampf für die Menschenrechte in Europa begründete werden , geht es nun um die militärische Solidarität mit den USA in einem weit entfernten Dritte-Welt-Land .
+      </unit>
+   </unit>
+   <unit type="int" id="5">
+      <unit type="int" id="4">
+         <unit type="ext" id="7">
+            <unit type="ext" id="6">
+                  <connective id="4" relation="contrast">Doch</connective>
+                  die Kritiker wissen
+                  <connective id="5" relation="addition">auch</connective>
+                  , dass sie
+                  <connective id="6" relation="addition">weder</connective>
+                  den Krieg in Afghanistan stoppen
+            </unit>
+            <unit type="int" id="6">
+                  <connective id="6" relation="addition">noch</connective>
+                  eine deutsche Beteiligung daran verhindern können .
+            </unit>
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="7">
+      Sie können
+      <connective id="7" relation="concession">aber</connective>
+      die rot-grüne Regierung in eine schwere Krise treiben .
+   </unit>
+   Ein Kanzler , den in einer solch existenziellen Frage die eigene Koalition im Stich lässt , muss sich neue Partner suchen .
+</discourse>
+

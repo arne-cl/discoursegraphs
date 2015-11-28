@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Gigantischer Coup
+   <unit type="int" id="1">
+      <connective id="1" relation="concession">Auch</connective>
+      <connective id="1" relation="concession">wenn</connective>
+      unklar ist , welchen Preis Rosco dafür haben will , dass er sein stärkstes Faustpfand - das Loch - aus der Hand gibt :
+   </unit>
+   <unit type="ext" id="1">Der Coup , den die CDU-OB-Kandidatin Dietlind Tiemann mit dem Verfüllen des Neustädtischen Marktes landet , ist ein gigantischer .</unit>
+   Nichts lässt die Volksseele lauter aufschreien als das Trauerspiel " Loch " , dieses Sinnbild für Ignoranz , Unfähigkeit und Inkompetenz . 
+     <unit type="ext" id="9">
+<unit type="ext" id="2">Wer das Problem nach einem halben Jahrzehnt des Stillstands <unit type="int" id="2"><connective id="2" relation="consequence">durch</connective> entschlossenes Handeln</unit> löst ,</unit> hat gute Chancen , als Oberbürgermeister akzeptiert zu werden .
+     </unit>
+      <unit type="int" id="9">
+         <connective id="9" relation="consequence">Denn</connective>
+         verschwindet das Loch wirklich , verschwindet auch der Selbsthass ,
+      <unit type="ext" id="11">mit dem sich die Brandenburger ob ihrer hässlichen Mitte geißeln</unit>
+      <unit type="int" id="11">
+         <connective id="11" relation="addition">und</connective>
+         wegen dem sie sich schämen .
+      </unit>
+      </unit>
+   Tiemanns Initiative setzt jetzt die SPD unter unglaublichen Druck . Was hat die SPD dem entgegenzusetzen ?
+   <unit type="ext" id="16">
+      Soll sie versuchen , über die SPD-dominierte Verwaltung
+      <unit type="ext" id="14">das Verfüllen zu behindern</unit>
+      <unit type="int" id="14">
+         <connective id="14" relation="addition">und</connective>
+         so den Termin zu kippen ?
+      </unit>
+   </unit>
+   <unit type="int" id="16">
+      <connective id="16" relation="alternation">Oder</connective>
+      am Ende helfen ?
+   </unit>
+      <unit type="ext" id="20">Der SPD-OB-Kandidat Helmut Schmidt hat angekündigt , er wolle das Problem Neustadt Markt " entschlossen und ohne Getöse " ab Mai 2002 als Chefsache in die Hände nehmen ,</unit>
+      <unit type="int" id="20">
+         <connective id="20" relation="condition">falls</connective>
+         er OB wird .
+      </unit>
+      Wenn der Zeitpunkt in einem halben Jahr mal nicht zu spät gewählt ist ...
+</discourse>
+

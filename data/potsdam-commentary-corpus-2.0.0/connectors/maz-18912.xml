@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Engelsgedanken
+   <unit type="int" id="1">
+      <connective id="1" relation="simultaneous">Als</connective>
+      Franz Fühmann vor fast zwei Jahrzehnten sein Essay über Georg Trakls Dichtung schrieb ,
+   </unit>
+   <unit type="ext" id="1">gab er ihm den Titel " Vor Feuerschlünden " .</unit>
+   <unit type="ext" id="3">Auch im Westen fand das Buch aus dem Rostocker Hinstorff-Verlag viel Beachtung . Bloß den Titel wollte man nicht übernehmen , der sei zu sperrig .</unit> <unit type="int" id="3">Der Westleser bekam das Buch <connective id="3" relation="successive">schließlich</connective> als " Der Sturz des Engels " serviert .</unit>
+   <unit type="ext" id="4">Engel verkaufen sich einfach besser , hieß es .</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="addition">Und</connective>
+      so heißt es noch heute , vor allem in der Weihnachtszeit .
+   </unit>
+   Ob feenhaft schön oder pausbäckig barock - wir mögen sie alle .
+   <unit type="ext" id="9">Selbst ein gefallener Engel kann sicher sein , noch auf einer Woge der Sympathie zu schweben .</unit>
+   <unit type="int" id="9">
+      <unit type="ext" id="11">
+         <unit type="ext" id="10">
+            <connective id="9" relation="addition">So</connective>
+            ist es kein Wunder ,
+         </unit>
+         <unit type="int" id="10">
+            <connective id="10" relation="condition">wenn</connective>
+            wir beim Blick ins Telefonbuch in den größeren Städten der Region keinen einzigen Teufel finden ,
+      </unit>
+      <unit type="int" id="11">
+         <connective id="11" relation="contrast">aber</connective>
+         Engel 21-mal in Hennigsdorf , 13-mal in Oranienburg , zwölfmal in Falkensee und sechsmal in Nauen .
+         </unit>
+      </unit>
+   </unit>
+   Die Engel bleiben die wunderbaren Boten , die Musen und Heilsbringer .
+   <unit type="int" id="12">
+      <connective id="12" relation="condition">Wenn</connective>
+      Werbestrategen die Himmelsscharen als Verkäufer für Handys , Abführpillen und Aktienpapiere oder als Blickfang für Erotikmessen missbrauchen ,
+   </unit>
+   <unit type="ext" id="12">müssen wir ihnen ja nicht glauben .</unit>
+   Wir können uns unsere eigenen Gedanken machen .
+</discourse>
+

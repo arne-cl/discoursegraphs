@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Ehrgeizig
+   Die nächste Förderwelle rollt auf Brandenburg zu . Mehr als 20 Millionen Mark sollen in den kommenden Jahren im Rahmen des Zis-Programmes in die Sanierung und Belebung der Innenstadt fließen . Die 13 Projektbündel mit ihren insgesamt 140 Einzelvorhaben sind ein heller Hoffnungsschimmer für das von Wegzug und wirtschaftlicher Depression gebeutelte " Aschenputtel der Mark " .
+   <unit type="ext" id="6">Werden sie verwirklicht</unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="addition">und</connective>
+      gelingt es der nächsten Stadtregierung , das Debakel um die gescheiterte Ansiedlung am Neustadt-Markt zu überwinden ,
+   </unit>
+   hat Brandenburg gute Aussichten ,
+   <unit type="ext" id="10">wieder auf die Beine zu kommen</unit>
+   <unit type="int" id="10">
+      <connective id="10" relation="addition">und</connective>
+      vor allem ein besseres Image zu gewinnen .
+   </unit>
+   Das innerhalb von Zis geplante City-Management ist ein wesentlicher Motor dabei . Dass es Menschen gibt in dieser Stadt , die etwas bewirken können , hat die Umsetzung des jetzt ausgelaufenen Urban-Programmes gezeigt . Innerhalb der vergangenen sechs Jahre hat die Bahnhofsvorstadt ihr Gesicht fast völlig verändert . Aus dem früheren Nachtjackenviertel ist ein familienfreundlicher Kiez geworden . Mit den Erfahrungen aus Urban im Gepäck haben die Zis-Macher gute Startbedingungen . Nun kommt es darauf an , aus dem vielen Steuergeld auch wirklich etwas zu machen .
+</discourse>
+

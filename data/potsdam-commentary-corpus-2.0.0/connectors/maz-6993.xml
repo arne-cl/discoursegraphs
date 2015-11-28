@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Drei leere Kassen <unit type="ext" id="1">Diepensee siedelt um . Ohne Wenn und Aber . Dessen konnten sich die vor dem möglichen Ausbau des Flughafens Schönefeld weichenden Dorfbewohner gewiss sein .</unit>
+<unit type="int" id="1">
+   <connective id="1" relation="temporal">Bis</connective> eine Presseinformation der Ausbau-Planer einschlug , wie eine Bombe . Umsiedlung , hieß es da , nur vorbehaltlich der Privatisierung der Flughafen-Holding .</unit>
+<unit type="ext" id="2">
+      Überrascht reagierte auch der Königs-Wusterhausener Bürgermeister Jochen Wagner .</unit><unit type="int" id="2">
+   <connective id="2" relation="consequence">Schließlich</connective> gaben die Stadtverordneten erst Montagabend grünes Licht für die weitere Erschließung des neuen Ortsteils Diepensee .</unit> Soll dieser Beschluss bald nicht mal mehr das Papier wert sein , auf dem er gedruckt wurde ? Das wäre denkbar . Schließlich läuft Ende Oktober die Angebotsfrist für die Privatisierung der Flughafen-Holding aus .
+   <unit type="ext" id="11">Möglicherweise legt das Baukonzern-Bieterkonsortium wieder keinen verhandelbaren Vorschlag auf den Tisch .</unit>
+   <unit type="int" id="11">
+      <connective id="11" relation="successive">Dann</connective>
+      müssten die Holding-Gesellschafter - Bund , Brandenburg und Berlin - sowohl die Kosten für den Ausbau und die Anbindung des Flughafens Schönefeld , als auch für die Umsiedlung Diepensees aufbringen .
+   </unit>
+   Vorbehalte scheinen da angesichts leerer Kassen aller drei Gesellschafter durchaus angebracht .
+</discourse>
+

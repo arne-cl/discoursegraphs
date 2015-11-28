@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+
+   Dilemma Verrat , hat Talleyrand einmal zynisch bemerkt , ist nur eine Frage des Datums . Und des Gewissens , möchte man mit Blick auf Schröder und Fischer hinzufügen .
+
+   <unit type="ext" id="5">
+      <unit type="int" id="5">
+         Nicht , dass beide eine Mehrheit für ihre Koalition suchten , war das Ärgerliche in den vergangenen Tagen ,
+      </unit>
+      <connective id="5" relation="contrast">
+         sondern
+      </connective>
+      das Wie , der Druck auf Abgeordnete , die 
+      <unit type="ext" id="7">
+         <unit type="ext" id="9">
+            kein Regierungsamt haben
+         </unit>
+      </unit>
+      <unit type="int" id="9">
+         <unit type="int" id="7">
+            <connective id="7" relation="addition">
+               und
+            </connective>
+            ihr Gewissen
+            <connective id="9" relation="consequence">
+               deshalb
+            </connective>
+            auch nicht in den Vorzimmern der Macht abgeben können .
+         </unit>
+      </unit>
+   </unit>
+
+   <unit type="ext" id="12">
+      <unit type="ext" id="11">
+         Gut , dass wir eine rot-grüne Koalition haben , stoßseufzen viele hinter vorgehaltener Hand ,
+      </unit>
+      <unit type="int" id="11">
+         <connective id="11" relation="contrast">
+            andernfalls
+         </connective>
+         würde die Republik brennen .
+      </unit>
+   </unit>
+   <unit type="int" id="12">
+      <connective id="12" relation="addition">
+         Und
+      </connective>
+      das ist das Dilemma der Regierenden .
+   </unit>
+
+   <unit type="ext" id="13">
+      Wer in der Zeit , 
+      <unit type="int" id="13">
+         <connective id="13" relation="temporal">
+            da 
+         </connective>
+         er noch nach Ämtern strebte , 
+      </unit>
+      mit eben denselben Argumenten , die heute aus dem pazifistischen Lager der Regierung entgegenschallen , Kohl , Genscher und Kinkel verteufelte , hat kein Recht , den Kritikern ihr Gewissen abzusprechen .
+   </unit>
+
+   <unit type="int" id="18">
+      Die anfängliche Überreaktion von Kanzler und Außenminister hat
+      <connective id="18" relation="addition">
+         <modifier>eben</modifier>
+         auch
+      </connective>
+      damit zu tun ,
+   </unit>
+
+   <unit type="ext" id="18">
+      dass sie als Bekehrte das Misstrauen jener fürchten , die 
+      <unit type="ext" id="20">
+         mit Amerika schon kritische Solidarität übten ,
+      </unit>
+      <unit type="int" id="20">
+         <connective id="20" relation="simultaneous">
+            als
+         </connective>
+         <unit type="ext" id="22">
+            <unit type="ext" id="21">
+               Schröder noch Schmidt
+            </unit>
+            <unit type="int" id="21">
+               <connective id="21" relation="consequence">
+                  wegen
+               </connective>
+               dessen Amerikahörigkeit
+            </unit>
+            beschimpfte
+         </unit>
+         <unit type="int" id="22">
+            <connective id="22" relation="addition">
+               und
+            </connective>
+            Fischer in Mutlangen gegen die Nachrüstung demonstrierte .
+         </unit>
+      </unit>
+   </unit>
+
+   <unit type="ext" id="23">
+      Es stimmt schon , Schmidt , Kohl und Genscher hätten in Washington sehr viel genauer nach Strategie und Zielen fragen können ,
+   </unit>
+   <unit type="int" id="23">
+      <connective id="23" relation="consequence">
+         da
+      </connective>
+      sie nicht vor der eigenen Vergangenheit weglaufen mussten .
+   </unit>
+
+   Wie hat das Bismarck einmal formuliert ? Die Geschichte ist so genau wie die preußische Oberrechnungskammer .
+
+</discourse>

@@ -1,0 +1,85 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Nicht mehr so lax</segment>
+    <segment id="9" parent="19" relname="span">
+
+Der Ton macht die Musik .</segment>
+    <segment id="2" parent="10" relname="circumstance">  Das zeigt sich wohl auch gerade jetzt ,</segment>
+    <segment id="10" parent="18" relname="span"> wo die Sache mit den Urlaubsscheinen für Asylbewerber nicht mehr so lax gehandhabt wird .</segment>
+    <segment id="3" parent="20" relname="circumstance">  Schön ist es ja nun wirklich nicht ,</segment>
+    <segment id="11" parent="20" relname="span"> wenn man als Beamter jemandem einen Konzertbesuch oder eine Geburtstagsfete vermasseln muss ,</segment>
+    <segment id="12" parent="11" relname="cause"> weil die allgemeine Weltlage das gegenwärtig nicht zulässt .</segment>
+    <segment id="4" parent="22" relname="conjunction">
+
+Da spielt eben auch eine Rolle , wie menschlich man sich in solchen Situationen verhält</segment>
+    <segment id="13" parent="22" relname="conjunction"> und mit welchen Worten man das rüberbringt .</segment>
+    <segment id="5" parent="33" relname="joint">  Dass sich manches auch in Deutschland nach dem 11. September verändert hat ,</segment>
+    <segment id="31" parent="33" relname="joint"> dafür gibt es ja auch bei den oft abgeschottet lebenden Asylbewerbern Verständnis .</segment>
+    <segment id="6" parent="24" relname="span">
+
+Schade ist nur bei all diesen strengeren Regelungen , dass es wohl wieder mal zum großen Teil die Falschen trifft .</segment>
+    <segment id="7" parent="23" relname="list">  Nämlich jene , die sich artig an die Spielregeln halten ,</segment>
+    <segment id="14" parent="23" relname="list"> sich in Deutschland integrieren wollen</segment>
+    <segment id="15" parent="34" relname="conjunction"> und vorschriftsmäßig ihre geplanten Fahrten bei den zuständigen Stellen ankündigen</segment>
+    <segment id="32" parent="34" relname="conjunction"> und genehmigen lassen wollen .</segment>
+    <segment id="8" parent="25" relname="conjunction">  Wer durch die Gegend fährt</segment>
+    <segment id="16" parent="25" relname="conjunction"> und auf alle nunmal existierenden Vorschriften pfeift ,</segment>
+    <segment id="17" parent="26" relname="span"> wird wohl kaum gemerkt haben , dass irgend etwas anders ist .</segment>
+<group id="18" type="span" parent="9" relname="evidence" />
+<group id="19" type="span" parent="29" relname="background" />
+<group id="20" type="span" parent="21" relname="span" />
+<group id="22" type="multinuc" parent="21" relname="elaboration" />
+<group id="23" type="multinuc" parent="35" relname="span" />
+<group id="24" type="span" parent="28" relname="contrast" />
+<group id="25" type="multinuc" parent="17" relname="condition" />
+<group id="26" type="span" parent="28" relname="contrast" />
+<group id="21" type="span" parent="27" relname="span" />
+<group id="27" type="span" parent="29" relname="joint" />
+<group id="28" type="multinuc" parent="29" relname="joint" />
+<group id="29" type="multinuc" parent="30" relname="span" />
+<group id="30" type="span" />
+<group id="33" type="multinuc" parent="29" relname="joint" />
+<group id="34" type="multinuc" parent="23" relname="list" />
+<group id="35" type="span" parent="6" relname="elaboration" />
+  </body>
+</rst>

@@ -1,0 +1,75 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="e-elaboration" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="evaluation-s" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="means" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="cause" type="rst" />
+      <rel name="result" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="preparation" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="unconditional" type="rst" />
+      <rel name="unless" type="rst" />
+      <rel name="unstated-relation" type="rst" />
+      <rel name="evaluation-n" type="rst" />
+      <rel name="reason" type="rst" />
+      <rel name="" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="list" type="multinuc" />
+      <rel name="restatement-mn" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">
+
+Erfolgsverwöhnt</segment>
+    <segment id="13" parent="15" relname="evaluation-s">
+
+Erneut sorgt das renommierte Unternehmen Parmalat mit einem Paukenschlag für positive Schlagzeilen .</segment>
+    <segment id="2" parent="15" relname="span">  Eine der modernsten Produktionslinien ist gestern offiziell gestartet worden ,</segment>
+    <segment id="14" parent="2" relname="e-elaboration"> mit deren Hilfe frische Milch aus dem Brandenburgischen auf dem Frühstückstisch italienischer Familien landet .</segment>
+    <segment id="3" parent="20" relname="result">  Zu Recht ist die Chefetage des Milchgiganten zufrieden .</segment>
+    <segment id="4" parent="19" relname="span">
+
+Unbestritten ist die Geschichte von Parmalat in Gransee eine Erfolgsstory .</segment>
+    <segment id="5" parent="18" relname="list">  Zu danken ist dies natürlich in erster Linie den engagierten Mitarbeitern und der Investitionsfreudigkeit des Konzerns .</segment>
+    <segment id="6" parent="18" relname="list">  Aber auch Gransees Stadtväter trugen als unbürokratische Wegbereiter ihr Scherflein zum Erfolg bei .</segment>
+    <segment id="7" parent="17" relname="span">  Und das macht Mut .</segment>
+    <segment id="8" parent="7" relname="e-elaboration">  Mut , mit dem die Milchverarbeiter optimistisch in die Zukunft blicken und weitere Investitionen anvisieren .</segment>
+    <segment id="9" parent="23" relname="joint">
+
+Natürlich hoffen die Mitarbeiter , dass sich die millionenschweren Investionen bezahlt machen .</segment>
+    <segment id="10" parent="22" relname="joint">  Und wer weiß , vielleicht steht frische Milch aus Gransee eines Tages tatsächlich auf dem Tisch von Einheimischen .</segment>
+    <segment id="11" parent="16" relname="span">  Ob dies aber mehr als ein Wunschtraum ist , bleibt abzuwarten .</segment>
+    <segment id="12" parent="11" relname="reason">  Denn letztlich liegt die Entscheidung über den Erfolg eines Produkts einzig und allein beim Verbraucher .</segment>
+<group id="15" type="span" parent="20" relname="span" />
+<group id="16" type="span" parent="22" relname="joint" />
+<group id="17" type="span" parent="23" relname="joint" />
+<group id="18" type="multinuc" parent="4" relname="interpretation" />
+<group id="19" type="span" parent="23" relname="joint" />
+<group id="20" type="span" parent="21" relname="span" />
+<group id="21" type="span" parent="23" relname="background" />
+<group id="22" type="multinuc" parent="23" relname="joint" />
+<group id="23" type="multinuc" parent="24" relname="span" />
+<group id="24" type="span" />
+  </body>
+</rst>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+    Ausrutscher
+
+    Es ist bewundernswert , wie beharrlich die Initiatoren der Bücherstadt Wünsdorf ihr Konzept verfolgen . Die Basis ist mit einem festen Stamm an Antiquaren geschaffen . Es gibt Gastronomie und Bunkerführungen ebenso wie Museen und diverse Veranstaltungen . 
+
+    <unit type="ext" id="2">
+        Inzwischen hat sich die Bücherstadt einen Namen gemacht .
+    </unit>
+
+    <unit type="int" id="2">
+        <unit type="ext" id="3">
+            <connective id="2" relation="addition">
+                Und
+            </connective>
+            wird hoffentlich nicht mehr kleinzukriegen sein -
+            <unit type="int" id="3">
+                <connective id="3" relation="concession">
+                    trotz
+                </connective>
+                <unit type="ext" id="10">
+                    der Pleite der Landesentwicklungsgesellschaft ( LEG )
+                </unit>
+                <unit type="int" id="10">
+                    <connective id="10" relation="addition">
+                        und 
+                    </connective>
+                    gelegentlichen Jammerns in den eigenen Reihen .
+                </unit>
+            </unit>
+        </unit>
+    </unit>
+
+    <unit type="ext" id="4">
+        Mit dem gestrigen Umwelttag ist ein zunächst ungewöhnlich scheinender Schritt getan worden .
+    </unit>
+
+    <unit type="ext" id="11">
+        <unit type="int" id="4">
+            <connective id="4" relation="contrast">
+                Doch
+            </connective>
+            solche " Ausrutscher " sind gewollt .
+        </unit>
+    </unit>
+
+    <unit type="int" id="11">
+        <unit type="ext" id="6">
+            <unit type="int" id="5">
+                <connective id="11" relation="consequence">
+                    Schließlich 
+                </connective>
+                stellen alte Bücher 
+                <connective id="5" relation="concession">
+                    zwar
+                </connective>
+                für bestimmte Zielgruppen einen Magneten dar ,
+            </unit>
+        </unit>
+        <unit type="int" id="6">
+            <unit type="ext" id="5">
+                <connective id="6" relation="contrast">doch</connective>
+                    lange nicht für alle .
+            </unit>
+        </unit>
+    </unit>
+
+    <unit type="ext" id="7">
+        Zusatzangebote müssen her ,
+    </unit>
+
+    <unit type="int" id="7">
+        <connective id="7" relation="addition">
+            und
+        </connective>
+        was bietet sich da in der grünen Waldstadt mehr an als die Beschäftigung mit der Natur ?
+    </unit>
+    
+    <unit type="ext" id="9">
+        Hinzu kommt , dass es allemal besser ist , 
+        <unit type="ext" id="8">
+            sich in puncto Resonanz nicht selbst zu belügen ,
+        </unit>
+        <unit type="int" id="8">
+            <connective id="8" relation="contrast">
+                sondern
+            </connective>
+            lieber etwas für mehr Besucher zu tun .
+        </unit>
+    </unit>
+
+    <unit type="int" id="9">
+        <connective id="9" relation="consequence">
+            Denn
+        </connective>
+        dass solche Lügen kurze Beine haben , musste die LEG in diesem Jahr erfahren .
+    </unit>
+
+    <unit type="ext" id="12">
+        Sie hatte vor ( ! ) der langen Nacht der Antiquare kühn die 2000er Besucherzahlen in Druck gegeben .
+    </unit>
+    
+    <unit type="int" id="12">
+        <connective id="12" relation="addition">
+            Und 
+        </connective>
+        sich damit gehörig blamiert ...
+    </unit>
+</discourse>
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Punktsieg für Arafat
+   Wäre der Konflikt im Nahen Osten nicht so tödlich und grausam , könnte man sich darüber amüsieren , wie Ariel Scharon und Jassir Arafat versuchen , sich gegenseitig auszumanövrieren . Scharon agiert , Arafat antwortet mit Gegenreaktionen . Arafat agiert , Scharon blockt . Ein Schachspiel mit Konsequenzen für Leben und Tod . Politische Beobachter auf beiden Seiten sind sich einig :
+   <unit type="ext" id="9">
+      <unit type="ext" id="11">Nur der Einfluss von außen kann diesen Poker beenden .</unit>
+   </unit>
+   <unit type="int" id="11">
+      <unit type="int" id="9">
+         <connective id="9" relation="addition">Und</connective>
+         <connective id="11" relation="addition">so</connective>
+         schielen die Israelis nach Washington , an dessen Tropf sie militärisch und wirtschaftlich hängen , die Palästinenser zur Europäischen Union und zu den arabischen Staaten , von deren Unterstützung sie abhängen .
+      </unit>
+   </unit>
+   <unit type="ext" id="17">Die Folge ist oft genug eine Polarisierung auch bei den potenziellen Schiedsrichtern .</unit>
+   <unit type="int" id="17">
+      Zu Weihnachten
+      <connective id="17" relation="concession">allerdings</connective>
+      waren sich US-Amerikaner und Europäer einig :
+      <unit type="ext" id="22">Das vom israelischen Premier verhängte Reiseverbot für Arafat zur Christmette nach Bethlehem war unnötig und unangemessen .</unit>
+   </unit>
+   <unit type="int" id="22">
+      Punktsieg
+      <connective id="22" relation="consequence">also</connective>
+      für den Palästinenserchef im Duell der alten Haudegen .
+   </unit>
+   Bis zum nächsten Schachzug .
+</discourse>
+

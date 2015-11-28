@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Ein Fels
+   <unit type="ext" id="1">Es war sicher nicht die letzte Lobpreisung für Hans-Joachim Giersberg .</unit>
+   <unit type="ext" id="2">
+   <unit type="int" id="1">
+      <connective id="1" relation="contrast">Doch</connective>
+      dürfte ihm die Ehrenbürgerwürde , die ihm Potsdam gestern verlieh , wertvoller sein als mancher Preis , der da noch kommen mag .
+   </unit></unit>
+   <unit type="ext" id="3"><unit type="int" id="2">Ist es <connective id="2" relation="consequence">doch</connective> die Anerkennung dafür , dass der frühere Generaldirektor der Schlösserstiftung
+   <unit type="ext" id="6">nicht allein von der Sorge um die anvertrauten Kunstschätze getrieben war ,</unit></unit>
+   <unit type="int" id="6">
+      <connective id="6" relation="contrast">sondern</connective>
+      von der Vision einer Stadt , die durch diese Kunst lebt .
+   </unit></unit>
+   <unit type="int" id="3"><unit type="ext" id="8"><connective id="3" relation="addition">So</connective> stand Giersberg nicht nur wie der Fels in der Brandung ,</unit>
+   <unit type="int" id="8">
+      <connective id="8" relation="simultaneous">als</connective>
+      die Kommerzialisierungswogen an die Schlossmauern schlugen .
+   </unit>
+   Sein stilles , aber nachhaltiges Eintreten für die Qualitäten der Kulturlandschaft außerhalb seiner Gärten , allzuoft als Sichtachsen-Fetischismus benörgelt , hat dazu beigetragen , die Landeshauptstadt als Gesamtkunstwerk erfahrbar zu machen . Dafür hat ihm Potsdam zu danken .</unit>
+   <unit type="ext" id="13">Mit seinem Ja zu den Schlössernächten übersprang er am Ende sogar den Schatten des nur ängstlichen Bewahrers , als der er lange galt .</unit>
+   <unit type="int" id="13">
+      <connective id="13" relation="concession">Dennoch</connective>
+      endet mit Giersberg eine Ära .
+   </unit>
+   Sein Nachfolger wird nicht allein am Kunstsinn gemessen werden , er wird mehr von dem haben müssen , was Giersberg lästig war : Sinn für das Geld - und damit für alle " niederen " Bedürfnisse .
+</discourse>
+

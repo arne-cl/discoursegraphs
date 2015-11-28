@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Nicht so schnell
+   Die Falkenseer Verwaltung und Havelbus wollen die Buslinie Bahnhof Falkensee - Dallgow näher an die Leute bringen .
+   <unit type="ext" id="4">Der Bus würde Straßen im Wohnviertel durchfahren .</unit>
+   <unit type="int" id="4">
+      <connective id="4" relation="contrast">Doch</connective>
+      das Angebot , nahe der Haustür den Personennahverkehr nutzen zu können , wollen nicht alle .
+   </unit>
+   <unit type="ext" id="5">Er gefährde spielende Kinder</unit>
+   <unit type="int" id="5">
+      <connective id="5" relation="addition">und</connective>
+      ließe Kaffeetische wackeln .
+   </unit>
+   <unit type="ext" id="17">
+      <unit type="ext" id="7">Die Ablehnung hat in der Verwaltung eine gewisse Verwunderung hervorgerufen .</unit>
+      <unit type="ext" id="8">
+         <unit type="int" id="7">
+            <connective id="7" relation="consequence">Denn</connective>
+            auf eine Ansiedlung von etwa 3000 Menschen sollte eine vernünftige Kommunalpolitik mit einem attraktiven Verkehrsangebot reagieren .
+         </unit>
+      </unit>
+      <unit type="ext" id="14">
+      <unit type="int" id="8">
+         <connective id="8" relation="circumstance">Außerdem</connective> hatte der Bauherr vor Jahren bei Verkauf und Vermietung der Häuser eine Busanbindung versprochen .
+      </unit>
+      </unit>
+      <unit type="int" id="14">
+      Handelte es sich <connective id="14" relation="consequence">doch</connective> vornehmlich um Bürger ,
+      <unit type="ext" id="11">
+         die
+         <connective id="11" relation="concession">zwar</connective>
+         ihre Wohnung in Berlin verließen ,
+      </unit>	 
+         <unit type="int" id="11">
+            <unit type="ext" id="15">
+               <unit type="ext" id="12">
+                  dort
+                  <connective id="11" relation="concession">aber</connective>
+                  nach wie vor arbeiten
+               </unit>
+            </unit>
+            <unit type="int" id="15">
+               <unit type="int" id="12">
+                  <connective id="12" relation="addition">und</connective>
+                  <connective id="15" relation="consequence">daher</connective>
+                  täglich fahren .
+               </unit>
+            </unit>
+         </unit>
+      </unit>
+   </unit>
+   <unit type="int" id="17">
+      <unit type="ext" id="16">
+         Die Verwaltung hat <connective id="17" relation="sequence">inzwischen</connective> beschwichtigend wissen lassen , nicht gegen den Willen der Bewohner zu handeln .
+      </unit>
+   </unit>
+   <unit type="int" id="16">
+      <connective id="16" relation="contrast">Doch</connective>
+      sind 80 Unterschriften der Wille der Bewohner ?
+   </unit>
+   Gibt es in der Parkstadt nicht auch Bürger , die den Bus dem Verkehr vieler einzelner Autos vorziehen ? Achtung ! Eine vorschnelle Entscheidung könnte sich gegen den Willen der tatsächlichen Mehrheit richten .
+</discourse>
+

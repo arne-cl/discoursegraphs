@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?relations relSet="Martin1992" lexURL="jar:file:/home/lisa/Arbeit/Conano-Distrib/conano.jar!/de/uni_potsdam/ling/coli/resources/ConnectorLexicon.xml"?>
+<discourse>
+   Alarmsignal
+   Es brodelt an der CDU-Basis in Werder und Umgebung . Der Grund ist die Weigerung des Innenministers und Parteivorsitzenden Jörg Schönbohm , dem eindeutigen Bürgerwillen der Golmer nach Eingliederung in die Stadt Werder nachzukommen .
+   <unit type="ext" id="4">Ein Alarmsignal für Schönbohm müsste es jedenfalls sein ,</unit>
+   <unit type="int" id="4">
+      <unit type="ext" id="5">
+         <connective id="4" relation="condition">wenn</connective>
+	 <unit type="ext" id="3">
+         sich jetzt die Junge Union in Werder scharf gegen seinen Kurs wendet
+	 </unit> 
+	 <unit type="int" id="3"><connective id="3" relation="addition">und</connective> ein CDU-Stadtverordneter gar mit seinem sofortigen Austritt aus der Christlich Demokratischen Union droht ,</unit>
+      </unit>
+      <unit type="int" id="5">
+         <connective id="5" relation="consequence">weil</connective>
+         für ihn demokratische Spielregeln eklatant verletzt wurden .
+      </unit>
+   </unit>
+   <unit type="int" id="7">
+      Durchaus brisant wird die Situation für den Parteivorsitzenden auch
+      <connective id="7" relation="consequence">dadurch</connective> ,
+   </unit>
+   <unit type="ext" id="7">
+      <unit type="ext" id="6">dass er gleich zwei CDU-Bürgermeister gegen sich aufgebracht hat</unit>
+      <unit type="int" id="6">
+         <connective id="6" relation="addition">und</connective>
+         damit dort Ansehen und Rückhalt verlieren wird ,
+      </unit>
+      wo sie mit Sicherheit jede Partei bitter nötig hat - nämlich an der Basis .
+   </unit>
+   Dazu kommt , dass <unit type="ext" id="8">in Werder am 24. Februar ein Bürgermeister gewählt wird </unit><unit type="int" id="8"><connective id="8" relation="addition">und</connective> es bisher als sicher galt , dass CDU-Amtsinhaber Werner Große unangefochten bleibt .</unit>
+   <unit type="ext" id="9">Das muss sich nicht ändern ,</unit>
+   <unit type="int" id="9">
+      <connective id="9" relation="contrast">doch</connective>
+      <unit type="int" id="10">
+         <connective id="10" relation="condition">wenn</connective>
+         der eigene Parteichef dem Kandidaten so derb in die Parade einer erfolgreichen Amtszeit fährt ,
+      </unit>
+      <unit type="ext" id="10">werden andere Parteien nicht säumen , ihre Ansprüche deutlicher als bisher anzumelden .</unit>
+   </unit>
+</discourse>
+
