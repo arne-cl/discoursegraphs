@@ -23,8 +23,23 @@ install_requires = [
 
 
 def gen_data_files(src_dir):
-    fpaths = []
+    """
+    generates a list of files contained in the given directory (and its
+    subdirectories) in the format required by the ``data_files`` parameter
+    of the ``setuptools.setup`` function.
 
+    Parameters
+    ----------
+    src_dir : str
+        (relative) path to the directory structure containing the files to
+        be included in the package distribution
+
+    Returns
+    -------
+    fpaths : list(tuple(str, list(str)))
+        a list of (subdirectory path, list of file paths) tuples
+    """
+    fpaths = []
     for root, dirs, files in os.walk(src_dir):
         files_in_dir = [os.path.join(root, fname) for fname in files]
         fpaths.append((root, files_in_dir))
