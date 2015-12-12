@@ -10,8 +10,7 @@ __version__ = '0.1.2'
 
 import os
 
-from networkx import (
-    write_dot, write_gpickle, write_graphml)
+from networkx import write_dot, write_gpickle
 
 from discoursegraphs.discoursegraph import (
     DiscourseDocumentGraph, EdgeTypes, create_token_mapping,
