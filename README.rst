@@ -14,6 +14,10 @@ DiscourseGraphs
    :align: right
    :target: http://opensource.org/licenses/BSD-3-Clause
 
+.. image:: https://www.quantifiedcode.com/api/v1/project/3076854b9ea74bed867f12808d98f437/badge.svg
+   :alt: Code Issues
+   :align: right
+   :target: https://www.quantifiedcode.com/app/project/3076854b9ea74bed867f12808d98f437
 
 This library enables you to process linguistic corpora with multiple levels
 of annotations by:
