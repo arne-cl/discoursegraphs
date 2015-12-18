@@ -6,9 +6,13 @@
 #    BSD license.
 
 """
-This is a slightly modified version of ``networkx.relabel``. The only
+This is a slightly modified version of ``networkx.relabel``. The
 difference between the two versions is that this one supports the ``layers``
 attribute (which each node and edge in a ``DisourseDocumentGraph``) must have.
+
+In addition, when creating a relabeled copy of the original graph,
+the resulting graph will always be a ``DiscourseDocumentGraph`` (no
+matter what kind of graph the original graph was.
 """
 
 # flake8: noqa
@@ -143,7 +147,9 @@ def _relabel_inplace(G, mapping):
 
 
 def _relabel_copy(G, mapping):
-    H = G.__class__()
+    # the copied graph H will not be of the same class as G, but will have
+    # the type of G's superclass (a DiscourseDocumentGraph that is).
+    H = G.__class__.__bases__[0]()
     H.name = "(%s)" % G.name
     if G.is_multigraph():
         H.add_edges_from((mapping.get(n1, n1), mapping.get(n2, n2), k, d.copy())
