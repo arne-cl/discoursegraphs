@@ -55,7 +55,7 @@ class RSTGraph(DiscourseDocumentGraph):
         representing tokens.
         False, if the segments represent untokenized text.
     """
-    def __init__(self, rs3_filepath, name=None, namespace='rst',
+    def __init__(self, rs3_filepath=None, name=None, namespace='rst',
                  tokenize=True, precedence=False):
         """
         Creates an RSTGraph from a RS3 XML file and adds metadata to it
@@ -64,8 +64,9 @@ class RSTGraph(DiscourseDocumentGraph):
 
         Parameters
         ----------
-        rs3_filepath : str
-            absolute or relative path to the RS3 file to be parsed.
+        rs3_filepath : str or None
+            Absolute or relative path to the RS3 file to be parsed.
+            If no path is given, return an empty RSTGraph.
         name : str or None
             the name or ID of the graph to be generated. If no name is
             given, the basename of the input file is used.
@@ -82,8 +83,12 @@ class RSTGraph(DiscourseDocumentGraph):
         # super calls __init__() of base class DiscourseDocumentGraph
         super(RSTGraph, self).__init__()
 
-        self.name = name if name else os.path.basename(rs3_filepath)
         self.ns = namespace
+        if not rs3_filepath:
+            return  # create empty document graph
+
+        self.name = name if name else os.path.basename(rs3_filepath)
+
         # __rst2graph() will find/set the root node later on
 
         self.segments = []
