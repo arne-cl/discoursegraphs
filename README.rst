@@ -189,10 +189,23 @@ If you'd like to visualize your graphs, you will also need:
 - `pygraphviz <http://pygraphviz.github.io/>`_
 
 
-License
--------
+License and Citation
+--------------------
 
-3-Clause BSD.
+This software is released under a 3-Clause BSD license. If you use
+discoursegraphs in your academic work, please cite the following paper:
+
+Neumann, A. 2015. discoursegraphs: A graph-based merging tool and converter
+for multilayer annotated corpora. In *Proceedings of the 20th Nordic Conference
+of Computational Linguistics (NODALIDA 2015)*, pp. 309-312.
+
+@inproceedings{neumann2015discoursegraphs,
+  title={discoursegraphs: A graph-based merging tool and converter for multilayer annotated corpora},
+  author={Neumann, Arne},
+  booktitle={Proceedings of the 20th Nordic Conference of Computational Linguistics (NODALIDA 2015)},
+  pages={309-312},
+  year={2015}
+}
 
 Author
 ------
