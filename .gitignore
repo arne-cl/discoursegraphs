@@ -30,3 +30,4 @@ include
 lib
 local
 .ipynb_checkpoints
+.cache
