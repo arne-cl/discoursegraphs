@@ -59,7 +59,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
 
         Parameters
         ----------
-        tiger_filepath : str
+        tiger_filepath : str or None
             absolute or relative path to the TigerXML file to be parsed.
             If no path is given, return an empty TigerDocumentGraph.
         name : str or None
