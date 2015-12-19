@@ -13,6 +13,8 @@ attribute (which each node and edge in a ``DisourseDocumentGraph``) must have.
 
 # flake8: noqa
 
+from copy import deepcopy
+
 import networkx as nx
 __author__ = """\n""".join(['Aric Hagberg <aric.hagberg@gmail.com>',
                            'Pieter Swart (swart@lanl.gov)',
@@ -143,21 +145,8 @@ def _relabel_inplace(G, mapping):
 
 
 def _relabel_copy(G, mapping):
-    H = G.__class__()
-    H.name = "(%s)" % G.name
-    if G.is_multigraph():
-        H.add_edges_from((mapping.get(n1, n1), mapping.get(n2, n2), k, d.copy())
-                         for (n1, n2, k, d) in G.edges_iter(keys=True, data=True))
-    else:
-        H.add_edges_from((mapping.get(n1, n1), mapping.get(n2, n2), d.copy())
-                         for (n1, n2, d) in G.edges_iter(data=True))
-
-    H.add_nodes_from(mapping.get(n, n) for n in G)
-    H.node.update(dict((mapping.get(n, n), d.copy())
-                  for n, d in G.node.items()))
-    H.graph.update(G.graph.copy())
-
-    return H
+    H = deepcopy(G)
+    return _relabel_inplace(H, mapping)
 
 
 def convert_node_labels_to_integers(G, first_label=0, ordering="default",
