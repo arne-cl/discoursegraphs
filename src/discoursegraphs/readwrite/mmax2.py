@@ -427,9 +427,14 @@ def spanstring2tokens(docgraph, span_string):
             existing_tokens.append(tok)
         else: # we're trying to catch all token IDs that have been
               # renamed during merging of document graphs / annotation layers
-            renamed_token_id = docgraph.renamed_nodes.get(tok)
-            if renamed_token_id in existing_nodes:
-                existing_tokens.append(renamed_token_id)
+            if hasattr(docgraph, 'renamed_nodes'):
+                renamed_token_id = docgraph.renamed_nodes.get(tok)
+                if renamed_token_id in existing_nodes:
+                    existing_tokens.append(renamed_token_id)
+            # else: there was no merging /renaming going on, so the
+            # token is missing because it's <word> element was removed
+            # from the associated *_words.xml file.
+            # This is another 'bug' in the PCC corpus, cf. issue #134
     return existing_tokens
 
 
