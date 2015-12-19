@@ -16,11 +16,15 @@ Attribution-NonCommercial-ShareAlike license.
     Evaluation Conference (LREC), Reykjavik.
 """
 
+import fnmatch
+from itertools import chain
 import os
+import re
 
 import discoursegraphs as dg
 
 PCC_DIRNAME = 'potsdam-commentary-corpus-2.0.0'
+PCC_DOCID_RE = re.compile('^.*(maz-\d+)\..*')
 
 
 class PCC(object):
@@ -47,27 +51,67 @@ class PCC(object):
     """
     def __init__(self):
         self.path = os.path.join(dg.DATA_ROOT_DIR, PCC_DIRNAME)
-        self.connectors = self.get_layer_files('connectors', 'maz*.xml')
-        self.coreference = self.get_layer_files('coreference', 'maz*.mmax')
-        self.rst = self.get_layer_files('rst', 'maz*.rs3')
-        self.syntax = self.get_layer_files('syntax', 'maz*.xml')
-        self.tokenization = self.get_layer_files('tokenized', 'maz*.tok')
+        self.connectors = self.get_files_by_layer('connectors', 'maz*.xml')
+        self.coreference = self.get_files_by_layer('coreference', 'maz*.mmax')
+        self.rst = self.get_files_by_layer('rst', 'maz*.rs3')
+        self.syntax = self.get_files_by_layer('syntax', 'maz*.xml')
+        self.tokenization = self.get_files_by_layer('tokenized', 'maz*.tok')
 
         self.layers = {
-            'connectors': self.connectors,
-            'coreference': self.coreference,
-            'rst': self.rst,
-            'syntax': self.syntax,
-            'tokenization': self.tokenization,
+            'connectors': (self.connectors, dg.read_conano),
+            'coreference': (self.coreference, dg.read_mmax2),
+            'rst': (self.rst, dg.read_rs3),
+            'syntax': (self.syntax, dg.read_tiger),
+            # TODO: implement TokenDocumentGraph before adding this
+            # 'tokenization': (self.tokenization, dg.read_tokenized),
         }
 
-    def get_layer_files(self, layer_name, file_pattern):
+        list_of_dir_contents = (files for (files, _) in self.layers.values())
+        self._all_files = list(chain.from_iterable(list_of_dir_contents))
+
+    @property
+    def document_ids(self):
+        """returns a list of document IDs used in the PCC"""
+        matches = [PCC_DOCID_RE.match(os.path.basename(fname))
+                   for fname in pcc.tokenization]
+        return sorted(match.groups()[0] for match in matches)
+
+    def __getitem__(self, key):
+        """
+        given a document ID, returns a merged document graph containng all
+        available annotation layers.
+        """
+        layer_graphs = []
+        for layer_name in self.layers:
+            layer_files, read_function = self.layers[layer_name]
+            for layer_file in layer_files:
+                if fnmatch.fnmatch(layer_file, '*{}.*'.format(key)):
+                    layer_graphs.append(read_function(layer_file))
+
+        if not layer_graphs:
+            raise TypeError("There are no files with that document ID.")
+        else:
+            doc_graph = layer_graphs[0]
+            for layer_graph in layer_graphs[1:]:
+                doc_graph.merge_graphs(layer_graph)
+        return doc_graph
+
+    def get_files_by_layer(self, layer_name, file_pattern='*'):
         """
         returns a list of all files with the given filename pattern in the
         given PCC annotation layer
         """
         layer_path = os.path.join(self.path, layer_name)
         return list(dg.find_files(layer_path, file_pattern))
+
+    def get_files_by_document_id(self, document_id):
+        """
+        returns a list of all files (from all available annotation layers)
+        with the given document ID.
+        """
+        assert isinstance(document_id, basestring), \
+            "The document ID must be given as a string, e.g. 'maz-1423'"
+        return list(dg.find_files(self._all_files, '*{}.*'.format(document_id)))
 
 
 pcc = PCC()
