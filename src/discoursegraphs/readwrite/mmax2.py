@@ -29,7 +29,8 @@ class MMAXProject(object):
         self.paths, self.annotations, self.stylesheet = \
             self._parse_common_paths_file(project_path)
 
-    def _parse_common_paths_file(self, project_path):
+    @staticmethod
+    def _parse_common_paths_file(project_path):
         """
         Parses a common_paths.xml file and returns a dictionary of paths,
         a dictionary of annotation level descriptions and the filename
@@ -222,9 +223,11 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         return sentence_root_nodes, token_nodes
 
     def get_token_nodes_from_sentence(self, sentence_root_node):
+        """returns a list of token node IDs belonging to the given sentence"""
         return spanstring2tokens(self, self.node[sentence_root_node][self.ns+':span'])
 
-    def get_file_id(self, mmax_base_file):
+    @staticmethod
+    def get_file_id(mmax_base_file):
         """
         given an MMAX base file (``*.mmax``), returns its file ID.
         """
@@ -321,7 +324,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                     antecedent_node_id = ante_split[-1]
                     if len(ante_split) == 2:
                         antecedent_layer = ante_split[0]
-                        default_layers.add('{}:{}'.format(self.ns, antecedent_layer))
+                        default_layers.add('{0}:{1}'.format(self.ns, antecedent_layer))
 
                     # manually add antecedent node if it's not yet in the graph
                     # cf. issue #39
