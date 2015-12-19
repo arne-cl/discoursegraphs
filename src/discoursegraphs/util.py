@@ -222,22 +222,32 @@ def create_dir(path):
             raise
 
 
-def find_files(directory, pattern='*'):
+def find_files(dir_or_filelist, pattern='*'):
     """
-    find files recursively, e.g. all *.txt files
-    in a given directory (or its subdirectories)
+    If given a path to a directory, finds files recursively,
+    e.g. all *.txt files in a given directory (or its subdirectories).
+    If given a list of files, yields all of the files that match the given
+    pattern.
 
     adapted from: http://stackoverflow.com/a/2186673
     """
     import os
     import fnmatch
 
-    abspath = os.path.abspath(os.path.expanduser(directory))
-    for root, dirs, files in os.walk(abspath):
-        for basename in files:
-            if fnmatch.fnmatch(basename, pattern):
-                filename = os.path.join(root, basename)
-                yield filename
+    if isinstance(dir_or_filelist, str):
+        directory = dir_or_filelist
+
+        abspath = os.path.abspath(os.path.expanduser(directory))
+        for root, dirs, files in os.walk(abspath):
+            for basename in files:
+                if fnmatch.fnmatch(basename, pattern):
+                    filename = os.path.join(root, basename)
+                    yield filename
+    else:
+        filelist = dir_or_filelist
+        for filepath in filelist:
+            if fnmatch.fnmatch(filepath, pattern):
+                yield filepath
 
 
 def sanitize_string(string_or_unicode):
