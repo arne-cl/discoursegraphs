@@ -1043,6 +1043,51 @@ def select_nodes_by_layer(docgraph, layer, data=False):
                 yield node_id
 
 
+def select_nodes_by_attribute(docgraph, attribute=None, value=None, data=False):
+    """
+    Get all nodes with the given attribute (and attribute value).
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        document graph from which the nodes will be extracted
+    attribute : str or None
+        Name of the node attribute that all nodes must posess.
+        If None, returns all nodes.
+    value : str or collection of str or None
+        Value of the node attribute that all nodes must posess.
+        If None, returns all nodes with the given node attribute key    .
+    data : bool
+        If True, results will include node attributes.
+
+    Yields
+    ------
+    nodes : generator of str or generator of (str, dict) tuple
+        If data is False (default), a generator of node (IDs) that posess
+        the given attribute. If data is True, a generator of (node ID,
+        node attrib dict) tuples.
+    """
+    for node_id, node_attribs in docgraph.nodes_iter(data=True):
+        if attribute is None:
+            has_attrib = True # don't filter nodes
+        else:
+            has_attrib = attribute in node_attribs
+
+        if has_attrib:
+            if value is None:
+                has_value = True
+            elif isinstance(value, basestring):
+                has_value = node_attribs.get(attribute) == value
+            else:  # ``value`` is a list/set/dict of values
+                has_value = any(node_attribs.get(attribute) == v for v in value)
+
+            if has_value:
+                if data:
+                    yield (node_id, node_attribs)
+                else:
+                    yield node_id
+
+
 def select_edges_by(docgraph, layer=None, edge_type=None, data=False):
     """
     get all edges with the given edge type and layer.
