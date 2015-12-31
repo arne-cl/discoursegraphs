@@ -1088,6 +1088,19 @@ def select_nodes_by_attribute(docgraph, attribute=None, value=None, data=False):
                     yield node_id
 
 
+def select_edges(docgraph, conditions, data):
+    """yields all edges that meet the conditions given as eval strings"""
+    for (from_id, to_id, edge_attribs) in docgraph.edges(data=True):
+        # if all conditions are fulfilled
+        # we need to add edge_attribs to the namespace eval is working in
+        if all((eval(cond, {'edge_attribs': edge_attribs})
+                for cond in conditions)):
+            if data:
+                yield (from_id, to_id, edge_attribs)
+            else:
+                yield (from_id, to_id)
+
+
 def select_edges_by(docgraph, layer=None, edge_type=None, data=False):
     """
     get all edges with the given edge type and layer.
@@ -1113,18 +1126,6 @@ def select_edges_by(docgraph, layer=None, edge_type=None, data=False):
     """
     edge_type_eval = "edge_attribs['edge_type'] == '{}'".format(edge_type)
     layer_eval = "'{}' in edge_attribs['layers']".format(layer)
-
-    def select_edges(docgraph, conditions, data):
-        """yields all edges that meet the conditions given as eval strings"""
-        for (from_id, to_id, edge_attribs) in docgraph.edges(data=True):
-            # if all conditions are fulfilled
-            # we need to add edge_attribs to the namespace eval is working in
-            if all((eval(cond, {'edge_attribs': edge_attribs})
-                    for cond in conditions)):
-                if data:
-                    yield (from_id, to_id, edge_attribs)
-                else:
-                    yield (from_id, to_id)
 
     if layer is not None:
         if edge_type is not None:
