@@ -11,11 +11,14 @@ a ``layers`` attribute (which maps to the set of layers (str) it belongs to).
 TODO: implement a DiscourseCorpusGraph
 """
 
+import itertools
 import sys
 import warnings
 from collections import defaultdict
+
 from enum import Enum
 from networkx import MultiDiGraph, is_directed_acyclic_graph
+
 from discoursegraphs.relabel import relabel_nodes
 from discoursegraphs.util import natural_sort_key
 
@@ -1099,6 +1102,59 @@ def select_edges(docgraph, conditions, data):
                 yield (from_id, to_id, edge_attribs)
             else:
                 yield (from_id, to_id)
+
+
+def select_edges_by_attribute(docgraph, attribute=None, value=None, data=False):
+    """
+    get all edges with the given edge type and layer.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        document graph from which the nodes will be extracted
+    attribute : str or None
+        Name of the node attribute that all nodes must posess.
+        If None, returns all nodes.
+    value : str or collection of str or None
+        Value of the node attribute that all nodes must posess.
+        If None, returns all nodes with the given node attribute key    .
+    data : bool
+        If True, results will include edge attributes.
+
+    Returns
+    -------
+    edges : generator of str
+        a container/list of edges (represented as (source node ID, target
+        node ID) tuples). If data is True, edges are represented as
+        (source node ID, target node ID, edge attribute dict) tuples.
+    """
+    if attribute:
+        attrib_key_eval = "'{}' in edge_attribs".format(attribute)
+
+        if value is not None:
+            if isinstance(value, basestring):
+                attrib_val_eval = \
+                    "edge_attribs['{0}'] == '{1}'".format(attribute, value)
+                return select_edges(
+                    docgraph, data=data,
+                    conditions=[attrib_key_eval, attrib_val_eval])
+
+            else:  # ``value`` is a list/set/dict of values
+                attrib_val_evals = \
+                    ["edge_attribs['{0}'] == '{1}'".format(attribute, v)
+                     for v in value]
+                results = \
+                    [select_edges(docgraph, data=data,
+                                  conditions=[attrib_key_eval, val_eval])
+                     for val_eval in attrib_val_evals]
+                # results is a list of generators
+                return itertools.chain(*results)
+
+        else:  # yield all edges with the given attribute, regardless of value
+            return select_edges(docgraph, data=data, conditions=[attrib_key_eval])
+
+    else:  # don't filter edges at all
+        return docgraph.edges_iter(data=data)
 
 
 def select_edges_by(docgraph, layer=None, edge_type=None, data=False):
