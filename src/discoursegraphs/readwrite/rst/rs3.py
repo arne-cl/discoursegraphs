@@ -356,7 +356,7 @@ class RSTGraph(DiscourseDocumentGraph):
 
 
 
-def get_edus(rst_graph):
+def get_edus(rst_graph, namespace='rst'):
     """
     returns the elementary discourse units (EDUs) in the order they occur
     in the document.
@@ -365,6 +365,8 @@ def get_edus(rst_graph):
     ----------
     rst_graph : RSTGraph
         a document graph representing an RS3 file
+    namespace : str
+        the namespace that contains the EDUs (default: 'rst')
 
     Returns
     -------
@@ -372,7 +374,7 @@ def get_edus(rst_graph):
         a list of node IDs of RST segments (EDUs) in the order they occur
         in the RS3 file
     """
-    return rst_graph.node[rst_graph.root]['metadata'][rst_graph.ns+':edus']
+    return rst_graph.node[rst_graph.root]['metadata'][namespace+':edus']
 
 
 def extract_relationtypes(rs3_xml_tree):
