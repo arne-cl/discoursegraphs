@@ -13,6 +13,7 @@ from lxml import etree
 from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.util import natural_sort_key, ensure_unicode, add_prefix
 from discoursegraphs.readwrite.generic import generic_converter_cli
+from discoursegraphs.relabel import relabel_nodes
 
 
 class TigerDocumentGraph(DiscourseDocumentGraph):
@@ -82,9 +83,12 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         self.name = name if name else os.path.basename(tiger_filepath)
         self.corpus_id = tigerxml_root.attrib['id']
 
-        # add root node of TigerDocumentGraph
+        # rename the root node (it was created by super() and already
+        # has a 'metadata' element
+        old_root_id = self.root
         self.root = self.ns+':root_node'
-        self.add_node(self.root, layers={self.ns})
+        relabel_nodes(self, {old_root_id: self.root}, copy=False)
+        self.node[self.root].update({'layers': {self.ns}})
 
         self.tokens = []
         self.sentences = []
