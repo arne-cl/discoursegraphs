@@ -131,11 +131,11 @@ class RSTGraph(DiscourseDocumentGraph):
             If False, each RST segment will be labeled with the text it
             represents.
         """
-        rst_root = rs3_xml_tree.getroot()
+        doc_root = rs3_xml_tree.getroot()
 
-        for segment in rst_root.iter('segment'):
+        for segment in doc_root.iter('segment'):
             self.__add_segment(segment)
-        for group in rst_root.iter('group'):
+        for group in doc_root.iter('group'):
             self.__add_group(group)
 
     def __add_segment(self, segment):
