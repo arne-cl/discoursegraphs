@@ -704,6 +704,11 @@ class DiscourseDocumentGraph(MultiDiGraph):
         if other_docgraph.sentences and not self.sentences:
             self.sentences = other_docgraph.sentences
 
+        # copy metadata from other graph, cf. #136
+        if 'metadata' in other_docgraph.node[other_docgraph.root]:
+            other_meta = other_docgraph.node[other_docgraph.root]['metadata']
+            self.node[self.root]['metadata'].update(other_meta)
+
     def add_precedence_relations(self):
         """
         add precedence relations to the document graph (i.e. an edge from the
