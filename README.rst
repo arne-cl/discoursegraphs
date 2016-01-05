@@ -221,7 +221,9 @@ People who downloaded this also like
 - `educe`_: a library for handling discourse-annotated corpora (SDRT, RST and PDTB)
 - `treetools`_: a library for converting treebanks and grammar extraction (supports  
   i.a. TigerXML and Negra/Tüba-Export formats)
+- `TCFnetworks`_: library for creating graphs from annotated text corpora (based on TCF).
 
 .. _`SaltNPepper`: https://korpling.german.hu-berlin.de/p/projects/saltnpepper/wiki/
 .. _`educe`: https://github.com/kowey/educe
 .. _`treetools`: https://github.com/wmaier/treetools
+.. _`TCFnetworks`: https://github.com/SeNeReKo/TCFnetworks
