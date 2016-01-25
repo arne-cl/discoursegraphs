@@ -917,9 +917,11 @@ def get_span_offsets(docgraph, node_id):
     """
     try:
         span = get_span(docgraph, node_id)
-        span_onset, _ = docgraph.get_offsets(span[0])
-        _, span_offset = docgraph.get_offsets(span[-1])
-        return (span_onset, span_offset)
+        # workaround for issue #138
+        # TODO: when #138 is fixed, just take the first onset / last offset
+        onsets, offsets = zip(*[docgraph.get_offsets(tok_node)
+                                for tok_node in span])
+        return (min(onsets), max(offsets))
     except KeyError as _:
         raise KeyError("Node '{}' doesn't span any tokens.".format(node_id))
 
