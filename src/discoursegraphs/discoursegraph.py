@@ -925,6 +925,7 @@ def get_span_offsets(docgraph, node_id):
     except KeyError as _:
         raise KeyError("Node '{}' doesn't span any tokens.".format(node_id))
 
+
 def get_span(docgraph, node_id, debug=False):
     """
     returns all the tokens that are dominated or in a span relation with
