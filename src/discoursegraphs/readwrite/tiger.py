@@ -137,7 +137,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
     tokens : list of str
         a sorted list of terminal node IDs (i.e. token nodes)
     """
-    def __init__(self, sentence, namespace):
+    def __init__(self, sentence, namespace='tiger'):
         """
         Creates a directed graph from a syntax annotated sentence (i.e.
         a <s> element from a TigerXML file parsed into an lxml etree
