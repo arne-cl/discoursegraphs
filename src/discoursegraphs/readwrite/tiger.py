@@ -10,6 +10,7 @@ document graph.
 import os
 from lxml import etree
 
+import discoursegraphs as dg
 from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.util import natural_sort_key, ensure_unicode, add_prefix
 from discoursegraphs.readwrite.generic import generic_converter_cli
@@ -374,6 +375,34 @@ def get_unconnected_nodes(sentence_graph):
     return [node for node in sentence_graph.nodes_iter()
             if sentence_graph.degree(node) == 0 and
             sentence_graph.number_of_nodes() > 1]
+
+
+def get_subordinate_clauses(tiger_docgraph):
+    """
+    given a document graph of a TIGER syntax tree, return all
+    node IDs of nodes representing subordinate clause constituents.
+
+    Parameters
+    ----------
+    tiger_docgraph : DiscourseDocumentGraph or TigerDocumentGraph
+        document graph from which subordinate clauses will be extracted
+
+    Returns
+    -------
+    subord_clause_nodes : list(str)
+        list of node IDs of nodes directly dominating subordinate clauses
+    """
+    subord_clause_rels = \
+        dg.select_edges_by_attribute(
+            tiger_docgraph, attribute='tiger:label',
+            value=['MO', 'RC', 'SB'])
+
+    subord_clause_nodes = []
+    for src_id, target_id in subord_clause_rels:
+        src_cat = tiger_docgraph.node[src_id].get('tiger:cat')
+        if src_cat == 'S' and not dg.istoken(tiger_docgraph, target_id):
+            subord_clause_nodes.append(target_id)
+    return subord_clause_nodes
 
 
 # pseudo-function to create a document graph from a Tiger XML file
