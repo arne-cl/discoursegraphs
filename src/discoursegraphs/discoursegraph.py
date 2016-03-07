@@ -981,9 +981,21 @@ def tokens2text(docgraph, token_ids):
                     for token_id in token_ids)
 
 
-def istoken(docgraph, node_id):
-    """returns true, iff the given node ID belongs to a token node."""
-    return docgraph.ns+':token' in docgraph.node[node_id]
+def istoken(docgraph, node_id, namespace=None):
+    """returns true, iff the given node ID belongs to a token node.
+
+    Parameters
+    ----------
+    node_id : str
+        the node to be checked
+    namespace : str or None
+        If a namespace is given, only look for tokens in the given namespace.
+        Otherwise, look for tokens in the default namespace of the given
+        document graph.
+    """
+    if namespace is None:
+        namespace = docgraph.ns
+    return namespace+':token' in docgraph.node[node_id]
 
 
 def select_neighbors_by_layer(docgraph, node, layer, data=False):
