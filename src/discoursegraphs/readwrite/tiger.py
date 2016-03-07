@@ -159,7 +159,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         self.tokens = []
 
         graph_element = sentence.find('./graph')
-        sentence_root_id = graph_element.attrib['root']
+        self.root = graph_element.attrib['root']
 
         # sentence.attrib is a lxml.etree._Attrib, which is 'dict-like'
         # but doesn't behave exactly like a dict (i.e. it threw an error
@@ -172,7 +172,6 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                 {self.ns+':discontinuous':
                     graph_element.attrib['discontinuous']})
 
-        self.__add_vroot(sentence_root_id, sentence_attributes)
         self.__tigersentence2graph(sentence)
         self.__repair_unconnected_nodes()
 
@@ -188,6 +187,12 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         sentence : lxml.etree._Element
             a sentence from a TigerXML file in etree element format
         """
+        # add sentence root to graph
+        self.add_node(self.root,
+                      layers={self.ns, self.ns+':sentence',
+                              self.ns+':sentence:root'})
+
+
         token_ids = []
         # add terminals to graph (tokens)
         for t in sentence.iterfind('./graph/terminals/t'):
@@ -263,54 +268,9 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                               label=edge_attribs[self.ns+':label'],
                               edge_type=EdgeTypes.pointing_relation)
 
-    def __add_vroot(self, sentence_root_id, sentence_attributes):
-        """
-        Adds a new node with the ID 'VROOT' to this sentence graph.
-        The 'VROOT' node will have an outgoing edge (``dominance_relation``)
-        to the node that has previously been considered the root node of the
-        sentence and will have the attributes extracted from the <s> element of
-        the corresponding sentence in the TigerXML file.
-        The ``TigerSentenceGraph.root`` attribute will be set as well.
-
-        Why do we do this?
-
-        'VROOT' (virtual root) nodes are commonly used in the Tiger
-        corpus (version 2.1). They are useful whenever a sentence does
-        not have any nonterminals (e.g. if there is no full syntax
-        structure annotation in the case of a three word headline
-        'sentence').
-
-        Parameters
-        ----------
-        sentence_root_id : str
-            the ID of the root node of the sentence, extracted from the
-            ``root`` attribute of the ``<graph>`` element of the
-            corresponding sentence in the TigerXML file.
-        sentence_attributes : dict of (str, str)
-            a dictionary of sentence attributes extracted from the <s>
-            element (corresponding to this sentence) of a TigerXML file.
-            contains the attributes ``tiger:id``, ``tiger:art_id`` and
-            ``tiger:orig_id``.
-        """
-        old_root_node_id = sentence_root_id
-        sentence_id = sentence_attributes[self.ns+':id']
-        new_root_node_id = 'VROOT-{0}'.format(sentence_id)
-        self.add_node(old_root_node_id,
-                      layers={self.ns, self.ns+':sentence',
-                              self.ns+':sentence:root'})
-        self.add_node(new_root_node_id,
-                      layers={self.ns, self.ns+':sentence',
-                              self.ns+':sentence:vroot'},
-                      attr_dict=sentence_attributes)
-        self.add_edge(new_root_node_id, old_root_node_id,
-                      layers={self.ns, self.ns+':sentence',
-                              self.ns+':sentence:vroot'},
-                      edge_type=EdgeTypes.dominance_relation)
-        self.root = new_root_node_id
-
     def __repair_unconnected_nodes(self):
         """
-        Adds a (``dominance_relation``) edge from the 'VROOT' node to all
+        Adds a (``dominance_relation``) edge from the sentence root node to all
         previously unconnected nodes (token nodes, that either represent a
         punctuation mark or are part of a headline 'sentence' that has no
         full syntax structure annotation).
