@@ -31,3 +31,7 @@ reinstall: clean uninstall install
 	cd ~/repos/neonx && make clean && yes | pip uninstall neonx && python setup.py install
 
 frankenstein: reinstall repopulate-neo4j
+
+# runs py.test with coverage.py and creates annoted HTML reports in htmlcov/
+coverage:
+	py.test --cov=discoursegraphs --cov-report html tests/
