@@ -127,6 +127,9 @@ class DiscourseDocumentGraph(MultiDiGraph):
             will be returned, representing all the tokens in the order they
             occur in the document.
         """
+        assert istoken(self, token_node_id), \
+            "'{}' is not a token node.".format(token_node_id)
+
         if offset_ns is None:
             offset_ns = self.ns
 
