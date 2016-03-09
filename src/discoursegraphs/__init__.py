@@ -15,8 +15,8 @@ from networkx import write_dot, write_gpickle
 from discoursegraphs.discoursegraph import (
     DiscourseDocumentGraph, EdgeTypes, create_token_mapping,
     get_annotation_layers, get_span, get_span_offsets,
-    get_text, istoken, layer2namespace, select_neighbors_by_layer,
-    select_nodes_by_attribute,
+    get_text, is_continuous, istoken, layer2namespace,
+    select_neighbors_by_layer, select_nodes_by_attribute,
     select_nodes_by_layer, select_edges_by_attribute,
     select_edges_by, tokens2text,
     get_pointing_chains, get_top_level_layers)

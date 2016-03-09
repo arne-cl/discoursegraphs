@@ -998,6 +998,21 @@ def istoken(docgraph, node_id, namespace=None):
     return namespace+':token' in docgraph.node[node_id]
 
 
+def is_continuous(docgraph, dominating_node):
+    """return True, if the tokens dominated by the given node are all adjacent"""
+    first_onset, last_offset = get_span_offsets(docgraph, dominating_node)
+    span_range = xrange(first_onset, last_offset+1)
+
+    token_offsets = (docgraph.get_offsets(tok)
+                     for tok in get_span(docgraph, dominating_node))
+    char_positions = set(itertools.chain.from_iterable(xrange(on, off+1)
+                         for on, off in token_offsets))
+    for item in span_range:
+        if item not in char_positions:
+            return False
+    return True
+
+
 def select_neighbors_by_layer(docgraph, node, layer, data=False):
     """
     Get all neighboring nodes belonging to (any of) the given layer(s),
