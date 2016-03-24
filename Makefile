@@ -18,6 +18,7 @@ clean:
 	rm -rf git_stats
 	rm -rf build dist src/discoursegraphs.egg-info
 	rm -rf docs/_build
+	rm -rf htmlcov
 
 kill-delete-restart-neo4j:
 	~/bin/neo4j/bin/neo4j stop
