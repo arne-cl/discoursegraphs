@@ -1,0 +1,14 @@
+-e git+https://github.com/arne-cl/discoursegraphs.git#egg=discoursegraphs
+-e git+https://github.com/arne-cl/neonx.git#egg=neonx
+
+brewer2mpl==1.4.1
+decorator==4.0.9
+enum==0.4.6
+lxml==3.6.0
+networkx==1.11
+nltk==3.2
+pydot2==1.0.33
+pygraphviz==1.3.1
+pyparsing==2.1.1
+requests==2.9.1
+Unidecode==0.4.19
