@@ -29,7 +29,7 @@ def quote_for_pydot(string):
 
 def unquote_from_pydot(string):
     """removes the "-char from the beginning and end of a pydot-quoted string"""
-    return UNQUOTE_RE.match(quoted_str).groups()[0]
+    return UNQUOTE_RE.match(string).groups()[0]
 
 
 def _preprocess_nodes_for_pydot(nodes_with_data):
