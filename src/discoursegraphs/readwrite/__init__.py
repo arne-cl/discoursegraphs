@@ -13,6 +13,7 @@ from discoursegraphs.readwrite.brat import write_brat
 from discoursegraphs.readwrite.conano import ConanoDocumentGraph, read_conano
 from discoursegraphs.readwrite.conll import ConllDocumentGraph, read_conll, write_conll
 from discoursegraphs.readwrite.decour import DecourDocumentGraph, read_decour
+from discoursegraphs.readwrite.dot import write_dot
 from discoursegraphs.readwrite.exmaralda import (
     ExmaraldaDocumentGraph, read_exb, read_exmaralda, write_exmaralda, write_exb)
 from discoursegraphs.readwrite.exportxml import read_exportxml

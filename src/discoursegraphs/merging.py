@@ -11,10 +11,9 @@ So far, it is able to merge rhetorical structure theory (RS3), syntax
 import os
 import sys
 import argparse
-from networkx import write_dot
 
 import discoursegraphs as dg
-from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs import DiscourseDocumentGraph, write_dot
 from discoursegraphs.util import create_dir
 
 

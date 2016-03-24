@@ -277,7 +277,7 @@ def make_labels_explicit(docgraph):
     """
     Appends the node ID to each node label and appends the edge type to each
     edge label in the given document graph. This can be used to debug a
-    graph visually with ``networkx.write_dot``.
+    graph visually with ``write_dot``.
 
     Parameters
     ----------

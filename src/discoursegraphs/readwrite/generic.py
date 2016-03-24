@@ -5,8 +5,8 @@
 import os
 import sys
 import argparse
-from networkx import write_dot
 
+from discoursegraphs.readwrite.dot import write_dot
 from discoursegraphs.util import ensure_utf8, ensure_ascii
 
 

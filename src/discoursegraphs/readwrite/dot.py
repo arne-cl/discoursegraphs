@@ -12,7 +12,7 @@ import codecs
 from tempfile import NamedTemporaryFile
 
 import networkx as nx
-
+from networkx.drawing.nx_agraph import write_dot
 
 QUOTE_RE = re.compile('"') # a single "-char
 UNQUOTE_RE = re.compile('^"(.*)"$') # a string beginning and ending with a "-char
