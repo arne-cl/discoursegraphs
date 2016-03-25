@@ -78,7 +78,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         self.parse_rst_tree(self.rst_tree)
 
     @staticmethod
-    def disfile2tree(self, dis_filepath):
+    def disfile2tree(dis_filepath):
         """converts a *.dis file into a ParentedTree (NLTK) instance"""
         with open(dis_filepath) as f:
             rst_tree_str = f.read().strip()
@@ -157,14 +157,14 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         return child_types
 
     @staticmethod
-    def get_edu_text(self, text_subtree):
+    def get_edu_text(text_subtree):
         assert text_subtree[0].value() == 'text'
         return u' '.join(word.value().decode('utf-8')
                          if isinstance(word, sexpdata.Symbol) else word.decode('utf-8')
                          for word in text_subtree[1:])
 
     @staticmethod
-    def get_tree_type(self, tree):
+    def get_tree_type(tree):
         """
         returns the type of the (sub)tree: Root, Nucleus or Satellite
 
@@ -178,7 +178,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         return tree_type
 
     @staticmethod
-    def get_node_type(self, tree):
+    def get_node_type(tree):
         """
         returns the node type (leaf or span) of a subtree (i.e. Nucleus or Satellite)
 
@@ -192,7 +192,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         return node_type
 
     @staticmethod
-    def get_relation_type(self, tree):
+    def get_relation_type(tree):
         """
         returns the RST relation type attached to the parent node of an RST relation,
         e.g. `span`, `elaboration` or `antithesis`.

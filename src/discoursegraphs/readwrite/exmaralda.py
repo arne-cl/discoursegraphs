@@ -407,7 +407,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
                               edge_type=EdgeTypes.spanning_relation)
 
     @staticmethod
-    def get_token_ids(self, tree):
+    def get_token_ids(tree):
         """
         returns a list of all token IDs occuring the the given exmaralda file,
         sorted by their time stamp in ascending order.
@@ -425,7 +425,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
                                   key=tok2time))
 
     @staticmethod
-    def tokenid2index(self, token_id):
+    def tokenid2index(token_id):
         """converts a token ID (e.g. 'T0') to its index (i.e. 0)"""
         return int(token_id[1:])
 

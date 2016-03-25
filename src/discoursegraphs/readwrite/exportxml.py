@@ -617,7 +617,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         self.parse_child_elements(word)
 
     @staticmethod
-    def element_attribs_to_dict(self, element):
+    def element_attribs_to_dict(element):
         """
         converts the .attrib attributes of an etree element (from ``lxml.etree._Attrib``)
         into a dict, leaving out the xml:id attribute.
@@ -626,7 +626,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
                 if key != add_ns('id')}
 
     @staticmethod
-    def get_element_id(self, element):
+    def get_element_id(element):
         """
         Returns the ID of an element (or, if the element doesn't have one:
         the ID of its parent). Returns an error, if both elements have no ID.
@@ -642,7 +642,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
                 'have an ID'.format(element, element.getparent()))
 
     @staticmethod
-    def get_parent_id(self, element):
+    def get_parent_id(element):
         """returns the ID of the parent of the given element"""
         if 'parent' in element.attrib:
             return element.attrib['parent']
