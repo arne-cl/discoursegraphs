@@ -70,7 +70,7 @@ class SaltLabel(object):
         return cls(name=etree_element.attrib['name'],
                    value=etree_element.attrib['valueString'],
                    xsi_type=get_xsi_type(etree_element),
-                   namespace=etree_element.attrib.get('namespace', None),
+                   namespace=etree_element.attrib.get('namespace'),
                    hexvalue=etree_element.attrib['value'])
 
     def to_etree(self):
