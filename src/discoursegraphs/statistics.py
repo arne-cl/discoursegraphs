@@ -43,6 +43,7 @@ def node_statistics(docgraph):
 
 
 def edge_statistics(docgraph):
+    """print basic statistics about an edge, e.g. layer/attribute counts"""
     print "Edge statistics\n==============="
     layer_counts = Counter()
     attrib_counts = Counter()
