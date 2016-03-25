@@ -117,7 +117,7 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
             elif isinstance(node, unicode):
                 return node.encode('utf-8')
             else:
-                raise ValueError("Unexpected node type: {}, {}".format(type(node), node))
+                raise ValueError("Unexpected node type: {0}, {1}".format(type(node), node))
 
         root_node_id = self._node_id
         self.node[root_node_id]['label'] = get_nodelabel(tree)

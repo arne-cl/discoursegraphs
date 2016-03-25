@@ -16,13 +16,13 @@ import networkx
 def print_sorted_counter(counter, tab=1):
     """print all elements of a counter in descending order"""
     for key, count in sorted(counter.items(), key=itemgetter(1), reverse=True):
-        print "{}{} - {}".format('\t'*tab, key, count)
+        print "{0}{1} - {2}".format('\t'*tab, key, count)
 
 
 def print_most_common(counter, number=5, tab=1):
     """print the most common elements of a counter"""
     for key, count in counter.most_common(number):
-        print "{}{} - {}".format('\t'*tab, key, count)
+        print "{0}{1} - {2}".format('\t'*tab, key, count)
 
 
 def node_statistics(docgraph):
