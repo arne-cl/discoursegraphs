@@ -41,8 +41,7 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         sorted list of all token node IDs contained in this document graph
     """
     def __init__(self, ptb_filepath=None, name=None, namespace='ptb',
-                 tokenize=True, precedence=False, limit=None,
-                 ignore_traces=True):
+                 tokenize=True, limit=None, ignore_traces=True):
         """
         Creates an PTBDocumentGraph from a Penn Treebank *.mrg file and adds metadata
         to it.
@@ -57,9 +56,6 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
             given, the basename of the input file is used.
         namespace : str
             the namespace of the document (default: ptb)
-        precedence : bool
-            If True, add precedence relation edges
-            (root precedes token1, which precedes token2 etc.)
         limit : int or None
             only parse the first n sentences of the input file into the
             document graph

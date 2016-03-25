@@ -19,7 +19,7 @@ class SaltEdge(SaltElement):
     and has two or more labels attached to it.
     """
     def __init__(self, name, element_id, xsi_type, labels, source, target,
-                 layers=None, xml=None):
+                 layers=None):
         """
         Every edge has these attributes (in addition to the attributes
         inherited from the ``SaltElement`` class):
