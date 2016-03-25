@@ -216,7 +216,7 @@ def create_dir(path):
             else: # if something exists at the path, but it's not a dir
                 raise
         elif exc.errno == errno.EACCES:
-            sys.stderr.write("Cannot create [%s]! Check Permissions" % path)
+            sys.stderr.write("Cannot create [{0}]! Check Permissions".format(path))
             raise
         else:
             raise

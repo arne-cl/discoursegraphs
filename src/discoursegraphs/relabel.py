@@ -124,7 +124,7 @@ def _relabel_inplace(G, mapping):
             layers = G.node[old]['layers']
             G.add_node(new, layers, attr_dict=G.node[old])
         except KeyError:
-            raise KeyError("Node %s is not in the graph" % old)
+            raise KeyError("Node {0} is not in the graph".format(old))
         if multigraph:
             new_edges = [(new, old == target and new or target, key, data)
                          for (_, target, key, data)
@@ -197,7 +197,7 @@ def convert_node_labels_to_integers(G, first_label=0, ordering="default",
         dv_pairs.reverse()
         mapping = dict(zip([n for d, n in dv_pairs], range(first_label, N)))
     else:
-        raise nx.NetworkXError('Unknown node ordering: %s' % ordering)
+        raise nx.NetworkXError('Unknown node ordering: {0}'.format(ordering))
     H = relabel_nodes(G, mapping)
     H.name = "(" + G.name + ")_with_int_labels"
     # create node attribute with the old label

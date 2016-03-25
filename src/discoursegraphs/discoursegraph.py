@@ -556,8 +556,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
                 key = None
             else:
                 raise AttributeError(
-                    "Edge tuple %s must be a 3-tuple (u,v,attribs) "
-                    "or 4-tuple (u,v,key,attribs)." % (e,))
+                    "Edge tuple {0} must be a 3-tuple (u,v,attribs) "
+                    "or 4-tuple (u,v,key,attribs).".format(e))
 
             assert 'layers' in dd, \
                 "Every edge must have a 'layers' attribute."

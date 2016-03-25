@@ -88,9 +88,9 @@ class SaltElement(object):
         """
         returns the name, Salt type and XML representation of a `SaltElement`.
         """
-        ret_str = "name: %s\n" % self.name
-        ret_str += "Salt type: %s\n\n" % self.xsi_type
-        ret_str += "XML representation:\n%s" % etree.tostring(self.xml)
+        ret_str = "name: {0}\n".format(self.name)
+        ret_str += "Salt type: {0}\n\n".format(self.xsi_type)
+        ret_str += "XML representation:\n{0}".format(etree.tostring(self.xml))
         return ret_str
 
 
