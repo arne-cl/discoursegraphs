@@ -14,6 +14,10 @@ DiscourseGraphs
    :align: right
    :target: http://opensource.org/licenses/BSD-3-Clause
 
+.. image:: https://travis-ci.org/arne-cl/discoursegraphs.svg?branch=master
+   :alt: Build status
+   :align: right
+   :target: https://travis-ci.org/arne-cl/discoursegraphs
 .. image:: https://www.quantifiedcode.com/api/v1/project/3076854b9ea74bed867f12808d98f437/badge.svg
    :alt: Code Issues
    :align: right
@@ -22,7 +26,7 @@ DiscourseGraphs
 This library enables you to process linguistic corpora with multiple levels
 of annotations by:
 
-1. converting the different annotation formats into separate graphs and 
+1. converting the different annotation formats into separate graphs and
 2. merging these graphs into a single multidigraph (based on the common
    tokenization of the annotation layers)
 3. exporting your (merged) graphs into several output formats
@@ -218,7 +222,7 @@ People who downloaded this also like
 
 - `SaltNPepper`_: a converter framework for various linguistic data formats
 - `educe`_: a library for handling discourse-annotated corpora (SDRT, RST and PDTB)
-- `treetools`_: a library for converting treebanks and grammar extraction (supports  
+- `treetools`_: a library for converting treebanks and grammar extraction (supports
   i.a. TigerXML and Negra/Tüba-Export formats)
 - `TCFnetworks`_: library for creating graphs from annotated text corpora (based on TCF).
 
