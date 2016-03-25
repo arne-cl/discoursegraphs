@@ -693,8 +693,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
         # copy token node attributes to the current namespace
         for node_id, node_attrs in other_docgraph.nodes(data=True):
-            if istoken(other_docgraph, node_id):
-                if self.ns+':token' not in self.node[node_id]:
+            if istoken(other_docgraph, node_id) and \
+                self.ns+':token' not in self.node[node_id]:
                     self.node[node_id].update({self.ns+':token': other_docgraph.get_token(node_id)})
         self.add_edges_from(other_docgraph.edges(data=True))
 
