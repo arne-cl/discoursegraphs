@@ -16,14 +16,13 @@ import sys
 import warnings
 from collections import defaultdict
 
-from enum import Enum
 from networkx import MultiDiGraph, is_directed_acyclic_graph
 
 from discoursegraphs.relabel import relabel_nodes
 from discoursegraphs.util import natural_sort_key
 
 
-class EdgeTypes(Enum):
+class EdgeTypes(object):
     pointing_relation = 'points_to'
     # reverse_pointing_relation = 'is_pointed_to_by' # not needed right now
     dominance_relation = 'dominates'

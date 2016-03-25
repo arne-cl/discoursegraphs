@@ -18,7 +18,6 @@ from collections import defaultdict
 from lxml import etree
 from lxml.etree import Comment
 from lxml.builder import ElementMaker
-from enum import Enum
 
 from discoursegraphs import (EdgeTypes, get_text, get_top_level_layers,
                              istoken, select_edges_by, select_nodes_by_layer,
@@ -39,7 +38,7 @@ IGNORED_NODE_ATTRIBS = ('layers', 'label', 'metadata', 'tokens', 'tiger:id',
 IGNORED_TOKEN_ATTRIBS = IGNORED_NODE_ATTRIBS + ('tiger:token', 'tiger:word')
 
 
-class PaulaDTDs(Enum):
+class PaulaDTDs(object):
     """
     enumerator for PAULA XML document type definitions (DTDs)
 
