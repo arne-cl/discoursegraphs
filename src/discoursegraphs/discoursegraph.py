@@ -941,11 +941,10 @@ def get_span(docgraph, node_id, debug=False):
     span : list of str
         sorted list of token nodes (token node IDs)
     """
-    if debug is True:
-        if is_directed_acyclic_graph(docgraph) is False:
-            warnings.warn(
-                ("Can't reliably extract span '{0}' from cyclical graph'{1}'."
-                "Maximum recursion depth may be exceeded.").format(node_id,
+    if debug is True and is_directed_acyclic_graph(docgraph) is False:
+        warnings.warn(
+            ("Can't reliably extract span '{0}' from cyclical graph'{1}'."
+            "Maximum recursion depth may be exceeded.").format(node_id,
                                                                    docgraph))
     span = []
     if docgraph.ns+':token' in docgraph.node[node_id]:
