@@ -31,6 +31,7 @@ class TextCountTarget(object):
     def __init__(self):
         self.count = 0
     def start(self, tag, attrib):
+        """handle the start of a <text> element"""
         if tag == 'text':
             self.count +=1
     def end(self, tag):
@@ -38,6 +39,7 @@ class TextCountTarget(object):
     def data(self, data):
         pass
     def close(self):
+        """return the number of <text> elements"""
         return self.count
 
 

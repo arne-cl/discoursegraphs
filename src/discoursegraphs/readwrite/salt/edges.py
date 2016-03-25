@@ -204,12 +204,14 @@ def get_node_id(edge, node_type):
 
 
 def get_string_onset(edge):
+    """return the onset (int) of a string"""
     onset_label = edge.find('labels[@name="SSTART"]')
     onset_str = onset_label.xpath('@valueString')[0]
     return int(onset_str)
 
 
 def get_string_offset(edge):
+    """return the offset (int) of a string"""
     onset_label = edge.find('labels[@name="SEND"]')
     onset_str = onset_label.xpath('@valueString')[0]
     return int(onset_str)

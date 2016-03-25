@@ -14,16 +14,19 @@ import networkx
 
 
 def print_sorted_counter(counter, tab=1):
+    """print all elements of a counter in descending order"""
     for key, count in sorted(counter.items(), key=itemgetter(1), reverse=True):
         print "{}{} - {}".format('\t'*tab, key, count)
 
 
 def print_most_common(counter, number=5, tab=1):
+    """print the most common elements of a counter"""
     for key, count in counter.most_common(number):
         print "{}{} - {}".format('\t'*tab, key, count)
 
 
 def node_statistics(docgraph):
+    """print basic statistics about a node, e.g. layer/attribute counts"""
     print "Node statistics\n==============="
     layer_counts = Counter()
     attrib_counts = Counter()
@@ -65,6 +68,7 @@ def edge_statistics(docgraph):
 
 
 def info(docgraph):
+    """print node and edge statistics of a document graph"""
     print networkx.info(docgraph), '\n'
     node_statistics(docgraph)
     print

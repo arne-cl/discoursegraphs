@@ -87,6 +87,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
             return ParentedTree.fromstring(rst_tree_str)
 
     def parse_rst_tree(self, rst_tree, indent=0):
+        """parse an RST ParentedTree into this document graph"""
         tree_type = self.get_tree_type(rst_tree)
         assert tree_type in SUBTREE_TYPES
         if tree_type == 'Root':
@@ -158,6 +159,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
 
     @staticmethod
     def get_edu_text(text_subtree):
+        """return the text of the given EDU subtree"""
         assert text_subtree[0].value() == 'text'
         return u' '.join(word.value().decode('utf-8')
                          if isinstance(word, sexpdata.Symbol) else word.decode('utf-8')
@@ -210,6 +212,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         return tree[1][0]
 
     def get_node_id(self, nuc_or_sat):
+        """return the node ID of the given nucleus or satellite"""
         node_type = self.get_node_type(nuc_or_sat)
         if node_type == 'leaf':
             leaf_id = nuc_or_sat[0].leaves()[0]

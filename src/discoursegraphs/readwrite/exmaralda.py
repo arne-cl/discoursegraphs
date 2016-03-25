@@ -97,6 +97,7 @@ class ExmaraldaFile(object):
 
     def __add_document_structure(self, docgraph,
                                  remove_redundant_layers=True):
+        """return an Exmaralda XML etree representation a docgraph"""
         E = self.E
         root = self.__create_document_header()
 
@@ -430,6 +431,10 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
         return int(token_id[1:])
 
     def indexdelta(self, stop_id, start_id):
+        """returns the distance (int) between to idices.
+
+        Two consecutive tokens must have a delta of 1.
+        """
         return self.tokenid2index(stop_id) - self.tokenid2index(start_id)
 
     def gen_token_range(self, start_id, stop_id):

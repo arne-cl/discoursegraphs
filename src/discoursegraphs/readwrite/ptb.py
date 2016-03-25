@@ -110,6 +110,7 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         self._node_id += 1 # iterate after last subtree has been processed
         
     def _parse_sentencetree(self, tree, parent_node_id=None, ignore_traces=True):
+        """parse a sentence Tree into this document graph"""
         def get_nodelabel(node):
             if isinstance(node, nltk.tree.Tree):
                 return node.label()

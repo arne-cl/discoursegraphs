@@ -214,5 +214,6 @@ def extract_primary_text(sTextualDS_node):
 
 
 def get_nodes_by_layer(tree, layer_number):
+    """return all nodes beloning to the given layer"""
     return tree.findall(
         "//nodes[@layers='//@layers.{0}']".format(layer_number))

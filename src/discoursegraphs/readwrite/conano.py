@@ -88,6 +88,10 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
             assert self.is_valid(tree)
 
     def _add_element(self, element, parent_node):
+        """
+        add an element (i.e. a unit/connective/discourse or modifier)
+        to the docgraph.
+        """
         if element.tag == 'unit':
             element_node_id = element.attrib['id']+':'+element.attrib['type']
             node_layers = {self.ns, self.ns+':unit', self.ns+':'+element.attrib['type']}
@@ -131,6 +135,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
 
 
     def _add_token(self, token, parent_node='root'):
+        """add a token to this docgraph"""
         if parent_node == 'root':
             parent_node = self.root
 

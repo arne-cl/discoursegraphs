@@ -100,6 +100,7 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
             self._add_token_span_to_document(conclu)
 
     def _add_token_to_document(self, token_string, token_attrs=None):
+        """add a token node to this document graph"""
         token_feat = {self.ns+':token': token_string}
         if token_attrs:
             token_attrs.update(token_feat)
@@ -113,6 +114,7 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
         return token_id
 
     def _add_utterance_to_document(self, utterance):
+        """add an utterance to this docgraph (as a spanning relation)"""
         utter_id = 'utterance_{}'.format(utterance.attrib['nrgen'])
         norm, lemma, pos = [elem.text.split()
                             for elem in utterance.iterchildren()]
@@ -139,6 +141,7 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
             self.act_count += 1
 
     def _add_dominance_relation(self, source, target):
+        """add a dominance relation to this docgraph"""
         # TODO: fix #39, so we don't need to add nodes by hand
         self.add_node(target, layers={self.ns, self.ns+':unit'})
         self.add_edge(source, target,
@@ -146,6 +149,7 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
                       edge_type=EdgeTypes.dominance_relation)
 
     def _add_spanning_relation(self, source, target):
+        """add a spanning relation to this docgraph"""
         self.add_edge(source, target, layers={self.ns, self.ns+':unit'},
                       edge_type=EdgeTypes.spanning_relation)
 
