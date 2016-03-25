@@ -32,7 +32,7 @@ from discoursegraphs.util import xmlprint, make_labels_explicit, find_files
 
 
 SRC_ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
-PACKAGE_ROOT_DIR = os.path.abspath(os.path.join(SRC_ROOT_DIR, '..'))
+PACKAGE_ROOT_DIR = os.path.abspath(os.path.join(SRC_ROOT_DIR, '../..'))
 DATA_ROOT_DIR = os.path.join(PACKAGE_ROOT_DIR, 'data')
 
 # corpora can't be imported before root dirs and ``find_files`` are known
