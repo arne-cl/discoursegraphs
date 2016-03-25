@@ -616,6 +616,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         self.add_edge(parent_id, word_id, edge_type=dg.EdgeTypes.dominance_relation)
         self.parse_child_elements(word)
 
+    @staticmethod
     def element_attribs_to_dict(self, element):
         """
         converts the .attrib attributes of an etree element (from ``lxml.etree._Attrib``)
@@ -624,6 +625,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         return {key: val for (key, val) in element.attrib.items()
                 if key != add_ns('id')}
 
+    @staticmethod
     def get_element_id(self, element):
         """
         Returns the ID of an element (or, if the element doesn't have one:
@@ -639,6 +641,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
                 'Neither the element "{}" nor its parent "{}" '
                 'have an ID'.format(element, element.getparent()))
 
+    @staticmethod
     def get_parent_id(self, element):
         """returns the ID of the parent of the given element"""
         if 'parent' in element.attrib:
