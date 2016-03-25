@@ -132,7 +132,6 @@ class TokenNode(SaltNode):
     """
     def __init__(self, element, element_id, doc_id):
         super(TokenNode, self).__init__(element, element_id, doc_id)
-        pass
 
 
 class SpanNode(SaltNode):
@@ -162,7 +161,6 @@ class SpanNode(SaltNode):
     """
     def __init__(self, element, element_id, doc_id):
         super(SpanNode, self).__init__(element, element_id, doc_id)
-        pass
 
 
 class StructureNode(SaltNode):
@@ -184,7 +182,6 @@ class StructureNode(SaltNode):
     """
     def __init__(self, element, element_id, doc_id):
         super(StructureNode, self).__init__(element, element_id, doc_id)
-        pass
 
 
 def extract_sentences(nodes, token_node_indices):
