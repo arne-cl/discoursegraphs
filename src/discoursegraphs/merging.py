@@ -111,11 +111,10 @@ def merging_cli(debug=False):
     elif args.output_format == 'graphml':
         dg.write_graphml(discourse_docgraph, args.output_file)
     elif args.output_format == 'neo4j':
-        import requests
         from discoursegraphs.readwrite.neo4j import upload_to_neo4j
         try:
             upload_to_neo4j(discourse_docgraph)
-        except requests.exceptions.ConnectionError as e:
+        except Exception as e:
             sys.stderr.write(
                 ("Can't upload graph to Neo4j server. "
                  "Is it running?\n{}\n".format(e)))
