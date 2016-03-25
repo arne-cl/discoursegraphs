@@ -17,7 +17,7 @@ install_requires = [
     # List your project dependencies here.
     # For more details, see:
     # http://packages.python.org/distribute/setuptools.html#declaring-dependencies
-    "nltk", "enum", "lxml", "networkx", "pygraphviz",
+    "nltk", "lxml", "networkx", "pygraphviz",
     "brewer2mpl", "unidecode", "neonx", "pydot2"
 ]
 

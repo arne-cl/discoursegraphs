@@ -2,7 +2,6 @@
 git+https://github.com/arne-cl/neonx.git # use my modified version of neonx
 
 brewer2mpl==1.4.1
-enum==0.4.6
 lxml==3.6.0
 networkx==1.11
 nltk==3.2
