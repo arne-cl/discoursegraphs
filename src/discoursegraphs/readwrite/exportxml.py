@@ -42,17 +42,18 @@ class TextCountTarget(object):
 
 
 class ExportXMLCorpus(object):
+    """
+    represents an ExportXML formatted corpus (e.g. Tüba-D/Z) as an
+    iterable over ExportXMLDocumentGraph instances (or an iterable over
+    <text> elements if ``debug`` is set to ``True``).
+
+    This class is used to 'parse' an ExportXML file iteratively, using as
+    little memory as possible. To retrieve the document graphs of the
+    documents contained in the corpus, simply iterate over the class
+    instance (or use the ``.next()`` method).
+    """
     def __init__(self, exportxml_file, name=None, debug=False):
         """
-        represents an ExportXML formatted corpus (e.g. Tüba-D/Z) as an
-        iterable over ExportXMLDocumentGraph instances (or an iterable over
-        <text> elements if ``debug`` is set to ``True``).
-
-        This class is used to 'parse' an ExportXML file iteratively, using as
-        little memory as possible. To retrieve the document graphs of the
-        documents contained in the corpus, simply iterate over the class
-        instance (or use the ``.next()`` method).
-
         Parameters
         ----------
         exportxml_file : str

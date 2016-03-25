@@ -23,6 +23,7 @@ from discoursegraphs.util import natural_sort_key
 
 
 class EdgeTypes(object):
+    """Enumerator of edge types"""
     pointing_relation = 'points_to'
     # reverse_pointing_relation = 'is_pointed_to_by' # not needed right now
     dominance_relation = 'dominates'
