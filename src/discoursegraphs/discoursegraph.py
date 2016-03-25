@@ -618,7 +618,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
             existing_layers.add(layer)
             self.node[element]['layers'] = existing_layers
         elif isinstance(element, tuple): # edge repr. by (source, target)
-            assert len(element) == 2 and all(isinstance(node, str) for node in element)
+            assert len(element) == 2
+            assert all(isinstance(node, str) for node in element)
             source_id, target_id = element
             # this class is based on a multi-digraph, so we'll have to iterate
             # over all edges between the two nodes (even if there's just one)
