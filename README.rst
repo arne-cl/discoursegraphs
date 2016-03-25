@@ -18,6 +18,10 @@ DiscourseGraphs
    :alt: Build status
    :align: right
    :target: https://travis-ci.org/arne-cl/discoursegraphs
+.. image:: https://codecov.io/github/arne-cl/discoursegraphs/coverage.svg?branch=master
+   :alt: Test coverage
+   :align: right
+   :target: https://codecov.io/github/arne-cl/discoursegraphs?branch=master
 .. image:: https://www.quantifiedcode.com/api/v1/project/3076854b9ea74bed867f12808d98f437/badge.svg
    :alt: Code Issues
    :align: right
