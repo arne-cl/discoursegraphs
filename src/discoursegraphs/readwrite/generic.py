@@ -167,5 +167,5 @@ def remove_root_metadata(docgraph):
         for merged_rootnode in docgraph.merged_rootnodes:
             try:  # some of these nodes may not exist any longer
                 docgraph.node[merged_rootnode].pop('metadata', None)
-            except:
+            except KeyError as e:
                 pass

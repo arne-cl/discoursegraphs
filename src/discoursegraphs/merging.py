@@ -70,7 +70,7 @@ def merging_cli(debug=False):
         # node.
         try:
             discourse_docgraph.remove_node('anaphoricity:root_node')
-        except:
+        except networkx.NetworkXError as e:  # ignore if the node doesn't exist
             pass
 
     if args.conano_file:
