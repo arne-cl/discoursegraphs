@@ -27,10 +27,13 @@ def test_write_brat():
 
 
 def test_write_conll():
-    """convert a PCC document into a conll file."""
+    """convert a PCC coreference document into a conll file."""
+    coref_file = dg.corpora.pcc.get_files_by_layer('coreference')[0]
+    cdg = dg.read_mmax2(coref_file)
+
     temp_file = NamedTemporaryFile()
     temp_file.close()
-    dg.write_conll(maz_1423, temp_file.name)
+    dg.write_conll(cdg, temp_file.name)
 
 
 def test_write_dot():
