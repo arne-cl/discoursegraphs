@@ -78,10 +78,9 @@ for the following tools:
 * geoff format, used by the `neo4j <http://neo4j.com/>`_ graph database (please
   use my fork of the `neonx <https://github.com/arne-cl/neonx>`_ library to make this work)
 * direct data export into a running neon4j database (see above)
-* `GEXF <http://gexf.net/format/>`_, `GML <http://www.fim.uni-passau.de/index.php?id=17297&L=1>`_
-  and `GraphML <http://graphml.graphdrawing.org/>`_ (common interchange formats for graphs used
-  by various tools such as `Gephi <https://gephi.github.io/>`_ and
-  `Cytoscape <http://www.cytoscape.org/>`_)
+* `GEXF <http://gexf.net/format/>`_  and `GraphML <http://graphml.graphdrawing.org/>`_ 
+  (common interchange formats for graphs used by various tools such as
+  `Gephi <https://gephi.github.io/>`_ and `Cytoscape <http://www.cytoscape.org/>`_)
 * `PAULA XML 1.1 <https://www.sfb632.uni-potsdam.de/en/paula.html>`_, an exchange format
   for linguistic data (exporter is still buggy)
 * `EXMARaLDA <http://exmaralda.org/>`_, a tool for annotating spans in spoken
