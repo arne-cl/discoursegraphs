@@ -70,13 +70,6 @@ def test_write_gexf():
     dg.write_gexf(maz_1423, temp_file.name)
 
 
-def test_write_geoff():
-    """convert a PCC document into a geoff file."""
-    temp_file = NamedTemporaryFile()
-    temp_file.close()
-    dg.write_geoff(maz_1423, temp_file.name)
-
-
 def test_write_paula():
     """convert a PCC document into a paula file."""
     temp_dir = mkdtemp()

@@ -53,7 +53,6 @@ def write_geoff(discoursegraph, output_file):
     converts a DiscourseDocumentGraph into a Geoff file and
     writes it to the given file (or file path).
     """
-    assert isinstance(output_file, (str, file))
     if isinstance(output_file, str):
         with open(output_file, 'w') as outfile:
             outfile.write(convert_to_geoff(discoursegraph))
