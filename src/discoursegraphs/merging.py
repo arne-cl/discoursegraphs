@@ -38,7 +38,7 @@ def merging_cli(debug=False):
                         help='MMAX2 file to be merged')
     parser.add_argument(
         '-o', '--output-format', default='dot',
-        help=('output format: brackets, brat, dot, pickle, geoff, gexf, gml, graphml, '
+        help=('output format: brackets, brat, dot, pickle, geoff, gexf, graphml, '
               'neo4j, exmaralda, conll, paula, no-output'))
     parser.add_argument('output_file', nargs='?', default=sys.stdout)
 
@@ -106,8 +106,6 @@ def merging_cli(debug=False):
         print ''  # this is just cosmetic for stdout
     elif args.output_format == 'gexf':
         dg.write_gexf(discourse_docgraph, args.output_file)
-    elif args.output_format == 'gml':
-        dg.write_gml(discourse_docgraph, args.output_file)
     elif args.output_format == 'graphml':
         dg.write_graphml(discourse_docgraph, args.output_file)
     elif args.output_format == 'neo4j':

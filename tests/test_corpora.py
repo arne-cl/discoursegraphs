@@ -55,15 +55,6 @@ def test_write_exb():
     dg.write_exb(maz_1423, temp_file.name)
 
 
-@pytest.mark.skip(reason="node IDs must match '^[A-Za-z][0-9A-Za-z]*$'")
-# cf. http://www.fim.uni-passau.de/fileadmin/files/lehrstuhl/brandenburg/projekte/gml/gml-technical-report.pdf
-def test_write_gml():
-    """convert a PCC document into a gml file."""
-    temp_file = NamedTemporaryFile()
-    temp_file.close()
-    dg.write_gml(maz_1423, temp_file.name)
-
-
 def test_write_graphml():
     """convert a PCC document into a graphml file."""
     temp_file = NamedTemporaryFile()
