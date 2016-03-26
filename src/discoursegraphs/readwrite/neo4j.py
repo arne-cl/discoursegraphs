@@ -7,6 +7,8 @@ The ``neo4j`` module converts a ``DiscourseDocumentGraph`` into a ``Geoff``
 string and/or exports it to a running ``Neo4j`` graph database.
 """
 
+from copy import deepcopy
+
 from neonx import write_to_neo, get_geoff
 from discoursegraphs.util import ensure_utf8
 from discoursegraphs.readwrite.generic import layerset2list
@@ -40,9 +42,10 @@ def convert_to_geoff(discoursegraph):
     geoff : string
         a geoff string representation of the discourse graph.
     """
-    layerset2list(discoursegraph)
-    add_node_ids_as_labels(discoursegraph)
-    return get_geoff(discoursegraph, 'LINKS_TO')
+    dg_copy = deepcopy(discoursegraph)
+    layerset2list(dg_copy)
+    add_node_ids_as_labels(dg_copy)
+    return get_geoff(dg_copy, 'LINKS_TO')
 
 
 def write_geoff(discoursegraph, output_file):

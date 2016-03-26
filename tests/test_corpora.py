@@ -10,6 +10,7 @@ import pytest
 import discoursegraphs as dg
 from discoursegraphs.corpora import pcc
 
+
 maz_1423 = pcc['maz-1423']
 
 
@@ -75,7 +76,7 @@ def test_write_geoff():
     temp_file.close()
     dg.write_geoff(maz_1423, temp_file.name)
 
-@pytest.mark.skip(reason="AssertionError: 'layers' parameter must be given as a set of strings.")
+
 def test_write_paula():
     """convert a PCC document into a paula file."""
     temp_dir = mkdtemp()
