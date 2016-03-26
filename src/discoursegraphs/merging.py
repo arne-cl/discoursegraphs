@@ -100,7 +100,7 @@ def merging_cli(debug=False):
         import cPickle as pickle
         with open(args.output_file, 'wb') as pickle_file:
             pickle.dump(discourse_docgraph, pickle_file)
-    elif args.output_format == 'geoff':
+    elif args.output_format in ('geoff', 'neo4j'):
         from discoursegraphs.readwrite.neo4j import write_geoff
         write_geoff(discourse_docgraph, args.output_file)
         print ''  # this is just cosmetic for stdout
@@ -108,14 +108,6 @@ def merging_cli(debug=False):
         dg.write_gexf(discourse_docgraph, args.output_file)
     elif args.output_format == 'graphml':
         dg.write_graphml(discourse_docgraph, args.output_file)
-    elif args.output_format == 'neo4j':
-        from discoursegraphs.readwrite.neo4j import upload_to_neo4j
-        try:
-            upload_to_neo4j(discourse_docgraph)
-        except Exception as e:
-            sys.stderr.write(
-                ("Can't upload graph to Neo4j server. "
-                 "Is it running?\n{}\n".format(e)))
     elif args.output_format == 'exmaralda':
         from discoursegraphs.readwrite.exmaralda import write_exb
         write_exb(discourse_docgraph, args.output_file)

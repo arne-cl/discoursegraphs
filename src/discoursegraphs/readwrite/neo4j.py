@@ -4,7 +4,7 @@
 
 """
 The ``neo4j`` module converts a ``DiscourseDocumentGraph`` into a ``Geoff``
-string and/or exports it to a running ``Neo4j`` graph database.
+string which can be imported into a ``Neo4j`` graph database.
 """
 
 from copy import deepcopy
@@ -63,26 +63,3 @@ def write_geoff(discoursegraph, output_file):
 
 # alias for write_geoff(): convert document graph into a Geoff file
 write_neo4j = write_geoff
-
-
-def upload_to_neo4j(discoursegraph):
-    """
-    Parameters
-    ----------
-    discoursegraph : DiscourseDocumentGraph
-        the discourse document graph to be uploaded to the local neo4j
-        instance/
-
-    Returns
-    -------
-    neonx_results : list of dict
-        list of results from the `write_to_neo` function of neonx.
-    """
-    layerset2list(discoursegraph)
-    add_node_ids_as_labels(discoursegraph)
-    # neonx requires a label_name as a fallback, in case a node doesn't
-    # have the specified label_attrib to extract the label from
-    return write_to_neo("http://localhost:7474/db/data/",
-                        discoursegraph, edge_rel_name='LINKS_TO',
-                        edge_rel_attrib='edge_type', label_attrib='label',
-                        label_name='discoursegraph:fallback_label')

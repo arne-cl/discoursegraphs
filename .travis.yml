@@ -9,7 +9,7 @@ install:
 
 # command to run tests
 script:
-    - py.test --cov=./ -m "not integration"
+    - py.test --cov=./
 
 # upload coverage statistics to codecov.io
 after_success:

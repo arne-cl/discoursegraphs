@@ -132,9 +132,9 @@ Usage
 
 The command line interface of DiscourseGraphs allows you to
 merge syntax, rhetorical structure, connectives and expletives
-annotation files into one graph and either uploads it to a running
-instance of the `neo4j`_ graph database or generates output in `dot`_
-or `geoff`_ format.
+annotation files into one graph and to  store this graph in one of several
+output formats (e.g. the `geoff`_ format used by the `neo4j`_ graph database
+or the `dot`_ format used by the graphviz plotting tool).
 
 .. _`neo4j`:  http://www.neo4j.org/
 .. _`dot`: http://www.graphviz.org/content/dot-language

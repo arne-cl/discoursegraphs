@@ -40,7 +40,7 @@ def generic_converter_cli(docgraph_class, file_descriptor=''):
 def layerset2list(discoursegraph):
     """
     typecasts all `layers` sets to lists to make the graph
-    exportable (e.g. into the `geoff` format or to upload the graph to neo4j).
+    exportable (e.g. into the `geoff` format).
 
     Parameters
     ----------
