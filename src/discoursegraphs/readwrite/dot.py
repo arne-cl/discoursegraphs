@@ -9,7 +9,6 @@ This module contains code to convert document graphs to graphviz graphs
 
 import re
 import codecs
-from tempfile import NamedTemporaryFile
 
 import networkx as nx
 from networkx.drawing.nx_agraph import write_dot
