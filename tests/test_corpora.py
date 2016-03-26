@@ -2,10 +2,84 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
+from tempfile import NamedTemporaryFile
+
 import pytest
 
 import discoursegraphs as dg
 from discoursegraphs.corpora import pcc
+
+maz_1423 = pcc['maz-1423']
+
+
+def test_write_brackets():
+    """convert a PCC document into a brackets file."""
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    dg.write_brackets(maz_1423, temp_file.name)
+
+
+def test_write_brat():
+    """convert a PCC document into a brat file."""
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    dg.write_brat(maz_1423, temp_file.name)
+
+
+def test_write_conll():
+    """convert a PCC document into a conll file."""
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    dg.write_conll(maz_1423, temp_file.name)
+
+
+def test_write_dot():
+    """convert a PCC document into a dot file."""
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    dg.write_dot(maz_1423, temp_file.name)
+
+
+def test_write_exb():
+    """convert a PCC document into a exb file."""
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    dg.write_exb(maz_1423, temp_file.name)
+
+
+def test_write_gml():
+    """convert a PCC document into a gml file."""
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    dg.write_gml(maz_1423, temp_file.name)
+
+
+def test_write_graphml():
+    """convert a PCC document into a graphml file."""
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    dg.write_graphml(maz_1423, temp_file.name)
+
+
+def test_write_gexf():
+    """convert a PCC document into a gexf file."""
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    dg.write_gexf(maz_1423, temp_file.name)
+
+
+def test_write_geoff():
+    """convert a PCC document into a geoff file."""
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    dg.write_geoff(maz_1423, temp_file.name)
+
+
+def test_write_paula():
+    """convert a PCC document into a paula file."""
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    dg.write_paula(maz_1423, temp_file.name)
 
 
 @pytest.mark.slowtest
