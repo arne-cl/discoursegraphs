@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
+import pkgutil
 from tempfile import NamedTemporaryFile
 
 import pytest
@@ -36,6 +37,10 @@ def test_write_conll():
     dg.write_conll(cdg, temp_file.name)
 
 
+@pytest.mark.skipif(pkgutil.find_loader("pygraphviz") == None,
+                    reason="requires pygraphviz")
+# pygraphviz may be hard to install on Ubuntu
+# http://stackoverflow.com/questions/32885486/pygraphviz-importerror-undefined-symbol-agundirected
 def test_write_dot():
     """convert a PCC document into a dot file."""
     temp_file = NamedTemporaryFile()
