@@ -125,9 +125,17 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
             if ignore_traces and node_label == '-NONE-': # ignore tokens annotated for traces
                 continue
             if isinstance(subtree, nltk.tree.Tree):
-                node_attrs = {'label': node_label}
+                if len(subtree) > 1: # subtree is a syntactic category
+                    node_attrs = {'label': node_label,
+                                  self.ns+':cat': node_label}
+                    layers = {self.ns, self.ns+':syntax'}
+                else:  # subtree represents a token and its POS tag
+                    node_attrs = {'label': node_label}
+                    layers = {self.ns}
+
                 edge_type = dg.EdgeTypes.dominance_relation
-                self.add_node(self._node_id, attr_dict=node_attrs)
+                self.add_node(self._node_id, layers=layers,
+                              attr_dict=node_attrs)
                 self.add_edge(root_node_id, self._node_id, edge_type=edge_type)
 
             else: # isinstance(subtree, unicode); subtree is a token
