@@ -175,7 +175,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
             ns = self.ns
 
         for node_id in select_nodes_by_layer(self, '{}:{}'.format(ns, layer)):
-            if self.node[node_id][cat_key] == cat_val:
+            if self.node[node_id][self.ns+':'+cat_key] == cat_val:
                 yield node_id
 
     def add_node(self, n, layers=None, attr_dict=None, **attr):
