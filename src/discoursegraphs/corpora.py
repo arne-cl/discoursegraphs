@@ -19,6 +19,7 @@ Attribution-NonCommercial-ShareAlike license.
 import fnmatch
 from itertools import chain
 import os
+import random
 import re
 
 import discoursegraphs as dg
@@ -95,6 +96,11 @@ class PCC(object):
             for layer_graph in layer_graphs[1:]:
                 doc_graph.merge_graphs(layer_graph)
         return doc_graph
+
+    def get_random_document(self):
+        """return the document graph of a random PCC document"""
+        random_docid = random.choice(self.document_ids)
+        return self[random_docid]
 
     def get_files_by_layer(self, layer_name, file_pattern='*'):
         """
