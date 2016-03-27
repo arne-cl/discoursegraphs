@@ -15,6 +15,7 @@ This module contains some tests for the ``discoursegraph`` module.
 
 
 class TestDiscourseDocumentGraph(object):
+    """create and manipulate document graphs"""
     def setup(self):
         """create an empty DiscourseDocumentGraph"""
         self.docgraph = dg.DiscourseDocumentGraph()

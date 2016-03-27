@@ -97,8 +97,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
         for token_id, token_str in self.get_tokens():
             offset = onset + len(token_str)
-            self.node[token_id]['{}:{}'.format(offset_ns, 'onset')] = onset
-            self.node[token_id]['{}:{}'.format(offset_ns, 'offset')] = offset
+            self.node[token_id]['{0}:{1}'.format(offset_ns, 'onset')] = onset
+            self.node[token_id]['{0}:{1}'.format(offset_ns, 'offset')] = offset
             onset = offset + 1
 
     def get_offsets(self, token_node_id=None, offset_ns=None):
@@ -134,8 +134,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
             if token_node_id is not None:
                 assert istoken(self, token_node_id), \
                     "'{}' is not a token node.".format(token_node_id)
-                onset = self.node[token_node_id]['{}:{}'.format(offset_ns, 'onset')]
-                offset = self.node[token_node_id]['{}:{}'.format(offset_ns, 'offset')]
+                onset = self.node[token_node_id]['{0}:{1}'.format(offset_ns, 'onset')]
+                offset = self.node[token_node_id]['{0}:{1}'.format(offset_ns, 'offset')]
                 return (onset, offset)
             else:  # return offsets for all tokens in the document
                 return self._get_all_offsets(offset_ns)
@@ -165,8 +165,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
             they occur in the document.
         """
         for token_id, _token_str in self.get_tokens():
-            onset = self.node[token_id]['{}:{}'.format(offset_ns, 'onset')]
-            offset = self.node[token_id]['{}:{}'.format(offset_ns, 'offset')]
+            onset = self.node[token_id]['{0}:{1}'.format(offset_ns, 'onset')]
+            offset = self.node[token_id]['{0}:{1}'.format(offset_ns, 'offset')]
             yield (token_id, onset, offset)
 
     def get_phrases(self, ns=None, layer='syntax', cat_key='cat', cat_val='NP'):
@@ -174,7 +174,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
         if not ns:
             ns = self.ns
 
-        for node_id in select_nodes_by_layer(self, '{}:{}'.format(ns, layer)):
+        for node_id in select_nodes_by_layer(self, '{0}:{1}'.format(ns, layer)):
             if self.node[node_id][self.ns+':'+cat_key] == cat_val:
                 yield node_id
 
