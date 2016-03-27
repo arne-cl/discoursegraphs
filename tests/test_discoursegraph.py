@@ -13,8 +13,6 @@ import discoursegraphs as dg
 This module contains some tests for the ``discoursegraph`` module.
 """
 
-import pytest
-
 
 class TestDiscourseDocumentGraph:
     def setup(self):
