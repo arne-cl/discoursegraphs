@@ -605,20 +605,15 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
         Parameters
         ----------
-        element : str or (str, str)
-            the ID of a node (node ID str) or
-            edge (source node ID str, target node ID str)
+        element : str, int, (str/int, str/int)
+            the ID of a node or edge (source node ID, target node ID)
         layer : str
             the layer that the element shall be added to
         """
         assert isinstance(layer, str), "Layers must be strings!"
-        if isinstance(element, str): # node
-            existing_layers = self.node[element]['layers']
-            existing_layers.add(layer)
-            self.node[element]['layers'] = existing_layers
-        elif isinstance(element, tuple): # edge repr. by (source, target)
+        if isinstance(element, tuple): # edge repr. by (source, target)
             assert len(element) == 2
-            assert all(isinstance(node, str) for node in element)
+            assert all(isinstance(node, (str, int)) for node in element)
             source_id, target_id = element
             # this class is based on a multi-digraph, so we'll have to iterate
             # over all edges between the two nodes (even if there's just one)
@@ -627,6 +622,11 @@ class DiscourseDocumentGraph(MultiDiGraph):
                 existing_layers = edges[edge]['layers']
                 existing_layers.add(layer)
                 edges[edge]['layers'] = existing_layers
+        if isinstance(element, (str, int)): # node
+            existing_layers = self.node[element]['layers']
+            existing_layers.add(layer)
+            self.node[element]['layers'] = existing_layers
+
 
     def get_token(self, token_node_id, token_attrib='token'):
         """
