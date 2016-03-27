@@ -108,7 +108,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
         Parameters
         ----------
-        token_node_id : str or None
+        token_node_id : str, int or None
             Node ID of a token from which we want to retrieve the start and end
             position. If no node ID is given, this method will yield
             (token node ID, start pos, end pos) tuples containing data for all
@@ -127,14 +127,13 @@ class DiscourseDocumentGraph(MultiDiGraph):
             will be returned, representing all the tokens in the order they
             occur in the document.
         """
-        assert istoken(self, token_node_id), \
-            "'{}' is not a token node.".format(token_node_id)
-
         if offset_ns is None:
             offset_ns = self.ns
 
         try:
-            if token_node_id:
+            if token_node_id is not None:
+                assert istoken(self, token_node_id), \
+                    "'{}' is not a token node.".format(token_node_id)
                 onset = self.node[token_node_id]['{}:{}'.format(offset_ns, 'onset')]
                 offset = self.node[token_node_id]['{}:{}'.format(offset_ns, 'offset')]
                 return (onset, offset)
