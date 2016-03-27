@@ -27,8 +27,10 @@ def quote_for_pydot(string):
 
 
 def unquote_from_pydot(string):
-    """removes the "-char from the beginning and end of a pydot-quoted string"""
-    return UNQUOTE_RE.match(string).groups()[0]
+    """
+    removes the "-char from the beginning and end of a pydot-quoted string
+    and de-escapes \\-escaped "-chars."""
+    return UNQUOTE_RE.match(string).groups()[0].replace('\\"', '"')
 
 
 def _preprocess_nodes_for_pydot(nodes_with_data):
@@ -96,4 +98,4 @@ def print_dot(docgraph):
         %load_ext gvmagic
     """
     stripped_graph = preprocess_for_pydot(docgraph)
-    return nx.to_pydot(stripped_graph).to_string()
+    return nx.drawing.nx_pydot.to_pydot(stripped_graph).to_string()
