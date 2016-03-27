@@ -1,0 +1,89 @@
+;; Source: https://en.wikipedia.org/wiki/Noam_Chomsky
+;; License: Creative Commons Attribution-ShareAlike 3.0 Unported License
+;; Parser: Stanford CoreNLP demo (http://nlp.stanford.edu:8080/parser/index.jsp)
+
+(ROOT
+  (S
+    (NP (NNP Chomsky))
+    (VP (VBZ is)
+      (NP
+        (NP
+          (NP (DT a) (JJ major) (NN figure))
+          (PP (IN in)
+            (NP (JJ analytic) (NN philosophy))))
+        (, ,)
+        (CC and)
+        (NP
+          (NP (CD one))
+          (PP (IN of)
+            (NP
+              (NP (DT the) (NNS founders))
+              (PP (IN of)
+                (NP
+                  (NP (DT the) (NN field))
+                  (PP (IN of)
+                    (NP (JJ cognitive) (NN science))))))))))
+    (. .)))
+
+(ROOT
+  (S
+    (NP (PRP He))
+    (VP
+      (VP (VBZ has)
+        (VP (VBN spent)
+          (NP
+            (QP (JJR more) (IN than) (PDT half)))
+          (NP (DT a) (NN century))
+          (PP (IN at)
+            (NP
+              (NP (DT the) (NNP Massachusetts) (NNP Institute))
+              (PP (IN of)
+                (NP
+                  (NP
+                    (NP (NNP Technology))
+                    (PRN (-LRB- -LRB-)
+                      (NP (NNP MIT))
+                      (-RRB- -RRB-)))
+                  (, ,)
+                  (SBAR
+                    (WHADVP (WRB where))
+                    (S
+                      (NP (PRP he))
+                      (VP (VBZ is)
+                        (NP (NNP Institute) (NNP Professor) (NNP Emeritus)))))))))))
+      (, ,)
+      (CC and)
+      (VP (VBZ is)
+        (NP
+          (NP (DT the) (NN author))
+          (PP (IN of)
+            (NP
+              (NP
+                (QP (IN over) (CD 100))
+                (NNS books))
+              (PP (IN on)
+                (NP
+                  (NP (NNS topics))
+                  (PP (JJ such) (IN as)
+                    (NP
+                      (NP (NNS linguistics))
+                      (, ,)
+                      (NP (NN war))
+                      (, ,)
+                      (NP (NNS politics))
+                      (, ,)
+                      (CC and)
+                      (NP (JJ mass) (NNS media)))))))))))
+    (. .)))
+
+(ROOT
+  (S
+    (ADVP (RB Ideologically))
+    (, ,)
+    (NP (PRP he))
+    (VP (VBZ aligns)
+      (PP (IN with)
+        (NP (NN anarcho-syndicalism)
+          (CC and)
+          (NN libertarian) (NN socialism))))
+    (. .)))
