@@ -66,11 +66,14 @@ class TestDiscourseDocumentGraph(object):
             {'layers': {'discoursegraph', 'foo', 'bar', 'bla', 'xyz', 'abc'}}
 
         # try to add node with bad layers
+        # 'layers' must be a set of str
         with pytest.raises(AssertionError) as excinfo:
-            # 'layers' must be a set of str
             self.docgraph.add_node(666, layers='foo')
+        with pytest.raises(AssertionError) as excinfo:
             self.docgraph.add_node(666, layers=['foo'])
+        with pytest.raises(AssertionError) as excinfo:
             self.docgraph.add_node(666, layers={23})
+        with pytest.raises(AssertionError) as excinfo:
             self.docgraph.add_node(666, layers={'foo', 23})
 
     def test_add_node_with_attributes(self):
@@ -108,11 +111,15 @@ class TestDiscourseDocumentGraph(object):
              'cat': 'NP', 'score': 0.5}
 
         # try to add node with bad attributes
-        with pytest.raises(AttributeError) as excinfo:
-            # 'attr_dict' must be a dict
+        # 'attr_dict' must be a dict
+        with pytest.raises(AssertionError) as excinfo:
             self.docgraph.add_node(666, attr_dict='foo')
+        with pytest.raises(AssertionError) as excinfo:
             self.docgraph.add_node(666, attr_dict=['foo'])
+        with pytest.raises(AssertionError) as excinfo:
+            #~ import pudb; pudb.set_trace()
             self.docgraph.add_node(666, attr_dict={23})
+        with pytest.raises(AssertionError) as excinfo:
             self.docgraph.add_node(666, attr_dict={'foo', 23})
 
     def test_add_nodes_from(self):
@@ -208,19 +215,24 @@ class TestDiscourseDocumentGraph(object):
         assert self.docgraph[4][5] == {0: {'layers': {'fake', 'ptb'}, 'score': 0.5}}
 
 
+        # ebunch must be a (u, v, attribs) or (u, v, key, attribs) tuple
         with pytest.raises(AttributeError) as excinfo:
-            # ebunch must be a (u, v, attribs) or (u, v, key, attribs) tuple
             self.docgraph.add_edges_from(ebunch=[(1, 2)])
+        with pytest.raises(AttributeError) as excinfo:
             self.docgraph.add_edges_from(ebunch=[(1, 2)], attr_dict='bogus')
-            # attr_dict must be a dict
+
+        # attr_dict must be a dict
+        with pytest.raises(AttributeError) as excinfo:
             self.docgraph.add_edges_from(
                 ebunch=[(1, 2, {'layers': {'ptb'}})],
                 attr_dict='bogus')
 
+        # (u, v, attribs): attribs must be a dict
         with pytest.raises(AssertionError) as excinfo:
-            # (u, v, attribs): attribs must be a dict
             self.docgraph.add_edges_from([(1, 2, 'bar')])
-            # (u, v, attribs): attribs must contain a 'layers' key
+
+        # (u, v, attribs): attribs must contain a 'layers' key
+        with pytest.raises(AssertionError) as excinfo:
             self.docgraph.add_edges_from([(1, 2, {'score': 0.5})])
 
     def test_add_layer(self):
