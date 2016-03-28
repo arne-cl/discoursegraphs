@@ -832,7 +832,7 @@ def get_kwic(tokens, index, context_window=5):
         the tokens succeding the keyword
     """
     text_length = len(tokens)
-    start_before = max(0, index-context_window-1)
+    start_before = max(0, index-context_window)
     end_before = max(0, index)
     before = tokens[start_before:end_before]
     start_after = min(text_length, index+1)

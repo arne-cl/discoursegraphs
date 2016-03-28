@@ -8,10 +8,23 @@ import os
 import pytest
 
 import discoursegraphs as dg
+from discoursegraphs.discoursegraph import create_token_mapping, get_kwic
 
 """
 This module contains some tests for the ``discoursegraph`` module.
 """
+
+def add_tokens(docgraph, tokens):
+    """add tokens (list of str) to a document graph"""
+    for token in tokens:
+        node_id = len(docgraph.tokens)
+        while node_id in docgraph.tokens:
+            node_id += 1
+
+        docgraph.add_node(
+            node_id, layers={docgraph.ns+':token'},
+            attr_dict={docgraph.ns+':token': token})
+        docgraph.tokens.append(node_id)
 
 
 class TestDiscourseDocumentGraph(object):
@@ -248,11 +261,7 @@ class TestDiscourseDocumentGraph(object):
     def test_add_offsets_get_offsets(self):
         """annotate tokens with offsets and retrieve them."""
         # add a few tokens to the docgraph
-        for i, token in enumerate(['Ich', 'bin', 'ein', 'Berliner', '.']):
-            self.docgraph.add_node(
-                i, layers={self.docgraph.ns+':token'},
-                attr_dict={self.docgraph.ns+':token': token})
-            self.docgraph.tokens.append(i)
+        add_tokens(self.docgraph, ['Ich', 'bin', 'ein', 'Berliner', '.'])
         assert len(self.docgraph.tokens) == 5
 
         # get_offsets() will trigger add_offsets() on first run
@@ -286,14 +295,44 @@ class TestDiscourseDocumentGraph(object):
 
     def test_get_tokens(self):
         # add a few tokens to the docgraph
-        for i, token in enumerate(['dogs', 'bite']):
-            self.docgraph.add_node(
-                i, layers={self.docgraph.ns+':token'},
-                attr_dict={self.docgraph.ns+':token': token})
-            self.docgraph.tokens.append(i)
-
+        add_tokens(self.docgraph, ['dogs', 'bite'])
         assert list(self.docgraph.get_tokens()) == [(0, 'dogs'), (1, 'bite')]
         assert list(self.docgraph.get_tokens(token_strings_only=True)) == ['dogs', 'bite']
+
+
+def test_get_kwic():
+    """keyword in context"""
+    tokens = ['Ich', 'bin', 'ein', 'Berliner', '.']
+    assert get_kwic(tokens, 2, context_window=0) == \
+        ([], 'ein', [])
+    assert get_kwic(tokens, 2, context_window=1) == \
+        (['bin'], 'ein', ['Berliner'])
+    assert get_kwic(tokens, 2, context_window=2) == \
+        (['Ich', 'bin'], 'ein', ['Berliner', '.'])
+    assert get_kwic(tokens, 1, context_window=2) == \
+        (['Ich'], 'bin', ['ein', 'Berliner'])
+    assert get_kwic(tokens, 2, context_window=3) == \
+        (['Ich', 'bin'], 'ein', ['Berliner', '.'])
+
+
+def test_create_token_mapping():
+    # merging must fail when tokens aren't identical
+    first_graph = dg.DiscourseDocumentGraph(name='first')
+    add_tokens(first_graph, ['Ich', 'bin', 'ein', 'Berliner', '.'])
+
+    second_graph = dg.DiscourseDocumentGraph(name='second')
+    add_tokens(second_graph, ['Ich', 'bin', 'kein', 'Berliner', '.'])
+
+    with pytest.raises(ValueError) as excinfo:
+        create_token_mapping(first_graph, second_graph, verbose=False)
+    assert 'Tokenization mismatch' in str(excinfo.value)
+    assert 'kein != ein' in str(excinfo.value)
+
+    with pytest.raises(ValueError) as excinfo:
+        create_token_mapping(first_graph, second_graph, verbose=True)
+    assert 'Tokenization mismatch' in str(excinfo.value)
+    assert 'Ich bin [[ein]] Berliner .' in str(excinfo.value)
+    assert 'Ich bin [[kein]] Berliner .' in str(excinfo.value)
 
 
 def test_is_continuous():
