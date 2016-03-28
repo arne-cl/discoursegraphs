@@ -68,7 +68,7 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
         tree = etree.parse(decour_filepath)
         self._parse_decour(tree)
         if precedence:
-            self._add_precedence_relations()
+            self.add_precedence_relations()
 
     def _parse_decour(self, tree):
         """
