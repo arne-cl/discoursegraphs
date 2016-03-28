@@ -8,23 +8,44 @@ from tempfile import NamedTemporaryFile
 import pytest
 
 import discoursegraphs as dg
+from discoursegraphs.readwrite.conll import traverse_dependencies_up
 
 """
 Basic tests for the CoNLL family of corpus formats.
 """
 
+CONLL_FILEPATH = os.path.join(dg.DATA_ROOT_DIR, 'conll2009-example.tsv')
+
 def test_read_conll():
     """convert a tab-separated CoNLL-2009 file into a document graph"""
-    conll_filepath = os.path.join(dg.DATA_ROOT_DIR, 'conll2009-example.tsv')
-    cdg = dg.read_conll(conll_filepath)
+    cdg = dg.read_conll(CONLL_FILEPATH)
 
     # add precedence relations between tokens
     conll_prec = dg.read_conll(
-        conll_filepath, precedence=True)
+        CONLL_FILEPATH, precedence=True)
 
     num_of_prec_rels = len(
         list(dg.select_edges_by(conll_prec, layer='conll:precedence')))
     assert len(conll_prec.tokens) == num_of_prec_rels == 78
+
+
+def test_traverse_dependencies_up():
+    """follow the dependency path backwards from the given node to the root"""
+    cdg = dg.read_conll(CONLL_FILEPATH)
+    #~ import pudb; pudb.set_trace()
+    traverse_dependencies_up(cdg, 's1_t8', node_attr=None)
+    
+    # example sentence: Chomsky is a major figure in analytical philosophy ...
+    # ROOT: is --PRD--> figure --LOC--> in 
+    assert cdg.get_token('s1_t8') == u'philosophy'
+    assert list(traverse_dependencies_up(cdg, 's1_t8')) == \
+        [u'in', u'figure', u'be']
+    assert list(traverse_dependencies_up(
+        cdg, 's1_t8', node_attr='token')) == [u'in', u'figure', u'is']
+    assert list(traverse_dependencies_up(
+        cdg, 's1_t8', node_attr='pos')) == [u'IN', u'NN', u'VBZ']
+    assert list(traverse_dependencies_up(
+        cdg, 's1_t8', node_attr='deprel')) == [u'LOC', u'PRD', u'ROOT']
 
 
 def test_write_conll():
