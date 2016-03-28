@@ -241,11 +241,9 @@ class DiscourseDocumentGraph(MultiDiGraph):
         if attr_dict is None:
             attr_dict = attr
         else:
-            try:
-                attr_dict.update(attr)
-            except AttributeError as e:
-                raise AttributeError("The attr_dict argument must be "
-                                     "a dictionary: ".format(e))
+            assert isinstance(attr_dict, dict), \
+                "attr_dict must be a dictionary, not a '{}'".format(type(attr_dict))
+            attr_dict.update(attr)
 
         # if there's no node with this ID in the graph, yet
         if n not in self.succ:
