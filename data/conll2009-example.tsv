@@ -1,0 +1,81 @@
+# Parser: Lund University Semantic Parser, http://barbar.cs.lth.se:8081/
+1	Chomsky	chomsky	chomsky	NNP	NNP	_	_	2	2	SBJ	SBJ	_	_	_	_	_	_	_
+2	is	be	be	VBZ	VBZ	_	_	0	0	ROOT	ROOT	_	_	_	_	_	_	_
+3	a	a	a	DT	DT	_	_	5	5	NMOD	NMOD	_	_	_	_	_	_	_
+4	major	major	major	JJ	JJ	_	_	5	5	NMOD	NMOD	_	_	_	_	_	_	_
+5	figure	figure	figure	NN	NN	_	_	2	2	PRD	PRD	Y	figure.04	A0	_	_	_	_
+6	in	in	in	IN	IN	_	_	5	5	LOC	LOC	_	_	A1	_	_	_	_
+7	analytic	analytic	analytic	JJ	JJ	_	_	8	8	NMOD	NMOD	_	_	_	A1	_	_	_
+8	philosophy	philosophy	philosophy	NN	NN	_	_	6	6	PMOD	PMOD	Y	philosophy.01	_	_	_	_	_
+9	,	,	,	,	,	_	_	5	5	P	P	_	_	_	_	_	_	_
+10	and	and	and	CC	CC	_	_	5	5	COORD	COORD	_	_	_	_	_	_	_
+11	one	one	one	CD	CD	_	_	10	10	CONJ	CONJ	_	_	_	_	_	_	_
+12	of	of	of	IN	IN	_	_	11	11	NMOD	NMOD	_	_	_	_	_	_	_
+13	the	the	the	DT	DT	_	_	14	14	NMOD	NMOD	_	_	_	_	_	_	_
+14	founders	founder	founder	NNS	NNS	_	_	12	12	PMOD	PMOD	Y	founder.01	_	_	A0	_	_
+15	of	of	of	IN	IN	_	_	14	14	NMOD	NMOD	_	_	_	_	A1	_	_
+16	the	the	the	DT	DT	_	_	17	17	NMOD	NMOD	_	_	_	_	_	_	_
+17	field	field	field	NN	NN	_	_	15	15	PMOD	PMOD	Y	field.01	_	_	_	_	_
+18	of	of	of	IN	IN	_	_	17	17	NMOD	NMOD	_	_	_	_	_	A1	_
+19	cognitive	cognitive	cognitive	JJ	JJ	_	_	20	20	NMOD	NMOD	_	_	_	_	_	_	A1
+20	science	science	science	NN	NN	_	_	18	18	PMOD	PMOD	Y	science.01	_	_	_	_	_
+21	.	.	.	.	.	_	_	2	2	P	P	_	_	_	_	_	_	_
+
+1	He	he	he	PRP	PRP	_	_	2	2	SBJ	SBJ	_	_	A0	_	_
+2	has	have	have	VBZ	VBZ	_	_	0	0	ROOT	ROOT	_	_	_	_	_
+3	spent	spend	spend	VBN	VBN	_	_	2	2	VC	VC	Y	spend.02	_	_	_
+4	more	more	more	RBR	RBR	_	_	6	6	DEP	DEP	_	_	_	_	_
+5	than	than	than	IN	IN	_	_	6	6	DEP	DEP	_	_	_	_	_
+6	half	half	half	PDT	PDT	_	_	8	8	NMOD	NMOD	_	_	_	_	_
+7	a	a	a	DT	DT	_	_	8	8	NMOD	NMOD	_	_	_	_	_
+8	century	century	century	NN	NN	_	_	3	3	OBJ	OBJ	_	_	A1	_	_
+9	at	at	at	IN	IN	_	_	3	3	LOC	LOC	_	_	AM-LOC	_	_
+10	the	the	the	DT	DT	_	_	12	12	NMOD	NMOD	_	_	_	_	_
+11	Massachusetts	massachusetts	massachusetts	NNP	NNP	_	_	12	12	NAME	NAME	_	_	_	_	_
+12	Institute	institute	institute	NNP	NNP	_	_	13	13	NAME	NAME	_	_	_	_	_
+13	of	of	of	IN	IN	_	_	9	9	PMOD	PMOD	_	_	_	_	_
+14	Technology	technology	technology	NNP	NNP	_	_	17	17	NAME	NAME	_	_	_	_	_
+15	-LRB-	-lrb-	-lrb-	NNP	NNP	_	_	17	17	NAME	NAME	_	_	_	_	_
+16	MIT	mit	mit	NNP	NNP	_	_	17	17	NAME	NAME	_	_	_	_	_
+17	-RRB-	-rrb-	-rrb-	NNP	NNP	_	_	13	13	PMOD	PMOD	_	_	_	_	_
+18	,	,	,	,	,	_	_	17	17	P	P	_	_	_	_	_
+19	where	where	where	WRB	WRB	_	_	21	21	LOC	LOC	_	_	_	_	_
+20	he	he	he	PRP	PRP	_	_	21	21	SBJ	SBJ	_	_	_	_	_
+21	is	be	be	VBZ	VBZ	_	_	17	17	NMOD	NMOD	_	_	_	_	_
+22	Institute	institute	institute	NNP	NNP	_	_	24	24	NAME	NAME	_	_	_	_	_
+23	Professor	professor	professor	NN	NN	_	_	24	24	NAME	NAME	_	_	_	_	_
+24	Emeritus	emeritus	emeritus	NNP	NNP	_	_	21	21	PRD	PRD	_	_	_	_	_
+25	,	,	,	,	,	_	_	2	2	P	P	_	_	_	_	_
+26	and	and	and	CC	CC	_	_	2	2	COORD	COORD	_	_	_	_	_
+27	is	be	be	VBZ	VBZ	_	_	26	26	CONJ	CONJ	_	_	_	_	_
+28	the	the	the	DT	DT	_	_	29	29	NMOD	NMOD	_	_	_	_	_
+29	author	author	author	NN	NN	_	_	27	27	PRD	PRD	Y	author.01	_	A0	_
+30	of	of	of	IN	IN	_	_	29	29	NMOD	NMOD	_	_	_	A1	_
+31	over	over	over	IN	IN	_	_	32	32	DEP	DEP	_	_	_	_	_
+32	100	100	100	CD	CD	_	_	33	33	NMOD	NMOD	_	_	_	_	_
+33	books	book	book	NNS	NNS	_	_	30	30	PMOD	PMOD	Y	book.01	_	_	_
+34	on	on	on	IN	IN	_	_	33	33	NMOD	NMOD	_	_	_	_	A1
+35	topics	topic	topic	NNS	NNS	_	_	34	34	PMOD	PMOD	_	_	_	_	_
+36	such	such	such	JJ	JJ	_	_	37	37	DEP	DEP	_	_	_	_	_
+37	as	as	as	IN	IN	_	_	35	35	NMOD	NMOD	_	_	_	_	_
+38	linguistics	linguistics	linguistics	NNS	NNS	_	_	37	37	PMOD	PMOD	_	_	_	_	_
+39	,	,	,	,	,	_	_	38	38	P	P	_	_	_	_	_
+40	war	war	war	NN	NN	_	_	38	38	COORD	COORD	_	_	_	_	_
+41	,	,	,	,	,	_	_	40	40	P	P	_	_	_	_	_
+42	politics	politics	politics	NNS	NNS	_	_	40	40	COORD	COORD	_	_	_	_	_
+43	,	,	,	,	,	_	_	42	42	P	P	_	_	_	_	_
+44	and	and	and	CC	CC	_	_	42	42	COORD	COORD	_	_	_	_	_
+45	mass	mass	mass	NN	NN	_	_	46	46	NMOD	NMOD	_	_	_	_	_
+46	media	medium	medium	NNS	NNS	_	_	44	44	CONJ	CONJ	_	_	_	_	_
+47	.	.	.	.	.	_	_	2	2	P	P	_	_	_	_	_
+
+1	Ideologically	ideologically	ideologically	RB	RB	_	_	4	4	ADV	ADV	_	_	AM-DIS
+2	,	,	,	,	,	_	_	4	4	P	P	_	_	_
+3	he	he	he	PRP	PRP	_	_	4	4	SBJ	SBJ	_	_	A0
+4	aligns	align	align	VBZ	VBZ	_	_	0	0	ROOT	ROOT	Y	align.01	_
+5	with	with	with	IN	IN	_	_	4	4	ADV	ADV	_	_	A2
+6	anarcho-syndicalism	anarcho-syndicalism	anarcho-syndicalism	NN	NN	_	_	5	5	PMOD	PMOD	_	_	_
+7	and	and	and	CC	CC	_	_	6	6	COORD	COORD	_	_	_
+8	libertarian	libertarian	libertarian	JJ	JJ	_	_	9	9	NMOD	NMOD	_	_	_
+9	socialism	socialism	socialism	NN	NN	_	_	7	7	CONJ	CONJ	_	_	_
+10	.	.	.	.	.	_	_	4	4	P	P	_	_	_

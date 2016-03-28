@@ -53,11 +53,19 @@ from discoursegraphs.util import ensure_utf8, create_dir
 
 
 # cpos: coarse-grained POS tag
+# source: http://ilk.uvt.nl/conll/example.html
 CONLLX_COLUMNS = ('word_id', 'token', 'lemma', 'cpos', 'pos', 'feat', 'head',
                   'deprel', 'phead', 'pdeprel')
+
+# source: http://ufal.mff.cuni.cz/conll2009-st/task-description.html
+# there are up to six additional APRED columns
 CONLL2009_COLUMNS = ('word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos',
                      'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel',
                      'fillpred', 'pred')
+
+# this is some kind of legacy format that someone named CoNLL-2010,
+# but I don't think it's the real thing, as the shared task in 2010 used
+# an XML format: http://rgai.inf.u-szeged.hu/conll2010st/faq.html
 CONLL2010_COLUMNS = ('word_id', 'token', 'lemma', 'plemma', 'pos', 'ppos',
                      'feat', 'pfeat', 'head', 'phead', 'deprel', 'pdeprel',
                      'ne', 'pne', 'pred', 'ppred', 'coref')
