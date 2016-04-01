@@ -226,9 +226,11 @@ class RSTGraph(DiscourseDocumentGraph):
             # overwrite it here
             old_root_id = self.root
             self.root = group_id
-            # the layers attribute is append-only
+            # workaround for #141: the layers attribute is append-only,
+            # but here we're updating it as a part of the attribute dict
+            #
             # root segment type: always span
-            root_attrs = {'layers': {self.ns+':root'},
+            root_attrs = {'layers': {self.ns, self.ns+':root'},
                           self.ns+':segment_type': 'span'}
             self.node[group_id].update(root_attrs)
             # copy metadata from old root node
