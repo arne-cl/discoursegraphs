@@ -122,6 +122,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         """
         # super calls __init__() of base class DiscourseDocumentGraph
         super(MMAXDocumentGraph, self).__init__()
+        self.remove_node(self.root)  # remove generic root node
 
         self.name = name if name else os.path.basename(mmax_base_file)
         self.ns = namespace
