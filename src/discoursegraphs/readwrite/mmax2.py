@@ -209,7 +209,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
                     # NOTE: we only need this filter for broken files in the PCC corpus
                     if token_id in self.tokens:
                         sentence_token_nodes.append(token_id)
-                        self.add_node(markable.attrib['id'], layers={self.ns+':sentence'})
+                        self.add_node(markable.attrib['id'], layers={self.ns, self.ns+':sentence'})
                 token_nodes.append(sentence_token_nodes)
         else:
             sentence_root_nodes = list(select_nodes_by_layer(self, self.ns+':sentence'))
