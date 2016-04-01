@@ -233,6 +233,8 @@ class RSTGraph(DiscourseDocumentGraph):
             self.node[group_id].update(root_attrs)
             # copy metadata from old root node
             self.node[group_id]['metadata'] = self.node[old_root_id]['metadata']
+            # finally, remove the old root node
+            self.remove_node(old_root_id)
         else:  # the group node is dominated by another group or segment
             self.__add_parent_relation(group, group_id, segment_type,
                                        parent_segment_type)
