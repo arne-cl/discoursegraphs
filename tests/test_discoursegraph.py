@@ -9,6 +9,7 @@ import pytest
 
 import discoursegraphs as dg
 from discoursegraphs.discoursegraph import create_token_mapping, get_kwic
+from discoursegraphs.corpora import pcc
 
 """
 This module contains some tests for the ``discoursegraph`` module.
@@ -370,3 +371,45 @@ def test_is_continuous():
     assert dg.is_continuous(docgraph, '2')
     assert dg.is_continuous(docgraph, '3')
     assert dg.is_continuous(docgraph, '4')
+
+
+def test_select_nodes_by_attribute():
+    """Are node lists are correctly filtered based on their attribs/values?"""
+    pdg = pcc['maz-10374']
+
+    # don't filter any nodes
+    all_node_ids = list(dg.select_nodes_by_attribute(pdg))
+    assert len(pdg) == len(pdg.nodes()) == len(all_node_ids) == 346
+    all_nodes = list(dg.select_nodes_by_attribute(pdg, data=True))
+    assert len(all_node_ids) == len(all_nodes)
+
+    # select all tokens
+    all_token_ids = list(
+        dg.select_nodes_by_attribute(pdg, attribute='tiger:token'))
+    assert len(pdg.tokens) == len(all_token_ids) == 174
+    all_tokens = list(
+        dg.select_nodes_by_attribute(pdg, attribute='tiger:token', data=True))
+    assert len(all_token_ids) == len(all_tokens)
+
+    # select all occurences of the lemma 'mit'
+    mit_token_ids = list(dg.select_nodes_by_attribute(
+        pdg, attribute='tiger:lemma', value='mit'))
+    assert len(mit_token_ids) == 3
+    mit_tokens = list(dg.select_nodes_by_attribute(
+        pdg, attribute='tiger:lemma', value='mit', data=True))
+    assert len(mit_token_ids) == len(mit_tokens)
+
+    # select all nodes, whose lemma is either 'mit' or 'und'
+    mitund_token_ids = list(dg.select_nodes_by_attribute(
+        pdg, attribute='tiger:lemma', value=['mit', 'und']))
+    assert len(mitund_token_ids) == 6
+    mitund_tokens = list(dg.select_nodes_by_attribute(
+        pdg, attribute='tiger:lemma', value={'mit', 'und'}, data=True))
+    assert len(mitund_token_ids) == len(mitund_tokens)
+
+
+    # does the data parameter work with all other parameter settings
+    for list_of_nodes in (all_nodes, all_tokens, mit_tokens, mitund_tokens):
+        for node_id, attr_dict in list_of_nodes:
+            assert isinstance(node_id, (str, int))
+            assert isinstance(attr_dict, dict)
