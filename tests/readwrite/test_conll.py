@@ -18,6 +18,7 @@ CONLL_FILEPATH = os.path.join(dg.DATA_ROOT_DIR, 'conll2009-example.tsv')
 ELEFANT_2009_FILEPATH = os.path.join(dg.DATA_ROOT_DIR, 'conll2009-elefant-mate.tsv')
 ELEFANT_2010_FILEPATH = os.path.join(dg.DATA_ROOT_DIR, 'conll2010-elefant-mate.tsv')
 
+
 def test_read_conll():
     """convert tab-separated CoNLL (2009/2010) files into document graphs"""
     cdg = dg.read_conll(CONLL_FILEPATH)

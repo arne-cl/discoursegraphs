@@ -316,6 +316,7 @@ def test_get_kwic():
 
 
 def test_create_token_mapping():
+    """check if two docgraphs cover the same text with the same tokenization"""
     # merging must fail when tokens aren't identical
     first_graph = dg.DiscourseDocumentGraph(name='first')
     add_tokens(first_graph, ['Ich', 'bin', 'ein', 'Berliner', '.'])
