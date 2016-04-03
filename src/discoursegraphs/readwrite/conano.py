@@ -65,13 +65,10 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
             text it spans (this is only useful for debugging).
         """
         # super calls __init__() of base class DiscourseDocumentGraph
-        super(ConanoDocumentGraph, self).__init__()
+        super(ConanoDocumentGraph, self).__init__(namespace=namespace)
 
         self.name = name if name else os.path.basename(conano_filepath)
         self.ns = namespace
-        self.root = self.ns+':root_node'
-        self.add_node(self.root, layers={self.ns})
-
         self.tokenize = tokenize
         if self.tokenize:
             self.tokens = []
