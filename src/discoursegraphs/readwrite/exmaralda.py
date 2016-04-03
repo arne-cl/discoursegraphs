@@ -115,9 +115,9 @@ class ExmaraldaFile(object):
 
         annotation_layers = get_annotation_layers(docgraph)
         for layer in annotation_layers:
-            if remove_redundant_layers and is_informative(layer):
+            if not remove_redundant_layers:  # add all layers
                 self.__add_annotation_tier(docgraph, body, layer)
-            else:  # always add all layers
+            elif is_informative(layer):  # only add informative layers
                 self.__add_annotation_tier(docgraph, body, layer)
 
         self.__add_coreference_chain_tiers(docgraph, body)
