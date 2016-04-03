@@ -26,7 +26,7 @@ def add_tokens(docgraph, tokens):
             node_id += 1
 
         docgraph.add_node(
-            node_id, layers={docgraph.ns+':token'},
+            node_id, layers={docgraph.ns, docgraph.ns+':token'},
             attr_dict={docgraph.ns+':token': token})
         docgraph.tokens.append(node_id)
 
