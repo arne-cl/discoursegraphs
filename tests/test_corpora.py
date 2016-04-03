@@ -5,6 +5,7 @@
 import pkgutil
 from tempfile import NamedTemporaryFile, mkdtemp
 
+import networkx as nx
 import pytest
 
 import discoursegraphs as dg
@@ -22,3 +23,4 @@ def test_pcc():
     for doc_id in pcc.document_ids:
         docgraph = pcc[doc_id]
         assert isinstance(docgraph, dg.DiscourseDocumentGraph)
+        assert nx.is_directed_acyclic_graph(docgraph) == True
