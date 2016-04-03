@@ -71,7 +71,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
             the namespace of the graph (default: tiger)
         """
         # super calls __init__() of base class DiscourseDocumentGraph
-        super(TigerDocumentGraph, self).__init__()
+        super(TigerDocumentGraph, self).__init__(namespace=namespace)
 
         self.ns = namespace
         if not tiger_filepath:
@@ -83,13 +83,6 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
 
         self.name = name if name else os.path.basename(tiger_filepath)
         self.corpus_id = tigerxml_root.attrib['id']
-
-        # rename the root node (it was created by super() and already
-        # has a 'metadata' element
-        old_root_id = self.root
-        self.root = self.ns+':root_node'
-        relabel_nodes(self, {old_root_id: self.root}, copy=False)
-        self.node[self.root].update({'layers': {self.ns}})
 
         self.tokens = []
         self.sentences = []
@@ -111,7 +104,7 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
         sentence : lxml.etree._Element
             a sentence from a TigerXML file in etree element format
         """
-        sentence_graph = TigerSentenceGraph(sentence, self.ns)
+        sentence_graph = TigerSentenceGraph(sentence)
         self.tokens.extend(sentence_graph.tokens)
         sentence_root_node_id = sentence_graph.root
 
@@ -153,7 +146,8 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
             the namespace of the graph (default: tiger)
         """
         # super calls __init__() of base class DiscourseDocumentGraph
-        super(TigerSentenceGraph, self).__init__()
+        super(TigerSentenceGraph, self).__init__(namespace=namespace)
+        self.remove_node(self.root)  # delete default root node
         self.ns = namespace
 
         self.tokens = []
