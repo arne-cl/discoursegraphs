@@ -81,7 +81,7 @@ class RSTGraph(DiscourseDocumentGraph):
             (root precedes token1, which precedes token2 etc.)
         """
         # super calls __init__() of base class DiscourseDocumentGraph
-        super(RSTGraph, self).__init__()
+        super(RSTGraph, self).__init__(namespace=namespace)
 
         self.ns = namespace
         if not rs3_filepath:
