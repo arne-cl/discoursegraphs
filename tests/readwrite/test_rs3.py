@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
-"""Basic tests for the ``discoursegraphs.readwrite.rst.rs3`` module"""
+"""Basic tests for the ``rs3`` module"""
 
 import os
 
@@ -89,3 +89,12 @@ def test_get_rst_spans():
     assert isinstance(rst_spans, list)
     all([(len(span) == 5 and isinstance(span, tuple))
          for span in rst_spans])
+
+
+def test_select_nodes_by_layer():
+    """Are RST nodes correctly filtered based on their layer?"""
+    rst_filepath = os.path.join(pcc.path, 'rst/maz-10374.rs3')
+    rdg = dg.read_rst(rst_filepath)
+    rst_node_ids = list(dg.select_nodes_by_layer(rdg, 'rst'))
+    rst_nodes = list(dg.select_nodes_by_layer(rdg, 'rst', data=True))
+    assert len(rdg) == len(rst_node_ids) == len(rst_nodes) == 195

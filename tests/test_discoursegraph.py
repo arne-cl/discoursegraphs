@@ -410,9 +410,24 @@ def test_select_nodes_by_attribute():
         pdg, attribute='tiger:lemma', value={'mit', 'und'}, data=True))
     assert len(mitund_token_ids) == len(mitund_tokens)
 
-
     # does the data parameter work with all other parameter settings
     for list_of_nodes in (all_nodes, all_tokens, mit_tokens, mitund_tokens):
         for node_id, attr_dict in list_of_nodes:
             assert isinstance(node_id, (str, int))
             assert isinstance(attr_dict, dict)
+
+
+def test_select_nodes_by_layer():
+    """Are nodes correctly filtered based on their layer?"""
+    ddg = dg.DiscourseDocumentGraph(namespace='test')
+    assert len(ddg) == 1
+    add_tokens(ddg, ['The', 'dog', 'barks', '.'])
+    assert len(ddg) == 5
+
+    test_node_ids = list(dg.select_nodes_by_layer(ddg, 'test'))
+    test_nodes = list(dg.select_nodes_by_layer(ddg, 'test', data=True))
+    assert len(ddg) == len(test_node_ids) == len(test_nodes) == 5
+
+    for node_id, attr_dict in test_nodes:
+        assert isinstance(node_id, (str, int))
+        assert isinstance(attr_dict, dict)

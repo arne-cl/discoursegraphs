@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
+import os
+
 from lxml import etree
 import pytest
 
@@ -247,3 +249,12 @@ def test_tiger_sentence_with_secedge_spans():
     assert get_text(tsg_secedge, 's367_502') == \
         u"die realpolitische Schmutzarbeit"
     assert dg.is_continuous(tsg_secedge, 's367_502')
+
+
+def test_select_nodes_by_layer():
+    """Are Tiger syntax nodes correctly filtered based on their layer?"""
+    tiger_fpath = os.path.join(pcc.path, 'syntax/maz-10374.xml')
+    tdg = dg.read_tiger(tiger_fpath)
+    tiger_node_ids = list(dg.select_nodes_by_layer(tdg, 'tiger'))
+    tiger_nodes = list(dg.select_nodes_by_layer(tdg, 'tiger', data=True))
+    assert len(tdg) == len(tiger_node_ids) == 253
