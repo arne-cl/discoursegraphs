@@ -382,7 +382,7 @@ def test_select_nodes_by_attribute():
 
     # don't filter any nodes
     all_node_ids = list(dg.select_nodes_by_attribute(pdg))
-    assert len(pdg) == len(pdg.nodes()) == len(all_node_ids) == 346
+    assert len(pdg) == len(pdg.nodes()) == len(all_node_ids) == 345
     all_nodes = list(dg.select_nodes_by_attribute(pdg, data=True))
     assert len(all_node_ids) == len(all_nodes)
 
