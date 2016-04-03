@@ -15,6 +15,9 @@ from discoursegraphs.corpora import pcc
 This module contains some tests for the ``discoursegraph`` module.
 """
 
+DOC_ID = 'maz-10374'
+
+
 def add_tokens(docgraph, tokens):
     """add tokens (list of str) to a document graph"""
     for token in tokens:
@@ -375,7 +378,7 @@ def test_is_continuous():
 
 def test_select_nodes_by_attribute():
     """Are node lists are correctly filtered based on their attribs/values?"""
-    pdg = pcc['maz-10374']
+    pdg = pcc[DOC_ID]
 
     # don't filter any nodes
     all_node_ids = list(dg.select_nodes_by_attribute(pdg))
