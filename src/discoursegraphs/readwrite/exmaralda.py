@@ -302,12 +302,12 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
         self.name = name if name else os.path.basename(exmaralda_file)
         self.ns = namespace
         self.root = self.ns+':root_node'
-        
+
         tree = etree.parse(exmaralda_file)
         self.tokens = []
-        
+
         self.__add_tokenization(tree)
-        
+
         if ignored_tier_categories:
             for tier in tree.iter('tier'):
                 if tier.attrib['category'] not in ignored_tier_categories:
@@ -321,7 +321,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
         for token_id in self.get_token_ids(tree):
             self.add_node(token_id, layers={self.ns})
             self.tokens.append(token_id)
-    
+
     def __add_tier(self, tier, token_tier_name):
         """
         adds a tier to the document graph (either as additional attributes
@@ -330,10 +330,10 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
         """
         if tier.attrib['category'] == token_tier_name:
             self.__add_tokens(tier)
-        else: 
+        else:
             if self.is_token_annotation_tier(tier):
                 self.__add_token_annotation_tier(tier)
-                
+
             else:
                 self.__add_span_tier(tier)
 
@@ -374,7 +374,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
         for i, event in enumerate(tier.iter('event')):
             anno_key = '{}:{}'.format(self.ns, tier.attrib['category'])
             anno_val = event.text if event.text else ''
-            self.node[event.attrib['start']][anno_key] = anno_val        
+            self.node[event.attrib['start']][anno_key] = anno_val
 
     def __add_span_tier(self, tier):
         """
@@ -389,7 +389,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
                        self.ns+':type': tier.attrib['type'],
                        self.ns+':display-name': tier.attrib['display-name']})
         self.add_edge(self.root, tier_id, edge_type=EdgeTypes.dominance_relation)
-        
+
         # add a node for each span, containing an annotation.
         # add an edge from the tier root to each span and an edge from each
         # span to the tokens it represents
@@ -402,7 +402,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
                 attr_dict={self.ns+':annotation': annotation,
                            'label': annotation})
             self.add_edge(tier_id, span_id, edge_type=EdgeTypes.dominance_relation)
-            
+
             for token_id in span_tokens:
                 self.add_edge(span_id, token_id,
                               edge_type=EdgeTypes.spanning_relation)
@@ -421,7 +421,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
             return float(token_element.attrib['time'])
 
         timeline = tree.find('//common-timeline')
-        return (tok.attrib['id'] 
+        return (tok.attrib['id']
                 for tok in sorted((tli for tli in timeline.iterchildren()),
                                   key=tok2time))
 
@@ -444,7 +444,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
 
         >>> gen_token_range('T0', 'T1')
         ['T0']
-        
+
         >>> gen_token_range('T1', 'T5')
         ['T1', 'T2', 'T3', 'T4']
         """
