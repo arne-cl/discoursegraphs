@@ -154,6 +154,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
 
         graph_element = sentence.find('./graph')
         self.root = graph_element.attrib['root']
+        self.name = sentence.attrib.get('id', '')
 
         # sentence.attrib is a lxml.etree._Attrib, which is 'dict-like'
         # but doesn't behave exactly like a dict (i.e. it threw an error
@@ -270,6 +271,14 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         full syntax structure annotation).
         """
         unconnected_node_ids = get_unconnected_nodes(self)
+        if dg.istoken(self, self.root):
+            # This sentence has no hierarchical structure, i.e. the root
+            # node is also a terminal / token node.
+            # We will add a virtual root node to compensate for this.
+            self.root = self.ns+':VROOT'
+            self.add_node(self.root,
+                layers={'tiger', 'tiger:sentence', 'tiger:sentence:root'})
+
         for unconnected_node_id in unconnected_node_ids:
             self.add_edge(self.root, unconnected_node_id,
                           layers={self.ns, self.ns+':sentence',
