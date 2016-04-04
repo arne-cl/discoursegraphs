@@ -303,6 +303,28 @@ class TestDiscourseDocumentGraph(object):
         assert list(self.docgraph.get_tokens()) == [(0, 'dogs'), (1, 'bite')]
         assert list(self.docgraph.get_tokens(token_strings_only=True)) == ['dogs', 'bite']
 
+    def test_merge_graphs(self):
+        """merge a very simple graph into an empty graph"""
+        # create a simple graph with 3 tokens, all dominated by the root node
+        token_graph = dg.DiscourseDocumentGraph(
+            name='example.tok', namespace='tokenized')
+        add_tokens(token_graph, ['He', 'sleeps', '.'])
+        for token_node in token_graph.tokens:
+            token_graph.add_edge(token_graph.root, token_node,
+                                 edge_type=dg.EdgeTypes.dominance_relation)
+        assert len(token_graph) == 4
+        assert len(token_graph.edges()) == 3
+
+        assert self.docgraph.name == ''
+        assert self.docgraph.tokens == []
+        assert len(self.docgraph) == 1
+        self.docgraph.merge_graphs(token_graph)
+
+        assert self.docgraph.name == 'example.tok'
+        assert len(self.docgraph.tokens) == 3
+        assert len(self.docgraph) == 4
+        assert len(token_graph.edges()) == 3
+
 
 def test_get_kwic():
     """keyword in context"""
