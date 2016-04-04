@@ -453,3 +453,48 @@ def test_select_nodes_by_layer():
     for node_id, attr_dict in test_nodes:
         assert isinstance(node_id, (str, int))
         assert isinstance(attr_dict, dict)
+
+def test_select_edges_by_attribute():
+    """test if edges can be filtered for attributes/values"""
+    # create a simple graph with 3 tokens, all dominated by the root node
+    # and with precedence relations between the tokens
+    token_graph = dg.DiscourseDocumentGraph(
+        name='example.tok', namespace='tokenized')
+    add_tokens(token_graph, ['He', 'sleeps', '.'])
+    for token_node in token_graph.tokens:
+        token_graph.add_edge(token_graph.root, token_node,
+                             edge_type=dg.EdgeTypes.dominance_relation)
+
+    for src, target in [(0, 1), (1, 2)]:
+        token_graph.add_edge(
+            src, target, edge_type=dg.EdgeTypes.precedence_relation)
+
+    assert len(token_graph) == 4
+
+    all_edge_ids = list(dg.select_edges_by_attribute(token_graph))
+    all_edges = list(dg.select_edges_by_attribute(token_graph, data=True))
+    assert len(token_graph.edges()) == len(all_edge_ids) == len(all_edges) == 5
+
+    # test if data=True works as expected
+    for src, target, attrs in all_edges:
+        assert isinstance(src, (str, int))
+        assert isinstance(target, (str, int))
+        assert isinstance(attrs, dict)
+
+    # edges with any edge_type
+    edges_with_edgetype = list(dg.select_edges_by_attribute(
+        token_graph, attribute='edge_type'))
+    assert len(edges_with_edgetype) == 5
+
+    # edges with dominance relation edge_type
+    dominance_edge_ids = list(dg.select_edges_by_attribute(
+        token_graph, attribute='edge_type',
+        value=dg.EdgeTypes.dominance_relation))
+    assert len(dominance_edge_ids) == 3
+
+    # edges with dominance or precedence edge_type
+    dominance_or_precendence = list(dg.select_edges_by_attribute(
+        token_graph, attribute='edge_type',
+        value=[dg.EdgeTypes.dominance_relation,
+               dg.EdgeTypes.precedence_relation]))
+    assert len(dominance_or_precendence) == 5
