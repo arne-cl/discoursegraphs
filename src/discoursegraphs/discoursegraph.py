@@ -705,10 +705,28 @@ class DiscourseDocumentGraph(MultiDiGraph):
         if other_docgraph.sentences and not self.sentences:
             self.sentences = other_docgraph.sentences
 
+        # there should be no dangling, unused root nodes in a merged graph
+        self.merge_rootnodes(other_docgraph)
+
+    def merge_rootnodes(self, other_docgraph):
+        """
+        Copy all the metadata from the root node of the other graph into this
+        one. Then, move all edges belonging to the other root node to this
+        one. Finally, remove the root node of the other graph from this one.
+        """
         # copy metadata from other graph, cf. #136
         if 'metadata' in other_docgraph.node[other_docgraph.root]:
             other_meta = other_docgraph.node[other_docgraph.root]['metadata']
             self.node[self.root]['metadata'].update(other_meta)
+
+        assert not other_docgraph.in_edges(other_docgraph.root), \
+            "root node in graph '{}' must not have any ingoing edges".format(
+                other_docgraph.name)
+
+        for (root, target, attrs) in other_docgraph.out_edges(
+            other_docgraph.root, data=True):
+                self.add_edge(self.root, target, attr_dict=attrs)
+        self.remove_node(other_docgraph.root)
 
     def add_precedence_relations(self):
         """
