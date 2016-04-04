@@ -13,6 +13,7 @@ import discoursegraphs as dg
 from discoursegraphs.corpora import pcc
 
 
+@pytest.mark.last  # this should be the last test to run
 @pytest.mark.slowtest
 def test_pcc():
     """
