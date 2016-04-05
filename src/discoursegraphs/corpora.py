@@ -16,6 +16,8 @@ Attribution-NonCommercial-ShareAlike license.
     Evaluation Conference (LREC), Reykjavik.
 """
 
+from collections import Sequence
+
 import fnmatch
 from itertools import chain
 import os
@@ -28,7 +30,7 @@ PCC_DIRNAME = 'potsdam-commentary-corpus-2.0.0'
 PCC_DOCID_RE = re.compile('^.*(maz-\d+)\..*')
 
 
-class PCC(object):
+class PCC(Sequence):
     """
     class representation of the Potsdam Commentary Corpus
 
@@ -77,7 +79,11 @@ class PCC(object):
                    for fname in pcc.tokenization]
         return sorted(match.groups()[0] for match in matches)
 
-    def __getitem__(self, key):
+    def __len__(self):
+        """return the number of documents in the corpus"""
+        return len(self.document_ids)
+
+    def get_document(self, doc_id):
         """
         given a document ID, returns a merged document graph containng all
         available annotation layers.
@@ -86,7 +92,7 @@ class PCC(object):
         for layer_name in self.layers:
             layer_files, read_function = self.layers[layer_name]
             for layer_file in layer_files:
-                if fnmatch.fnmatch(layer_file, '*{}.*'.format(key)):
+                if fnmatch.fnmatch(layer_file, '*{}.*'.format(doc_id)):
                     layer_graphs.append(read_function(layer_file))
 
         if not layer_graphs:
@@ -96,6 +102,16 @@ class PCC(object):
             for layer_graph in layer_graphs[1:]:
                 doc_graph.merge_graphs(layer_graph)
         return doc_graph
+
+    def __getitem__(self, sliced):
+        """access documents by their index or by their document ID"""
+        if isinstance(sliced, str):  # get document by its document ID
+            return self.get_document(sliced)
+        elif isinstance(sliced, int):  # get document by its index
+            return self.get_document(self.document_ids[sliced])
+        else:  # get a slice/range of documents
+            doc_ids = self.document_ids[sliced]
+            return [self.get_document(doc_id) for doc_id in doc_ids]
 
     def get_random_document(self):
         """return the document graph of a random PCC document"""
