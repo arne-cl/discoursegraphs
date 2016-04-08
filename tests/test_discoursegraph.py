@@ -475,7 +475,6 @@ def test_select_nodes_by_layer():
             assert isinstance(attr_dict, dict)
 
 
-
 def test_select_edges_by_attribute():
     """test if edges can be filtered for attributes/values"""
     # create a simple graph with 3 tokens, all dominated by the root node
@@ -520,6 +519,61 @@ def test_select_edges_by_attribute():
         value=[dg.EdgeTypes.dominance_relation,
                dg.EdgeTypes.precedence_relation]))
     assert len(dominance_or_precendence) == 5
+
+
+def test_select_edges_by():
+    """test various combinations of edge filters (layer/edge type)"""
+    sg1 = make_sentencegraph1()
+
+    # don't filter any edges
+    all_edge_ids = list(dg.select_edges_by(sg1, layer=None, edge_type=None))
+    all_edges = list(dg.select_edges_by(sg1, layer=None, edge_type=None, data=True))
+    assert len(all_edge_ids) == len(all_edges) == len(sg1.edges()) == 20
+
+    # filter layer, but not edge type
+    expected_sytax_edge_ids = {
+        (sg1.root, 'S'), ('S', 'NP1'), ('S', 'VP1'), ('S', 'SBAR'),
+        ('SBAR', 'NP2'), ('SBAR', 'VP2')}
+    syntax_edge_ids = list(dg.select_edges_by(
+        sg1, layer=sg1.ns+':syntax', edge_type=None))
+    syntax_edges = list(dg.select_edges_by(
+        sg1, layer=sg1.ns+':syntax', edge_type=None, data=True))
+    assert len(syntax_edge_ids) == len(syntax_edges) == 6
+    assert set(syntax_edge_ids) == expected_sytax_edge_ids
+
+    precedence_edge_ids = list(dg.select_edges_by(
+        sg1, layer=sg1.ns+':precedence', edge_type=None))
+    precedence_edges = list(dg.select_edges_by(
+        sg1, layer=sg1.ns+':precedence', edge_type=None, data=True))
+    assert len(precedence_edge_ids) == len(precedence_edges) == 7
+    assert set(precedence_edge_ids) == {(i, i+1) for i in range(7)}
+
+    # filter layer and edge type
+    syndom_edge_ids = list(dg.select_edges_by(
+        sg1, layer=sg1.ns+':syntax',
+        edge_type=dg.EdgeTypes.dominance_relation))
+    syndom_edges = list(dg.select_edges_by(
+        sg1, layer=sg1.ns+':syntax',
+        edge_type=dg.EdgeTypes.dominance_relation, data=True))
+    assert len(syndom_edge_ids) == len(syndom_edges) == 6
+    assert set(syndom_edge_ids) == expected_sytax_edge_ids
+
+    # filter edge type, but not layer
+    dom_edge_ids = list(dg.select_edges_by(
+        sg1, layer=None, edge_type=dg.EdgeTypes.dominance_relation))
+    dom_edges = list(dg.select_edges_by(
+        sg1, layer=None, edge_type=dg.EdgeTypes.dominance_relation, data=True))
+    assert len(dom_edge_ids) == len(dom_edges) == 6
+    assert set(dom_edge_ids) == expected_sytax_edge_ids
+
+    # test if data=True works as expected
+    edge_lists = (all_edges, syntax_edges, precedence_edges, syndom_edges,
+                  dom_edges)
+    for edge_list in edge_lists:
+        for src, target, attrs in edge_list:
+            assert isinstance(src, (str, int))
+            assert isinstance(target, (str, int))
+            assert isinstance(attrs, dict)
 
 
 def make_sentencegraph1():
