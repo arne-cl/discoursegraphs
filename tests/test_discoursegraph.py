@@ -579,4 +579,33 @@ def test_get_span():
     sg1.add_edge('NP1', 'S', layers={sg1.ns+':loop'},
                  edge_type=dg.EdgeTypes.dominance_relation)
     with pytest.raises(RuntimeError) as excinfo:
-        assert dg.get_span(sg1, 'S') == [0, 1, 3, 4, 5, 6]
+        assert dg.get_span(sg1, 'S')
+
+
+def test_get_span_offsets():
+    sg1 = make_sentencegraph1()
+
+    sg1_offsets = \
+    [
+        [0, (0, 5)],
+        [1, (6, 10)],
+        [2, (11, 12)],
+        [3, (13, 15)],
+        [4, (16, 19)],
+        [5, (20, 24)],
+        [6, (25, 27)],
+        [7, (28, 29)],
+        ['S', (0, 27)],
+        ['NP1', (0, 5)],
+        ['VP1', (6, 10)],
+        ['SBAR', (13, 27)],
+        ['NP2', (13, 15)],
+        ['VP2', (16, 27)]
+    ]
+
+    for token_node_id, (onset, offset) in sg1_offsets:
+        assert dg.get_span_offsets(sg1, token_node_id) == (onset, offset)
+
+    with pytest.raises(KeyError) as excinfo:
+        assert dg.get_span_offsets(sg1, 'foo')
+        assert "doesn't span any tokens" in excinfo.value
