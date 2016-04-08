@@ -583,6 +583,9 @@ def test_get_span():
 
 
 def test_get_span_offsets():
+    """test, if offsets can be retrieved from tokens, spans of tokens or
+    dominating nodes.
+    """
     sg1 = make_sentencegraph1()
 
     sg1_offsets = \
