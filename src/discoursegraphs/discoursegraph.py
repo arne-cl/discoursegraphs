@@ -1248,7 +1248,7 @@ def select_edges_by(docgraph, layer=None, edge_type=None, data=False):
             return select_edges(docgraph, data=data,
                                 conditions=[edge_type_eval])
         else:  # neither layer, nor edge type is filtered
-            return docgraph.edges(data=data)
+            return docgraph.edges_iter(data=data)
 
 
 def __walk_chain(rel_dict, from_id):
