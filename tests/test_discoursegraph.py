@@ -447,13 +447,34 @@ def test_select_nodes_by_layer():
     add_tokens(ddg, ['The', 'dog', 'barks', '.'])
     assert len(ddg) == 5
 
+    # don't filter any nodes
+    all_node_ids = list(dg.select_nodes_by_layer(ddg))
+    all_nodes = list(dg.select_nodes_by_layer(ddg, data=True))
+    assert len(all_node_ids) == len(all_nodes) == 5
+
     test_node_ids = list(dg.select_nodes_by_layer(ddg, 'test'))
     test_nodes = list(dg.select_nodes_by_layer(ddg, 'test', data=True))
     assert len(ddg) == len(test_node_ids) == len(test_nodes) == 5
 
-    for node_id, attr_dict in test_nodes:
-        assert isinstance(node_id, (str, int))
-        assert isinstance(attr_dict, dict)
+    ddg.add_node(10, layers={'foo'})
+    ddg.add_node(11, layers={'bar'})
+
+    # filter several layers
+    test_foo_ids = list(dg.select_nodes_by_layer(ddg, layer={'test', 'foo'}))
+    test_foo_nodes = list(dg.select_nodes_by_layer(
+        ddg, layer={'test', 'foo'}, data=True))
+    assert len(test_foo_ids) == len(test_foo_nodes) == 6
+    test_foobar_ids = list(dg.select_nodes_by_layer(
+        ddg, layer={'test', 'foo', 'bar'}))
+    assert len(test_foobar_ids) == 7
+
+    # test if data=True works as expected
+    for nodelist in (all_nodes, test_nodes, test_foo_nodes):
+        for node_id, attr_dict in nodelist:
+            assert isinstance(node_id, (str, int))
+            assert isinstance(attr_dict, dict)
+
+
 
 def test_select_edges_by_attribute():
     """test if edges can be filtered for attributes/values"""
