@@ -1064,7 +1064,7 @@ def select_neighbors_by_layer(docgraph, node, layer, data=False):
             yield (node_id, docgraph.node[node_id]) if data else (node_id)
 
 
-def select_nodes_by_layer(docgraph, layer, data=False):
+def select_nodes_by_layer(docgraph, layer=None, data=False):
     """
     Get all nodes belonging to (any of) the given layer(s).
 
