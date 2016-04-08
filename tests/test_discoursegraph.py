@@ -685,8 +685,8 @@ def test_get_span_offsets():
         assert dg.get_span_offsets(sg1, token_node_id) == (onset, offset)
 
     with pytest.raises(KeyError) as excinfo:
-        assert dg.get_span_offsets(sg1, 'foo')
-        assert "doesn't span any tokens" in excinfo.value
+        offsets = dg.get_span_offsets(sg1, 'foo')
+    assert "doesn't span any tokens" in excinfo.value.message
 
 
 def test_multiedge_keyincrement():
