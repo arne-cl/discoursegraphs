@@ -640,3 +640,36 @@ def test_multiedge_keyincrement():
     assert len(dg2.edge['a']['b']) == 2
     assert 'love' in dg2.edge['a']['b'][1]['layers']
     assert 'hate' in dg2.edge['a']['b'][2]['layers']
+
+
+def test_select_neighbors_by_layer():
+    """test, if we can find nodes connected via outgoing edges, which belong
+    to the given layer(s).
+    """
+    sg1 = make_sentencegraph1()
+    # [(0, 'Guido'), (1, 'died'), (2, ','), (3, 'he'), (4, 'was'),
+    #  (5, 'only'), (6, '54'), (7, '.')]
+    for punct_token in (2, 7):
+        sg1.add_edge('S', punct_token, layers={'unconnected'},
+                     edge_type=dg.EdgeTypes.dominance_relation)
+
+    unconnected_tokens = list(dg.select_neighbors_by_layer(
+        sg1, 'S', layer=sg1.ns+':token'))
+    assert unconnected_tokens == [2, 7]
+
+    cat_nodes = list(dg.select_neighbors_by_layer(
+        sg1, 'S', layer=sg1.ns+':syntax'))
+    # there's no explicit node order, so we'll have to resort to sets
+    assert set(cat_nodes) == {'NP1', 'VP1', 'SBAR'}
+
+    # find all neighbors within the syntax or the token layer
+    all_neighbors = list(dg.select_neighbors_by_layer(
+        sg1, 'S', layer={sg1.ns+':syntax', sg1.ns+':token'}))
+    assert set(all_neighbors) == {'NP1', 'VP1', 'SBAR', 2, 7}
+
+    assert list(dg.select_neighbors_by_layer(
+        sg1, 'VP1', layer=sg1.ns+':token')) == [1] # via dominance
+    assert list(dg.select_neighbors_by_layer(
+        sg1, 0, layer=sg1.ns+':token')) == [1] # via precedence
+    assert list(dg.select_neighbors_by_layer(
+        sg1, 3, layer=sg1.ns+':token')) == [0, 4] # 3->0 coref, 3->4 precedence
