@@ -5,6 +5,7 @@
 from copy import deepcopy
 import os
 
+from networkx import is_directed_acyclic_graph
 import pytest
 
 import discoursegraphs as dg
@@ -498,3 +499,84 @@ def test_select_edges_by_attribute():
         value=[dg.EdgeTypes.dominance_relation,
                dg.EdgeTypes.precedence_relation]))
     assert len(dominance_or_precendence) == 5
+
+
+def make_sentencegraph1():
+    """return a docgraph containing one sentence with syntax and coreference
+    annotation, as well as precedence relations.
+
+    The graph is cyclic because of a coreference relation (pointing relation).
+    """
+    docgraph = dg.DiscourseDocumentGraph()
+    # tokens: 0    1       2    3     4      5       6     7
+    add_tokens(docgraph,
+        ['Guido', 'died', ',', 'he', 'was', 'only', '54', '.'])
+
+    # add syntax structure (nodes, dominance and spanning relations)
+    docgraph.add_node('S', layers={docgraph.ns+':syntax'})
+    docgraph.add_node('NP1', layers={docgraph.ns+':syntax'})
+    docgraph.add_node('VP1', layers={docgraph.ns+':syntax'})
+    docgraph.add_node('SBAR', layers={docgraph.ns+':syntax'})
+    docgraph.add_node('NP2', layers={docgraph.ns+':syntax'})
+    docgraph.add_node('VP2', layers={docgraph.ns+':syntax'})
+
+    dom_rels = [(docgraph.root, 'S'), ('S', 'NP1'), ('S', 'VP1'),
+                ('S', 'SBAR'), ('SBAR', 'NP2'), ('SBAR', 'VP2')]
+    for src, target in dom_rels:
+        docgraph.add_edge(src, target, layers={docgraph.ns+':syntax'},
+                          edge_type=dg.EdgeTypes.dominance_relation)
+
+    span_rels = [('NP1', 0), ('VP1', 1), ('NP2', 3), ('VP2', 4), ('VP2', 5),
+                 ('VP2', 6)]
+    for src, target in span_rels:
+        docgraph.add_edge(src, target,
+                          edge_type=dg.EdgeTypes.spanning_relation)
+
+    # coreference: he -> Guido
+    docgraph.add_edge(3, 0, layers={docgraph.ns+':coreference'},
+                      edge_type=dg.EdgeTypes.pointing_relation)
+
+    # add precedence relations
+    prec_rels = [(i, i+1) for i in range(7)]
+    for src, target in prec_rels:
+        docgraph.add_edge(src, target, layers={docgraph.ns+':precedence'},
+                          edge_type=dg.EdgeTypes.pointing_relation)
+    return docgraph
+
+
+def test_get_span():
+    """get spans from an sentence graph with dominance, spanning and
+    pointing relations, but without self-loops"""
+    sg1 = make_sentencegraph1()
+    assert is_directed_acyclic_graph(sg1) is False
+    assert len(sg1) == 15
+
+    # token nodes only "span" themselves
+    for i in range(8):
+        assert dg.get_span(sg1, i) == [i]
+
+    # the sentence covers all tokens, except for the markers ',' and '.'
+    assert dg.get_span(sg1, 'S') == [0, 1, 3, 4, 5, 6]
+    assert dg.get_span(sg1, 'NP1') == [0]
+    assert dg.get_span(sg1, 'VP1') == [1]
+    assert dg.get_span(sg1, 'SBAR') == [3, 4, 5, 6]
+    assert dg.get_span(sg1, 'NP2') == [3]
+    assert dg.get_span(sg1, 'VP2') == [4, 5, 6]
+
+    # the debug parameter should 'raise' a warning (since the graph is
+    # cyclic), but the result must be the same)
+    assert dg.get_span(sg1, 'S', debug=True) == [0, 1, 3, 4, 5, 6]
+
+    # get_span() must be robust against self-loops
+    sg1.add_edge('SBAR', 'SBAR', layers={sg1.ns+':selfloop'},
+                 edge_type=dg.EdgeTypes.dominance_relation)
+    assert dg.get_span(sg1, 'S') == [0, 1, 3, 4, 5, 6]
+    assert dg.get_span(sg1, 'SBAR') == [3, 4, 5, 6]
+    assert dg.get_span(sg1, 'SBAR', debug=True) == [3, 4, 5, 6]
+
+    # get_span() won't be able to recover from a dominance relation
+    # (non self)-loop
+    sg1.add_edge('NP1', 'S', layers={sg1.ns+':loop'},
+                 edge_type=dg.EdgeTypes.dominance_relation)
+    with pytest.raises(RuntimeError) as excinfo:
+        assert dg.get_span(sg1, 'S') == [0, 1, 3, 4, 5, 6]
