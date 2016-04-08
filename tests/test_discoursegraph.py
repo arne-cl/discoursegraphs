@@ -609,3 +609,31 @@ def test_get_span_offsets():
     with pytest.raises(KeyError) as excinfo:
         assert dg.get_span_offsets(sg1, 'foo')
         assert "doesn't span any tokens" in excinfo.value
+
+
+def test_multiedge_keyincrement():
+    """test, if keys are automatically incremented when adding multiple edges
+    between two nodes. This tests redundant code common to add_edge() and
+    add_edges_from().
+    """
+    dg1 = dg.DiscourseDocumentGraph()
+
+    # add an edge with a key. keys are used in multigraphs to distinguish
+    # between multiple edges between the same nodes
+    dg1.add_edge('a', 'b', layers={'love'}, key=1)
+    assert len(dg1.edge['a']['b']) == 1
+    # add another edge between the same nodes.
+    # keys should auto-increment, especially if the key is already in use
+    dg1.add_edge('a', 'b', layers={'hate'})
+    assert len(dg1.edge['a']['b']) == 2
+    assert 'love' in dg1.edge['a']['b'][1]['layers']
+    assert 'hate' in dg1.edge['a']['b'][2]['layers']
+
+    # the method add_edges_from should show the same behaviour
+    dg2 = dg.DiscourseDocumentGraph()
+    dg2.add_edges_from([('a', 'b', 1, {'layers': {'love'}})])
+    assert len(dg2.edge['a']['b']) == 1
+    dg2.add_edges_from([('a', 'b', {'layers': {'hate'}})])
+    assert len(dg2.edge['a']['b']) == 2
+    assert 'love' in dg2.edge['a']['b'][1]['layers']
+    assert 'hate' in dg2.edge['a']['b'][2]['layers']
