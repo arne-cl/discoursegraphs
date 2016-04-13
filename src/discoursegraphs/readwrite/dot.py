@@ -19,9 +19,11 @@ UNQUOTE_RE = re.compile('^"(.*)"$') # a string beginning and ending with a "-cha
 
 def quote_for_pydot(string):
     """
-    takes a string and encloses it with "-chars. if the string contains "-chars
-    itself, they will be escaped.
+    takes a string (or int) and encloses it with "-chars. if the string
+    contains "-chars itself, they will be escaped.
     """
+    if isinstance(string, int):
+        string = str(string)
     escaped_str = QUOTE_RE.sub(r'\\"', string)
     return u'"{}"'.format(escaped_str)
 
