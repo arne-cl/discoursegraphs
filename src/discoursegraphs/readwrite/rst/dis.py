@@ -17,7 +17,7 @@ from collections import defaultdict
 
 from nltk.tree import ParentedTree
 
-from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.readwrite.ptb import PTB_BRACKET_MAPPING
 
 
@@ -71,7 +71,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         self.add_node(self.root, layers={self.ns}, label=self.ns+':root_node')
         if 'discoursegraph:root_node' in self:
             self.remove_node('discoursegraph:root_node')
-        
+
         self.tokenized = tokenize
         self.tokens = []
         self.rst_tree = self.disfile2tree(dis_filepath)
@@ -100,7 +100,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
             node_type = self.get_node_type(rst_tree)
             relation_type = self.get_relation_type(rst_tree)
             if node_type == 'leaf':
-                edu_text = self.get_edu_text(rst_tree[3])
+                edu_text = self.get_edu_text(rst_tree[-1])
                 self.add_node(node_id, attr_dict={self.ns+':text': edu_text,
                                                   'label': u'{}: {}'.format(node_id, edu_text[:20])})
                 if self.tokenized:
@@ -111,29 +111,41 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
                         self.add_node(token_node_id, attr_dict={self.ns+':token': token,
                                                                 'label': token})
                         self.add_edge(node_id, '{}_{}'.format(node_id, i))
-                    
+
             else: # node_type == 'span'
                 self.add_node(node_id, attr_dict={self.ns+':rel_type': relation_type,
                                                    self.ns+':node_type': node_type})
                 children = rst_tree[3:]
                 child_types = self.get_child_types(children)
-                
+
                 expected_child_types = set(['Nucleus', 'Satellite'])
                 unexpected_child_types = set(child_types).difference(expected_child_types)
                 assert not unexpected_child_types, \
                     "Node '{}' contains unexpected child types: {}\n".format(node_id, unexpected_child_types)
-                
+
                 if 'Satellite' not in child_types:
                     # span only contains nucleii -> multinuc
                     for child in children:
                         child_node_id = self.get_node_id(child)
                         self.add_edge(node_id, child_node_id, attr_dict={self.ns+':rel_type': relation_type})
-                
+
+                elif len(child_types['Satellite']) == 1 and len(children) == 1:
+                    if tree_type == 'Nucleus':
+                        child = children[0]
+                        child_node_id = self.get_node_id(child)
+                        self.add_edge(
+                            node_id, child_node_id,
+                            attr_dict={self.ns+':rel_type': relation_type},
+                            edge_type=EdgeTypes.dominance_relation)
+                    else:
+                        assert tree_type == 'Satellite'
+                        raise NotImplementedError("I don't know how to combine two satellites")
+
                 elif len(child_types['Satellite']) == 1 and len(child_types['Nucleus']) == 1:
                     # standard RST relation, where one satellite is dominated by one nucleus
                     nucleus_index = child_types['Nucleus'][0]
                     satellite_index = child_types['Satellite'][0]
-                    
+
                     nucleus_node_id = self.get_node_id(children[nucleus_index])
                     satellite_node_id = self.get_node_id(children[satellite_index])
                     self.add_edge(node_id, nucleus_node_id, attr_dict={self.ns+':rel_type': 'span'},
@@ -143,7 +155,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
                                   edge_type=EdgeTypes.dominance_relation)
                 else:
                     raise ValueError("Unexpected child combinations: {}\n".format(child_types))
-                
+
                 for child in children:
                     self.parse_rst_tree(child, indent=indent+1)
 
@@ -160,10 +172,8 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
     @staticmethod
     def get_edu_text(text_subtree):
         """return the text of the given EDU subtree"""
-        assert text_subtree[0].value() == 'text'
-        return u' '.join(word.value().decode('utf-8')
-                         if isinstance(word, sexpdata.Symbol) else word.decode('utf-8')
-                         for word in text_subtree[1:])
+        assert text_subtree.label() == 'text'
+        return u' '.join(word.decode('utf-8') for word in text_subtree.leaves())
 
     @staticmethod
     def get_tree_type(tree):
@@ -173,7 +183,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         Parameters
         ----------
         tree : nltk.tree.ParentedTree
-            a tree representing a rhetorical structure (or a part of it)    
+            a tree representing a rhetorical structure (or a part of it)
         """
         tree_type = tree.label()
         assert tree_type in SUBTREE_TYPES
@@ -187,7 +197,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         Parameters
         ----------
         tree : nltk.tree.ParentedTree
-            a tree representing a rhetorical structure (or a part of it)    
+            a tree representing a rhetorical structure (or a part of it)
         """
         node_type = tree[0].label()
         assert node_type in NODE_TYPES
@@ -203,7 +213,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         ----------
         tree : nltk.tree.ParentedTree
             a tree representing a rhetorical structure (or a part of it)
-        
+
         Returns
         -------
         relation_type : str

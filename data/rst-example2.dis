@@ -1,0 +1,11 @@
+( Root (span 1 4)
+  ( Nucleus (span 1 3) (rel2par span)
+    ( Nucleus (leaf 1) (rel2par span) (text _!blah blah blah_!) )
+    ( Satellite (span 2 3) (rel2par elaboration-additional)
+      ( Nucleus (leaf 2) (rel2par span) (text _!blah blah blah_!) )
+      ( Satellite (leaf 3) (rel2par elaboration-set-member) (text _!blah blah blah_!) )
+    )
+  )
+  ( Satellite (leaf 4) (rel2par elaboration-additional) (text _!blah blah blah_!) )
+)
+
