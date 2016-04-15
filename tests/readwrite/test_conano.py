@@ -3,7 +3,6 @@
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 import os
-from tempfile import NamedTemporaryFile, mkdtemp
 
 import discoursegraphs as dg
 from discoursegraphs.corpora import pcc
