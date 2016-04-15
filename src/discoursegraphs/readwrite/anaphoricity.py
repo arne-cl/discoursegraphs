@@ -88,7 +88,7 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
             token (default: False).
         """
         # super calls __init__() of base class DiscourseDocumentGraph
-        super(AnaphoraDocumentGraph, self).__init__()
+        super(AnaphoraDocumentGraph, self).__init__(namespace='anaphoricity')
         self.name = name if name else os.path.basename(anaphora_filepath)
         self.ns = namespace
         self.root = self.ns+':root_node'
