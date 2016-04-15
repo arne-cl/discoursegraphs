@@ -685,7 +685,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
             self.merged_rootnodes = [other_docgraph.root]
 
         # renaming the tokens of the other graph to match this one
-        other_docgraph = rename_tokens(other_docgraph, self, verbose=verbose)
+        rename_tokens(other_docgraph, self, verbose=verbose)
         self.add_nodes_from(other_docgraph.nodes(data=True))
 
         # copy token node attributes to the current namespace
@@ -748,10 +748,10 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
 def rename_tokens(docgraph_with_old_names, docgraph_with_new_names, verbose=False):
     """
-    Return a copy of the graph (``docgraph_with_old_names``) with token nodes
-    renamed to match the token names of another document graph
-    (``docgraph_with_new_names``). The returned graph will also have an updated
-     ``.tokens`` list.
+    Renames the tokens of a graph (``docgraph_with_old_names``) in-place,
+    using the token names of another document graph
+    (``docgraph_with_new_names``). Also updates the ``.tokens`` list of the old
+    graph.
 
     This will only work, iff both graphs have the same tokenization.
     """
@@ -765,16 +765,12 @@ def rename_tokens(docgraph_with_old_names, docgraph_with_new_names, verbose=Fals
     else:
         docgraph_with_new_names.renamed_nodes = old2new
 
-    # we can't do this inplace (at least not when merging two graphs
-    # with the same namespace (e.g. two anaphoricity graphs)
-    docgraph_with_updated_names = relabel_nodes(
-        docgraph_with_old_names, old2new, copy=True)
+    relabel_nodes(docgraph_with_old_names, old2new, copy=False)
     new_token_ids = old2new.values()
 
     # new_token_ids could be empty (if docgraph_with_new_names is still empty)
     if new_token_ids:
-        docgraph_with_updated_names.tokens = new_token_ids
-    return docgraph_with_updated_names
+        docgraph_with_old_names.tokens = new_token_ids
 
 
 def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names,
