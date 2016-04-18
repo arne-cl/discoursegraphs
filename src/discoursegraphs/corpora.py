@@ -140,9 +140,3 @@ class PCC(Sequence):
 
 
 pcc = PCC()
-
-
-try:
-    tuebadz = dg.read_exportxml(TUEBADZ_PATH)
-except IOError:
-    pass # the Tüba-D/Z corpus ExportXML file is not found
