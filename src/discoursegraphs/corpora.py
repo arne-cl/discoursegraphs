@@ -29,6 +29,9 @@ import discoursegraphs as dg
 PCC_DIRNAME = 'potsdam-commentary-corpus-2.0.0'
 PCC_DOCID_RE = re.compile('^.*(maz-\d+)\..*')
 
+TUEBADZ_PATH = os.path.expanduser(
+    '~/corpora/tuebadz-8.0/tuebadz-8.0-mit-NE+Anaphern+Diskurs.exml.xml')
+
 
 class PCC(Sequence):
     """
@@ -137,3 +140,9 @@ class PCC(Sequence):
 
 
 pcc = PCC()
+
+
+try:
+    tuebadz = dg.read_exportxml(TUEBADZ_PATH)
+except IOError:
+    pass # the Tüba-D/Z corpus ExportXML file is not found
