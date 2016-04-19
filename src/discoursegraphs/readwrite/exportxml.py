@@ -16,6 +16,7 @@ from lxml import etree
 
 import discoursegraphs as dg
 from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs.util import add_prefix
 
 
 # example node ID: 's_1_n_506' -> sentence 1, node 506
@@ -550,7 +551,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
 
             for target_node_id in target_node_ids:
                 self.add_edge(target_span_id, target_node_id,
-                              layers={self.ns, self.ns+reltype},
+                              layers={self.ns, self.ns+':'+reltype},
                               edge_type=dg.EdgeTypes.spanning_relation)
 
     def add_topic(self, topic):
@@ -612,19 +613,19 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         # use all attributes except for the ID
         word_attribs = self.element_attribs_to_dict(word)
         # add the token string under the key namespace:token
-        token_str = word_attribs['form']
+        token_str = word_attribs[self.ns+':form']
         word_attribs.update({self.ns+':token': token_str, 'label': token_str})
         self.add_node(word_id, layers={self.ns, self.ns+':token'}, attr_dict=word_attribs)
         self.add_edge(parent_id, word_id, edge_type=dg.EdgeTypes.dominance_relation)
         self.parse_child_elements(word)
 
-    @staticmethod
-    def element_attribs_to_dict(element):
+    def element_attribs_to_dict(self, element):
         """
-        converts the .attrib attributes of an etree element (from ``lxml.etree._Attrib``)
-        into a dict, leaving out the xml:id attribute.
+        Convert the ``.attrib`` attributes of an etree element into a dict,
+        leaving out the xml:id attribute. Each key will be prepended by graph's
+        namespace.
         """
-        return {key: val for (key, val) in element.attrib.items()
+        return {self.ns+':'+key: val for (key, val) in element.attrib.items()
                 if key != add_ns('id')}
 
     @staticmethod
