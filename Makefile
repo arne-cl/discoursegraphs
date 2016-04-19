@@ -11,7 +11,7 @@ clean:
 	rm -rf git_stats
 	rm -rf build dist src/discoursegraphs.egg-info
 	rm -rf docs/_build
-	rm -rf htmlcov
+	rm -rf htmlcov __pycache__
 
 # cleans, uninstalls and reinstalls discoursegraphs
 reinstall: clean uninstall
