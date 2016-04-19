@@ -5,6 +5,41 @@
 '''
 The ``exportxml`` module will convert a corpus in Negra ExportXML format [1]
 (e.g. Tüba-D/Z [2]) into a document graph.
+
+Usage
+=====
+
+1.  How to extract coreference relations from Tüba-D/Z?
+
+The corpus distinguishes four different types of coreference relations:
+
+- anaphoric (``Anaphorisches Pronomen``)
+- cataphoric (``Kataphorisches Pronomen``)
+- coreferential (``Diskurs-altes nicht-Pronomen``)
+- splitRelation (a word or syntax category node is marked as an anaphora
+  with multiple antecedents)
+
+In order to simplify the query process, I marked all these relations as
+``exportxml:coreference``.
+
+Here are the coresponding definitions in the ExportXML header:
+
+<edge name="relation" parent="word|node">
+  <enum-attr name="type">
+   <val name="anaphoric" description="Anaphorisches Pronomen"/>
+   <val name="cataphoric" description="Kataphorisches Pronomen"/>
+   <val name="coreferential" description="Diskurs-altes nicht-Pronomen"/>
+  </enum-attr>
+  <node-ref name="target"/>
+</edge>
+
+<edge name="splitRelation" parent="word|node">
+  <enum-attr name="type">
+  </enum-attr>
+  <text-attr name="target"/>
+</edge>
+
+
 '''
 
 import os
@@ -385,7 +420,8 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
                           label=ne_label)
 
     def add_node_element(self, node):
-        """
+        """Add a (syntax category) <node> to the document graph.
+
         Parameters
         ----------
         node : etree.Element
