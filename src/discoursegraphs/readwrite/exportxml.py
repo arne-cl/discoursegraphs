@@ -651,7 +651,8 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         # add the token string under the key namespace:token
         token_str = word_attribs[self.ns+':form']
         word_attribs.update({self.ns+':token': token_str, 'label': token_str})
-        self.add_node(word_id, layers={self.ns, self.ns+':token'}, attr_dict=word_attribs)
+        self.add_node(word_id, layers={self.ns, self.ns+':token'},
+                      attr_dict=word_attribs)
         self.add_edge(parent_id, word_id, edge_type=dg.EdgeTypes.dominance_relation)
         self.parse_child_elements(word)
 
