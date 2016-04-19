@@ -582,7 +582,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             self.add_node(target_span_id,
                           layers={self.ns, self.ns+':targetspan', self.ns+':'+reltype, self.ns+':markable'})
             self.add_edge(source_id, target_span_id,
-                          layers={self.ns, self.ns+':coreference', self.ns+':'+reltype},
+                          layers={self.ns, self.ns+':coreference', self.ns+':splitrelation', self.ns+':'+reltype},
                           edge_type=dg.EdgeTypes.pointing_relation)
 
             for target_node_id in target_node_ids:
