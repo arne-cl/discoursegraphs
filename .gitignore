@@ -33,3 +33,4 @@ local
 .cache
 htmlcov/
 __pycache__
+.eggs/
