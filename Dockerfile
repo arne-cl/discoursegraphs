@@ -1,6 +1,6 @@
 # Dockerfile to build a discoursegraphs container image
 
-FROM ipython/notebook
+FROM jupyter/notebook
 
 MAINTAINER Arne Neumann <discoursegraphs.programming@arne.cl>
 
@@ -9,13 +9,11 @@ RUN apt-get install -y python-dev python-pip git graphviz-dev libxml2-dev libxsl
 
 RUN easy_install -U setuptools
 
-WORKDIR /opt/
-RUN git clone https://github.com/arne-cl/discoursegraphs.git
-RUN git clone https://github.com/arne-cl/neonx.git
-
-WORKDIR /opt/neonx/
-RUN python setup.py install
-
 WORKDIR /opt/discoursegraphs/
-RUN python setup.py install
+ADD data data/
+ADD docs docs/
+ADD src src/
+ADD tests tests/
+ADD LICENSE Makefile NEWS.rst README.rst requirements.txt setup.py ./
 
+RUN pip2.7 install -r requirements.txt

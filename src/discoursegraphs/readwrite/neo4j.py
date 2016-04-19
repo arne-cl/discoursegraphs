@@ -9,9 +9,9 @@ string which can be imported into a ``Neo4j`` graph database.
 
 from copy import deepcopy
 
-from neonx import write_to_neo, get_geoff
 from discoursegraphs.util import ensure_utf8
 from discoursegraphs.readwrite.generic import layerset2list
+from discoursegraphs.readwrite.geoff import graph2geoff
 
 
 def add_node_ids_as_labels(discoursegraph):
@@ -45,7 +45,7 @@ def convert_to_geoff(discoursegraph):
     dg_copy = deepcopy(discoursegraph)
     layerset2list(dg_copy)
     add_node_ids_as_labels(dg_copy)
-    return get_geoff(dg_copy, 'LINKS_TO')
+    return graph2geoff(dg_copy, 'LINKS_TO')
 
 
 def write_geoff(discoursegraph, output_file):

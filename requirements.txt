@@ -1,5 +1,4 @@
 -e . # install this package using the setup.py in this directory
-git+https://github.com/arne-cl/neonx.git # use my modified version of neonx
 
 brewer2mpl==1.4.1
 lxml==3.6.0

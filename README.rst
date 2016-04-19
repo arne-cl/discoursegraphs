@@ -75,10 +75,8 @@ discoursegraphs can export graphs into the following formats /
 for the following tools:
 
 * dot format, which is used by the open source graph visualization software `graphviz <>`_
-* geoff format, used by the `neo4j <http://neo4j.com/>`_ graph database (please
-  use my fork of the `neonx <https://github.com/arne-cl/neonx>`_ library to make this work)
-* direct data export into a running neon4j database (see above)
-* `GEXF <http://gexf.net/format/>`_  and `GraphML <http://graphml.graphdrawing.org/>`_ 
+* geoff format, used by the `neo4j <http://neo4j.com/>`_ graph database
+* `GEXF <http://gexf.net/format/>`_  and `GraphML <http://graphml.graphdrawing.org/>`_
   (common interchange formats for graphs used by various tools such as
   `Gephi <https://gephi.github.io/>`_ and `Cytoscape <http://www.cytoscape.org/>`_)
 * `PAULA XML 1.1 <https://www.sfb632.uni-potsdam.de/en/paula.html>`_, an exchange format
@@ -118,10 +116,6 @@ Install from source
 
     sudo apt-get install python-dev libxml2-dev libxslt-dev pkg-config graphviz-dev libgraphviz-dev -y
     sudo easy_install -U setuptools
-    git clone https://arne-cl@github.com/arne-cl/neonx.git # TODO: submit that patch upstream
-    cd neonx
-    sudo python setup.py install
-    cd ..
     git clone https://github.com/arne-cl/discoursegraphs.git
     cd discoursegraphs
     sudo python setup.py install

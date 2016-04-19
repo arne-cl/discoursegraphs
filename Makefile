@@ -1,12 +1,5 @@
 # a '-' before a shell command causes make to ignore its exit code (errors)
 
-MAZ = data/potsdam-commentary-corpus-2.0.0
-
-neo4j:
-	date +"%H:%M:%S"
-	-ls $(MAZ)/syntax/*.xml | parallel discoursegraphs -t {} -r $(MAZ)/rst/{/.}.rs3 -c $(MAZ)/connectors/{/.}.xml -m $(MAZ)/coreference/{/.}.mmax -o neo4j
-	date +"%H:%M:%S"
-
 install:
 	python setup.py install
 
@@ -20,18 +13,9 @@ clean:
 	rm -rf docs/_build
 	rm -rf htmlcov
 
-kill-delete-restart-neo4j:
-	~/bin/neo4j/bin/neo4j stop
-	rm -rf ~/bin/neo4j/data/*
-	~/bin/neo4j/bin/neo4j start
-
-repopulate-neo4j: kill-delete-restart-neo4j neo4j
-
-# cleans, uninstalls and reinstalls both discoursegraphs and our neonx "fork"
-reinstall: clean uninstall install
-	cd ~/repos/neonx && make clean && yes | pip uninstall neonx && python setup.py install
-
-frankenstein: reinstall repopulate-neo4j
+# cleans, uninstalls and reinstalls discoursegraphs
+reinstall: clean uninstall
+	python setup.py install
 
 # runs py.test with coverage.py and creates annoted HTML reports in htmlcov/
 coverage:
