@@ -965,13 +965,13 @@ def get_span(docgraph, node_id, debug=False):
     if docgraph.ns+':token' in docgraph.node[node_id]:
         span.append(node_id)
 
-    for from_id, to_id, edge_attribs in docgraph.out_edges_iter(node_id,
+    for src_id, target_id, edge_attribs in docgraph.out_edges_iter(node_id,
                                                                 data=True):
-        if from_id == to_id:
+        if src_id == target_id:
             continue  # ignore self-loops
         # ignore pointing relations
         if edge_attribs['edge_type'] != EdgeTypes.pointing_relation:
-            span.extend(get_span(docgraph, to_id))
+            span.extend(get_span(docgraph, target_id))
     return sorted(span, key=natural_sort_key)
 
 
@@ -1146,15 +1146,15 @@ def select_nodes_by_attribute(docgraph, attribute=None, value=None, data=False):
 
 def select_edges(docgraph, conditions, data):
     """yields all edges that meet the conditions given as eval strings"""
-    for (from_id, to_id, edge_attribs) in docgraph.edges(data=True):
+    for (src_id, target_id, edge_attribs) in docgraph.edges(data=True):
         # if all conditions are fulfilled
         # we need to add edge_attribs to the namespace eval is working in
         if all((eval(cond, {'edge_attribs': edge_attribs})
                 for cond in conditions)):
             if data:
-                yield (from_id, to_id, edge_attribs)
+                yield (src_id, target_id, edge_attribs)
             else:
-                yield (from_id, to_id)
+                yield (src_id, target_id)
 
 
 def select_edges_by_attribute(docgraph, attribute=None, value=None, data=False):
@@ -1251,7 +1251,7 @@ def select_edges_by(docgraph, layer=None, edge_type=None, data=False):
             return docgraph.edges_iter(data=data)
 
 
-def __walk_chain(rel_dict, from_id):
+def __walk_chain(rel_dict, src_id):
     """
     given a dict of pointing relations and a start node, this function
     will return a list of paths (each path is represented as a list of
@@ -1262,7 +1262,7 @@ def __walk_chain(rel_dict, from_id):
     rel_dict : dict
         a dictionary mapping from an edge source node (node ID str)
         to a set of edge target nodes (node ID str)
-    from_id : str
+    src_id : str
 
     Returns
     -------
@@ -1271,12 +1271,12 @@ def __walk_chain(rel_dict, from_id):
         which represent a chain of pointing relations)
     """
     paths_starting_with_id = []
-    for to_id in rel_dict[from_id]:
-        if to_id in rel_dict:
-            for tail in __walk_chain(rel_dict, to_id):
-                paths_starting_with_id.append([from_id] + tail)
+    for target_id in rel_dict[src_id]:
+        if target_id in rel_dict:
+            for tail in __walk_chain(rel_dict, target_id):
+                paths_starting_with_id.append([src_id] + tail)
         else:
-            paths_starting_with_id.append([from_id, to_id])
+            paths_starting_with_id.append([src_id, target_id])
     return paths_starting_with_id
 
 
@@ -1298,26 +1298,26 @@ def get_pointing_chains(docgraph, layer=None):
 
     # a markable can point to more than one antecedent, cf. Issue #40
     rel_dict = defaultdict(set)
-    for from_id, to_id in pointing_relations:
-        rel_dict[from_id].add(to_id)
+    for src_id, target_id in pointing_relations:
+        rel_dict[src_id].add(target_id)
 
-    all_chains = [__walk_chain(rel_dict, from_id)
-                  for from_id in rel_dict.iterkeys()]
+    all_chains = [__walk_chain(rel_dict, src_id)
+                  for src_id in rel_dict.iterkeys()]
 
     # don't return partial chains, i.e. instead of returning [a,b], [b,c] and
     # [a,b,c,d], just return [a,b,c,d]
     unique_chains = []
-    for i, from_id_chains in enumerate(all_chains):
+    for i, src_id_chains in enumerate(all_chains):
         # there will be at least one chain in this list and
         # its first element is the from ID
-        from_id = from_id_chains[0][0]
+        src_id = src_id_chains[0][0]
 
-        # chain lists not starting with from_id
+        # chain lists not starting with src_id
         other_chainlists = all_chains[:i] + all_chains[i+1:]
-        if not any([from_id in chain
+        if not any([src_id in chain
                     for chain_list in other_chainlists
                     for chain in chain_list]):
-                        unique_chains.extend(from_id_chains)
+                        unique_chains.extend(src_id_chains)
     return unique_chains
 
 
