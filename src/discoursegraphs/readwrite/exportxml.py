@@ -203,7 +203,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             edges (between elements in a syntax tree)
         """
         # super calls __init__() of base class DiscourseDocumentGraph
-        super(ExportXMLDocumentGraph, self).__init__()
+        super(ExportXMLDocumentGraph, self).__init__(namespace=namespace)
 
         if isinstance(text_element, str):
             _event, text_element = etree.iterparse(
@@ -211,8 +211,6 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
 
         self.name = name if name else text_element.attrib[add_ns('id')]
         self.ns = namespace
-        self.root = self.ns+':root_node'
-        self.add_node(self.root, layers={self.ns}, label=self.ns+':root_node')
 
         self.sentences = []
         self.tokens = []
@@ -220,7 +218,6 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         self.ignore_relations = ignore_relations
         self.ignore_splitrelations = ignore_splitrelations
         self.ignore_secedges = ignore_secedges
-
 
         self.parsers = {
             'connective': self.add_connective,
