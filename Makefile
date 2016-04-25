@@ -1,7 +1,7 @@
 # a '-' before a shell command causes make to ignore its exit code (errors)
 
 install:
-	python setup.py install
+	pip install -r requirements.txt
 
 uninstall:
 	yes | pip uninstall discoursegraphs
@@ -14,8 +14,8 @@ clean:
 	rm -rf htmlcov __pycache__
 
 # cleans, uninstalls and reinstalls discoursegraphs
-reinstall: clean uninstall
-	python setup.py install
+reinstall: uninstall clean install
+
 
 # runs py.test with coverage.py and creates annoted HTML reports in htmlcov/
 coverage:
