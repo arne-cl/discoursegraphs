@@ -110,10 +110,20 @@ class ExportXMLCorpus(object):
         self._num_of_documents = None
         self.exportxml_file = exportxml_file
         self.debug = debug
-        # create an iterator over all documents in the file (i.e. all
-        # <text> elements). The recover parameter is used, as the Tüba-D/Z 8.0
-        # corpus used for testing isn't completely valid XML (i.e. there are two
-        # element IDs used twice)
+
+        self.__context = None
+        self._reset_corpus_iterator()
+
+    def _reset_corpus_iterator(self):
+        """
+        create an iterator over all documents in the file (i.e. all
+        <text> elements). The recover parameter is used, as the Tüba-D/Z 8.0
+        corpus used for testing isn't completely valid XML (i.e. there are two
+        element IDs used twice).
+
+        Once you have iterated over all documents, call this method again
+        if you want to iterate over them again.
+        """
         self.__context = etree.iterparse(self.exportxml_file, events=('end',),
                                          tag='text', recover=True)
 
