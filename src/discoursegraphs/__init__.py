@@ -32,7 +32,27 @@ from discoursegraphs.util import xmlprint, make_labels_explicit, find_files
 
 
 SRC_ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
-PACKAGE_ROOT_DIR = os.path.abspath(os.path.join(SRC_ROOT_DIR, '../..'))
+
+def get_package_root_dir(src_root_dir=SRC_ROOT_DIR):
+    """return the path to the root directory of this package.
+
+    This clumsy function allows me to distribute a data directory with my
+    package (specified via the ``data_files`` parameter of
+    ``setuptools.setup``), no matter if it is installed via setup.py or
+    a ``requirements.txt`` file.
+    """
+    parentdir_path = os.path.abspath(os.path.join(SRC_ROOT_DIR, os.pardir))
+    dirname = os.path.basename(parentdir_path)
+    if dirname.startswith('discoursegraphs') and dirname.endswith('.egg'):
+        # package was installed via setup.py
+        return parentdir_path
+    else:  # software was installed via requirements.txt
+        grandparentdir_path = os.path.abspath(
+            os.path.join(SRC_ROOT_DIR, os.pardir, os.pardir))
+        return grandparentdir_path
+
+
+PACKAGE_ROOT_DIR = get_package_root_dir(SRC_ROOT_DIR)
 DATA_ROOT_DIR = os.path.join(PACKAGE_ROOT_DIR, 'data')
 
 # corpora can't be imported before root dirs and ``find_files`` are known
