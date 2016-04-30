@@ -9,6 +9,7 @@ uninstall:
 clean:
 	find . -name '*.pyc' -delete
 	find . -name ".ipynb_checkpoints" -type d -exec rm -rf {} \;
+	find . -name "__pycache__" -type d -exec rm -rf {} \;
 	rm -rf .eggs .cache
 	rm -rf git_stats
 	rm -rf build dist src/discoursegraphs.egg-info
