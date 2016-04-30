@@ -6,6 +6,15 @@
 News
 ====
 
+0.3.0 (2016-04-30)
+------------------
+
+*Release data: 30-April-2016*
+
+* almost two years and countless commits later, finally a new official release
+* added lots of importers and exporters and simplified the API
+* added 80+ tests (py.test), continuous integration (Travis) and docker support
+
 0.1.2 (2014-05-13)
 ------------------
 
