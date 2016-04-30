@@ -1,0 +1,13 @@
+# I hate Python packaging! Putting all of this in setup.py simple isn't
+# enough. setuptools behaves differently than distutils and sdist is is not
+# bdist and there are eggs on my wheels. Don't get my started on
+# discoursegraphs.get_package_root_dir() !
+#
+# http://stackoverflow.com/questions/7522250/how-to-include-package-data-with-setuptools-distribute
+# https://github.com/pypa/setuptools/issues/521
+# http://stackoverflow.com/questions/1612733/including-non-python-files-with-setup-py
+
+include Dockerfile LICENSE Makefile NEWS.rst README.rst 
+recursive-include data *
+recursive-include docs *
+recursive-include tests *
