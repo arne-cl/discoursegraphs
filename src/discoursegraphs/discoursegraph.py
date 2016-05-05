@@ -16,7 +16,7 @@ import sys
 import warnings
 from collections import defaultdict, OrderedDict
 
-from networkx import MultiDiGraph, is_directed_acyclic_graph
+from networkx import MultiGraph, MultiDiGraph, is_directed_acyclic_graph
 
 from discoursegraphs.relabel import relabel_nodes
 from discoursegraphs.util import natural_sort_key
@@ -1073,6 +1073,36 @@ def select_neighbors_by_layer(docgraph, node, layer, data=False):
 
         if condition:
             yield (node_id, docgraph.node[node_id]) if data else (node_id)
+
+
+def select_neighbors_by_edge_attribute(docgraph, source,
+                                       attribute=None, value=None, data=False):
+    """Get all neighbors with the given edge attribute value(s)."""
+    assert isinstance(docgraph, MultiGraph)
+    for neighbor_id in docgraph.neighbors_iter(source):
+        edges = docgraph[source][neighbor_id].values()
+
+        if attribute is None:
+            has_attrib = True # don't filter neighbors
+        else:
+            has_attrib = any(attribute in edge for edge in edges)
+
+        if has_attrib:
+            if value is None:
+                has_value = True
+            elif isinstance(value, basestring):
+                has_value = any(edge.get(attribute) == value
+                                for edge in edges)
+            else:  # ``value`` is a list/set/dict of values
+                has_value = any(edge.get(attribute) == v
+                                for edge in edges
+                                for v in value)
+
+            if has_value:
+                if data:
+                    yield (neighbor_id, docgraph.node[neighbor_id])
+                else:
+                    yield neighbor_id
 
 
 def select_nodes_by_layer(docgraph, layer=None, data=False):
