@@ -76,7 +76,7 @@ setup(name='discoursegraphs',
     data_files = distribution_files + corpora_files,
     zip_safe=False,
     install_requires=install_requires,
-    setup_requires=['pytest-runner'],
+    #setup_requires=['pytest-runner'],
     tests_require=['pytest', 'pytest-ordering'],
     entry_points={
         'console_scripts':
