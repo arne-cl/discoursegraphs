@@ -14,7 +14,7 @@ TODO: implement a DiscourseCorpusGraph
 import itertools
 import sys
 import warnings
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 
 from networkx import MultiDiGraph, is_directed_acyclic_graph
 
@@ -62,6 +62,15 @@ class DiscourseDocumentGraph(MultiDiGraph):
       different attributes (layers can be the same though)
     - outsource layer assertions to method?
     """
+
+    # Create a multdigraph object that tracks the order nodes are added
+    # and for each node track the order that neighbors are added and for
+    # each neighbor tracks the order that multiedges are added.
+    # Cf. nx.MultiDiGraph docstring (OrderedGraph)
+    node_dict_factory = OrderedDict
+    adjlist_dict_factory = OrderedDict
+    edge_key_dict_factory = OrderedDict
+
     def __init__(self, name='', namespace='discoursegraph', root=None):
         """
         Initialized an empty directed graph which allows multiple edges.
