@@ -261,6 +261,7 @@ text_22_stats = ['Name: text_22',
 
 
 def test_read_exportxml():
+    """An ExportXML file can be parsed with the expected node/edge attributes."""
     exportxml_filepath = os.path.join(dg.DATA_ROOT_DIR, 'exportxml-example.xml')
     exportxml_corpus = dg.read_exportxml(exportxml_filepath)
     assert isinstance(exportxml_corpus, dg.readwrite.exportxml.ExportXMLCorpus)
