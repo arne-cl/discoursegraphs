@@ -109,6 +109,7 @@ class ExportXMLCorpus(object):
         self.name = name if name else os.path.basename(exportxml_file)
         self._num_of_documents = None
         self.exportxml_file = exportxml_file
+        self.path = os.path.abspath(exportxml_file)
         self.debug = debug
 
         self.__context = None
@@ -169,7 +170,7 @@ class ExportXMLCorpus(object):
         """
         for _event, elem in context:
             if not self.debug:
-                yield ExportXMLDocumentGraph(elem)
+                yield ExportXMLDocumentGraph(elem, name=elem.attrib[add_ns('id')])
             else:
                 yield elem
             # removes element (and references to it) from memory after processing it
@@ -183,7 +184,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
     """
     represents an ExportXML document as a document graph.
     """
-    def __init__(self, text_element, name=None, namespace='exportxml',
+    def __init__(self, text_element=None, name=None, namespace='exportxml',
                  precedence=False, ignore_relations=False,
                  ignore_splitrelations=False, ignore_secedges=False):
         """
@@ -191,9 +192,10 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
 
         Parameters
         ----------
-        text_element : lxml.etree._Element or str
-            a <text> element from an ExportXML file parsed with lxml or
-            a path to a file containing a <text> element
+        text_element : lxml.etree._Element or str or None
+            A <text> element from an ExportXML file parsed with lxml or
+            a path to a file containing a <text> element. If None, return
+            an empty document graph.
         name : str or None
             the name or ID of the graph to be generated. If no name is
             given, the xml:id of the <text> element is used
@@ -212,15 +214,18 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             If True, don't add pointing relations representing secondary
             edges (between elements in a syntax tree)
         """
+        text_id = text_element.attrib[add_ns('id')]
         # super calls __init__() of base class DiscourseDocumentGraph
-        super(ExportXMLDocumentGraph, self).__init__(namespace=namespace)
+        super(ExportXMLDocumentGraph, self).__init__(namespace=namespace, root=text_id)
+
+        if text_element is None:
+            return
 
         if isinstance(text_element, str):
             _event, text_element = etree.iterparse(
                 text_element, events=('end',), tag='text', recover=True).next()
 
-        self.name = name if name else text_element.attrib[add_ns('id')]
-        self.ns = namespace
+        self.name = name if name else text_id
 
         self.sentences = []
         self.tokens = []

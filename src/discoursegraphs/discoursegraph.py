@@ -62,22 +62,24 @@ class DiscourseDocumentGraph(MultiDiGraph):
       different attributes (layers can be the same though)
     - outsource layer assertions to method?
     """
-    def __init__(self, name='', namespace='discoursegraph'):
+    def __init__(self, name='', namespace='discoursegraph', root=None):
         """
         Initialized an empty directed graph which allows multiple edges.
 
         Parameters
         ----------
         name : str or None
-            the name or ID of the graph to be generated.
+            name or ID of the graph to be generated.
         namespace : str
-            the namespace of the graph (default: discoursegraph)
+            namespace of the graph (default: discoursegraph)
+        root : str or None
+            Name of the root node. If None, defaults to namespace+':root_node'.
         """
         # super calls __init__() of base class MultiDiGraph
         super(DiscourseDocumentGraph, self).__init__()
         self.name = name
         self.ns = namespace
-        self.root = self.ns+':root_node'
+        self.root = root if root else self.ns+':root_node'
         self.add_node(self.root, layers={self.ns})
         # metadata shall be stored in the root node's dictionary
         self.node[self.root]['metadata'] = defaultdict(lambda: defaultdict(dict))
