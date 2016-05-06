@@ -36,7 +36,9 @@ text0_str = """
 
 
 class TestTree(object):
+    """Tests for PTB-style export"""
     def setup_class(cls):
+        """parse the text string into an ExportXML docgraph"""
         cls.tree = etree.fromstring(text0_str)
         cls.docgraph = ExportXMLDocumentGraph(cls.tree)
 
@@ -117,6 +119,7 @@ class TestTree(object):
         expected_successors.pop('text_0')
         assert s1_successors == expected_successors
 
+    @staticmethod
     def test_node2bracket(self):
         """A docgraph node can be converted into PTB-style bracket notation."""
         ddg = dg.DiscourseDocumentGraph()
