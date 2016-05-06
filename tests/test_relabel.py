@@ -217,11 +217,11 @@ def test_relabel_nodes_missing():
 def test_relabel_toposort():
     K5 = nx.complete_graph(4)
     G = nx.complete_graph(4)
-    G = nx.relabel_nodes(G,dict( [(i,i+1) for i in range(4)]),copy=False)
+    G = nx.relabel_nodes(G, {i: i+1 for i in range(4)}, copy=False)
     assert nx.is_isomorphic(K5,G)
 
     G = nx.complete_graph(4)
-    G = nx.relabel_nodes(G,dict( [(i,i-1) for i in range(4)]),copy=False)
+    G = nx.relabel_nodes(G, {i: i-1 for i in range(4)}, copy=False)
     assert nx.is_isomorphic(K5,G)
 
 
