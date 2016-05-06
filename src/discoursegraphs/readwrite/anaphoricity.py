@@ -153,7 +153,7 @@ def gen_anaphoricity_str(docgraph, anaphora='es'):
     for token_id in docgraph.tokens:
         if token_id in annotated_token_ids:
             certainty_str = '' if docgraph.ns+':certainty' == '1.0' else '?'
-            ret_str += u'{}/{}{} '.format(
+            ret_str += u'{0}/{1}{2} '.format(
                 docgraph.get_token(token_id),
                 ANNOTATIONS[docgraph.node[token_id][docgraph.ns+':annotation']],
                 certainty_str)

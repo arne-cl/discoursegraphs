@@ -193,9 +193,9 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
                     # dependencies and labels of PRED)
                     yield word_class._make(line.split("\t")[:14])
             except TypeError as e:
-                error_msg = ("Is input really in CoNLL{} format?\n"
-                             "word features: {}\n"
-                             "{}".format(self.conll_format, line.split('\t'), e))
+                error_msg = ("Is input really in CoNLL{0} format?\n"
+                             "word features: {1}\n"
+                             "{2}".format(self.conll_format, line.split('\t'), e))
                 raise TypeError(error_msg.format(e))
 
     def __add_sentence_root_node(self, sent_number):
@@ -241,7 +241,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         token_id : str
             the ID of the token just created
         """
-        token_id = '{}_t{}'.format(sent_id, word.word_id)
+        token_id = '{0}_t{1}'.format(sent_id, word.word_id)
         feats = word._asdict()
         # dicts can't be generated and updated at once
         feats.update({self.ns+':token': word.token, 'label': word.token,
@@ -265,12 +265,12 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
             # word represents the sentence root
             source_id = sent_id
         else:
-            source_id = '{}_t{}'.format(sent_id, head)
+            source_id = '{0}_t{1}'.format(sent_id, head)
             # TODO: fix issue #39, so we don't have to add nodes explicitly
             if source_id not in self.node:
                 self.add_node(source_id, layers={self.ns})
 
-        target_id = '{}_t{}'.format(sent_id, word_instance.word_id)
+        target_id = '{0}_t{1}'.format(sent_id, word_instance.word_id)
         # 'pdeprel': projected dependency relation
         try:
             self.add_edge(source_id, target_id,
@@ -279,7 +279,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
                           label=deprel,
                           edge_type=EdgeTypes.dominance_relation)
         except AssertionError:
-            print "source: {}, target: {}".format(source_id, target_id)
+            print "source: {0}, target: {1}".format(source_id, target_id)
 
     def __add_morph_features(self, token_dict, feature_string,
                              feature_format='unknown'):

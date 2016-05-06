@@ -690,7 +690,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             return element.getparent().attrib[id_attrib_key]
         except KeyError as e:
             raise KeyError(
-                'Neither the element "{}" nor its parent "{}" '
+                'Neither the element "{0}" nor its parent "{1}" '
                 'have an ID'.format(element, element.getparent()))
 
     @staticmethod

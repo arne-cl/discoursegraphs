@@ -372,7 +372,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
         exactly one token.
         """
         for i, event in enumerate(tier.iter('event')):
-            anno_key = '{}:{}'.format(self.ns, tier.attrib['category'])
+            anno_key = '{0}:{1}'.format(self.ns, tier.attrib['category'])
             anno_val = event.text if event.text else ''
             self.node[event.attrib['start']][anno_key] = anno_val
 

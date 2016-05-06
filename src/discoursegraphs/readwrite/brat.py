@@ -84,7 +84,7 @@ def brat_output(docgraph, layer=None, show_relations=True):
         if token_id in first_token2markables:
             for markable in first_token2markables[token_id]:
                 mark_index, mark_text, mark_len = markable_dict[markable]
-                ret_str += u"T{}\tMarkable {} {}\t{}\n".format(
+                ret_str += u"T{0}\tMarkable {1} {2}\t{3}\n".format(
                     mark_index, onset, onset+mark_len, mark_text)
         onset += tok_len+1
 
@@ -120,7 +120,7 @@ def create_visual_conf(docgraph, pointing_chains):
             span_tokens = spanstring2tokens(docgraph, docgraph.node[markable][docgraph.ns+':span'])
             span_text = dg.tokens2text(docgraph, span_tokens)
             ascii_markable = unidecode(span_text)
-            ret_str += u'{}\tbgColor:{}\n'.format(ascii_markable,
+            ret_str += u'{0}\tbgColor:{1}\n'.format(ascii_markable,
                                                   background_color)
     ret_str += '\n[labels]'
     return ret_str

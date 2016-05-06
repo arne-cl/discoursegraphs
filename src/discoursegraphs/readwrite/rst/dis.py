@@ -101,16 +101,17 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
             relation_type = self.get_relation_type(rst_tree)
             if node_type == 'leaf':
                 edu_text = self.get_edu_text(rst_tree[-1])
-                self.add_node(node_id, attr_dict={self.ns+':text': edu_text,
-                                                  'label': u'{}: {}'.format(node_id, edu_text[:20])})
+                self.add_node(node_id, attr_dict={
+                    self.ns+':text': edu_text,
+                    'label': u'{0}: {1}'.format(node_id, edu_text[:20])})
                 if self.tokenized:
                     edu_tokens = edu_text.split()
                     for i, token in enumerate(edu_tokens):
-                        token_node_id = '{}_{}'.format(node_id, i)
+                        token_node_id = '{0}_{1}'.format(node_id, i)
                         self.tokens.append(token_node_id)
                         self.add_node(token_node_id, attr_dict={self.ns+':token': token,
                                                                 'label': token})
-                        self.add_edge(node_id, '{}_{}'.format(node_id, i))
+                        self.add_edge(node_id, '{0}_{1}'.format(node_id, i))
 
             else: # node_type == 'span'
                 self.add_node(node_id, attr_dict={self.ns+':rel_type': relation_type,
@@ -121,7 +122,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
                 expected_child_types = set(['Nucleus', 'Satellite'])
                 unexpected_child_types = set(child_types).difference(expected_child_types)
                 assert not unexpected_child_types, \
-                    "Node '{}' contains unexpected child types: {}\n".format(node_id, unexpected_child_types)
+                    "Node '{0}' contains unexpected child types: {1}\n".format(node_id, unexpected_child_types)
 
                 if 'Satellite' not in child_types:
                     # span only contains nucleii -> multinuc
@@ -226,11 +227,11 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         node_type = self.get_node_type(nuc_or_sat)
         if node_type == 'leaf':
             leaf_id = nuc_or_sat[0].leaves()[0]
-            return '{}:{}'.format(self.ns, leaf_id)
+            return '{0}:{1}'.format(self.ns, leaf_id)
         else: # node_type == 'span'
             span_start = nuc_or_sat[0].leaves()[0]
             span_end = nuc_or_sat[0].leaves()[1]
-            return '{}:span:{}-{}'.format(self.ns, span_start, span_end)
+            return '{0}:span:{1}-{2}'.format(self.ns, span_start, span_end)
 
 
 def fix_rst_treebank_tree_str(rst_tree_str):
