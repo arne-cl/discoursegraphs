@@ -254,6 +254,9 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
 
         self.parse_descedant_elements(text_element)
 
+        if precedence:
+            self.add_precedence_relations()
+
     def parse_child_elements(self, element):
         '''parses all children of an etree element'''
         for child in element.iterchildren():
