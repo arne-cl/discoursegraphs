@@ -197,7 +197,7 @@ class ExmaraldaFile(object):
                                     'end': "T{}".format(end_id)}, element_str))
             body.append(chain_tier)
 
-    def __add_token_tiers(self, docgraph, body, default_ns='tiger'):
+    def __add_token_tiers(self, docgraph, body):
         """
         adds all tiers that annotate single tokens (e.g. token string, lemma,
         POS tag) to the etree representation of the Exmaralda XML file.
@@ -209,9 +209,6 @@ class ExmaraldaFile(object):
         body : etree._Element
             an etree representation of the <basic_body> element (and all its
             descendants) of the Exmaralda file
-        default_ns : str
-            the default namespace (i.a. used to extract the token strings
-            only once)
         """
         E = self.E
         token_tier = E('tier',

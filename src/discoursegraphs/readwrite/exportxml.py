@@ -63,6 +63,8 @@ class TextCountTarget(object):
     counts all <text> elements in the XML document to be parsed.
     adapted from Listing 2 on
     http://www.ibm.com/developerworks/library/x-hiperfparse/
+
+    NOTE: unused arguments (i.e. `attrib` and `data` are required)
     '''
     def __init__(self):
         self.count = 0
