@@ -1355,9 +1355,9 @@ def get_pointing_chains(docgraph, layer=None):
 
         # chain lists not starting with src_id
         other_chainlists = all_chains[:i] + all_chains[i+1:]
-        if not any([src_id in chain
+        if not any((src_id in chain
                     for chain_list in other_chainlists
-                    for chain in chain_list]):
+                    for chain in chain_list)):
                         unique_chains.extend(src_id_chains)
     return unique_chains
 

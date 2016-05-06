@@ -66,10 +66,10 @@ def test_get_rst_relation_root_nodes():
     rst_relation_root_nodes_with_data = \
         list(dg.readwrite.rst.rs3.get_rst_relation_root_nodes(RS3_GRAPH))
 
-    assert all([isinstance(node, str)
-                for node in rst_relation_root_nodes])
-    all([(isinstance(node, tuple) and len(node) == 3)
-         for node in rst_relation_root_nodes_with_data])
+    assert all((isinstance(node, str)
+                for node in rst_relation_root_nodes))
+    all(((isinstance(node, tuple) and len(node) == 3)
+         for node in rst_relation_root_nodes_with_data))
     assert len(rst_relation_root_nodes_with_data) == len(rst_relation_root_nodes) == 15
 
 
@@ -87,8 +87,8 @@ def test_get_rst_relations():
 def test_get_rst_spans():
     rst_spans = dg.readwrite.rst.rs3.get_rst_spans(RS3_GRAPH)
     assert isinstance(rst_spans, list)
-    all([(len(span) == 5 and isinstance(span, tuple))
-         for span in rst_spans])
+    all(((len(span) == 5 and isinstance(span, tuple))
+         for span in rst_spans))
 
 
 def test_select_nodes_by_layer():
