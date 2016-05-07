@@ -34,6 +34,7 @@ from discoursegraphs.util import xmlprint, make_labels_explicit, find_files
 
 SRC_ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 
+
 def get_package_root_dir(src_root_dir=SRC_ROOT_DIR):
     """return the path to the root directory of this package.
 
