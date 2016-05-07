@@ -42,7 +42,7 @@ def get_package_root_dir(src_root_dir=SRC_ROOT_DIR):
     ``setuptools.setup``), no matter if it is installed via setup.py or
     a ``requirements.txt`` file.
     """
-    parentdir_path = os.path.abspath(os.path.join(SRC_ROOT_DIR, os.pardir))
+    parentdir_path = os.path.abspath(os.path.join(src_root_dir, os.pardir))
     dirname = os.path.basename(parentdir_path)
     if dirname.startswith('discoursegraphs') and dirname.endswith('.egg'):
         # package was installed via setup.py
@@ -53,7 +53,7 @@ def get_package_root_dir(src_root_dir=SRC_ROOT_DIR):
         return base_dir_path
     else:  # software was installed via requirements.txt
         grandparentdir_path = os.path.abspath(
-            os.path.join(SRC_ROOT_DIR, os.pardir, os.pardir))
+            os.path.join(src_root_dir, os.pardir, os.pardir))
         return grandparentdir_path
 
 
