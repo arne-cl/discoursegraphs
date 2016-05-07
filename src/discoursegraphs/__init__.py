@@ -4,7 +4,7 @@
 
 __author__ = 'Arne Neumann'
 __email__ = 'discoursegraphs.programming@arne.cl'
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 # flake8: noqa
 

@@ -6,6 +6,15 @@
 News
 ====
 
+0.3.1 (2016-05-07)
+------------------
+
+*Release data: 7-May-2016*
+
+* attempt to fix the distribution of the data directory with the package
+* document graphs can be converted into PTB-style strings (readwrite/tree.py)
+* node/edge collections are now ordered (OrderedDict)
+
 0.3.0 (2016-04-30)
 ------------------
 
