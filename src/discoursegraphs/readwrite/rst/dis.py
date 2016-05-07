@@ -77,6 +77,9 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         self.rst_tree = self.disfile2tree(dis_filepath)
         self.parse_rst_tree(self.rst_tree)
 
+        if precedence:
+            self.add_precedence_relations()
+
     @staticmethod
     def disfile2tree(dis_filepath):
         """converts a *.dis file into a ParentedTree (NLTK) instance"""
