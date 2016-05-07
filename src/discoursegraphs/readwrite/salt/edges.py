@@ -104,7 +104,7 @@ class SpanningRelation(SaltEdge):
         """A ``SpanningRelation`` is created just like an ``SaltEdge``."""
         super(SpanningRelation, self).__init__(name, element_id, xsi_type,
                                                labels, source, target,
-                                               layers=None, xml=None)
+                                               layers=layers, xml=xml)
 
 
 class TextualRelation(SaltEdge):
