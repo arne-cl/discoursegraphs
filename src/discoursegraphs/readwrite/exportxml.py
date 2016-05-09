@@ -554,7 +554,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         """
         sent_root_id = sentence.attrib[add_ns('id')]
         # add edge from document root to sentence root
-        self.add_edge(self.root, sent_root_id, edge_type=dg.EdgeTypes.spanning_relation)
+        self.add_edge(self.root, sent_root_id, edge_type=dg.EdgeTypes.dominance_relation)
         self.sentences.append(sent_root_id)
 
         sentence_token_ids = []
