@@ -27,3 +27,6 @@ from discoursegraphs.readwrite.rst.rs3 import RSTGraph, read_rst, read_rs3
 from discoursegraphs.readwrite.rst.dis import read_dis
 from discoursegraphs.readwrite.salt.saltxmi import SaltDocument, SaltXMIGraph
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph, read_tiger
+
+from discoursegraphs.readwrite.tree import tree2bracket
+from discoursegraphs.readwrite.freqt import docgraph2freqt, write_freqt
