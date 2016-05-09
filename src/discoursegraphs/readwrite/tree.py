@@ -26,6 +26,36 @@ def get_child_nodes(docgraph, parent_node_id, data=False):
         data=data)
 
 
+def get_parents(docgraph, child_node, strict=True):
+    """Return a list of parent nodes that dominate this child.
+
+    In a 'syntax tree' a node never has more than one parent node
+    dominating it. To enforce this, set strict=True.
+
+    Parameters
+    ----------
+    docgraph : DiscourseDocumentGraph
+        a document graph
+    strict : bool
+        If True, raise a ValueError if a child node is dominated
+        by more than one parent node.
+
+    Returns
+    -------
+    parents : list
+        a list of (parent) node IDs.
+    """
+    parents = []
+    for src, target, edge_attrs in docgraph.in_edges(child_node, data=True):
+        if edge_attrs['edge_type'] == EdgeTypes.dominance_relation:
+            parents.append(src)
+
+    if strict and len(parents) > 1:
+        raise ValueError(("In a syntax tree, a node can't be "
+                          "dominated by more than one parent"))
+    return parents
+
+
 def horizontal_positions(docgraph, sentence_root=None):
     """return map: node ID -> first token index (int) it covers"""
     # calculate positions for the whole graph
@@ -38,14 +68,12 @@ def horizontal_positions(docgraph, sentence_root=None):
         token_nodes = docgraph.node[sentence_root]['tokens']
         path = {sentence_root: 0}
 
-    predecessors = nx.predecessor(docgraph, sentence_root)
-
     for i, token_node in enumerate(token_nodes):
         start_node = token_node
-        while predecessors[start_node]:
+        while get_parents(docgraph, start_node, strict=True):
             if start_node not in path:
                 path[start_node] = i
-            start_node = predecessors[start_node][0]
+            start_node = get_parents(docgraph, start_node, strict=True)[0]
     return path
 
 
