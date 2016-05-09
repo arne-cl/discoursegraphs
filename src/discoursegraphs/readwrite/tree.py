@@ -22,8 +22,7 @@ def get_child_nodes(docgraph, parent_node_id, data=False):
         docgraph=docgraph,
         source=parent_node_id,
         attribute='edge_type',
-        value=[EdgeTypes.dominance_relation,
-               EdgeTypes.spanning_relation],
+        value=[EdgeTypes.dominance_relation],
         data=data)
 
 
