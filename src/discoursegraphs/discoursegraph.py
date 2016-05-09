@@ -323,8 +323,10 @@ class DiscourseDocumentGraph(MultiDiGraph):
                 newnode = n not in self.succ  # is node in the graph, yet?
             except TypeError:  # n is a (node_id, attribute dict) tuple
                 node_id, ndict = n
-                assert 'layers' in ndict, \
-                    "Every node must have a 'layers' attribute."
+
+                if not 'layers' in ndict:
+                    ndict['layers'] = {self.ns}
+
                 layers = ndict['layers']
                 assert isinstance(layers, set), \
                     "'layers' must be specified as a set of strings."
@@ -567,8 +569,9 @@ class DiscourseDocumentGraph(MultiDiGraph):
                     "Edge tuple {0} must be a 3-tuple (u,v,attribs) "
                     "or 4-tuple (u,v,key,attribs).".format(e))
 
-            assert 'layers' in dd, \
-                "Every edge must have a 'layers' attribute."
+            if not 'layers' in dd:
+                dd['layers'] = {self.ns}
+
             layers = dd['layers']
             assert isinstance(layers, set), \
                 "'layers' must be specified as a set of strings."

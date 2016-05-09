@@ -247,12 +247,8 @@ class TestDiscourseDocumentGraph(object):
                 attr_dict='bogus')
 
         # (u, v, attribs): attribs must be a dict
-        with pytest.raises(AssertionError) as excinfo:
+        with pytest.raises(TypeError) as excinfo:
             self.docgraph.add_edges_from([(1, 2, 'bar')])
-
-        # (u, v, attribs): attribs must contain a 'layers' key
-        with pytest.raises(AssertionError) as excinfo:
-            self.docgraph.add_edges_from([(1, 2, {'score': 0.5})])
 
     def test_add_layer(self):
         """add a layer to existing nodes or edges"""
