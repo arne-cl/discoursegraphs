@@ -1,4 +1,5 @@
 
+import os
 from tempfile import NamedTemporaryFile
 
 from lxml import etree
@@ -87,3 +88,16 @@ class TestFreqtTree(object):
                               '(N(telescope)))))(PUNCT(.)))')
         freqt_pos_str = docgraph2freqt(self.docgraph, root='S', include_pos=True)
         assert freqt_pos_str == expected_with_pos
+
+
+def test_write_freqt():
+    """convert an ExportXML file into FREQT input files (with/out POS tags)"""
+    edg = dg.read_exportxml(
+        os.path.join(dg.DATA_ROOT_DIR, 'exportxml-example.xml')).next()
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    write_freqt(edg, temp_file.name, include_pos=False)
+
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    write_freqt(edg, temp_file.name, include_pos=True)
