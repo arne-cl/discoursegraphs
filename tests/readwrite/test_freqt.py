@@ -279,3 +279,19 @@ def test_docgraph2freqt_ptb():
 
     assert double_freqt_str_pos == \
         expected_freqt_str_pos+"\n"+expected_freqt_str_pos
+
+
+def test_docgraph2freqt_ptb_escapes():
+    """convert a PTB string with escaped '(' and ')' into a FREQT string."""
+    ptb_str = ("(S (NP (PRP It)) (VP (VBZ is) (ADJP (PRN (-LRB- -LRB-) "
+               "(ADVP (RB almost)) (-RRB- -RRB-)) (JJ perfect))) (. .))")
+    pdg = dg.read_ptb.fromstring(ptb_str)
+    assert dg.get_text(pdg) == u"It is ( almost ) perfect ."
+
+    expected_freqt_str_pos = "(S(NP(PRP(It)))(VP(VBZ(is))(ADJP(PRN(-LRB-(-LRB-))(ADVP(RB(almost)))(-RRB-(-RRB-)))(JJ(perfect))))(.(.)))"
+    freqt_str_pos = docgraph2freqt(pdg, include_pos=True)
+    assert freqt_str_pos == expected_freqt_str_pos
+
+    expected_freqt_str_nopos = "(S(NP(It))(VP(is)(ADJP(PRN(-LRB-)(ADVP(almost))(-RRB-))(perfect)))(.))"
+    freqt_str_nopos = docgraph2freqt(pdg, include_pos=False)
+    assert freqt_str_nopos == expected_freqt_str_nopos
