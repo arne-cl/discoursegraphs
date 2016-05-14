@@ -5,8 +5,6 @@
 """
 This module converts an Penn Treebank *.mrg file into a networkx-based
 directed graph (``DiscourseDocumentGraph``).
-
-TODO: add precedence edges if needed
 """
 
 import os
