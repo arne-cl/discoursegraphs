@@ -8,6 +8,8 @@ directed graph (``DiscourseDocumentGraph``).
 """
 
 import os
+import tempfile
+
 import nltk # version 3.x is needed here (.labels() vs. .node)
 
 import discoursegraphs as dg
@@ -93,6 +95,18 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
 
         if precedence:
             self.add_precedence_relations()
+
+    @classmethod
+    def fromstring(cls, ptb_string, namespace='ptb', precedence=False,
+                  ignore_traces=True):
+        """create a PTBDocumentGraph from a string containing PTB parses."""
+        temp = tempfile.NamedTemporaryFile(delete=False)
+        temp.write(ptb_string)
+        temp.close()
+        ptb_docgraph = cls(ptb_filepath=temp.name, namespace=namespace,
+                           precedence=precedence, ignore_traces=ignore_traces)
+        os.unlink(temp.name)
+        return ptb_docgraph
 
     def _add_sentence(self, sentence, ignore_traces=True):
         """
