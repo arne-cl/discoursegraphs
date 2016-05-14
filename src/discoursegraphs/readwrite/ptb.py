@@ -21,7 +21,8 @@ PTB_BRACKET_ESCAPE = {'(': r'-LRB-',
                        ']': r'-RSB-',
                        '{': r'-LCB-',
                        '}': r'-RCB-'}
-
+PTB_BRACKET_UNESCAPE = {val:key for (key, val)
+                                in PTB_BRACKET_ESCAPE.items()}
 
 class PTBDocumentGraph(dg.DiscourseDocumentGraph):
     """
@@ -139,6 +140,8 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         for subtree in tree:
             self._node_id += 1
             node_label = get_nodelabel(subtree)
+            # unescape the node label, if necessary
+            node_label = PTB_BRACKET_UNESCAPE.get(node_label, node_label)
             # TODO: refactor this, so we don't need to query this all the time
             if ignore_traces and node_label == '-NONE-': # ignore tokens annotated for traces
                 continue
