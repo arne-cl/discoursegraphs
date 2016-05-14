@@ -250,3 +250,32 @@ def test_docgraph2freqt_fix144():
     text9_tree = etree.fromstring(text9_s144)
     text9_graph = ExportXMLDocumentGraph(text9_tree)
     docgraph2freqt(text9_graph, include_pos=False)
+
+
+def test_docgraph2freqt_ptb():
+    """convert a PTB parse string into a FREQT string."""
+    ptb_str = ("(ROOT (S (ADVP (RB Ideologically)) (, ,) (NP (PRP he)) "
+               "(VP (VBZ aligns) (PP (IN with) (NP (NN anarcho-syndicalism) "
+               "(CC and) (NN libertarian) (NN socialism)))) (. .)))")
+    pdg = dg.read_ptb.fromstring(ptb_str)
+
+    freqt_str_pos = docgraph2freqt(pdg, include_pos=True)
+    freqt_str_nopos = docgraph2freqt(pdg, include_pos=False)
+
+    expected_freqt_str_pos = (
+        "(ROOT(S(ADVP(RB(Ideologically)))(,(,))(NP(PRP(he)))(VP(VBZ(aligns))"
+        "(PP(IN(with))(NP(NN(anarcho-syndicalism))(CC(and))(NN(libertarian))"
+        "(NN(socialism)))))(.(.))))")
+    assert freqt_str_pos == expected_freqt_str_pos
+
+    expected_freqt_str_nopos = (
+        "(ROOT(S(ADVP(Ideologically))(,)(NP(he))(VP(aligns)(PP(with)(NP"
+        "(anarcho-syndicalism)(and)(libertarian)(socialism))))(.)))")
+    assert freqt_str_nopos == expected_freqt_str_nopos
+
+    # a PTB string that contains two sentences
+    double_pdg = dg.read_ptb.fromstring(ptb_str+"\n"+ptb_str)
+    double_freqt_str_pos = docgraph2freqt(double_pdg, include_pos=True)
+
+    assert double_freqt_str_pos == \
+        expected_freqt_str_pos+"\n"+expected_freqt_str_pos
