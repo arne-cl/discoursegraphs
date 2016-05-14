@@ -32,20 +32,27 @@ def node2freqt(docgraph, node_id, child_str='', include_pos=False):
         return u"({label}{child})".format(label=label_str, child=child_str)
 
 
-def docgraph2freqt(docgraph, root=None, successors=None, include_pos=False):
+def docgraph2freqt(docgraph, root=None, include_pos=False):
     """convert a docgraph into a FREQT string."""
-    if root is None:
-        root = docgraph.root
-    if successors is None:
-        successors = sorted_bfs_successors(docgraph, root)
+    def sentence2freqt(docgraph, root, successors=None, include_pos=False):
+        """convert a sentence subgraph into a FREQT string."""
+        if successors is None:
+            successors = sorted_bfs_successors(docgraph, root)
 
-    if root in successors:
-        embed_str = u"".join(docgraph2freqt(docgraph, child, successors,
-                                            include_pos=include_pos)
-                             for child in successors[root])
-        return node2freqt(docgraph, root, embed_str, include_pos=include_pos)
+        if root in successors:
+            embed_str = u"".join(sentence2freqt(docgraph, child, successors,
+                                                include_pos=include_pos)
+                                 for child in successors[root])
+            return node2freqt(docgraph, root, embed_str, include_pos=include_pos)
+        else:
+            return node2freqt(docgraph, root, include_pos=include_pos)
+
+    if root is None:
+        return u"\n".join(
+            sentence2freqt(docgraph, sentence, include_pos=include_pos)
+            for sentence in docgraph.sentences)
     else:
-        return node2freqt(docgraph, root, include_pos=include_pos)
+        return sentence2freqt(docgraph, root, include_pos=include_pos)
 
 
 def write_freqt(docgraph, output_filepath, include_pos=False):
