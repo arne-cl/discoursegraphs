@@ -1,4 +1,7 @@
+#!/usr/bin/env python
 # coding: utf-8
+# Author: Arne Neumann <discoursegraphs.programming@arne.cl>
+
 from lxml import etree
 
 from discoursegraphs.readwrite.exportxml import ExportXMLDocumentGraph
