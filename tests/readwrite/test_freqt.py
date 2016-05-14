@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+# Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 import os
 from tempfile import NamedTemporaryFile
@@ -8,6 +11,135 @@ import pytest
 import discoursegraphs as dg
 from discoursegraphs.readwrite.exportxml import ExportXMLDocumentGraph
 from discoursegraphs.readwrite.freqt import docgraph2freqt, node2freqt, write_freqt
+
+
+# Issue #143: KeyError 's144_23': the word occurs after </sentence> !
+text9_s144 = """
+<text xml:id="text_9" origin="T990507.13">
+  <edu-range xml:id="edus9_18_0-19_0">
+   <discRel relation="Parallel" marking="auch" arg2="edu_9_20_0"/>
+   <sentence xml:id="s143">
+    <edu xml:id="edu_9_18_0">
+     <discRel relation="Contrast" marking="dagegen|*eher" arg2="edu_9_19_0"/>
+     <node xml:id="s143_508" cat="SIMPX" func="--">
+      <node xml:id="s143_501" cat="VF" func="-" parent="s143_508">
+       <node xml:id="s143_500" cat="NX" func="ON" parent="s143_501">
+        <relation type="anaphoric" target="s142_511"/>
+        <word xml:id="s143_1" form="Diese" pos="PDS" morph="np*" lemma="dieser|diese|dieses" func="HD" parent="s143_500" dephead="s143_2" deprel="SUBJ"/>
+       </node>
+      </node>
+      <node xml:id="s143_503" cat="LK" func="-" parent="s143_508">
+       <node xml:id="s143_502" cat="VXFIN" func="HD" parent="s143_503">
+        <word xml:id="s143_2" form="saufen" pos="VVFIN" morph="3pis" lemma="saufen" func="HD" parent="s143_502" deprel="ROOT"/>
+       </node>
+      </node>
+      <node xml:id="s143_507" cat="MF" func="-" parent="s143_508">
+       <node xml:id="s143_504" cat="ADVX" func="V-MOD" parent="s143_507">
+        <word xml:id="s143_3" form="&#246;fter" pos="ADV" lemma="&#246;fter" func="HD" parent="s143_504" dephead="s143_2" deprel="ADV"/>
+       </node>
+       <node xml:id="s143_506" cat="PX" func="V-MOD" parent="s143_507">
+        <word xml:id="s143_4" form="in" pos="APPR" morph="d" lemma="in" func="-" parent="s143_506" dephead="s143_2" deprel="PP"/>
+        <node xml:id="s143_505" cat="NX" func="HD" parent="s143_506">
+         <word xml:id="s143_5" form="Gesellschaft" pos="NN" morph="dsf" lemma="Gesellschaft" func="HD" parent="s143_505" dephead="s143_4" deprel="PN"/>
+        </node>
+       </node>
+      </node>
+     </node>
+     <word xml:id="s143_6" form="." pos="$." lemma="." func="--" deprel="ROOT"/>
+    </edu>
+   </sentence>
+   <sentence xml:id="s144" span="s144_1..s144_23">
+    <node xml:id="s144_528" cat="SIMPX" func="--" span="s144_1..s144_22">
+     <edu xml:id="edu_9_19_0">
+      <discRel relation="Explanation-Cause" marking="-" arg2="edu_9_19_1"/>
+      <node xml:id="s144_525" cat="SIMPX" func="KONJ" parent="s144_528">
+       <node xml:id="s144_514" cat="VF" func="-" parent="s144_525">
+        <node xml:id="s144_500" cat="NX" func="ON" parent="s144_514">
+         <word xml:id="s144_1" form="Frauen" pos="NN" morph="npf" lemma="Frau" func="HD" parent="s144_500" dephead="s144_2" deprel="SUBJ"/>
+        </node>
+       </node>
+       <node xml:id="s144_515" cat="LK" func="-" parent="s144_525">
+        <node xml:id="s144_501" cat="VXFIN" func="HD" parent="s144_515">
+         <word xml:id="s144_2" form="erleben" pos="VVFIN" morph="3pis" lemma="erleben" func="HD" parent="s144_501" deprel="ROOT"/>
+        </node>
+       </node>
+       <node xml:id="s144_523" cat="MF" func="-" parent="s144_525">
+        <node xml:id="s144_502" cat="NX" func="OA" parent="s144_523">
+         <word xml:id="s144_3" form="den" pos="ART" morph="asm" lemma="der" func="-" parent="s144_502" dephead="s144_4" deprel="DET"/>
+         <word xml:id="s144_4" form="Vollrausch" pos="NN" morph="asm" lemma="Vollrausch" func="HD" parent="s144_502" dephead="s144_2" deprel="OBJA"/>
+        </node>
+        <node xml:id="s144_503" cat="PX" func="MOD" parent="s144_523">
+         <word xml:id="s144_5" form="dagegen" pos="PROP" lemma="dagegen" func="HD" parent="s144_503" dephead="s144_2" deprel="PP"/>
+        </node>
+        <node xml:id="s144_504" cat="ADVX" func="MOD" parent="s144_523">
+         <word xml:id="s144_6" form="eher" pos="ADV" lemma="eher" func="HD" parent="s144_504" dephead="s144_2" deprel="ADV"/>
+        </node>
+        <node xml:id="s144_520" cat="ADJX" func="V-MOD" parent="s144_523">
+         <node xml:id="s144_505" cat="ADJX" func="KONJ" parent="s144_520">
+          <word xml:id="s144_7" form="heimlich" pos="ADJD" lemma="heimlich" func="HD" parent="s144_505" dephead="s144_2" deprel="ADV"/>
+         </node>
+         <word xml:id="s144_8" form="und" pos="KON" lemma="und" func="-" parent="s144_520" dephead="s144_7" deprel="KON"/>
+         <node xml:id="s144_516" cat="PX" func="KONJ" parent="s144_520">
+          <word xml:id="s144_9" form="zu" pos="APPR" morph="d" lemma="zu" func="-" parent="s144_516" dephead="s144_8" deprel="CJ"/>
+          <node xml:id="s144_506" cat="NX" func="HD" parent="s144_516">
+           <word xml:id="s144_10" form="Hause" pos="NN" morph="dsn" lemma="Haus" func="HD" parent="s144_506" dephead="s144_9" deprel="PN"/>
+          </node>
+         </node>
+        </node>
+       </node>
+      </node>
+      <word xml:id="s144_11" form="-" pos="$(" lemma="-" func="--" deprel="ROOT"/>
+     </edu>
+    </node>
+   </sentence>
+  </edu-range>
+  <edu xml:id="edu_9_19_1">
+   <node xml:id="s144_527" cat="SIMPX" func="KONJ" parent="s144_528">
+    <node xml:id="s144_521" cat="VF" func="-" parent="s144_527">
+     <node xml:id="s144_517" cat="PX" func="OA-MOD" parent="s144_521">
+      <word xml:id="s144_12" form="au&#223;er" pos="APPR" morph="d" lemma="au&#223;er" func="-" parent="s144_517" dephead="s144_19" deprel="PP"/>
+      <node xml:id="s144_507" cat="NX" func="HD" parent="s144_517">
+       <word xml:id="s144_13" form="Weiberfastnacht" pos="NN" morph="dsf" lemma="Weiberfastnacht" func="HD" parent="s144_507" dephead="s144_12" deprel="PN"/>
+      </node>
+     </node>
+    </node>
+    <node xml:id="s144_518" cat="LK" func="-" parent="s144_527">
+     <node xml:id="s144_508" cat="VXFIN" func="HD" parent="s144_518">
+      <word xml:id="s144_14" form="bietet" pos="VVFIN" morph="3sis" lemma="bieten" func="HD" parent="s144_508" dephead="s144_2" deprel="KON"/>
+     </node>
+    </node>
+    <node xml:id="s144_526" cat="MF" func="-" parent="s144_527">
+     <node xml:id="s144_509" cat="NX" func="ON" parent="s144_526">
+      <word xml:id="s144_15" form="die" pos="ART" morph="nsf" lemma="die" func="-" parent="s144_509" dephead="s144_16" deprel="DET"/>
+      <word xml:id="s144_16" form="&#214;ffentlichkeit" pos="NN" morph="nsf" lemma="&#214;ffentlichkeit" func="HD" parent="s144_509" dephead="s144_14" deprel="SUBJ"/>
+     </node>
+     <node xml:id="s144_510" cat="NX" func="OD" parent="s144_526">
+      <relation type="anaphoric" target="s144_500"/>
+      <word xml:id="s144_17" form="ihnen" pos="PPER" morph="dp*3" lemma="sie" func="HD" parent="s144_510" dephead="s144_14" deprel="OBJD"/>
+     </node>
+     <node xml:id="s144_511" cat="ADVX" func="MOD" parent="s144_526">
+      <word xml:id="s144_18" form="kaum" pos="ADV" lemma="kaum" func="HD" parent="s144_511" dephead="s144_14" deprel="ADV"/>
+     </node>
+     <node xml:id="s144_524" cat="NX" func="OA" parent="s144_526">
+      <node xml:id="s144_512" cat="NX" func="HD" parent="s144_524">
+       <word xml:id="s144_19" form="Orte" pos="NN" morph="apm" lemma="Ort" func="HD" parent="s144_512" dephead="s144_14" deprel="OBJA"/>
+      </node>
+      <node xml:id="s144_522" cat="PX" func="-" parent="s144_524">
+       <word xml:id="s144_20" form="f&#252;r" pos="APPR" morph="a" lemma="f&#252;r" func="-" parent="s144_522" dephead="s144_19" deprel="PP"/>
+       <node xml:id="s144_519" cat="NX" func="HD" parent="s144_522">
+        <node xml:id="s144_513" cat="ADJX" func="-" parent="s144_519">
+         <word xml:id="s144_21" form="ungehemmte" pos="ADJA" morph="asf" lemma="ungehemmt" func="HD" parent="s144_513" dephead="s144_22" deprel="ATTR"/>
+        </node>
+        <word xml:id="s144_22" form="Alkoholzufuhr" pos="NN" morph="asf" lemma="Alkoholzufuhr" func="HD" parent="s144_519" dephead="s144_20" deprel="PN"/>
+       </node>
+      </node>
+     </node>
+    </node>
+   </node>
+   <word xml:id="s144_23" form="." pos="$." lemma="." func="--" deprel="ROOT"/>
+  </edu>
+</text>
+"""
 
 
 class TestFreqtTree(object):
@@ -101,3 +233,20 @@ def test_write_freqt():
     temp_file = NamedTemporaryFile()
     temp_file.close()
     write_freqt(edg, temp_file.name, include_pos=True)
+
+
+def test_write_freqt_fix144():
+    """
+    convert an ExportXML document graph into a FREQT file, where the original
+    ExportXML segment contains a <sentence> element that does not embed all
+    <word> elements that belong to the sentence.
+
+    The sentence covers the tokens 1 to 23
+    (<sentence xml:id="s144" span="s144_1..s144_23">), but the <sentence>
+    element only embeds the <word> elements 1 to 11.
+    """
+    text9_tree = etree.fromstring(text9_s144)
+    text9_graph = ExportXMLDocumentGraph(text9_tree)
+    temp_file = NamedTemporaryFile()
+    temp_file.close()
+    write_freqt(text9_graph, temp_file.name, include_pos=False)

@@ -51,6 +51,7 @@ from lxml import etree
 
 import discoursegraphs as dg
 from discoursegraphs import DiscourseDocumentGraph
+from discoursegraphs.readwrite.generic import convert_spanstring
 from discoursegraphs.util import add_prefix
 
 
@@ -559,8 +560,16 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
 
         sentence_token_ids = []
 
-        for descendant in sentence.iterdescendants('word'):
-            sentence_token_ids.append(self.get_element_id(descendant))
+        if 'span' in sentence.attrib:
+            # the sentence element looks like this:
+            # <sentence xml:id="s144" span="s144_1..s144_23">, which means that
+            # there might be <word> elements which belong to this sentence but
+            # occur after the closing </sentence> element
+            span_str = sentence.attrib['span']
+            sentence_token_ids.extend(convert_spanstring(span_str))
+        else:  # a normal sentence element, i.e. <sentence xml:id="s143">
+            for descendant in sentence.iterdescendants('word'):
+                sentence_token_ids.append(self.get_element_id(descendant))
 
         self.node[sent_root_id]['tokens'] = sentence_token_ids
 

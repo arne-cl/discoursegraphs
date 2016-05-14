@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
+"""
+This module contains code that is used by multiple importers and/or exporters.
+"""
+
 import os
 import sys
 import argparse
@@ -124,3 +128,58 @@ def remove_root_metadata(docgraph):
                 docgraph.node[merged_rootnode].pop('metadata', None)
             except KeyError as e:
                 pass
+
+
+def convert_spanstring(span_string):
+    """
+    converts a span of tokens (str, e.g. 'word_88..word_91')
+    into a list of token IDs (e.g. ['word_88', 'word_89', 'word_90', 'word_91']
+
+    Note: Please don't use this function directly, use spanstring2tokens()
+    instead, which checks for non-existing tokens!
+
+    Examples
+    --------
+    >>> convert_spanstring('word_1')
+    ['word_1']
+    >>> convert_spanstring('word_2,word_3')
+    ['word_2', 'word_3']
+    >>> convert_spanstring('word_7..word_11')
+    ['word_7', 'word_8', 'word_9', 'word_10', 'word_11']
+    >>> convert_spanstring('word_2,word_3,word_7..word_9')
+    ['word_2', 'word_3', 'word_7', 'word_8', 'word_9']
+    >>> convert_spanstring('word_7..word_9,word_15,word_17..word_19')
+    ['word_7', 'word_8', 'word_9', 'word_15', 'word_17', 'word_18', 'word_19']
+    """
+    prefix_err = "All tokens must share the same prefix: {0} vs. {1}"
+
+    tokens = []
+    if not span_string:
+        return tokens
+
+    spans = span_string.split(',')
+    for span in spans:
+        span_elements = span.split('..')
+        if len(span_elements) == 1:
+            tokens.append(span_elements[0])
+        elif len(span_elements) == 2:
+            start, end = span_elements
+            start_prefix, start_id_str = start.split('_')
+            end_prefix, end_id_str = end.split('_')
+            assert start_prefix == end_prefix, prefix_err.format(
+                start_prefix, end_prefix)
+            tokens.extend("{0}_{1}".format(start_prefix, token_id)
+                          for token_id in range(int(start_id_str),
+                                                int(end_id_str)+1))
+
+        else:
+            raise ValueError("Can't parse span '{}'".format(span_string))
+
+    first_prefix = tokens[0].split('_')[0]
+    for token in tokens:
+        token_parts = token.split('_')
+        assert len(token_parts) == 2, \
+            "All token IDs must use the format prefix + '_' + number"
+        assert token_parts[0] == first_prefix, prefix_err.format(
+            token_parts[0], first_prefix)
+    return tokens
