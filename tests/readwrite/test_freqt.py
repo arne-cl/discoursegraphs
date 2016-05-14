@@ -237,9 +237,9 @@ def test_write_freqt():
     os.unlink(temp_file.name)
 
 
-def test_write_freqt_fix144():
+def test_docgraph2freqt_fix144():
     """
-    convert an ExportXML document graph into a FREQT file, where the original
+    convert an ExportXML document graph into a FREQT str, where the original
     ExportXML segment contains a <sentence> element that does not embed all
     <word> elements that belong to the sentence.
 
@@ -249,6 +249,4 @@ def test_write_freqt_fix144():
     """
     text9_tree = etree.fromstring(text9_s144)
     text9_graph = ExportXMLDocumentGraph(text9_tree)
-    temp_file = NamedTemporaryFile()
-    temp_file.close()
-    write_freqt(text9_graph, temp_file.name, include_pos=False)
+    docgraph2freqt(text9_graph, include_pos=False)
