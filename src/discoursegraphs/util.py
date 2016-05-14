@@ -371,3 +371,25 @@ def plot_attribute_distribution(docgraph, elements, attribute,
         [attrib_name for attrib_name, attrib_count in sorted_value_counts],
         rotation=90)
     plt.show()
+
+
+def create_multiple_replace_func(*args, **kwds):
+    """
+    You can call this function and pass it a dictionary, or any other
+    combination of arguments you could pass to built-in dict in order to
+    construct a dictionary. The function will return a xlat closure that
+    takes as its only argument text the string on which the substitutions
+    are desired and returns a copy of text with all the substitutions
+    performed.
+
+    Source: Python Cookbook 2nd ed, Chapter 1.18. Replacing Multiple Patterns
+    in a Single Pass.
+    https://www.safaribooksonline.com/library/view/python-cookbook-2nd/0596007973/ch01s19.html
+    """
+    adict = dict(*args, **kwds)
+    rx = re.compile('|'.join(map(re.escape, adict)))
+    def one_xlat(match):
+        return adict[match.group(0)]
+    def xlat(text):
+        return rx.sub(one_xlat, text)
+    return xlat
