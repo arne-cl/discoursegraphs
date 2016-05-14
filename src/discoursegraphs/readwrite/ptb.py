@@ -105,7 +105,7 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         """
         self.sentences.append(self._node_id)
         # add edge from document root to sentence root
-        self.add_edge(self.root, self._node_id, edge_type=dg.EdgeTypes.spanning_relation)
+        self.add_edge(self.root, self._node_id, edge_type=dg.EdgeTypes.dominance_relation)
         self._parse_sentencetree(sentence, ignore_traces=ignore_traces)
         self._node_id += 1 # iterate after last subtree has been processed
         
