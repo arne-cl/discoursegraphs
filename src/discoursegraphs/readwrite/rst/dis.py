@@ -18,7 +18,7 @@ from collections import defaultdict
 from nltk.tree import ParentedTree
 
 from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
-from discoursegraphs.readwrite.ptb import PTB_BRACKET_MAPPING
+from discoursegraphs.readwrite.ptb import PTB_BRACKET_ESCAPE
 
 
 SUBTREE_TYPES = ('Root', 'Nucleus', 'Satellite')
@@ -259,7 +259,7 @@ def convert_parens_in_rst_tree_str(rst_tree_str):
     source: github.com/EducationalTestingService/discourse-parsing
     original license: MIT
     '''
-    for bracket_type, bracket_replacement in PTB_BRACKET_MAPPING.items():
+    for bracket_type, bracket_replacement in PTB_BRACKET_ESCAPE.items():
         rst_tree_str = \
             re.sub('(_![^_(?=!)]*)\\{}([^_(?=!)]*_!)'.format(bracket_type),
                    '\\g<1>{}\\g<2>'.format(bracket_replacement),

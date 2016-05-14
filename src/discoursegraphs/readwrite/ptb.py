@@ -15,7 +15,7 @@ import nltk # version 3.x is needed here (.labels() vs. .node)
 import discoursegraphs as dg
 
 
-PTB_BRACKET_MAPPING = {'(': r'-LRB-',
+PTB_BRACKET_ESCAPE = {'(': r'-LRB-',
                        ')': r'-RRB-',
                        '[': r'-LSB-',
                        ']': r'-RSB-',
