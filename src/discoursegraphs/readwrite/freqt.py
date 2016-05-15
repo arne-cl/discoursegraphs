@@ -12,15 +12,14 @@ import os
 
 from discoursegraphs import istoken
 from discoursegraphs.readwrite.tree import sorted_bfs_successors
-from discoursegraphs.readwrite.ptb import PTB_BRACKET_ESCAPE
 from discoursegraphs.util import create_dir, create_multiple_replace_func
 
-
-PTB_ESCAPE_FUNC = create_multiple_replace_func(PTB_BRACKET_ESCAPE)
+FREQT_BRACKET_ESCAPE = {'(': r'-LRB-', ')': r'-RRB-'}
+FREQT_ESCAPE_FUNC = create_multiple_replace_func(FREQT_BRACKET_ESCAPE)
 
 
 def node2freqt(docgraph, node_id, child_str='', include_pos=False,
-               escape_func=PTB_ESCAPE_FUNC):
+               escape_func=FREQT_ESCAPE_FUNC):
     """convert a docgraph node into a FREQT string."""
     node_attrs = docgraph.node[node_id]
     if istoken(docgraph, node_id):
@@ -38,7 +37,7 @@ def node2freqt(docgraph, node_id, child_str='', include_pos=False,
 
 
 def sentence2freqt(docgraph, root, successors=None, include_pos=False,
-                   escape_func=PTB_ESCAPE_FUNC):
+                   escape_func=FREQT_ESCAPE_FUNC):
     """convert a sentence subgraph into a FREQT string."""
     if successors is None:
         successors = sorted_bfs_successors(docgraph, root)
@@ -57,7 +56,7 @@ def sentence2freqt(docgraph, root, successors=None, include_pos=False,
 
 
 def docgraph2freqt(docgraph, root=None, include_pos=False,
-                   escape_func=PTB_ESCAPE_FUNC):
+                   escape_func=FREQT_ESCAPE_FUNC):
     """convert a docgraph into a FREQT string."""
     if root is None:
         return u"\n".join(

@@ -10,7 +10,8 @@ import pytest
 
 import discoursegraphs as dg
 from discoursegraphs.readwrite.exportxml import ExportXMLDocumentGraph
-from discoursegraphs.readwrite.freqt import docgraph2freqt, node2freqt, write_freqt
+from discoursegraphs.readwrite.freqt import (
+    docgraph2freqt, node2freqt, FREQT_ESCAPE_FUNC, write_freqt)
 
 
 # Issue #143: KeyError 's144_23': the word occurs after </sentence> !
@@ -203,11 +204,12 @@ class TestFreqtTree(object):
         assert u'(NP(PRON(I)))' == node2freqt(
             self.docgraph, 'NP1', child_str='(PRON(I))', include_pos=True)
 
-        # the root node has no label attribute
-        assert u'()' == node2freqt(self.docgraph, 'TEXT', child_str='',
-                                    include_pos=False)
-        assert u'()' == node2freqt(self.docgraph, 'TEXT', child_str='',
-                                    include_pos=True)
+        # the root node has no label attribute. here, the node ID is used
+        # instead
+        assert u'(TEXT)' == node2freqt(self.docgraph, 'TEXT', child_str='',
+                                       include_pos=False)
+        assert u'(TEXT)' == node2freqt(self.docgraph, 'TEXT', child_str='',
+                                       include_pos=True)
 
     def test_docgraph2freqt(self):
         """A docgraph can be converted into a FREQT string, with/out POS tags."""
@@ -220,6 +222,76 @@ class TestFreqtTree(object):
                               '(N(telescope)))))(PUNCT(.)))')
         freqt_pos_str = docgraph2freqt(self.docgraph, root='S', include_pos=True)
         assert freqt_pos_str == expected_with_pos
+
+    def test_docgraph2freqt_escaped(self):
+        """Convert a docgraph into a FREQT string, with/out POS tags and escaping."""
+        identity_func = lambda x: x
+
+        docgraph = dg.DiscourseDocumentGraph(root='TEXT')
+        assert '(TEXT)' == node2freqt(docgraph, docgraph.root, escape_func=FREQT_ESCAPE_FUNC)
+        assert '(TEXT)' == node2freqt(docgraph, docgraph.root, escape_func=identity_func)
+
+        docgraph = dg.DiscourseDocumentGraph(root='(TEXT)')
+        assert '(-LRB-TEXT-RRB-)' == node2freqt(docgraph, docgraph.root, escape_func=FREQT_ESCAPE_FUNC)
+        assert '((TEXT))' == node2freqt(docgraph, docgraph.root, escape_func=identity_func)
+
+        docgraph = dg.DiscourseDocumentGraph(root='TE(X)T')
+        assert '(TE-LRB-X-RRB-T)' == node2freqt(docgraph, docgraph.root, escape_func=FREQT_ESCAPE_FUNC)
+        assert '(TE(X)T)' == node2freqt(docgraph, docgraph.root, escape_func=identity_func)
+
+        # sentence: I am (un)certain .
+        docgraph = dg.DiscourseDocumentGraph(root='ROOT')
+        ns = docgraph.ns
+
+        nodes = [
+            ('S', {'label': 'S', 'layers': {ns+':syntax'}}),
+            ('NP', {'label': 'NP', 'layers': {ns+':syntax'}}),
+            ('VP', {'label': 'VP', 'layers': {ns+':syntax'}}),
+            ('ADJP', {'label': 'ADJP', 'layers': {ns+':syntax'}}),
+            ('token1', {ns+':token': 'I', ns+':pos': 'PRP', 'layers': {ns+':token'}}),
+            ('token2', {ns+':token': 'am', ns+':pos': 'VBP', 'layers': {ns+':token'}}),
+            ('token3', {ns+':token': '(un)certain', ns+':pos': 'JJ', 'layers': {ns+':token'}}),
+            ('token4', {ns+':token': '.', ns+':pos': '$(', 'layers': {ns+':token'}}),
+        ]
+
+        edges = [
+            ('ROOT', 'S', {'edge_type': dg.EdgeTypes.dominance_relation}),
+            ('S', 'NP', {'edge_type': dg.EdgeTypes.dominance_relation}),
+            ('S', 'VP', {'edge_type': dg.EdgeTypes.dominance_relation}),
+            ('NP', 'token1', {'edge_type': dg.EdgeTypes.dominance_relation}),
+            ('VP', 'token2', {'edge_type': dg.EdgeTypes.dominance_relation}),
+            ('VP', 'ADJP', {'edge_type': dg.EdgeTypes.dominance_relation}),
+            ('ADJP', 'token3', {'edge_type': dg.EdgeTypes.dominance_relation}),
+            ('S', 'token4', {'edge_type': dg.EdgeTypes.dominance_relation}),
+        ]
+
+        docgraph.add_nodes_from(nodes)
+        docgraph.add_edges_from(edges)
+        docgraph.tokens = ['token'+str(tok_id) for tok_id in range(1, 5)]
+
+        # generate FREQT string without POS; don't escape brackets
+        freqtstr_nopos_noescape = u"(ROOT(S(NP(I))(VP(am)(ADJP((un)certain)))(.)))"
+        assert freqtstr_nopos_noescape == docgraph2freqt(
+            docgraph, docgraph.root, include_pos=False,
+            escape_func=identity_func)
+
+        # generate FREQT string without POS; escape brackets
+        freqtstr_nopos_escape = u"(ROOT(S(NP(I))(VP(am)(ADJP(-LRB-un-RRB-certain)))(.)))"
+        assert freqtstr_nopos_escape == docgraph2freqt(
+            docgraph, docgraph.root, include_pos=False,
+            escape_func=FREQT_ESCAPE_FUNC)
+
+        # generate FREQT string with POS; don't escape brackets
+        freqtstr_pos_noescape = u"(ROOT(S(NP(PRP(I)))(VP(VBP(am))(ADJP(JJ((un)certain))))($((.))))"
+        assert freqtstr_pos_noescape == docgraph2freqt(
+            docgraph, docgraph.root, include_pos=True,
+            escape_func=identity_func)
+
+        # generate FREQT string with POS; escape brackets
+        freqtstr_pos_escape = u"(ROOT(S(NP(PRP(I)))(VP(VBP(am))(ADJP(JJ(-LRB-un-RRB-certain))))($-LRB-(.))))"
+        assert freqtstr_pos_escape == docgraph2freqt(
+            docgraph, docgraph.root, include_pos=True,
+            escape_func=FREQT_ESCAPE_FUNC)
 
 
 def test_write_freqt():
