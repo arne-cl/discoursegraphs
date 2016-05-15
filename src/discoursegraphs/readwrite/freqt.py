@@ -46,14 +46,14 @@ def sentence2freqt(docgraph, root, successors=None, include_pos=False,
     if root in successors:
         embed_str = u"".join(sentence2freqt(docgraph, child, successors,
                                             include_pos=include_pos,
-                                            escape_func=PTB_ESCAPE_FUNC)
+                                            escape_func=escape_func)
                              for child in successors[root])
         return node2freqt(
             docgraph, root, embed_str, include_pos=include_pos,
-            escape_func=PTB_ESCAPE_FUNC)
+            escape_func=escape_func)
     else:
         return node2freqt(docgraph, root, include_pos=include_pos,
-                          escape_func=PTB_ESCAPE_FUNC)
+                          escape_func=escape_func)
 
 
 def docgraph2freqt(docgraph, root=None, include_pos=False,
@@ -62,11 +62,11 @@ def docgraph2freqt(docgraph, root=None, include_pos=False,
     if root is None:
         return u"\n".join(
             sentence2freqt(docgraph, sentence, include_pos=include_pos,
-                           escape_func=PTB_ESCAPE_FUNC)
+                           escape_func=escape_func)
             for sentence in docgraph.sentences)
     else:
         return sentence2freqt(docgraph, root, include_pos=include_pos,
-                              escape_func=PTB_ESCAPE_FUNC)
+                              escape_func=escape_func)
 
 
 def write_freqt(docgraph, output_filepath, include_pos=False):
