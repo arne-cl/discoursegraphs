@@ -33,7 +33,7 @@ def node2freqt(docgraph, node_id, child_str='', include_pos=False,
             return u"({token}{child})".format(token=token_str, child=child_str)
 
     else:  # node is not a token
-        label_str=node_attrs.get('label', '')
+        label_str=escape_func(node_attrs.get('label', node_id))
         return u"({label}{child})".format(label=label_str, child=child_str)
 
 
