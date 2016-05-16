@@ -42,7 +42,7 @@ def sentence2freqt(docgraph, root, successors=None, include_pos=False,
     if successors is None:
         successors = sorted_bfs_successors(docgraph, root)
 
-    if root in successors:
+    if root in successors:  # root node has children / subgraphs
         embed_str = u"".join(sentence2freqt(docgraph, child, successors,
                                             include_pos=include_pos,
                                             escape_func=escape_func)
@@ -50,7 +50,7 @@ def sentence2freqt(docgraph, root, successors=None, include_pos=False,
         return node2freqt(
             docgraph, root, embed_str, include_pos=include_pos,
             escape_func=escape_func)
-    else:
+    else:  # root node has no children / subgraphs
         return node2freqt(docgraph, root, include_pos=include_pos,
                           escape_func=escape_func)
 
