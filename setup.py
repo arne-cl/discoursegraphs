@@ -25,7 +25,7 @@ install_requires = [
 def gen_data_files(src_dir):
     """
     generates a list of files contained in the given directory (and its
-    subdirectories) in the format required by the ``data_files`` parameter
+    subdirectories) in the format required by the ``package_data`` parameter
     of the ``setuptools.setup`` function.
 
     Parameters
@@ -36,18 +36,21 @@ def gen_data_files(src_dir):
 
     Returns
     -------
-    fpaths : list(tuple(str, list(str)))
-        a list of (subdirectory path, list of file paths) tuples
+    fpaths : list(str)
+        a list of file paths
     """
     fpaths = []
-    for root, dirs, files in os.walk(src_dir):
-        files_in_dir = [os.path.join(root, fname) for fname in files]
-        fpaths.append((root, files_in_dir))
-    return fpaths
+    base = os.path.dirname(src_dir)
+
+    for root, dir, files in os.walk(src_dir):
+        if len(files) != 0:
+            for f in files:
+                fpaths.append(os.path.relpath(os.path.join(root, f), base))
+    return fpaths                
 
 
 distribution_files = [('.', ['./NEWS.rst', './Makefile', './LICENSE', './README.rst', './Dockerfile'])]
-corpora_files = gen_data_files('data')
+#corpora_files = gen_data_files('data')
 
 
 setup(name='discoursegraphs',
@@ -72,8 +75,9 @@ setup(name='discoursegraphs',
     license='3-Clause BSD License',
     packages=find_packages("src"),
     package_dir = {'': "src"},
+    package_data = {'discoursegraphs': gen_data_files('src/discoursegraphs/data')},
     include_package_data=True,
-    data_files = distribution_files + corpora_files,
+    data_files = distribution_files, # + corpora_files,
     zip_safe=False,
     install_requires=install_requires,
     setup_requires=['pytest-runner'],
