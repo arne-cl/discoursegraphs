@@ -46,10 +46,6 @@ def get_package_root_dir(src_root_dir=SRC_ROOT_DIR):
     if dirname.startswith('discoursegraphs') and dirname.endswith('.egg'):
         # package was installed via setup.py
         return parentdir_path
-    elif dirname == 'site-packages':
-	# package was installed using wheel
-	base_dir_path = os.path.join(os.sep, *parentdir_path.split(os.sep)[:-5])
-	return base_dir_path
     else:  # software was installed via requirements.txt
         grandparentdir_path = os.path.abspath(
             os.path.join(SRC_ROOT_DIR, os.pardir, os.pardir))
