@@ -223,21 +223,20 @@ class TestFreqtTree(object):
         freqt_pos_str = docgraph2freqt(self.docgraph, root='S', include_pos=True)
         assert freqt_pos_str == expected_with_pos
 
+    @staticmethod
     def test_docgraph2freqt_escaped(self):
         """Convert a docgraph into a FREQT string, with/out POS tags and escaping."""
-        identity_func = lambda x: x
-
         docgraph = dg.DiscourseDocumentGraph(root='TEXT')
         assert '(TEXT)' == node2freqt(docgraph, docgraph.root, escape_func=FREQT_ESCAPE_FUNC)
-        assert '(TEXT)' == node2freqt(docgraph, docgraph.root, escape_func=identity_func)
+        assert '(TEXT)' == node2freqt(docgraph, docgraph.root, escape_func=lambda x: x)
 
         docgraph = dg.DiscourseDocumentGraph(root='(TEXT)')
         assert '(-LRB-TEXT-RRB-)' == node2freqt(docgraph, docgraph.root, escape_func=FREQT_ESCAPE_FUNC)
-        assert '((TEXT))' == node2freqt(docgraph, docgraph.root, escape_func=identity_func)
+        assert '((TEXT))' == node2freqt(docgraph, docgraph.root, escape_func=lambda x: x)
 
         docgraph = dg.DiscourseDocumentGraph(root='TE(X)T')
         assert '(TE-LRB-X-RRB-T)' == node2freqt(docgraph, docgraph.root, escape_func=FREQT_ESCAPE_FUNC)
-        assert '(TE(X)T)' == node2freqt(docgraph, docgraph.root, escape_func=identity_func)
+        assert '(TE(X)T)' == node2freqt(docgraph, docgraph.root, escape_func=lambda x: x)
 
         # sentence: I am (un)certain .
         docgraph = dg.DiscourseDocumentGraph(root='ROOT')
@@ -273,7 +272,7 @@ class TestFreqtTree(object):
         freqtstr_nopos_noescape = u"(ROOT(S(NP(I))(VP(am)(ADJP((un)certain)))(.)))"
         assert freqtstr_nopos_noescape == docgraph2freqt(
             docgraph, docgraph.root, include_pos=False,
-            escape_func=identity_func)
+            escape_func=lambda x: x)
 
         # generate FREQT string without POS; escape brackets
         freqtstr_nopos_escape = u"(ROOT(S(NP(I))(VP(am)(ADJP(-LRB-un-RRB-certain)))(.)))"
@@ -285,7 +284,7 @@ class TestFreqtTree(object):
         freqtstr_pos_noescape = u"(ROOT(S(NP(PRP(I)))(VP(VBP(am))(ADJP(JJ((un)certain))))($((.))))"
         assert freqtstr_pos_noescape == docgraph2freqt(
             docgraph, docgraph.root, include_pos=True,
-            escape_func=identity_func)
+            escape_func=lambda x: x)
 
         # generate FREQT string with POS; escape brackets
         freqtstr_pos_escape = u"(ROOT(S(NP(PRP(I)))(VP(VBP(am))(ADJP(JJ(-LRB-un-RRB-certain))))($-LRB-(.))))"
