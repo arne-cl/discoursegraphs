@@ -49,7 +49,6 @@ def gen_data_files(src_dir):
 
 
 distribution_files = [('.', ['./NEWS.rst', './Makefile', './LICENSE', './README.rst', './Dockerfile'])]
-#corpora_files = gen_data_files('data')
 
 
 setup(name='discoursegraphs',
@@ -76,7 +75,7 @@ setup(name='discoursegraphs',
     package_dir = {'': "src"},
     package_data = {'discoursegraphs': gen_data_files('src/discoursegraphs/data')},
     include_package_data=True,
-    data_files = distribution_files, # + corpora_files,
+    data_files = distribution_files,
     zip_safe=False,
     install_requires=install_requires,
     #setup_requires=['pytest-runner'],
