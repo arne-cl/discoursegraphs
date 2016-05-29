@@ -7,10 +7,8 @@ import discoursegraphs
 
 def test_data_installation():
     """the `data` directory was installed properly with the package"""
-    src_root_dir = discoursegraphs.SRC_ROOT_DIR
-    package_root_dir = discoursegraphs.get_package_root_dir(src_root_dir)
-    # implicitly vs. explicitly setting the parameter
-    assert package_root_dir == discoursegraphs.get_package_root_dir()
+    package_root_dir = discoursegraphs.PACKAGE_ROOT_DIR
+    assert len(package_root_dir) != 2
 
     # if we can't find the documents, this will be 0
     assert len(discoursegraphs.corpora.pcc) == 176
