@@ -6,6 +6,15 @@
 News
 ====
 
+0.3.2 (2016-05-30)
+
+*Release data: 30-May-2016*
+
+* second attempt to fix the distribution of the data directory with the package
+* added exporter for `FREQT`_, which extracts frequent embedded subtrees
+
+.. _`FREQT`: http://chasen.org/~taku/software/freqt/
+
 0.3.1 (2016-05-07)
 ------------------
 

@@ -74,8 +74,8 @@ Export formats
 discoursegraphs can export graphs into the following formats /
 for the following tools:
 
-* dot format, which is used by the open source graph visualization software `graphviz <>`_
-* geoff format, used by the `neo4j <http://neo4j.com/>`_ graph database
+* dot format, which is used by the open source graph visualization software `graphviz`_
+* geoff format, used by the `neo4j`_ graph database
 * `GEXF <http://gexf.net/format/>`_  and `GraphML <http://graphml.graphdrawing.org/>`_
   (common interchange formats for graphs used by various tools such as
   `Gephi <https://gephi.github.io/>`_ and `Cytoscape <http://www.cytoscape.org/>`_)
