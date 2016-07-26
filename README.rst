@@ -224,6 +224,6 @@ People who downloaded this also like
 - `TCFnetworks`_: library for creating graphs from annotated text corpora (based on TCF).
 
 .. _`SaltNPepper`: https://korpling.german.hu-berlin.de/p/projects/saltnpepper/wiki/
-.. _`educe`: https://github.com/kowey/educe
+.. _`educe`: https://github.com/irit-melodi/educe
 .. _`treetools`: https://github.com/wmaier/treetools
 .. _`TCFnetworks`: https://github.com/SeNeReKo/TCFnetworks
