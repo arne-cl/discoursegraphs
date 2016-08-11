@@ -46,6 +46,7 @@ So far, the following formats can be imported and merged:
 
 * `TigerXML`_ (a format for representing tree-like syntax graphs with
   secondary edges)
+* `NeGra Export Format`_ (a format used i.a. for the TüBa-D/Z Treebank)
 * `Penn Treebank <http://www.cis.upenn.edu/~treebank/>`_ format (an s-expressions/lisp/brackets format for representing syntax trees)
 * RS3 (a format used by `RSTTool`_ to
   annotate documents with Rhetorical Structure Theory)
@@ -62,6 +63,7 @@ So far, the following formats can be imported and merged:
   interested in)
 
 .. _`TigerXML`: http://www.ims.uni-stuttgart.de/forschung/ressourcen/werkzeuge/TIGERSearch/doc/html/TigerXML.html
+.. _`NeGra Export Format`: http://www.sfs.uni-tuebingen.de/resources/exformat3.ps 
 .. _`RSTTool`: http://www.wagsoft.com/RSTTool/
 .. _`MMAX2`: http://mmax2.sourceforge.net/
 .. _`CoNLL 2009`: http://ufal.mff.cuni.cz/conll2009-st/task-description.html
