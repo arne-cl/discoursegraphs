@@ -6,6 +6,9 @@
 The ``exportxml`` module will convert a corpus in Negra ExportXML format [1]
 (e.g. Tüba-D/Z [2]) into a document graph.
 
+[1] http://www.sfs.uni-tuebingen.de/resources/exformat3.ps
+[2] http://www.sfs.uni-tuebingen.de/ascl/ressourcen/corpora/tueba-dz.html
+
 Usage
 =====
 
@@ -65,7 +68,8 @@ class TextCountTarget(object):
     adapted from Listing 2 on
     http://www.ibm.com/developerworks/library/x-hiperfparse/
 
-    NOTE: unused arguments (i.e. `attrib` and `data` are required)
+    NOTE: The unused arguments `attrib` and `data` are required by
+    `etree.XMLParser`.
     '''
     def __init__(self):
         self.count = 0
@@ -293,11 +297,13 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
 
     def add_discrel(self, discrel):
         """
+        Add a discourse relation to the document graph.
+
         Parameters
         ----------
         add_discrel : etree.Element
-            etree representation of a <discRel> element
-            Describes the relation between two EDUs.
+            etree representation of a <discRel> element which describes the
+            relation between two EDUs.
             The ID of the other EDU is given in the arg2 attribute.
             Note, that arg2 can either reference an EDU (e.g. edu_9_3_2
             or an EDU range, e.g. edus9_3_1-5_0).
