@@ -185,8 +185,8 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         # add sentence root to graph
         self.add_node(self.root,
                       layers={self.ns, self.ns+':sentence',
-                              self.ns+':sentence:root'})
-
+                              self.ns+':sentence:root',
+                              self.ns+':syntax'})
 
         token_ids = []
         # add terminals to graph (tokens)
