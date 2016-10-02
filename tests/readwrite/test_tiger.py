@@ -258,12 +258,3 @@ def test_select_nodes_by_layer():
     tiger_node_ids = list(dg.select_nodes_by_layer(tdg, 'tiger'))
     tiger_nodes = list(dg.select_nodes_by_layer(tdg, 'tiger', data=True))
     assert len(tdg) == len(tiger_node_ids) == 253
-
-
-def test_fix_148():
-    """Are all Tiger sentence root nodes part of the 'tiger:syntax' layer?"""
-    tiger_fpath = os.path.join(pcc.path, 'syntax/maz-10374.xml')
-    tdg = dg.read_tiger(tiger_fpath)
-    assert all(['tiger:syntax' in tdg.node[node_id]['layers']
-               for node_id in dg.select_nodes_by_layer(
-                   tdg, 'tiger:sentence:root')])
