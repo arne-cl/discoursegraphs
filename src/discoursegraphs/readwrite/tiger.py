@@ -185,8 +185,8 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         # add sentence root to graph
         self.add_node(self.root,
                       layers={self.ns, self.ns+':sentence',
-                              self.ns+':sentence:root'})
-
+                              self.ns+':sentence:root',
+                              self.ns+':syntax'})
 
         token_ids = []
         # add terminals to graph (tokens)
@@ -277,7 +277,8 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
             # We will add a virtual root node to compensate for this.
             self.root = self.ns+':VROOT'
             self.add_node(self.root,
-                layers={'tiger', 'tiger:sentence', 'tiger:sentence:root'})
+                layers={'tiger', 'tiger:syntax', 'tiger:sentence',
+                        'tiger:sentence:root'})
 
         for unconnected_node_id in unconnected_node_ids:
             self.add_edge(self.root, unconnected_node_id,
