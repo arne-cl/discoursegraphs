@@ -1,10 +1,6 @@
 DiscourseGraphs
 ===============
 
-.. image:: http://img.shields.io/pypi/dm/discoursegraphs.svg
-   :alt: PyPI download counter
-   :align: right
-   :target: https://pypi.python.org/pypi/discoursegraphs#downloads
 .. image:: http://img.shields.io/pypi/v/discoursegraphs.svg
    :alt: Latest version
    :align: right
