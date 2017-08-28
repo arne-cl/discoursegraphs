@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urml>
+  <header>
+    <reltypes>
+      <rel name="cause" type="hyp"/>
+      <rel name="concession" type="hyp"/>
+      <rel name="conclusive" type="hyp"/>
+      <rel name="condition" type="hyp"/>
+      <rel name="conjunction" type="par"/>
+      <rel name="contrastive" type="par"/>
+      <rel name="disjunction" type="par"/>
+      <rel name="evaluation" type="hyp"/>
+      <rel name="evidence" type="hyp"/>
+      <rel name="framework" type="hyp"/>
+      <rel name="interpretation" type="hyp"/>
+      <rel name="joint" type="par"/>
+      <rel name="means" type="hyp"/>
+      <rel name="motivation" type="hyp"/>
+      <rel name="otherwise" type="hyp"/>
+      <rel name="preparation" type="hyp"/>
+      <rel name="purpose" type="hyp"/>
+      <rel name="result" type="hyp"/>
+      <rel name="sequential" type="par"/>
+      <rel name="specification" type="hyp"/>
+      <rel name="specification-mn" type="par"/>
+      <rel name="unconditional" type="hyp"/>
+      <rel name="unless" type="hyp"/>
+      <rel name="unstated-relation" type="hyp"/>
+    </reltypes>
+    <postypes>
+      <pos name="\$("/>
+      <pos name="\$,"/>
+      <pos name="\$."/>
+      <pos name="ADJA"/>
+      <pos name="ADJD"/>
+      <pos name="ADV"/>
+      <pos name="APPO"/>
+      <pos name="APPR"/>
+      <pos name="APPRART"/>
+      <pos name="APZR"/>
+      <pos name="ART"/>
+      <pos name="CARD"/>
+      <pos name="FM"/>
+      <pos name="KOKOM"/>
+      <pos name="KON"/>
+      <pos name="KOUI"/>
+      <pos name="KOUS"/>
+      <pos name="NE"/>
+      <pos name="NN"/>
+      <pos name="PDAT"/>
+      <pos name="PDS"/>
+      <pos name="PIAT"/>
+      <pos name="PIDAT"/>
+      <pos name="PIS"/>
+      <pos name="PPER"/>
+      <pos name="PPOSAT"/>
+      <pos name="PRELAT"/>
+      <pos name="PRELS"/>
+      <pos name="PRF"/>
+      <pos name="PROAV"/>
+      <pos name="PTKA"/>
+      <pos name="PTKANT"/>
+      <pos name="PTKNEG"/>
+      <pos name="PTKVZ"/>
+      <pos name="PTKZU"/>
+      <pos name="PWAT"/>
+      <pos name="PWAV"/>
+      <pos name="PWS"/>
+      <pos name="TRUNC"/>
+      <pos name="VAFIN"/>
+      <pos name="VAINF"/>
+      <pos name="VAPP"/>
+      <pos name="VMFIN"/>
+      <pos name="VMINF"/>
+      <pos name="VMPP"/>
+      <pos name="VVFIN"/>
+      <pos name="VVIMP"/>
+      <pos name="VVINF"/>
+      <pos name="VVIZU"/>
+      <pos name="VVPP"/>
+      <pos name="XY"/>
+    </postypes>
+  </header>
+  <document id="maz3377">
+    <info>
+      <source>Maerkische Allgemeine Zeitung 3377 09.10.2001
+<section> 09.10.2001  VOR ORT : HAVELLAND : KOMMENTAR</section><suptitle> ANDRE WIRSING</suptitle><title> Absicht </title></source>
+    </info>
+    <text>
+      <segment id="maz3377.0">
+        <sign pos="NN">Absicht</sign>
+        <sign pos="\$.">.</sign>
+      </segment>
+      <segment id="maz3377.1">Erst rührt sich niemand unter den Dallgower Kommunalpolitikern , </segment>
+      <segment id="maz3377.2">nun überschlagen sich alle mit Anträgen zur Gemeindereform und den vorausgehenden Verhandlungen mit den südlichen Nachbarn . </segment>
+      <segment id="maz3377.3">Nicht klar wird zum jetzigen Zeitpunkt , </segment>
+      <segment id="maz3377.4">welche Absichten hinter dem plötzlichen Aktionismus stehen : </segment>
+      <segment id="maz3377.5">Will die SPD-Fraktion - bisher völlig uneins über Dallgows Zukunft - wirklich faire Verhandlungen anstreben ? </segment>
+      <segment id="maz3377.6">Warum stellt sie dann schier unannehmbare Bedingungen , indem sie den Bürgermeister mit einem solch eng geschnürten Verhandlungsmandat ausstattet , dass dieser nur noch das Wie der Eingemeindung klären darf . </segment>
+      <segment id="maz3377.7">Warum beharrt die CDU auf einer neuerlichen Einwohnerversammlung ? </segment>
+      <segment id="maz3377.8">Warten die Christdemokraten nur darauf , genügend Claqueure zusammenzubekommen , die sie in ihrer Ablehnung zu jeglichen Fusionen bestätigen ? </segment>
+      <segment id="maz3377.9">Allein eine Fraktion , die der Freien Wählergemeinschaft , ist bisher mit einer einheitlichen und nachvollziehbaren Argumentationslinie aufgetreten , </segment>
+      <segment id="maz3377.10">bekennt sich zum Dreierbund und lässt Spielraum für die Art des Zustandekommens . </segment>
+      <segment id="maz3377.11">Die anderen werden am nächsten Mittwoch beweisen müssen , dass sie es ehrlich meinen . </segment>
+    </text>
+    <analysis status="interpretation">
+      <info>
+        <editor job="annotate" date="05.02.2002">Reitter</editor>
+      </info>
+      <parRelation id="maz3377.1000" type="sequential">
+        <nucleus id="maz3377.1"/>
+        <nucleus id="maz3377.2"/>
+      </parRelation>
+      <parRelation id="maz3377.1001" type="conjunction">
+        <nucleus id="maz3377.10"/>
+        <nucleus id="maz3377.9"/>
+      </parRelation>
+      <hypRelation id="maz3377.1002" type="cause">
+        <nucleus id="maz3377.11"/>
+        <satellite id="maz3377.1003"/>
+      </hypRelation>
+      <parRelation id="maz3377.1003" type="contrastive">
+        <nucleus id="maz3377.1000"/>
+        <nucleus id="maz3377.1004"/>
+      </parRelation>
+      <parRelation id="maz3377.1004" type="contrastive">
+        <nucleus id="maz3377.1001"/>
+        <nucleus id="maz3377.1006"/>
+      </parRelation>
+      <parRelation id="maz3377.1005" type="sequential"/>
+      <hypRelation id="maz3377.1006" type="specification">
+        <nucleus id="maz3377.1007"/>
+        <satellite id="maz3377.1005"/>
+      </hypRelation>
+      <parRelation id="maz3377.1007" type="joint">
+        <nucleus id="maz3377.3"/>
+        <nucleus id="maz3377.4"/>
+      </parRelation>
+      <parRelation id="maz3377.1008" type="contrastive">
+        <nucleus id="maz3377.5"/>
+        <nucleus id="maz3377.6"/>
+      </parRelation>
+      <parRelation id="maz3377.1009" type="contrastive">
+        <nucleus id="maz3377.7"/>
+        <nucleus id="maz3377.8"/>
+      </parRelation>
+    </analysis>
+  </document>
+</urml>
