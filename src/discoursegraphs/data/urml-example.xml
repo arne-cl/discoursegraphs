@@ -84,7 +84,10 @@
   <document id="maz3377">
     <info>
       <source>Maerkische Allgemeine Zeitung 3377 09.10.2001
-<section> 09.10.2001  VOR ORT : HAVELLAND : KOMMENTAR</section><suptitle> ANDRE WIRSING</suptitle><title> Absicht </title></source>
+        <section> 09.10.2001  VOR ORT : HAVELLAND : KOMMENTAR</section>
+        <suptitle> ANDRE WIRSING</suptitle>
+        <title> Absicht </title>
+      </source>
     </info>
     <text>
       <segment id="maz3377.0">
@@ -127,7 +130,10 @@
         <nucleus id="maz3377.1001"/>
         <nucleus id="maz3377.1006"/>
       </parRelation>
-      <parRelation id="maz3377.1005" type="sequential"/>
+      <parRelation id="maz3377.1005" type="sequential">
+        <nucleus id="maz3377.1008"/>
+        <nucleus id="maz3377.1009"/>      
+      </parRelation>
       <hypRelation id="maz3377.1006" type="specification">
         <nucleus id="maz3377.1007"/>
         <satellite id="maz3377.1005"/>
