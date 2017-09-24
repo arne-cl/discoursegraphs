@@ -10,6 +10,8 @@ rhetorical structure) into a networkx-based directed graph
 Warning: RS3 files considered harmful. Segment IDs appear ordered, but they
 aren't. For example, after segment 1, there could be segment 19, followed by
 segment 2, 3 and 4 etc.
+
+TODO: merge self.segments into self.edus
 """
 
 from __future__ import print_function
@@ -24,13 +26,14 @@ from discoursegraphs import (DiscourseDocumentGraph, EdgeTypes, get_span,
 from discoursegraphs.util import (get_segment_token_offsets, natural_sort_key,
                                   sanitize_string, TokenMapper)
 from discoursegraphs.readwrite.generic import generic_converter_cli
+from discoursegraphs.readwrite.rst.common import get_segment_label
 
 
 class RSTGraph(DiscourseDocumentGraph):
     """
     A directed graph with multiple edges (based on a networkx
     MultiDiGraph) that represents the rhetorical structure of a
-    document. It is generated from a *.dis file.
+    document. It is generated from a *.rs3 file.
 
     Attributes
     ----------
@@ -151,7 +154,8 @@ class RSTGraph(DiscourseDocumentGraph):
         self.segments.append(segment_id)
         segment_type, parent_segment_type = self.__get_segment_types(segment)
         segment_text = sanitize_string(segment.text)
-        segment_label = self.__get_segment_label(segment, segment_type, segment_text)
+        segment_label = get_segment_label(
+            segment, segment_type, segment_text, self.ns, self.tokenized)
 
         self.add_node(
             segment_id, layers={self.ns, self.ns+':segment'},
@@ -165,22 +169,6 @@ class RSTGraph(DiscourseDocumentGraph):
         if 'parent' in segment.attrib:
             self.__add_parent_relation(segment, segment_id, segment_type,
                                        parent_segment_type)
-
-    def __get_segment_label(self, segment, segment_type, segment_text):
-        """
-        generates an appropriate node label for a segment (useful for dot
-        visualization).
-        """
-        segment_prefix = segment_type[0] if segment_type else '_'
-        if self.tokenized:
-            segment_label = u'[{0}]:{1}:segment:{2}'.format(
-                segment_prefix, self.ns, segment.attrib['id'])
-        else:
-            # if the graph is not tokenized, put (the beginning of) the
-            # segment's text into its label
-            segment_label = u'[{0}]:{1}: {2}...'.format(
-                segment_prefix, segment.attrib['id'], segment_text[:20])
-        return segment_label
 
     def __add_group(self, group):
         """
