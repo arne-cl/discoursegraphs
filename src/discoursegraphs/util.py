@@ -256,8 +256,10 @@ def sanitize_string(string_or_unicode):
     """
     if isinstance(string_or_unicode, unicode):
         return string_or_unicode.strip()
-    else:
+    elif isinstance(string_or_unicode, str):
         return string_or_unicode.decode('utf-8').strip()
+    else:  # e.g. if input is None
+        return u''
 
 
 def xmlprint(element):
