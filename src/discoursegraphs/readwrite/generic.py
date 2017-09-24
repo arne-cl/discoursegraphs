@@ -14,6 +14,31 @@ from discoursegraphs.readwrite.dot import write_dot
 from discoursegraphs.util import ensure_utf8, ensure_ascii
 
 
+class XMLElementCountTarget(object):
+    '''
+    counts all <``self.element_name``> elements in the XML document to be
+    parsed. Adapted from Listing 2 on
+    http://www.ibm.com/developerworks/library/x-hiperfparse/
+
+    NOTE: The unused arguments `attrib` and `data` are required by
+    `etree.XMLParser`.
+    '''
+    def __init__(self, element_name):
+        self.count = 0
+        self.element_name = element_name
+    def start(self, tag, attrib):
+        """handle the start of a <``self.element_name``> element"""
+        if tag == self.element_name:
+            self.count +=1
+    def end(self, tag):
+        pass
+    def data(self, data):
+        pass
+    def close(self):
+        """return the number of <``self.element_name``> elements"""
+        return self.count
+
+
 def generic_converter_cli(docgraph_class, file_descriptor=''):
     """
     generic command line interface for importers. Will convert the file

@@ -54,36 +54,13 @@ from lxml import etree
 
 import discoursegraphs as dg
 from discoursegraphs import DiscourseDocumentGraph
-from discoursegraphs.readwrite.generic import convert_spanstring
+from discoursegraphs.readwrite.generic import (
+    convert_spanstring, XMLElementCountTarget)
 from discoursegraphs.util import add_prefix
 
 
 # example node ID: 's_1_n_506' -> sentence 1, node 506
 NODE_ID_REGEX = re.compile('s_(\d+)_n_(\d+)')
-
-
-class TextCountTarget(object):
-    '''
-    counts all <text> elements in the XML document to be parsed.
-    adapted from Listing 2 on
-    http://www.ibm.com/developerworks/library/x-hiperfparse/
-
-    NOTE: The unused arguments `attrib` and `data` are required by
-    `etree.XMLParser`.
-    '''
-    def __init__(self):
-        self.count = 0
-    def start(self, tag, attrib):
-        """handle the start of a <text> element"""
-        if tag == 'text':
-            self.count +=1
-    def end(self, tag):
-        pass
-    def data(self, data):
-        pass
-    def close(self):
-        """return the number of <text> elements"""
-        return self.count
 
 
 class ExportXMLCorpus(object):
@@ -149,7 +126,7 @@ class ExportXMLCorpus(object):
         adapted from Listing 2 on
         http://www.ibm.com/developerworks/library/x-hiperfparse/
         '''
-        parser = etree.XMLParser(target = TextCountTarget())
+        parser = etree.XMLParser(target = XMLElementCountTarget('text'))
         # When iterated over, 'results' will contain the output from
         # target parser's close() method
         num_of_documents = etree.parse(self.exportxml_file, parser)
