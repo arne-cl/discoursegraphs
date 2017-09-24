@@ -5,7 +5,7 @@ FROM jupyter/notebook
 MAINTAINER Arne Neumann <discoursegraphs.programming@arne.cl>
 
 RUN apt-get update
-RUN apt-get install -y python-dev python-pip git graphviz-dev libxml2-dev libxslt-dev
+RUN apt-get install -y python-dev python-pip git graphviz graphviz-dev libxml2-dev libxslt-dev
 
 RUN easy_install -U setuptools
 
