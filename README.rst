@@ -45,10 +45,11 @@ So far, the following formats can be imported and merged:
 * `NeGra Export Format`_ (a format used i.a. for the TüBa-D/Z Treebank)
 * `Penn Treebank <http://www.cis.upenn.edu/~treebank/>`_ format (an s-expressions/lisp/brackets format for representing syntax trees)
 * a number of formats for Rhetorical Structure Theory:
-  * RS3 (a format used by `RSTTool`_ to
-    annotate documents with Rhetorical Structure Theory)
-  * the .dis "LISP" format used by the RST-DT corpus
-  * URML (a format for underspecified rhetorical structure trees)
+
+  - RS3 (a format used by `RSTTool`_ to annotate documents with Rhetorical Structure Theory)
+  - the .dis "LISP" format used by the RST-DT corpus
+  - `URML`_ (a format for underspecified rhetorical structure trees)
+  
 * `MMAX2`_ (a format / GUI tool for annotating spans and connections between
   them (e.g. coreferences)
 * `CoNLL 2009`_ and `CoNLL 2010`_ formats (used for annotating i.a. dependency parses
@@ -64,6 +65,7 @@ So far, the following formats can be imported and merged:
 .. _`TigerXML`: http://www.ims.uni-stuttgart.de/forschung/ressourcen/werkzeuge/TIGERSearch/doc/html/TigerXML.html
 .. _`NeGra Export Format`: http://www.sfs.uni-tuebingen.de/resources/exformat3.ps 
 .. _`RSTTool`: http://www.wagsoft.com/RSTTool/
+.. _`URML`: http://www.david-reitter.com/compling/urml/index.html
 .. _`MMAX2`: http://mmax2.sourceforge.net/
 .. _`CoNLL 2009`: http://ufal.mff.cuni.cz/conll2009-st/task-description.html
 .. _`CoNLL 2010`: http://web.archive.org/web/20130119013221/http://www.inf.u-szeged.hu/rgai/conll2010st
