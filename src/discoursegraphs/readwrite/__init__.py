@@ -17,6 +17,7 @@ from discoursegraphs.readwrite.dot import write_dot
 from discoursegraphs.readwrite.exmaralda import (
     ExmaraldaDocumentGraph, read_exb, read_exmaralda, write_exmaralda, write_exb)
 from discoursegraphs.readwrite.exportxml import read_exportxml
+from discoursegraphs.readwrite.freqt import docgraph2freqt, write_freqt
 from discoursegraphs.readwrite.gexf import write_gexf
 from discoursegraphs.readwrite.graphml import write_graphml
 from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph, read_mmax2
@@ -25,8 +26,7 @@ from discoursegraphs.readwrite.paulaxml.paula import PaulaDocument, write_paula
 from discoursegraphs.readwrite.ptb import PTBDocumentGraph, read_ptb, read_mrg
 from discoursegraphs.readwrite.rst.rs3 import RSTGraph, read_rst, read_rs3
 from discoursegraphs.readwrite.rst.dis import read_dis
+from discoursegraphs.readwrite.rst.urml import URMLDocumentGraph, read_urml
 from discoursegraphs.readwrite.salt.saltxmi import SaltDocument, SaltXMIGraph
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph, read_tiger
-
 from discoursegraphs.readwrite.tree import tree2bracket
-from discoursegraphs.readwrite.freqt import docgraph2freqt, write_freqt
