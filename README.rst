@@ -44,8 +44,11 @@ So far, the following formats can be imported and merged:
   secondary edges)
 * `NeGra Export Format`_ (a format used i.a. for the TüBa-D/Z Treebank)
 * `Penn Treebank <http://www.cis.upenn.edu/~treebank/>`_ format (an s-expressions/lisp/brackets format for representing syntax trees)
-* RS3 (a format used by `RSTTool`_ to
-  annotate documents with Rhetorical Structure Theory)
+* a number of formats for Rhetorical Structure Theory:
+  * RS3 (a format used by `RSTTool`_ to
+    annotate documents with Rhetorical Structure Theory)
+  * the .dis "LISP" format used by the RST-DT corpus
+  * URML (a format for underspecified rhetorical structure trees)
 * `MMAX2`_ (a format / GUI tool for annotating spans and connections between
   them (e.g. coreferences)
 * `CoNLL 2009`_ and `CoNLL 2010`_ formats (used for annotating i.a. dependency parses
