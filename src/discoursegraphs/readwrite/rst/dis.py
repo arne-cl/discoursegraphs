@@ -94,8 +94,21 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         tree_type = self.get_tree_type(rst_tree)
         assert tree_type in SUBTREE_TYPES
         if tree_type == 'Root':
+            # replace generic root node with tree root
+            old_root_id = self.root
+            root_id = self.get_node_id(rst_tree)
+            self.root = root_id
+            self.add_node(root_id)
+            self.remove_node(old_root_id)
+
             span, children = rst_tree[0], rst_tree[1:]
             for child in children:
+                child_id = self.get_node_id(child)
+                self.add_edge(
+                    root_id, child_id,
+                    #~ attr_dict={self.ns+':rel_type': relation_type},
+                    edge_type=EdgeTypes.dominance_relation)
+
                 self.parse_rst_tree(child, indent=indent+1)
 
         else: # tree_type in ('Nucleus', 'Satellite')
