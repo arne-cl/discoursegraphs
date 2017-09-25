@@ -123,7 +123,7 @@ class TestTree(object):
         assert s1_successors == expected_successors
 
     @staticmethod
-    def test_node2bracket(self):
+    def test_node2bracket():
         """A docgraph node can be converted into PTB-style bracket notation."""
         ddg = dg.DiscourseDocumentGraph()
         ns = ddg.ns

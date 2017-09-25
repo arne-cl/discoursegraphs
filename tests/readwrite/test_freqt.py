@@ -224,7 +224,7 @@ class TestFreqtTree(object):
         assert freqt_pos_str == expected_with_pos
 
     @staticmethod
-    def test_docgraph2freqt_escaped(self):
+    def test_docgraph2freqt_escaped():
         """Convert a docgraph into a FREQT string, with/out POS tags and escaping."""
         docgraph = dg.DiscourseDocumentGraph(root='TEXT')
         assert '(TEXT)' == node2freqt(docgraph, docgraph.root, escape_func=FREQT_ESCAPE_FUNC)

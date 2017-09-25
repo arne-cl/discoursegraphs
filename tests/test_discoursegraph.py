@@ -42,7 +42,7 @@ class TestDiscourseDocumentGraph(object):
         assert self.docgraph.nodes() == ['discoursegraph:root_node']
 
     @staticmethod
-    def test_docgraph_name_namespace(self):
+    def test_docgraph_name_namespace():
         """create a docgraph with a user-defined name and namespace"""
         name = 'mydoc'
         ns = 'weird'
@@ -284,7 +284,7 @@ class TestDiscourseDocumentGraph(object):
         assert self.docgraph.node == nodes_dict
 
     @staticmethod
-    def test_get_phrases(self):
+    def test_get_phrases():
         """extract all VPs from a document"""
         ptb_filepath = os.path.join(dg.DATA_ROOT_DIR, 'ptb-example.mrg')
         #~ import pudb; pudb.set_trace()
