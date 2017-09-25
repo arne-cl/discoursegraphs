@@ -74,8 +74,8 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
 
         self.tokenized = tokenize
         self.tokens = []
-        self.rst_tree = self.disfile2tree(dis_filepath)
-        self.parse_rst_tree(self.rst_tree)
+        self.dis_tree = self.disfile2tree(dis_filepath)
+        self.parse_dis_tree(self.dis_tree)
 
         if precedence:
             self.add_precedence_relations()
@@ -89,19 +89,19 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
             rst_tree_str = convert_parens_in_rst_tree_str(rst_tree_str)
             return ParentedTree.fromstring(rst_tree_str)
 
-    def parse_rst_tree(self, rst_tree, indent=0):
-        """parse an RST ParentedTree into this document graph"""
-        tree_type = self.get_tree_type(rst_tree)
+    def parse_dis_tree(self, dis_tree, indent=0):
+        """parse a *.dis ParentedTree into this document graph"""
+        tree_type = self.get_tree_type(dis_tree)
         assert tree_type in SUBTREE_TYPES
         if tree_type == 'Root':
             # replace generic root node with tree root
             old_root_id = self.root
-            root_id = self.get_node_id(rst_tree)
+            root_id = self.get_node_id(dis_tree)
             self.root = root_id
             self.add_node(root_id)
             self.remove_node(old_root_id)
 
-            span, children = rst_tree[0], rst_tree[1:]
+            span, children = dis_tree[0], dis_tree[1:]
             for child in children:
                 child_id = self.get_node_id(child)
                 self.add_edge(
@@ -109,14 +109,14 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
                     #~ attr_dict={self.ns+':rel_type': relation_type},
                     edge_type=EdgeTypes.dominance_relation)
 
-                self.parse_rst_tree(child, indent=indent+1)
+                self.parse_dis_tree(child, indent=indent+1)
 
         else: # tree_type in ('Nucleus', 'Satellite')
-            node_id = self.get_node_id(rst_tree)
-            node_type = self.get_node_type(rst_tree)
-            relation_type = self.get_relation_type(rst_tree)
+            node_id = self.get_node_id(dis_tree)
+            node_type = self.get_node_type(dis_tree)
+            relation_type = self.get_relation_type(dis_tree)
             if node_type == 'leaf':
-                edu_text = self.get_edu_text(rst_tree[-1])
+                edu_text = self.get_edu_text(dis_tree[-1])
                 self.add_node(node_id, attr_dict={
                     self.ns+':text': edu_text,
                     'label': u'{0}: {1}'.format(node_id, edu_text[:20])})
@@ -132,7 +132,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
             else: # node_type == 'span'
                 self.add_node(node_id, attr_dict={self.ns+':rel_type': relation_type,
                                                    self.ns+':node_type': node_type})
-                children = rst_tree[3:]
+                children = dis_tree[3:]
                 child_types = self.get_child_types(children)
 
                 expected_child_types = set(['Nucleus', 'Satellite'])
@@ -174,7 +174,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
                     raise ValueError("Unexpected child combinations: {}\n".format(child_types))
 
                 for child in children:
-                    self.parse_rst_tree(child, indent=indent+1)
+                    self.parse_dis_tree(child, indent=indent+1)
 
     def get_child_types(self, children):
         """
