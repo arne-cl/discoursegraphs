@@ -11,9 +11,52 @@ from collections import defaultdict, deque
 from functools import partial
 
 import networkx as nx
+from nltk.tree import ParentedTree
 
 from discoursegraphs import (
     EdgeTypes, istoken, select_neighbors_by_edge_attribute)
+
+
+def t(root, children=None):
+    "Create nltk.tree.ParentedTree from a root (str) and a list of (str, list) tuples."
+    if isinstance(root, ParentedTree):
+        if children is None:
+            return root
+        else:
+            return ParentedTree(root, children)
+
+    elif isinstance(root, basestring):
+        # Beware: a ParentedTree is also a list!
+        if isinstance(children, ParentedTree):
+            child_trees = [children]
+
+        elif isinstance(children, list):
+            child_trees = []
+            for child in children:
+                if isinstance(child, ParentedTree):
+                    child_trees.append(child)
+                elif isinstance(child, list):
+                    child_trees.extend(child)
+                else:  #isinstance(child, tuple)
+                    child_trees.append(t(*child))
+        elif isinstance(children, basestring):
+            # this tree does only have one child, a leaf node
+            child_trees = [children]
+        else:  #children == None
+            # this tree only consists of one leaf node
+            child_trees = []
+        return ParentedTree(root, child_trees)
+    else:
+        raise NotImplementedError
+
+
+def get_position(node_id, child_dict, ordered_edus, edu_set):
+    """Get the position of a node in an RST tree to be constructed."""
+    if node_id in edu_set:
+        return ordered_edus.index(node_id)
+    else:
+        return min(get_position(child_node_id, child_dict, ordered_edus, edu_set)
+                   for child_node_id in child_dict[node_id])
 
 
 def get_child_nodes(docgraph, parent_node_id, data=False):
