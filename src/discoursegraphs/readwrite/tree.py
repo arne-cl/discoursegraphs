@@ -51,7 +51,10 @@ def t(root, children=None):
 
 
 def get_position(node_id, child_dict, ordered_edus, edu_set):
-    """Get the position of a node in an RST tree to be constructed."""
+    """Get the position of a node in an RST tree to be constructed.
+
+    TODO: add proper documentation
+    """
     if node_id in edu_set:
         return ordered_edus.index(node_id)
     else:
