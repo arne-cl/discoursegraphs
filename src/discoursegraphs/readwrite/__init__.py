@@ -24,7 +24,7 @@ from discoursegraphs.readwrite.mmax2 import MMAXDocumentGraph, read_mmax2
 from discoursegraphs.readwrite.neo4j import write_neo4j, write_geoff
 from discoursegraphs.readwrite.paulaxml.paula import PaulaDocument, write_paula
 from discoursegraphs.readwrite.ptb import PTBDocumentGraph, read_ptb, read_mrg
-from discoursegraphs.readwrite.rst.rs3 import RSTGraph, read_rst, read_rs3
+from discoursegraphs.readwrite.rst.rs3 import RSTGraph, RSTTree, read_rst, read_rs3
 from discoursegraphs.readwrite.rst.dis import read_dis
 from discoursegraphs.readwrite.rst.urml import URMLDocumentGraph, read_urml
 from discoursegraphs.readwrite.salt.saltxmi import SaltDocument, SaltXMIGraph

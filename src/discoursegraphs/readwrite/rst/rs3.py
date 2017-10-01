@@ -17,7 +17,9 @@ TODO: merge self.segments into self.edus
 from __future__ import print_function
 import os
 import sys
+import textwrap
 from collections import defaultdict
+
 
 from lxml import etree
 
@@ -348,6 +350,28 @@ class RSTGraph(DiscourseDocumentGraph):
 
 
 
+class RSTTree(object):
+    """An RSTTree is a NLTK ParentedTree representation of an .rs3 file."""
+    def __init__(self, rs3_file, word_wrap=0):
+        self.child_dict, self.elem_dict, self.edus = get_rs3_data(rs3_file, word_wrap=word_wrap)
+        self.edu_set = set(self.edus)
+        self.tree = dt(self.child_dict, self.elem_dict, self.edus)
+
+    def _repr_png_(self):
+        """This PNG representation will be automagically used inside
+        IPython notebooks.
+        """
+        return self.tree._repr_png_()
+
+    def __str__(self):
+        return self.tree.__str__()
+
+    def pretty_print(self):
+        return self.tree.pretty_print()
+
+    def __getitem__(self, key):
+        return self.tree.__getitem__(key)
+
 
 def get_edus(rst_graph, namespace='rst'):
     """
@@ -568,7 +592,7 @@ def get_rst_spans(rst_graph):
     return all_spans
 
 
-def get_rs3_data(rs3_file):
+def get_rs3_data(rs3_file, word_wrap=0):
     """helper function to build RSTTrees: data on parent-child relations
     and node attributes.
 
@@ -611,8 +635,16 @@ def get_rs3_data(rs3_file):
         elements[elem_id]['element_type'] = elem_type
 
         if elem_type == 'segment':
-            elements[elem_id]['text'] = elem.text
+            if word_wrap == 0:
+                edu_text = elem.text
+            else:
+                #~ import pudb; pudb.set_trace()
+                dedented_text = textwrap.dedent(elem.text).strip()
+                edu_text = textwrap.fill(dedented_text, width=word_wrap)
+
+            elements[elem_id]['text'] = edu_text
             ordered_edus.append(elem_id)
+
         else:  # elem_type == 'group':
             elements[elem_id]['group_type'] = elem.attrib.get('type')
     return children, elements, ordered_edus
@@ -667,7 +699,8 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None):
             # this elem is the N in an N-S relation
             nuc_tree = t('N ({})'.format(elem_id), elem['text'])
 
-            assert len(child_dict[elem_id]) == 1
+            assert len(child_dict[elem_id]) == 1, \
+                "A span segment (%s) should have one child: %s" % (elem_id, child_dict[elem_id])
             satellite_id = child_dict[elem_id][0]
             satellite_elem = elem_dict[satellite_id]
             sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id)
@@ -717,7 +750,8 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None):
 
                 other_child_ids = [c for c in child_ids
                                    if c not in multinuc_child_ids]
-                assert len(other_child_ids) == 1
+                assert len(other_child_ids) == 1, \
+                    "A multinuc group (%s) should not have > 1 non-multinuc children: %s" % (elem_id, child_dict[elem_id])
 
                 satellite_id = other_child_ids[0]
                 satellite_elem = elem_dict[satellite_id]
