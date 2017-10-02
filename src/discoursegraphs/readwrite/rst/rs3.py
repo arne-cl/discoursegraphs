@@ -32,6 +32,18 @@ from discoursegraphs.readwrite.rst.common import get_segment_label
 from discoursegraphs.readwrite.tree import get_position, t
 
 
+class NoRootError(ValueError):
+    pass
+
+
+class TooManyChildrenError(ValueError):
+    pass
+
+
+class TooFewChildrenError(ValueError):
+    pass
+
+
 class RSTGraph(DiscourseDocumentGraph):
     """
     A directed graph with multiple edges (based on a networkx
@@ -670,7 +682,7 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None):
                              for root_id in root_nodes]
             return t('virtual-root', root_subtrees)
         else:
-            raise ValueError("A tree must have (at least) one root node.")
+            raise NoRootError("A tree must have (at least) one root node.")
 
     elem_id = start_node
     if elem_id not in elem_dict:
@@ -746,26 +758,33 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None):
                 multinuc_subtree = t(multinuc_relname, [
                     dt(child_dict, elem_dict, ordered_edus, start_node=mc)
                     for mc in multinuc_child_ids])
-                nuc_tree = ('N ({})'.format(elem_id), multinuc_subtree)
+                nuc_tree = t('N ({})'.format(elem_id), multinuc_subtree)
 
                 other_child_ids = [c for c in child_ids
                                    if c not in multinuc_child_ids]
-                assert len(other_child_ids) == 1, \
-                    "A multinuc group (%s) should not have > 1 non-multinuc children: %s" % (elem_id, child_dict[elem_id])
 
-                satellite_id = other_child_ids[0]
-                satellite_elem = elem_dict[satellite_id]
-                sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id)
-                relname = satellite_elem['relname']
+                if len(other_child_ids) == 0:
+                    # this elem is only the head of a multinuc relation
+                    return nuc_tree
 
-                # --- <start> copied from element_type: segment / reltype: span ---
-                if get_position(elem_id, child_dict, ordered_edus, edu_set) \
-                    < get_position(satellite_id, child_dict, ordered_edus, edu_set):
-                        subtrees = [nuc_tree, sat_subtree]
-                else:
-                        subtrees = [sat_subtree, nuc_tree]
-                return t(relname, subtrees)
-                # --- <end> copied from element_type: segment / reltype: span ---
+                elif len(other_child_ids) == 1:
+                    satellite_id = other_child_ids[0]
+                    satellite_elem = elem_dict[satellite_id]
+                    sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id)
+                    relname = satellite_elem['relname']
+
+                    # --- <start> copied from element_type: segment / reltype: span ---
+                    if get_position(elem_id, child_dict, ordered_edus, edu_set) \
+                        < get_position(satellite_id, child_dict, ordered_edus, edu_set):
+                            subtrees = [nuc_tree, sat_subtree]
+                    else:
+                            subtrees = [sat_subtree, nuc_tree]
+                    return t(relname, subtrees)
+                    # --- <end> copied from element_type: segment / reltype: span ---
+
+                else:  #len(other_child_ids) > 1
+                    raise TooManyChildrenError(
+                        "A multinuc group (%s) should not have > 1 non-multinuc children: %s" % (elem_id, other_child_ids))
 
             else:  # elem['group_type'] == 'span'
                 if len(child_dict[elem_id]) == 1:
@@ -800,9 +819,9 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None):
                     # --- <end> adapted from element_type: segment / reltype: span ---
 
                 elif len(child_dict[elem_id]) > 2:
-                    raise ValueError("A span group ('%s') should not have > 2 children: %s" % (elem_id, child_dict[elem_id]))
+                    raise TooManyChildrenError("A span group ('%s') should not have > 2 children: %s" % (elem_id, child_dict[elem_id]))
                 else: #len(child_dict[elem_id]) == 0
-                    raise ValueError("A span group ('%s)' should have at least 1 child: %s" % (elem_id, child_dict[elem_id]))
+                    raise TooFewChildrenError("A span group ('%s)' should have at least 1 child: %s" % (elem_id, child_dict[elem_id]))
 
 
 # pseudo-function(s) to create a document graph from a RST (.rs3) file
