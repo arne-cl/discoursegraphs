@@ -57,14 +57,14 @@ def test_rstgraph_str_representation():
                                     RS3_GRAPH.tokenized))
 
 def test_get_edus():
-    RS3_GRAPH.edus == dg.readwrite.rst.rs3.get_edus(RS3_GRAPH)
+    RS3_GRAPH.edus == dg.readwrite.rst.rs3.rs3graph.get_edus(RS3_GRAPH)
 
 
 def test_get_rst_relation_root_nodes():
     rst_relation_root_nodes = \
-        list(dg.readwrite.rst.rs3.get_rst_relation_root_nodes(RS3_GRAPH, data=False))
+        list(dg.readwrite.rst.rs3.rs3graph.get_rst_relation_root_nodes(RS3_GRAPH, data=False))
     rst_relation_root_nodes_with_data = \
-        list(dg.readwrite.rst.rs3.get_rst_relation_root_nodes(RS3_GRAPH))
+        list(dg.readwrite.rst.rs3.rs3graph.get_rst_relation_root_nodes(RS3_GRAPH))
 
     assert all((isinstance(node, str)
                 for node in rst_relation_root_nodes))
@@ -75,7 +75,7 @@ def test_get_rst_relation_root_nodes():
 
 def test_get_rst_relations():
     from collections import defaultdict
-    rst_rels = dg.readwrite.rst.rs3.get_rst_relations(RS3_GRAPH)
+    rst_rels = dg.readwrite.rst.rs3.rs3graph.get_rst_relations(RS3_GRAPH)
 
     assert isinstance(rst_rels, defaultdict)
 
@@ -85,7 +85,7 @@ def test_get_rst_relations():
 
 
 def test_get_rst_spans():
-    rst_spans = dg.readwrite.rst.rs3.get_rst_spans(RS3_GRAPH)
+    rst_spans = dg.readwrite.rst.rs3.rs3graph.get_rst_spans(RS3_GRAPH)
     assert isinstance(rst_spans, list)
     all(((len(span) == 5 and isinstance(span, tuple))
          for span in rst_spans))
