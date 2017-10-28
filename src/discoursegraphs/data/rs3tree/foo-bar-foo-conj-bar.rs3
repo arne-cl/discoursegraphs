@@ -1,0 +1,13 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="elaboration" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1" parent="3" relname="conjunction">foo</segment>
+    <segment id="2" parent="3" relname="conjunction"> bar</segment>
+    <group id="3" type="multinuc" />
+  </body>
+</rst>

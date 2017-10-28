@@ -1,0 +1,14 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="circumstance" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1" parent="4" relname="span">eins</segment>
+    <segment id="2" parent="1" relname="circumstance"> zwei</segment>
+    <segment id="3" parent="4" relname="circumstance"> drei</segment>
+    <group id="4" type="span" />
+  </body>
+</rst>

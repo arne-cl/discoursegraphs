@@ -1,0 +1,12 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="circumstance" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">foo</segment>
+    <segment id="2"> bar</segment>
+  </body>
+</rst>
