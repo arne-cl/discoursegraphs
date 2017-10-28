@@ -290,7 +290,6 @@ class RSTGraph(DiscourseDocumentGraph):
                 parent_segment_type = None
             return segment_type, parent_segment_type
 
-        parent_id = self.ns+':'+element.attrib['parent']
         # ``relname`` either contains the name of an RST relation or
         # the string ``span`` (iff the segment is dominated by a span
         # node -- a horizontal line spanning one or more segments/groups
@@ -428,7 +427,7 @@ def get_rst_relations(docgraph):
     """
     rst_relations = defaultdict(lambda: defaultdict(str))
 
-    for dom_node, relname, toks in get_rst_relation_root_nodes(docgraph):
+    for dom_node, _, _ in get_rst_relation_root_nodes(docgraph):
         neighbors = \
             list(select_neighbors_by_layer(docgraph, dom_node,
                                            layer={'rst:segment', 'rst:group'}))
@@ -509,7 +508,7 @@ def get_rst_spans(rst_graph):
             multinuc_rel_id = "{0}-{1}".format(
                 dom_node, '-'.join(target for target, _rel, _toks in multinuc_spans))
 
-            for nucleus, relname, toks in multinuc_spans:
+            for _, relname, toks in multinuc_spans:
                 nuc_start, nuc_end = get_segment_token_offsets(toks, token_map)
                 multinuc_span = (multinuc_rel_id, "N{}".format(nuc_count),
                                  relname, nuc_start, nuc_end)
