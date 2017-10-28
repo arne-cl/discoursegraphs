@@ -79,8 +79,7 @@ class URMLCorpus(object):
     def __len__(self):
         if self._num_of_documents is not None:
             return self._num_of_documents
-        else:
-            return self._get_num_of_documents()
+        return self._get_num_of_documents()
 
     def _get_num_of_documents(self):
         '''
@@ -88,7 +87,7 @@ class URMLCorpus(object):
         adapted from Listing 2 on
         http://www.ibm.com/developerworks/library/x-hiperfparse/
         '''
-        parser = etree.XMLParser(target = XMLElementCountTarget('document'))
+        parser = etree.XMLParser(target=XMLElementCountTarget('document'))
         # When iterated over, 'results' will contain the output from
         # target parser's close() method
         num_of_documents = etree.parse(self.urml_file, parser)
@@ -99,6 +98,7 @@ class URMLCorpus(object):
         return iter(self.document_iter(self.__context))
 
     def next(self):
+        """convenience method to get the next element of this iterable"""
         # to build an iterable, __iter__() would be sufficient,
         # but adding a next() method is quite common
         return self.__iter__().next()
@@ -146,7 +146,7 @@ class URMLDocumentGraph(DiscourseDocumentGraph):
         list of segment node IDs (i.e. leaf nodes in a RST
         tree that represent segments of text).
     segment_types : dict(str: str)
-        maps from segment node ID to its type (i.e. 'nucleus' or 'satellite') 
+        maps from segment node ID to its type (i.e. 'nucleus' or 'satellite')
     root : str
         name of the document root node ID
     tokens : list of str
@@ -232,7 +232,7 @@ class URMLDocumentGraph(DiscourseDocumentGraph):
             self.__add_segment(segment)
         for relation in document_elem.iter('parRelation', 'hypRelation'):
             self.__add_relation(relation)
-        
+
         # each discourse docgraphs has a default root node, but we will
         # overwrite it here
         old_root_id = self.root
@@ -253,25 +253,15 @@ class URMLDocumentGraph(DiscourseDocumentGraph):
         Parameters
         ----------
         segment : ??? etree Element
-        
-        example data # TODO: rm after debug
-        ------------
-        
-            <segment id="maz3377.0">
-                <sign pos="NN">Absicht</sign>
-                <sign pos="\$.">.</sign>
-            </segment>
-
-            <segment id="maz3377.1">Erst rührt sich niemand unter den Dallgower Kommunalpolitikern , </segment>
         """
         segment_id = self.ns+':'+segment.attrib['id']
         self.edus.append(segment_id)  # store RST segment in list of EDUs
 
-        # A URM file can be tokenized, partially tokenized or not tokenized
+        # A URML file can be tokenized, partially tokenized or not tokenized
         # at all. The "tokenized tokens" in the URML file will always be added
         # to the graph as nodes. The "untokenized tokens" will only be added,
         # if ``self.tokenize`` is ``True``.
-        
+
         if is_segment_tokenized(segment):
             self.tokenized = True
             segment_text = sanitize_string(
@@ -280,13 +270,13 @@ class URMLDocumentGraph(DiscourseDocumentGraph):
             for i, tok_elem in enumerate(segment):
                 tok = tok_elem.text
                 self.__add_token(segment_id, i, tok)
-            
+
         else:  # is_segment_tokenized(segment) is False
-            segment_text = sanitize_string(segment.text)    
+            segment_text = sanitize_string(segment.text)
             segment_toks = segment_text.split()
 
             if self.tokenize:
-                self.tokenized = True            
+                self.tokenized = True
                 for i, tok in enumerate(segment_toks):
                     self.__add_token(segment_id, i, tok)
 
@@ -297,7 +287,7 @@ class URMLDocumentGraph(DiscourseDocumentGraph):
             segment_id, layers={self.ns, self.ns+':segment'},
             attr_dict={self.ns+':text' : segment_text,
                        'label':  segment_label})
-        
+
     def __add_relation(self, relation):
         """
             <parRelation id="maz3377.1000" type="sequential">
@@ -311,22 +301,22 @@ class URMLDocumentGraph(DiscourseDocumentGraph):
         self.add_node(rel_id, layers={self.ns, self.ns+':relation'},
                       attr_dict={self.ns+':rel_name': rel_name,
                                  self.ns+':rel_type': rel_type})
-        
+
         rel_attrs = {self.ns+':rel_name': rel_name,
                      self.ns+':rel_type': rel_type,
                      'label': self.ns+':'+rel_name}
-        
+
         if rel_type == 'parRelation':  # relation between two or more nucleii
             for nucleus in relation:
                 nucleus_id = self.ns + ':' + nucleus.attrib['id']
                 self.add_edge(rel_id, nucleus_id, layers={self.ns},
                               attr_dict=rel_attrs,
                               edge_type=EdgeTypes.spanning_relation)
-                
+
         elif rel_type == 'hypRelation': # between nucleus and satellite
-            hyp_error =  ("<hypRelation> can only contain one nucleus and one"
-                           "satellite: {}".format(etree.tostring(relation)))
-            
+            hyp_error = ("<hypRelation> can only contain one nucleus and one"
+                         "satellite: {}".format(etree.tostring(relation)))
+
             rel_elems = {elem.tag: elem.attrib['id'] for elem in relation}
             assert len(relation) == 2, hyp_error
             assert set(rel_elems.keys()) == {'nucleus', 'satellite'}, hyp_error
@@ -342,7 +332,7 @@ class URMLDocumentGraph(DiscourseDocumentGraph):
             self.add_edge(nucleus_id, satellite_id,
                           layers={self.ns}, attr_dict=rel_attrs,
                           edge_type=EdgeTypes.dominance_relation)
-            
+
         else:  # <relation>, <span>
             raise NotImplementedError
 
@@ -358,7 +348,7 @@ class URMLDocumentGraph(DiscourseDocumentGraph):
 
 def is_segment_tokenized(segment):
     """Return True, iff the segment is already tokenized.
-    
+
     Examples
     --------
     >>> s = ('<segment id="1"><sign pos="ART">Die</sign>'
