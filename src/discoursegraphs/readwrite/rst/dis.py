@@ -18,6 +18,7 @@ from collections import defaultdict
 from nltk.tree import ParentedTree
 
 from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
+from discoursegraphs.readwrite.generic import generic_converter_cli
 from discoursegraphs.readwrite.ptb import PTB_BRACKET_ESCAPE
 
 
@@ -83,8 +84,8 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
     @staticmethod
     def disfile2tree(dis_filepath):
         """converts a *.dis file into a ParentedTree (NLTK) instance"""
-        with open(dis_filepath) as f:
-            rst_tree_str = f.read().strip()
+        with open(dis_filepath) as disfile:
+            rst_tree_str = disfile.read().strip()
             rst_tree_str = fix_rst_treebank_tree_str(rst_tree_str)
             rst_tree_str = convert_parens_in_rst_tree_str(rst_tree_str)
             return ParentedTree.fromstring(rst_tree_str)
@@ -101,7 +102,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
             self.add_node(root_id)
             self.remove_node(old_root_id)
 
-            span, children = dis_tree[0], dis_tree[1:]
+            children = dis_tree[1:]
             for child in children:
                 child_id = self.get_node_id(child)
                 self.add_edge(
@@ -131,20 +132,22 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
 
             else: # node_type == 'span'
                 self.add_node(node_id, attr_dict={self.ns+':rel_type': relation_type,
-                                                   self.ns+':node_type': node_type})
+                                                  self.ns+':node_type': node_type})
                 children = dis_tree[3:]
                 child_types = self.get_child_types(children)
 
                 expected_child_types = set(['Nucleus', 'Satellite'])
                 unexpected_child_types = set(child_types).difference(expected_child_types)
                 assert not unexpected_child_types, \
-                    "Node '{0}' contains unexpected child types: {1}\n".format(node_id, unexpected_child_types)
+                    "Node '{0}' contains unexpected child types: {1}\n".format(
+                        node_id, unexpected_child_types)
 
                 if 'Satellite' not in child_types:
                     # span only contains nucleii -> multinuc
                     for child in children:
                         child_node_id = self.get_node_id(child)
-                        self.add_edge(node_id, child_node_id, attr_dict={self.ns+':rel_type': relation_type})
+                        self.add_edge(node_id, child_node_id, attr_dict={
+                            self.ns+':rel_type': relation_type})
 
                 elif len(child_types['Satellite']) == 1 and len(children) == 1:
                     if tree_type == 'Nucleus':
@@ -244,10 +247,11 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         if node_type == 'leaf':
             leaf_id = nuc_or_sat[0].leaves()[0]
             return '{0}:{1}'.format(self.ns, leaf_id)
-        else: # node_type == 'span'
-            span_start = nuc_or_sat[0].leaves()[0]
-            span_end = nuc_or_sat[0].leaves()[1]
-            return '{0}:span:{1}-{2}'.format(self.ns, span_start, span_end)
+
+        #else: node_type == 'span'
+        span_start = nuc_or_sat[0].leaves()[0]
+        span_end = nuc_or_sat[0].leaves()[1]
+        return '{0}:span:{1}-{2}'.format(self.ns, span_start, span_end)
 
 
 def fix_rst_treebank_tree_str(rst_tree_str):
@@ -286,4 +290,3 @@ read_dis = RSTLispDocumentGraph
 
 if __name__ == '__main__':
     generic_converter_cli(RSTLispDocumentGraph, 'RST (rhetorical structure)')
-

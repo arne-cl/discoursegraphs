@@ -22,4 +22,3 @@ def get_segment_label(segment, segment_type, segment_text, ns, tokenized):
         segment_label = u'[{0}]:{1}: {2}...'.format(
             segment_prefix, segment.attrib['id'], segment_text[:20])
     return segment_label
-
