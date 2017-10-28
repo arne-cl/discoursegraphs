@@ -8,9 +8,7 @@ trees.
 """
 
 from collections import defaultdict, deque
-from functools import partial
 
-import networkx as nx
 from nltk.tree import ParentedTree
 
 from discoursegraphs import (
@@ -22,8 +20,7 @@ def t(root, children=None):
     if isinstance(root, ParentedTree):
         if children is None:
             return root
-        else:
-            return ParentedTree(root, children)
+        return ParentedTree(root, children)
 
     elif isinstance(root, basestring):
         # Beware: a ParentedTree is also a list!
@@ -57,9 +54,9 @@ def get_position(node_id, child_dict, ordered_edus, edu_set):
     """
     if node_id in edu_set:
         return ordered_edus.index(node_id)
-    else:
-        return min(get_position(child_node_id, child_dict, ordered_edus, edu_set)
-                   for child_node_id in child_dict[node_id])
+
+    return min(get_position(child_node_id, child_dict, ordered_edus, edu_set)
+               for child_node_id in child_dict[node_id])
 
 
 def get_child_nodes(docgraph, parent_node_id, data=False):
@@ -92,7 +89,7 @@ def get_parents(docgraph, child_node, strict=True):
         a list of (parent) node IDs.
     """
     parents = []
-    for src, target, edge_attrs in docgraph.in_edges(child_node, data=True):
+    for src, _, edge_attrs in docgraph.in_edges(child_node, data=True):
         if edge_attrs['edge_type'] == EdgeTypes.dominance_relation:
             parents.append(src)
 
@@ -105,11 +102,11 @@ def get_parents(docgraph, child_node, strict=True):
 def horizontal_positions(docgraph, sentence_root=None):
     """return map: node ID -> first token index (int) it covers"""
     # calculate positions for the whole graph
-    if (sentence_root is None) or (sentence_root == docgraph.root) \
-        or ('tokens' not in docgraph.node[sentence_root]):
-            sentence_root = docgraph.root
-            token_nodes = docgraph.tokens
-            path = {}
+    root_cond = (sentence_root is None) or (sentence_root == docgraph.root)
+    if root_cond or ('tokens' not in docgraph.node[sentence_root]):
+        sentence_root = docgraph.root
+        token_nodes = docgraph.tokens
+        path = {}
     else:  # calculate positions only for the given sentence subgraph
         token_nodes = docgraph.node[sentence_root]['tokens']
         path = {sentence_root: 0}
@@ -148,7 +145,6 @@ def sorted_bfs_edges(G, source=None):
         source = G.root
 
     xpos = horizontal_positions(G, source)
-    neighbors = G.neighbors_iter
     visited = set([source])
     source_children = get_child_nodes(G, source)
     queue = deque([(source, iter(sorted(source_children,
@@ -180,16 +176,16 @@ def sorted_bfs_successors(G, source=None):
 
     Returns
     -------
-    succ: dict
+    successors: dict
        A dictionary with nodes as keys and list of succssors nodes as values.
     """
     if source is None:
         source = G.root
 
-    d = defaultdict(list)
-    for s,t in sorted_bfs_edges(G, source):
-        d[s].append(t)
-    return dict(d)
+    successors = defaultdict(list)
+    for src, target in sorted_bfs_edges(G, source):
+        successors[src].append(target)
+    return dict(successors)
 
 
 def node2bracket(docgraph, node_id, child_str=''):
@@ -201,11 +197,12 @@ def node2bracket(docgraph, node_id, child_str=''):
         return u"({pos}{space1}{token}{space2}{child})".format(
             pos=pos_str, space1=bool(pos_str)*' ', token=token_str,
             space2=bool(child_str)*' ', child=child_str)
-    else:  # node is not a token
-        label_str=node_attrs.get('label', '')
-        return u"({label}{space}{child})".format(
-            label=label_str, space=bool(label_str and child_str)*' ',
-            child=child_str)
+
+    #else: node is not a token
+    label_str = node_attrs.get('label', '')
+    return u"({label}{space}{child})".format(
+        label=label_str, space=bool(label_str and child_str)*' ',
+        child=child_str)
 
 
 def tree2bracket(docgraph, root=None, successors=None):
@@ -223,5 +220,4 @@ def tree2bracket(docgraph, root=None, successors=None):
         embed_str = u" ".join(tree2bracket(docgraph, child, successors)
                               for child in successors[root])
         return node2bracket(docgraph, root, embed_str)
-    else:
-        return node2bracket(docgraph, root)
+    return node2bracket(docgraph, root)
