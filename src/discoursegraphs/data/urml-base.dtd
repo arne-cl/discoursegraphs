@@ -1,0 +1,100 @@
+<!-- DTD for Underspecified Rhethorical Structure Trees -->
+<!-- Version 0.5 Jan05 2002 - Reitter - reitter@mle.media.mit.edu -->
+
+<!ENTITY markup "((#PCDATA)*)">
+
+<!ELEMENT urml (header, document*)>
+
+<!ENTITY % reltype "(par|hyp)">
+
+<!ELEMENT header (reltypes)>
+<!ELEMENT reltypes (rel)*>
+<!ELEMENT rel EMPTY>
+<!ATTLIST rel
+name	  CDATA	#REQUIRED
+type	%reltype;	#REQUIRED >
+
+ 
+<!ELEMENT document (info?,text,analysis+)*>
+<!ATTLIST document
+	id	ID	#IMPLIED
+	lang   CDATA   #IMPLIED>
+<!-- language follows the iso639 stanard: en, de, fr, es etc. -->
+
+<!ELEMENT info (source?, editor*, note?)>
+<!ELEMENT source ANY> <!-- Source of the doc/analysis -->
+<!ELEMENT editor (#PCDATA)>  <!-- Who inserted the doc, created the analysis? -->
+<!ATTLIST editor
+	job	CDATA	#REQUIRED
+	date	CDATA	#IMPLIED>
+<!ELEMENT note ANY> <!-- Any additional notes -->
+
+
+<!ELEMENT text (segment|unsegmented|ignore)*>  <!-- The text of a document -->
+	
+<!ELEMENT ignore (#PCDATA)> <!-- Data decided to be unimportant -->
+<!ELEMENT segment (#PCDATA|p)*> <!-- A minimal unit of discourse -->
+<!ATTLIST segment
+	id	ID	#REQUIRED>
+<!ELEMENT unsegmented (#PCDATA|p)*>  <!-- Text that has not been segmented yet -->
+
+
+<!ELEMENT br EMPTY>
+<!-- paragraph delimiter - refers to layout
+	-->
+
+	
+<!-- a distinct analysis of the text. -->
+<!ELEMENT analysis (info?, (hypRelation|parRelation|relation|span)*)>
+<!ATTLIST analysis
+status	CDATA	#IMPLIED
+id	ID	#IMPLIED
+score	CDATA	#IMPLIED   
+>
+
+<!-- paratactic (multi-nuclear) relation -->
+<!ELEMENT parRelation ((nucleus|element)*)>
+<!ATTLIST parRelation
+type	CDATA	#REQUIRED
+id	ID	#REQUIRED
+score	CDATA	#IMPLIED   
+>
+<!-- if type is unspecified: unknown paratactic relation -->
+
+
+<!-- hypotactic (nucleus-satellite) relation -->
+<!ELEMENT hypRelation (((satellite|element),(nucleus|element))|((nucleus|element),(satellite|element)))>
+<!ATTLIST hypRelation
+type	CDATA	#IMPLIED   
+id	ID	#REQUIRED
+score	CDATA	#IMPLIED   
+>
+<!-- if type is unspecified: unknown hypotactic relation -->
+
+<!ELEMENT relation (((satellite|element),(nucleus|element))|((nucleus|element),(satellite|element))|((nucleus|element)*))>
+<!ATTLIST relation
+type	CDATA	#IMPLIED
+id	ID	#REQUIRED
+score	CDATA	#IMPLIED   
+group	ID	#IMPLIED
+>
+<!-- if type is unspecified: unknown relation -->
+
+<!-- satellite role -->
+<!ELEMENT satellite EMPTY>
+<!ATTLIST satellite
+id	IDREF	#REQUIRED>		<!-- IDREF -->
+
+<!-- nucleus role -->
+<!ELEMENT nucleus EMPTY>
+<!ATTLIST nucleus
+id	IDREF	#REQUIRED>		<!-- IDREF -->
+
+<!-- unknown element role -->
+<!ELEMENT element EMPTY>
+<!ATTLIST element
+id	IDREF	#REQUIRED>		<!-- IDREF -->
+
+<!-- If a satellite or nucleus consists of more than a single relation, 
+      the group of elements may be assigned an ID to be referenced using
+      the group attribute. -->
