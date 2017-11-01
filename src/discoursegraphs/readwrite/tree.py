@@ -15,7 +15,7 @@ from discoursegraphs import (
     EdgeTypes, istoken, select_neighbors_by_edge_attribute)
 
 
-def t(root, children=None):
+def t(root, children=None, debug=False, debug_label=None):
     "Create nltk.tree.ParentedTree from a root (str) and a list of (str, list) tuples."
     if isinstance(root, ParentedTree):
         if children is None:
@@ -23,7 +23,10 @@ def t(root, children=None):
         return ParentedTree(root, children)
 
     elif isinstance(root, basestring):
-        # Beware: a ParentedTree is also a list!
+        if debug is True and debug_label is not None:
+            root = root + " ({})".format(debug_label)
+
+        # Beware: ParentedTree is a subclass of list!
         if isinstance(children, ParentedTree):
             child_trees = [children]
 
@@ -43,6 +46,7 @@ def t(root, children=None):
             # this tree only consists of one leaf node
             child_trees = []
         return ParentedTree(root, child_trees)
+
     else:
         raise NotImplementedError
 

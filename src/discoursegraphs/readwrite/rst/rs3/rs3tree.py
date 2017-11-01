@@ -30,10 +30,10 @@ class TooFewChildrenError(ValueError):
 
 class RSTTree(object):
     """An RSTTree is a NLTK ParentedTree representation of an .rs3 file."""
-    def __init__(self, rs3_file, word_wrap=0):
+    def __init__(self, rs3_file, word_wrap=0, debug=False):
         self.child_dict, self.elem_dict, self.edus = get_rs3_data(rs3_file, word_wrap=word_wrap)
         self.edu_set = set(self.edus)
-        self.tree = dt(self.child_dict, self.elem_dict, self.edus)
+        self.tree = dt(self.child_dict, self.elem_dict, self.edus, debug=debug)
 
     def _repr_png_(self):
         """This PNG representation will be automagically used inside
@@ -110,7 +110,7 @@ def get_rs3_data(rs3_file, word_wrap=0):
     return children, elements, ordered_edus
 
 
-def dt(child_dict, elem_dict, ordered_edus, start_node=None):
+def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
     """main function to create an RSTTree from the output of get_rs3_data().
 
     TODO: add proper documentation
@@ -120,13 +120,13 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None):
     if start_node is None:
         root_nodes = child_dict[start_node]
         if len(root_nodes) == 1:
-            return dt(child_dict, elem_dict, ordered_edus, start_node=root_nodes[0])
+            return dt(child_dict, elem_dict, ordered_edus, start_node=root_nodes[0], debug=debug)
         elif len(root_nodes) > 1:
             # An undesired, but common case (at least in the PCC corpus).
             # This happens if there's one EDU not to connected to the rest
             # of the tree (e.g. a headline). We will just make all 'root'
             # nodes part of a multinuc relation called 'virtual-root'.
-            root_subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=root_id)
+            root_subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=root_id, debug=debug)
                              for root_id in root_nodes]
             return t('virtual-root', root_subtrees)
         else:
@@ -141,31 +141,31 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None):
 
     if elem_type == 'segment':
         if elem['nuclearity'] == 'root':
-            return t('N ({})'.format(elem_id), elem['text'])
+            return t('N', elem['text'], debug=debug, debug_label=elem_id)
 
         if elem['reltype'] == 'rst':
             # this elem is the S in an N-S relation
             assert elem_id not in child_dict, \
                 "A satellite segment (%s) should not have children: %s" \
                     % (elem_id, child_dict[elem_id])
-            return t('S ({})'.format(elem_id), elem['text'])
+            return t('S', elem['text'], debug=debug, debug_label=elem_id)
 
         elif elem['reltype'] == 'multinuc':
             # this elem is one of several Ns in a multinuc relation
             assert elem_id not in child_dict, \
                 "A multinuc segment (%s) should not have children: %s" \
                     % (elem_id, child_dict[elem_id])
-            return t('N ({})'.format(elem_id), elem['text'])
+            return t('N', elem['text'], debug=debug, debug_label=elem_id)
 
         else:  # elem['reltype'] == 'span'
             # this elem is the N in an N-S relation
-            nuc_tree = t('N ({})'.format(elem_id), elem['text'])
+            nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
 
             assert len(child_dict[elem_id]) == 1, \
                 "A span segment (%s) should have one child: %s" % (elem_id, child_dict[elem_id])
             satellite_id = child_dict[elem_id][0]
             satellite_elem = elem_dict[satellite_id]
-            sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id)
+            sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id, debug=debug)
             relname = satellite_elem['relname']
 
             elem_pos = get_position(elem_id, child_dict, ordered_edus, edu_set)
@@ -182,21 +182,21 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None):
 
 #             assert len(child_dict[elem_id]) == 1
 #             child_id = child_dict[elem_id][0]
-#             subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id)
-            subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=c)
+#             subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id, debug=debug)
+            subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=c, debug=debug)
                         for c in child_dict[elem_id]]
 
-            return t('S ({})'.format(elem_id), subtrees)
+            return t('S', subtrees, debug=debug, debug_label=elem_id)
 
         elif elem['reltype'] == 'multinuc':
             # this elem is one of several Ns in a multinuc relation
 
 #             assert len(child_dict[elem_id]) == 1
 #             child_id = child_dict[elem_id][0]
-#             subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id)
-            subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=c)
+#             subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id, debug=debug)
+            subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=c, debug=debug)
                         for c in child_dict[elem_id]]
-            return t('N ({})'.format(elem_id), subtrees)
+            return t('N', subtrees, debug=debug, debug_label=elem_id)
 
         else: # elem_type == 'group' and elem['reltype'] == 'span'
             # this elem is the N in an N-S relation
@@ -207,9 +207,9 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None):
                                       if elem_dict[c]['reltype'] == 'multinuc']
                 multinuc_relname = elem_dict[multinuc_child_ids[0]]['relname']
                 multinuc_subtree = t(multinuc_relname, [
-                    dt(child_dict, elem_dict, ordered_edus, start_node=mc)
+                    dt(child_dict, elem_dict, ordered_edus, start_node=mc, debug=debug)
                     for mc in multinuc_child_ids])
-                nuc_tree = t('N ({})'.format(elem_id), multinuc_subtree)
+                nuc_tree = t('N', multinuc_subtree, debug=debug, debug_label=elem_id)
 
                 other_child_ids = [c for c in child_ids
                                    if c not in multinuc_child_ids]
@@ -221,7 +221,7 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None):
                 elif len(other_child_ids) == 1:
                     satellite_id = other_child_ids[0]
                     satellite_elem = elem_dict[satellite_id]
-                    sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id)
+                    sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id, debug=debug)
                     relname = satellite_elem['relname']
 
                     # --- <start> copied from element_type: segment / reltype: span ---
@@ -242,8 +242,8 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None):
             else:  # elem['group_type'] == 'span'
                 if len(child_dict[elem_id]) == 1:
                     child_id = child_dict[elem_id][0]
-                    subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id)
-                    return t('N ({})'.format(elem_id), subtree)
+                    subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id, debug=debug)
+                    return t('N', subtree, debug=debug, debug_label=elem_id)
 
                 elif len(child_dict[elem_id]) == 2:
                     # this elem is the N of an N-S relation (child: S), but is also
@@ -257,10 +257,10 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None):
                     relname = satellite_elem['relname']
 
                     sat_subtree = dt(child_dict, elem_dict, ordered_edus,
-                                     start_node=children['satellite'])
+                                     start_node=children['satellite'], debug=debug)
                     nuc_subtree = dt(child_dict, elem_dict, ordered_edus,
-                                     start_node=children['nucleus'])
-                    nuc_tree = ('N ({})'.format(elem_id), nuc_subtree)
+                                     start_node=children['nucleus'], debug=debug)
+                    nuc_tree = t('N'.format(elem_id), nuc_subtree, debug=debug, debug_label=elem_id)
 
                     # --- <start> adapted from element_type: segment / reltype: span ---
                     elem_pos = get_position(children['nucleus'], child_dict, ordered_edus, edu_set)
