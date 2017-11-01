@@ -95,11 +95,9 @@ def get_rs3_data(rs3_file, word_wrap=0):
         elements[elem_id]['element_type'] = elem_type
 
         if elem_type == 'segment':
-            if word_wrap == 0:
-                edu_text = elem.text
-            else:
-                #~ import pudb; pudb.set_trace()
-                dedented_text = textwrap.dedent(elem.text).strip()
+            edu_text = elem.text.strip()
+            if word_wrap != 0:
+                dedented_text = textwrap.dedent(edu_text).strip()
                 edu_text = textwrap.fill(dedented_text, width=word_wrap)
 
             elements[elem_id]['text'] = edu_text
