@@ -37,8 +37,13 @@ def t(root, children=None, debug=False, debug_label=None):
                     child_trees.append(child)
                 elif isinstance(child, list):
                     child_trees.extend(child)
-                else:  #isinstance(child, tuple)
+                elif isinstance(child, tuple):
                     child_trees.append(t(*child))
+                elif isinstance(child, basestring):
+                    child_trees.append(child)
+                else:
+                    raise NotImplementedError
+
         elif isinstance(children, basestring):
             # this tree does only have one child, a leaf node
             child_trees = [children]
