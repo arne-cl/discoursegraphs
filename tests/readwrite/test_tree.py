@@ -3,11 +3,12 @@
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 from lxml import etree
+from nltk.tree import ParentedTree
 
 from discoursegraphs.readwrite.exportxml import ExportXMLDocumentGraph
 from discoursegraphs.readwrite.tree import (
     get_child_nodes, horizontal_positions, node2bracket, sorted_bfs_edges,
-    sorted_bfs_successors, tree2bracket)
+    sorted_bfs_successors, t, tree2bracket)
 import discoursegraphs as dg
 
 
@@ -86,7 +87,7 @@ class TestTree(object):
         assert x_positions_s1 == expected_positions
 
     def test_sorted_bfs_edges(self):
-        """Interpreting a graph as an ordered rooted tree, we find all 
+        """Interpreting a graph as an ordered rooted tree, we find all
         its edges in BFS order.
         """
         bfs_edges = list(sorted_bfs_edges(self.docgraph, source=None))
@@ -164,7 +165,7 @@ class TestTree(object):
         expected_str = (u'((SIMPX (LK (VXFIN (VVFIN Verschlampte))) '
                          '(MF (NX (ART die) (NN AFD)) (NX (NN Spendengeld)))) '
                          '($. ?))')
-        
+
         assert tree_str == expected_str
 
         root_str = tree2bracket(self.docgraph, self.docgraph.root)
@@ -177,3 +178,14 @@ class TestTree(object):
         subtree_str = tree2bracket(self.docgraph, root='s1_502',
                                    successors=subgraph_successors)
         assert subtree_str == u"(NX (ART die) (NN AFD))"
+
+
+def test_t():
+    assert t("", []) == ParentedTree("", [])
+    assert t("") == ParentedTree("", [])
+
+    assert t("foo", []) == ParentedTree("foo", [])
+    assert t("foo") == ParentedTree("foo", [])
+
+    assert t("foo", ["bar"]) == ParentedTree("foo", ["bar"])
+    assert t("foo", ["bar", "baz"]) == ParentedTree("foo", ["bar", "baz"])
