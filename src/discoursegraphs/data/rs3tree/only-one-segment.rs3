@@ -1,0 +1,9 @@
+<rst>
+  <header>
+    <relations>
+    </relations>
+  </header>
+  <body>
+    <segment id="1">foo</segment>
+  </body>
+</rst>
