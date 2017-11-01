@@ -128,7 +128,7 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
                              for root_id in root_nodes]
             return t('virtual-root', root_subtrees)
         else:
-            raise NoRootError("A tree must have (at least) one root node.")
+            return t('')
 
     elem_id = start_node
     if elem_id not in elem_dict:
