@@ -157,7 +157,9 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
                     % (elem_id, child_dict[elem_id])
             return t('N', elem['text'], debug=debug, debug_label=elem_id)
 
-        else:  # elem['reltype'] == 'span'
+        else:
+            assert elem['reltype'] == 'span', \
+                "I didn't expect to see this reltype here: %s" % elem['reltype']
             # this elem is the N in an N-S relation
             nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
 
@@ -176,7 +178,9 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
                 subtrees = [sat_subtree, nuc_tree]
             return t(relname, subtrees)
 
-    else:  # elem_type == 'group':
+    else:
+        assert elem_type == 'group', \
+            "I didn't expect to see this element type here: %s" % elem_type
         if elem['reltype'] == 'rst':
             # this elem is the S in an N-S relation
 
@@ -198,7 +202,11 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
                         for c in child_dict[elem_id]]
             return t('N', subtrees, debug=debug, debug_label=elem_id)
 
-        else: # elem_type == 'group' and elem['reltype'] == 'span'
+        else:
+            assert elem_type == 'group' and elem['reltype'] == 'span', \
+                "Unexpected combination: elem_type '%s' and reltype '%s'" \
+                    % (elem_type, elem['reltype'])
+
             # this elem is the N in an N-S relation
             if elem['group_type'] == 'multinuc':
                 # this elem is also the 'root node' of a multinuc relation
@@ -239,7 +247,9 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
                         "A multinuc group (%s) should not have > 1 non-multinuc children: %s" \
                             % (elem_id, other_child_ids))
 
-            else:  # elem['group_type'] == 'span'
+            else:
+                assert elem['group_type'] == 'span', \
+                    "Unexpected group_type '%s'" % elem['group_type']
                 if len(child_dict[elem_id]) == 1:
                     child_id = child_dict[elem_id][0]
                     subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id, debug=debug)
