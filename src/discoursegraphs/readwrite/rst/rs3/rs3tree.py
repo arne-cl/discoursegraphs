@@ -138,45 +138,9 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
     elem_type = elem['element_type']
 
     if elem_type == 'segment':
-        if elem['nuclearity'] == 'root':
-            assert elem.has_key('reltype') is False, \
-                "A root segment must not be part of a relation"
-            return t('N', elem['text'], debug=debug, debug_label=elem_id)
-
-        if elem['reltype'] == 'rst':
-            # this elem is the S in an N-S relation
-            assert elem_id not in child_dict, \
-                "A satellite segment (%s) should not have children: %s" \
-                    % (elem_id, child_dict[elem_id])
-            return t('S', elem['text'], debug=debug, debug_label=elem_id)
-
-        elif elem['reltype'] == 'multinuc':
-            # this elem is one of several Ns in a multinuc relation
-            assert elem_id not in child_dict, \
-                "A multinuc segment (%s) should not have children: %s" \
-                    % (elem_id, child_dict[elem_id])
-            return t('N', elem['text'], debug=debug, debug_label=elem_id)
-
-        else:
-            assert elem['reltype'] == 'span', \
-                "I didn't expect to see this reltype here: %s" % elem['reltype']
-            # this elem is the N in an N-S relation
-            nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
-
-            assert len(child_dict[elem_id]) == 1, \
-                "A span segment (%s) should have one child: %s" % (elem_id, child_dict[elem_id])
-            satellite_id = child_dict[elem_id][0]
-            satellite_elem = elem_dict[satellite_id]
-            sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id, debug=debug)
-            relname = satellite_elem['relname']
-
-            elem_pos = get_position(elem_id, child_dict, ordered_edus, edu_set)
-            sat_pos = get_position(satellite_id, child_dict, ordered_edus, edu_set)
-            if  elem_pos < sat_pos:
-                subtrees = [nuc_tree, sat_subtree]
-            else:
-                subtrees = [sat_subtree, nuc_tree]
-            return t(relname, subtrees)
+        return segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
+                            elem_id, elem, elem_type,
+                            start_node=start_node, debug=debug)
 
     else:
         assert elem_type == 'group', \
@@ -290,3 +254,47 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
                     raise TooFewChildrenError(
                         "A span group ('%s)' should have at least 1 child: %s" \
                             % (elem_id, child_dict[elem_id]))
+
+
+
+def segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
+                 elem_id, elem, elem_type, start_node=None, debug=False):
+    if elem['nuclearity'] == 'root':
+        assert elem.has_key('reltype') is False, \
+            "A root segment must not be part of a relation"
+        return t('N', elem['text'], debug=debug, debug_label=elem_id)
+
+    if elem['reltype'] == 'rst':
+        # this elem is the S in an N-S relation
+        assert elem_id not in child_dict, \
+            "A satellite segment (%s) should not have children: %s" \
+                % (elem_id, child_dict[elem_id])
+        return t('S', elem['text'], debug=debug, debug_label=elem_id)
+
+    elif elem['reltype'] == 'multinuc':
+        # this elem is one of several Ns in a multinuc relation
+        assert elem_id not in child_dict, \
+            "A multinuc segment (%s) should not have children: %s" \
+                % (elem_id, child_dict[elem_id])
+        return t('N', elem['text'], debug=debug, debug_label=elem_id)
+
+    else:
+        assert elem['reltype'] == 'span', \
+            "I didn't expect to see this reltype here: %s" % elem['reltype']
+        # this elem is the N in an N-S relation
+        nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
+
+        assert len(child_dict[elem_id]) == 1, \
+            "A span segment (%s) should have one child: %s" % (elem_id, child_dict[elem_id])
+        satellite_id = child_dict[elem_id][0]
+        satellite_elem = elem_dict[satellite_id]
+        sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id, debug=debug)
+        relname = satellite_elem['relname']
+
+        elem_pos = get_position(elem_id, child_dict, ordered_edus, edu_set)
+        sat_pos = get_position(satellite_id, child_dict, ordered_edus, edu_set)
+        if  elem_pos < sat_pos:
+            subtrees = [nuc_tree, sat_subtree]
+        else:
+            subtrees = [sat_subtree, nuc_tree]
+        return t(relname, subtrees)
