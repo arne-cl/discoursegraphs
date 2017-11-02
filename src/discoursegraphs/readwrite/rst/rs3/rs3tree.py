@@ -139,6 +139,8 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
 
     if elem_type == 'segment':
         if elem['nuclearity'] == 'root':
+            assert elem.has_key('reltype') is False, \
+                "A root segment must not be part of a relation"
             return t('N', elem['text'], debug=debug, debug_label=elem_id)
 
         if elem['reltype'] == 'rst':
