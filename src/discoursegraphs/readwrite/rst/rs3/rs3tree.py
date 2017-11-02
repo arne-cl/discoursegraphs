@@ -203,7 +203,7 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
             return t('N', subtrees, debug=debug, debug_label=elem_id)
 
         else:
-            assert elem_type == 'group' and elem['reltype'] == 'span', \
+            assert elem.get('reltype') in ('', 'span'), \
                 "Unexpected combination: elem_type '%s' and reltype '%s'" \
                     % (elem_type, elem['reltype'])
 
