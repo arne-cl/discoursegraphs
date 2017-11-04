@@ -73,7 +73,8 @@ def get_rs3_data(rs3_file, word_wrap=0):
         relname = elem.attrib.get('relname')
         elements[elem_id]['relname'] = relname
         if relname is None:
-            # nodes without a parent have no relname attribute
+            # Nodes without a parent have no relname attribute.
+            # They might well the N of a relation.
             elements[elem_id]['nuclearity'] = 'root'
         else:
             reltype = reltypes.get(relname, 'span')
@@ -136,6 +137,8 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
 
     elem = elem_dict[elem_id]
     elem_type = elem['element_type']
+
+    assert elem_type in ('segment', 'group')
 
     if elem_type == 'segment':
         return segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
