@@ -267,9 +267,9 @@ def group2tree(child_dict, elem_dict, ordered_edus, edu_set,
             assert elem['group_type'] == 'span', \
                 "Unexpected group_type '%s'" % elem['group_type']
             if len(child_dict[elem_id]) == 1:
+                # this span at the top of a tree was only added for visual purposes
                 child_id = child_dict[elem_id][0]
-                subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id, debug=debug)
-                return t('N', subtree, debug=debug, debug_label=elem_id)
+                return dt(child_dict, elem_dict, ordered_edus, start_node=child_id, debug=debug)
 
             elif len(child_dict[elem_id]) == 2:
                 # this elem is the N of an N-S relation (child: S), but is also
