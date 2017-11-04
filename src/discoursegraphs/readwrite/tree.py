@@ -46,10 +46,15 @@ def t(root, children=None, debug=False, debug_label=None):
 
         elif isinstance(children, basestring):
             # this tree does only have one child, a leaf node
-            child_trees = [children]
-        else:  #children == None
+            # TODO: this is a workaround for the following problem:
+            # ParentedTree('foo', [ParentedTree('bar', [])]) != ParentedTree('foo', ['bar'])
+            child_trees = [ParentedTree(children, [])]
+
+        else:
             # this tree only consists of one leaf node
+            assert children is None
             child_trees = []
+
         return ParentedTree(root, child_trees)
 
     else:

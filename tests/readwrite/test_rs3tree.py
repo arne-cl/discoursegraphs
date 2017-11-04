@@ -22,7 +22,6 @@ def example2tree(rs3tree_example_filename):
 
 def test_segments_only_trees():
     """Files without a single root must get a virtual one."""
-
     # minimal case: file without any segments
     produced = example2tree("empty.rs3")
     expected = t("")
@@ -43,7 +42,6 @@ def test_segments_only_trees():
 
     assert expected == produced.tree
 
-    # FIXME: one lonely segment; produces (N (foo))
     produced = example2tree('only-one-segment.rs3')
     expected = t("foo")
 
