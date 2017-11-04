@@ -109,6 +109,19 @@ def get_rs3_data(rs3_file, word_wrap=0):
     return children, elements, ordered_edus
 
 
+def get_ordered_subtree(nuc_tree, sat_tree, nuc_id, sat_id,
+                        child_dict, elem_dict, ordered_edus, edu_set):
+    nuc_pos = get_position(nuc_id, child_dict, ordered_edus, edu_set)
+    sat_pos = get_position(sat_id, child_dict, ordered_edus, edu_set)
+    if  nuc_pos < sat_pos:
+        subtrees = [nuc_tree, sat_tree]
+    else:
+        subtrees = [sat_tree, nuc_tree]
+
+    relname = elem_dict[sat_id]['relname']
+    return t(relname, subtrees)
+
+
 def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
     """main function to create an RSTTree from the output of get_rs3_data().
 
@@ -179,18 +192,10 @@ def segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
         assert len(child_dict[elem_id]) == 1, \
             "A span segment (%s) should have one child: %s" % (elem_id, child_dict[elem_id])
         satellite_id = child_dict[elem_id][0]
-        satellite_elem = elem_dict[satellite_id]
         sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id, debug=debug)
-        relname = satellite_elem['relname']
 
-        elem_pos = get_position(elem_id, child_dict, ordered_edus, edu_set)
-        sat_pos = get_position(satellite_id, child_dict, ordered_edus, edu_set)
-        if  elem_pos < sat_pos:
-            subtrees = [nuc_tree, sat_subtree]
-        else:
-            subtrees = [sat_subtree, nuc_tree]
-        return t(relname, subtrees)
-
+        return get_ordered_subtree(nuc_tree, sat_subtree, elem_id, satellite_id,
+                        child_dict, elem_dict, ordered_edus, edu_set)
 
     if elem['nuclearity'] == 'root':
         #~ import pudb; pudb.set_trace()
@@ -255,17 +260,9 @@ def group2tree(child_dict, elem_dict, ordered_edus, edu_set,
                 satellite_id = other_child_ids[0]
                 satellite_elem = elem_dict[satellite_id]
                 sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id, debug=debug)
-                relname = satellite_elem['relname']
 
-                # --- <start> copied from element_type: segment / reltype: span ---
-                elem_pos = get_position(elem_id, child_dict, ordered_edus, edu_set)
-                sat_pos = get_position(satellite_id, child_dict, ordered_edus, edu_set)
-                if  elem_pos < sat_pos:
-                    subtrees = [nuc_tree, sat_subtree]
-                else:
-                    subtrees = [sat_subtree, nuc_tree]
-                return t(relname, subtrees)
-                # --- <end> copied from element_type: segment / reltype: span ---
+                return get_ordered_subtree(nuc_tree, sat_subtree, elem_id, satellite_id,
+                        child_dict, elem_dict, ordered_edus, edu_set)
 
             else:  #len(other_child_ids) > 1
                 raise TooManyChildrenError(
@@ -297,15 +294,11 @@ def group2tree(child_dict, elem_dict, ordered_edus, edu_set,
                                  start_node=children['nucleus'], debug=debug)
                 nuc_tree = t('N'.format(elem_id), nuc_subtree, debug=debug, debug_label=elem_id)
 
-                # --- <start> adapted from element_type: segment / reltype: span ---
-                elem_pos = get_position(children['nucleus'], child_dict, ordered_edus, edu_set)
-                sat_pos = get_position(children['satellite'], child_dict, ordered_edus, edu_set)
-                if elem_pos < sat_pos:
-                    subtrees = [nuc_tree, sat_subtree]
-                else:
-                    subtrees = [sat_subtree, nuc_tree]
-                return t(relname, subtrees)
-                # --- <end> adapted from element_type: segment / reltype: span ---
+                return get_ordered_subtree(
+                    nuc_tree, sat_subtree,
+                    nuc_id=children['nucleus'], sat_id=children['satellite'],
+                    child_dict=child_dict, elem_dict=elem_dict,
+                    ordered_edus=ordered_edus, edu_set=edu_set)
 
             elif len(child_dict[elem_id]) > 2:
                 raise TooManyChildrenError(
