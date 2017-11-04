@@ -114,22 +114,11 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
 
     TODO: add proper documentation
     """
-    edu_set = set(ordered_edus)
-
     if start_node is None:
-        root_nodes = child_dict[start_node]
-        if len(root_nodes) == 1:
-            return dt(child_dict, elem_dict, ordered_edus, start_node=root_nodes[0], debug=debug)
-        elif len(root_nodes) > 1:
-            # An undesired, but common case (at least in the PCC corpus).
-            # This happens if there's one EDU not to connected to the rest
-            # of the tree (e.g. a headline). We will just make all 'root'
-            # nodes part of a multinuc relation called 'virtual-root'.
-            root_subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=root_id, debug=debug)
-                             for root_id in root_nodes]
-            return t('virtual-root', [('N', sub) for sub in root_subtrees])
-        else:
-            return t('')
+        return root2tree(child_dict, elem_dict, ordered_edus,
+                         start_node=start_node, debug=debug)
+
+    edu_set = set(ordered_edus)
 
     elem_id = start_node
     if elem_id not in elem_dict:
@@ -149,6 +138,22 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
         return group2tree(child_dict, elem_dict, ordered_edus, edu_set,
                           elem_id, elem, elem_type,
                           start_node=start_node, debug=debug)
+
+
+def root2tree(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
+    root_nodes = child_dict[start_node]
+    if len(root_nodes) == 1:
+        return dt(child_dict, elem_dict, ordered_edus, start_node=root_nodes[0], debug=debug)
+    elif len(root_nodes) > 1:
+        # An undesired, but common case (at least in the PCC corpus).
+        # This happens if there's one EDU not to connected to the rest
+        # of the tree (e.g. a headline). We will just make all 'root'
+        # nodes part of a multinuc relation called 'virtual-root'.
+        root_subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=root_id, debug=debug)
+                         for root_id in root_nodes]
+        return t('virtual-root', [('N', sub) for sub in root_subtrees])
+    else:
+        return t('')
 
 
 def segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
@@ -197,7 +202,6 @@ def segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
             return t(elem['text'], debug=debug, debug_label=elem_id)
         else:
             raise NotImplementedError("Can't handle root segment with children, yet")
-
 
 
 def group2tree(child_dict, elem_dict, ordered_edus, edu_set,
