@@ -28,6 +28,12 @@ def test_segments_only_trees():
 
     assert expected == produced.tree
 
+    # one segment only
+    produced = example2tree('only-one-segment.rs3')
+    expected = t("foo")
+
+    assert expected == produced.tree
+
     # two segments w/out a root
     produced = example2tree("foo-bar-only-segments.rs3")
     expected = t("virtual-root",
@@ -42,22 +48,15 @@ def test_segments_only_trees():
 
     assert expected == produced.tree
 
-    produced = example2tree('only-one-segment.rs3')
-    expected = t("foo")
-
-    assert expected == produced.tree
-
 
 def test_single_nucsat_relation():
-    # FIXME: only contains root node
     produced = example2tree("foo-bar-circ-foo-to-bar.rs3")
     expected = t("circumstance", [
         ("S", "foo"),
         ("N", "bar")])
-    
+
     assert expected == produced.tree
 
-    # FIXME: only contains root node
     produced = example2tree("foo-bar-elab-foo-to-bar.rs3")
     expected = t("elaboration", [
         ("S", "foo"),
@@ -65,7 +64,6 @@ def test_single_nucsat_relation():
 
     assert expected == produced.tree
 
-    # FIXME: only contains root node
     produced = example2tree("foo-bar-circ-bar-to-foo.rs3")
     expected = t("circumstance", [
         ("N", "foo"),
@@ -73,7 +71,6 @@ def test_single_nucsat_relation():
 
     assert expected == produced.tree
 
-    # FIXME: only contains root node
     produced = example2tree("foo-bar-elab-bar-to-foo.rs3")
     expected = t("elaboration", [
         ("N", "foo"),
@@ -83,15 +80,13 @@ def test_single_nucsat_relation():
 
 
 def test_single_nucsat_relation_topspan():
-    """It must not matter if there is a span above a single N-S relation."""
-    # CORRECT
+    """It doesn't matter if there is a span above a single N-S relation."""
     produced = example2tree("foo-bar-circ-foo-to-bar-plus-top-span.rs3")
     expected = t("circumstance", [
         ("S", "foo"),
         ("N", "bar")])
     assert expected == produced.tree
 
-    # FIXME: only contains root node
     produced = example2tree("foo-bar-circ-foo-to-bar.rs3")
     expected = t("circumstance", [
         ("S", "foo"),
@@ -122,12 +117,11 @@ def test_single_nucnuc_relation():
         ("N", "eins"),
         ("N", "zwei"),
         ("N", "drei")])
-    
+
     assert expected == produced.tree
 
 
 def test_nested_nucsat_relation():
-    # correct
     produced = example2tree('eins-zwei-drei-(circ-(circ-eins-to-zwei)-from-drei).rs3')
     expected = t("circumstance", [
         ("N", [
@@ -138,7 +132,6 @@ def test_nested_nucsat_relation():
 
     assert expected == produced.tree
 
-    # correct
     produced = example2tree('eins-zwei-drei-(circ-(circ-eins-from-zwei)-from-drei).rs3')
     expected = t("circumstance", [
         ("N", [
@@ -149,7 +142,6 @@ def test_nested_nucsat_relation():
 
     assert expected == produced.tree
 
-    # FIXME: only contains root node
     produced = example2tree('eins-zwei-drei-(circ-(circ-eins-from-zwei)-to-drei).rs3')
     expected = t("circumstance", [
         ("S", [
@@ -160,7 +152,6 @@ def test_nested_nucsat_relation():
 
     assert expected == produced.tree
 
-    # FIXME: only contains root node
     produced = example2tree('eins-zwei-drei-(circ-(circ-eins-to-zwei)-to-drei.rs3')
     expected = t("circumstance", [
         ("S", [
