@@ -127,7 +127,7 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
             # nodes part of a multinuc relation called 'virtual-root'.
             root_subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=root_id, debug=debug)
                              for root_id in root_nodes]
-            return t('virtual-root', root_subtrees)
+            return t('virtual-root', [('N', sub) for sub in root_subtrees])
         else:
             return t('')
 
@@ -190,8 +190,13 @@ def segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
     if elem['nuclearity'] == 'root':
         #~ import pudb; pudb.set_trace()
         assert not elem['reltype'], \
-            "A root segment must not be part of a relation"
-        return t('N', elem['text'], debug=debug, debug_label=elem_id)
+            "A root segment must not have a parent"
+
+        if not child_dict.has_key(elem_id):
+            # a root segment without any children (e.g. a headline in PCC)
+            return t(elem['text'], debug=debug, debug_label=elem_id)
+        else:
+            raise NotImplementedError("Can't handle root segment with children, yet")
 
 
 
