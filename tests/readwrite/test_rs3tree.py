@@ -128,23 +128,23 @@ def test_single_nucnuc_relation():
 
 def test_nested_nucsat_relation():
     # correct
-    produced = example2tree('eins-zwei-drei-(circ-(circ-eins-from-zwei)-from-drei).rs3')
-    expected = t("circumstance", [
-        ("N", [
-            ("circumstance", [
-                ("N", "eins"),
-                ("S", "zwei")])]),
-        ("S", "drei")])
-
-    assert expected == produced.tree
-
-    # correct
     produced = example2tree('eins-zwei-drei-(circ-(circ-eins-to-zwei)-from-drei).rs3')
     expected = t("circumstance", [
         ("N", [
             ("circumstance", [
                 ("S", "eins"),
                 ("N", "zwei")])]),
+        ("S", "drei")])
+
+    assert expected == produced.tree
+
+    # correct
+    produced = example2tree('eins-zwei-drei-(circ-(circ-eins-from-zwei)-from-drei).rs3')
+    expected = t("circumstance", [
+        ("N", [
+            ("circumstance", [
+                ("N", "eins"),
+                ("S", "zwei")])]),
         ("S", "drei")])
 
     assert expected == produced.tree
