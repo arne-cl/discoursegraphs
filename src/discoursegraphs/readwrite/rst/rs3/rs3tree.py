@@ -153,11 +153,6 @@ def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
 
 def segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
                  elem_id, elem, elem_type, start_node=None, debug=False):
-    if elem['nuclearity'] == 'root':
-        assert elem.has_key('reltype') is False, \
-            "A root segment must not be part of a relation"
-        return t('N', elem['text'], debug=debug, debug_label=elem_id)
-
     if elem['reltype'] == 'rst':
         # this elem is the S in an N-S relation
         assert elem_id not in child_dict, \
@@ -172,9 +167,7 @@ def segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
                 % (elem_id, child_dict[elem_id])
         return t('N', elem['text'], debug=debug, debug_label=elem_id)
 
-    else:
-        assert elem['reltype'] == 'span', \
-            "I didn't expect to see this reltype here: %s" % elem['reltype']
+    elif elem['reltype'] == 'span':
         # this elem is the N in an N-S relation
         nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
 
@@ -194,10 +187,16 @@ def segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
         return t(relname, subtrees)
 
 
+    if elem['nuclearity'] == 'root':
+        #~ import pudb; pudb.set_trace()
+        assert not elem['reltype'], \
+            "A root segment must not be part of a relation"
+        return t('N', elem['text'], debug=debug, debug_label=elem_id)
+
+
+
 def group2tree(child_dict, elem_dict, ordered_edus, edu_set,
                elem_id, elem, elem_type, start_node=None, debug=False):
-    assert elem_type == 'group', \
-        "I didn't expect to see this element type here: %s" % elem_type
     if elem['reltype'] == 'rst':
         # this elem is the S in an N-S relation
 
