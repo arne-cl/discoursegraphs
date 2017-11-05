@@ -269,16 +269,18 @@ def group2tree(child_dict, elem_dict, ordered_edus, edu_set,
             multinuc_subtree = t(multinuc_relname, [
                 dt(child_dict, elem_dict, ordered_edus, start_node=mc, debug=debug)
                 for mc in multinuc_child_ids])
-            nuc_tree = t('N', multinuc_subtree, debug=debug, debug_label=elem_id)
 
             other_child_ids = [c for c in child_ids
                                if c not in multinuc_child_ids]
 
             if not other_child_ids:
                 # this elem is only the head of a multinuc relation
-                return nuc_tree
+                # TODO: does this make sense / is this ever reached?
+                return multinuc_subtree
 
             elif len(other_child_ids) == 1:
+                nuc_tree = t('N', multinuc_subtree, debug=debug, debug_label=elem_id)
+
                 satellite_id = other_child_ids[0]
                 satellite_elem = elem_dict[satellite_id]
                 sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id, debug=debug)
