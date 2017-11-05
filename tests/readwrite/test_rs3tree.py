@@ -81,17 +81,18 @@ def test_single_nucsat_relation():
 
 def test_single_nucsat_relation_topspan():
     """It doesn't matter if there is a span above a single N-S relation."""
-    produced = example2tree("foo-bar-circ-foo-to-bar-plus-top-span.rs3")
-    expected = t("circumstance", [
+    produced1 = example2tree("foo-bar-circ-foo-to-bar-plus-top-span.rs3")
+    expected1 = t("circumstance", [
         ("S", "foo"),
         ("N", "bar")])
-    assert expected == produced.tree
+    assert expected1 == produced1.tree
 
-    produced = example2tree("foo-bar-circ-foo-to-bar.rs3")
-    expected = t("circumstance", [
+    produced2 = example2tree("foo-bar-circ-foo-to-bar.rs3")
+    expected2 = t("circumstance", [
         ("S", "foo"),
         ("N", "bar")])
-    assert expected == produced.tree
+    assert expected2 == produced2.tree
+    assert produced1.tree == produced2.tree
 
 
 def test_single_nucnuc_relation():
