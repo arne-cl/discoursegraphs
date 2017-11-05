@@ -95,7 +95,6 @@ def test_single_nucsat_relation_topspan():
 
 
 def test_single_nucnuc_relation():
-    # FIXME: superfluous N root
     produced = example2tree("foo-bar-foo-joint-bar.rs3")
     expected = t("joint", [
         ("N", "foo"),
@@ -103,7 +102,6 @@ def test_single_nucnuc_relation():
 
     assert expected == produced.tree
 
-    # FIXME: superfluous N root
     produced = example2tree("foo-bar-foo-conj-bar.rs3")
     expected = t("conjunction", [
         ("N", "foo"),
@@ -111,7 +109,6 @@ def test_single_nucnuc_relation():
 
     assert expected == produced.tree
 
-    # FIXME: superfluous N root
     produced = example2tree('eins-zwei-drei-(joint-eins-and-zwei-and-drei).rs3')
     expected = t("joint", [
         ("N", "eins"),
@@ -164,7 +161,6 @@ def test_nested_nucsat_relation():
 
 
 def test_nested_nucsat_nucnuc_relation():
-    # CORRECT
     produced = example2tree('eins-zwei-drei-(circ-eins-to-(joint-zwei-and-drei).rs3')
     expected = t("circumstance", [
         ("S", "eins"),
@@ -175,7 +171,6 @@ def test_nested_nucsat_nucnuc_relation():
 
     assert expected == produced.tree
 
-    # CORRECT
     produced = example2tree('eins-zwei-drei-(circ-(joint-eins-and-zwei)-from-drei).rs3')
     expected = t("circumstance", [
         ("N", [
@@ -188,7 +183,6 @@ def test_nested_nucsat_nucnuc_relation():
 
     assert expected == produced.tree
 
-    # FIXME, only contains root node
     produced = example2tree('eins-zwei-drei-(circ-eins-from-(joint-zwei-and-drei).rs3')
     expected = t("circumstance", [
         ("N", "eins"),
@@ -199,7 +193,6 @@ def test_nested_nucsat_nucnuc_relation():
 
     assert expected == produced.tree
 
-    # FIXME, only contains root node
     produced = example2tree('eins-zwei-drei-(circ-(joint-eins-and-zwei)-to-drei).rs3')
     expected = t("circumstance", [
         ("S", [
