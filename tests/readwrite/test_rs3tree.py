@@ -205,15 +205,15 @@ def test_nested_nucsat_nucnuc_relation():
 
     assert expected == produced.tree
 
-    # FIXME, only root node
     produced = example2tree('eins-zwei-drei-(elab-eins-from-(joint-zwei-and-drei).rs3')
-    expected = t("elaboration", [
-        ("N", [
+    expected = t('elaboration', [
+        ("N", "eins"),
+        ("S", [
             ("joint", [
-                ("N", "eins"),
-                ("N", "zwei")
+                ("N", "zwei"),
+                ("N", "drei")
             ])
-        ]),
-        ("S", "drei")])
+        ])
+    ])
 
     assert expected == produced.tree
