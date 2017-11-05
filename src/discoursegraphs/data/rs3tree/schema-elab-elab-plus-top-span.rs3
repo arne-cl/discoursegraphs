@@ -1,0 +1,14 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="elaboration" type="rst" />
+      <rel name="joint" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1" parent="2" relname="elaboration">eins</segment>
+    <segment id="2" parent="3" relname="span"> zwei</segment>
+    <segment id="5" parent="2" relname="elaboration"> drei</segment>
+<group id="3" type="span" />
+  </body>
+</rst>

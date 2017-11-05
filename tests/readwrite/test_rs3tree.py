@@ -82,20 +82,25 @@ def test_single_nucsat_relation():
 def test_single_nucsat_relation_topspan():
     """It doesn't matter if there is a span above a single N-S relation."""
     produced1 = example2tree("foo-bar-circ-foo-to-bar-plus-top-span.rs3")
-    expected1 = t("circumstance", [
-        ("S", "foo"),
-        ("N", "bar")])
-    assert expected1 == produced1.tree
-
     produced2 = example2tree("foo-bar-circ-foo-to-bar.rs3")
-    expected2 = t("circumstance", [
+    expected = t("circumstance", [
         ("S", "foo"),
         ("N", "bar")])
-    assert expected2 == produced2.tree
-    assert produced1.tree == produced2.tree
+    assert expected == produced1.tree == produced2.tree
 
 
-def test_single_nucnuc_relation():
+def test_single_multinuc_relation_topspan():
+    """It doesn't matter if there is a span above a single multinuc relation."""
+    produced1 = example2tree("foo-bar-foo-joint-bar.rs3")
+    produced2 = example2tree("foo-bar-foo-joint-bar-plus-top-span.rs3")
+    expected = t("joint", [
+        ("N", "foo"),
+        ("N", "bar")])
+
+    assert expected == produced1.tree == produced2.tree
+
+
+def test_single_multinuc_relation():
     produced = example2tree("foo-bar-foo-joint-bar.rs3")
     expected = t("joint", [
         ("N", "foo"),
@@ -161,7 +166,7 @@ def test_nested_nucsat_relation():
     assert expected == produced.tree
 
 
-def test_nested_nucsat_nucnuc_relation():
+def test_nested_nucsat_multinuc_relation():
     produced = example2tree('eins-zwei-drei-(circ-eins-to-(joint-zwei-and-drei).rs3')
     expected = t("circumstance", [
         ("S", "eins"),
@@ -218,3 +223,23 @@ def test_nested_nucsat_nucnuc_relation():
     ])
 
     assert expected == produced.tree
+
+
+@pytest.mark.xfail
+def test_single_schema():
+    #~ import pudb; pudb.set_trace()
+
+    produced1 = example2tree("schema-elab-elab.rs3")
+    produced2 = example2tree("schema-elab-elab-plus-top-span.rs3")
+
+    expected = t('elaboration', [
+        ('N', [
+            ('elaboration', [
+                ('S', 'eins'),
+                ('N', 'zwei')
+            ])
+        ]),
+        ('S', 'drei')
+    ])
+
+    assert expected == produced1.tree == produced2.tree
