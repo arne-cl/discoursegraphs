@@ -204,20 +204,23 @@ def segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
         if not child_dict.has_key(elem_id):
             # a root segment without any children (e.g. a headline in PCC)
             return t(elem['text'], debug=debug, debug_label=elem_id)
+
+        elif len(child_dict[elem_id]) == 1:
+            # this elem is the N in an N-S relation
+            nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
+
+            sat_id = child_dict[elem_id][0]
+            sat_tree = dt(child_dict, elem_dict, ordered_edus, start_node=sat_id, debug=debug)
+
+            return get_ordered_subtree(
+                nuc_tree, sat_tree, elem_id, sat_id,
+                child_dict, elem_dict, ordered_edus, edu_set)
+        elif len(child_dict[elem_id]) == 2:
+            # this elem is the N in an S-N-S schema
+            raise NotImplementedError("Can't handle schemas, yet")
+
         else:
-            if len(child_dict[elem_id]) == 1:
-                # this elem is the N in an N-S relation
-                nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
-
-                sat_id = child_dict[elem_id][0]
-                sat_tree = dt(child_dict, elem_dict, ordered_edus, start_node=sat_id, debug=debug)
-
-                return get_ordered_subtree(
-                    nuc_tree, sat_tree, elem_id, sat_id,
-                    child_dict, elem_dict, ordered_edus, edu_set)
-
-            else:
-                raise NotImplementedError("Can't handle root segment more than one child, yet")
+            raise NotImplementedError("Root segment has more than two children")
 
 
 def group2tree(child_dict, elem_dict, ordered_edus, edu_set,
