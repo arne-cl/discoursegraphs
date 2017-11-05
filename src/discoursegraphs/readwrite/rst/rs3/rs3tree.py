@@ -229,10 +229,20 @@ def group2tree(child_dict, elem_dict, ordered_edus, edu_set,
 #             assert len(child_dict[elem_id]) == 1
 #             child_id = child_dict[elem_id][0]
 #             subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id, debug=debug)
-        subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=c, debug=debug)
-                    for c in child_dict[elem_id]]
 
-        return t('S', subtrees, debug=debug, debug_label=elem_id)
+        if len(child_dict[elem_id]) >= 1:
+            # this elem is the S in an N-S relation, but it's also the root of
+            # another relation
+            subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=c, debug=debug)
+                        for c in child_dict[elem_id]]
+            first_child_id = child_dict[elem_id][0]
+            subtrees_relname = elem_dict[first_child_id]['relname']
+
+            subtree = t(subtrees_relname, subtrees, debug=debug, debug_label=elem_id)
+            return t('S', subtree, debug=debug, debug_label=elem_id)
+        else:
+            NotImplementedError
+
 
     elif elem['reltype'] == 'multinuc':
         # this elem is one of several Ns in a multinuc relation
