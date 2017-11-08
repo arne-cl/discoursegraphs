@@ -33,7 +33,7 @@ class RSTTree(object):
     def __init__(self, rs3_file, word_wrap=0, debug=False):
         self.child_dict, self.elem_dict, self.edus = get_rs3_data(rs3_file, word_wrap=word_wrap)
         self.edu_set = set(self.edus)
-        self.tree = dt(self.child_dict, self.elem_dict, self.edus, debug=debug)
+        self.tree = self.dt(debug=debug)
 
     def _repr_png_(self):
         """This PNG representation will be automagically used inside
@@ -50,6 +50,214 @@ class RSTTree(object):
 
     def __getitem__(self, key):
         return self.tree.__getitem__(key)
+
+    def dt(self, start_node=None, debug=False):
+        """main method to create an RSTTree from the output of get_rs3_data().
+
+        TODO: add proper documentation
+        """
+        if start_node is None:
+            return self.root2tree(start_node=start_node, debug=debug)
+
+        elem_id = start_node
+        if elem_id not in self.elem_dict:
+            return []
+
+        elem = self.elem_dict[elem_id]
+        elem_type = elem['element_type']
+
+        assert elem_type in ('segment', 'group')
+
+        if elem_type == 'segment':
+            return self.segment2tree(
+                elem_id, elem, elem_type, start_node=start_node, debug=debug)
+
+        else:
+            return self.group2tree(
+                elem_id, elem, elem_type, start_node=start_node, debug=debug)
+
+    def root2tree(self, start_node=None, debug=False):
+        root_nodes = self.child_dict[start_node]
+        if len(root_nodes) == 1:
+            return self.dt(start_node=root_nodes[0], debug=debug)
+        elif len(root_nodes) > 1:
+            # An undesired, but common case (at least in the PCC corpus).
+            # This happens if there's one EDU not to connected to the rest
+            # of the tree (e.g. a headline). We will just make all 'root'
+            # nodes part of a multinuc relation called 'virtual-root'.
+            root_subtrees = [self.dt(start_node=root_id, debug=debug)
+                             for root_id in root_nodes]
+            return t('virtual-root', [('N', sub) for sub in root_subtrees])
+        else:
+            return t('')
+
+    def group2tree(self, elem_id, elem, elem_type, start_node=None, debug=False):
+        if elem['reltype'] == 'rst':
+            # this elem is the S in an N-S relation
+
+            if len(self.child_dict[elem_id]) == 1:
+                # this elem is the S in an N-S relation, but it's also the root of
+                # another N-S relation
+                subtree_id = self.child_dict[elem_id][0]
+                subtree = self.dt(start_node=subtree_id, debug=debug)
+
+            else:
+                assert len(self.child_dict[elem_id]) > 1
+                # this elem is the S in an N-S relation, but it's also the root of
+                # a multinuc relation
+                subtrees = [self.dt(start_node=c, debug=debug)
+                            for c in self.child_dict[elem_id]]
+                first_child_id = self.child_dict[elem_id][0]
+                subtrees_relname = self.elem_dict[first_child_id]['relname']
+
+                subtree = t(subtrees_relname, subtrees, debug=debug, debug_label=elem_id)
+
+            return t('S', subtree, debug=debug, debug_label=elem_id)
+
+        elif elem['reltype'] == 'multinuc':
+            # this elem is one of several Ns in a multinuc relation
+
+    #             assert len(child_dict[elem_id]) == 1
+    #             child_id = child_dict[elem_id][0]
+    #             subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id, debug=debug)
+            subtrees = [self.dt(start_node=c, debug=debug)
+                        for c in self.child_dict[elem_id]]
+            return t('N', subtrees, debug=debug, debug_label=elem_id)
+
+        else:
+            assert elem.get('reltype') in ('', 'span'), \
+                "Unexpected combination: elem_type '%s' and reltype '%s'" \
+                    % (elem_type, elem['reltype'])
+
+            # this elem is the N in an N-S relation
+            if elem['group_type'] == 'multinuc':
+                # this elem is also the 'root node' of a multinuc relation
+                child_ids = self.child_dict[elem_id]
+                multinuc_child_ids = [c for c in child_ids
+                                      if self.elem_dict[c]['reltype'] == 'multinuc']
+                multinuc_relname = self.elem_dict[multinuc_child_ids[0]]['relname']
+                multinuc_subtree = t(multinuc_relname, [
+                    self.dt(start_node=mc, debug=debug)
+                    for mc in multinuc_child_ids])
+
+                other_child_ids = [c for c in child_ids
+                                   if c not in multinuc_child_ids]
+
+                if not other_child_ids:
+                    # this elem is only the head of a multinuc relation
+                    # TODO: does this make sense / is this ever reached?
+                    return multinuc_subtree
+
+                elif len(other_child_ids) == 1:
+                    nuc_tree = t('N', multinuc_subtree, debug=debug, debug_label=elem_id)
+
+                    satellite_id = other_child_ids[0]
+                    satellite_elem = self.elem_dict[satellite_id]
+                    sat_subtree = self.dt(start_node=satellite_id, debug=debug)
+
+                    return self.get_ordered_subtree(nuc_tree, sat_subtree, elem_id, satellite_id)
+
+                else:  #len(other_child_ids) > 1
+                    raise TooManyChildrenError(
+                        "A multinuc group (%s) should not have > 1 non-multinuc children: %s" \
+                            % (elem_id, other_child_ids))
+
+            else:
+                #~ assert elem['group_type'] == 'span', \
+                    #~ "Unexpected group_type '%s'" % elem['group_type']
+                if len(self.child_dict[elem_id]) == 1:
+                    # this span at the top of a tree was only added for visual purposes
+                    child_id = self.child_dict[elem_id][0]
+                    return self.dt(start_node=child_id, debug=debug)
+
+                elif len(self.child_dict[elem_id]) == 2:
+                    # this elem is the N of an N-S relation (child: S), but is also
+                    # a span over another relation (child: N)
+                    children = {}
+                    for child_id in self.child_dict[elem_id]:
+                        children[self.elem_dict[child_id]['nuclearity']] = child_id
+
+                    satellite_id = children['satellite']
+                    satellite_elem = self.elem_dict[satellite_id]
+                    relname = satellite_elem['relname']
+
+                    sat_subtree = self.dt(start_node=children['satellite'], debug=debug)
+                    nuc_subtree = self.dt(start_node=children['nucleus'], debug=debug)
+                    nuc_tree = t('N'.format(elem_id), nuc_subtree, debug=debug, debug_label=elem_id)
+
+                    return self.get_ordered_subtree(
+                        nuc_tree, sat_subtree,
+                        nuc_id=children['nucleus'], sat_id=children['satellite'])
+
+                elif len(self.child_dict[elem_id]) > 2:
+                    raise TooManyChildrenError(
+                        "A span group ('%s') should not have > 2 children: %s" \
+                            % (elem_id, self.child_dict[elem_id]))
+                else: #len(child_dict[elem_id]) == 0
+                    raise TooFewChildrenError(
+                        "A span group ('%s)' should have at least 1 child: %s" \
+                            % (elem_id, self.child_dict[elem_id]))
+
+    def segment2tree(self, elem_id, elem, elem_type, start_node=None, debug=False):
+        if elem['reltype'] == 'rst':
+            # this elem is the S in an N-S relation
+            assert elem_id not in self.child_dict, \
+                "A satellite segment (%s) should not have children: %s" \
+                    % (elem_id, self.child_dict[elem_id])
+            return t('S', elem['text'], debug=debug, debug_label=elem_id)
+
+        elif elem['reltype'] == 'multinuc':
+            # this elem is one of several Ns in a multinuc relation
+            assert elem_id not in self.child_dict, \
+                "A multinuc segment (%s) should not have children: %s" \
+                    % (elem_id, self.child_dict[elem_id])
+            return t('N', elem['text'], debug=debug, debug_label=elem_id)
+
+        elif elem['reltype'] == 'span':
+            # this elem is the N in an N-S relation
+            nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
+
+            assert len(self.child_dict[elem_id]) == 1, \
+                "A span segment (%s) should have one child: %s" % (elem_id, self.child_dict[elem_id])
+            satellite_id = self.child_dict[elem_id][0]
+            sat_subtree = self.dt(start_node=satellite_id, debug=debug)
+
+            return self.get_ordered_subtree(nuc_tree, sat_subtree, elem_id, satellite_id)
+
+        if elem['nuclearity'] == 'root':
+            assert not elem['reltype'], \
+                "A root segment must not have a parent"
+
+            if not self.child_dict.has_key(elem_id):
+                # a root segment without any children (e.g. a headline in PCC)
+                return t(elem['text'], debug=debug, debug_label=elem_id)
+
+            elif len(self.child_dict[elem_id]) == 1:
+                # this elem is the N in an N-S relation
+                nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
+
+                sat_id = self.child_dict[elem_id][0]
+                sat_tree = self.dt(start_node=sat_id, debug=debug)
+
+                return self.get_ordered_subtree(nuc_tree, sat_tree, elem_id, sat_id)
+
+            elif len(self.child_dict[elem_id]) == 2:
+                # this elem is the N in an S-N-S schema
+                raise NotImplementedError("Can't handle schemas, yet")
+
+            else:
+                raise NotImplementedError("Root segment has more than two children")
+
+    def get_ordered_subtree(self, nuc_tree, sat_tree, nuc_id, sat_id):
+        nuc_pos = get_position(nuc_id, self.child_dict, self.edus, self.edu_set)
+        sat_pos = get_position(sat_id, self.child_dict, self.edus, self.edu_set)
+        if  nuc_pos < sat_pos:
+            subtrees = [nuc_tree, sat_tree]
+        else:
+            subtrees = [sat_tree, nuc_tree]
+
+        relname = self.elem_dict[sat_id]['relname']
+        return t(relname, subtrees)
 
 
 def get_rs3_data(rs3_file, word_wrap=0):
@@ -109,230 +317,11 @@ def get_rs3_data(rs3_file, word_wrap=0):
     return children, elements, ordered_edus
 
 
-def get_ordered_subtree(nuc_tree, sat_tree, nuc_id, sat_id,
-                        child_dict, elem_dict, ordered_edus, edu_set):
-    nuc_pos = get_position(nuc_id, child_dict, ordered_edus, edu_set)
-    sat_pos = get_position(sat_id, child_dict, ordered_edus, edu_set)
-    if  nuc_pos < sat_pos:
-        subtrees = [nuc_tree, sat_tree]
-    else:
-        subtrees = [sat_tree, nuc_tree]
-
-    relname = elem_dict[sat_id]['relname']
-    return t(relname, subtrees)
 
 
-def dt(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
-    """main function to create an RSTTree from the output of get_rs3_data().
-
-    TODO: add proper documentation
-    """
-    if start_node is None:
-        return root2tree(child_dict, elem_dict, ordered_edus,
-                         start_node=start_node, debug=debug)
-
-    edu_set = set(ordered_edus)
-
-    elem_id = start_node
-    if elem_id not in elem_dict:
-        return []
-
-    elem = elem_dict[elem_id]
-    elem_type = elem['element_type']
-
-    assert elem_type in ('segment', 'group')
-
-    if elem_type == 'segment':
-        return segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
-                            elem_id, elem, elem_type,
-                            start_node=start_node, debug=debug)
-
-    else:
-        return group2tree(child_dict, elem_dict, ordered_edus, edu_set,
-                          elem_id, elem, elem_type,
-                          start_node=start_node, debug=debug)
 
 
-def root2tree(child_dict, elem_dict, ordered_edus, start_node=None, debug=False):
-    root_nodes = child_dict[start_node]
-    if len(root_nodes) == 1:
-        return dt(child_dict, elem_dict, ordered_edus, start_node=root_nodes[0], debug=debug)
-    elif len(root_nodes) > 1:
-        # An undesired, but common case (at least in the PCC corpus).
-        # This happens if there's one EDU not to connected to the rest
-        # of the tree (e.g. a headline). We will just make all 'root'
-        # nodes part of a multinuc relation called 'virtual-root'.
-        root_subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=root_id, debug=debug)
-                         for root_id in root_nodes]
-        return t('virtual-root', [('N', sub) for sub in root_subtrees])
-    else:
-        return t('')
 
 
-def segment2tree(child_dict, elem_dict, ordered_edus, edu_set,
-                 elem_id, elem, elem_type, start_node=None, debug=False):
-    if elem['reltype'] == 'rst':
-        # this elem is the S in an N-S relation
-        assert elem_id not in child_dict, \
-            "A satellite segment (%s) should not have children: %s" \
-                % (elem_id, child_dict[elem_id])
-        return t('S', elem['text'], debug=debug, debug_label=elem_id)
-
-    elif elem['reltype'] == 'multinuc':
-        # this elem is one of several Ns in a multinuc relation
-        assert elem_id not in child_dict, \
-            "A multinuc segment (%s) should not have children: %s" \
-                % (elem_id, child_dict[elem_id])
-        return t('N', elem['text'], debug=debug, debug_label=elem_id)
-
-    elif elem['reltype'] == 'span':
-        # this elem is the N in an N-S relation
-        nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
-
-        assert len(child_dict[elem_id]) == 1, \
-            "A span segment (%s) should have one child: %s" % (elem_id, child_dict[elem_id])
-        satellite_id = child_dict[elem_id][0]
-        sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id, debug=debug)
-
-        return get_ordered_subtree(nuc_tree, sat_subtree, elem_id, satellite_id,
-                        child_dict, elem_dict, ordered_edus, edu_set)
-
-    if elem['nuclearity'] == 'root':
-        assert not elem['reltype'], \
-            "A root segment must not have a parent"
-
-        if not child_dict.has_key(elem_id):
-            # a root segment without any children (e.g. a headline in PCC)
-            return t(elem['text'], debug=debug, debug_label=elem_id)
-
-        elif len(child_dict[elem_id]) == 1:
-            # this elem is the N in an N-S relation
-            nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
-
-            sat_id = child_dict[elem_id][0]
-            sat_tree = dt(child_dict, elem_dict, ordered_edus, start_node=sat_id, debug=debug)
-
-            return get_ordered_subtree(
-                nuc_tree, sat_tree, elem_id, sat_id,
-                child_dict, elem_dict, ordered_edus, edu_set)
-        elif len(child_dict[elem_id]) == 2:
-            # this elem is the N in an S-N-S schema
-            raise NotImplementedError("Can't handle schemas, yet")
-
-        else:
-            raise NotImplementedError("Root segment has more than two children")
 
 
-def group2tree(child_dict, elem_dict, ordered_edus, edu_set,
-               elem_id, elem, elem_type, start_node=None, debug=False):
-    if elem['reltype'] == 'rst':
-        # this elem is the S in an N-S relation
-
-        if len(child_dict[elem_id]) == 1:
-            # this elem is the S in an N-S relation, but it's also the root of
-            # another N-S relation
-            subtree_id = child_dict[elem_id][0]
-            subtree = dt(child_dict, elem_dict, ordered_edus,
-                         start_node=subtree_id, debug=debug)
-
-        else:
-            assert len(child_dict[elem_id]) > 1
-            # this elem is the S in an N-S relation, but it's also the root of
-            # a multinuc relation
-            subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=c, debug=debug)
-                        for c in child_dict[elem_id]]
-            first_child_id = child_dict[elem_id][0]
-            subtrees_relname = elem_dict[first_child_id]['relname']
-
-            subtree = t(subtrees_relname, subtrees, debug=debug, debug_label=elem_id)
-
-        return t('S', subtree, debug=debug, debug_label=elem_id)
-
-    elif elem['reltype'] == 'multinuc':
-        # this elem is one of several Ns in a multinuc relation
-
-#             assert len(child_dict[elem_id]) == 1
-#             child_id = child_dict[elem_id][0]
-#             subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id, debug=debug)
-        subtrees = [dt(child_dict, elem_dict, ordered_edus, start_node=c, debug=debug)
-                    for c in child_dict[elem_id]]
-        return t('N', subtrees, debug=debug, debug_label=elem_id)
-
-    else:
-        assert elem.get('reltype') in ('', 'span'), \
-            "Unexpected combination: elem_type '%s' and reltype '%s'" \
-                % (elem_type, elem['reltype'])
-
-        # this elem is the N in an N-S relation
-        if elem['group_type'] == 'multinuc':
-            # this elem is also the 'root node' of a multinuc relation
-            child_ids = child_dict[elem_id]
-            multinuc_child_ids = [c for c in child_ids
-                                  if elem_dict[c]['reltype'] == 'multinuc']
-            multinuc_relname = elem_dict[multinuc_child_ids[0]]['relname']
-            multinuc_subtree = t(multinuc_relname, [
-                dt(child_dict, elem_dict, ordered_edus, start_node=mc, debug=debug)
-                for mc in multinuc_child_ids])
-
-            other_child_ids = [c for c in child_ids
-                               if c not in multinuc_child_ids]
-
-            if not other_child_ids:
-                # this elem is only the head of a multinuc relation
-                # TODO: does this make sense / is this ever reached?
-                return multinuc_subtree
-
-            elif len(other_child_ids) == 1:
-                nuc_tree = t('N', multinuc_subtree, debug=debug, debug_label=elem_id)
-
-                satellite_id = other_child_ids[0]
-                satellite_elem = elem_dict[satellite_id]
-                sat_subtree = dt(child_dict, elem_dict, ordered_edus, start_node=satellite_id, debug=debug)
-
-                return get_ordered_subtree(nuc_tree, sat_subtree, elem_id, satellite_id,
-                        child_dict, elem_dict, ordered_edus, edu_set)
-
-            else:  #len(other_child_ids) > 1
-                raise TooManyChildrenError(
-                    "A multinuc group (%s) should not have > 1 non-multinuc children: %s" \
-                        % (elem_id, other_child_ids))
-
-        else:
-            #~ assert elem['group_type'] == 'span', \
-                #~ "Unexpected group_type '%s'" % elem['group_type']
-            if len(child_dict[elem_id]) == 1:
-                # this span at the top of a tree was only added for visual purposes
-                child_id = child_dict[elem_id][0]
-                return dt(child_dict, elem_dict, ordered_edus, start_node=child_id, debug=debug)
-
-            elif len(child_dict[elem_id]) == 2:
-                # this elem is the N of an N-S relation (child: S), but is also
-                # a span over another relation (child: N)
-                children = {}
-                for child_id in child_dict[elem_id]:
-                    children[elem_dict[child_id]['nuclearity']] = child_id
-
-                satellite_id = children['satellite']
-                satellite_elem = elem_dict[satellite_id]
-                relname = satellite_elem['relname']
-
-                sat_subtree = dt(child_dict, elem_dict, ordered_edus,
-                                 start_node=children['satellite'], debug=debug)
-                nuc_subtree = dt(child_dict, elem_dict, ordered_edus,
-                                 start_node=children['nucleus'], debug=debug)
-                nuc_tree = t('N'.format(elem_id), nuc_subtree, debug=debug, debug_label=elem_id)
-
-                return get_ordered_subtree(
-                    nuc_tree, sat_subtree,
-                    nuc_id=children['nucleus'], sat_id=children['satellite'],
-                    child_dict=child_dict, elem_dict=elem_dict,
-                    ordered_edus=ordered_edus, edu_set=edu_set)
-
-            elif len(child_dict[elem_id]) > 2:
-                raise TooManyChildrenError(
-                    "A span group ('%s') should not have > 2 children: %s" \
-                        % (elem_id, child_dict[elem_id]))
-            else: #len(child_dict[elem_id]) == 0
-                raise TooFewChildrenError(
-                    "A span group ('%s)' should have at least 1 child: %s" \
-                        % (elem_id, child_dict[elem_id]))
