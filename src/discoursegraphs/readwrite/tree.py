@@ -15,25 +15,33 @@ from discoursegraphs import (
     EdgeTypes, istoken, select_neighbors_by_edge_attribute)
 
 
-def t(root, children=None, debug=False, debug_label=None):
-    "Create nltk.tree.ParentedTree from a root (str) and a list of (str, list) tuples."
-    if isinstance(root, ParentedTree):
+class DGParentedTree(ParentedTree):
+    """An nltk.tree.ParentedTree with an additional root_id parameter."""
+    def __init__(self, node, children=None, root_id=None):
+        # super calls __init__() of base class nltk.tree.ParentedTree
+        super(DGParentedTree, self).__init__(node, children)
+        self.root_id = root_id
+
+
+def t(root, children=None, debug=False, root_id=None):
+    "Create DGParentedTree from a root (str) and a list of (str, list) tuples."
+    if isinstance(root, DGParentedTree):
         if children is None:
             return root
-        return ParentedTree(root, children)
+        return DGParentedTree(root, children, root_id)
 
     elif isinstance(root, basestring):
-        if debug is True and debug_label is not None:
-            root = root + " ({})".format(debug_label)
+        if debug is True and root_id is not None:
+            root = root + " ({})".format(root_id)
 
-        # Beware: ParentedTree is a subclass of list!
-        if isinstance(children, ParentedTree):
+        # Beware: DGParentedTree is a subclass of list!
+        if isinstance(children, DGParentedTree):
             child_trees = [children]
 
         elif isinstance(children, list):
             child_trees = []
             for child in children:
-                if isinstance(child, ParentedTree):
+                if isinstance(child, DGParentedTree):
                     child_trees.append(child)
                 elif isinstance(child, list):
                     child_trees.extend(child)
@@ -47,15 +55,15 @@ def t(root, children=None, debug=False, debug_label=None):
         elif isinstance(children, basestring):
             # this tree does only have one child, a leaf node
             # TODO: this is a workaround for the following problem:
-            # ParentedTree('foo', [ParentedTree('bar', [])]) != ParentedTree('foo', ['bar'])
-            child_trees = [ParentedTree(children, [])]
+            # DGParentedTree('foo', [DGParentedTree('bar', [])]) != DGParentedTree('foo', ['bar'])
+            child_trees = [DGParentedTree(children, [])]
 
         else:
             # this tree only consists of one leaf node
             assert children is None
             child_trees = []
 
-        return ParentedTree(root, child_trees)
+        return DGParentedTree(root, child_trees, root_id)
 
     else:
         raise NotImplementedError

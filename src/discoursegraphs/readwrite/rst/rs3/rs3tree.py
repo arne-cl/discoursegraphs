@@ -29,7 +29,7 @@ class TooFewChildrenError(ValueError):
 
 
 class RSTTree(object):
-    """An RSTTree is a NLTK ParentedTree representation of an .rs3 file."""
+    """An RSTTree is a DGParentedTree representation of an .rs3 file."""
     def __init__(self, rs3_file, word_wrap=0, debug=False):
         self.child_dict, self.elem_dict, self.edus = get_rs3_data(rs3_file, word_wrap=word_wrap)
         self.edu_set = set(self.edus)
@@ -110,9 +110,9 @@ class RSTTree(object):
                 first_child_id = self.child_dict[elem_id][0]
                 subtrees_relname = self.elem_dict[first_child_id]['relname']
 
-                subtree = t(subtrees_relname, subtrees, debug=debug, debug_label=elem_id)
+                subtree = t(subtrees_relname, subtrees, debug=debug, root_id=elem_id)
 
-            return t('S', subtree, debug=debug, debug_label=elem_id)
+            return t('S', subtree, debug=debug, root_id=elem_id)
 
         elif elem['reltype'] == 'multinuc':
             # this elem is one of several Ns in a multinuc relation
@@ -122,7 +122,7 @@ class RSTTree(object):
     #             subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id, debug=debug)
             subtrees = [self.dt(start_node=c, debug=debug)
                         for c in self.child_dict[elem_id]]
-            return t('N', subtrees, debug=debug, debug_label=elem_id)
+            return t('N', subtrees, debug=debug, root_id=elem_id)
 
         else:
             assert elem.get('reltype') in ('', 'span'), \
@@ -138,7 +138,7 @@ class RSTTree(object):
                 multinuc_relname = self.elem_dict[multinuc_child_ids[0]]['relname']
                 multinuc_subtree = t(multinuc_relname, [
                     self.dt(start_node=mc, debug=debug)
-                    for mc in multinuc_child_ids])
+                    for mc in multinuc_child_ids], root_id=elem_id)
 
                 other_child_ids = [c for c in child_ids
                                    if c not in multinuc_child_ids]
@@ -149,7 +149,7 @@ class RSTTree(object):
                     return multinuc_subtree
 
                 elif len(other_child_ids) == 1:
-                    nuc_tree = t('N', multinuc_subtree, debug=debug, debug_label=elem_id)
+                    nuc_tree = t('N', multinuc_subtree, debug=debug, root_id=elem_id)
 
                     satellite_id = other_child_ids[0]
                     satellite_elem = self.elem_dict[satellite_id]
@@ -183,7 +183,7 @@ class RSTTree(object):
 
                     sat_subtree = self.dt(start_node=children['satellite'], debug=debug)
                     nuc_subtree = self.dt(start_node=children['nucleus'], debug=debug)
-                    nuc_tree = t('N'.format(elem_id), nuc_subtree, debug=debug, debug_label=elem_id)
+                    nuc_tree = t('N'.format(elem_id), nuc_subtree, debug=debug, root_id=elem_id)
 
                     return self.get_ordered_subtree(
                         nuc_tree, sat_subtree,
@@ -204,18 +204,18 @@ class RSTTree(object):
             assert elem_id not in self.child_dict, \
                 "A satellite segment (%s) should not have children: %s" \
                     % (elem_id, self.child_dict[elem_id])
-            return t('S', elem['text'], debug=debug, debug_label=elem_id)
+            return t('S', elem['text'], debug=debug, root_id=elem_id)
 
         elif elem['reltype'] == 'multinuc':
             # this elem is one of several Ns in a multinuc relation
             assert elem_id not in self.child_dict, \
                 "A multinuc segment (%s) should not have children: %s" \
                     % (elem_id, self.child_dict[elem_id])
-            return t('N', elem['text'], debug=debug, debug_label=elem_id)
+            return t('N', elem['text'], debug=debug, root_id=elem_id)
 
         elif elem['reltype'] == 'span':
             # this elem is the N in an N-S relation
-            nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
+            nuc_tree = t('N', elem['text'], debug=debug, root_id=elem_id)
 
             assert len(self.child_dict[elem_id]) == 1, \
                 "A span segment (%s) should have one child: %s" % (elem_id, self.child_dict[elem_id])
@@ -230,11 +230,11 @@ class RSTTree(object):
 
             if not self.child_dict.has_key(elem_id):
                 # a root segment without any children (e.g. a headline in PCC)
-                return t(elem['text'], debug=debug, debug_label=elem_id)
+                return t(elem['text'], debug=debug, root_id=elem_id)
 
             elif len(self.child_dict[elem_id]) == 1:
                 # this elem is the N in an N-S relation
-                nuc_tree = t('N', elem['text'], debug=debug, debug_label=elem_id)
+                nuc_tree = t('N', elem['text'], debug=debug, root_id=elem_id)
 
                 sat_id = self.child_dict[elem_id][0]
                 sat_tree = self.dt(start_node=sat_id, debug=debug)

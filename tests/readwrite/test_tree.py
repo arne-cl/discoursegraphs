@@ -3,12 +3,11 @@
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 from lxml import etree
-from nltk.tree import ParentedTree
 
 from discoursegraphs.readwrite.exportxml import ExportXMLDocumentGraph
 from discoursegraphs.readwrite.tree import (
-    get_child_nodes, horizontal_positions, node2bracket, sorted_bfs_edges,
-    sorted_bfs_successors, t, tree2bracket)
+    DGParentedTree, get_child_nodes, horizontal_positions, node2bracket,
+    sorted_bfs_edges, sorted_bfs_successors, t, tree2bracket)
 import discoursegraphs as dg
 
 
@@ -181,11 +180,11 @@ class TestTree(object):
 
 
 def test_t():
-    assert t("", []) == ParentedTree("", [])
-    assert t("") == ParentedTree("", [])
+    assert t("", []) == DGParentedTree("", [])
+    assert t("") == DGParentedTree("", [])
 
-    assert t("foo", []) == ParentedTree("foo", [])
-    assert t("foo") == ParentedTree("foo", [])
+    assert t("foo", []) == DGParentedTree("foo", [])
+    assert t("foo") == DGParentedTree("foo", [])
 
-    assert t("foo", ["bar"]) == ParentedTree("foo", ["bar"])
-    assert t("foo", ["bar", "baz"]) == ParentedTree("foo", ["bar", "baz"])
+    assert t("foo", ["bar"]) == DGParentedTree("foo", ["bar"])
+    assert t("foo", ["bar", "baz"]) == DGParentedTree("foo", ["bar", "baz"])
