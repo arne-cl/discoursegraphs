@@ -9,7 +9,7 @@ import textwrap
 
 from lxml import etree
 
-from discoursegraphs.readwrite.tree import get_position, t
+from discoursegraphs.readwrite.tree import t
 from discoursegraphs.readwrite.rst.rs3 import extract_relationtypes
 
 
@@ -249,8 +249,8 @@ class RSTTree(object):
                 raise NotImplementedError("Root segment has more than two children")
 
     def get_ordered_subtree(self, nuc_tree, sat_tree, nuc_id, sat_id):
-        nuc_pos = get_position(nuc_id, self.child_dict, self.edus, self.edu_set)
-        sat_pos = get_position(sat_id, self.child_dict, self.edus, self.edu_set)
+        nuc_pos = self.get_position(nuc_id)
+        sat_pos = self.get_position(sat_id)
         if  nuc_pos < sat_pos:
             subtrees = [nuc_tree, sat_tree]
         else:
@@ -258,6 +258,18 @@ class RSTTree(object):
 
         relname = self.elem_dict[sat_id]['relname']
         return t(relname, subtrees)
+
+    def get_position(self, node_id):
+        """Get the position of a node in an RST tree to be constructed.
+
+        TODO: add proper documentation
+        """
+        if node_id in self.edu_set:
+            return self.edus.index(node_id)
+
+        return min(self.get_position(child_node_id)
+                   for child_node_id in self.child_dict[node_id])
+
 
 
 def get_rs3_data(rs3_file, word_wrap=0):

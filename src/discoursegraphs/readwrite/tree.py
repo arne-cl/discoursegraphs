@@ -69,16 +69,6 @@ def t(root, children=None, debug=False, root_id=None):
         raise NotImplementedError
 
 
-def get_position(node_id, child_dict, ordered_edus, edu_set):
-    """Get the position of a node in an RST tree to be constructed.
-
-    TODO: add proper documentation
-    """
-    if node_id in edu_set:
-        return ordered_edus.index(node_id)
-
-    return min(get_position(child_node_id, child_dict, ordered_edus, edu_set)
-               for child_node_id in child_dict[node_id])
 
 
 def get_child_nodes(docgraph, parent_node_id, data=False):
