@@ -241,9 +241,7 @@ def test_single_schema():
     assert expected == produced1.tree
 
 
-@pytest.mark.xfail
 def test_single_schema_topspan():
-    #~ import pudb; pudb.set_trace()
     produced1 = example2tree("schema-elab-elab.rs3")
     produced2 = example2tree("schema-elab-elab-plus-top-span.rs3")
 

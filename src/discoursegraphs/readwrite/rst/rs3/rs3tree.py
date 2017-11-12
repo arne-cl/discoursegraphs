@@ -192,7 +192,7 @@ class RSTTree(object):
                     sat_subtree = self.dt(start_node=sat_id, debug=debug)
 
                     nuc_subtree = self.dt(start_node=children['nucleus'], debug=debug)
-                    nuc_tree = t('N'.format(elem_id), nuc_subtree, debug=debug, root_id=elem_id)
+                    nuc_tree = t('N', nuc_subtree, debug=debug, root_id=elem_id)
 
                     return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
 
@@ -206,6 +206,7 @@ class RSTTree(object):
                             % (elem_id, self.child_dict[elem_id]))
 
     def segment2tree(self, elem_id, elem, elem_type, start_node=None, debug=False):
+        assert elem.get('reltype') in ('rst', 'multinuc', 'span', '', None)
         if elem['reltype'] == 'rst':
             # this elem is the S in an N-S relation
             assert elem_id not in self.child_dict, \
@@ -220,48 +221,33 @@ class RSTTree(object):
                     % (elem_id, self.child_dict[elem_id])
             return t('N', elem['text'], debug=debug, root_id=elem_id)
 
-        elif elem['reltype'] == 'span':
-            # this elem is the N in an N-S relation
-            nuc_tree = t('N', elem['text'], debug=debug, root_id=elem_id)
-
-            assert len(self.child_dict[elem_id]) == 1, \
-                "A span segment (%s) should have one child: %s" % (elem_id, self.child_dict[elem_id])
-            sat_id = self.child_dict[elem_id][0]
-            sat_subtree = self.dt(start_node=sat_id, debug=debug)
-
-            return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
-
-        if elem['nuclearity'] == 'root':
-            assert not elem['reltype'], \
-                "A root segment must not have a parent"
-
+        else:
+            # this segment is either an N or an unconnected root node
             if not self.child_dict.has_key(elem_id):
                 # a root segment without any children (e.g. a headline in PCC)
+                assert elem['nuclearity'] == 'root'
                 return t(elem['text'], debug=debug, root_id=elem_id)
 
-            elif len(self.child_dict[elem_id]) == 1:
-                # this elem is the N in an N-S relation
-                nuc_tree = t('N', elem['text'], debug=debug, root_id=elem_id)
+            # this segment is a nucleus
+            nuc_tree = t('N', elem['text'], debug=debug, root_id=elem_id)
 
+            if len(self.child_dict[elem_id]) == 1:
+                # this segment is the N in an N-S relation
                 sat_id = self.child_dict[elem_id][0]
-                sat_tree = self.dt(start_node=sat_id, debug=debug)
-
-                return self.sorted_nucsat_tree(nuc_tree, sat_tree)
+                sat_subtree = self.dt(start_node=sat_id, debug=debug)
+                return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
 
             elif len(self.child_dict[elem_id]) == 2:
-                # this elem is the N in an S-N-S schema
-                nuc_tree = t('N', elem['text'], debug=debug, root_id=elem_id)
-
+                # this segment is the N in an S-N-S schema
                 sat1_id = self.child_dict[elem_id][0]
                 sat2_id = self.child_dict[elem_id][1]
 
                 sat1_tree = self.dt(start_node=sat1_id, debug=debug)
                 sat2_tree = self.dt(start_node=sat2_id, debug=debug)
-
                 return self.order_schema(nuc_tree, sat1_tree, sat2_tree)
 
             else:
-                raise NotImplementedError("Root segment has more than two children")
+                raise NotImplementedError("Segment has more than two children")
 
     def order_schema(self, nuc_tree, sat1_tree, sat2_tree):
         """convert an RST schema (a nucleus is shared between two satellites)
