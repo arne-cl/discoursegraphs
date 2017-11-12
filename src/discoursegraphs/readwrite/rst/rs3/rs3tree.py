@@ -166,10 +166,7 @@ class RSTTree(object):
                     sat_id = other_child_ids[0]
                     sat_subtree = self.dt(start_node=sat_id, debug=debug)
 
-                    sorted_subtrees = self.sort_subtrees(nuc_tree, sat_subtree)
-                    relname = self.elem_dict[sat_id]['relname']
-                    return t(relname, sorted_subtrees)
-
+                    return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
 
                 else:  #len(other_child_ids) > 1
                     raise TooManyChildrenError(
@@ -197,9 +194,7 @@ class RSTTree(object):
                     nuc_subtree = self.dt(start_node=children['nucleus'], debug=debug)
                     nuc_tree = t('N'.format(elem_id), nuc_subtree, debug=debug, root_id=elem_id)
 
-                    sorted_subtrees = self.sort_subtrees(nuc_tree, sat_subtree)
-                    relname = self.elem_dict[sat_id]['relname']
-                    return t(relname, sorted_subtrees)
+                    return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
 
                 elif len(self.child_dict[elem_id]) > 2:
                     raise TooManyChildrenError(
@@ -234,9 +229,7 @@ class RSTTree(object):
             sat_id = self.child_dict[elem_id][0]
             sat_subtree = self.dt(start_node=sat_id, debug=debug)
 
-            sorted_subtrees = self.sort_subtrees(nuc_tree, sat_subtree)
-            relname = self.elem_dict[sat_id]['relname']
-            return t(relname, sorted_subtrees)
+            return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
 
         if elem['nuclearity'] == 'root':
             assert not elem['reltype'], \
@@ -253,9 +246,7 @@ class RSTTree(object):
                 sat_id = self.child_dict[elem_id][0]
                 sat_tree = self.dt(start_node=sat_id, debug=debug)
 
-                sorted_subtrees = self.sort_subtrees(nuc_tree, sat_tree)
-                relname = self.elem_dict[sat_id]['relname']
-                return t(relname, sorted_subtrees)
+                return self.sorted_nucsat_tree(nuc_tree, sat_tree)
 
             elif len(self.child_dict[elem_id]) == 2:
                 # this elem is the N in an S-N-S schema
@@ -273,6 +264,11 @@ class RSTTree(object):
                 raise NotImplementedError("Root segment has more than two children")
 
     def order_schema(self, nuc_tree, sat1_tree, sat2_tree):
+        """convert an RST schema (a nucleus is shared between two satellites)
+        into a regular RST subtree.
+
+        TODO: add proper documentation
+        """
         if sat1_tree.height() == sat2_tree.height():
             sat1_pos = self.get_position(sat1_tree.root_id)
             sat2_pos = self.get_position(sat2_tree.root_id)
@@ -298,11 +294,7 @@ class RSTTree(object):
         inner_tree = t('N', [(inner_relation, inner_subtrees)],
                        root_id=more_important_sat.root_id)
 
-        outer_relation = self.elem_dict[less_important_sat.root_id]['relname']
-        outer_subtrees = self.sort_subtrees(inner_tree, less_important_sat)
-
-        return t(outer_relation, outer_subtrees,
-                 root_id=less_important_sat.root_id)
+        return self.sorted_nucsat_tree(inner_tree, less_important_sat)
 
     def get_position(self, node_id):
         """Get the linear position of a subtree (of type DGParentedTree,
@@ -324,6 +316,11 @@ class RSTTree(object):
                                       reverse=True)
         return sorted(subtrees_desc_height,
                       key=methodcaller('get_position', self))
+
+    def sorted_nucsat_tree(self, nuc_tree, sat_tree):
+        sorted_subtrees = self.sort_subtrees(nuc_tree, sat_tree)
+        relname = self.elem_dict[sat_tree.root_id]['relname']
+        return t(relname, sorted_subtrees, root_id=nuc_tree.root_id)
 
 
 def get_rs3_data(rs3_file, word_wrap=0):
