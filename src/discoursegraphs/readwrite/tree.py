@@ -36,7 +36,8 @@ class DGParentedTree(ParentedTree):
             return rst_tree.edus.index(node_id)
 
         return min(self.get_position(rst_tree, child_node_id)
-                   for child_node_id in rst_tree.child_dict[self.root_id])
+                   for child_node_id in rst_tree.child_dict[node_id])
+
     def node_height(self, rst_tree, node_id=None):
         if node_id is None:
             node_id = self.root_id
