@@ -22,6 +22,17 @@ class DGParentedTree(ParentedTree):
         super(DGParentedTree, self).__init__(node, children)
         self.root_id = root_id
 
+    def get_position(self, rst_tree):
+        """Get the linear position of this subtree in a RSTTree.
+
+        TODO: add proper documentation
+        """
+        if self.root_id in rst_tree.edu_set:
+            return rst_tree.edus.index(self.root_id)
+
+        return min(self.get_position(child_node_id)
+                   for child_node_id in rst_tree.child_dict[self.root_id])
+
 
 def t(root, children=None, debug=False, root_id=None):
     "Create DGParentedTree from a root (str) and a list of (str, list) tuples."

@@ -6,6 +6,7 @@
 
 from collections import defaultdict
 import textwrap
+from operator import methodcaller
 
 from lxml import etree
 
@@ -270,6 +271,8 @@ class RSTTree(object):
         return min(self.get_position(child_node_id)
                    for child_node_id in self.child_dict[node_id])
 
+    def sort_subtrees(self, *subtrees):
+        return sorted(subtrees, key=methodcaller('get_position', self))
 
 
 def get_rs3_data(rs3_file, word_wrap=0):
