@@ -163,11 +163,13 @@ class RSTTree(object):
                 elif len(other_child_ids) == 1:
                     nuc_tree = t('N', multinuc_subtree, debug=debug, root_id=elem_id)
 
-                    satellite_id = other_child_ids[0]
-                    satellite_elem = self.elem_dict[satellite_id]
-                    sat_subtree = self.dt(start_node=satellite_id, debug=debug)
+                    sat_id = other_child_ids[0]
+                    sat_subtree = self.dt(start_node=sat_id, debug=debug)
 
-                    return self.get_ordered_subtree(nuc_tree, sat_subtree, elem_id, satellite_id)
+                    sorted_subtrees = self.sort_subtrees(nuc_tree, sat_subtree)
+                    relname = self.elem_dict[sat_id]['relname']
+                    return t(relname, sorted_subtrees)
+
 
                 else:  #len(other_child_ids) > 1
                     raise TooManyChildrenError(
@@ -189,17 +191,15 @@ class RSTTree(object):
                     for child_id in self.child_dict[elem_id]:
                         children[self.elem_dict[child_id]['nuclearity']] = child_id
 
-                    satellite_id = children['satellite']
-                    satellite_elem = self.elem_dict[satellite_id]
-                    relname = satellite_elem['relname']
+                    sat_id = children['satellite']
+                    sat_subtree = self.dt(start_node=sat_id, debug=debug)
 
-                    sat_subtree = self.dt(start_node=children['satellite'], debug=debug)
                     nuc_subtree = self.dt(start_node=children['nucleus'], debug=debug)
                     nuc_tree = t('N'.format(elem_id), nuc_subtree, debug=debug, root_id=elem_id)
 
-                    return self.get_ordered_subtree(
-                        nuc_tree, sat_subtree,
-                        nuc_id=children['nucleus'], sat_id=children['satellite'])
+                    sorted_subtrees = self.sort_subtrees(nuc_tree, sat_subtree)
+                    relname = self.elem_dict[sat_id]['relname']
+                    return t(relname, sorted_subtrees)
 
                 elif len(self.child_dict[elem_id]) > 2:
                     raise TooManyChildrenError(
@@ -231,10 +231,12 @@ class RSTTree(object):
 
             assert len(self.child_dict[elem_id]) == 1, \
                 "A span segment (%s) should have one child: %s" % (elem_id, self.child_dict[elem_id])
-            satellite_id = self.child_dict[elem_id][0]
-            sat_subtree = self.dt(start_node=satellite_id, debug=debug)
+            sat_id = self.child_dict[elem_id][0]
+            sat_subtree = self.dt(start_node=sat_id, debug=debug)
 
-            return self.get_ordered_subtree(nuc_tree, sat_subtree, elem_id, satellite_id)
+            sorted_subtrees = self.sort_subtrees(nuc_tree, sat_subtree)
+            relname = self.elem_dict[sat_id]['relname']
+            return t(relname, sorted_subtrees)
 
         if elem['nuclearity'] == 'root':
             assert not elem['reltype'], \
@@ -251,7 +253,9 @@ class RSTTree(object):
                 sat_id = self.child_dict[elem_id][0]
                 sat_tree = self.dt(start_node=sat_id, debug=debug)
 
-                return self.get_ordered_subtree(nuc_tree, sat_tree, elem_id, sat_id)
+                sorted_subtrees = self.sort_subtrees(nuc_tree, sat_tree)
+                relname = self.elem_dict[sat_id]['relname']
+                return t(relname, sorted_subtrees)
 
             elif len(self.child_dict[elem_id]) == 2:
                 # this elem is the N in an S-N-S schema
@@ -298,16 +302,6 @@ class RSTTree(object):
 
         return t(outer_relation, outer_subtrees)
 
-    def get_ordered_subtree(self, nuc_tree, sat_tree, nuc_id, sat_id):
-        nuc_pos = self.get_position(nuc_id)
-        sat_pos = self.get_position(sat_id)
-        if  nuc_pos < sat_pos:
-            subtrees = [nuc_tree, sat_tree]
-        else:
-            subtrees = [sat_tree, nuc_tree]
-
-        relname = self.elem_dict[sat_id]['relname']
-        return t(relname, subtrees)
 
     def get_position(self, node_id):
         """Get the linear position of a subtree (of type DGParentedTree,
