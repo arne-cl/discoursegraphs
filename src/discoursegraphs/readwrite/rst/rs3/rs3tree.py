@@ -267,15 +267,15 @@ class RSTTree(object):
                 sat1_tree = self.dt(start_node=sat1_id, debug=debug)
                 sat2_tree = self.dt(start_node=sat2_id, debug=debug)
 
-                return self.order_schema(nuc_tree, sat1_tree, sat2_tree, elem_id, sat1_id, sat2_id)
+                return self.order_schema(nuc_tree, sat1_tree, sat2_tree)
 
             else:
                 raise NotImplementedError("Root segment has more than two children")
 
-    def order_schema(self, nuc_tree, sat1_tree, sat2_tree, elem_id, sat1_id, sat2_id):
+    def order_schema(self, nuc_tree, sat1_tree, sat2_tree):
         if sat1_tree.height() == sat2_tree.height():
-            sat1_pos = self.get_position(sat1_id)
-            sat2_pos = self.get_position(sat2_id)
+            sat1_pos = self.get_position(sat1_tree.root_id)
+            sat2_pos = self.get_position(sat2_tree.root_id)
 
             if sat1_pos < sat2_pos:
                 more_important_sat = sat1_tree
