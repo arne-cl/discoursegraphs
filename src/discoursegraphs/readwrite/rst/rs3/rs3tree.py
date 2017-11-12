@@ -295,13 +295,14 @@ class RSTTree(object):
         inner_relation = self.elem_dict[more_important_sat.root_id]['relname']
         inner_subtrees = self.sort_subtrees(nuc_tree, more_important_sat)
 
-        inner_tree = t('N', [(inner_relation, inner_subtrees)])
+        inner_tree = t('N', [(inner_relation, inner_subtrees)],
+                       root_id=more_important_sat.root_id)
 
         outer_relation = self.elem_dict[less_important_sat.root_id]['relname']
         outer_subtrees = self.sort_subtrees(inner_tree, less_important_sat)
 
-        return t(outer_relation, outer_subtrees)
-
+        return t(outer_relation, outer_subtrees,
+                 root_id=less_important_sat.root_id)
 
     def get_position(self, node_id):
         """Get the linear position of a subtree (of type DGParentedTree,
