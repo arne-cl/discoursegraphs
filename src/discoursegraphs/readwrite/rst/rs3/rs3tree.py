@@ -278,26 +278,14 @@ class RSTTree(object):
             less_important_sat = sat1_tree
 
         inner_relation = self.elem_dict[more_important_sat.root_id]['relname']
-        inner_subtrees = self.order_nucsat(nuc_tree, more_important_sat)
+        inner_subtrees = self.sort_subtrees(nuc_tree, more_important_sat)
 
         inner_tree = t('N', [(inner_relation, inner_subtrees)])
 
         outer_relation = self.elem_dict[less_important_sat.root_id]['relname']
-        outer_subtrees = self.order_nucsat(inner_tree, less_important_sat)
+        outer_subtrees = self.sort_subtrees(inner_tree, less_important_sat)
 
         return t(outer_relation, outer_subtrees)
-
-    def order_nucsat(self, nuc_tree, sat_tree):
-        """Sort the nucleus and satellite of a relation by the linear order
-        in which they appear in the text.
-        """
-        nuc_pos = self.get_position(nuc_tree.root_id)
-        sat_pos = self.get_position(sat_tree.root_id)
-        if nuc_pos < sat_pos:
-            return [nuc_tree, sat_tree]
-        else:
-            return [sat_tree, nuc_tree]
-
 
     def get_ordered_subtree(self, nuc_tree, sat_tree, nuc_id, sat_id):
         nuc_pos = self.get_position(nuc_id)
@@ -311,9 +299,8 @@ class RSTTree(object):
         return t(relname, subtrees)
 
     def get_position(self, node_id):
-        """Get the position of a node in an RST tree to be constructed.
-
-        TODO: add proper documentation
+        """Get the linear position of a subtree (of type DGParentedTree,
+        identified by its node ID) in this RSTTree.
         """
         if node_id in self.edu_set:
             return self.edus.index(node_id)
@@ -322,6 +309,9 @@ class RSTTree(object):
                    for child_node_id in self.child_dict[node_id])
 
     def sort_subtrees(self, *subtrees):
+        """sort the given subtrees (of type DGParentedTree) based on their
+        linear position in this RSTTree.
+        """
         return sorted(subtrees, key=methodcaller('get_position', self))
 
 

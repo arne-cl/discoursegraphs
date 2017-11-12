@@ -22,15 +22,20 @@ class DGParentedTree(ParentedTree):
         super(DGParentedTree, self).__init__(node, children)
         self.root_id = root_id
 
-    def get_position(self, rst_tree):
-        """Get the linear position of this subtree in a RSTTree.
+    def get_position(self, rst_tree, node_id=None):
+        """Get the linear position of an element of this DGParentedTree in a RSTTree.
 
-        TODO: add proper documentation
+        If ``node_id`` is given, this will return the position of the subtree
+        with that node ID. Otherwise, the position of the root of this
+        DGParentedTree in the given RSTTree.
         """
-        if self.root_id in rst_tree.edu_set:
-            return rst_tree.edus.index(self.root_id)
+        if node_id is None:
+            node_id = self.root_id
 
-        return min(self.get_position(child_node_id)
+        if node_id in rst_tree.edu_set:
+            return rst_tree.edus.index(node_id)
+
+        return min(self.get_position(rst_tree, child_node_id)
                    for child_node_id in rst_tree.child_dict[self.root_id])
 
 
