@@ -225,10 +225,25 @@ def test_nested_nucsat_multinuc_relation():
     assert expected == produced.tree
 
 
-@pytest.mark.xfail
 def test_single_schema():
-    #~ import pudb; pudb.set_trace()
+    produced1 = example2tree("schema-elab-elab.rs3")
 
+    expected = t('elaboration', [
+        ('N', [
+            ('elaboration', [
+                ('S', 'eins'),
+                ('N', 'zwei')
+            ])
+        ]),
+        ('S', 'drei')
+    ])
+
+    assert expected == produced1.tree
+
+
+@pytest.mark.xfail
+def test_single_schema_topspan():
+    #~ import pudb; pudb.set_trace()
     produced1 = example2tree("schema-elab-elab.rs3")
     produced2 = example2tree("schema-elab-elab-plus-top-span.rs3")
 

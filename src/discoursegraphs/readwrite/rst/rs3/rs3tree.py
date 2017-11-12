@@ -244,10 +244,60 @@ class RSTTree(object):
 
             elif len(self.child_dict[elem_id]) == 2:
                 # this elem is the N in an S-N-S schema
-                raise NotImplementedError("Can't handle schemas, yet")
+                nuc_tree = t('N', elem['text'], debug=debug, root_id=elem_id)
+
+                sat1_id = self.child_dict[elem_id][0]
+                sat2_id = self.child_dict[elem_id][1]
+
+                sat1_tree = self.dt(start_node=sat1_id, debug=debug)
+                sat2_tree = self.dt(start_node=sat2_id, debug=debug)
+
+                return self.order_schema(nuc_tree, sat1_tree, sat2_tree, elem_id, sat1_id, sat2_id)
 
             else:
                 raise NotImplementedError("Root segment has more than two children")
+
+    def order_schema(self, nuc_tree, sat1_tree, sat2_tree, elem_id, sat1_id, sat2_id):
+        if sat1_tree.height() == sat2_tree.height():
+            sat1_pos = self.get_position(sat1_id)
+            sat2_pos = self.get_position(sat2_id)
+
+            if sat1_pos < sat2_pos:
+                more_important_sat = sat1_tree
+                less_important_sat = sat2_tree
+            else:
+                more_important_sat = sat2_tree
+                less_important_sat = sat1_tree
+
+        elif sat1_tree.height() > sat2_tree.height():
+            more_important_sat = sat1_tree
+            less_important_sat = sat2_tree
+
+        else:
+            more_important_sat = sat2_tree
+            less_important_sat = sat1_tree
+
+        inner_relation = self.elem_dict[more_important_sat.root_id]['relname']
+        inner_subtrees = self.order_nucsat(nuc_tree, more_important_sat)
+
+        inner_tree = t('N', [(inner_relation, inner_subtrees)])
+
+        outer_relation = self.elem_dict[less_important_sat.root_id]['relname']
+        outer_subtrees = self.order_nucsat(inner_tree, less_important_sat)
+
+        return t(outer_relation, outer_subtrees)
+
+    def order_nucsat(self, nuc_tree, sat_tree):
+        """Sort the nucleus and satellite of a relation by the linear order
+        in which they appear in the text.
+        """
+        nuc_pos = self.get_position(nuc_tree.root_id)
+        sat_pos = self.get_position(sat_tree.root_id)
+        if nuc_pos < sat_pos:
+            return [nuc_tree, sat_tree]
+        else:
+            return [sat_tree, nuc_tree]
+
 
     def get_ordered_subtree(self, nuc_tree, sat_tree, nuc_id, sat_id):
         nuc_pos = self.get_position(nuc_id)
