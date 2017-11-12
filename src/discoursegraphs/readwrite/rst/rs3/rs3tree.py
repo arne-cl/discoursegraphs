@@ -52,6 +52,17 @@ class RSTTree(object):
     def __getitem__(self, key):
         return self.tree.__getitem__(key)
 
+    def node_height(self, node_id):
+        assert node_id in self.elem_dict
+
+        height = 0
+        lookup_id = node_id
+
+        while lookup_id is not None:
+            lookup_id = self.elem_dict[lookup_id]['parent']
+            height += 1
+        return height
+
     def dt(self, start_node=None, debug=False):
         """main method to create an RSTTree from the output of get_rs3_data().
 
