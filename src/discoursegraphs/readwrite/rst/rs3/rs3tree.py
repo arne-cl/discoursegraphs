@@ -315,9 +315,14 @@ class RSTTree(object):
 
     def sort_subtrees(self, *subtrees):
         """sort the given subtrees (of type DGParentedTree) based on their
-        linear position in this RSTTree.
+        linear position in this RSTTree. If both subtrees have the same
+        linear position in the RSTTree (i.e. one is a child of the other)
         """
-        return sorted(subtrees, key=methodcaller('get_position', self))
+        subtrees_desc_height = sorted(subtrees,
+                                      key=methodcaller('node_height', self),
+                                      reverse=True)
+        return sorted(subtrees_desc_height,
+                      key=methodcaller('get_position', self))
 
 
 def get_rs3_data(rs3_file, word_wrap=0):
