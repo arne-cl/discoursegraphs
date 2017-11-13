@@ -162,15 +162,23 @@ class RSTTree(object):
 
                 elif len(other_child_ids) == 1:
                     nuc_tree = t('N', multinuc_subtree, debug=debug, root_id=elem_id)
-
                     sat_id = other_child_ids[0]
                     sat_subtree = self.dt(start_node=sat_id, debug=debug)
-
                     return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
 
-                else:  #len(other_child_ids) > 1
+                elif len(other_child_ids) == 2:
+                    # this element is the N in an S-N-S schema
+                    nuc_tree = t('N', multinuc_subtree, debug=debug, root_id=elem_id)
+                    sat1_id = other_child_ids[0]
+                    sat2_id = other_child_ids[1]
+
+                    sat1_tree = self.dt(start_node=sat1_id, debug=debug)
+                    sat2_tree = self.dt(start_node=sat2_id, debug=debug)
+                    return self.order_schema(nuc_tree, sat1_tree, sat2_tree)
+
+                else:  #len(other_child_ids) > 2
                     raise TooManyChildrenError(
-                        "A multinuc group (%s) should not have > 1 non-multinuc children: %s" \
+                        "Can't parse a multinuc group (%s) with more than 2 non-multinuc children: %s" \
                             % (elem_id, other_child_ids))
 
             else:
