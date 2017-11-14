@@ -1,0 +1,40 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="???" type="rst" />
+      <rel name="circumstance" type="rst" />
+      <rel name="solutionhood" type="rst" />
+      <rel name="elaboration" type="rst" />
+      <rel name="background" type="rst" />
+      <rel name="enablement" type="rst" />
+      <rel name="motivation" type="rst" />
+      <rel name="evidence" type="rst" />
+      <rel name="justify" type="rst" />
+      <rel name="volitional-cause" type="rst" />
+      <rel name="nonvolitional-cause" type="rst" />
+      <rel name="volitional-result" type="rst" />
+      <rel name="nonvolitional-result" type="rst" />
+      <rel name="purpose" type="rst" />
+      <rel name="antithesis" type="rst" />
+      <rel name="concession" type="rst" />
+      <rel name="condition" type="rst" />
+      <rel name="otherwise" type="rst" />
+      <rel name="interpretation" type="rst" />
+      <rel name="evaluation" type="rst" />
+      <rel name="restatement" type="rst" />
+      <rel name="summary" type="rst" />
+      <rel name="conjunction" type="multinuc" />
+      <rel name="disjunction" type="multinuc" />
+      <rel name="sequence" type="multinuc" />
+      <rel name="joint" type="multinuc" />
+      <rel name="contrast" type="multinuc" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1">eins</segment>
+    <segment id="2" parent="1" relname="elaboration"> zwei</segment>
+    <segment id="3" parent="4" relname="joint"> drei</segment>
+    <segment id="5" parent="4" relname="joint"> vier</segment>
+<group id="4" type="multinuc" parent="1" relname="background" />
+  </body>
+</rst>
