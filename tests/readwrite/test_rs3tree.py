@@ -225,23 +225,8 @@ def test_nested_nucsat_multinuc_relation():
     assert expected == produced.tree
 
 
-def test_single_schema():
-    produced1 = example2tree("schema-elab-elab.rs3")
-
-    expected = t('elaboration', [
-        ('N', [
-            ('elaboration', [
-                ('S', 'eins'),
-                ('N', 'zwei')
-            ])
-        ]),
-        ('S', 'drei')
-    ])
-
-    assert expected == produced1.tree
-
-
-def test_single_schema_topspan():
+def test_single_sns_schema_topspan():
+    """It doesn't matter if there's a span above a S-N-S schema."""
     produced1 = example2tree("schema-elab-elab.rs3")
     produced2 = example2tree("schema-elab-elab-plus-top-span.rs3")
 
@@ -257,94 +242,8 @@ def test_single_schema_topspan():
 
     assert expected == produced1.tree == produced2.tree
 
-"""
-maz-10575.rs3
 
-dt('33'):
-    group2tree('33'):
-        ...
-        assert elem.get('reltype') in ('', 'span')
-        ...
-        if len(self.child_dict[elem_id]) == 1:
-            ...
-            return dt('32')
-
-dt('32'):
-    group2tree('32'):
-        ...
-        assert elem.get('reltype') in ('', 'span')
-        ...
-        elif len(self.child_dict[elem_id]) == 2:
-            sat_subtree = self.dt(start_node=sat_id='30')
-            
-dt('30'):
-    group2tree('30'):
-        if elem['reltype'] == 'rst':
-            if len(self.child_dict[elem_id]) == 1:
-                subtree = self.dt(start_node=subtree_id='29')
-
-dt('29'):
-    group2tree('29'):
-        ...
-        assert elem.get('reltype') in ('', 'span')
-        ...
-        if elem['group_type'] == 'multinuc':
-
-            >>> multinuc_subtree.pretty_print()
-                             contrast                         
-                    ____________|_______                       
-                   |                    N                     
-                   |                    |                      
-                   |                  cause                   
-                   |             _______|___________           
-                   N            N                   S         
-                   |            |                   |          
-            Viele aus Intere einige ,        weil es in ander 
-                 sse ,          |            en Gruppen keine 
-                   |            |           n Platz mehr gab .
-                   |            |                   |          
-                  ...          ...                 ...        
-
-            >>> other_child_ids                                                                                                                                                     
-            ['8', '10']
-
-            >>> sat1_tree = self.dt(start_node='8', debug=debug)
-
-            >>> sat1_tree.pretty_print()
-                    S        
-                    |         
-             Die 30 Mädchen  
-            und Jungen haben 
-              sich eher zufä 
-               llig in der   
-             Neigungsgruppe  
-              Biologie und   
-             Umwelt zusammeng
-                efunden .    
-                    |         
-                   ... 
-
-            >>> sat2_tree = self.dt(start_node='10', debug=debug)
-            >>> sat2_tree.pretty_print()
-                   S        
-                   |         
-            Vielleicht fande
-            n auch die geste
-              rn die Bestä  
-             tigung , dass  
-             sie letztlich  
-            doch gar keine  
-             so schlechte   
-            Wahl getroffen  
-                haben .     
-                   |         
-                  ... 
-
-            else:  #len(other_child_ids) > 1
-                raise TooManyChildrenError
-                
-
-"""
+@pytest.mark.xfail
 def test_parse_complete_pcc():
     okay = 0.0
     fail = 0.0
@@ -353,12 +252,50 @@ def test_parse_complete_pcc():
             x = dg.readwrite.RSTTree(rfile)
             okay += 1
         except Exception as e:
-            print i, os.path.basename(rfile), "FAIL"
-            print "\t", e
+            #~ print i, os.path.basename(rfile), "FAIL"
+            #~ print "\t", e
             #~ import pudb; pudb.set_trace()
             #~ x = dg.readwrite.RSTTree(rfile)
             fail += 1
 
-
     print "{}% success".format(okay / (okay+fail) * 100)
     assert okay == 176
+
+
+def test_single_nss_schema_topspan():
+    """It doesn't matter if there's a span above a N-S-S schema."""
+    produced1 = example2tree('n-s-s-schema-eins-zwei-drei.rs3')
+    produced2 = example2tree('n-s-s-schema-eins-zwei-drei-plus-top-span.rs3')
+    expected = t('background', [
+        ('N', [
+            ('elaboration', [
+                ('N', 'eins'),
+                ('S', 'zwei')
+            ])
+        ]),
+        ('S', 'drei')
+    ])
+
+    assert expected == produced1.tree == produced2.tree
+
+
+def test_nested_nss_schema_topspan():
+    """It doesn't matter if there's a span above a nested N-S-S schema."""
+    produced1 = example2tree('n-s-s-schema-eins-zwei-(joint-drei-vier).rs3')
+    produced2 = example2tree('n-s-s-schema-eins-zwei-(joint-drei-vier)-plus-top-span.rs3')
+    expected = t('background', [
+        ('N', [
+            ('elaboration', [
+                ('N', 'eins'),
+                ('S', 'zwei')
+            ])]),
+        ('S', [
+            ('joint', [
+                ('N', 'drei'),
+                ('N', 'vier')
+            ])
+        ])
+    ])
+
+    assert produced1.tree == produced2.tree
+    assert expected == produced1.tree == produced2.tree
