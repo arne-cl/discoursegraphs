@@ -14,6 +14,12 @@ from discoursegraphs.readwrite.tree import t
 from discoursegraphs.readwrite.rst.rs3 import extract_relationtypes
 
 
+class SchemaTypes(object):
+    """Enumerator of RST schema types"""
+    one_sided = 'one_sided' # S-S-N or N-S-S
+    two_sided = 'two_sided' # S-N-S
+
+
 class NoRootError(ValueError):
     """An RST Tree with multiple nodes without an ancestor."""
     pass
@@ -174,7 +180,13 @@ class RSTTree(object):
 
                     sat1_tree = self.dt(start_node=sat1_id, debug=debug)
                     sat2_tree = self.dt(start_node=sat2_id, debug=debug)
-                    return self.order_schema(nuc_tree, sat1_tree, sat2_tree)
+
+                    schema_type = self.get_schema_type(nuc_tree, sat1_tree, sat2_tree)
+                    if schema_type == SchemaTypes.one_sided:
+                        return self.order_one_sided_schema(nuc_tree, sat1_tree, sat2_tree)
+
+                    else:
+                        return self.order_two_sided_schema(nuc_tree, sat1_tree, sat2_tree)
 
                 else:  #len(other_child_ids) > 2
                     raise TooManyChildrenError(
@@ -252,14 +264,65 @@ class RSTTree(object):
 
                 sat1_tree = self.dt(start_node=sat1_id, debug=debug)
                 sat2_tree = self.dt(start_node=sat2_id, debug=debug)
-                return self.order_schema(nuc_tree, sat1_tree, sat2_tree)
+
+                schema_type = self.get_schema_type(nuc_tree, sat1_tree, sat2_tree)
+                if schema_type == SchemaTypes.one_sided:
+                    return self.order_one_sided_schema(nuc_tree, sat1_tree, sat2_tree)
+
+                else:
+                    return self.order_two_sided_schema(nuc_tree, sat1_tree, sat2_tree)
 
             else:
                 raise NotImplementedError("Segment has more than two children")
 
-    def order_schema(self, nuc_tree, sat1_tree, sat2_tree):
-        """convert an RST schema (a nucleus is shared between two satellites)
+    def get_schema_type(self, nuc_tree, sat1_tree, sat2_tree):
+        """Determine the type of an RST schema.
+        Returns 'one_sided' iff the relation is in N-S-S or S-S-N order
+        or 'two_sided' iff the relation is in S-N-S order.
+        """
+        nuc_pos = self.get_position(nuc_tree.root_id)
+        sat1_pos = self.get_position(sat1_tree.root_id)
+        sat2_pos = self.get_position(sat2_tree.root_id)
+
+        if nuc_pos == sat1_pos == sat2_pos:
+            raise NotImplementedError("Unexpected RST schema")
+
+        elif sat1_pos <= nuc_pos and sat2_pos <= nuc_pos:
+            return SchemaTypes.one_sided
+
+        elif sat1_pos >= nuc_pos and sat2_pos >= nuc_pos:
+            return SchemaTypes.one_sided
+
+        else:
+            return SchemaTypes.two_sided
+
+    def order_one_sided_schema(self, nuc_tree, sat1_tree, sat2_tree):
+        """convert a one-sided RST schema (a nucleus is shared by two
+        satellites, which are both either on the left or on the right of it)
         into a regular RST subtree.
+        """
+        nuc_pos = self.get_position(nuc_tree.root_id)
+        sat1_pos = self.get_position(sat1_tree.root_id)
+        sat2_pos = self.get_position(sat2_tree.root_id)
+
+        if abs(nuc_pos - sat1_pos) < abs(nuc_pos - sat2_pos):
+            inner_sat_tree = sat1_tree
+            outer_sat_tree = sat2_tree
+        else:
+            inner_sat_tree = sat2_tree
+            outer_sat_tree = sat1_tree
+
+        inner_relation = self.elem_dict[inner_sat_tree.root_id]['relname']
+        inner_subtrees = self.sort_subtrees(nuc_tree, inner_sat_tree)
+
+        inner_tree = t('N', [(inner_relation, inner_subtrees)],
+                       root_id=inner_sat_tree.root_id)
+
+        return self.sorted_nucsat_tree(inner_tree, outer_sat_tree)
+
+    def order_two_sided_schema(self, nuc_tree, sat1_tree, sat2_tree):
+        """convert a two-sided RST schema (a nucleus is shared by and in
+        between two satellites) into a regular RST subtree.
 
         TODO: add proper documentation
         """
