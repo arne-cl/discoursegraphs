@@ -243,6 +243,31 @@ def test_single_sns_schema_topspan():
     assert expected == produced1.tree == produced2.tree
 
 
+def test_nested_sns_schema():
+    produced = example2tree('maz-10575-excerpt.rs3')
+    expected = t('interpretation', [
+        ('N', [
+            ('circumstance', [
+                ('S', 'eins'),
+                ('N', [
+                    ('contrast', [
+                        ('N', 'zwei'),
+                        ('N', [
+                            ('cause', [
+                                ('N', 'drei'),
+                                ('S', 'vier')
+                            ])
+                        ])
+                    ])
+                ])
+            ])
+        ]),
+        ('S', 'fuenf')
+    ])
+    
+    assert expected == produced.tree
+
+
 @pytest.mark.xfail
 def test_parse_complete_pcc():
     okay = 0.0
