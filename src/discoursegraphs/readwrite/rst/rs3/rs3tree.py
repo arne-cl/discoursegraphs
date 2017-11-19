@@ -126,10 +126,11 @@ class RSTTree(object):
                 # a multinuc relation
                 subtrees = [self.dt(start_node=c, debug=debug)
                             for c in self.child_dict[elem_id]]
+                sorted_subtrees = self.sort_subtrees(*subtrees)
                 first_child_id = self.child_dict[elem_id][0]
                 subtrees_relname = self.elem_dict[first_child_id]['relname']
 
-                subtree = t(subtrees_relname, subtrees, debug=debug, root_id=elem_id)
+                subtree = t(subtrees_relname, sorted_subtrees, debug=debug, root_id=elem_id)
 
             return t('S', subtree, debug=debug, root_id=elem_id)
 
