@@ -38,6 +38,7 @@ class TooFewChildrenError(ValueError):
 class RSTTree(object):
     """An RSTTree is a DGParentedTree representation of an .rs3 file."""
     def __init__(self, rs3_file, word_wrap=0, debug=False):
+        self.filepath = rs3_file
         self.child_dict, self.elem_dict, self.edus = get_rs3_data(rs3_file, word_wrap=word_wrap)
         self.edu_set = set(self.edus)
         self.tree = self.dt(debug=debug)
