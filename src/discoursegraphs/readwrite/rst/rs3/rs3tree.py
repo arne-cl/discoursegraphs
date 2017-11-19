@@ -135,10 +135,6 @@ class RSTTree(object):
 
         elif elem['reltype'] == 'multinuc':
             # this elem is one of several Ns in a multinuc relation
-
-    #             assert len(child_dict[elem_id]) == 1
-    #             child_id = child_dict[elem_id][0]
-    #             subtree = dt(child_dict, elem_dict, ordered_edus, start_node=child_id, debug=debug)
             subtrees = [self.dt(start_node=c, debug=debug)
                         for c in self.child_dict[elem_id]]
             return t('N', subtrees, debug=debug, root_id=elem_id)
