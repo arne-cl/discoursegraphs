@@ -12,11 +12,14 @@ from discoursegraphs import t
 from discoursegraphs.readwrite.rst.rs3 import RSTTree
 import discoursegraphs as dg
 
+RS3TREE_DIR = os.path.join(dg.DATA_ROOT_DIR, 'rs3tree')
+PCC_RS3_DIR = os.path.join(dg.DATA_ROOT_DIR,
+                           'potsdam-commentary-corpus-2.0.0', 'rst')
 
-def example2tree(rs3tree_example_filename):
+
+def example2tree(rs3tree_example_filename, rs3tree_dir=RS3TREE_DIR):
     """Return the absolute path of an example file."""
-    filepath = os.path.join(dg.DATA_ROOT_DIR, 'rs3tree',
-                            rs3tree_example_filename)
+    filepath = os.path.join(rs3tree_dir, rs3tree_example_filename)
     return RSTTree(filepath)
 
 
