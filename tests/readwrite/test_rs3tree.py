@@ -24,27 +24,27 @@ def test_segments_only_trees():
     """Files without a single root must get a virtual one."""
     # minimal case: file without any segments
     produced = example2tree("empty.rs3")
-    expected = t("")
+    expected = t("", [])
 
     assert expected == produced.tree
 
     # one segment only
     produced = example2tree('only-one-segment.rs3')
-    expected = t("foo")
+    expected = t("N", ["foo"])
 
     assert expected == produced.tree
 
     # two segments w/out a root
     produced = example2tree("foo-bar-only-segments.rs3")
     expected = t("virtual-root",
-                 [("N", "foo"), ("N", "bar")])
+                 [("N", ["foo"]), ("N", ["bar"])])
 
     assert expected == produced.tree
 
     # three segments w/out a root
     produced = example2tree('eins-zwei-drei-only-segments.rs3')
     expected = t("virtual-root",
-                 [("N", "eins"), ("N", "zwei"), ("N", "drei")])
+                 [("N", ["eins"]), ("N", ["zwei"]), ("N", ["drei"])])
 
     assert expected == produced.tree
 
@@ -52,29 +52,29 @@ def test_segments_only_trees():
 def test_single_nucsat_relation():
     produced = example2tree("foo-bar-circ-foo-to-bar.rs3")
     expected = t("circumstance", [
-        ("S", "foo"),
-        ("N", "bar")])
+        ("S", ["foo"]),
+        ("N", ["bar"])])
 
     assert expected == produced.tree
 
     produced = example2tree("foo-bar-elab-foo-to-bar.rs3")
     expected = t("elaboration", [
-        ("S", "foo"),
-        ("N", "bar")])
+        ("S", ["foo"]),
+        ("N", ["bar"])])
 
     assert expected == produced.tree
 
     produced = example2tree("foo-bar-circ-bar-to-foo.rs3")
     expected = t("circumstance", [
-        ("N", "foo"),
-        ("S", "bar")])
+        ("N", ["foo"]),
+        ("S", ["bar"])])
 
     assert expected == produced.tree
 
     produced = example2tree("foo-bar-elab-bar-to-foo.rs3")
     expected = t("elaboration", [
-        ("N", "foo"),
-        ("S", "bar")])
+        ("N", ["foo"]),
+        ("S", ["bar"])])
 
     assert expected == produced.tree
 
@@ -84,8 +84,8 @@ def test_single_nucsat_relation_topspan():
     produced1 = example2tree("foo-bar-circ-foo-to-bar-plus-top-span.rs3")
     produced2 = example2tree("foo-bar-circ-foo-to-bar.rs3")
     expected = t("circumstance", [
-        ("S", "foo"),
-        ("N", "bar")])
+        ("S", ["foo"]),
+        ("N", ["bar"])])
     assert expected == produced1.tree == produced2.tree
 
 
@@ -94,8 +94,8 @@ def test_single_multinuc_relation_topspan():
     produced1 = example2tree("foo-bar-foo-joint-bar.rs3")
     produced2 = example2tree("foo-bar-foo-joint-bar-plus-top-span.rs3")
     expected = t("joint", [
-        ("N", "foo"),
-        ("N", "bar")])
+        ("N", ["foo"]),
+        ("N", ["bar"])])
 
     assert expected == produced1.tree == produced2.tree
 
@@ -103,23 +103,23 @@ def test_single_multinuc_relation_topspan():
 def test_single_multinuc_relation():
     produced = example2tree("foo-bar-foo-joint-bar.rs3")
     expected = t("joint", [
-        ("N", "foo"),
-        ("N", "bar")])
+        ("N", ["foo"]),
+        ("N", ["bar"])])
 
     assert expected == produced.tree
 
     produced = example2tree("foo-bar-foo-conj-bar.rs3")
     expected = t("conjunction", [
-        ("N", "foo"),
-        ("N", "bar")])
+        ("N", ["foo"]),
+        ("N", ["bar"])])
 
     assert expected == produced.tree
 
     produced = example2tree('eins-zwei-drei-(joint-eins-and-zwei-and-drei).rs3')
     expected = t("joint", [
-        ("N", "eins"),
-        ("N", "zwei"),
-        ("N", "drei")])
+        ("N", ["eins"]),
+        ("N", ["zwei"]),
+        ("N", ["drei"])])
 
     assert expected == produced.tree
 
@@ -129,9 +129,9 @@ def test_nested_nucsat_relation():
     expected = t("circumstance", [
         ("N", [
             ("circumstance", [
-                ("S", "eins"),
-                ("N", "zwei")])]),
-        ("S", "drei")])
+                ("S", ["eins"]),
+                ("N", ["zwei"])])]),
+        ("S", ["drei"])])
 
     assert expected == produced.tree
 
@@ -139,9 +139,9 @@ def test_nested_nucsat_relation():
     expected = t("circumstance", [
         ("N", [
             ("circumstance", [
-                ("N", "eins"),
-                ("S", "zwei")])]),
-        ("S", "drei")])
+                ("N", ["eins"]),
+                ("S", ["zwei"])])]),
+        ("S", ["drei"])])
 
     assert expected == produced.tree
 
@@ -149,9 +149,9 @@ def test_nested_nucsat_relation():
     expected = t("circumstance", [
         ("S", [
             ("circumstance", [
-                ("N", "eins"),
-                ("S", "zwei")])]),
-        ("N", "drei")])
+                ("N", ["eins"]),
+                ("S", ["zwei"])])]),
+        ("N", ["drei"])])
 
     assert expected == produced.tree
 
@@ -159,9 +159,9 @@ def test_nested_nucsat_relation():
     expected = t("circumstance", [
         ("S", [
             ("circumstance", [
-                ("S", "eins"),
-                ("N", "zwei")])]),
-        ("N", "drei")])
+                ("S", ["eins"]),
+                ("N", ["zwei"])])]),
+        ("N", ["drei"])])
 
     assert expected == produced.tree
 
@@ -169,11 +169,11 @@ def test_nested_nucsat_relation():
 def test_nested_nucsat_multinuc_relation():
     produced = example2tree('eins-zwei-drei-(circ-eins-to-(joint-zwei-and-drei).rs3')
     expected = t("circumstance", [
-        ("S", "eins"),
+        ("S", ["eins"]),
         ("N", [
             ("joint", [
-                ("N", "zwei"),
-                ("N", "drei")])])])
+                ("N", ["zwei"]),
+                ("N", ["drei"])])])])
 
     assert expected == produced.tree
 
@@ -181,21 +181,21 @@ def test_nested_nucsat_multinuc_relation():
     expected = t("circumstance", [
         ("N", [
             ("joint", [
-                ("N", "eins"),
-                ("N", "zwei")
+                ("N", ["eins"]),
+                ("N", ["zwei"])
             ])
         ]),
-        ("S", "drei")])
+        ("S", ["drei"])])
 
     assert expected == produced.tree
 
     produced = example2tree('eins-zwei-drei-(circ-eins-from-(joint-zwei-and-drei).rs3')
     expected = t("circumstance", [
-        ("N", "eins"),
+        ("N", ["eins"]),
         ("S", [
             ("joint", [
-                ("N", "zwei"),
-                ("N", "drei")])])])
+                ("N", ["zwei"]),
+                ("N", ["drei"])])])])
 
     assert expected == produced.tree
 
@@ -203,21 +203,21 @@ def test_nested_nucsat_multinuc_relation():
     expected = t("circumstance", [
         ("S", [
             ("joint", [
-                ("N", "eins"),
-                ("N", "zwei")
+                ("N", ["eins"]),
+                ("N", ["zwei"])
             ])
         ]),
-        ("N", "drei")])
+        ("N", ["drei"])])
 
     assert expected == produced.tree
 
     produced = example2tree('eins-zwei-drei-(elab-eins-from-(joint-zwei-and-drei).rs3')
     expected = t('elaboration', [
-        ("N", "eins"),
+        ("N", ["eins"]),
         ("S", [
             ("joint", [
-                ("N", "zwei"),
-                ("N", "drei")
+                ("N", ["zwei"]),
+                ("N", ["drei"])
             ])
         ])
     ])
@@ -233,11 +233,11 @@ def test_single_sns_schema_topspan():
     expected = t('elaboration', [
         ('N', [
             ('elaboration', [
-                ('S', 'eins'),
-                ('N', 'zwei')
+                ('S', ['eins']),
+                ('N', ['zwei'])
             ])
         ]),
-        ('S', 'drei')
+        ('S', ['drei'])
     ])
 
     assert expected == produced1.tree == produced2.tree
@@ -248,21 +248,21 @@ def test_nested_sns_schema():
     expected = t('interpretation', [
         ('N', [
             ('circumstance', [
-                ('S', 'eins'),
+                ('S', ['eins']),
                 ('N', [
                     ('contrast', [
-                        ('N', 'zwei'),
+                        ('N', ['zwei']),
                         ('N', [
                             ('cause', [
-                                ('N', 'drei'),
-                                ('S', 'vier')
+                                ('N', ['drei']),
+                                ('S', ['vier'])
                             ])
                         ])
                     ])
                 ])
             ])
         ]),
-        ('S', 'fuenf')
+        ('S', ['fuenf'])
     ])
     
     assert expected == produced.tree
@@ -294,11 +294,11 @@ def test_single_nss_schema_topspan():
     expected = t('background', [
         ('N', [
             ('elaboration', [
-                ('N', 'eins'),
-                ('S', 'zwei')
+                ('N', ['eins']),
+                ('S', ['zwei'])
             ])
         ]),
-        ('S', 'drei')
+        ('S', ['drei'])
     ])
 
     assert expected == produced1.tree == produced2.tree
@@ -311,13 +311,13 @@ def test_nested_nss_schema_topspan():
     expected = t('background', [
         ('N', [
             ('elaboration', [
-                ('N', 'eins'),
-                ('S', 'zwei')
+                ('N', ['eins']),
+                ('S', ['zwei'])
             ])]),
         ('S', [
             ('joint', [
-                ('N', 'drei'),
-                ('N', 'vier')
+                ('N', ['drei']),
+                ('N', ['vier'])
             ])
         ])
     ])

@@ -106,7 +106,7 @@ class RSTTree(object):
             # nodes part of a multinuc relation called 'virtual-root'.
             root_subtrees = [self.dt(start_node=root_id, debug=debug)
                              for root_id in root_nodes]
-            return t('virtual-root', [('N', sub) for sub in root_subtrees])
+            return t('virtual-root', root_subtrees)
         else:
             return t('')
 
@@ -230,24 +230,24 @@ class RSTTree(object):
             assert elem_id not in self.child_dict, \
                 "A satellite segment (%s) should not have children: %s" \
                     % (elem_id, self.child_dict[elem_id])
-            return t('S', elem['text'], debug=debug, root_id=elem_id)
+            return t('S', [elem['text']], debug=debug, root_id=elem_id)
 
         elif elem['reltype'] == 'multinuc':
             # this elem is one of several Ns in a multinuc relation
             assert elem_id not in self.child_dict, \
                 "A multinuc segment (%s) should not have children: %s" \
                     % (elem_id, self.child_dict[elem_id])
-            return t('N', elem['text'], debug=debug, root_id=elem_id)
+            return t('N', [elem['text']], debug=debug, root_id=elem_id)
 
         else:
             # this segment is either an N or an unconnected root node
+            # (which we will convert into an N as well)
+            nuc_tree = t('N', [elem['text']], debug=debug, root_id=elem_id)
+
             if not self.child_dict.has_key(elem_id):
                 # a root segment without any children (e.g. a headline in PCC)
                 assert elem['nuclearity'] == 'root'
-                return t(elem['text'], debug=debug, root_id=elem_id)
-
-            # this segment is a nucleus
-            nuc_tree = t('N', elem['text'], debug=debug, root_id=elem_id)
+                return nuc_tree
 
             if len(self.child_dict[elem_id]) == 1:
                 # this segment is the N in an N-S relation
