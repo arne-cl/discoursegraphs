@@ -361,3 +361,99 @@ def test_nested_nss_schema_topspan():
     assert produced1.tree == produced2.tree
     assert expected == produced1.tree == produced2.tree
 
+def test_pcc_3367():
+    produced = example2tree('maz-3367-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
+
+    list_2_7 = ('list', [
+        ('N', ['2']),
+        ('N', ['3']),
+        ('N', ['4']),
+        ('N', ['5']),
+        ('N', ['6']),
+        ('N', ['7']),
+    ])
+
+    evidence_2_9 = ('evidence', [
+        ('S', [list_2_7]),
+        ('N', [
+            ('concession', [
+                ('S', ['8']),
+                ('N', ['9']),
+            ])
+        ])
+    ])
+
+    interpretation_2_12 = ('interpretation', [
+        ('S', [evidence_2_9]),
+        ('N', [
+            ('evaluation-s', [
+                ('N', ['10']),
+                ('S', [
+                    ('conjunction', [
+                        ('N', ['11']),
+                        ('N', ['12'])
+                    ])
+                ])
+            ])
+        ])
+    ])
+
+    eval_13_14 = ('evaluation-n', [
+        ('S', ['13']),
+        ('N', ['14'])
+    ])
+
+    anti_15_16 = ('antithesis', [
+        ('S', ['15']),
+        ('N', ['16'])
+    ])
+
+    list_15_17 = t('list', [
+        ('N', [anti_15_16]),
+        ('N', ['17'])
+    ])
+
+    cond_18_19 = ('condition', [
+        ('S', ['18']),
+        ('N', ['19'])
+    ])
+
+    reason_20_23 = ('reason', [
+        ('S', ['20']),
+        ('N', [
+            ('reason', [
+                ('N', ['21']),
+                ('S', [
+                    ('conjunction', [
+                        ('N', ['22']),
+                        ('N', ['23'])
+                    ])
+                ])
+            ])
+        ])
+    ])
+
+    inner_tree_18_23 = ('evidence', [
+        ('N', [cond_18_19]),
+        ('S', [reason_20_23])
+    ])
+
+    second_tree_15_23 = ('evidence', [
+        ('S', [list_15_17]),
+        ('N', [inner_tree_18_23])
+    ])
+
+    third_tree_13_23 = ('evidence', [
+        ('S', [eval_13_14]),
+        ('N', [second_tree_15_23])
+    ])
+
+    expected = t('background', [
+        ('S', [interpretation_2_12]),
+        ('N', [third_tree_13_23])
+    ])
+
+    assert produced.tree.leaves() == [
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+        '11', '12', '13', '14', '15', '16', '17', '18', '19',
+        '20', '21', '22', '23']
