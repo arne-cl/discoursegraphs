@@ -41,6 +41,8 @@ class RSTTree(object):
         self.filepath = rs3_file
         self.child_dict, self.elem_dict, self.edus = get_rs3_data(rs3_file, word_wrap=word_wrap)
         self.edu_set = set(self.edus)
+        self.edu_strings = [self.elem_dict[edu_id]['text']
+                            for edu_id in self.edus]
         self.tree = self.dt(debug=debug)
 
     def _repr_png_(self):
@@ -278,9 +280,9 @@ class RSTTree(object):
         Returns 'one_sided' iff the relation is in N-S-S or S-S-N order
         or 'two_sided' iff the relation is in S-N-S order.
         """
-        nuc_pos = self.get_position(nuc_tree.root_id)
-        sat1_pos = self.get_position(sat1_tree.root_id)
-        sat2_pos = self.get_position(sat2_tree.root_id)
+        nuc_pos = self.get_linear_position(nuc_tree)
+        sat1_pos = self.get_linear_position(sat1_tree)
+        sat2_pos = self.get_linear_position(sat2_tree)
 
         if nuc_pos == sat1_pos == sat2_pos:
             raise NotImplementedError("Unexpected RST schema")
@@ -299,9 +301,9 @@ class RSTTree(object):
         satellites, which are both either on the left or on the right of it)
         into a regular RST subtree.
         """
-        nuc_pos = self.get_position(nuc_tree.root_id)
-        sat1_pos = self.get_position(sat1_tree.root_id)
-        sat2_pos = self.get_position(sat2_tree.root_id)
+        nuc_pos = self.get_linear_position(nuc_tree)
+        sat1_pos = self.get_linear_position(sat1_tree)
+        sat2_pos = self.get_linear_position(sat2_tree)
 
         if abs(nuc_pos - sat1_pos) < abs(nuc_pos - sat2_pos):
             inner_sat_tree = sat1_tree
@@ -325,8 +327,8 @@ class RSTTree(object):
         TODO: add proper documentation
         """
         if sat1_tree.height() == sat2_tree.height():
-            sat1_pos = self.get_position(sat1_tree.root_id)
-            sat2_pos = self.get_position(sat2_tree.root_id)
+            sat1_pos = self.get_linear_position(sat1_tree)
+            sat2_pos = self.get_linear_position(sat2_tree)
 
             if sat1_pos < sat2_pos:
                 more_important_sat = sat1_tree
@@ -351,20 +353,16 @@ class RSTTree(object):
 
         return self.sorted_nucsat_tree(inner_tree, less_important_sat)
 
-    def get_position(self, node_id):
-        """Get the linear position of a subtree (of type DGParentedTree,
-        identified by its node ID) in this RSTTree.
-        """
-        if node_id in self.edu_set:
-            return self.edus.index(node_id)
-
-        return min(self.get_position(child_node_id)
-                   for child_node_id in self.child_dict[node_id])
+    def get_linear_position(self, subtree):
+        first_leaf_text = subtree.leaves()[0]
+        return self.edu_strings.index(first_leaf_text)
 
     def sort_subtrees(self, *subtrees):
         """sort the given subtrees (of type DGParentedTree) based on their
-        linear position in this RSTTree. If both subtrees have the same
-        linear position in the RSTTree (i.e. one is a child of the other)
+        linear position in this RSTTree. If two subtrees have the same
+        linear position in the RSTTree (i.e. one is a child of the other),
+        they are sorted by their height in reverse order (i.e. the child
+        appears before its parent).
         """
         subtrees_desc_height = sorted(subtrees,
                                       key=methodcaller('node_height', self),
