@@ -22,6 +22,139 @@ def example2tree(rs3tree_example_filename, rs3tree_dir=RS3TREE_DIR):
     filepath = os.path.join(rs3tree_dir, rs3tree_example_filename)
     return RSTTree(filepath)
 
+"""
+group2tree('38'):
+    else: # elem['group_type'] == 'span'
+        if len(self.child_dict[elem_id]) == 1:
+            return dt('37')
+
+dt('37'):
+    group2tree('37'):
+        else:
+             elif len(self.child_dict[elem_id]) == 2:
+                sat_subtree = self.dt(start_node=sat_id='29')
+
+                nuc_tree = dt('32')
+
+dt('32'):
+    group2tree('32'):
+        else:
+            elif len(self.child_dict[elem_id]) > 2:
+                nuc_subtree = self.dt(start_node=children['nucleus'][0])
+
+dt('19'):
+    segment2tree('19'):
+        else: # this segment is either an N or an unconnected root node
+            nuc_tree = t('N', [elem['text']], debug=self.debug, root_id=elem_id) !!!
+
+            if len(self.child_dict[elem_id]) == 1:
+                sat_subtree = self.dt(start_node=sat_id='18')
+"""
+def test_pcc_3367():
+    import pudb; pudb.set_trace()
+    produced = example2tree('maz-3367-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
+
+    list_2_7 = ('list', [
+        ('N', ['2']),
+        ('N', ['3']),
+        ('N', ['4']),
+        ('N', ['5']),
+        ('N', ['6']),
+        ('N', ['7']),
+    ])
+
+    evidence_2_9 = ('evidence', [
+        ('S', [list_2_7]),
+        ('N', [
+            ('concession', [
+                ('S', ['8']),
+                ('N', ['9']),
+            ])
+        ])
+    ])
+
+    interpretation_2_12 = ('interpretation', [
+        ('S', [evidence_2_9]),
+        ('N', [
+            ('evaluation-s', [
+                ('N', ['10']),
+                ('S', [
+                    ('conjunction', [
+                        ('N', ['11']),
+                        ('N', ['12'])
+                    ])
+                ])
+            ])
+        ])
+    ])
+
+    eval_13_14 = ('evaluation-n', [
+        ('S', ['13']),
+        ('N', ['14'])
+    ])
+
+    anti_15_16 = ('antithesis', [
+        ('S', ['15']),
+        ('N', ['16'])
+    ])
+
+    list_15_17 = t('list', [
+        ('N', [anti_15_16]),
+        ('N', ['17'])
+    ])
+
+    cond_18_19 = ('condition', [
+        ('S', ['18']),
+        ('N', ['19'])
+    ])
+
+    reason_20_23 = ('reason', [
+        ('S', ['20']),
+        ('N', [
+            ('reason', [
+                ('N', ['21']),
+                ('S', [
+                    ('conjunction', [
+                        ('N', ['22']),
+                        ('N', ['23'])
+                    ])
+                ])
+            ])
+        ])
+    ])
+
+    inner_tree_18_23 = ('evidence', [
+        ('N', [cond_18_19]),
+        ('S', [reason_20_23])
+    ])
+
+    second_tree_15_23 = ('evidence', [
+        ('S', [list_15_17]),
+        ('N', [inner_tree_18_23])
+    ])
+
+    third_tree_13_23 = ('evidence', [
+        ('S', [eval_13_14]),
+        ('N', [second_tree_15_23])
+    ])
+
+    background_2_23 = ('background', [
+        ('S', [interpretation_2_12]),
+        ('N', [third_tree_13_23])
+    ])
+
+    expected = t('virtual-root', [
+        ('N', ['1']),
+        ('S', [background_2_23])
+    ])
+
+    assert produced.tree.leaves() == [
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+        '11', '12', '13', '14', '15', '16', '17', '18', '19',
+        '20', '21', '22', '23']
+
+    assert expected == produced.tree
+
 
 def test_segments_only_trees():
     """Files without a single root must get a virtual one."""
@@ -300,25 +433,6 @@ def test_nested_sns_schema():
     assert expected == produced.tree
 
 
-@pytest.mark.xfail
-def test_parse_complete_pcc():
-    okay = 0.0
-    fail = 0.0
-    for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
-        try:
-            x = dg.readwrite.RSTTree(rfile)
-            okay += 1
-        except Exception as e:
-            #~ print i, os.path.basename(rfile), "FAIL"
-            #~ print "\t", e
-            #~ import pudb; pudb.set_trace()
-            #~ x = dg.readwrite.RSTTree(rfile)
-            fail += 1
-
-    print "{}% success".format(okay / (okay+fail) * 100)
-    assert okay == 176
-
-
 def test_single_nss_schema_topspan():
     """It doesn't matter if there's a span above a N-S-S schema."""
     produced1 = example2tree('n-s-s-schema-eins-zwei-drei.rs3')
@@ -361,105 +475,65 @@ def test_nested_nss_schema_topspan():
     assert produced1.tree == produced2.tree
     assert expected == produced1.tree == produced2.tree
 
+
+"""
+children = defaultdict(list)
+for child_id in self.child_dict[elem_id]:
+    children[self.elem_dict[child_id]['nuclearity']].append(child_id)
+
+nuc_subtree = self.dt(start_node=children['nucleus'], debug=debug)
+nuc_tree = t('N', nuc_subtree, debug=debug, root_id=elem_id)
+
+
+group2tree('32'):
+    else: 3 span group nucleus
+
+            >>> elem
+            {'nuclearity': 'nucleus', 'parent': '33',
+             'element_type': 'group', 'reltype': 'span',
+             'relname': 'span', 'group_type': 'span'}
+
+        elif len(self.child_dict[elem_id]) > 2:
+            raise TooManyChildrenError
+
+                >>> self.child_dict[elem_id] # '32'
+                ['26', '28', '31']
+
+                >>> sat26_tree = self.dt(start_node='26', debug=debug)
+                >>> sat26_tree.pretty_print()
+                (S, interpretation ... "Reste vom Sonntag ... teuer zu stehen")
+
+                >>> sat28_tree.pretty_print()
+                (S, reason ... "Entsorgung nur noch ... Appelle umsonst") # EDU 17-19, relation restatement
+
+                >>> sat31_tree.pretty_print() # no 'N' or 'S' as root
+                (reason, [N cause, S e-elab] ... "Denn angesichts ... dringend benötigt"
+
+                >>> children
+                defaultdict(list, {'nucleus': ['31'], 'satellite': ['26', '28']})
+
+
+"""
 @pytest.mark.xfail
 def test_pcc_8501():
     produced = example2tree('maz-8509.rs3', rs3tree_dir=PCC_RS3_DIR)
     assert 1 == 0
 
+
 @pytest.mark.xfail
-def test_pcc_3367():
-    produced = example2tree('maz-3367-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
+def test_parse_complete_pcc():
+    okay = 0.0
+    fail = 0.0
+    for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
+        try:
+            x = dg.readwrite.RSTTree(rfile)
+            okay += 1
+        except Exception as e:
+            #~ print i, os.path.basename(rfile), "FAIL"
+            #~ print "\t", e
+            #~ import pudb; pudb.set_trace()
+            #~ x = dg.readwrite.RSTTree(rfile)
+            fail += 1
 
-    list_2_7 = ('list', [
-        ('N', ['2']),
-        ('N', ['3']),
-        ('N', ['4']),
-        ('N', ['5']),
-        ('N', ['6']),
-        ('N', ['7']),
-    ])
-
-    evidence_2_9 = ('evidence', [
-        ('S', [list_2_7]),
-        ('N', [
-            ('concession', [
-                ('S', ['8']),
-                ('N', ['9']),
-            ])
-        ])
-    ])
-
-    interpretation_2_12 = ('interpretation', [
-        ('S', [evidence_2_9]),
-        ('N', [
-            ('evaluation-s', [
-                ('N', ['10']),
-                ('S', [
-                    ('conjunction', [
-                        ('N', ['11']),
-                        ('N', ['12'])
-                    ])
-                ])
-            ])
-        ])
-    ])
-
-    eval_13_14 = ('evaluation-n', [
-        ('S', ['13']),
-        ('N', ['14'])
-    ])
-
-    anti_15_16 = ('antithesis', [
-        ('S', ['15']),
-        ('N', ['16'])
-    ])
-
-    list_15_17 = t('list', [
-        ('N', [anti_15_16]),
-        ('N', ['17'])
-    ])
-
-    cond_18_19 = ('condition', [
-        ('S', ['18']),
-        ('N', ['19'])
-    ])
-
-    reason_20_23 = ('reason', [
-        ('S', ['20']),
-        ('N', [
-            ('reason', [
-                ('N', ['21']),
-                ('S', [
-                    ('conjunction', [
-                        ('N', ['22']),
-                        ('N', ['23'])
-                    ])
-                ])
-            ])
-        ])
-    ])
-
-    inner_tree_18_23 = ('evidence', [
-        ('N', [cond_18_19]),
-        ('S', [reason_20_23])
-    ])
-
-    second_tree_15_23 = ('evidence', [
-        ('S', [list_15_17]),
-        ('N', [inner_tree_18_23])
-    ])
-
-    third_tree_13_23 = ('evidence', [
-        ('S', [eval_13_14]),
-        ('N', [second_tree_15_23])
-    ])
-
-    expected = t('background', [
-        ('S', [interpretation_2_12]),
-        ('N', [third_tree_13_23])
-    ])
-
-    assert produced.tree.leaves() == [
-        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-        '11', '12', '13', '14', '15', '16', '17', '18', '19',
-        '20', '21', '22', '23']
+    print "{}% success".format(okay / (okay+fail) * 100)
+    assert okay == 176
