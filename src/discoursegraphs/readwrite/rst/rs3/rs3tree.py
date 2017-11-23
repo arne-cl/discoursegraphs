@@ -6,7 +6,7 @@
 
 from collections import defaultdict
 import textwrap
-from operator import methodcaller
+from operator import itemgetter, methodcaller
 
 from lxml import etree
 
@@ -218,9 +218,20 @@ class RSTTree(object):
                     return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
 
                 elif len(self.child_dict[elem_id]) > 2:
-                    raise TooManyChildrenError(
-                        "A span group ('%s') should not have > 2 children: %s" \
-                            % (elem_id, self.child_dict[elem_id]))
+                    children = defaultdict(list)
+                    for child_id in self.child_dict[elem_id]:
+                        children[self.elem_dict[child_id]['nuclearity']].append(child_id)
+
+                    assert len(children['nucleus']) == 1
+
+                    nuc_subtree = self.dt(start_node=children['nucleus'][0])
+                    nuc_tree = t('N', nuc_subtree, debug=self.debug, root_id=elem_id)
+
+                    sat_subtrees = [self.dt(start_node=sat_child_id)
+                                    for sat_child_id in children['satellite']]
+
+                    return self.order_schema(nuc_tree, sat_subtrees)
+
                 else: #len(child_dict[elem_id]) == 0
                     raise TooFewChildrenError(
                         "A span group ('%s)' should have at least 1 child: %s" \
@@ -275,6 +286,60 @@ class RSTTree(object):
 
             else:
                 raise NotImplementedError("Segment has more than two children")
+
+    def order_schema(self, nuc_tree, sat_trees):
+        nuc_pos = self.get_linear_position(nuc_tree)
+        sat_tree_pos_tuples = [(sat_tree, self.get_linear_position(sat_tree))
+                               for sat_tree in sat_trees]
+        sat_tree_pos_tuples = sorted(sat_tree_pos_tuples, key=itemgetter(1))
+
+        assert not any(
+            [sat_pos == nuc_pos
+             for (sat_tree, sat_pos) in sat_tree_pos_tuples]), \
+             "Subtrees can't have the same linear positions."
+
+        sat_trees_prec_nuc = []
+        sat_trees_succ_nuc = []
+        for (sat_tree, sat_pos) in sat_tree_pos_tuples:
+            if sat_pos < nuc_pos:
+                sat_trees_prec_nuc.append((sat_tree, sat_pos))
+            else:
+                sat_trees_succ_nuc.append((sat_tree, sat_pos))
+
+        # A N is combined with its preceeding satellites in
+        # this way (nuc-3 (nuc-2 (nuc-1 nuc))), while succeeding
+        # satellites are combined like this: (((nuc nuc+1) nuc+2) nuc+3).
+        # Therefore, it is easier to reverse the list of preceeding
+        # satellites for combining N with all satellites.
+        sat_trees_prec_nuc.reverse()
+
+        prec_heights = [t.height() for (t, pos) in sat_trees_prec_nuc]
+        succ_heights = [t.height() for (t, pos) in sat_trees_succ_nuc]
+
+        max_height_prec = max(prec_heights) if prec_heights else 0
+        max_height_succ = max(succ_heights) if succ_heights else 0
+
+        if max_height_prec >= max_height_succ:
+            return self.convert_schema(
+                (nuc_tree, nuc_pos), sat_trees_prec_nuc, sat_trees_succ_nuc)
+        else:
+            return self.convert_schema(
+                (nuc_tree, nuc_pos), sat_trees_succ_nuc, sat_trees_prec_nuc)
+
+    def convert_schema(self, nuc_tuple, inner_sat_tuples, outer_sat_tuples):
+        """subtrees are represented as (tree, linear tree position) tuples"""
+        nuc_tree, nuc_pos = nuc_tuple
+
+        for sat_tuples in (inner_sat_tuples, outer_sat_tuples):
+            for sat_tree, sat_pos in sat_tuples:
+                relname = self.elem_dict[sat_tree.root_id]['relname']
+                if sat_pos < nuc_pos:
+                    ordered_trees = [sat_tree, nuc_tree]
+                else:
+                    ordered_trees = [nuc_tree, sat_tree]
+                nuc_tree = t(relname, ordered_trees, root_id=nuc_tree.root_id)
+
+        return nuc_tree
 
     def get_schema_type(self, nuc_tree, sat1_tree, sat2_tree):
         """Determine the type of an RST schema.
