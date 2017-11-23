@@ -361,6 +361,12 @@ def test_nested_nss_schema_topspan():
     assert produced1.tree == produced2.tree
     assert expected == produced1.tree == produced2.tree
 
+@pytest.mark.xfail
+def test_pcc_8501():
+    produced = example2tree('maz-8509.rs3', rs3tree_dir=PCC_RS3_DIR)
+    assert 1 == 0
+
+@pytest.mark.xfail
 def test_pcc_3367():
     produced = example2tree('maz-3367-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
 
