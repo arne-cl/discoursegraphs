@@ -501,6 +501,14 @@ def get_rs3_data(rs3_file, word_wrap=0):
     return children, elements, ordered_edus
 
 
+def n(children):
+    return ('N', children)
+
+
+def s(children):
+    return ('S', children)
+
+
 def n_wrap(tree, debug=False, root_id=None):
     root_label = tree.label()
 
