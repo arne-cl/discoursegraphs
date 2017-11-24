@@ -10,7 +10,7 @@ from operator import itemgetter, methodcaller
 
 from lxml import etree
 
-from discoursegraphs.readwrite.tree import t
+from discoursegraphs.readwrite.tree import t, p, debug_root_label
 from discoursegraphs.readwrite.rst.rs3 import extract_relationtypes
 
 
@@ -109,7 +109,9 @@ class RSTTree(object):
             # nodes part of a multinuc relation called 'virtual-root'.
             root_subtrees = [self.dt(start_node=root_id)
                              for root_id in root_nodes]
-            return t('virtual-root', root_subtrees, debug=self.debug)
+            # ensure that each subtree is marked as a nucleus
+            nuc_subtrees = [n_wrap(st, debug=self.debug) for st in root_subtrees]
+            return t('virtual-root', nuc_subtrees, debug=self.debug)
         else:
             return t('')
 
@@ -213,7 +215,7 @@ class RSTTree(object):
                     sat_subtree = self.dt(start_node=sat_id)
 
                     nuc_subtree = self.dt(start_node=children['nucleus'])
-                    nuc_tree = t('N', nuc_subtree, debug=self.debug, root_id=elem_id)
+                    nuc_tree = n_wrap(nuc_subtree, debug=self.debug, root_id=elem_id)
 
                     return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
 
@@ -337,7 +339,7 @@ class RSTTree(object):
                     ordered_trees = [sat_tree, nuc_tree]
                 else:
                     ordered_trees = [nuc_tree, sat_tree]
-                nuc_tree = t(relname, ordered_trees, root_id=nuc_tree.root_id)
+                nuc_tree = t('N', [(relname, ordered_trees)], root_id=nuc_tree.root_id)
 
         return nuc_tree
 
@@ -499,11 +501,15 @@ def get_rs3_data(rs3_file, word_wrap=0):
     return children, elements, ordered_edus
 
 
+def n_wrap(tree, debug=False, root_id=None):
+    root_label = tree.label()
 
+    if debug is True:
+        expected_root_label = debug_root_label('N', tree.root_id)
+    else:
+        expected_root_label = 'N'
 
-
-
-
-
-
-
+    if root_label == expected_root_label:
+        return tree
+    else:
+        return t('N', [tree], debug=debug, root_id=root_id)

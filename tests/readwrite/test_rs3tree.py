@@ -9,6 +9,7 @@ import os
 import pytest
 
 from discoursegraphs import t
+from discoursegraphs.readwrite.tree import p
 from discoursegraphs.readwrite.rst.rs3 import RSTTree
 import discoursegraphs as dg
 
@@ -22,36 +23,8 @@ def example2tree(rs3tree_example_filename, rs3tree_dir=RS3TREE_DIR):
     filepath = os.path.join(rs3tree_dir, rs3tree_example_filename)
     return RSTTree(filepath)
 
-"""
-group2tree('38'):
-    else: # elem['group_type'] == 'span'
-        if len(self.child_dict[elem_id]) == 1:
-            return dt('37')
 
-dt('37'):
-    group2tree('37'):
-        else:
-             elif len(self.child_dict[elem_id]) == 2:
-                sat_subtree = self.dt(start_node=sat_id='29')
-
-                nuc_tree = dt('32')
-
-dt('32'):
-    group2tree('32'):
-        else:
-            elif len(self.child_dict[elem_id]) > 2:
-                nuc_subtree = self.dt(start_node=children['nucleus'][0])
-
-dt('19'):
-    segment2tree('19'):
-        else: # this segment is either an N or an unconnected root node
-            nuc_tree = t('N', [elem['text']], debug=self.debug, root_id=elem_id) !!!
-
-            if len(self.child_dict[elem_id]) == 1:
-                sat_subtree = self.dt(start_node=sat_id='18')
-"""
 def test_pcc_3367():
-    import pudb; pudb.set_trace()
     produced = example2tree('maz-3367-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
 
     list_2_7 = ('list', [
@@ -145,14 +118,13 @@ def test_pcc_3367():
 
     expected = t('virtual-root', [
         ('N', ['1']),
-        ('S', [background_2_23])
+        ('N', [background_2_23])
     ])
 
     assert produced.tree.leaves() == [
         '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
         '11', '12', '13', '14', '15', '16', '17', '18', '19',
         '20', '21', '22', '23']
-
     assert expected == produced.tree
 
 

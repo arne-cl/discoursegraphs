@@ -44,6 +44,13 @@ class DGParentedTree(ParentedTree):
         return rst_tree.node_height(node_id)
 
 
+def debug_root_label(root_label, root_id=None):
+    if root_id is None:
+        return root_label
+    else:
+        return root_label + " ({})".format(root_id)
+
+
 def t(root, children=None, debug=False, root_id=None):
     "Create DGParentedTree from a root (str) and a list of (str, list) tuples."
     if isinstance(root, DGParentedTree):
@@ -52,8 +59,8 @@ def t(root, children=None, debug=False, root_id=None):
         return DGParentedTree(root, children, root_id)
 
     elif isinstance(root, basestring):
-        if debug is True and root_id is not None:
-            root = root + " ({})".format(root_id)
+        if debug is True:
+            root = debug_root_label(root, root_id)
 
         # Beware: DGParentedTree is a subclass of list!
         if isinstance(children, DGParentedTree):
@@ -254,3 +261,8 @@ def tree2bracket(docgraph, root=None, successors=None):
                               for child in successors[root])
         return node2bracket(docgraph, root, embed_str)
     return node2bracket(docgraph, root)
+
+
+def p(tree):
+    """pretty-print a tree"""
+    return tree.pretty_print()
