@@ -287,7 +287,16 @@ class RSTTree(object):
                     return self.order_two_sided_schema(nuc_tree, sat1_tree, sat2_tree)
 
             else:
-                raise NotImplementedError("Segment has more than two children")
+                # this segment is a nucleus and must only have satellites as children
+                assert all([self.elem_dict[child_id]['nuclearity'] == 'satellite'
+                            for child_id in self.child_dict[elem_id]])
+
+                sat_subtrees = [self.dt(start_node=child_id)
+                                for child_id in self.child_dict[elem_id]]
+
+                return self.order_schema(nuc_tree, sat_subtrees)
+
+
 
     def order_schema(self, nuc_tree, sat_trees):
         nuc_pos = self.get_linear_position(nuc_tree)
