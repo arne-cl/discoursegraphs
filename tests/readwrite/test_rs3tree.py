@@ -7,6 +7,7 @@
 import os
 
 import pytest
+import re
 
 from discoursegraphs import t
 from discoursegraphs.readwrite.tree import p
@@ -448,54 +449,71 @@ def test_nested_nss_schema_topspan():
     assert expected == produced1.tree == produced2.tree
 
 
-"""
-children = defaultdict(list)
-for child_id in self.child_dict[elem_id]:
-    children[self.elem_dict[child_id]['nuclearity']].append(child_id)
-
-nuc_subtree = self.dt(start_node=children['nucleus'], debug=debug)
-nuc_tree = t('N', nuc_subtree, debug=debug, root_id=elem_id)
-
-
-group2tree('32'):
-    else: 3 span group nucleus
-
-            >>> elem
-            {'nuclearity': 'nucleus', 'parent': '33',
-             'element_type': 'group', 'reltype': 'span',
-             'relname': 'span', 'group_type': 'span'}
-
-        elif len(self.child_dict[elem_id]) > 2:
-            raise TooManyChildrenError
-
-                >>> self.child_dict[elem_id] # '32'
-                ['26', '28', '31']
-
-                >>> sat26_tree = self.dt(start_node='26', debug=debug)
-                >>> sat26_tree.pretty_print()
-                (S, interpretation ... "Reste vom Sonntag ... teuer zu stehen")
-
-                >>> sat28_tree.pretty_print()
-                (S, reason ... "Entsorgung nur noch ... Appelle umsonst") # EDU 17-19, relation restatement
-
-                >>> sat31_tree.pretty_print() # no 'N' or 'S' as root
-                (reason, [N cause, S e-elab] ... "Denn angesichts ... dringend benötigt"
-
-                >>> children
-                defaultdict(list, {'nucleus': ['31'], 'satellite': ['26', '28']})
+def generate_pcc_test_case(filepath, error):
+    basename = os.path.basename(filepath)
+    doc_id_regex = re.compile('^.*maz-(\d+)\..*')
+    doc_id = doc_id_regex.search(basename).groups()[0]
+    result = (
+        "@pytest.mark.xfail\n"
+        "def test_pcc_{0}():\n"
+        "\t# error: {1}\n"
+        "\t#~ import pudb; pudb.set_trace()\n"
+        "\t#~ produced = rstviewer_vs_rsttree('{2}', rs3tree_dir=PCC_RS3_DIR)\n"
+        "\tproduced = example2tree('{2}', rs3tree_dir=PCC_RS3_DIR)\n"
+        "\tassert 1 == 0\n".format(doc_id, error, basename))
+    return result
 
 
-"""
 @pytest.mark.xfail
-def test_pcc_8501():
-    produced = example2tree('maz-8509.rs3', rs3tree_dir=PCC_RS3_DIR)
-    assert 1 == 0
+def test_pcc_10207():
+        # error: Segment has more than two children
+        #~ import pudb; pudb.set_trace()
+        #~ produced = rstviewer_vs_rsttree('maz-10207.rs3', rs3tree_dir=PCC_RS3_DIR)
+        produced = example2tree('maz-10207.rs3', rs3tree_dir=PCC_RS3_DIR)
+        assert 1 == 0
+
+
+@pytest.mark.xfail
+def test_pcc_11279():
+        # error: 
+        #~ import pudb; pudb.set_trace()
+        #~ produced = rstviewer_vs_rsttree('maz-11279.rs3', rs3tree_dir=PCC_RS3_DIR)
+        produced = example2tree('maz-11279.rs3', rs3tree_dir=PCC_RS3_DIR)
+        assert 1 == 0
+
+
+@pytest.mark.xfail
+def test_pcc_6918():
+        # error: Segment has more than two children
+        #~ import pudb; pudb.set_trace()
+        #~ produced = rstviewer_vs_rsttree('maz-6918.rs3', rs3tree_dir=PCC_RS3_DIR)
+        produced = example2tree('maz-6918.rs3', rs3tree_dir=PCC_RS3_DIR)
+        assert 1 == 0
+
+
+@pytest.mark.xfail
+def test_pcc_00001():
+        # error: A multinuc segment (18) should not have children: ['40']
+        #~ import pudb; pudb.set_trace()
+        #~ produced = rstviewer_vs_rsttree('maz-00001.rs3', rs3tree_dir=PCC_RS3_DIR)
+        produced = example2tree('maz-00001.rs3', rs3tree_dir=PCC_RS3_DIR)
+        assert 1 == 0
+
+
+@pytest.mark.xfail
+def test_pcc_14654():
+        # error: Can't parse a multinuc group (28) with more than 2 non-multinuc children: ['25', '30', '31']
+        #~ import pudb; pudb.set_trace()
+        #~ produced = rstviewer_vs_rsttree('maz-14654.rs3', rs3tree_dir=PCC_RS3_DIR)
+        produced = example2tree('maz-14654.rs3', rs3tree_dir=PCC_RS3_DIR)
+        assert 1 == 0
 
 
 @pytest.mark.xfail
 def test_parse_complete_pcc():
     okay = 0.0
     fail = 0.0
+    print "\n"
     for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
         try:
             x = dg.readwrite.RSTTree(rfile)
@@ -503,9 +521,9 @@ def test_parse_complete_pcc():
         except Exception as e:
             #~ print i, os.path.basename(rfile), "FAIL"
             #~ print "\t", e
-            #~ import pudb; pudb.set_trace()
             #~ x = dg.readwrite.RSTTree(rfile)
             fail += 1
+            #~ print generate_pcc_test_case(rfile, e)
 
-    print "{}% success".format(okay / (okay+fail) * 100)
+    print "\n{}% success".format(okay / (okay+fail) * 100)
     assert okay == 176
