@@ -12,6 +12,7 @@ import re
 from discoursegraphs import t
 from discoursegraphs.readwrite.tree import p
 from discoursegraphs.readwrite.rst.rs3 import RSTTree
+from discoursegraphs.readwrite.rst.rs3.rs3tree import n, s
 import discoursegraphs as dg
 
 RS3TREE_DIR = os.path.join(dg.DATA_ROOT_DIR, 'rs3tree')
@@ -164,6 +165,7 @@ def test_segments_only_trees():
 
 
 def test_single_nucsat_relation():
+    #~ import pudb; pudb.set_trace()
     produced = example2tree("foo-bar-circ-foo-to-bar.rs3")
     expected = t("circumstance", [
         ("S", ["foo"]),
@@ -463,14 +465,107 @@ def generate_pcc_test_case(filepath, error):
         "\tassert 1 == 0\n".format(doc_id, error, basename))
     return result
 
-
-@pytest.mark.xfail
+"""
+segment2tree('2'):
+    else: #  elem['reltype'] == 'span'
+        else: # Segment has more than two children
+            
+"""
+#~ @pytest.mark.xfail
 def test_pcc_10207():
-        # error: Segment has more than two children
-        #~ import pudb; pudb.set_trace()
-        #~ produced = rstviewer_vs_rsttree('maz-10207.rs3', rs3tree_dir=PCC_RS3_DIR)
-        produced = example2tree('maz-10207.rs3', rs3tree_dir=PCC_RS3_DIR)
-        assert 1 == 0
+    # error: Segment has more than two children
+    #~ import pudb; pudb.set_trace()
+    #~ produced = rstviewer_vs_rsttree('maz-10207.rs3', rs3tree_dir=PCC_RS3_DIR)
+    produced = example2tree('maz-10207-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
+
+    x = produced.dt('22')
+    y = produced.dt('2')
+
+    prep_2_3 = ('preparation', [
+        s(['2']),
+        n(['3'])
+    ])
+
+    inter_2_4 = ('interpretation', [
+        s([prep_2_3]),
+        n(['4'])
+    ])
+
+    inter_2_5 = ('interpretation', [
+        n([inter_2_4]),
+        s(['5'])
+    ])
+
+    inter_2_6 = ('interpretation', [
+        n([inter_2_5]),
+        s(['6'])
+    ])
+
+    elab_7_8 = ('e-elaboration', [
+        n(['7']),
+        s(['8'])
+    ])
+
+    list_9_11 = ('list', [
+        n(['9']),
+        n(['10']),
+        n(['11'])
+    ])
+
+    concession_7_11 = ('concession', [
+        s([elab_7_8]),
+        n([list_9_11])
+    ])
+
+    concession_14_15 = ('concession', [
+        s(['14']),
+        n(['15'])
+    ])
+
+    inter_16_17 = ('interpretation', [
+        n(['16']),
+        s(['17'])
+    ])
+
+    joint_14_17 = ('joint', [
+        n([concession_14_15]),
+        n([inter_16_17])
+    ])
+
+    inter_13_17 = ('interpretation', [
+        n(['13']),
+        s([joint_14_17])
+    ])
+
+    justify_12_17 = ('justify', [
+        s(['12']),
+        n([inter_13_17])
+    ])
+
+    list_7_17 = ('list', [
+        n([concession_7_11]),
+        n([justify_12_17])
+    ])
+
+    back_2_17 = ('background', [
+        s([inter_2_6]),
+        n([list_7_17])
+    ])
+
+    inter_2_18 = ('interpretation', [
+        n([back_2_17]),
+        s(['18'])
+    ])
+
+    expected = t('virtual-root', [
+        n(['1']),
+        n([inter_2_18])
+    ])
+
+    assert produced.tree.leaves() == [
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+        '11', '12', '13', '14', '15', '16', '17', '18']
+    assert expected == produced.tree
 
 
 @pytest.mark.xfail
