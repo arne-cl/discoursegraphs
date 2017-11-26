@@ -20,10 +20,12 @@ PCC_RS3_DIR = os.path.join(dg.DATA_ROOT_DIR,
                            'potsdam-commentary-corpus-2.0.0', 'rst')
 
 
-def example2tree(rs3tree_example_filename, rs3tree_dir=RS3TREE_DIR):
+def example2tree(rs3tree_example_filename, rs3tree_dir=RS3TREE_DIR, debug=False):
     """Return the absolute path of an example file."""
     filepath = os.path.join(rs3tree_dir, rs3tree_example_filename)
-    return RSTTree(filepath)
+    return RSTTree(filepath, debug=debug)
+
+
 
 
 def test_pcc_3367():
