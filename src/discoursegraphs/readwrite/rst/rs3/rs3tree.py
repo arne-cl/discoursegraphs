@@ -75,6 +75,9 @@ class RSTTree(object):
             height += 1
         return height
 
+    def get_relname(self, node_id):
+        return self.elem_dict[node_id]['relname']
+
     def dt(self, start_node=None):
         """main method to create an RSTTree from the output of get_rs3_data().
 
@@ -141,7 +144,7 @@ class RSTTree(object):
                             for c in self.child_dict[elem_id]]
                 sorted_subtrees = self.sort_subtrees(*subtrees)
                 first_child_id = self.child_dict[elem_id][0]
-                subtrees_relname = self.elem_dict[first_child_id]['relname']
+                subtrees_relname = self.get_relname(first_child_id)
 
                 subtree = t(subtrees_relname, sorted_subtrees, debug=self.debug, root_id=elem_id)
             return s_wrap(subtree, debug=self.debug, root_id=elem_id)
@@ -163,7 +166,7 @@ class RSTTree(object):
                 child_ids = self.child_dict[elem_id]
                 multinuc_child_ids = [c for c in child_ids
                                       if self.elem_dict[c]['reltype'] == 'multinuc']
-                multinuc_relname = self.elem_dict[multinuc_child_ids[0]]['relname']
+                multinuc_relname = self.get_relname(multinuc_child_ids[0])
                 multinuc_subtree = t(multinuc_relname, [
                     self.dt(start_node=mc)
                     for mc in multinuc_child_ids], debug=self.debug, root_id=elem_id)
@@ -342,7 +345,7 @@ class RSTTree(object):
         last_sat_tuple_pos = len(sat_tuples)-1
 
         for i, (sat_tree, sat_pos) in enumerate(sat_tuples):
-            relname = self.elem_dict[sat_tree.root_id]['relname']
+            relname = self.get_relname(sat_tree.root_id)
             if sat_pos < nuc_pos:
                 ordered_trees = [sat_tree, nuc_tree]
             else:
@@ -391,7 +394,7 @@ class RSTTree(object):
             inner_sat_tree = sat2_tree
             outer_sat_tree = sat1_tree
 
-        inner_relation = self.elem_dict[inner_sat_tree.root_id]['relname']
+        inner_relation = self.get_relname(inner_sat_tree.root_id)
         inner_subtrees = self.sort_subtrees(nuc_tree, inner_sat_tree)
 
         inner_tree = t('N', [(inner_relation, inner_subtrees)],
@@ -424,7 +427,7 @@ class RSTTree(object):
             more_important_sat = sat2_tree
             less_important_sat = sat1_tree
 
-        inner_relation = self.elem_dict[more_important_sat.root_id]['relname']
+        inner_relation = self.get_relname(more_important_sat.root_id)
         inner_subtrees = self.sort_subtrees(nuc_tree, more_important_sat)
 
         inner_tree = t('N', [(inner_relation, inner_subtrees)],
@@ -451,7 +454,7 @@ class RSTTree(object):
 
     def sorted_nucsat_tree(self, nuc_tree, sat_tree):
         sorted_subtrees = self.sort_subtrees(nuc_tree, sat_tree)
-        relname = self.elem_dict[sat_tree.root_id]['relname']
+        relname = self.get_relname(sat_tree.root_id)
         return t(relname, sorted_subtrees, debug=self.debug, root_id=nuc_tree.root_id)
 
 
