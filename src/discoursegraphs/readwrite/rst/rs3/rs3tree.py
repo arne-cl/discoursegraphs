@@ -270,23 +270,9 @@ class RSTTree(object):
                 sat_subtree = self.dt(start_node=sat_id)
                 return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
 
-            elif len(self.child_dict[elem_id]) == 2:
-                # this segment is the N in an S-N-S schema
-                sat1_id = self.child_dict[elem_id][0]
-                sat2_id = self.child_dict[elem_id][1]
-
-                sat1_tree = self.dt(start_node=sat1_id)
-                sat2_tree = self.dt(start_node=sat2_id)
-
-                schema_type = self.get_schema_type(nuc_tree, sat1_tree, sat2_tree)
-                if schema_type == SchemaTypes.one_sided:
-                    return self.order_one_sided_schema(nuc_tree, sat1_tree, sat2_tree)
-
-                else:
-                    return self.order_two_sided_schema(nuc_tree, sat1_tree, sat2_tree)
-
-            else:
-                # this segment is a nucleus and must only have satellites as children
+            elif len(self.child_dict[elem_id]) >= 2:
+                # this segment is the N in an RST schema,
+                # as such it must only have satellites as children
                 assert all([self.elem_dict[child_id]['nuclearity'] == 'satellite'
                             for child_id in self.child_dict[elem_id]])
 
