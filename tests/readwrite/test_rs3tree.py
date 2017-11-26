@@ -554,23 +554,6 @@ def test_pcc_10207():
 
 
 @pytest.mark.xfail
-def test_pcc_11279():
-        # error: 
-        #~ import pudb; pudb.set_trace()
-        #~ produced = rstviewer_vs_rsttree('maz-11279.rs3', rs3tree_dir=PCC_RS3_DIR)
-        produced = example2tree('maz-11279.rs3', rs3tree_dir=PCC_RS3_DIR)
-        assert 1 == 0
-
-
-@pytest.mark.xfail
-def test_pcc_6918():
-        # error: Segment has more than two children
-        #~ import pudb; pudb.set_trace()
-        #~ produced = rstviewer_vs_rsttree('maz-6918.rs3', rs3tree_dir=PCC_RS3_DIR)
-        produced = example2tree('maz-6918.rs3', rs3tree_dir=PCC_RS3_DIR)
-        assert 1 == 0
-
-
 @pytest.mark.xfail
 def test_pcc_00001():
         # error: A multinuc segment (18) should not have children: ['40']
