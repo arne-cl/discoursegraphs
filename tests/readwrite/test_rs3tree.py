@@ -138,7 +138,7 @@ def test_pcc_3367():
         ('N', [background_2_23])
     ])
 
-    assert produced.tree.leaves() == [
+    assert produced.edu_strings == produced.tree.leaves() == [
         '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
         '11', '12', '13', '14', '15', '16', '17', '18', '19',
         '20', '21', '22', '23']
@@ -151,14 +151,14 @@ def test_segments_only_trees():
     produced = example2tree("empty.rs3")
     expected = t("", [])
 
-    assert produced.tree.leaves() == []
+    assert produced.edu_strings == produced.tree.leaves() == []
     assert expected == produced.tree
 
     # one segment only
     produced = example2tree('only-one-segment.rs3')
     expected = t("N", ["foo"])
 
-    assert produced.tree.leaves() == ['foo']
+    assert produced.edu_strings == produced.tree.leaves() == ['foo']
     assert expected == produced.tree
 
     # two segments w/out a root
@@ -166,7 +166,7 @@ def test_segments_only_trees():
     expected = t("virtual-root",
                  [("N", ["foo"]), ("N", ["bar"])])
 
-    assert produced.tree.leaves() == ['foo', 'bar']
+    assert produced.edu_strings == produced.tree.leaves() == ['foo', 'bar']
     assert expected == produced.tree
 
     # three segments w/out a root
@@ -174,7 +174,7 @@ def test_segments_only_trees():
     expected = t("virtual-root",
                  [("N", ["eins"]), ("N", ["zwei"]), ("N", ["drei"])])
 
-    assert produced.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced.tree
 
 
@@ -184,7 +184,7 @@ def test_single_nucsat_relation():
         ("S", ["foo"]),
         ("N", ["bar"])])
 
-    assert produced.tree.leaves() == ['foo', 'bar']
+    assert produced.edu_strings == produced.tree.leaves() == ['foo', 'bar']
     assert expected == produced.tree
 
     produced = example2tree("foo-bar-elab-foo-to-bar.rs3")
@@ -192,7 +192,7 @@ def test_single_nucsat_relation():
         ("S", ["foo"]),
         ("N", ["bar"])])
 
-    assert produced.tree.leaves() == ['foo', 'bar']
+    assert produced.edu_strings == produced.tree.leaves() == ['foo', 'bar']
     assert expected == produced.tree
 
     produced = example2tree("foo-bar-circ-bar-to-foo.rs3")
@@ -200,7 +200,7 @@ def test_single_nucsat_relation():
         ("N", ["foo"]),
         ("S", ["bar"])])
 
-    assert produced.tree.leaves() == ['foo', 'bar']
+    assert produced.edu_strings == produced.tree.leaves() == ['foo', 'bar']
     assert expected == produced.tree
 
     produced = example2tree("foo-bar-elab-bar-to-foo.rs3")
@@ -208,7 +208,7 @@ def test_single_nucsat_relation():
         ("N", ["foo"]),
         ("S", ["bar"])])
 
-    assert produced.tree.leaves() == ['foo', 'bar']
+    assert produced.edu_strings == produced.tree.leaves() == ['foo', 'bar']
     assert expected == produced.tree
 
 
@@ -220,8 +220,8 @@ def test_single_nucsat_relation_topspan():
         ("S", ["foo"]),
         ("N", ["bar"])])
 
-    assert produced1.tree.leaves() == ['foo', 'bar']
-    assert produced2.tree.leaves() == ['foo', 'bar']
+    assert produced1.edu_strings == produced1.tree.leaves() == ['foo', 'bar']
+    assert produced2.edu_strings == produced2.tree.leaves() == ['foo', 'bar']
     assert expected == produced1.tree == produced2.tree
 
 
@@ -233,8 +233,8 @@ def test_single_multinuc_relation_topspan():
         ("N", ["foo"]),
         ("N", ["bar"])])
 
-    assert produced1.tree.leaves() == ['foo', 'bar']
-    assert produced2.tree.leaves() == ['foo', 'bar']
+    assert produced1.edu_strings == produced1.tree.leaves() == ['foo', 'bar']
+    assert produced2.edu_strings == produced2.tree.leaves() == ['foo', 'bar']
     assert expected == produced1.tree == produced2.tree
 
 
@@ -244,7 +244,7 @@ def test_single_multinuc_relation():
         ("N", ["foo"]),
         ("N", ["bar"])])
 
-    assert produced.tree.leaves() == ['foo', 'bar']
+    assert produced.edu_strings == produced.tree.leaves() == ['foo', 'bar']
     assert expected == produced.tree
 
     produced = example2tree("foo-bar-foo-conj-bar.rs3")
@@ -252,7 +252,7 @@ def test_single_multinuc_relation():
         ("N", ["foo"]),
         ("N", ["bar"])])
 
-    assert produced.tree.leaves() == ['foo', 'bar']
+    assert produced.edu_strings == produced.tree.leaves() == ['foo', 'bar']
     assert expected == produced.tree
 
     produced = example2tree('eins-zwei-drei-(joint-eins-and-zwei-and-drei).rs3')
@@ -261,7 +261,7 @@ def test_single_multinuc_relation():
         ("N", ["zwei"]),
         ("N", ["drei"])])
 
-    assert produced.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced.tree
 
 
@@ -274,7 +274,7 @@ def test_nested_nucsat_relation():
                 ("N", ["zwei"])])]),
         ("S", ["drei"])])
 
-    assert produced.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced.tree
 
     produced = example2tree('eins-zwei-drei-(circ-(circ-eins-from-zwei)-from-drei).rs3')
@@ -285,7 +285,7 @@ def test_nested_nucsat_relation():
                 ("S", ["zwei"])])]),
         ("S", ["drei"])])
 
-    assert produced.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced.tree
 
     produced = example2tree('eins-zwei-drei-(circ-(circ-eins-from-zwei)-to-drei).rs3')
@@ -296,7 +296,7 @@ def test_nested_nucsat_relation():
                 ("S", ["zwei"])])]),
         ("N", ["drei"])])
 
-    assert produced.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced.tree
 
     produced = example2tree('eins-zwei-drei-(circ-(circ-eins-to-zwei)-to-drei.rs3')
@@ -307,7 +307,7 @@ def test_nested_nucsat_relation():
                 ("N", ["zwei"])])]),
         ("N", ["drei"])])
 
-    assert produced.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced.tree
 
 
@@ -320,7 +320,7 @@ def test_nested_nucsat_multinuc_relation():
                 ("N", ["zwei"]),
                 ("N", ["drei"])])])])
 
-    assert produced.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced.tree
 
     produced = example2tree('eins-zwei-drei-(circ-(joint-eins-and-zwei)-from-drei).rs3')
@@ -333,7 +333,7 @@ def test_nested_nucsat_multinuc_relation():
         ]),
         ("S", ["drei"])])
 
-    assert produced.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced.tree
 
     produced = example2tree('eins-zwei-drei-(circ-eins-from-(joint-zwei-and-drei).rs3')
@@ -344,7 +344,7 @@ def test_nested_nucsat_multinuc_relation():
                 ("N", ["zwei"]),
                 ("N", ["drei"])])])])
 
-    assert produced.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced.tree
 
     produced = example2tree('eins-zwei-drei-(circ-(joint-eins-and-zwei)-to-drei).rs3')
@@ -357,7 +357,7 @@ def test_nested_nucsat_multinuc_relation():
         ]),
         ("N", ["drei"])])
 
-    assert produced.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced.tree
 
     produced = example2tree('eins-zwei-drei-(elab-eins-from-(joint-zwei-and-drei).rs3')
@@ -371,7 +371,7 @@ def test_nested_nucsat_multinuc_relation():
         ])
     ])
 
-    assert produced.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced.tree
 
 
@@ -390,8 +390,8 @@ def test_single_sns_schema_topspan():
         ('S', ['drei'])
     ])
 
-    assert produced1.tree.leaves() == ['eins', 'zwei', 'drei']
-    assert produced2.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced1.edu_strings == produced1.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced2.edu_strings == produced2.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced1.tree == produced2.tree
 
 
@@ -417,7 +417,7 @@ def test_nested_sns_schema():
         ('S', ['fuenf'])
     ])
 
-    assert produced.tree.leaves() == ['eins', 'zwei', 'drei', 'vier', 'fuenf']
+    assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei', 'vier', 'fuenf']
     assert expected == produced.tree
 
 
@@ -435,8 +435,8 @@ def test_single_nss_schema_topspan():
         ('S', ['drei'])
     ])
 
-    assert produced1.tree.leaves() == ['eins', 'zwei', 'drei']
-    assert produced2.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced1.edu_strings == produced1.tree.leaves() == ['eins', 'zwei', 'drei']
+    assert produced2.edu_strings == produced2.tree.leaves() == ['eins', 'zwei', 'drei']
     assert expected == produced1.tree == produced2.tree
 
 
@@ -458,9 +458,8 @@ def test_nested_nss_schema_topspan():
         ])
     ])
 
-    assert produced1.tree.leaves() == ['eins', 'zwei', 'drei', 'vier']
-    assert produced2.tree.leaves() == ['eins', 'zwei', 'drei', 'vier']
-    assert produced1.tree == produced2.tree
+    assert produced1.edu_strings == produced1.tree.leaves() == ['eins', 'zwei', 'drei', 'vier']
+    assert produced2.edu_strings == produced2.tree.leaves() == ['eins', 'zwei', 'drei', 'vier']
     assert expected == produced1.tree == produced2.tree
 
 
@@ -548,7 +547,7 @@ def test_pcc_10207():
         n([inter_2_18])
     ])
 
-    assert produced.tree.leaves() == [
+    assert produced.edu_strings == produced.tree.leaves() == [
         '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
         '11', '12', '13', '14', '15', '16', '17', '18']
     assert expected == produced.tree
