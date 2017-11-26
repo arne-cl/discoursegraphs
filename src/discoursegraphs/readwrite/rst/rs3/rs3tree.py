@@ -102,13 +102,19 @@ class RSTTree(object):
 
     def root2tree(self, start_node=None):
         root_nodes = self.child_dict[start_node]
-        if len(root_nodes) == 1:
+        num_roots = len(root_nodes)
+        if num_roots == 1:
             return self.dt(start_node=root_nodes[0])
-        elif len(root_nodes) > 1:
+        elif num_roots > 1:
             # An undesired, but common case (at least in the PCC corpus).
             # This happens if there's one EDU not to connected to the rest
             # of the tree (e.g. a headline). We will just make all 'root'
             # nodes part of a multinuc relation called 'virtual-root'.
+            loglevel = logging.WARN if num_roots > 2 else logging.INFO
+            logging.log(loglevel,
+                        "File '{}' has {} roots!".format(
+                            os.path.basename(self.filepath), num_roots))
+
             root_subtrees = [self.dt(start_node=root_id)
                              for root_id in root_nodes]
             # ensure that each subtree is marked as a nucleus
