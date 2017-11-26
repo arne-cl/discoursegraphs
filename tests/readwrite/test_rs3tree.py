@@ -26,6 +26,19 @@ def example2tree(rs3tree_example_filename, rs3tree_dir=RS3TREE_DIR, debug=False)
     return RSTTree(filepath, debug=debug)
 
 
+def generate_pcc_test_case(filepath, error):
+    basename = os.path.basename(filepath)
+    doc_id_regex = re.compile('^.*maz-(\d+)\..*')
+    doc_id = doc_id_regex.search(basename).groups()[0]
+    result = (
+        "@pytest.mark.xfail\n"
+        "def test_pcc_{0}():\n"
+        "\t# error: {1}\n"
+        "\t#~ import pudb; pudb.set_trace()\n"
+        "\t#~ produced = rstviewer_vs_rsttree('{2}', rs3tree_dir=PCC_RS3_DIR)\n"
+        "\tproduced = example2tree('{2}', rs3tree_dir=PCC_RS3_DIR)\n"
+        "\tassert 1 == 0\n".format(doc_id, error, basename))
+    return result
 
 
 def test_pcc_3367():
@@ -449,21 +462,6 @@ def test_nested_nss_schema_topspan():
     assert produced2.tree.leaves() == ['eins', 'zwei', 'drei', 'vier']
     assert produced1.tree == produced2.tree
     assert expected == produced1.tree == produced2.tree
-
-
-def generate_pcc_test_case(filepath, error):
-    basename = os.path.basename(filepath)
-    doc_id_regex = re.compile('^.*maz-(\d+)\..*')
-    doc_id = doc_id_regex.search(basename).groups()[0]
-    result = (
-        "@pytest.mark.xfail\n"
-        "def test_pcc_{0}():\n"
-        "\t# error: {1}\n"
-        "\t#~ import pudb; pudb.set_trace()\n"
-        "\t#~ produced = rstviewer_vs_rsttree('{2}', rs3tree_dir=PCC_RS3_DIR)\n"
-        "\tproduced = example2tree('{2}', rs3tree_dir=PCC_RS3_DIR)\n"
-        "\tassert 1 == 0\n".format(doc_id, error, basename))
-    return result
 
 
 def test_pcc_10207():
