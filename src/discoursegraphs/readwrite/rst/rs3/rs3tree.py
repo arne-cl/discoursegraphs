@@ -158,7 +158,7 @@ class RSTTree(object):
                 multinuc_relname = self.elem_dict[multinuc_child_ids[0]]['relname']
                 multinuc_subtree = t(multinuc_relname, [
                     self.dt(start_node=mc)
-                    for mc in multinuc_child_ids], root_id=elem_id)
+                    for mc in multinuc_child_ids], debug=self.debug, root_id=elem_id)
 
                 other_child_ids = [c for c in child_ids
                                    if c not in multinuc_child_ids]
@@ -392,7 +392,7 @@ class RSTTree(object):
         inner_subtrees = self.sort_subtrees(nuc_tree, inner_sat_tree)
 
         inner_tree = t('N', [(inner_relation, inner_subtrees)],
-                       root_id=inner_sat_tree.root_id)
+                       debug=self.debug, root_id=inner_sat_tree.root_id)
 
         return self.sorted_nucsat_tree(inner_tree, outer_sat_tree)
 
@@ -425,7 +425,7 @@ class RSTTree(object):
         inner_subtrees = self.sort_subtrees(nuc_tree, more_important_sat)
 
         inner_tree = t('N', [(inner_relation, inner_subtrees)],
-                       root_id=more_important_sat.root_id)
+                       debug=self.debug, root_id=more_important_sat.root_id)
 
         return self.sorted_nucsat_tree(inner_tree, less_important_sat)
 
@@ -449,7 +449,7 @@ class RSTTree(object):
     def sorted_nucsat_tree(self, nuc_tree, sat_tree):
         sorted_subtrees = self.sort_subtrees(nuc_tree, sat_tree)
         relname = self.elem_dict[sat_tree.root_id]['relname']
-        return t(relname, sorted_subtrees, root_id=nuc_tree.root_id)
+        return t(relname, sorted_subtrees, debug=self.debug, root_id=nuc_tree.root_id)
 
 
 def get_rs3_data(rs3_file, word_wrap=0):
