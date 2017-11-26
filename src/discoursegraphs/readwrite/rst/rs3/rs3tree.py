@@ -281,8 +281,6 @@ class RSTTree(object):
 
                 return self.order_schema(nuc_tree, sat_subtrees)
 
-
-
     def order_schema(self, nuc_tree, sat_trees):
         nuc_pos = self.get_linear_position(nuc_tree)
         sat_tree_pos_tuples = [(sat_tree, self.get_linear_position(sat_tree))
@@ -323,18 +321,25 @@ class RSTTree(object):
                 (nuc_tree, nuc_pos), sat_trees_succ_nuc, sat_trees_prec_nuc)
 
     def convert_schema(self, nuc_tuple, inner_sat_tuples, outer_sat_tuples):
-        """subtrees are represented as (tree, linear tree position) tuples"""
+        """subtrees are represented as (tree, linear tree position) tuples.
+
+        returns relation as root node.
+        """
         nuc_tree, nuc_pos = nuc_tuple
+        sat_tuples = inner_sat_tuples + outer_sat_tuples
+        last_sat_tuple_pos = len(sat_tuples)-1
 
-        for sat_tuples in (inner_sat_tuples, outer_sat_tuples):
-            for sat_tree, sat_pos in sat_tuples:
-                relname = self.elem_dict[sat_tree.root_id]['relname']
-                if sat_pos < nuc_pos:
-                    ordered_trees = [sat_tree, nuc_tree]
-                else:
-                    ordered_trees = [nuc_tree, sat_tree]
-                nuc_tree = t('N', [(relname, ordered_trees)], root_id=nuc_tree.root_id)
+        for i, (sat_tree, sat_pos) in enumerate(sat_tuples):
+            relname = self.elem_dict[sat_tree.root_id]['relname']
+            if sat_pos < nuc_pos:
+                ordered_trees = [sat_tree, nuc_tree]
+            else:
+                ordered_trees = [nuc_tree, sat_tree]
 
+            if i == last_sat_tuple_pos:
+                nuc_tree = t(relname, ordered_trees, debug=self.debug, root_id=nuc_tree.root_id)
+            else:
+                nuc_tree = t('N', [(relname, ordered_trees)], debug=self.debug, root_id=nuc_tree.root_id)
         return nuc_tree
 
     def get_schema_type(self, nuc_tree, sat1_tree, sat2_tree):
