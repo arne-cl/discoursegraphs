@@ -127,37 +127,30 @@ class RSTTree(object):
             return t('')
 
     def group2tree(self, elem_id, elem, elem_type, start_node=None):
-        if elem['reltype'] == 'rst':
-            # this elem is the S in an N-S relation
+        reltype = elem.get('reltype')
+        root_wrap = s_wrap if reltype == 'rst' else n_wrap
 
+        # rst: this elem is the S in an N-S relation
+        # multinuc: this elem is one of several Ns in a multinuc relation
+        if reltype in ('rst', 'multinuc'):
             if len(self.child_dict[elem_id]) == 1:
-                # this elem is the S in an N-S relation, but it's also the root of
-                # another N-S relation
+                # this group is the root of another N-S relation
                 subtree_id = self.child_dict[elem_id][0]
                 subtree = self.dt(start_node=subtree_id)
 
             else:
                 assert len(self.child_dict[elem_id]) > 1
-                # this elem is the S in an N-S relation, but it's also the root of
-                # a multinuc relation
+                # this group is the root of a multinuc relation
                 subtrees = [self.dt(start_node=c)
                             for c in self.child_dict[elem_id]]
                 sorted_subtrees = self.sort_subtrees(*subtrees)
                 first_child_id = self.child_dict[elem_id][0]
                 subtrees_relname = self.get_relname(first_child_id)
-
                 subtree = t(subtrees_relname, sorted_subtrees, debug=self.debug, root_id=elem_id)
-            return s_wrap(subtree, debug=self.debug, root_id=elem_id)
-
-        elif elem['reltype'] == 'multinuc':
-            # this elem is one of several Ns in a multinuc relation
-            subtrees = [self.dt(start_node=c)
-                        for c in self.child_dict[elem_id]]
-            sorted_subtrees = self.sort_subtrees(*subtrees)
-            return t('N', sorted_subtrees, debug=self.debug, root_id=elem_id)
+            return root_wrap(subtree, debug=self.debug, root_id=elem_id)
 
         else:
-            assert elem.get('reltype') in ('', 'span'), \
+            assert reltype in ('', None, 'span'), \
                 "Unexpected combination: elem_type '%s' and reltype '%s'" \
                     % (elem_type, elem['reltype'])
 
