@@ -136,8 +136,7 @@ class RSTTree(object):
                 subtrees_relname = self.elem_dict[first_child_id]['relname']
 
                 subtree = t(subtrees_relname, sorted_subtrees, debug=self.debug, root_id=elem_id)
-
-            return t('S', subtree, debug=self.debug, root_id=elem_id)
+            return s_wrap(subtree, debug=self.debug, root_id=elem_id)
 
         elif elem['reltype'] == 'multinuc':
             # this elem is one of several Ns in a multinuc relation
@@ -519,14 +518,46 @@ def s(children):
 
 
 def n_wrap(tree, debug=False, root_id=None):
+    """Ensure the given tree has a nucleus as its root.
+
+    If the root of the tree is a nucleus, return it.
+    If the root of the tree is a satellite, replace the satellite
+    with a nucleus and return the tree.
+    If the root of the tree is a relation, place a nucleus on top
+    and return the tree.
+    """
     root_label = tree.label()
 
-    if debug is True:
-        expected_root_label = debug_root_label('N', tree.root_id)
-    else:
-        expected_root_label = 'N'
+    expected_n_root = debug_root_label('N', debug=debug, root_id=tree.root_id)
+    expected_s_root = debug_root_label('S', debug=debug, root_id=tree.root_id)
 
-    if root_label == expected_root_label:
+    if root_label == expected_n_root:
+        return tree
+    elif root_label == expected_s_root:
+        tree.set_label(expected_n_root)
         return tree
     else:
         return t('N', [tree], debug=debug, root_id=root_id)
+
+
+def s_wrap(tree, debug=False, root_id=None):
+    """Ensure the given tree has a nucleus as its root.
+
+    If the root of the tree is a satellite, return it.
+    If the root of the tree is a nucleus, replace the nucleus
+    with a satellite and return the tree.
+    If the root of the tree is a relation, place a satellite on top
+    and return the tree.
+    """
+    root_label = tree.label()
+
+    expected_n_root = debug_root_label('N', debug, tree.root_id)
+    expected_s_root = debug_root_label('S', debug, tree.root_id)
+
+    if root_label == expected_s_root:
+        return tree
+    elif root_label == expected_n_root:
+        tree.set_label(expected_s_root)
+        return tree
+    else:
+        return t('S', [tree], debug=debug, root_id=root_id)
