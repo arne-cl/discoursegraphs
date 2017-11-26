@@ -153,7 +153,8 @@ class RSTTree(object):
             # this elem is one of several Ns in a multinuc relation
             subtrees = [self.dt(start_node=c)
                         for c in self.child_dict[elem_id]]
-            return t('N', subtrees, debug=self.debug, root_id=elem_id)
+            sorted_subtrees = self.sort_subtrees(*subtrees)
+            return t('N', sorted_subtrees, debug=self.debug, root_id=elem_id)
 
         else:
             assert elem.get('reltype') in ('', 'span'), \
@@ -167,9 +168,14 @@ class RSTTree(object):
                 multinuc_child_ids = [c for c in child_ids
                                       if self.elem_dict[c]['reltype'] == 'multinuc']
                 multinuc_relname = self.get_relname(multinuc_child_ids[0])
-                multinuc_subtree = t(multinuc_relname, [
-                    self.dt(start_node=mc)
-                    for mc in multinuc_child_ids], debug=self.debug, root_id=elem_id)
+
+                multinuc_elements = [self.dt(start_node=mc)
+                                     for mc in multinuc_child_ids]
+                sorted_subtrees = self.sort_subtrees(*multinuc_elements)
+
+                multinuc_subtree = t(
+                    multinuc_relname, [sorted_subtrees], debug=self.debug,
+                    root_id=elem_id)
 
                 other_child_ids = [c for c in child_ids
                                    if c not in multinuc_child_ids]
