@@ -44,11 +44,11 @@ class DGParentedTree(ParentedTree):
         return rst_tree.node_height(node_id)
 
 
-def debug_root_label(root_label, root_id=None):
-    if root_id is None:
-        return root_label
-    else:
+def debug_root_label(root_label, debug=False, root_id=None):
+    if debug is True and root_id is not None:
         return root_label + " ({})".format(root_id)
+    else:
+        return root_label
 
 
 def t(root, children=None, debug=False, root_id=None):
@@ -59,8 +59,7 @@ def t(root, children=None, debug=False, root_id=None):
         return DGParentedTree(root, children, root_id)
 
     elif isinstance(root, basestring):
-        if debug is True:
-            root = debug_root_label(root, root_id)
+        root = debug_root_label(root, debug, root_id)
 
         # Beware: DGParentedTree is a subclass of list!
         if isinstance(children, DGParentedTree):
