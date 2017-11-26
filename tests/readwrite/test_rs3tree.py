@@ -573,6 +573,14 @@ def test_pcc_14654():
 
 
 @pytest.mark.xfail
+def test_pcc_4472():
+        # error: Can't parse a multinuc group (15) with more than 2 non-multinuc children: ['13', '19', '21']
+        #~ import pudb; pudb.set_trace()
+        #~ produced = rstviewer_vs_rsttree('maz-4472.rs3', rs3tree_dir=PCC_RS3_DIR)
+        produced = example2tree('maz-4472.rs3', rs3tree_dir=PCC_RS3_DIR)
+        assert 1 == 0
+
+
 def test_parse_complete_pcc():
     okay = 0.0
     fail = 0.0
