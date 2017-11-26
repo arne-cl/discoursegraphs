@@ -5,8 +5,10 @@
 """This module converts .rs3 files into `NLTK ParentedTree`s."""
 
 from collections import defaultdict
+import logging
 import textwrap
 from operator import itemgetter, methodcaller
+import os
 
 from lxml import etree
 
@@ -261,7 +263,11 @@ class RSTTree(object):
 
             if not self.child_dict.has_key(elem_id):
                 # a root segment without any children (e.g. a headline in PCC)
-                assert elem['nuclearity'] == 'root'
+                if elem['nuclearity'] != 'root':
+                    logging.log(
+                        logging.WARN,
+                        "Segment '{}' in file '{}' is a non-root nucleus without children".format(
+                            elem_id, os.path.basename(self.filepath)))
                 return nuc_tree
 
             if len(self.child_dict[elem_id]) == 1:
