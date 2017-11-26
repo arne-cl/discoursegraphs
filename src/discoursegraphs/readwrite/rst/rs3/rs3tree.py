@@ -250,51 +250,40 @@ class RSTTree(object):
                             % (elem_id, self.child_dict[elem_id]))
 
     def segment2tree(self, elem_id, elem, elem_type, start_node=None):
-        assert elem.get('reltype') in ('rst', 'multinuc', 'span', '', None)
         if elem['reltype'] == 'rst':
             # this elem is the S in an N-S relation
-            assert elem_id not in self.child_dict, \
-                "A satellite segment (%s) should not have children: %s" \
-                    % (elem_id, self.child_dict[elem_id])
-            return t('S', [elem['text']], debug=self.debug, root_id=elem_id)
-
-        elif elem['reltype'] == 'multinuc':
-            # this elem is one of several Ns in a multinuc relation
-            assert elem_id not in self.child_dict, \
-                "A multinuc segment (%s) should not have children: %s" \
-                    % (elem_id, self.child_dict[elem_id])
-            return t('N', [elem['text']], debug=self.debug, root_id=elem_id)
-
+            root_label = 'S'
         else:
-            # this segment is either an N or an unconnected root node
-            # (which we will convert into an N as well)
-            nuc_tree = t('N', [elem['text']], debug=self.debug, root_id=elem_id)
+            root_label = 'N'
 
-            if not self.child_dict.has_key(elem_id):
-                # a root segment without any children (e.g. a headline in PCC)
+        tree = t(root_label, [elem['text']], debug=self.debug, root_id=elem_id)
+
+        if elem_id not in self.child_dict:
+            # this might be a root segment without any children
+            # (e.g. a headline in PCC) or the only segment in a span
+            if elem.get('reltype') in ('span', '', None):
                 if elem['nuclearity'] != 'root':
                     logging.log(
                         logging.WARN,
                         "Segment '{}' in file '{}' is a non-root nucleus without children".format(
                             elem_id, os.path.basename(self.filepath)))
-                return nuc_tree
+            return tree
 
-            if len(self.child_dict[elem_id]) == 1:
-                # this segment is the N in an N-S relation
-                sat_id = self.child_dict[elem_id][0]
-                sat_subtree = self.dt(start_node=sat_id)
-                return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
+        if len(self.child_dict[elem_id]) == 1:
+            # this segment is (also) the N in an N-S relation
+            sat_id = self.child_dict[elem_id][0]
+            sat_subtree = self.dt(start_node=sat_id)
+            return self.sorted_nucsat_tree(tree, sat_subtree)
 
-            elif len(self.child_dict[elem_id]) >= 2:
-                # this segment is the N in an RST schema,
-                # as such it must only have satellites as children
-                assert all([self.elem_dict[child_id]['nuclearity'] == 'satellite'
-                            for child_id in self.child_dict[elem_id]])
+        elif len(self.child_dict[elem_id]) >= 2:
+            # this segment is (also) the N in an RST schema,
+            # as such it must only have satellites as children
+            assert all([self.elem_dict[child_id]['nuclearity'] == 'satellite'
+                        for child_id in self.child_dict[elem_id]])
 
-                sat_subtrees = [self.dt(start_node=child_id)
-                                for child_id in self.child_dict[elem_id]]
-
-                return self.order_schema(nuc_tree, sat_subtrees)
+            sat_subtrees = [self.dt(start_node=child_id)
+                            for child_id in self.child_dict[elem_id]]
+            return self.order_schema(tree, sat_subtrees)
 
     def order_schema(self, nuc_tree, sat_trees):
         nuc_pos = self.get_linear_position(nuc_tree)
