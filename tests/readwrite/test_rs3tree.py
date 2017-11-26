@@ -139,7 +139,6 @@ def test_segments_only_trees():
     assert produced.tree.leaves() == []
     assert expected == produced.tree
 
-
     # one segment only
     produced = example2tree('only-one-segment.rs3')
     expected = t("N", ["foo"])
@@ -165,7 +164,6 @@ def test_segments_only_trees():
 
 
 def test_single_nucsat_relation():
-    #~ import pudb; pudb.set_trace()
     produced = example2tree("foo-bar-circ-foo-to-bar.rs3")
     expected = t("circumstance", [
         ("S", ["foo"]),
@@ -465,21 +463,9 @@ def generate_pcc_test_case(filepath, error):
         "\tassert 1 == 0\n".format(doc_id, error, basename))
     return result
 
-"""
-segment2tree('2'):
-    else: #  elem['reltype'] == 'span'
-        else: # Segment has more than two children
-            
-"""
-#~ @pytest.mark.xfail
-def test_pcc_10207():
-    # error: Segment has more than two children
-    #~ import pudb; pudb.set_trace()
-    #~ produced = rstviewer_vs_rsttree('maz-10207.rs3', rs3tree_dir=PCC_RS3_DIR)
-    produced = example2tree('maz-10207-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
 
-    x = produced.dt('22')
-    y = produced.dt('2')
+def test_pcc_10207():
+    produced = example2tree('maz-10207-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
 
     prep_2_3 = ('preparation', [
         s(['2']),
