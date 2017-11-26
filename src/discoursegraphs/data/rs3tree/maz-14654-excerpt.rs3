@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rst>
+  <header>
+    <relations>
+      <rel name="antithesis" type="rst"/>
+      <rel name="background" type="rst"/>
+      <rel name="circumstance" type="rst"/>
+      <rel name="concession" type="rst"/>
+      <rel name="condition" type="rst"/>
+      <rel name="elaboration" type="rst"/>
+      <rel name="e-elaboration" type="rst"/>
+      <rel name="enablement" type="rst"/>
+      <rel name="evaluation-s" type="rst"/>
+      <rel name="evidence" type="rst"/>
+      <rel name="interpretation" type="rst"/>
+      <rel name="justify" type="rst"/>
+      <rel name="means" type="rst"/>
+      <rel name="motivation" type="rst"/>
+      <rel name="cause" type="rst"/>
+      <rel name="result" type="rst"/>
+      <rel name="otherwise" type="rst"/>
+      <rel name="preparation" type="rst"/>
+      <rel name="purpose" type="rst"/>
+      <rel name="restatement" type="rst"/>
+      <rel name="solutionhood" type="rst"/>
+      <rel name="summary" type="rst"/>
+      <rel name="unconditional" type="rst"/>
+      <rel name="unless" type="rst"/>
+      <rel name="unstated-relation" type="rst"/>
+      <rel name="evaluation-n" type="rst"/>
+      <rel name="reason" type="rst"/>
+      <rel name="conjunction" type="multinuc"/>
+      <rel name="contrast" type="multinuc"/>
+      <rel name="disjunction" type="multinuc"/>
+      <rel name="joint" type="multinuc"/>
+      <rel name="list" type="multinuc"/>
+      <rel name="restatement-mn" type="multinuc"/>
+      <rel name="sequence" type="multinuc"/>
+    </relations>
+  </header>
+  <body>
+    <segment id="1">1</segment>
+    <segment id="12" parent="26" relname="span">2</segment>
+    <segment id="13" parent="12" relname="interpretation">3</segment>
+    <segment id="11" parent="31" relname="span">4</segment>
+    <segment id="2" parent="27" relname="span">5</segment>
+    <segment id="14" parent="2" relname="e-elaboration">6</segment>
+    <segment id="15" parent="28" relname="conjunction">7</segment>
+    <segment id="3" parent="4" relname="concession">8</segment>
+    <segment id="4" parent="29" relname="span">9</segment>
+    <segment id="5" parent="30" relname="span">10</segment>
+    <segment id="6" parent="22" relname="span">11</segment>
+    <segment id="16" parent="6" relname="elaboration">12</segment>
+    <segment id="7" parent="22" relname="interpretation">13</segment>
+    <segment id="8" parent="24" relname="span">14</segment>
+    <segment id="9" parent="21" relname="span">15</segment>
+    <segment id="10" parent="20" relname="span">16</segment>
+    <segment id="17" parent="19" relname="span">17</segment>
+    <segment id="18" parent="17" relname="e-elaboration">18</segment>
+<group id="19" type="span" parent="10" relname="reason"/>
+<group id="20" type="span" parent="9" relname="evidence"/>
+<group id="21" type="span" parent="8" relname="interpretation"/>
+<group id="22" type="span" parent="23" relname="span"/>
+<group id="23" type="span" parent="25" relname="joint"/>
+<group id="24" type="span" parent="25" relname="joint"/>
+<group id="25" type="multinuc" parent="28" relname="interpretation"/>
+<group id="26" type="span" parent="11" relname="antithesis"/>
+<group id="27" type="span" parent="28" relname="conjunction"/>
+<group id="28" type="multinuc" parent="32" relname="span"/>
+<group id="29" type="span" parent="5" relname="interpretation"/>
+<group id="30" type="span" parent="28" relname="interpretation"/>
+<group id="31" type="span" parent="28" relname="interpretation"/>
+<group id="32" type="span"/>
+  </body>
+</rst>
