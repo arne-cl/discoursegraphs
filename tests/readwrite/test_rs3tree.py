@@ -41,6 +41,122 @@ def generate_pcc_test_case(filepath, error):
     return result
 
 
+@pytest.mark.xfail
+def test_pcc_00001():
+    # error: A multinuc segment (18) should not have children: ['40']
+    produced = example2tree('maz-00001-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
+
+    con_4_5 = ('conjunction', [
+        n(['4']),
+        n(['5'])
+    ])
+
+    cause_3_5 = ('cause', [
+        s(['3']),
+        n([con_4_5])
+    ])
+
+    cause_6_7 = ('cause', [
+        n(['6']),
+        s(['7'])
+    ])
+
+    inter_3_7 = ('interpretation', [
+        n([cause_3_5]),
+        s([cause_6_7])
+    ])
+
+    inter_2_7 = ('interpretation', [
+        s(['2']),
+        n([inter_3_7])
+    ])
+
+    eval_2_8 = ('evaluation-n', [
+        s([inter_2_7]),
+        n(['8'])
+    ])
+
+    cond_13_14 = ('condition', [
+        n(['13']),
+        s(['14'])
+    ])
+
+    conj_12_14 = ('conjunction', [
+        n(['12']),
+        n([cond_13_14])
+    ])
+
+    evidence_11_14 = ('evidence', [
+        n(['11']),
+        s([conj_12_14])
+    ])
+
+    reason_10_14 = ('reason', [
+        n(['10']),
+        s([evidence_11_14])
+    ])
+
+    list_9_14 = ('list', [
+        n(['9']),
+        n([reason_10_14])
+    ])
+
+    reason_2_14 = ('reason', [
+        n([eval_2_8]),
+        s([list_9_14])
+    ])
+
+    reason_17_18 = ('reason', [
+        n(['17']),
+        s(['18'])
+    ])
+
+    conj_16_18 = ('conjunction', [
+        n(['16']),
+        n([reason_17_18])
+    ])
+
+    reason_15_18 = ('reason', [
+        n(['15']),
+        s([conj_16_18])
+    ])
+
+    elab_19_20 = ('elaboration', [
+        n(['19']),
+        s(['20'])
+    ])
+
+    dis_21_22 = ('disjunction', [
+        n(['21']),
+        n(['22'])
+    ])
+
+    inter_19_22 = ('interpretation', [
+        s([elab_19_20]),
+        n([dis_21_22])
+    ])
+
+    result_15_22 = ('result', [
+        n([reason_15_18]),
+        s([inter_19_22])
+    ])
+
+    joint_2_22 = ('joint', [
+        n([reason_2_14]),
+        n([result_15_22])
+    ])
+
+    expected = t('virtual-root', [
+        n(['1']),
+        n([joint_2_22])
+    ])
+
+    assert produced.edu_strings == produced.tree.leaves() == [
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+        '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22']
+    assert expected == produced.tree
+
+
 def test_pcc_3367():
     produced = example2tree('maz-3367-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
 
@@ -554,16 +670,6 @@ def test_pcc_10207():
 
 
 @pytest.mark.xfail
-@pytest.mark.xfail
-def test_pcc_00001():
-        # error: A multinuc segment (18) should not have children: ['40']
-        #~ import pudb; pudb.set_trace()
-        #~ produced = rstviewer_vs_rsttree('maz-00001.rs3', rs3tree_dir=PCC_RS3_DIR)
-        produced = example2tree('maz-00001.rs3', rs3tree_dir=PCC_RS3_DIR)
-        assert 1 == 0
-
-
-@pytest.mark.xfail
 def test_pcc_14654():
         # error: Can't parse a multinuc group (28) with more than 2 non-multinuc children: ['25', '30', '31']
         #~ import pudb; pudb.set_trace()
@@ -581,6 +687,7 @@ def test_pcc_4472():
         assert 1 == 0
 
 
+@pytest.mark.xfail
 def test_parse_complete_pcc():
     okay = 0.0
     fail = 0.0
