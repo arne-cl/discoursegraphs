@@ -5,7 +5,7 @@
 from lxml import etree
 
 from discoursegraphs.readwrite.exportxml import ExportXMLDocumentGraph
-from discoursegraphs.readwrite.tree import (
+from discoursegraphs.readwrite.tree import (debug_root_label,
     DGParentedTree, get_child_nodes, horizontal_positions, node2bracket,
     sorted_bfs_edges, sorted_bfs_successors, t, tree2bracket)
 import discoursegraphs as dg
@@ -188,3 +188,13 @@ def test_t():
 
     assert t("foo", ["bar"]) == DGParentedTree("foo", ["bar"])
     assert t("foo", ["bar", "baz"]) == DGParentedTree("foo", ["bar", "baz"])
+
+
+def test_debug_root_label():
+    label = 'Foo'
+    node_id = '21'
+
+    assert debug_root_label(label, debug=False, root_id=None) == label
+    assert debug_root_label(label, debug=False, root_id=node_id) == label
+    assert debug_root_label(label, debug=True, root_id=None) == label
+    assert debug_root_label(label, debug=True, root_id=node_id) == "Foo (21)"
