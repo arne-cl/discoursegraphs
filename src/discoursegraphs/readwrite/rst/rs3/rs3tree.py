@@ -113,8 +113,7 @@ class RSTTree(object):
             # This happens if there's one EDU not to connected to the rest
             # of the tree (e.g. a headline). We will just make all 'root'
             # nodes part of a multinuc relation called 'virtual-root'.
-            loglevel = logging.WARN if num_roots > 2 else logging.INFO
-            logging.log(loglevel,
+            logging.log(logging.INFO,
                         "File '{}' has {} roots!".format(
                             os.path.basename(self.filepath), num_roots))
 
@@ -263,7 +262,7 @@ class RSTTree(object):
             if elem.get('reltype') in ('span', '', None):
                 if elem['nuclearity'] != 'root':
                     logging.log(
-                        logging.WARN,
+                        logging.INFO,
                         "Segment '{}' in file '{}' is a non-root nucleus without children".format(
                             elem_id, os.path.basename(self.filepath)))
             return tree
