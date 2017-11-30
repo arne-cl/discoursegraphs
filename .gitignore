@@ -34,3 +34,4 @@ local
 htmlcov/
 __pycache__
 .eggs/
+.idea/
