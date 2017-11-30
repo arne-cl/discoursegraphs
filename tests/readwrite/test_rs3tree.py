@@ -4,15 +4,17 @@
 
 """Basic tests for the ``rs3tree`` module"""
 
+import logging
 import os
+import re
 
 import pytest
-import re
+
 
 from discoursegraphs import t
 from discoursegraphs.readwrite.tree import p
 from discoursegraphs.readwrite.rst.rs3 import RSTTree
-from discoursegraphs.readwrite.rst.rs3.rs3tree import n, s
+from discoursegraphs.readwrite.rst.rs3.rs3tree import n, s, TooManyChildrenError
 import discoursegraphs as dg
 
 RS3TREE_DIR = os.path.join(dg.DATA_ROOT_DIR, 'rs3tree')
@@ -705,3 +707,26 @@ def test_parse_complete_pcc():
 
     print "\n{}% success".format(okay / (okay+fail) * 100)
     assert okay == 176
+
+
+def test_complete_pcc_edu_order():
+    okay = 0.0
+    fail = 0.0
+    print "\n"
+    for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
+        try:
+            rst_tree = dg.readwrite.RSTTree(rfile)
+            if rst_tree.edu_strings == rst_tree.tree.leaves():
+                okay += 1
+            else:
+                fail += 1
+
+                logging.log(logging.WARN,
+                        "EDU order in file '{}' is wrong!".format(
+                            os.path.basename(rfile)))
+
+        except TooManyChildrenError as e:
+            pass
+
+    success_rate = okay / (okay+fail) * 100
+    print "\n{0}% of parsed PCC files have correct EDU order ({1} of {2})".format(success_rate, okay, okay+fail)
