@@ -55,39 +55,87 @@ def no_double_ns(tree, filename, debug=False, root_id=None):
             if node.label() in expected_labels:
                 return False
 
-            no_double_ns(node, filename, debug=debug, root_id=root_id)
+            subtree_is_okay = no_double_ns(node, filename, debug=debug, root_id=root_id)
+            if not subtree_is_okay:
+                return False
+
     return True
 
 
-def relnodes_have_ns_children(rst_tree, tree=None):
+def test_no_double_ns():
+    """The test function no_double_ns() works as expected."""
+    bad_tree = t('N', [
+        ('S', ['foo']),
+        ('N', ['bar'])
+    ])
+
+    good_tree = t('elabortate', [
+        ('S', ['foo']),
+        ('N', ['bar'])
+    ])
+
+    assert no_double_ns(bad_tree, "testfile") == False
+    assert no_double_ns(good_tree, "testfile") == True
+
+
+
+def relnodes_have_ns_children(rst_tree, tree=None, debug=False, root_id=None):
     """Return True, iff every relation node (either rst or multinuc) in the
     given RSTTree has only nucleii and/or satellites as children.
     """
-    assert rst_tree.debug is False
     if tree is None:
         tree = rst_tree.tree
 
     assert isinstance(tree, ParentedTree)
     relations = get_relations_from_rs3file(rst_tree.filepath)
 
-    tree_label = tree.label()
+    tree_label = tree.label().split()[0] # works for 'label' and 'label (node_id)'
     tree_has_relroot = tree_label in relations
     if tree_has_relroot:
         if relations[tree_label] == 'rst':
-            expected_label = ('N', 'S')
+            expected_labels = [
+                debug_root_label('N', debug=debug, root_id=root_id),
+                debug_root_label('S', debug=debug, root_id=root_id)]
         else:
-            expected_label = ('N')
+            expected_labels = [
+                debug_root_label('N', debug=debug, root_id=root_id)]
 
     for node in tree:
-        if isinstance(node, ParentedTree) and tree_has_relroot:
-            if node.label() not in expected_labels:
+        if isinstance(node, ParentedTree):
+            if tree_has_relroot and node.label() not in expected_labels:
                 logging.log(
                     logging.WARN,
                     "File {0}: Node '{1}' has child '{2}'".format(
-                        filename, tree_label, node.label()))
+                        os.path.basename(rst_tree.filepath), tree_label, node.label()))
                 return False
 
-            relnodes_have_ns_children(rst_tree, tree=node)
+            subtree_is_okay = relnodes_have_ns_children(rst_tree, tree=node)
+            if not subtree_is_okay:
+                return False
+
+    return True
+
+
+def no_span_nodes(tree, debug=False, root_id=None):
+    """Return True, iff there is no span node in the given ParentedTree."""
+    assert isinstance(tree, ParentedTree)
+
+    if root_id is None:
+        root_id = tree.root_id
+    span_label = debug_root_label('span', debug=debug, root_id=root_id)
+
+    if tree.label() == span_label:
+        return False
+
+    for node in tree:
+        if isinstance(node, ParentedTree) :
+            if node.label() == span_label:
+                return False
+
+            subtree_is_okay = no_span_nodes(node, debug=debug, root_id=root_id)
+            if not subtree_is_okay:
+                return False
+
     return True
 
 
@@ -108,7 +156,8 @@ def generate_pcc_test_case(filepath, error):
 
 @pytest.mark.xfail
 def test_pcc_00001():
-    # error: A multinuc segment (18) should not have children: ['40']
+    # original error: A multinuc segment (18) should not have children: ['40']
+    #  WARNING:root:File maz-00001.rs3: Node 'conjunction' has child 'condition'
     produced = example2tree('maz-00001-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
 
     con_4_5 = ('conjunction', [
@@ -735,7 +784,7 @@ def test_pcc_10207():
 
 
 @pytest.mark.xfail
-def test_pcc_14654():
+def test_pcc_14654_too_many_multinuc_children():
         # error: Can't parse a multinuc group (28) with more than 2 non-multinuc children: ['25', '30', '31']
         #~ import pudb; pudb.set_trace()
         #~ produced = rstviewer_vs_rsttree('maz-14654.rs3', rs3tree_dir=PCC_RS3_DIR)
@@ -744,7 +793,7 @@ def test_pcc_14654():
 
 
 @pytest.mark.xfail
-def test_pcc_4472():
+def test_pcc_4472_too_many_multinuc_children():
         # error: Can't parse a multinuc group (15) with more than 2 non-multinuc children: ['13', '19', '21']
         #~ import pudb; pudb.set_trace()
         #~ produced = rstviewer_vs_rsttree('maz-4472.rs3', rs3tree_dir=PCC_RS3_DIR)
@@ -754,6 +803,7 @@ def test_pcc_4472():
 
 @pytest.mark.xfail
 def test_parse_complete_pcc():
+    """All *.rs3 files can be parsed into RSTTree instances."""
     okay = 0.0
     fail = 0.0
     print "\n"
@@ -771,11 +821,14 @@ def test_parse_complete_pcc():
     assert success_rate == 100, \
         "{0}% of PCC files could be parsed ({1} of {2})".format(success_rate, okay, okay+fail)
 
+
 @pytest.mark.xfail
 def test_complete_pcc_edu_order():
+    """The order of EDUs in all generated RSTTrees is the same as in the
+    original *.rs3 files.
+    """
     okay = 0.0
     fail = 0.0
-    print "\n"
     for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
         try:
             rst_tree = dg.readwrite.RSTTree(rfile)
@@ -796,25 +849,12 @@ def test_complete_pcc_edu_order():
         "\n{0}% of parsed PCC files have correct EDU order ({1} of {2})".format(success_rate, okay, okay+fail)
 
 
-def test_no_double_ns():
-    bad_tree = t('N', [
-        ('S', ['foo']),
-        ('N', ['bar'])
-    ])
-
-    good_tree = t('elabortate', [
-        ('S', ['foo']),
-        ('N', ['bar'])
-    ])
-
-    assert no_double_ns(bad_tree, "testfile") == False
-    assert no_double_ns(good_tree, "testfile") == True
-
-
 def test_complete_pcc_no_double_ns():
+    """There is no PCC file in which a nucleus/satellite has a nucleus or
+    satellite as a child.
+    """
     okay = 0.0
     fail = 0.0
-    print "\n"
     for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
         filename = os.path.basename(rfile)
         try:
@@ -824,6 +864,10 @@ def test_complete_pcc_no_double_ns():
             else:
                 fail += 1
 
+                logging.log(logging.WARN,
+                        "File '{}' has N/S->N/S parent/child".format(
+                            os.path.basename(rfile)))
+
         except TooManyChildrenError as e:
             pass
 
@@ -831,11 +875,36 @@ def test_complete_pcc_no_double_ns():
     assert success_rate == 100, \
         "\n{0}% of parsed PCC files have no N/S->N/S parent/child ({1} of {2})".format(success_rate, okay, okay+fail)
 
-
-def test_complete_pcc_relnodes_have_ns_children():
     okay = 0.0
     fail = 0.0
-    print "\n"
+    for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
+        filename = os.path.basename(rfile)
+        try:
+            rst_tree = dg.readwrite.RSTTree(rfile)
+            if no_double_ns(rst_tree.tree, filename, debug=True):
+                okay += 1
+            else:
+                fail += 1
+
+                logging.log(logging.WARN,
+                        "File '{}' has N/S->N/S parent/child in debug mode".format(
+                            os.path.basename(rfile)))
+
+        except TooManyChildrenError as e:
+            pass
+
+    success_rate = okay / (okay+fail) * 100
+    assert success_rate == 100, \
+        "\n{0}% of debug-parsed PCC files have no N/S->N/S parent/child ({1} of {2})".format(success_rate, okay, okay+fail)
+
+
+@pytest.mark.xfail
+def test_complete_pcc_relnodes_have_ns_children():
+    """All relation nodes in all PCC files have only nucleii and/or satellites
+    as children.
+    """
+    okay = 0.0
+    fail = 0.0
     for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
         filename = os.path.basename(rfile)
         try:
@@ -844,6 +913,9 @@ def test_complete_pcc_relnodes_have_ns_children():
                 okay += 1
             else:
                 fail += 1
+                logging.log(logging.WARN,
+                        "File '{}' has bad relname children".format(
+                            os.path.basename(rfile)))
 
         except TooManyChildrenError as e:
             pass
@@ -851,3 +923,99 @@ def test_complete_pcc_relnodes_have_ns_children():
     success_rate = okay / (okay+fail) * 100
     assert success_rate == 100, \
         "\n{0}% of parsed PCC files have  only relname->N/S parent/child relations ({1} of {2})".format(success_rate, okay, okay+fail)
+
+    okay = 0.0
+    fail = 0.0
+    for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
+        filename = os.path.basename(rfile)
+        try:
+            rst_tree = dg.readwrite.RSTTree(rfile, debug=True)
+            if relnodes_have_ns_children(rst_tree):
+                okay += 1
+            else:
+                fail += 1
+                logging.log(logging.WARN,
+                        "File '{}' has bad relname children in debug-mode".format(
+                            os.path.basename(rfile)))
+
+        except TooManyChildrenError as e:
+            pass
+
+    success_rate = okay / (okay+fail) * 100
+    assert success_rate == 100, \
+        "\n{0}% of debug-parsed PCC files have  only relname->N/S parent/child relations ({1} of {2})".format(success_rate, okay, okay+fail)
+
+
+@pytest.mark.xfail
+def test_complete_pcc_no_span_nodes():
+    """There are no 'span' nodes in any PCC file."""
+    okay = 0.0
+    fail = 0.0
+
+    for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
+        filename = os.path.basename(rfile)
+        try:
+            rst_tree = dg.readwrite.RSTTree(rfile)
+            if no_span_nodes(rst_tree.tree, debug=rst_tree.debug):
+                okay += 1
+            else:
+                fail += 1
+                logging.log(logging.WARN,
+                        "File '{}' has bad span nodes".format(
+                            os.path.basename(rfile)))
+
+        except TooManyChildrenError as e:
+            pass
+
+    success_rate = okay / (okay+fail) * 100
+    assert success_rate == 100, \
+        "\n{0}% of parsed PCC files have no bad span nodes ({1} of {2})".format(success_rate, okay, okay+fail)
+
+    okay = 0.0
+    fail = 0.0
+    for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
+        filename = os.path.basename(rfile)
+        try:
+            rst_tree = dg.readwrite.RSTTree(rfile, debug=True)
+            if no_span_nodes(rst_tree.tree, debug=rst_tree.debug):
+                okay += 1
+            else:
+                fail += 1
+                logging.log(logging.WARN,
+                        "File '{}' has bad span nodes in debug mode".format(
+                            os.path.basename(rfile)))
+
+        except TooManyChildrenError as e:
+            pass
+
+    success_rate = okay / (okay+fail) * 100
+    assert success_rate == 100, \
+        "\n{0}% of debug-parsed PCC files have no bad span nodes ({1} of {2})".format(success_rate, okay, okay+fail)
+
+
+@pytest.mark.xfail
+def test_pcc_12666_wrong_edu_order():
+        # error: wrong EDU order
+        #~ import pudb; pudb.set_trace()
+        #~ produced = rstviewer_vs_rsttree('maz-12666.rs3', rs3tree_dir=PCC_RS3_DIR)
+        produced = example2tree('maz-12666.rs3', rs3tree_dir=PCC_RS3_DIR)
+        assert produced.edu_strings == produced.tree.leaves()
+
+
+@pytest.mark.xfail
+def test_pcc_14813_wrong_edu_order():
+        # error: wrong EDU order
+        #~ import pudb; pudb.set_trace()
+        #~ produced = rstviewer_vs_rsttree('maz-14813.rs3', rs3tree_dir=PCC_RS3_DIR)
+        produced = example2tree('maz-14813.rs3', rs3tree_dir=PCC_RS3_DIR)
+        assert produced.edu_strings == produced.tree.leaves()
+
+
+@pytest.mark.xfail
+def test_pcc_11279_has_span_nodes():
+        # error: WARNING:root:File 'maz-11279.rs3' has bad span nodes
+        #~ import pudb; pudb.set_trace()
+        #~ produced = rstviewer_vs_rsttree('maz-11279.rs3', rs3tree_dir=PCC_RS3_DIR)
+        produced = example2tree('maz-11279.rs3', rs3tree_dir=PCC_RS3_DIR)
+        assert no_span_nodes(produced.tree)
+
