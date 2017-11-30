@@ -8,12 +8,14 @@ import logging
 import os
 import re
 
+from lxml import etree
+from nltk.tree import ParentedTree
 import pytest
 
 
 from discoursegraphs import t
-from discoursegraphs.readwrite.tree import p
-from discoursegraphs.readwrite.rst.rs3 import RSTTree
+from discoursegraphs.readwrite.tree import p, debug_root_label
+from discoursegraphs.readwrite.rst.rs3 import extract_relationtypes, RSTTree
 from discoursegraphs.readwrite.rst.rs3.rs3tree import n, s, TooManyChildrenError
 import discoursegraphs as dg
 
@@ -26,6 +28,67 @@ def example2tree(rs3tree_example_filename, rs3tree_dir=RS3TREE_DIR, debug=False)
     """Return the absolute path of an example file."""
     filepath = os.path.join(rs3tree_dir, rs3tree_example_filename)
     return RSTTree(filepath, debug=debug)
+
+
+def get_relations_from_rs3file(rs3_filepath):
+    utf8_parser = etree.XMLParser(encoding="utf-8")
+    rs3_xml_tree = etree.parse(rs3_filepath, utf8_parser)
+    return extract_relationtypes(rs3_xml_tree)
+
+
+def no_double_ns(tree, filename, debug=False, root_id=None):
+    """Return True, iff there is no nucleus/satellite in the given ParentedTree
+    that has a nucleus or satellite as a child node.
+    """
+    assert isinstance(tree, ParentedTree)
+
+    if root_id is None:
+        root_id = tree.root_id
+    expected_labels = [debug_root_label('N', debug=debug, root_id=root_id),
+                       debug_root_label('S', debug=debug, root_id=root_id)]
+
+    tree_label = tree.label()
+    tree_has_nsroot = tree_label in expected_labels
+
+    for node in tree:
+        if isinstance(node, ParentedTree) and tree_has_nsroot:
+            if node.label() in expected_labels:
+                return False
+
+            no_double_ns(node, filename, debug=debug, root_id=root_id)
+    return True
+
+
+def relnodes_have_ns_children(rst_tree, tree=None):
+    """Return True, iff every relation node (either rst or multinuc) in the
+    given RSTTree has only nucleii and/or satellites as children.
+    """
+    assert rst_tree.debug is False
+    if tree is None:
+        tree = rst_tree.tree
+
+    assert isinstance(tree, ParentedTree)
+    relations = get_relations_from_rs3file(rst_tree.filepath)
+
+    tree_label = tree.label()
+    tree_has_relroot = tree_label in relations
+    if tree_has_relroot:
+        if relations[tree_label] == 'rst':
+            expected_label = ('N', 'S')
+        else:
+            expected_label = ('N')
+
+    for node in tree:
+        if isinstance(node, ParentedTree) and tree_has_relroot:
+            if node.label() not in expected_labels:
+                logging.log(
+                    logging.WARN,
+                    "File {0}: Node '{1}' has child '{2}'".format(
+                        filename, tree_label, node.label()))
+                return False
+
+            relnodes_have_ns_children(rst_tree, tree=node)
+    return True
 
 
 def generate_pcc_test_case(filepath, error):
@@ -699,16 +762,16 @@ def test_parse_complete_pcc():
             x = dg.readwrite.RSTTree(rfile)
             okay += 1
         except Exception as e:
-            #~ print i, os.path.basename(rfile), "FAIL"
-            #~ print "\t", e
-            #~ x = dg.readwrite.RSTTree(rfile)
+            logging.log(logging.WARN,
+                    "File '{0}' can't be parsed into an RSTTree: {1}".format(
+                        os.path.basename(rfile), e))
             fail += 1
-            #~ print generate_pcc_test_case(rfile, e)
 
-    print "\n{}% success".format(okay / (okay+fail) * 100)
-    assert okay == 176
+    success_rate = okay / (okay+fail) * 100
+    assert success_rate == 100, \
+        "{0}% of PCC files could be parsed ({1} of {2})".format(success_rate, okay, okay+fail)
 
-
+@pytest.mark.xfail
 def test_complete_pcc_edu_order():
     okay = 0.0
     fail = 0.0
@@ -729,4 +792,62 @@ def test_complete_pcc_edu_order():
             pass
 
     success_rate = okay / (okay+fail) * 100
-    print "\n{0}% of parsed PCC files have correct EDU order ({1} of {2})".format(success_rate, okay, okay+fail)
+    assert success_rate == 100, \
+        "\n{0}% of parsed PCC files have correct EDU order ({1} of {2})".format(success_rate, okay, okay+fail)
+
+
+def test_no_double_ns():
+    bad_tree = t('N', [
+        ('S', ['foo']),
+        ('N', ['bar'])
+    ])
+
+    good_tree = t('elabortate', [
+        ('S', ['foo']),
+        ('N', ['bar'])
+    ])
+
+    assert no_double_ns(bad_tree, "testfile") == False
+    assert no_double_ns(good_tree, "testfile") == True
+
+
+def test_complete_pcc_no_double_ns():
+    okay = 0.0
+    fail = 0.0
+    print "\n"
+    for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
+        filename = os.path.basename(rfile)
+        try:
+            rst_tree = dg.readwrite.RSTTree(rfile)
+            if no_double_ns(rst_tree.tree, filename):
+                okay += 1
+            else:
+                fail += 1
+
+        except TooManyChildrenError as e:
+            pass
+
+    success_rate = okay / (okay+fail) * 100
+    assert success_rate == 100, \
+        "\n{0}% of parsed PCC files have no N/S->N/S parent/child ({1} of {2})".format(success_rate, okay, okay+fail)
+
+
+def test_complete_pcc_relnodes_have_ns_children():
+    okay = 0.0
+    fail = 0.0
+    print "\n"
+    for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
+        filename = os.path.basename(rfile)
+        try:
+            rst_tree = dg.readwrite.RSTTree(rfile)
+            if relnodes_have_ns_children(rst_tree):
+                okay += 1
+            else:
+                fail += 1
+
+        except TooManyChildrenError as e:
+            pass
+
+    success_rate = okay / (okay+fail) * 100
+    assert success_rate == 100, \
+        "\n{0}% of parsed PCC files have  only relname->N/S parent/child relations ({1} of {2})".format(success_rate, okay, okay+fail)
