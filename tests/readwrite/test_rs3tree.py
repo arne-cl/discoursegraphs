@@ -123,6 +123,38 @@ def relnodes_have_ns_children(rst_tree, tree=None, debug=False, root_id=None):
     return True
 
 
+def test_relnodes_have_ns_children():
+    """The test function relnodes_have_ns_children works as expected."""
+    # we will only use the rst_tree to extract relations
+    dummy_rst_tree = example2tree('maz-00001-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
+
+    bad_inner = ('conjunction', [
+        ('explanation', [
+            ('S', ['foo']),
+            ('N', ['bar'])
+        ]),
+        n(['5'])
+    ])
+
+    bad_tree = t('cause', [
+        s(['3']),
+        n([bad_inner])
+    ])
+
+    good_inner = ('conjunction', [
+        n(['4']),
+        n(['5'])
+    ])
+
+    good_tree = t('cause', [
+        s(['3']),
+        n([good_inner])
+    ])
+
+    assert relnodes_have_ns_children(dummy_rst_tree, tree=bad_tree, debug=False, root_id=None) is False
+    assert relnodes_have_ns_children(dummy_rst_tree, tree=good_tree, debug=False, root_id=None) is True
+
+
 def no_span_nodes(tree, debug=False, root_id=None):
     """Return True, iff there is no span node in the given ParentedTree."""
     assert isinstance(tree, ParentedTree)
@@ -144,6 +176,30 @@ def no_span_nodes(tree, debug=False, root_id=None):
                 return False
 
     return True
+
+
+def test_no_span_nodes():
+    """The no_span_nodes test function works as expected."""
+    good_tree = t('joint', [
+        ('N', ['foo']),
+        ('N', [
+            ('background', [
+                ('S', ['bar']),
+                ('N', ['baz'])])]),
+        ]
+    )
+
+    bad_tree = t('joint', [
+        ('N', ['foo']),
+        ('N', [
+            ('span', [
+                ('S', ['bar']),
+                ('N', ['baz'])])]),
+        ]
+    )
+    
+    assert no_span_nodes(good_tree) is True
+    assert no_span_nodes(bad_tree) is False
 
 
 def generate_pcc_test_case(filepath, error):
