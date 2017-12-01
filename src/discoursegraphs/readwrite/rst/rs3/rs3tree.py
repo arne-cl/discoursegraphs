@@ -119,8 +119,9 @@ class RSTTree(object):
 
             root_subtrees = [self.dt(start_node=root_id)
                              for root_id in root_nodes]
+            sorted_subtrees = self.sort_subtrees(*root_subtrees)
             # ensure that each subtree is marked as a nucleus
-            nuc_subtrees = [n_wrap(st, debug=self.debug) for st in root_subtrees]
+            nuc_subtrees = [n_wrap(st, debug=self.debug) for st in sorted_subtrees]
             return t('virtual-root', nuc_subtrees, debug=self.debug)
         else:
             return t('')

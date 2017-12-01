@@ -851,7 +851,7 @@ def test_pcc_14654_too_many_multinuc_children():
         # error: Can't parse a multinuc group (28) with more than 2 non-multinuc children: ['25', '30', '31']
         #~ import pudb; pudb.set_trace()
         #~ produced = rstviewer_vs_rsttree('maz-14654.rs3', rs3tree_dir=PCC_RS3_DIR)
-        produced = example2tree('maz-14654.rs3', rs3tree_dir=PCC_RS3_DIR)
+        produced = example2tree('maz-14654-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
         assert 1 == 0
 
 
@@ -860,7 +860,8 @@ def test_pcc_4472_too_many_multinuc_children():
         # error: Can't parse a multinuc group (15) with more than 2 non-multinuc children: ['13', '19', '21']
         #~ import pudb; pudb.set_trace()
         #~ produced = rstviewer_vs_rsttree('maz-4472.rs3', rs3tree_dir=PCC_RS3_DIR)
-        produced = example2tree('maz-4472.rs3', rs3tree_dir=PCC_RS3_DIR)
+        #~ produced = example2tree('maz-4472.rs3', rs3tree_dir=PCC_RS3_DIR)
+        produced = example2tree('maz-4472-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
         assert 1 == 0
 
 
@@ -885,7 +886,6 @@ def test_parse_complete_pcc():
         "{0}% of PCC files could be parsed ({1} of {2})".format(success_rate, okay, okay+fail)
 
 
-@pytest.mark.xfail
 def test_complete_pcc_edu_order():
     """The order of EDUs in all generated RSTTrees is the same as in the
     original *.rs3 files.
@@ -1057,28 +1057,11 @@ def test_complete_pcc_no_span_nodes():
 
 
 @pytest.mark.xfail
-def test_pcc_12666_wrong_edu_order():
-        # error: wrong EDU order
-        #~ import pudb; pudb.set_trace()
-        #~ produced = rstviewer_vs_rsttree('maz-12666.rs3', rs3tree_dir=PCC_RS3_DIR)
-        produced = example2tree('maz-12666.rs3', rs3tree_dir=PCC_RS3_DIR)
-        assert produced.edu_strings == produced.tree.leaves()
-
-
-@pytest.mark.xfail
-def test_pcc_14813_wrong_edu_order():
-        # error: wrong EDU order
-        #~ import pudb; pudb.set_trace()
-        #~ produced = rstviewer_vs_rsttree('maz-14813.rs3', rs3tree_dir=PCC_RS3_DIR)
-        produced = example2tree('maz-14813.rs3', rs3tree_dir=PCC_RS3_DIR)
-        assert produced.edu_strings == produced.tree.leaves()
-
-
-@pytest.mark.xfail
 def test_pcc_11279_has_span_nodes():
         # error: WARNING:root:File 'maz-11279.rs3' has bad span nodes
         #~ import pudb; pudb.set_trace()
         #~ produced = rstviewer_vs_rsttree('maz-11279.rs3', rs3tree_dir=PCC_RS3_DIR)
-        produced = example2tree('maz-11279.rs3', rs3tree_dir=PCC_RS3_DIR)
+        #~ produced = example2tree('maz-11279.rs3', rs3tree_dir=PCC_RS3_DIR)
+        produced = example2tree('maz-11279-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
         assert no_span_nodes(produced.tree)
 
