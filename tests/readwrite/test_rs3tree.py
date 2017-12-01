@@ -51,8 +51,8 @@ def no_double_ns(tree, filename, debug=False, root_id=None):
     tree_has_nsroot = tree_label in expected_labels
 
     for node in tree:
-        if isinstance(node, ParentedTree) and tree_has_nsroot:
-            if node.label() in expected_labels:
+        if isinstance(node, ParentedTree):
+            if tree_has_nsroot and node.label() in expected_labels:
                 return False
 
             subtree_is_okay = no_double_ns(node, filename, debug=debug, root_id=root_id)
@@ -68,6 +68,13 @@ def test_no_double_ns():
         ('S', ['foo']),
         ('N', ['bar'])
     ])
+    
+    bad_embedded_tree = t('joint', [
+        ('N', [
+            ('N', ['foo'])
+        ]),
+        ('N', ['bar']),
+    ])
 
     good_tree = t('elabortate', [
         ('S', ['foo']),
@@ -75,8 +82,8 @@ def test_no_double_ns():
     ])
 
     assert no_double_ns(bad_tree, "testfile") == False
+    assert no_double_ns(bad_embedded_tree, "testfile") == False
     assert no_double_ns(good_tree, "testfile") == True
-
 
 
 def relnodes_have_ns_children(rst_tree, tree=None, debug=False, root_id=None):
