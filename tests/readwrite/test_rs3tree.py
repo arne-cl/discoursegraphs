@@ -846,23 +846,39 @@ def test_pcc_10207():
     assert expected == produced.tree
 
 
-@pytest.mark.xfail
-def test_pcc_14654_too_many_multinuc_children():
-        # error: Can't parse a multinuc group (28) with more than 2 non-multinuc children: ['25', '30', '31']
-        #~ import pudb; pudb.set_trace()
-        #~ produced = rstviewer_vs_rsttree('maz-14654.rs3', rs3tree_dir=PCC_RS3_DIR)
-        produced = example2tree('maz-14654-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
-        assert 1 == 0
+def test_multinuc_with_two_satellites():
+    """A multinuc that is also the nucleus of two other RST relations
+    is handled correctly.
+    """
+    produced = example2tree('multinuc-plus-two-satellites.rs3', rs3tree_dir=RS3TREE_DIR)
 
+    joint_5_6 = ('joint', [
+        ('N', ['fuenf']),
+        ('N', ['sechs'])
+    ])
 
-@pytest.mark.xfail
-def test_pcc_4472_too_many_multinuc_children():
-        # error: Can't parse a multinuc group (15) with more than 2 non-multinuc children: ['13', '19', '21']
-        #~ import pudb; pudb.set_trace()
-        #~ produced = rstviewer_vs_rsttree('maz-4472.rs3', rs3tree_dir=PCC_RS3_DIR)
-        #~ produced = example2tree('maz-4472.rs3', rs3tree_dir=PCC_RS3_DIR)
-        produced = example2tree('maz-4472-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
-        assert 1 == 0
+    conj_2_3 = ('conjunction', [
+        ('N', ['zwei']),
+        ('N', ['drei'])
+    ])
+
+    inter_2_4 = ('interpretation', [
+        ('N', [conj_2_3]),
+        ('S', ['vier'])
+    ])
+
+    inter_2_6 = ('interpretation', [
+        ('N', [inter_2_4]),
+        ('S', [joint_5_6])])
+
+    expected = t('interpretation', [
+        ('S', ['eins']),
+        ('N', [inter_2_6])
+    ])
+
+    assert produced.edu_strings == produced.tree.leaves() == [
+        'eins', 'zwei', 'drei', 'vier', 'fuenf', 'sechs']
+    assert expected == produced.tree
 
 
 @pytest.mark.xfail
