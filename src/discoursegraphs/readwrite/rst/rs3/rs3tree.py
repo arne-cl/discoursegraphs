@@ -173,18 +173,7 @@ class RSTTree(object):
                 other_child_ids = [c for c in child_ids
                                    if c not in multinuc_child_ids]
 
-                if not other_child_ids:
-                    # this elem is only the head of a multinuc relation
-                    # TODO: does this make sense / is this ever reached?
-                    return multinuc_subtree
-
-                elif len(other_child_ids) == 1:
-                    nuc_tree = t('N', multinuc_subtree, debug=self.debug, root_id=elem_id)
-                    sat_id = other_child_ids[0]
-                    sat_subtree = self.dt(start_node=sat_id)
-                    return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
-
-                elif len(other_child_ids) >= 2:
+                if other_child_ids:
                     # this element is the N in an S-N-S schema
                     nuc_tree = t('N', multinuc_subtree, debug=self.debug, root_id=elem_id)
 
@@ -194,6 +183,11 @@ class RSTTree(object):
                     sat_subtrees = [self.dt(start_node=child_id)
                                     for child_id in other_child_ids]
                     return self.order_schema(nuc_tree, sat_subtrees)
+
+                else:
+                    # this elem is only the head of a multinuc relation
+                    # TODO: does this make sense / is this ever reached?
+                    return multinuc_subtree
 
             else:
                 #~ assert elem['group_type'] == 'span', \

@@ -881,12 +881,10 @@ def test_multinuc_with_two_satellites():
     assert expected == produced.tree
 
 
-@pytest.mark.xfail
 def test_parse_complete_pcc():
     """All *.rs3 files can be parsed into RSTTree instances."""
     okay = 0.0
     fail = 0.0
-    print "\n"
     for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
         try:
             x = dg.readwrite.RSTTree(rfile)
