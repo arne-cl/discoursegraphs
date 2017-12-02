@@ -260,12 +260,19 @@ class RSTTree(object):
         if elem_id not in self.child_dict:
             # this might be a root segment without any children
             # (e.g. a headline in PCC) or the only segment in a span
+            # (which makes no sense in RST)
             if elem.get('reltype') in ('span', '', None):
                 if elem['nuclearity'] != 'root':
                     logging.log(
                         logging.INFO,
                         "Segment '{}' in file '{}' is a non-root nucleus without children".format(
                             elem_id, os.path.basename(self.filepath)))
+
+                    if elem.get('relname') == 'span':
+                        parent_elem = self.elem_dict.get(elem.get('parent'))
+                        if parent_elem:
+                            elem['relname'] = parent_elem.get('relname')
+
             return tree
 
         if len(self.child_dict[elem_id]) == 1:

@@ -68,7 +68,7 @@ def test_no_double_ns():
         ('S', ['foo']),
         ('N', ['bar'])
     ])
-    
+
     bad_embedded_tree = t('joint', [
         ('N', [
             ('N', ['foo'])
@@ -197,7 +197,7 @@ def test_no_span_nodes():
                 ('N', ['baz'])])]),
         ]
     )
-    
+
     assert no_span_nodes(good_tree) is True
     assert no_span_nodes(bad_tree) is False
 
@@ -1009,7 +1009,6 @@ def test_complete_pcc_relnodes_have_ns_children():
         "\n{0}% of debug-parsed PCC files have  only relname->N/S parent/child relations ({1} of {2})".format(success_rate, okay, okay+fail)
 
 
-@pytest.mark.xfail
 def test_complete_pcc_no_span_nodes():
     """There are no 'span' nodes in any PCC file."""
     okay = 0.0
@@ -1056,12 +1055,21 @@ def test_complete_pcc_no_span_nodes():
         "\n{0}% of debug-parsed PCC files have no bad span nodes ({1} of {2})".format(success_rate, okay, okay+fail)
 
 
-@pytest.mark.xfail
-def test_pcc_11279_has_span_nodes():
-        # error: WARNING:root:File 'maz-11279.rs3' has bad span nodes
-        #~ import pudb; pudb.set_trace()
-        #~ produced = rstviewer_vs_rsttree('maz-11279.rs3', rs3tree_dir=PCC_RS3_DIR)
-        #~ produced = example2tree('maz-11279.rs3', rs3tree_dir=PCC_RS3_DIR)
-        produced = example2tree('maz-11279-excerpt.rs3', rs3tree_dir=RS3TREE_DIR)
-        assert no_span_nodes(produced.tree)
+def test_fix_one_edu_span():
+    """A span consisting of only one EDU is pared correctly."""
+    produced = example2tree('one-edu-span.rs3', rs3tree_dir=RS3TREE_DIR)
+    expected = t(
+        'preparation', [
+            ('S', ['13']),
+            ('N', [
+                ('antithesis', [
+                    ('S', ['14']),
+                    ('N', [
+                        ('interpretation', [
+                            ('N', ['15']),
+                            ('S', ['16'])])])])])])
 
+    assert no_span_nodes(produced.tree)
+    assert produced.edu_strings == produced.tree.leaves() == [
+        '13', '14', '15', '16']
+    assert expected == produced.tree
