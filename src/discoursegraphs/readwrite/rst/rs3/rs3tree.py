@@ -117,12 +117,17 @@ class RSTTree(object):
                         "File '{}' has {} roots!".format(
                             os.path.basename(self.filepath), num_roots))
 
-            root_subtrees = [self.dt(start_node=root_id)
+            root_subtrees = [n_wrap(self.dt(start_node=root_id),
+                                    debug=self.debug, root_id=root_id)
                              for root_id in root_nodes]
             sorted_subtrees = self.sort_subtrees(*root_subtrees)
-            # ensure that each subtree is marked as a nucleus
-            nuc_subtrees = [n_wrap(st, debug=self.debug) for st in sorted_subtrees]
-            return t('virtual-root', nuc_subtrees, debug=self.debug)
+
+            # assign the root_id of the highest subtree to the virtual root
+            max_height, virtual_root_id = max((st.height(), st.root_id)
+                                              for st in sorted_subtrees)
+
+            return t('virtual-root', sorted_subtrees, debug=self.debug,
+                     root_id=virtual_root_id)
         else:
             return t('')
 
@@ -139,9 +144,7 @@ class RSTTree(object):
                 subtree = self.dt(start_node=subtree_id)
 
             else:
-                assert len(self.child_dict[elem_id]) > 1
-                # this group is the root of a multinuc relation
-                subtrees = [self.dt(start_node=c)
+                subtrees = [self.elem_wrap(self.dt(start_node=c), debug=self.debug, root_id=c)
                             for c in self.child_dict[elem_id]]
                 sorted_subtrees = self.sort_subtrees(*subtrees)
                 first_child_id = self.child_dict[elem_id][0]
@@ -435,6 +438,19 @@ class RSTTree(object):
         sorted_subtrees = self.sort_subtrees(nuc_tree, sat_tree)
         relname = self.get_relname(sat_tree.root_id)
         return t(relname, sorted_subtrees, debug=self.debug, root_id=nuc_tree.root_id)
+
+    def elem_wrap(self, tree, debug=False, root_id=None):
+        """takes a DGParentedTree and puts a nucleus or satellite on top,
+        depending on the nuclearity of the root element of the tree.
+        """
+        if root_id is None:
+            root_id = tree.root_id
+
+        elem = self.elem_dict[root_id]
+        if elem['nuclearity'] == 'nucleus':
+            return n_wrap(tree, debug=debug, root_id=root_id)
+        else:
+            return s_wrap(tree, debug=debug, root_id=root_id)
 
 
 def get_rs3_data(rs3_file, word_wrap=0):

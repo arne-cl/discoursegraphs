@@ -90,33 +90,37 @@ def relnodes_have_ns_children(rst_tree, tree=None, debug=False, root_id=None):
     """Return True, iff every relation node (either rst or multinuc) in the
     given RSTTree has only nucleii and/or satellites as children.
     """
+    def expected_labels(root_rel, debug, root_id):
+        labels = ('N', 'S') if root_rel == 'rst' else ('N')
+        return [debug_root_label(label, debug=debug, root_id=root_id)
+                for label in labels]
+
     if tree is None:
         tree = rst_tree.tree
 
+    if root_id is None:
+        root_id = tree.root_id
+
     assert isinstance(tree, ParentedTree)
     relations = get_relations_from_rs3file(rst_tree.filepath)
+    relations['virtual-root'] = 'multinuc'
 
-    tree_label = tree.label().split()[0] # works for 'label' and 'label (node_id)'
-    tree_has_relroot = tree_label in relations
+    norm_tree_label = tree.label().split()[0] # works for 'label' and 'label (node_id)'
+    tree_has_relroot = norm_tree_label in relations
     if tree_has_relroot:
-        if relations[tree_label] == 'rst':
-            expected_labels = [
-                debug_root_label('N', debug=debug, root_id=root_id),
-                debug_root_label('S', debug=debug, root_id=root_id)]
-        else:
-            expected_labels = [
-                debug_root_label('N', debug=debug, root_id=root_id)]
+        root_rel = relations[norm_tree_label]
 
     for node in tree:
         if isinstance(node, ParentedTree):
-            if tree_has_relroot and node.label() not in expected_labels:
+            if tree_has_relroot and node.label() not in expected_labels(root_rel, debug, node.root_id):
                 logging.log(
                     logging.WARN,
                     "File {0}: Node '{1}' has child '{2}'".format(
-                        os.path.basename(rst_tree.filepath), tree_label, node.label()))
+                        os.path.basename(rst_tree.filepath), norm_tree_label, node.label()))
                 return False
 
-            subtree_is_okay = relnodes_have_ns_children(rst_tree, tree=node)
+            subtree_is_okay = relnodes_have_ns_children(
+                rst_tree, tree=node, debug=debug, root_id=root_id)
             if not subtree_is_okay:
                 return False
 
@@ -151,7 +155,11 @@ def test_relnodes_have_ns_children():
         n([good_inner])
     ])
 
+    # disable logging for expected warning
+    logging.disable(logging.CRITICAL)
     assert relnodes_have_ns_children(dummy_rst_tree, tree=bad_tree, debug=False, root_id=None) is False
+    logging.disable(logging.NOTSET)
+
     assert relnodes_have_ns_children(dummy_rst_tree, tree=good_tree, debug=False, root_id=None) is True
 
 
@@ -217,7 +225,6 @@ def generate_pcc_test_case(filepath, error):
     return result
 
 
-@pytest.mark.xfail
 def test_pcc_00001():
     # original error: A multinuc segment (18) should not have children: ['40']
     #  WARNING:root:File maz-00001.rs3: Node 'conjunction' has child 'condition'
@@ -975,18 +982,18 @@ def test_complete_pcc_no_double_ns():
         "\n{0}% of debug-parsed PCC files have no N/S->N/S parent/child ({1} of {2})".format(success_rate, okay, okay+fail)
 
 
-@pytest.mark.xfail
 def test_complete_pcc_relnodes_have_ns_children():
     """All relation nodes in all PCC files have only nucleii and/or satellites
     as children.
     """
+    debug = False
     okay = 0.0
     fail = 0.0
     for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
         filename = os.path.basename(rfile)
         try:
-            rst_tree = dg.readwrite.RSTTree(rfile)
-            if relnodes_have_ns_children(rst_tree):
+            rst_tree = dg.readwrite.RSTTree(rfile, debug=debug)
+            if relnodes_have_ns_children(rst_tree, debug=debug):
                 okay += 1
             else:
                 fail += 1
@@ -1001,15 +1008,18 @@ def test_complete_pcc_relnodes_have_ns_children():
     assert success_rate == 100, \
         "\n{0}% of parsed PCC files have  only relname->N/S parent/child relations ({1} of {2})".format(success_rate, okay, okay+fail)
 
+    debug = True
     okay = 0.0
     fail = 0.0
     for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
         filename = os.path.basename(rfile)
         try:
-            rst_tree = dg.readwrite.RSTTree(rfile, debug=True)
-            if relnodes_have_ns_children(rst_tree):
+            rst_tree = dg.readwrite.RSTTree(rfile, debug=debug)
+            if relnodes_have_ns_children(rst_tree, debug=debug):
                 okay += 1
             else:
+                relnodes_have_ns_children(rst_tree, debug=debug)
+
                 fail += 1
                 logging.log(logging.WARN,
                         "File '{}' has bad relname children in debug-mode".format(
@@ -1087,3 +1097,4 @@ def test_fix_one_edu_span():
     assert produced.edu_strings == produced.tree.leaves() == [
         '13', '14', '15', '16']
     assert expected == produced.tree
+
