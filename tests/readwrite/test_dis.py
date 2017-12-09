@@ -7,7 +7,7 @@ import os
 import pytest
 
 import discoursegraphs as dg
-from discoursegraphs.readwrite.rst.dis import RSTLispDocumentGraph
+from discoursegraphs.readwrite.rst.dis.disgraph import RSTLispDocumentGraph
 
 """
 Basic tests for the *.dis format for Rhetorical Structure Theory

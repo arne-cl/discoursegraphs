@@ -6,24 +6,18 @@
 This module converts a *.dis file (used by old versions of RSTTool to
 annotate rhetorical structure) into a networkx-based directed graph
 (``DiscourseDocumentGraph``).
-
-This module contains some MIT licensed code from
-github.com/EducationalTestingService/discourse-parsing .
 """
 
 import os
-import re
 from collections import defaultdict
 
 from nltk.tree import ParentedTree
 
 from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.readwrite.generic import generic_converter_cli
-from discoursegraphs.readwrite.ptb import PTB_BRACKET_ESCAPE
-
-
-SUBTREE_TYPES = ('Root', 'Nucleus', 'Satellite')
-NODE_TYPES = ('leaf', 'span')
+from discoursegraphs.readwrite.rst.dis.common import (
+    convert_parens_in_rst_tree_str, fix_rst_treebank_tree_str,
+    NODE_TYPES, SUBTREE_TYPES)
 
 
 class RSTLispDocumentGraph(DiscourseDocumentGraph):
@@ -252,36 +246,6 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         span_start = nuc_or_sat[0].leaves()[0]
         span_end = nuc_or_sat[0].leaves()[1]
         return '{0}:span:{1}-{2}'.format(self.ns, span_start, span_end)
-
-
-def fix_rst_treebank_tree_str(rst_tree_str):
-    '''
-    This removes some unexplained comments in two files that cannot be parsed.
-    - data/RSTtrees-WSJ-main-1.0/TRAINING/wsj_2353.out.dis
-    - data/RSTtrees-WSJ-main-1.0/TRAINING/wsj_2367.out.dis
-
-    source: github.com/EducationalTestingService/discourse-parsing
-    original license: MIT
-    '''
-    return re.sub(r'\)//TT_ERR', ')', rst_tree_str)
-
-
-def convert_parens_in_rst_tree_str(rst_tree_str):
-    '''
-    This converts any brackets and parentheses in the EDUs of the RST discourse
-    treebank to look like Penn Treebank tokens (e.g., -LRB-),
-    so that the NLTK tree API doesn't crash when trying to read in the
-    RST trees.
-
-    source: github.com/EducationalTestingService/discourse-parsing
-    original license: MIT
-    '''
-    for bracket_type, bracket_replacement in PTB_BRACKET_ESCAPE.items():
-        rst_tree_str = \
-            re.sub('(_![^_(?=!)]*)\\{}([^_(?=!)]*_!)'.format(bracket_type),
-                   '\\g<1>{}\\g<2>'.format(bracket_replacement),
-                   rst_tree_str)
-    return rst_tree_str
 
 
 # pseudo-function to create a document graph from a RST (.dis) file
