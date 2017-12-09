@@ -11,12 +11,10 @@ annotate rhetorical structure) into a networkx-based directed graph
 import os
 from collections import defaultdict
 
-from nltk.tree import ParentedTree
-
 from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.readwrite.generic import generic_converter_cli
 from discoursegraphs.readwrite.rst.dis.common import (
-    convert_parens_in_rst_tree_str, fix_rst_treebank_tree_str,
+    convert_parens_in_rst_tree_str, DisFile, fix_rst_treebank_tree_str,
     NODE_TYPES, SUBTREE_TYPES)
 
 
@@ -69,20 +67,11 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
 
         self.tokenized = tokenize
         self.tokens = []
-        self.dis_tree = self.disfile2tree(dis_filepath)
+        self.dis_tree = DisFile(dis_filepath).tree
         self.parse_dis_tree(self.dis_tree)
 
         if precedence:
             self.add_precedence_relations()
-
-    @staticmethod
-    def disfile2tree(dis_filepath):
-        """converts a *.dis file into a ParentedTree (NLTK) instance"""
-        with open(dis_filepath) as disfile:
-            rst_tree_str = disfile.read().strip()
-            rst_tree_str = fix_rst_treebank_tree_str(rst_tree_str)
-            rst_tree_str = convert_parens_in_rst_tree_str(rst_tree_str)
-            return ParentedTree.fromstring(rst_tree_str)
 
     def parse_dis_tree(self, dis_tree, indent=0):
         """parse a *.dis ParentedTree into this document graph"""

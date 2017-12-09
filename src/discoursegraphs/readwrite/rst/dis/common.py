@@ -12,10 +12,39 @@ github.com/EducationalTestingService/discourse-parsing
 
 import re
 
+from nltk.tree import ParentedTree
+
 from discoursegraphs.readwrite.ptb import PTB_BRACKET_ESCAPE
 
 SUBTREE_TYPES = ('Root', 'Nucleus', 'Satellite')
 NODE_TYPES = ('leaf', 'span')
+
+
+class DisFile(object):
+    """A DisFile instance represents the structure of a *.dis file as a ParentedTree.
+    
+    NOTE: The resulting tree represents the file format (i.e. the syntax of a *.dis file),
+    not its meaning (i.e. it doesn't look like an RST tree).
+    """
+    def __init__(self, dis_filepath):
+        self.filepath = dis_filepath
+        
+        with open(dis_filepath) as disfile:
+            rst_tree_str = disfile.read().strip()
+            rst_tree_str = fix_rst_treebank_tree_str(rst_tree_str)
+            rst_tree_str = convert_parens_in_rst_tree_str(rst_tree_str)
+            self.tree = ParentedTree.fromstring(rst_tree_str)
+
+    @classmethod
+    def fromstring(cls, dis_string):
+        """Create a DisFile instance from a string containing a *.dis parse."""
+        temp = tempfile.NamedTemporaryFile(delete=False)
+        temp.write(dis_string)
+        temp.close()
+        dis_file = cls(dis_filepath=temp.name)
+        os.unlink(temp.name)
+        return dis_file
+
 
 
 def fix_rst_treebank_tree_str(rst_tree_str):
