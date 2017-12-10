@@ -9,13 +9,12 @@ annotate rhetorical structure) into a networkx-based directed graph
 """
 
 import os
-from collections import defaultdict
 
 from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.readwrite.generic import generic_converter_cli
 from discoursegraphs.readwrite.rst.dis.common import (
-    convert_parens_in_rst_tree_str, DisFile, fix_rst_treebank_tree_str,
-    NODE_TYPES, SUBTREE_TYPES)
+    DisFile, get_child_types, get_edu_text, get_node_type, get_relation_type,
+    get_tree_type, SUBTREE_TYPES)
 
 
 class RSTLispDocumentGraph(DiscourseDocumentGraph):
@@ -75,7 +74,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
 
     def parse_dis_tree(self, dis_tree, indent=0):
         """parse a *.dis ParentedTree into this document graph"""
-        tree_type = self.get_tree_type(dis_tree)
+        tree_type = get_tree_type(dis_tree)
         assert tree_type in SUBTREE_TYPES
         if tree_type == 'Root':
             # replace generic root node with tree root
@@ -97,10 +96,10 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
 
         else: # tree_type in ('Nucleus', 'Satellite')
             node_id = self.get_node_id(dis_tree)
-            node_type = self.get_node_type(dis_tree)
-            relation_type = self.get_relation_type(dis_tree)
+            node_type = get_node_type(dis_tree)
+            relation_type = get_relation_type(dis_tree)
             if node_type == 'leaf':
-                edu_text = self.get_edu_text(dis_tree[-1])
+                edu_text = get_edu_text(dis_tree[-1])
                 self.add_node(node_id, attr_dict={
                     self.ns+':text': edu_text,
                     'label': u'{0}: {1}'.format(node_id, edu_text[:20])})
@@ -117,7 +116,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
                 self.add_node(node_id, attr_dict={self.ns+':rel_type': relation_type,
                                                   self.ns+':node_type': node_type})
                 children = dis_tree[3:]
-                child_types = self.get_child_types(children)
+                child_types = get_child_types(children)
 
                 expected_child_types = set(['Nucleus', 'Satellite'])
                 unexpected_child_types = set(child_types).difference(expected_child_types)
@@ -162,71 +161,9 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
                 for child in children:
                     self.parse_dis_tree(child, indent=indent+1)
 
-    def get_child_types(self, children):
-        """
-        maps from (sub)tree type (i.e. Nucleus or Satellite) to a list
-        of all children of this type
-        """
-        child_types = defaultdict(list)
-        for i, child in enumerate(children):
-            child_types[self.get_tree_type(child)].append(i)
-        return child_types
-
-    @staticmethod
-    def get_edu_text(text_subtree):
-        """return the text of the given EDU subtree"""
-        assert text_subtree.label() == 'text'
-        return u' '.join(word.decode('utf-8') for word in text_subtree.leaves())
-
-    @staticmethod
-    def get_tree_type(tree):
-        """
-        returns the type of the (sub)tree: Root, Nucleus or Satellite
-
-        Parameters
-        ----------
-        tree : nltk.tree.ParentedTree
-            a tree representing a rhetorical structure (or a part of it)
-        """
-        tree_type = tree.label()
-        assert tree_type in SUBTREE_TYPES
-        return tree_type
-
-    @staticmethod
-    def get_node_type(tree):
-        """
-        returns the node type (leaf or span) of a subtree (i.e. Nucleus or Satellite)
-
-        Parameters
-        ----------
-        tree : nltk.tree.ParentedTree
-            a tree representing a rhetorical structure (or a part of it)
-        """
-        node_type = tree[0].label()
-        assert node_type in NODE_TYPES
-        return node_type
-
-    @staticmethod
-    def get_relation_type(tree):
-        """
-        returns the RST relation type attached to the parent node of an RST relation,
-        e.g. `span`, `elaboration` or `antithesis`.
-
-        Parameters
-        ----------
-        tree : nltk.tree.ParentedTree
-            a tree representing a rhetorical structure (or a part of it)
-
-        Returns
-        -------
-        relation_type : str
-            the type of the rhetorical relation that this (sub)tree represents
-        """
-        return tree[1][0]
-
     def get_node_id(self, nuc_or_sat):
         """return the node ID of the given nucleus or satellite"""
-        node_type = self.get_node_type(nuc_or_sat)
+        node_type = get_node_type(nuc_or_sat)
         if node_type == 'leaf':
             leaf_id = nuc_or_sat[0].leaves()[0]
             return '{0}:{1}'.format(self.ns, leaf_id)

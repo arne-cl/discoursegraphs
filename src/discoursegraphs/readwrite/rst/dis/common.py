@@ -10,6 +10,7 @@ It contains some MIT licensed code from
 github.com/EducationalTestingService/discourse-parsing
 """
 
+from collections import defaultdict
 import os
 import re
 import tempfile
@@ -24,13 +25,13 @@ NODE_TYPES = ('leaf', 'span')
 
 class DisFile(object):
     """A DisFile instance represents the structure of a *.dis file as a ParentedTree.
-    
+
     NOTE: The resulting tree represents the file format (i.e. the syntax of a *.dis file),
     not its meaning (i.e. it doesn't look like an RST tree).
     """
     def __init__(self, dis_filepath):
         self.filepath = dis_filepath
-        
+
         with open(dis_filepath) as disfile:
             rst_tree_str = disfile.read().strip()
             rst_tree_str = fix_rst_treebank_tree_str(rst_tree_str)
@@ -46,6 +47,69 @@ class DisFile(object):
         dis_file = cls(dis_filepath=temp.name)
         os.unlink(temp.name)
         return dis_file
+
+
+def get_edu_text(text_subtree):
+    """return the text of the given EDU subtree"""
+    assert text_subtree.label() == 'text'
+    return u' '.join(word.decode('utf-8') for word in text_subtree.leaves())
+
+
+def get_tree_type(tree):
+    """
+    returns the type of the (sub)tree: Root, Nucleus or Satellite
+
+    Parameters
+    ----------
+    tree : nltk.tree.ParentedTree
+        a tree representing a rhetorical structure (or a part of it)
+    """
+    tree_type = tree.label()
+    assert tree_type in SUBTREE_TYPES
+    return tree_type
+
+
+def get_node_type(tree):
+    """
+    returns the node type (leaf or span) of a subtree (i.e. Nucleus or Satellite)
+
+    Parameters
+    ----------
+    tree : nltk.tree.ParentedTree
+        a tree representing a rhetorical structure (or a part of it)
+    """
+    node_type = tree[0].label()
+    assert node_type in NODE_TYPES
+    return node_type
+
+
+def get_relation_type(tree):
+    """
+    returns the RST relation type attached to the parent node of an RST relation,
+    e.g. `span`, `elaboration` or `antithesis`.
+
+    Parameters
+    ----------
+    tree : nltk.tree.ParentedTree
+        a tree representing a rhetorical structure (or a part of it)
+
+    Returns
+    -------
+    relation_type : str
+        the type of the rhetorical relation that this (sub)tree represents
+    """
+    return tree[1][0]
+
+
+def get_child_types(children):
+    """
+    maps from (sub)tree type (i.e. Nucleus or Satellite) to a list
+    of all children of this type
+    """
+    child_types = defaultdict(list)
+    for i, child in enumerate(children):
+        child_types[get_tree_type(child)].append(i)
+    return child_types
 
 
 def fix_rst_treebank_tree_str(rst_tree_str):
