@@ -10,7 +10,9 @@ It contains some MIT licensed code from
 github.com/EducationalTestingService/discourse-parsing
 """
 
+import os
 import re
+import tempfile
 
 from nltk.tree import ParentedTree
 
@@ -44,7 +46,6 @@ class DisFile(object):
         dis_file = cls(dis_filepath=temp.name)
         os.unlink(temp.name)
         return dis_file
-
 
 
 def fix_rst_treebank_tree_str(rst_tree_str):

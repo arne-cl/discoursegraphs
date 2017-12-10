@@ -8,6 +8,7 @@ trees.
 """
 
 from collections import defaultdict, deque
+import textwrap
 
 from nltk.tree import ParentedTree
 
@@ -265,3 +266,13 @@ def tree2bracket(docgraph, root=None, successors=None):
 def p(tree):
     """pretty-print a tree"""
     return tree.pretty_print()
+
+
+def word_wrap_tree(parented_tree, width=0):
+    """line-wrap an NLTK ParentedTree for pretty-printing"""
+    if width != 0:
+        for i, leaf_text in enumerate(parented_tree.leaves()):
+            print "leaf_text:", leaf_text
+            dedented_text = textwrap.dedent(leaf_text).strip()
+            parented_tree[parented_tree.leaf_treeposition(i)] = textwrap.fill(dedented_text, width=width)
+    return parented_tree
