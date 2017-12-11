@@ -19,7 +19,10 @@ from nltk.tree import ParentedTree
 
 from discoursegraphs.readwrite.ptb import PTB_BRACKET_ESCAPE
 
-SUBTREE_TYPES = ('Root', 'Nucleus', 'Satellite')
+ROOT = 'Root'
+NUC = 'Nucleus'
+SAT = 'Satellite'
+SUBTREE_TYPES = (ROOT, NUC, SAT)
 NODE_TYPES = ('leaf', 'span')
 
 
@@ -82,6 +85,24 @@ def get_node_type(tree):
     assert node_type in NODE_TYPES
     return node_type
 
+
+def get_node_id(nuc_or_sat, namespace=None):
+    """return the node ID of the given nucleus or satellite"""
+    node_type = get_node_type(nuc_or_sat)
+    if node_type == 'leaf':
+        leaf_id = nuc_or_sat[0].leaves()[0]
+        if namespace is not None:
+            return '{0}:{1}'.format(namespace, leaf_id)
+        else:
+            return string(leaf_id)
+
+    #else: node_type == 'span'
+    span_start = nuc_or_sat[0].leaves()[0]
+    span_end = nuc_or_sat[0].leaves()[1]
+    if namespace is not None:
+        return '{0}:span:{1}-{2}'.format(namespace, span_start, span_end)
+    else:
+        return 'span:{0}-{1}'.format(span_start, span_end)
 
 def get_relation_type(tree):
     """

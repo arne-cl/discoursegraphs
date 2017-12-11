@@ -13,8 +13,8 @@ import os
 from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.readwrite.generic import generic_converter_cli
 from discoursegraphs.readwrite.rst.dis.common import (
-    DisFile, get_child_types, get_edu_text, get_node_type, get_relation_type,
-    get_tree_type, SUBTREE_TYPES)
+    DisFile, get_child_types, get_edu_text, get_node_id, get_node_type,
+    get_relation_type, get_tree_type, SUBTREE_TYPES)
 
 
 class RSTLispDocumentGraph(DiscourseDocumentGraph):
@@ -79,14 +79,14 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
         if tree_type == 'Root':
             # replace generic root node with tree root
             old_root_id = self.root
-            root_id = self.get_node_id(dis_tree)
+            root_id = get_node_id(dis_tree, self.ns)
             self.root = root_id
             self.add_node(root_id)
             self.remove_node(old_root_id)
 
             children = dis_tree[1:]
             for child in children:
-                child_id = self.get_node_id(child)
+                child_id = get_node_id(child, self.ns)
                 self.add_edge(
                     root_id, child_id,
                     #~ attr_dict={self.ns+':rel_type': relation_type},
@@ -95,7 +95,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
                 self.parse_dis_tree(child, indent=indent+1)
 
         else: # tree_type in ('Nucleus', 'Satellite')
-            node_id = self.get_node_id(dis_tree)
+            node_id = get_node_id(dis_tree, self.ns)
             node_type = get_node_type(dis_tree)
             relation_type = get_relation_type(dis_tree)
             if node_type == 'leaf':
@@ -127,14 +127,14 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
                 if 'Satellite' not in child_types:
                     # span only contains nucleii -> multinuc
                     for child in children:
-                        child_node_id = self.get_node_id(child)
+                        child_node_id = get_node_id(child, self.ns)
                         self.add_edge(node_id, child_node_id, attr_dict={
                             self.ns+':rel_type': relation_type})
 
                 elif len(child_types['Satellite']) == 1 and len(children) == 1:
                     if tree_type == 'Nucleus':
                         child = children[0]
-                        child_node_id = self.get_node_id(child)
+                        child_node_id = get_node_id(child, self.ns)
                         self.add_edge(
                             node_id, child_node_id,
                             attr_dict={self.ns+':rel_type': relation_type},
@@ -148,8 +148,8 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
                     nucleus_index = child_types['Nucleus'][0]
                     satellite_index = child_types['Satellite'][0]
 
-                    nucleus_node_id = self.get_node_id(children[nucleus_index])
-                    satellite_node_id = self.get_node_id(children[satellite_index])
+                    nucleus_node_id = get_node_id(children[nucleus_index], self.ns)
+                    satellite_node_id = get_node_id(children[satellite_index], self.ns)
                     self.add_edge(node_id, nucleus_node_id, attr_dict={self.ns+':rel_type': 'span'},
                                   edge_type=EdgeTypes.spanning_relation)
                     self.add_edge(nucleus_node_id, satellite_node_id,
@@ -160,18 +160,6 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
 
                 for child in children:
                     self.parse_dis_tree(child, indent=indent+1)
-
-    def get_node_id(self, nuc_or_sat):
-        """return the node ID of the given nucleus or satellite"""
-        node_type = get_node_type(nuc_or_sat)
-        if node_type == 'leaf':
-            leaf_id = nuc_or_sat[0].leaves()[0]
-            return '{0}:{1}'.format(self.ns, leaf_id)
-
-        #else: node_type == 'span'
-        span_start = nuc_or_sat[0].leaves()[0]
-        span_end = nuc_or_sat[0].leaves()[1]
-        return '{0}:span:{1}-{2}'.format(self.ns, span_start, span_end)
 
 
 # pseudo-function to create a document graph from a RST (.dis) file
