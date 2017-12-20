@@ -52,7 +52,7 @@ class DisRSTTree(object):
 
 
 def dis2tree(dis_tree, wrap_tree=False):
-    assert get_tree_type(dis_tree) in SUBTREE_TYPES
+    assert get_tree_type(dis_tree) in SUBTREE_TYPES, "tree_type: {}".format(get_tree_type(dis_tree))
     if get_node_type(dis_tree) == 'leaf':
         return leaf2tree(dis_tree)
     
@@ -63,8 +63,8 @@ def dis2tree(dis_tree, wrap_tree=False):
 
     child_types = get_child_types(children)    
     if len(child_types) == 1: # this is a multinuc relation
-        assert NUC in child_types
-        assert len(child_types[NUC]) > 1
+        assert NUC in child_types, "child_types: {}".format(child_types)
+        assert len(child_types[NUC]) > 1, "len: {}".format(len(child_types[NUC]))
         
         subtrees = [dis2tree(children[child_id], wrap_tree=True) for child_id in child_types[NUC]]
         
@@ -72,9 +72,10 @@ def dis2tree(dis_tree, wrap_tree=False):
         reltype = get_relation_type(children[0])      
         
     else: # this is a nucleus-satellite relation
-        assert len(child_types) == 2
-        assert NUC in child_types and SAT in child_types
-        assert len(child_types[NUC]) == 1 and len(child_types[SAT]) == 1
+        assert len(child_types) == 2, "child_types: {}".format(child_types)
+        assert NUC in child_types and SAT in child_types, "child_types: {}".format(child_types)
+        assert len(child_types[NUC]) == 1 and len(child_types[SAT]) == 1, \
+            "child_types: {}".format(child_types)
         
         nuc_child_id = child_types[NUC][0]
         nuc_subtree = dis2tree(children[nuc_child_id], wrap_tree=True)
@@ -108,8 +109,8 @@ def is_root(dis_tree):
 
 
 def leaf2tree(dis_subtree):
-    assert get_tree_type(dis_subtree) in SUBTREE_TYPES
-    assert get_node_type(dis_subtree) == 'leaf'
+    assert get_tree_type(dis_subtree) in SUBTREE_TYPES, "tree_type: {}".format(get_tree_type(dis_subtree))
+    assert get_node_type(dis_subtree) == 'leaf', "node_type: {}".format(get_node_type(dis_subtree))
 
     elem_wrapper = get_element_wrapper(dis_subtree)
     return elem_wrapper([get_edu_text(dis_subtree[2])])

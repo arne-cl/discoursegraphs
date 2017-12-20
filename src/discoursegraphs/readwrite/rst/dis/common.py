@@ -19,6 +19,7 @@ from nltk.tree import ParentedTree
 
 from discoursegraphs.readwrite.ptb import PTB_BRACKET_ESCAPE
 
+
 ROOT = 'Root'
 NUC = 'Nucleus'
 SAT = 'Satellite'
@@ -54,7 +55,7 @@ class DisFile(object):
 
 def get_edu_text(text_subtree):
     """return the text of the given EDU subtree"""
-    assert text_subtree.label() == 'text'
+    assert text_subtree.label() == 'text', "text_subtree: {}".format(text_subtree)
     return u' '.join(word.decode('utf-8') for word in text_subtree.leaves())
 
 
@@ -68,7 +69,7 @@ def get_tree_type(tree):
         a tree representing a rhetorical structure (or a part of it)
     """
     tree_type = tree.label()
-    assert tree_type in SUBTREE_TYPES
+    assert tree_type in SUBTREE_TYPES, "tree_type: {}".format(tree_type)
     return tree_type
 
 
@@ -82,7 +83,7 @@ def get_node_type(tree):
         a tree representing a rhetorical structure (or a part of it)
     """
     node_type = tree[0].label()
-    assert node_type in NODE_TYPES
+    assert node_type in NODE_TYPES, "node_type: {}".format(node_type)
     return node_type
 
 
