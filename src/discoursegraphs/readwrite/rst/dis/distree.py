@@ -15,7 +15,7 @@ from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.readwrite.rst.dis.common import (
     DisFile, get_child_types, get_edu_text, get_node_type, get_relation_type,
     get_tree_type, ROOT, NUC, SAT, SUBTREE_TYPES)
-from discoursegraphs.readwrite.tree import t
+from discoursegraphs.readwrite.tree import t, word_wrap_tree
 
 
 class DisRSTTree(object):
@@ -29,7 +29,8 @@ class DisRSTTree(object):
         self.edu_strings = None  # FIXME: implement if needed
         
         self.disfile_tree = DisFile(dis_filepath).tree
-        self.tree = dis2tree(self.disfile_tree)
+        tree = dis2tree(self.disfile_tree)
+        self.tree = word_wrap_tree(tree, width=word_wrap)
 
     def _repr_png_(self):
         """This PNG representation will be automagically used inside
