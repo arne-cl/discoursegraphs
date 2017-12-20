@@ -17,6 +17,6 @@ pydotplus>=2.0.2 # required by networkx's to_pydot. we use it for print_dot
 Unidecode==0.4.19
 
 # for debugging / testing
-ipython>=4.1.2
+ipython==5.5.0 # last version that works with python 2.7
 pudb>=2016.1
 pytest>=2.9.1
