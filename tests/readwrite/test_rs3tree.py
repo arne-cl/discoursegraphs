@@ -25,7 +25,7 @@ PCC_RS3_DIR = os.path.join(dg.DATA_ROOT_DIR,
 
 
 def example2tree(rs3tree_example_filename, rs3tree_dir=RS3TREE_DIR, debug=False):
-    """Return the absolute path of an example file."""
+    """Given the filename of an rs3 file and its directory, return an RSTTree instance of it."""
     filepath = os.path.join(rs3tree_dir, rs3tree_example_filename)
     return RSTTree(filepath, debug=debug)
 

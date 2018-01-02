@@ -48,9 +48,6 @@ class DisRSTTree(object):
     def __getitem__(self, key):
         return self.tree.__getitem__(key)
 
-    def node_height(self, node_id):
-        raise NotImplementedError
-
 
 def dis2tree(dis_tree, wrap_tree=False):
     assert get_tree_type(dis_tree) in SUBTREE_TYPES, "tree_type: {}".format(get_tree_type(dis_tree))

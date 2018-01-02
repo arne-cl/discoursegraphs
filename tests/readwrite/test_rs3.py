@@ -5,16 +5,26 @@
 """Basic tests for the ``rs3`` module"""
 
 import os
+from tempfile import NamedTemporaryFile
 
 import pytest
 
 import discoursegraphs as dg
 from discoursegraphs.corpora import pcc
+from discoursegraphs.readwrite.rst.rs3 import parentedtree2rs3, RSTTree
+from discoursegraphs.readwrite.tree import t
 
 
 DOC_ID = 'maz-9852'
+RS3TREE_DIR = os.path.join(dg.DATA_ROOT_DIR, 'rs3tree')
 RS3_TEST_FILE = os.path.join(pcc.path, 'rst/{}.rs3'.format(DOC_ID))
 RS3_GRAPH = dg.read_rs3(RS3_TEST_FILE)
+
+
+def example2tree(rs3tree_example_filename, rs3tree_dir=RS3TREE_DIR, debug=False):
+    """Given the filename of an rs3 file and its directory, return an RSTTree instance of it."""
+    filepath = os.path.join(rs3tree_dir, rs3tree_example_filename)
+    return RSTTree(filepath, debug=debug)
 
 
 def test_create_empty_rstgraph():
@@ -98,3 +108,57 @@ def test_select_nodes_by_layer():
     rst_node_ids = list(dg.select_nodes_by_layer(rdg, 'rst'))
     rst_nodes = list(dg.select_nodes_by_layer(rdg, 'rst', data=True))
     assert len(rdg) == len(rst_node_ids) == len(rst_nodes) == 195
+
+
+def test_parentedtree2rs3_emptytree():
+    """An empty DGParentedTree is converted into an empty RS3 file and back."""
+    # minimal case: file without any segments
+    input_pt = t("", [])
+    expected_output_rsttree = example2tree("empty.rs3")
+    
+    tempfile = NamedTemporaryFile()
+    parentedtree2rs3(input_pt, output_filepath=tempfile.name)
+    produced_output_rsttree = RSTTree(tempfile.name)
+
+    assert produced_output_rsttree.edu_strings == produced_output_rsttree.tree.leaves() == []
+    assert input_pt == produced_output_rsttree.tree
+
+
+def test_parentedtree2rs3_onesegmenttree():
+    """An DGParentedTree with only one segment is correctly converted into an RS3 file and back."""
+    input_pt = t("N", ["foo"])
+    expected_output_rsttree = example2tree('only-one-segment.rs3')
+
+    tempfile = NamedTemporaryFile()
+    parentedtree2rs3(input_pt, output_filepath=tempfile.name)
+    produced_output_rsttree = RSTTree(tempfile.name)
+
+    assert produced_output_rsttree.edu_strings == produced_output_rsttree.tree.leaves() == ['foo']
+    assert input_pt == produced_output_rsttree.tree
+
+
+def test_parentedtree2rs3_nucsat():
+    """An DGParentedTree with one nuc-sat relation is correctly converted into an RS3 file and back."""
+    input_pt = t("circumstance", [
+        ("S", ["foo"]),
+        ("N", ["bar"])])
+    expected_output_rsttree = example2tree("foo-bar-circ-foo-to-bar.rs3")
+
+    tempfile = NamedTemporaryFile()
+    parentedtree2rs3(input_pt, output_filepath=tempfile.name)
+    produced_output_rsttree = RSTTree(tempfile.name)
+
+    assert produced_output_rsttree.edu_strings == produced_output_rsttree.tree.leaves() == ['foo', 'bar']
+    assert input_pt == produced_output_rsttree.tree
+
+    input_pt = t("circumstance", [
+        ("N", ["foo"]),
+        ("S", ["bar"])])
+    expected_output_rsttree = example2tree("foo-bar-circ-bar-to-foo.rs3")
+
+    tempfile = NamedTemporaryFile()
+    parentedtree2rs3(input_pt, output_filepath=tempfile.name)
+    produced_output_rsttree = RSTTree(tempfile.name)
+
+    assert produced_output_rsttree.edu_strings == produced_output_rsttree.tree.leaves() == ['foo', 'bar']
+    assert input_pt == produced_output_rsttree.tree

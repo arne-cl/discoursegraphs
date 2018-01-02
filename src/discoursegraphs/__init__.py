@@ -28,7 +28,6 @@ from discoursegraphs.readwrite import (
     read_ptb, read_mrg,
     read_rst, read_rs3, read_dis, read_tiger, read_urml)
 from discoursegraphs.readwrite.dot import print_dot
-from discoursegraphs.readwrite.tree import t
 from discoursegraphs.statistics import info
 from discoursegraphs.util import xmlprint, make_labels_explicit, find_files
 
