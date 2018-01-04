@@ -16,6 +16,9 @@ from discoursegraphs.readwrite.tree import t, p, debug_root_label
 from discoursegraphs.readwrite.rst.rs3 import extract_relationtypes
 
 
+VIRTUAL_ROOT = 'virtual-root'
+
+
 class SchemaTypes(object):
     """Enumerator of RST schema types"""
     one_sided = 'one_sided' # S-S-N or N-S-S
@@ -112,7 +115,7 @@ class RSTTree(object):
             # An undesired, but common case (at least in the PCC corpus).
             # This happens if there's one EDU not to connected to the rest
             # of the tree (e.g. a headline). We will just make all 'root'
-            # nodes part of a multinuc relation called 'virtual-root'.
+            # nodes part of a multinuc relation called VIRTUAL_ROOT.
             logging.log(logging.INFO,
                         "File '{}' has {} roots!".format(
                             os.path.basename(self.filepath), num_roots))
@@ -126,7 +129,7 @@ class RSTTree(object):
             max_height, virtual_root_id = max((st.height(), st.root_id)
                                               for st in sorted_subtrees)
 
-            return t('virtual-root', sorted_subtrees, debug=self.debug,
+            return t(VIRTUAL_ROOT, sorted_subtrees, debug=self.debug,
                      root_id=virtual_root_id)
         else:
             return t('')

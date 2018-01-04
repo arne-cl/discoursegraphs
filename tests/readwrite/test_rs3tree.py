@@ -15,7 +15,7 @@ import pytest
 
 from discoursegraphs.readwrite.tree import p, t, debug_root_label
 from discoursegraphs.readwrite.rst.rs3 import extract_relationtypes, RSTTree
-from discoursegraphs.readwrite.rst.rs3.rs3tree import n, s, TooManyChildrenError
+from discoursegraphs.readwrite.rst.rs3.rs3tree import n, s, TooManyChildrenError, VIRTUAL_ROOT
 import discoursegraphs as dg
 
 RS3TREE_DIR = os.path.join(dg.DATA_ROOT_DIR, 'rs3tree')
@@ -102,7 +102,7 @@ def relnodes_have_ns_children(rst_tree, tree=None, debug=False, root_id=None):
 
     assert isinstance(tree, ParentedTree)
     relations = get_relations_from_rs3file(rst_tree.filepath)
-    relations['virtual-root'] = 'multinuc'
+    relations[VIRTUAL_ROOT] = 'multinuc'
 
     norm_tree_label = tree.label().split()[0] # works for 'label' and 'label (node_id)'
     tree_has_relroot = norm_tree_label in relations
@@ -329,7 +329,7 @@ def test_pcc_00001():
         n([result_15_22])
     ])
 
-    expected = t('virtual-root', [
+    expected = t(VIRTUAL_ROOT, [
         n(['1']),
         n([joint_2_22])
     ])
@@ -432,7 +432,7 @@ def test_pcc_3367():
         ('N', [third_tree_13_23])
     ])
 
-    expected = t('virtual-root', [
+    expected = t(VIRTUAL_ROOT, [
         ('N', ['1']),
         ('N', [background_2_23])
     ])
@@ -462,7 +462,7 @@ def test_segments_only_trees():
 
     # two segments w/out a root
     produced = example2tree("foo-bar-only-segments.rs3")
-    expected = t("virtual-root",
+    expected = t(VIRTUAL_ROOT,
                  [("N", ["foo"]), ("N", ["bar"])])
 
     assert produced.edu_strings == produced.tree.leaves() == ['foo', 'bar']
@@ -470,7 +470,7 @@ def test_segments_only_trees():
 
     # three segments w/out a root
     produced = example2tree('eins-zwei-drei-only-segments.rs3')
-    expected = t("virtual-root",
+    expected = t(VIRTUAL_ROOT,
                  [("N", ["eins"]), ("N", ["zwei"]), ("N", ["drei"])])
 
     assert produced.edu_strings == produced.tree.leaves() == ['eins', 'zwei', 'drei']
@@ -841,7 +841,7 @@ def test_pcc_10207():
         s(['18'])
     ])
 
-    expected = t('virtual-root', [
+    expected = t(VIRTUAL_ROOT, [
         n(['1']),
         n([inter_2_18])
     ])
