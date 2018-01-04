@@ -24,7 +24,7 @@ class DisRSTTree(object):
     def __init__(self, dis_filepath, word_wrap=0, debug=False):
         self.debug = debug
         self.filepath = dis_filepath
-        self.child_dict, self.elem_dict, self.edus = None, None, None # FIXME: implement if needed
+        self.child_dict, self.elem_dict, self.edus, self.reltypes = None, None, None, None # FIXME: implement if needed
         self.edu_set = None  # FIXME: implement if needed
         self.edu_strings = None  # FIXME: implement if needed
         

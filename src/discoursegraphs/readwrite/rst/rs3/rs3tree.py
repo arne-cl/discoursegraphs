@@ -45,7 +45,8 @@ class RSTTree(object):
     def __init__(self, rs3_file, word_wrap=0, debug=False):
         self.debug = debug
         self.filepath = rs3_file
-        self.child_dict, self.elem_dict, self.edus = get_rs3_data(rs3_file, word_wrap=word_wrap)
+        self.child_dict, self.elem_dict, self.edus, self.reltypes = \
+            get_rs3_data(rs3_file, word_wrap=word_wrap)
         self.edu_set = set(self.edus)
         self.edu_strings = [self.elem_dict[edu_id]['text']
                             for edu_id in self.edus]
@@ -386,6 +387,9 @@ def get_rs3_data(rs3_file, word_wrap=0):
     """
     rs3_etree = etree.parse(rs3_file)
     reltypes = extract_relationtypes(rs3_etree)
+    # add VIRTUAL_ROOT to reltypes dict for export
+    reltypes[VIRTUAL_ROOT] = 'multinuc'
+
     elements = defaultdict(lambda: defaultdict(str))
     children = defaultdict(list)
     ordered_edus = []
@@ -432,7 +436,7 @@ def get_rs3_data(rs3_file, word_wrap=0):
 
         else:  # elem_type == 'group':
             elements[elem_id]['group_type'] = elem.attrib.get('type')
-    return children, elements, ordered_edus
+    return children, elements, ordered_edus, reltypes
 
 
 def n(children):
