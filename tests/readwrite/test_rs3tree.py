@@ -13,8 +13,7 @@ from nltk.tree import ParentedTree
 import pytest
 
 
-from discoursegraphs import t
-from discoursegraphs.readwrite.tree import p, debug_root_label
+from discoursegraphs.readwrite.tree import p, t, debug_root_label
 from discoursegraphs.readwrite.rst.rs3 import extract_relationtypes, RSTTree
 from discoursegraphs.readwrite.rst.rs3.rs3tree import n, s, TooManyChildrenError
 import discoursegraphs as dg
