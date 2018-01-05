@@ -41,6 +41,9 @@ class DisRSTTree(object):
     def __str__(self):
         return self.tree.__str__()
 
+    def label(self):
+        return self.tree.label()
+
     def pretty_print(self):
         """Return a pretty-printed representation of the RSTTree."""
         return self.tree.pretty_print()
