@@ -7,6 +7,10 @@ This module contains helper functions to deal with .rs3 files that are
 used by several rs3-related modules.
 """
 
+from __future__ import absolute_import, division, print_function
+import codecs
+
+
 def extract_relationtypes(rs3_xml_tree):
     """
     extracts the allowed RST relation names and relation types from
@@ -27,16 +31,3 @@ def extract_relationtypes(rs3_xml_tree):
     return {rel.attrib['name']: rel.attrib['type']
             for rel in rs3_xml_tree.iter('rel')
             if 'type' in rel.attrib}
-
-
-# FIXME: implement parentedtree2rs3()
-def parentedtree2rs3(dgparented_tree, output_filepath=None):
-    """Converts a DGParentedTree (representing an RST tree) to a .rs3 file.
-    If no `output_filepath` is given, returns the .rs3 file content as a string.
-    """
-    if output_filepath is None:
-        # TODO: return string representation of RS3 FILE
-        raise NotImplementedError
-    else:
-        # TODO: write rs3 file
-        raise NotImplementedError

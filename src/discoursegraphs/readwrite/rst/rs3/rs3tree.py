@@ -4,6 +4,7 @@
 
 """This module converts .rs3 files into `NLTK ParentedTree`s."""
 
+import codecs
 from collections import defaultdict
 import logging
 import textwrap
@@ -11,11 +12,13 @@ from operator import itemgetter, methodcaller
 import os
 
 from lxml import etree
+from lxml.builder import E
 
-from discoursegraphs.readwrite.tree import t, p, debug_root_label
+from discoursegraphs.readwrite.tree import (
+    DGParentedTree, debug_root_label, p, t)
 from discoursegraphs.readwrite.rst.rs3 import extract_relationtypes
 
-
+NUCLEARITY_LABELS = ('N', 'S')
 VIRTUAL_ROOT = 'virtual-root'
 
 
@@ -390,8 +393,6 @@ def get_rs3_data(rs3_file, word_wrap=0):
     """
     rs3_etree = etree.parse(rs3_file)
     reltypes = extract_relationtypes(rs3_etree)
-    # add VIRTUAL_ROOT to reltypes dict for export
-    reltypes[VIRTUAL_ROOT] = 'multinuc'
 
     elements = defaultdict(lambda: defaultdict(str))
     children = defaultdict(list)
@@ -439,6 +440,12 @@ def get_rs3_data(rs3_file, word_wrap=0):
 
         else:  # elem_type == 'group':
             elements[elem_id]['group_type'] = elem.attrib.get('type')
+
+    if len(elements) > 0:
+        # add VIRTUAL_ROOT to reltypes dict for export, but only if the
+        # rs3 file is not empty
+        reltypes[VIRTUAL_ROOT] = 'multinuc'
+
     return children, elements, ordered_edus, reltypes
 
 
@@ -494,3 +501,179 @@ def s_wrap(tree, debug=False, root_id=None):
         return tree
     else:
         return t('S', [tree], debug=debug, root_id=root_id)
+
+
+def parentedtree2rs3(dgtree, debug=True, output_filepath=None):
+    """Convert a DGParentedTree into an lxml.etree._Element.
+    If debug is True, the etree element will also be printed."""
+    if isinstance(dgtree, RSTTree):
+        dgtree = dgtree.tree
+
+    tree = E('rst')
+
+    header = E('header')
+    relations = gen_relations(dgtree)
+    header.append(relations)
+
+    body = gen_body(dgtree)
+
+    tree.append(header)
+    tree.append(body)
+    if debug is True:
+        print(etree.tostring(tree, pretty_print=True))
+
+    if output_filepath is None:
+        return tree
+    else:
+        with codecs.open(output_filepath, 'w', 'utf-8') as outfile:
+            outfile.write(etree.tostring(tree))
+
+
+def extract_relations(dgtree, relations=None):
+    """Extracts relations from a DGParentedTree.
+
+    Given a DGParentedTree, returns a (relation name, relation type) dict
+    of all the RST relations occurring in that tree.
+    """
+    if hasattr(dgtree, 'reltypes'):
+        # dgtree is an RSTTree or a DisTree that contains a DGParentedTree
+        return dgtree.reltypes
+
+    if relations is None:
+        relations = {}
+
+    if is_leaf(dgtree):
+        return relations
+
+    root_label = dgtree.label()
+    if root_label == '':
+        assert dgtree == DGParentedTree('', []), \
+            "The tree has no root label, but isn't empty: {}".format(dgtree)
+        return relations
+    elif root_label in NUCLEARITY_LABELS:
+        for child in dgtree:
+            relations.update(extract_relations(child, relations))
+    else:  # dgtree is a 'relation' node
+        child_labels = [child.label() for child in dgtree]
+        assert all(label in NUCLEARITY_LABELS for label in child_labels)
+        if 'S' in child_labels:
+            relations[root_label] = 'rst'
+        else:
+            relations[root_label] = 'multinuc'
+        for child in dgtree:
+            relations.update(extract_relations(child, relations))
+
+    return relations
+
+
+def gen_relations(dgtree):
+    """Create the <relations> etree element of an RS3 file.
+    This represents all relation types (both 'rst' and 'multinuc').
+
+    Example:
+        <rel name="circumstance" type="rst" />
+    """
+    relations = E('relations')
+    relations_dict = extract_relations(dgtree)
+    for relname in sorted(relations_dict):
+        relations.append(E('rel', name=relname, type=relations_dict[relname]))
+    return relations
+
+
+def is_leaf(elem):
+    """Returns True, iff the given DGParentedTree node is a leaf node."""
+    return isinstance(elem, str)
+
+
+def gen_node_id(parent_id, node_ids):
+    """Return the ID of the current node, given its parent ID and a list
+    of already assigned node IDs."""
+    if parent_id is not None:
+        node_id = str(int(parent_id) + 1)
+    else:
+        node_id = '1'
+
+    while node_id in node_ids:
+        node_id = str(int(node_id) + 1)
+    node_ids.add(node_id)
+    return node_id
+
+
+def gen_body(dgtree, body=None,
+             this_node_id=None, node_ids=None,
+             parent_id=None, parent_label=None):
+    """Create the <body> etree element of an RS3 file (contains segments
+    and groups) given a DGParentedTree.
+    """
+    if body is None:
+        body = E('body')
+    if node_ids is None:
+        node_ids = set()
+    if this_node_id is None:
+        this_node_id = gen_node_id(parent_id, node_ids)
+
+    if is_leaf(dgtree):  # this node represents an EDU
+        if (parent_id is None) or (parent_id == this_node_id):
+            attribs = {}
+        else:
+            attribs = {'parent': parent_id, 'relname': parent_label}
+        body.append(E('segment', dgtree, id=this_node_id, **attribs))
+
+    elif dgtree.label() in NUCLEARITY_LABELS:
+        # child of a 'nuclearity' node: either 'EDU' or 'relation' node
+        leaf_node_id = gen_node_id(this_node_id, node_ids)
+        gen_body(dgtree[0], body=body, this_node_id=leaf_node_id,
+                 node_ids=node_ids, parent_id=parent_id,
+                 parent_label=parent_label)
+
+    elif dgtree.label() == '':  # the tree is empty
+        assert dgtree == DGParentedTree('', []), \
+            "The tree has no root label, but isn't empty: {}".format(dgtree)
+
+    else: # dgtree is a 'relation' node
+        assert isinstance(dgtree, (RSTTree, DGParentedTree)), type(dgtree)
+        relation = dgtree.label()
+        relations = extract_relations(dgtree)
+        assert relation in relations, relation
+        reltype = relations[relation]
+
+        children = []
+        for i, child in enumerate(dgtree):
+            child_label = child.label()
+            assert child_label in NUCLEARITY_LABELS
+            child_node_id = gen_node_id(this_node_id, node_ids)
+            children.append((child_label, child_node_id))
+
+        if reltype == 'rst':
+            for i, (node_label, node_id) in enumerate(children):
+                if node_label == 'N':
+                    nuc_node_id = node_id
+                    nuc_index = i
+
+            for i, child in enumerate(dgtree):
+                _, child_node_id = children[i]
+                if i != nuc_index:  # this child is the satellite of an rst relation
+                    parent_id = nuc_node_id # FIXME: calculate this
+                    parent_label = relation
+                gen_body(child[0], body=body, this_node_id=child_node_id,
+                         node_ids=node_ids, parent_id=parent_id,
+                         parent_label=parent_label)
+
+        else:
+            assert reltype == 'multinuc', reltype
+
+            if parent_id is not None:
+                body.append(E('group', id=this_node_id, type=reltype,
+                              parent=parent_id, relname=parent_label))
+            else:
+                body.append(E('group', id=this_node_id, type=reltype))
+
+            # each child of a 'multinuc' relation node is
+            # an 'N' nuclearity node, whose only child is either
+            # an EDU node or another relation node
+            for i, child in enumerate(dgtree):
+                _, child_node_id = children[i]
+                gen_body(child[0], body=body,
+                         this_node_id=child_node_id, node_ids=node_ids,
+                         parent_id=this_node_id, parent_label=relation)
+    return body
