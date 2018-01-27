@@ -2,7 +2,6 @@
   <header>
     <relations>
       <rel name="circumstance" type="rst" />
-      <rel name="conjunction" type="multinuc" />
     </relations>
   </header>
   <body>

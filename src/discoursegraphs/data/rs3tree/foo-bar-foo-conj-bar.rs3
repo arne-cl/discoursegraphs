@@ -1,7 +1,6 @@
 <rst>
   <header>
     <relations>
-      <rel name="elaboration" type="rst" />
       <rel name="conjunction" type="multinuc" />
     </relations>
   </header>
