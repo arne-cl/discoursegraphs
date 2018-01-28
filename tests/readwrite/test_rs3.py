@@ -120,7 +120,7 @@ def test_parentedtree2rs3_emptytree():
     produced_output_tree = RSTTree(tempfile.name)
 
     assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == []
-    assert input_tree == produced_output_tree.tree
+    assert input_tree == expected_output_tree.tree == produced_output_tree.tree
 
 
 def test_parentedtree2rs3_onesegmenttree():
@@ -133,7 +133,7 @@ def test_parentedtree2rs3_onesegmenttree():
     produced_output_tree = RSTTree(tempfile.name)
 
     assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == ['foo']
-    assert input_tree == produced_output_tree.tree
+    assert input_tree == expected_output_tree.tree == produced_output_tree.tree
 
 
 def test_parentedtree2rs3_nucsat():
@@ -148,7 +148,7 @@ def test_parentedtree2rs3_nucsat():
     produced_output_tree = RSTTree(tempfile.name)
 
     assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == ['foo', 'bar']
-    assert input_tree == produced_output_tree.tree
+    assert input_tree == expected_output_tree.tree == produced_output_tree.tree
 
     input_tree = t("circumstance", [
         ("N", ["foo"]),
@@ -160,7 +160,7 @@ def test_parentedtree2rs3_nucsat():
     produced_output_tree = RSTTree(tempfile.name)
 
     assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == ['foo', 'bar']
-    assert input_tree == produced_output_tree.tree
+    assert input_tree == expected_output_tree.tree == produced_output_tree.tree
 
 
 def test_parentedtree2rs3_nested():
@@ -179,4 +179,12 @@ def test_parentedtree2rs3_nested():
     produced_output_tree = RSTTree(tempfile.name)
 
     assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == ['eins', 'zwei', 'drei']
-    assert input_tree == produced_output_tree.tree
+    assert input_tree == expected_output_tree.tree == produced_output_tree.tree
+
+
+#~ def test_parentedtree2rs3_complete_pcc():
+    #~ """All *.rs3 files can be parsed into a DGParentedTree (T1), converted back
+    #~ into *.rs3 files and parsed back into a DGParentedTree (T2), with T1 == T2.
+    #~ """
+    #~ for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
+        #~ expected_output_tree
