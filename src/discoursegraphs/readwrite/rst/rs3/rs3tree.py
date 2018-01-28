@@ -632,10 +632,16 @@ def gen_body(dgtree, body=None,
 
     else: # dgtree is a 'relation' node
         assert isinstance(dgtree, (RSTTree, DGParentedTree)), type(dgtree)
+
         relation = dgtree.label()
+        # FIXME: calculate relations only once per tree
         relations = extract_relations(dgtree)
         assert relation in relations, relation
         reltype = relations[relation]
+
+        if parent_id is not None: # this is neither a root nor a leaf node
+            body.append(E('group', id=this_node_id, type=reltype, parent=parent_id, relname=parent_label))
+
 
         children = []
         for i, child in enumerate(dgtree):
@@ -662,10 +668,7 @@ def gen_body(dgtree, body=None,
         else:
             assert reltype == 'multinuc', reltype
 
-            if parent_id is not None:
-                body.append(E('group', id=this_node_id, type=reltype,
-                              parent=parent_id, relname=parent_label))
-            else:
+            if parent_id is None: # this is a multinuc relation and the tree root
                 body.append(E('group', id=this_node_id, type=reltype))
 
             # each child of a 'multinuc' relation node is

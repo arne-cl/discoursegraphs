@@ -114,7 +114,7 @@ def test_parentedtree2rs3_emptytree():
     """An empty DGParentedTree is converted into an empty RS3 file and back."""
     input_tree = t("", [])
     expected_output_tree = example2tree("empty.rs3")
-    
+
     tempfile = NamedTemporaryFile()
     parentedtree2rs3(input_tree, output_filepath=tempfile.name)
     produced_output_tree = RSTTree(tempfile.name)
@@ -124,7 +124,7 @@ def test_parentedtree2rs3_emptytree():
 
 
 def test_parentedtree2rs3_onesegmenttree():
-    """An DGParentedTree with only one segment is correctly converted into an RS3 file and back."""
+    """A DGParentedTree with only one segment is correctly converted into an RS3 file and back."""
     input_tree = t("N", ["foo"])
     expected_output_tree = example2tree('only-one-segment.rs3')
 
@@ -137,7 +137,7 @@ def test_parentedtree2rs3_onesegmenttree():
 
 
 def test_parentedtree2rs3_nucsat():
-    """An DGParentedTree with one nuc-sat relation is correctly converted into an RS3 file and back."""
+    """A DGParentedTree with one nuc-sat relation is correctly converted into an RS3 file and back."""
     input_tree = t("circumstance", [
         ("S", ["foo"]),
         ("N", ["bar"])])
@@ -160,4 +160,23 @@ def test_parentedtree2rs3_nucsat():
     produced_output_tree = RSTTree(tempfile.name)
 
     assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == ['foo', 'bar']
+    assert input_tree == produced_output_tree.tree
+
+
+def test_parentedtree2rs3_nested():
+    """A DGParentedTree with a multinuc relation nested in a nuc-sat relation
+    is correctly converted into an RS3 file and back."""
+    input_tree = t('elaboration', [
+        ('N', ['eins']),
+        ('S', [
+            ('joint', [
+                ('N', ['zwei']),
+                ('N', ['drei'])])])])
+    expected_output_tree = example2tree('eins-zwei-drei-(elab-eins-from-(joint-zwei-and-drei).rs3')
+
+    tempfile = NamedTemporaryFile()
+    parentedtree2rs3(input_tree, output_filepath=tempfile.name)
+    produced_output_tree = RSTTree(tempfile.name)
+
+    assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == ['eins', 'zwei', 'drei']
     assert input_tree == produced_output_tree.tree
