@@ -4,4 +4,4 @@
 
 from discoursegraphs.readwrite.rst.rs3.common import extract_relationtypes
 from discoursegraphs.readwrite.rst.rs3.rs3graph import RSTGraph, read_rst, read_rs3
-from discoursegraphs.readwrite.rst.rs3.rs3tree import RSTTree, parentedtree2rs3
+from discoursegraphs.readwrite.rst.rs3.rs3tree import RSTTree, RS3FileWriter

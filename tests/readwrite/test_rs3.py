@@ -4,6 +4,7 @@
 
 """Basic tests for the ``rs3`` module"""
 
+import logging
 import os
 from tempfile import NamedTemporaryFile
 
@@ -11,7 +12,7 @@ import pytest
 
 import discoursegraphs as dg
 from discoursegraphs.corpora import pcc
-from discoursegraphs.readwrite.rst.rs3 import parentedtree2rs3, RSTTree
+from discoursegraphs.readwrite.rst.rs3 import RS3FileWriter, RSTTree
 from discoursegraphs.readwrite.tree import DGParentedTree, t
 
 
@@ -110,33 +111,33 @@ def test_select_nodes_by_layer():
     assert len(rdg) == len(rst_node_ids) == len(rst_nodes) == 195
 
 
-def test_parentedtree2rs3_emptytree():
+def test_rs3filewriter_emptytree():
     """An empty DGParentedTree is converted into an empty RS3 file and back."""
     input_tree = t("", [])
     expected_output_tree = example2tree("empty.rs3")
 
     tempfile = NamedTemporaryFile()
-    parentedtree2rs3(input_tree, output_filepath=tempfile.name)
+    RS3FileWriter(input_tree, output_filepath=tempfile.name)
     produced_output_tree = RSTTree(tempfile.name)
 
     assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == []
     assert input_tree == expected_output_tree.tree == produced_output_tree.tree
 
 
-def test_parentedtree2rs3_onesegmenttree():
+def test_rs3filewriter_onesegmenttree():
     """A DGParentedTree with only one segment is correctly converted into an RS3 file and back."""
     input_tree = t("N", ["foo"])
     expected_output_tree = example2tree('only-one-segment.rs3')
 
     tempfile = NamedTemporaryFile()
-    parentedtree2rs3(input_tree, output_filepath=tempfile.name)
+    RS3FileWriter(input_tree, output_filepath=tempfile.name)
     produced_output_tree = RSTTree(tempfile.name)
 
     assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == ['foo']
     assert input_tree == expected_output_tree.tree == produced_output_tree.tree
 
 
-def test_parentedtree2rs3_nucsat():
+def test_rs3filewriter_nucsat():
     """A DGParentedTree with one nuc-sat relation is correctly converted into an RS3 file and back."""
     input_tree = t("circumstance", [
         ("S", ["foo"]),
@@ -144,7 +145,7 @@ def test_parentedtree2rs3_nucsat():
     expected_output_tree = example2tree("foo-bar-circ-foo-to-bar.rs3")
 
     tempfile = NamedTemporaryFile()
-    parentedtree2rs3(input_tree, output_filepath=tempfile.name)
+    RS3FileWriter(input_tree, output_filepath=tempfile.name)
     produced_output_tree = RSTTree(tempfile.name)
 
     assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == ['foo', 'bar']
@@ -156,14 +157,14 @@ def test_parentedtree2rs3_nucsat():
     expected_output_tree = example2tree("foo-bar-circ-bar-to-foo.rs3")
 
     tempfile = NamedTemporaryFile()
-    parentedtree2rs3(input_tree, output_filepath=tempfile.name)
+    RS3FileWriter(input_tree, output_filepath=tempfile.name)
     produced_output_tree = RSTTree(tempfile.name)
 
     assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == ['foo', 'bar']
     assert input_tree == expected_output_tree.tree == produced_output_tree.tree
 
 
-def test_parentedtree2rs3_nested():
+def test_rs3filewriter_nested():
     """A DGParentedTree with a multinuc relation nested in a nuc-sat relation
     is correctly converted into an RS3 file and back."""
     input_tree = t('elaboration', [
@@ -175,16 +176,91 @@ def test_parentedtree2rs3_nested():
     expected_output_tree = example2tree('eins-zwei-drei-(elab-eins-from-(joint-zwei-and-drei).rs3')
 
     tempfile = NamedTemporaryFile()
-    parentedtree2rs3(input_tree, output_filepath=tempfile.name)
+    RS3FileWriter(input_tree, output_filepath=tempfile.name)
     produced_output_tree = RSTTree(tempfile.name)
 
     assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == ['eins', 'zwei', 'drei']
     assert input_tree == expected_output_tree.tree == produced_output_tree.tree
 
 
-#~ def test_parentedtree2rs3_complete_pcc():
-    #~ """All *.rs3 files can be parsed into a DGParentedTree (T1), converted back
-    #~ into *.rs3 files and parsed back into a DGParentedTree (T2), with T1 == T2.
-    #~ """
-    #~ for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
-        #~ expected_output_tree
+@pytest.mark.xfail
+def test_rs3filewriter_pcc_10575():
+    """PCC rs3 file 10575 can be converted rs3 -> dgtree -> rs3' -> dgtree',
+    without information loss between dgtree and dgtree'.
+    """
+    input_tree = t('interpretation', [
+        ('N', [
+            ('circumstance', [
+                ('S', ['eins']),
+                ('N', [
+                    ('contrast', [
+                        ('N', ['zwei']),
+                        ('N', [
+                            ('cause', [
+                                ('N', ['drei']),
+                                ('S', ['vier'])])])])])])]),
+        ('S', ['fuenf'])])
+    expected_output_tree = example2tree('maz-10575-excerpt.rs3')
+
+    tempfile = NamedTemporaryFile()
+    RS3FileWriter(input_tree, output_filepath=tempfile.name)
+    produced_output_tree = RSTTree(tempfile.name)
+
+    assert produced_output_tree.edu_strings == produced_output_tree.tree.leaves() == ['eins', 'zwei', 'drei', 'vier', 'fuenf']
+    assert input_tree == expected_output_tree.tree == produced_output_tree.tree
+
+
+@pytest.mark.xfail
+def test_rs3filewriter_complete_pcc():
+    """All *.rs3 files can be parsed into a DGParentedTree (T1), converted back
+    into *.rs3 files and parsed back into a DGParentedTree (T2), with T1 == T2.
+    """
+    #~ import pudb; pudb.set_trace()
+    for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
+        # rs3 -> dgtree
+        expected_output_tree = RSTTree(rfile)
+
+        tempfile = NamedTemporaryFile()
+        # dgtree -> rs3'
+        RS3FileWriter(expected_output_tree, output_filepath=tempfile.name, debug=False)
+        # rs3' -> dgtree'
+        produced_output_tree = RSTTree(tempfile.name)
+
+        assert expected_output_tree.edu_strings == expected_output_tree.tree.leaves() \
+            == produced_output_tree.edu_strings == produced_output_tree.tree.leaves()
+        assert expected_output_tree.tree == produced_output_tree.tree
+
+
+@pytest.mark.xfail
+def test_rs3filewriter_complete_pcc_stats():
+    """All *.rs3 files can be parsed into a DGParentedTree (T1), converted back
+    into *.rs3 files and parsed back into a DGParentedTree (T2), with T1 == T2.
+    """
+    okay = 0.0
+    fail = 0.0
+
+    for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
+        try:
+            # rs3 -> dgtree
+            expected_output_tree = RSTTree(rfile)
+
+            tempfile = NamedTemporaryFile()
+            # dgtree -> rs3'
+            RS3FileWriter(expected_output_tree, output_filepath=tempfile.name, debug=False)
+            # rs3' -> dgtree'
+            produced_output_tree = RSTTree(tempfile.name)
+
+            assert expected_output_tree.edu_strings == expected_output_tree.tree.leaves() \
+                == produced_output_tree.edu_strings == produced_output_tree.tree.leaves()
+            assert expected_output_tree.tree == produced_output_tree.tree
+            okay += 1
+
+        except Exception as e:
+            logging.log(logging.WARN,
+                    "File '{0}' can't be loop-converted: {1}".format(
+                        os.path.basename(rfile), e))
+            fail += 1
+
+    success_rate = okay / (okay+fail) * 100
+    assert success_rate == 100, \
+        "{0}% of PCC files could be loop-converted ({1} of {2})".format(success_rate, okay, okay+fail)
