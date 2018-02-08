@@ -151,34 +151,41 @@ class RS3FileWriter(object):
         children = self.get_children(dgtree, this_node_id)
 
         if reltype == 'rst':
-            for i, (node_label, node_id) in enumerate(children):
-                if node_label == 'N':
-                    nuc_node_id = node_id
-                    nuc_index = i
+            self.handle_rst_relation(dgtree, relation, parent_id, parent_label, children)
 
-            for i, child in enumerate(dgtree):
-                _, child_node_id = children[i]
-                if i != nuc_index:  # this child is the satellite of an rst relation
-                    parent_id = nuc_node_id # FIXME: calculate this
-                    parent_label = relation
-                self.gen_body(child[0], this_node_id=child_node_id,
-                         parent_id=parent_id,
-                         parent_label=parent_label)
+        elif reltype == 'multinuc':
+            self.handle_multinuc_relation(dgtree, relation, parent_id, this_node_id, children)
 
         else:
-            assert reltype == 'multinuc', reltype
+            raise NotImplementedError('Unknown reltype: {}'.format(reltype))
 
-            if parent_id is None: # this is a multinuc relation and the tree root
-                self.body.append(E('group', id=this_node_id, type=reltype))
+    def handle_rst_relation(self, dgtree, relation, parent_id, parent_label, children):
+        for i, (node_label, node_id) in enumerate(children):
+            if node_label == 'N':
+                nuc_node_id = node_id
+                nuc_index = i
 
-            # each child of a 'multinuc' relation node is
-            # an 'N' nuclearity node, whose only child is either
-            # an EDU node or another relation node
-            for i, child in enumerate(dgtree):
-                _, child_node_id = children[i]
-                self.gen_body(child[0],
-                         this_node_id=child_node_id,
-                         parent_id=this_node_id, parent_label=relation)
+        for i, child in enumerate(dgtree):
+            _, child_node_id = children[i]
+            if i != nuc_index:  # this child is the satellite of an rst relation
+                parent_id = nuc_node_id # FIXME: calculate this
+                parent_label = relation
+            self.gen_body(child[0], this_node_id=child_node_id,
+                     parent_id=parent_id,
+                     parent_label=parent_label)
+
+    def handle_multinuc_relation(self, dgtree, relation, parent_id, this_node_id, children):
+        if parent_id is None: # this is a multinuc relation and the tree root
+            self.body.append(E('group', id=this_node_id, type='multinuc'))
+
+        # each child of a 'multinuc' relation node is
+        # an 'N' nuclearity node, whose only child is either
+        # an EDU node or another relation node
+        for i, child in enumerate(dgtree):
+            _, child_node_id = children[i]
+            self.gen_body(child[0],
+                     this_node_id=child_node_id,
+                     parent_id=this_node_id, parent_label=relation)
 
     def get_children(self, dgtree, this_node_id):
         children = []
