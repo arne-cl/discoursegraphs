@@ -148,12 +148,7 @@ class RS3FileWriter(object):
         if parent_id is not None: # this is neither a root nor a leaf node
             self.body.append(E('group', id=this_node_id, type=reltype, parent=parent_id, relname=parent_label))
 
-        children = []
-        for i, child in enumerate(dgtree):
-            child_label = child.label()
-            assert child_label in NUCLEARITY_LABELS
-            child_node_id = self.gen_node_id(this_node_id)
-            children.append((child_label, child_node_id))
+        children = self.get_children(dgtree, this_node_id)
 
         if reltype == 'rst':
             for i, (node_label, node_id) in enumerate(children):
@@ -184,6 +179,15 @@ class RS3FileWriter(object):
                 self.gen_body(child[0],
                          this_node_id=child_node_id,
                          parent_id=this_node_id, parent_label=relation)
+
+    def get_children(self, dgtree, this_node_id):
+        children = []
+        for i, child in enumerate(dgtree):
+            child_type = get_node_type(child)
+            assert child_type == TreeNodeTypes.nuclearity_node, child_type
+            child_node_id = self.gen_node_id(this_node_id)
+            children.append((child.label(), child_node_id))
+        return children
 
     def gen_node_id(self, parent_id):
         """Return the ID to be assigned current node, given its parent ID
