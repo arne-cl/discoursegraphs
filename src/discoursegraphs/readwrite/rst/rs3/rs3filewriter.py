@@ -54,9 +54,7 @@ class RS3FileWriter(object):
         if debug is True:
             print(etree.tostring(self.etree, pretty_print=True))
 
-        if output_filepath is None:
-            return self.etree
-        else:
+        if output_filepath is not None:
             with codecs.open(output_filepath, 'w', 'utf-8') as outfile:
                 outfile.write(etree.tostring(self.etree))
 
