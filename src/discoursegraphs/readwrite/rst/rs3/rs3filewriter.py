@@ -6,6 +6,7 @@
 
 from __future__ import absolute_import, division, print_function
 import codecs
+from collections import defaultdict
 
 from lxml import etree
 from lxml.builder import E
@@ -46,7 +47,7 @@ class RS3FileWriter(object):
         if hasattr(dgtree, 'tree') and isinstance(dgtree.tree, DGParentedTree):
             dgtree = dgtree.tree
 
-        self.body = E('body')  # will be filled by gen_body()
+        self.body = defaultdict(list)  # will be filled by gen_body()
         self.node_ids = set()  # will be filled by gen_body()
         self.relations = extract_relations(dgtree)
         self.etree = self.gen_etree(dgtree)
@@ -68,7 +69,17 @@ class RS3FileWriter(object):
 
         tree = E('rst')
         tree.append(header)
-        tree.append(self.body)
+
+        # The <body> contains both <segment>, as well as <group> elements.
+        # While the order of the elements should theoretically be irrelevant,
+        # rs3 files usually list the segments before the groups.
+        body = E('body')
+        for segment in self.body['segments']:
+            body.append(segment)
+        for group in self.body['groups']:
+            body.append(group)
+
+        tree.append(body)
         return tree
 
     def gen_relations(self, dgtree):
@@ -124,7 +135,7 @@ class RS3FileWriter(object):
             attribs = {}
         else:
             attribs = {'parent': parent_id, 'relname': parent_label}
-        self.body.append(E('segment', dgtree, id=this_node_id, **attribs))
+        self.body['segments'].append(E('segment', dgtree, id=this_node_id, **attribs))
 
     def handle_nuclearity_node(self, dgtree, this_node_id,
                                 parent_id, parent_label):
@@ -144,7 +155,7 @@ class RS3FileWriter(object):
         reltype = self.relations[relation]
 
         if parent_id is not None: # this is neither a root nor a leaf node
-            self.body.append(E('group', id=this_node_id, type=reltype, parent=parent_id, relname=parent_label))
+            self.body['groups'].append(E('group', id=this_node_id, type=reltype, parent=parent_id, relname=parent_label))
 
         children = self.get_children(dgtree, this_node_id)
 
@@ -174,7 +185,7 @@ class RS3FileWriter(object):
 
     def handle_multinuc_relation(self, dgtree, relation, parent_id, this_node_id, children):
         if parent_id is None: # this is a multinuc relation and the tree root
-            self.body.append(E('group', id=this_node_id, type='multinuc'))
+            self.body['groups'].append(E('group', id=this_node_id, type='multinuc'))
 
         # each child of a 'multinuc' relation node is
         # an 'N' nuclearity node, whose only child is either
