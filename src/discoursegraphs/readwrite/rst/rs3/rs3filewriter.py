@@ -102,10 +102,10 @@ class RS3FileWriter(object):
         node_type = get_node_type(dgtree)
 
         if node_type == TreeNodeTypes.leaf_node:
-            self.convert_leaf_node(dgtree, this_node_id, parent_id, parent_label)
+            self.handle_leaf_node(dgtree, this_node_id, parent_id, parent_label)
 
         elif node_type == TreeNodeTypes.nuclearity_node:
-            self.convert_nuclearity_node(
+            self.handle_nuclearity_node(
                 dgtree, this_node_id, parent_id, parent_label)
 
         elif node_type == TreeNodeTypes.empty_tree:
@@ -113,13 +113,13 @@ class RS3FileWriter(object):
                 "The tree has no root label, but isn't empty: {}".format(dgtree)
 
         elif node_type == TreeNodeTypes.relation_node:
-            self.convert_relation_node(
+            self.handle_relation_node(
                 dgtree, this_node_id, parent_id, parent_label)
 
         else:
             raise NotImplementedError('Unknown node type: {}'.format())
 
-    def convert_leaf_node(self, dgtree, this_node_id, parent_id, parent_label):
+    def handle_leaf_node(self, dgtree, this_node_id, parent_id, parent_label):
         """Converts a leaf node into corresponding <body> elements."""
         # this node is an EDU / segment
         if (parent_id is None) or (parent_id == this_node_id):
@@ -129,7 +129,7 @@ class RS3FileWriter(object):
             attribs = {'parent': parent_id, 'relname': parent_label}
         self.body.append(E('segment', dgtree, id=this_node_id, **attribs))
 
-    def convert_nuclearity_node(self, dgtree, this_node_id,
+    def handle_nuclearity_node(self, dgtree, this_node_id,
                                 parent_id, parent_label):
         """Converts a nuclearity node into corresponding <body> elements."""
         # child of a 'nuclearity' node: either 'EDU' or 'relation' node
@@ -138,7 +138,7 @@ class RS3FileWriter(object):
                  parent_id=parent_id,
                  parent_label=parent_label)
 
-    def convert_relation_node(self, dgtree, this_node_id,
+    def handle_relation_node(self, dgtree, this_node_id,
                               parent_id, parent_label):
         assert isinstance(dgtree, (RSTTree, DGParentedTree)), type(dgtree)
 
