@@ -48,6 +48,7 @@ class RS3FileWriter(object):
 
         self.body = E('body')  # will be filled by gen_body()
         self.node_ids = set()  # will be filled by gen_body()
+        self.relations = extract_relations(dgtree)
         self.etree = self.gen_etree(dgtree)
 
         if debug is True:
@@ -61,9 +62,9 @@ class RS3FileWriter(object):
 
     def gen_etree(self, dgtree):
         """convert an RST tree (DGParentedTree -> lxml etree)"""
-        relations = self.gen_relations(dgtree)
+        relations_elem = self.gen_relations(dgtree)
         header = E('header')
-        header.append(relations)
+        header.append(relations_elem)
 
         self.gen_body(dgtree)
 
@@ -72,20 +73,18 @@ class RS3FileWriter(object):
         tree.append(self.body)
         return tree
 
-    @staticmethod
-    def gen_relations(dgtree):
+    def gen_relations(self, dgtree):
         """Create the <relations> etree element of an RS3 file.
         This represents all relation types (both 'rst' and 'multinuc').
 
         Example relation:
             <rel name="circumstance" type="rst" />
         """
-        relations = E('relations')
-        relations_dict = extract_relations(dgtree)
-        for relname in sorted(relations_dict):
-            relations.append(
-                E('rel', name=relname, type=relations_dict[relname]))
-        return relations
+        relations_elem = E('relations')
+        for relname in sorted(self.relations):
+            relations_elem.append(
+                E('rel', name=relname, type=self.relations[relname]))
+        return relations_elem
 
     def gen_body(self, dgtree,
                  this_node_id=None,
@@ -143,10 +142,8 @@ class RS3FileWriter(object):
         assert isinstance(dgtree, (RSTTree, DGParentedTree)), type(dgtree)
 
         relation = dgtree.label()
-        # FIXME: calculate relations only once per tree
-        relations = extract_relations(dgtree)
-        assert relation in relations, relation
-        reltype = relations[relation]
+        assert relation in self.relations, relation
+        reltype = self.relations[relation]
 
         if parent_id is not None: # this is neither a root nor a leaf node
             self.body.append(E('group', id=this_node_id, type=reltype, parent=parent_id, relname=parent_label))
