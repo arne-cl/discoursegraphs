@@ -156,15 +156,6 @@ class RS3FileWriter(object):
             children.append((child_label, child_node_id))
 
         if reltype == 'rst':
-
-            #~ if parent_id is None:
-                # this is a the RST root node and the nucleus of a nucsat relation
-                #~ child = dgtree[0][0]
-                #~ if is_leaf(child): # the RST root node is a segment / an EDU
-                    #~ self.body.append(E('segment', child, id=this_node_id))
-                #~ else:
-                #~ self.body.append(E('group', id=this_node_id))
-
             for i, (node_label, node_id) in enumerate(children):
                 if node_label == 'N':
                     nuc_node_id = node_id
