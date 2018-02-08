@@ -116,7 +116,7 @@ class RS3FileWriter(object):
                 dgtree, this_node_id, parent_id, parent_label)
 
         else:
-            raise NotImplementedError('Unknown node type: {}'.format())
+            raise NotImplementedError('Unknown node type: {}'.format(node_type))
 
     def handle_leaf_node(self, dgtree, this_node_id, parent_id, parent_label):
         """Converts a leaf node into corresponding <body> elements."""
