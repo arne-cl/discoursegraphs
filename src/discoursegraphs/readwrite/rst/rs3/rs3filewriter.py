@@ -182,7 +182,9 @@ class RS3FileWriter(object):
         """Create the <body> etree element of an RS3 file (contains segments
         and groups) given a DGParentedTree.
         """
-        for treepos in self.treepositions:
+        # We need to sort the treepositions, as RSTTool relies on <segment>
+        # elements to be in linear order of the EDUs in the text.
+        for treepos in sorted(self.treepositions):
             node = self.dgtree[treepos]
             node_id = self.get_node_id(treepos)
             node_type = get_node_type(node)

@@ -183,7 +183,6 @@ def test_rs3filewriter_nested():
     assert input_tree == expected_output_tree.tree == produced_output_tree.tree
 
 
-@pytest.mark.xfail
 def test_rs3filewriter_pcc_10575():
     """PCC rs3 file 10575 can be converted rs3 -> dgtree -> rs3' -> dgtree',
     without information loss between dgtree and dgtree'.
@@ -210,7 +209,6 @@ def test_rs3filewriter_pcc_10575():
     assert input_tree == expected_output_tree.tree == produced_output_tree.tree
 
 
-@pytest.mark.xfail
 def test_rs3filewriter_complete_pcc():
     """All *.rs3 files can be parsed into a DGParentedTree (T1), converted back
     into *.rs3 files and parsed back into a DGParentedTree (T2), with T1 == T2.
@@ -231,7 +229,6 @@ def test_rs3filewriter_complete_pcc():
         assert expected_output_tree.tree == produced_output_tree.tree
 
 
-@pytest.mark.xfail
 def test_rs3filewriter_complete_pcc_stats():
     """All *.rs3 files can be parsed into a DGParentedTree (T1), converted back
     into *.rs3 files and parsed back into a DGParentedTree (T2), with T1 == T2.
