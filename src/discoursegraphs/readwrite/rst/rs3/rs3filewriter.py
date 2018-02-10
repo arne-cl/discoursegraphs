@@ -59,8 +59,9 @@ class RS3FileWriter(object):
             print(etree.tostring(self.etree, pretty_print=True))
 
         if output_filepath is not None:
-            with codecs.open(output_filepath, 'w', 'utf-8') as outfile:
-                outfile.write(etree.tostring(self.etree))
+            with open(output_filepath, 'w') as outfile:
+                outfile.write(etree.tostring(
+                    self.etree, encoding='UTF-8', xml_declaration=True, pretty_print=True))
 
     def has_parent(self, treepos):
         """Returns True, iff this node has a parent."""
