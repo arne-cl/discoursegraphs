@@ -209,26 +209,6 @@ def test_rs3filewriter_pcc_10575():
     assert input_tree == expected_output_tree.tree == produced_output_tree.tree
 
 
-def test_rs3filewriter_complete_pcc():
-    """All *.rs3 files can be parsed into a DGParentedTree (T1), converted back
-    into *.rs3 files and parsed back into a DGParentedTree (T2), with T1 == T2.
-    """
-    #~ import pudb; pudb.set_trace()
-    for i, rfile in enumerate(dg.corpora.pcc.get_files_by_layer('rst')):
-        # rs3 -> dgtree
-        expected_output_tree = RSTTree(rfile)
-
-        tempfile = NamedTemporaryFile()
-        # dgtree -> rs3'
-        RS3FileWriter(expected_output_tree, output_filepath=tempfile.name, debug=False)
-        # rs3' -> dgtree'
-        produced_output_tree = RSTTree(tempfile.name)
-
-        assert expected_output_tree.edu_strings == expected_output_tree.tree.leaves() \
-            == produced_output_tree.edu_strings == produced_output_tree.tree.leaves()
-        assert expected_output_tree.tree == produced_output_tree.tree
-
-
 def test_rs3filewriter_complete_pcc_stats():
     """All *.rs3 files can be parsed into a DGParentedTree (T1), converted back
     into *.rs3 files and parsed back into a DGParentedTree (T2), with T1 == T2.
