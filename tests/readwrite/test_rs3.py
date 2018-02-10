@@ -137,6 +137,25 @@ def test_rs3filewriter_onesegmenttree():
     assert input_tree == expected_output_tree.tree == produced_output_tree.tree
 
 
+def test_rs3filewriter_onesegmenttree_umlauts():
+    """A DGParentedTree with only one segment with umlauts is correctly
+    converted into an RS3 file and back.
+    """
+    edu_string = u"Über sein östliches Äußeres"
+    input_tree = t("N", [edu_string])
+    expected_output_tree = example2tree('only-one-segment-with-umlauts.rs3')
+
+    tempfile = NamedTemporaryFile()
+    RS3FileWriter(input_tree, output_filepath=tempfile.name)
+    produced_output_tree = RSTTree(tempfile.name)
+
+    assert expected_output_tree.edu_strings == \
+        produced_output_tree.edu_strings == \
+        produced_output_tree.tree.leaves() == [edu_string]
+    assert input_tree == expected_output_tree.tree == produced_output_tree.tree
+
+
+
 def test_rs3filewriter_nucsat():
     """A DGParentedTree with one nuc-sat relation is correctly converted into an RS3 file and back."""
     input_tree = t("circumstance", [
