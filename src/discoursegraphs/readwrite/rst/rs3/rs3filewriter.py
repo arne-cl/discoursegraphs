@@ -114,7 +114,7 @@ class RS3FileWriter(object):
         return cousins_pos
 
     def get_parent_label(self, treepos):
-        """Given a DGParentedTree, return the label of its parent.
+        """Given the treeposition of a node, return the label of its parent.
         Returns None, if the tree has no parent.
         """
         parent_pos = self.get_parent_treepos(treepos)
@@ -123,6 +123,17 @@ class RS3FileWriter(object):
             return parent.label()
         else:
             return None
+
+    def get_children_labels(self, treepos):
+        """Given the treeposition of a node, return the labels of its children."""
+        children_labels = []
+        node = self.dgtree[treepos]
+        for child in node:
+            if is_leaf(child):
+                children_labels.append(child)
+            else:
+                children_labels.append(child.label())
+        return children_labels
 
     def get_reltype(self, relname):
         """Given a relation name, return its type, i.e. 'rst' or 'multinuc'
@@ -187,9 +198,19 @@ class RS3FileWriter(object):
                     self.body['segments'].append(E('segment', node, id=node_id, **attribs))
 
                 else:  # node_type == TreeNodeTypes.relation_node:
-                    reltype = self.get_reltype(relname)
-                    self.body['groups'].append(E('group', id=node_id, type=reltype, **attribs))
+                    group_type = self.get_group_type(treepos)
+                    self.body['groups'].append(E('group', id=node_id, type=group_type, **attribs))
 
+    def get_group_type(self, treepos):
+        node = self.dgtree[treepos]
+        assert get_node_type(node) == TreeNodeTypes.relation_node
+        labels = self.get_children_labels(treepos)
+        if (len(labels) == 2) and ('S' in labels):
+            return 'span'
+        elif (len(labels) > 1) and set(labels) == {'N'}:
+            return 'multinuc'
+        else:
+            raise ValueError("Unknown group type of node '{}'.".format(node))
 
     def get_relname_and_parent(self, treepos):
         """Return the (relation name, parent ID) tuple that a node is in.
