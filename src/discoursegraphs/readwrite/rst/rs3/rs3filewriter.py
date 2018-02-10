@@ -6,7 +6,7 @@
 
 from __future__ import absolute_import, division, print_function
 import codecs
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 
 from lxml import etree
 from lxml.builder import E
@@ -130,6 +130,7 @@ class RS3FileWriter(object):
         node = self.dgtree[treepos]
         for child in node:
             if is_leaf(child):
+                # we can't call .label() on a leaf node
                 children_labels.append(child)
             else:
                 children_labels.append(child.label())
@@ -174,7 +175,7 @@ class RS3FileWriter(object):
         relations_elem = E('relations')
         for relname in sorted(self.relations):
             relations_elem.append(
-                E('rel', name=relname, type=self.relations[relname]))
+                E('rel', OrderedDict([('name', relname), ('type', self.relations[relname])])))
         return relations_elem
 
     def gen_body(self):
@@ -189,17 +190,19 @@ class RS3FileWriter(object):
             if node_type in (TreeNodeTypes.leaf_node,
                              TreeNodeTypes.relation_node):
                 relname, parent_id = self.get_relname_and_parent(treepos)
-                if parent_id is None:
-                    attribs = {}
-                else:
-                    attribs = {'parent': parent_id, 'relname': relname}
+
+                attrib_list = [('id', node_id)]
+                if parent_id is not None:
+                    attrib_list.extend([('parent', parent_id), ('relname', relname)])
 
                 if node_type == TreeNodeTypes.leaf_node:
-                    self.body['segments'].append(E('segment', node, id=node_id, **attribs))
+                    self.body['segments'].append(E('segment', node, OrderedDict(attrib_list)))
 
                 else:  # node_type == TreeNodeTypes.relation_node:
                     group_type = self.get_group_type(treepos)
-                    self.body['groups'].append(E('group', id=node_id, type=group_type, **attribs))
+                    # insert 'type' attrib between 'id' and 'parent'
+                    attrib_list.insert(1, ('type', group_type))
+                    self.body['groups'].append(E('group', OrderedDict(attrib_list)))
 
     def get_group_type(self, treepos):
         node = self.dgtree[treepos]
