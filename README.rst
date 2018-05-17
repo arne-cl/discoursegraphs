@@ -22,6 +22,11 @@ DiscourseGraphs
    :alt: Code Issues
    :align: right
    :target: https://www.quantifiedcode.com/app/project/3076854b9ea74bed867f12808d98f437
+.. image:: https://img.shields.io/docker/build/nlpbox/charniak.svg
+   :alt: Docker build status
+   :align: right
+   :target: https://hub.docker.com/r/nlpbox/charniak
+
 
 This library enables you to process linguistic corpora with multiple levels
 of annotations by:
