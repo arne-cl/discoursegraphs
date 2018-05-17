@@ -1,16 +1,10 @@
-language: python
-python:
-  - "2.7"
+sudo: required
 
-# command to install dependencies
+services:
+  - docker
+
 install:
-    - pip install codecov pytest-cov
-    - pip install -r requirements.txt
+  - docker build -t discoursegraphs .
 
-# command to run tests
 script:
-    - py.test --cov=./
-
-# upload coverage statistics to codecov.io
-after_success:
-    - codecov
+  - docker run --entrypoint=pytest -ti discoursegraphs
