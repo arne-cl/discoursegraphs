@@ -36,10 +36,10 @@ def test_read_dis2_graph():
 
 
 def test_read_dis1_tree():
-    disdg1 = DisRSTTree(os.path.join(dg.DATA_ROOT_DIR, 'rst-example1.dis'))
+    disdg1 = dg.read_distree(os.path.join(dg.DATA_ROOT_DIR, 'rst-example1.dis'))
     assert isinstance(disdg1, DisRSTTree)
 
 
 def test_read_dis2_tree():
-    disdg1 = DisRSTTree(os.path.join(dg.DATA_ROOT_DIR, 'rst-example2.dis'))
+    disdg1 = dg.read_distree(os.path.join(dg.DATA_ROOT_DIR, 'rst-example2.dis'))
     assert isinstance(disdg1, DisRSTTree)

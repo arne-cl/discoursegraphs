@@ -26,6 +26,7 @@ from discoursegraphs.readwrite.paulaxml.paula import PaulaDocument, write_paula
 from discoursegraphs.readwrite.ptb import PTBDocumentGraph, read_ptb, read_mrg
 from discoursegraphs.readwrite.rst.rs3 import RSTGraph, RSTTree, read_rst, read_rs3
 from discoursegraphs.readwrite.rst.dis.disgraph import read_dis
+from discoursegraphs.readwrite.rst.dis.distree import read_distree
 from discoursegraphs.readwrite.rst.urml import URMLDocumentGraph, read_urml
 from discoursegraphs.readwrite.salt.saltxmi import SaltDocument, SaltXMIGraph
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph, read_tiger

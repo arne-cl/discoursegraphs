@@ -130,6 +130,10 @@ def s_wrap(tree):
     return t('S', [tree])
 
 
+# pseudo-function to create a document tree from a RST (.dis) file
+read_distree = DisRSTTree
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input_file',
