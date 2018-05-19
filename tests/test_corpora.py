@@ -3,6 +3,7 @@
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 from copy import deepcopy
+from multiprocessing import Process
 import pkgutil
 from tempfile import NamedTemporaryFile, mkdtemp
 
@@ -13,16 +14,12 @@ import discoursegraphs as dg
 from discoursegraphs.corpora import pcc
 
 
-@pytest.mark.last  # this should be the last test to run
-@pytest.mark.slowtest
 def test_pcc():
     """
     create document graphs for all PCC documents containing all annotation
     layers and test them for cyclicity.
     """
-    assert len(pcc.document_ids) == 176
-
-    for doc_id in pcc.document_ids:
+    def convert_pcc_doc(doc_id):
         docgraph = pcc[doc_id]
         assert isinstance(docgraph, dg.DiscourseDocumentGraph)
 
@@ -37,3 +34,10 @@ def test_pcc():
             secedges = dg.select_edges_by(bad_graph, 'tiger:secedge')
             bad_graph.remove_edges_from(secedges)
             assert nx.is_directed_acyclic_graph(docgraph)
+
+
+    assert len(pcc.document_ids) == 176
+
+    p = Process(target=convert_pcc_doc, args=pcc.document_ids)
+    p.start()
+    p.join()
