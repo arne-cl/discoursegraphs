@@ -10,7 +10,7 @@ trees.
 from collections import defaultdict, deque
 import textwrap
 
-from nltk.tree import ParentedTree
+from nltk.tree import Tree, ParentedTree
 
 from discoursegraphs import (
     EdgeTypes, istoken, select_neighbors_by_edge_attribute)
@@ -24,11 +24,11 @@ class DGParentedTree(ParentedTree):
         self.root_id = root_id
 
     def get_position(self, rst_tree, node_id=None):
-        """Get the linear position of an element of this DGParentedTree in a RSTTree.
+        """Get the linear position of an element of this DGParentedTree in an RSTTree.
 
         If ``node_id`` is given, this will return the position of the subtree
         with that node ID. Otherwise, the position of the root of this
-        DGParentedTree in the given RSTTree.
+        DGParentedTree in the given RSTTree is returned.
         """
         if node_id is None:
             node_id = self.root_id
@@ -53,23 +53,23 @@ def debug_root_label(root_label, debug=False, root_id=None):
 
 
 def t(root, children=None, debug=False, root_id=None):
-    "Create DGParentedTree from a root (str) and a list of (str, list) tuples."
-    if isinstance(root, DGParentedTree):
+    "Create (DGParented)Tree from a root (str) and a list of (str, list) tuples."
+    if isinstance(root, Tree):
         if children is None:
             return root
-        return DGParentedTree(root, children, root_id)
+        return root.__class__(root, children, root_id)
 
     elif isinstance(root, basestring):
         root = debug_root_label(root, debug, root_id)
 
-        # Beware: DGParentedTree is a subclass of list!
-        if isinstance(children, DGParentedTree):
+        # Beware: (DGParented)Tree is a subclass of list!
+        if isinstance(children, Tree):
             child_trees = [children]
 
         elif isinstance(children, list):
             child_trees = []
             for child in children:
-                if isinstance(child, DGParentedTree):
+                if isinstance(child, Tree):
                     child_trees.append(child)
                 elif isinstance(child, list):
                     child_trees.extend(child)
@@ -83,8 +83,8 @@ def t(root, children=None, debug=False, root_id=None):
         elif isinstance(children, basestring):
             # this tree does only have one child, a leaf node
             # TODO: this is a workaround for the following problem:
-            # DGParentedTree('foo', [DGParentedTree('bar', [])]) != DGParentedTree('foo', ['bar'])
-            child_trees = [DGParentedTree(children, [])]
+            # Tree('foo', [Tree('bar', [])]) != Tree('foo', ['bar'])
+            child_trees = [Tree(children, [])]
 
         else:
             # this tree only consists of one leaf node
