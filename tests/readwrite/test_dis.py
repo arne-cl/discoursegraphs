@@ -3,12 +3,14 @@
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 import os
+from tempfile import NamedTemporaryFile
 
 import pytest
 
 import discoursegraphs as dg
 from discoursegraphs.readwrite.rst.dis.disgraph import RSTLispDocumentGraph
 from discoursegraphs.readwrite.rst.dis.distree import DisRSTTree
+from discoursegraphs.readwrite.rst.rs3 import RS3FileWriter, RSTTree
 
 """
 Basic tests for the *.dis format for Rhetorical Structure Theory.
@@ -36,10 +38,22 @@ def test_read_dis2_graph():
 
 
 def test_read_dis1_tree():
-    disdg1 = dg.read_distree(os.path.join(dg.DATA_ROOT_DIR, 'rst-example1.dis'))
-    assert isinstance(disdg1, DisRSTTree)
+    input_tree = dg.read_distree(os.path.join(dg.DATA_ROOT_DIR, 'rst-example1.dis'))
+    assert isinstance(input_tree, DisRSTTree)
+
+    tempfile = NamedTemporaryFile()
+    RS3FileWriter(input_tree, output_filepath=tempfile.name)
+    produced_output_tree = RSTTree(tempfile.name)
+
+    assert input_tree.tree == produced_output_tree.tree
 
 
 def test_read_dis2_tree():
-    disdg1 = dg.read_distree(os.path.join(dg.DATA_ROOT_DIR, 'rst-example2.dis'))
-    assert isinstance(disdg1, DisRSTTree)
+    input_tree = dg.read_distree(os.path.join(dg.DATA_ROOT_DIR, 'rst-example2.dis'))
+    assert isinstance(input_tree, DisRSTTree)
+
+    tempfile = NamedTemporaryFile()
+    RS3FileWriter(input_tree, output_filepath=tempfile.name)
+    produced_output_tree = RSTTree(tempfile.name)
+
+    assert input_tree.tree == produced_output_tree.tree
