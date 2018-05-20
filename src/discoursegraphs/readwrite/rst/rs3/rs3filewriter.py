@@ -251,3 +251,8 @@ class RS3FileWriter(object):
                         return grandparent_label, cousin_id
                 elif reltype == 'multinuc':
                     return grandparent_label, grandparent_id
+
+
+def write_rs3(dgtree, output_file):
+    """Convert a DGParentedTree representation of an RST tree into an .rs3 file"""
+    RS3FileWriter(dgtree, debug=False, output_filepath=output_file)

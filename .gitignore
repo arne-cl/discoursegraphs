@@ -36,3 +36,4 @@ __pycache__
 .eggs/
 .idea/
 .pytest_cache
+pytest.log

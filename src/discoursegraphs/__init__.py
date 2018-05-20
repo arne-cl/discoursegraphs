@@ -23,10 +23,10 @@ from discoursegraphs.discoursegraph import (
 from discoursegraphs.readwrite import (
     read_anaphoricity, write_brackets, write_brat, read_conano, read_conll, write_conll,
     read_decour, write_dot, read_exb, read_exmaralda, write_exmaralda, write_exb,
-    read_exportxml, write_freqt, write_graphml, write_gexf, read_mmax2,
+    read_exportxml, write_freqt, write_graphml, write_gexf, read_hilda, read_mmax2,
     write_neo4j, write_geoff, write_paula,
     read_ptb, read_mrg,
-    read_rst, read_rs3, read_dis, read_distree, read_tiger, read_urml)
+    read_rst, read_rs3, write_rs3, read_dis, read_distree, read_tiger, read_urml)
 from discoursegraphs.readwrite.dot import print_dot
 from discoursegraphs.statistics import info
 from discoursegraphs.util import xmlprint, make_labels_explicit, find_files
