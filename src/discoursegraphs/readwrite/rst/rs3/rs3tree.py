@@ -545,6 +545,7 @@ def extract_relations(dgtree, relations=None):
     return relations
 
 
-
+# pseudo-function to create a document tree from a .rs3 file
+read_rs3tree = RSTTree
 
 
