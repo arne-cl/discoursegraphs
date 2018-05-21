@@ -22,7 +22,7 @@ from discoursegraphs.discoursegraph import (
     get_pointing_chains, get_top_level_layers)
 from discoursegraphs.readwrite import (
     read_anaphoricity, write_brackets, write_brat, read_codra, read_conano, read_conll, write_conll,
-    read_decour, write_dot, read_exb, read_exmaralda, write_exmaralda, write_exb,
+    read_decour, read_dplp, write_dot, read_exb, read_exmaralda, write_exmaralda, write_exb,
     read_exportxml, write_freqt, write_graphml, write_gexf, read_hilda, read_mmax2,
     write_neo4j, write_geoff, write_paula,
     read_ptb, read_mrg,

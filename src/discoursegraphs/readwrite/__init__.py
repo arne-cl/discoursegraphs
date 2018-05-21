@@ -29,6 +29,7 @@ from discoursegraphs.readwrite.rst.rs3.rs3filewriter import RS3FileWriter, write
 from discoursegraphs.readwrite.rst.hilda import HILDARSTTree, read_hilda
 from discoursegraphs.readwrite.rst.dis.disgraph import read_dis
 from discoursegraphs.readwrite.rst.dis.distree import read_distree
+from discoursegraphs.readwrite.rst.dplp import DPLPRSTTree, read_dplp
 from discoursegraphs.readwrite.rst.dis.codra import read_codra
 from discoursegraphs.readwrite.rst.urml import URMLDocumentGraph, read_urml
 from discoursegraphs.readwrite.salt.saltxmi import SaltDocument, SaltXMIGraph
