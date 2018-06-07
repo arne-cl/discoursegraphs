@@ -275,3 +275,8 @@ def word_wrap_tree(parented_tree, width=0):
             dedented_text = textwrap.dedent(leaf_text).strip()
             parented_tree[parented_tree.leaf_treeposition(i)] = textwrap.fill(dedented_text, width=width)
     return parented_tree
+
+
+def is_leaf(elem):
+    """Returns True, iff the given tree node is a leaf node."""
+    return isinstance(elem, basestring)

@@ -15,7 +15,7 @@ from lxml import etree
 from lxml.builder import E
 
 from discoursegraphs.readwrite.tree import (
-    DGParentedTree, debug_root_label, p, t)
+    DGParentedTree, debug_root_label, p, t, is_leaf)
 from discoursegraphs.readwrite.rst.rs3 import extract_relationtypes
 
 NUCLEARITY_LABELS = ('N', 'S')
@@ -501,11 +501,6 @@ def s_wrap(tree, debug=False, root_id=None):
         return tree
     else:
         return t('S', [tree], debug=debug, root_id=root_id)
-
-
-def is_leaf(elem):
-    """Returns True, iff the given DGParentedTree node is a leaf node."""
-    return isinstance(elem, basestring)
 
 
 def extract_relations(dgtree, relations=None):
