@@ -56,7 +56,11 @@ class DisFile(object):
 def get_edu_text(text_subtree):
     """return the text of the given EDU subtree"""
     assert text_subtree.label() == 'text', "text_subtree: {}".format(text_subtree)
-    return u' '.join(word.decode('utf-8') for word in text_subtree.leaves())
+    # remove '_!' prefix and suffix from EDU
+    leaves = text_subtree.leaves()
+    leaves[0] = leaves[0].lstrip('_!')
+    leaves[-1] = leaves[-1].rstrip('_!')
+    return u' '.join(word.decode('utf-8') for word in leaves)
 
 
 def get_tree_type(tree):
