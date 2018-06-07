@@ -71,6 +71,15 @@ class RSTTree(object):
         """Return a pretty-printed representation of the RSTTree."""
         return self.tree.pretty_print()
 
+    def pprint(self):
+        """Return an s-expression representation of the RSTTree.
+
+        Note: This looks like the .dis format (i.e. the format used by
+        the RST-DT corpus, but it would still need some post-processing
+        to be compatible.
+        """
+        return self.tree.pprint()
+
     def __getitem__(self, key):
         return self.tree.__getitem__(key)
 
