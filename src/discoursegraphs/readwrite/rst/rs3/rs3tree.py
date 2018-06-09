@@ -7,6 +7,7 @@
 import codecs
 from collections import defaultdict
 import logging
+import tempfile
 import textwrap
 from operator import itemgetter, methodcaller
 import os
@@ -54,6 +55,16 @@ class RSTTree(object):
         self.edu_strings = [self.elem_dict[edu_id]['text']
                             for edu_id in self.edus]
         self.tree = self.dt()
+
+    @classmethod
+    def fromstring(cls, rs3_string):
+        """Create an RSTTree instance from a string content an *.rs3 file."""
+        temp = tempfile.NamedTemporaryFile(delete=False)
+        temp.write(rs3_string)
+        temp.close()
+        rst_tree = cls(rs3_file=temp.name)
+        os.unlink(temp.name)
+        return rst_tree
 
     def _repr_png_(self):
         """This PNG representation will be automagically used inside
