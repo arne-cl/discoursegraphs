@@ -3,7 +3,6 @@
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 from copy import deepcopy
-from multiprocessing import Process
 import pkgutil
 from tempfile import NamedTemporaryFile, mkdtemp
 
@@ -19,7 +18,9 @@ def test_pcc():
     create document graphs for all PCC documents containing all annotation
     layers and test them for cyclicity.
     """
-    def convert_pcc_doc(doc_id):
+    assert len(pcc.document_ids) == 176
+
+    for doc_id in pcc.document_ids:
         docgraph = pcc[doc_id]
         assert isinstance(docgraph, dg.DiscourseDocumentGraph)
 
@@ -36,8 +37,3 @@ def test_pcc():
             assert nx.is_directed_acyclic_graph(docgraph)
 
 
-    assert len(pcc.document_ids) == 176
-
-    p = Process(target=convert_pcc_doc, args=pcc.document_ids)
-    p.start()
-    p.join()
