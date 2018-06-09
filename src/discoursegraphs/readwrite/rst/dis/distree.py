@@ -10,6 +10,7 @@ annotate rhetorical structure) into an DisTree.
 import argparse
 import os
 import sys
+import tempfile
 
 from discoursegraphs import DiscourseDocumentGraph, EdgeTypes
 from discoursegraphs.readwrite.rst.dis.common import (
@@ -31,6 +32,16 @@ class DisRSTTree(object):
         self.disfile_tree = DisFile(dis_filepath).tree
         tree = dis2tree(self.disfile_tree)
         self.tree = word_wrap_tree(tree, width=word_wrap)
+
+    @classmethod
+    def fromstring(cls, dis_string):
+        """Create a DisRSTTree instance from a string containing a *.dis parse."""
+        temp = tempfile.NamedTemporaryFile(delete=False)
+        temp.write(dis_string)
+        temp.close()
+        dis_tree = cls(dis_filepath=temp.name)
+        os.unlink(temp.name)
+        return dis_tree
 
     def _repr_png_(self):
         """This PNG representation will be automagically used inside

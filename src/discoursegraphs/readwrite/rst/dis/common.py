@@ -10,6 +10,7 @@ It contains some MIT licensed code from
 github.com/EducationalTestingService/discourse-parsing
 """
 
+import codecs
 from collections import defaultdict
 import os
 import re
@@ -25,6 +26,7 @@ NUC = 'Nucleus'
 SAT = 'Satellite'
 SUBTREE_TYPES = (ROOT, NUC, SAT)
 NODE_TYPES = ('leaf', 'span')
+DIS_ESCAPES = (('(', r'-LRB-'), (')', r'-RRB-'))
 
 
 class DisFile(object):
@@ -36,11 +38,18 @@ class DisFile(object):
     def __init__(self, dis_filepath):
         self.filepath = dis_filepath
 
-        with open(dis_filepath) as disfile:
+        with codecs.open(dis_filepath, 'r', 'utf-8') as disfile:
             rst_tree_str = disfile.read().strip()
             rst_tree_str = fix_rst_treebank_tree_str(rst_tree_str)
             rst_tree_str = convert_parens_in_rst_tree_str(rst_tree_str)
             self.tree = ParentedTree.fromstring(rst_tree_str)
+
+            # replace escaped brackets (e.g. -LRB-) with real brackets
+            for leaf_pos in self.tree.treepositions('leaves'):
+                leaf = self.tree[leaf_pos]
+                for (bracket, bracket_replacement) in DIS_ESCAPES:
+                    leaf = re.sub(bracket_replacement, bracket, leaf)
+                self.tree[leaf_pos] = leaf
 
     @classmethod
     def fromstring(cls, dis_string):
@@ -54,13 +63,10 @@ class DisFile(object):
 
 
 def get_edu_text(text_subtree):
-    """return the text of the given EDU subtree"""
+    """return the text of the given EDU subtree, with '_!'-delimiters removed."""
     assert text_subtree.label() == 'text', "text_subtree: {}".format(text_subtree)
-    # remove '_!' prefix and suffix from EDU
-    leaves = text_subtree.leaves()
-    leaves[0] = leaves[0].lstrip('_!')
-    leaves[-1] = leaves[-1].rstrip('_!')
-    return u' '.join(word.decode('utf-8') for word in leaves)
+    edu_str = u' '.join(word for word in text_subtree.leaves())
+    return re.sub('_!(.*?)_!', '\g<1>', edu_str)
 
 
 def get_tree_type(tree):
@@ -152,17 +158,13 @@ def fix_rst_treebank_tree_str(rst_tree_str):
 
 def convert_parens_in_rst_tree_str(rst_tree_str):
     '''
-    This converts any brackets and parentheses in the EDUs of the RST discourse
-    treebank to look like Penn Treebank tokens (e.g., -LRB-),
-    so that the NLTK tree API doesn't crash when trying to read in the
-    RST trees.
-
-    source: github.com/EducationalTestingService/discourse-parsing
-    original license: MIT
+    This converts '(' and ')' brackets the EDUs of the RST into PTB-style
+    tokens (e.g., -LRB-) to escape them for nltk.
     '''
-    for bracket_type, bracket_replacement in PTB_BRACKET_ESCAPE.items():
-        rst_tree_str = \
-            re.sub('(_![^_(?=!)]*)\\{}([^_(?=!)]*_!)'.format(bracket_type),
-                   '\\g<1>{}\\g<2>'.format(bracket_replacement),
-                   rst_tree_str)
-    return rst_tree_str
+    def replace_brackets(matchobj):
+        edu = matchobj.group(0)
+        for (br, br_repl) in DIS_ESCAPES:
+            edu = re.sub("\{}".format(br), br_repl, edu)
+        return edu
+
+    return re.sub('_!(.*?)_!', replace_brackets, rst_tree_str)
