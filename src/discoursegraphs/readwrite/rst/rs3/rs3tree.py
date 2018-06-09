@@ -450,7 +450,7 @@ def get_rs3_data(rs3_file, word_wrap=0):
         elements[elem_id]['element_type'] = elem_type
 
         if elem_type == 'segment':
-            edu_text = elem.text.strip()
+            edu_text = normalize_edu_string(elem.text)
             if word_wrap != 0:
                 dedented_text = textwrap.dedent(edu_text).strip()
                 edu_text = textwrap.fill(dedented_text, width=word_wrap)
@@ -467,6 +467,11 @@ def get_rs3_data(rs3_file, word_wrap=0):
         reltypes[VIRTUAL_ROOT] = 'multinuc'
 
     return children, elements, ordered_edus, reltypes
+
+
+def normalize_edu_string(edu_string):
+    """Remove superfluous whitespace from an EDU and return it."""
+    return u' '.join(edu_string.strip().split())
 
 
 def n(children):
