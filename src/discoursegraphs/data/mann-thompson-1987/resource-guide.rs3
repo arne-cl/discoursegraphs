@@ -1,0 +1,34 @@
+<rst>
+<header>
+	<relations>
+			<rel name="antithesis" type="rst"/>
+			<rel name="background" type="rst"/>
+			<rel name="cause" type="rst"/>
+			<rel name="circumstance" type="rst"/>
+			<rel name="concession" type="rst"/>
+			<rel name="condition" type="rst"/>
+			<rel name="contrast" type="multinuc"/>
+			<rel name="enablement" type="rst"/>
+			<rel name="elaboration" type="rst"/>
+			<rel name="evaluation" type="rst"/>
+			<rel name="evidence" type="rst"/>
+			<rel name="joint" type="multinuc"/>
+			<rel name="justify" type="rst"/>
+			<rel name="motivation" type="rst"/>
+			<rel name="preparation" type="rst"/>
+			<rel name="purpose" type="rst"/>
+			<rel name="restatement" type="multinuc"/>
+			<rel name="restatement" type="rst"/>
+			<rel name="result" type="rst"/>
+			<rel name="sequence" type="multinuc"/>
+			<rel name="solutionhood" type="rst"/>
+		</relations>
+</header>
+<body>
+		<segment id="1" parent="5" relname="span">A Guide to Resource Organization for Minority Language Groups, which gives brief descriptions of 242 organizations that serve as resources for the bilingual education community, is now available from the National Clearinghouse for Bilingual Education.</segment>
+		<segment id="2" parent="1" relname="elaboration">The guide, compiled by M.T.R., M.L., and D.S., is an update of the 1979 Guide to Professional Organizations.</segment>
+		<segment id="3" parent="1" relname="elaboration">Each entry provides the name, address, and phone number of the organization, as well as information about services, publications, conferences, target languages and cultures, and other specialized information.</segment>
+		<segment id="4" parent="5" relname="enablement">Write NCBE at 1400 Wilson Blvd., Suite 200, Rosslyn, VA 22209.</segment>
+		<group id="5" type="span" />
+  </body>
+</rst>

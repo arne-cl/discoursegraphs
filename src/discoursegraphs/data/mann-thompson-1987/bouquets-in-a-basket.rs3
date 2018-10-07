@@ -1,0 +1,41 @@
+<rst>
+<header>
+	<relations>
+			<rel name="antithesis" type="rst"/>
+			<rel name="background" type="rst"/>
+			<rel name="cause" type="rst"/>
+			<rel name="circumstance" type="rst"/>
+			<rel name="concession" type="rst"/>
+			<rel name="condition" type="rst"/>
+			<rel name="contrast" type="multinuc"/>
+			<rel name="elaboration" type="rst"/>
+			<rel name="evaluation" type="rst"/>
+			<rel name="evidence" type="rst"/>
+			<rel name="joint" type="multinuc"/>
+			<rel name="justify" type="rst"/>
+			<rel name="motivation" type="rst"/>
+			<rel name="preparation" type="rst"/>
+			<rel name="purpose" type="rst"/>
+			<rel name="restatement" type="multinuc"/>
+			<rel name="restatement" type="rst"/>
+			<rel name="result" type="rst"/>
+			<rel name="sequence" type="multinuc"/>
+			<rel name="solutionhood" type="rst"/>
+		</relations>
+</header>
+<body>
+		<segment id="1" parent="12" relname="span">There is a gardening revolution going on.</segment>
+		<segment id="2" parent="11" relname="span">People are planting flower baskets with living plants,</segment>
+		<segment id="3" parent="2" relname="elaboration">mixing many types in one container for a full summer of floral beauty.</segment>
+		<segment id="4" parent="10" relname="purpose">To create your own "Victorian" bouquet of flowers,</segment>
+		<segment id="5" parent="10" relname="span">choose varying shapes, sizes and forms, besides a variety of complementary colors.</segment>
+		<segment id="6" parent="5" relname="elaboration">Plants that grow tall should be surrounded by smaller ones and filled with others that tumble over the side of a hanging basket.</segment>
+		<segment id="7" parent="9" relname="span">Leaf textures and colors will also be important.</segment>
+		<segment id="8" parent="7" relname="elaboration">There is the silver-white foliage of dusty miller, the feathery threads of lotus vine floating down from above, the deep greens, or chartreuse, even the widely varied foliage colors of the coleus.</segment>
+		<group id="9" type="span" parent="5" relname="elaboration"/>
+		<group id="10" type="span" parent="13" relname="span"/>
+		<group id="11" type="span" parent="1" relname="elaboration"/>
+		<group id="12" type="span" parent="13" relname="background"/>
+		<group id="13" type="span" />
+  </body>
+</rst>
