@@ -14,13 +14,14 @@ import os
 
 from nltk.tree import Tree
 
+from discoursegraphs.readwrite.rst import RSTBaseTree
 from discoursegraphs.readwrite.tree import DGParentedTree, word_wrap_tree
 
 # relation name followed by nuclearity of its child notes, e.g. Contrast[S][N]
 HILDA_REL_RE = re.compile(r"^(.*)\[(N|S)\]\[(N|S)\]$")
 
 
-class HILDARSTTree(object):
+class HILDARSTTree(RSTBaseTree):
     """A HILDARSTTree is a DGParentedTree representation (Rhetorical Structure tree)
     parsed from a .hilda file."""
     def __init__(self, hilda_filepath, word_wrap=0, debug=False):
@@ -94,30 +95,9 @@ class HILDARSTTree(object):
         tree = transform(self.hildafile_tree)
         return DGParentedTree.convert(tree)
 
-    def _repr_png_(self):
-        """This PNG representation will be automagically used inside
-        IPython notebooks.
-        """
-        return self.tree._repr_png_()
-
-    def __str__(self):
-        return self.tree.__str__()
-
-    def label(self):
-        """Return the label of the tree's root element."""
-        return self.tree.label()
-
-    def pretty_print(self):
-        """Return a pretty-printed representation of the RSTTree."""
-        return self.tree.pretty_print()
-
-    def __getitem__(self, key):
-        return self.tree.__getitem__(key)
-
 
 # pseudo-function to create a document tree from a RST (.hilda) file
 read_hilda = HILDARSTTree
-
 
 
 if __name__ == '__main__':
