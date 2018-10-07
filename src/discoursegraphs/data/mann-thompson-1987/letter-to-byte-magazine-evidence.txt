@@ -1,0 +1,2 @@
+The program (a Federal Income Tax program reported in an earlier issue) really works.
+In only a few minutes, I entered all the figures from my 1980 tax return and got a result which agreed with my hand calculations to the penny (no mean feat).

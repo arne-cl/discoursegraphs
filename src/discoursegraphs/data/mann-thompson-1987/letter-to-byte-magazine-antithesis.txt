@@ -1,0 +1,2 @@
+I recently purchased a text which purported to be a guide to Pascal for engineers.
+It totally ignored the subtleties of the language and made no bones about it.
