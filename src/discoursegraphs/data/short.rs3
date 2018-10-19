@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rst>
+  <header>
+    <relations>
+      <rel name="Contrast" type="rst"/>
+    </relations>
+  </header>
+  <body>
+    <segment id="3" parent="5" relname="Contrast">Although they did n't like it ,</segment>
+    <segment id="5" parent="1" relname="span">they accepted the offer .</segment>
+    <group id="1" type="span"/>
+  </body>
+</rst>

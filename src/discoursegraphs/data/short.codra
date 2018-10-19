@@ -1,0 +1,4 @@
+( Root (span 1 2)
+  ( Satellite (leaf 1) (rel2par Contrast) (text _!Although they did n't like it ,_!) )
+  ( Nucleus (leaf 2) (rel2par span) (text _!they accepted the offer ._!) )
+)
