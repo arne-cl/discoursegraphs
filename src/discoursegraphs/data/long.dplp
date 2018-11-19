@@ -1,0 +1,310 @@
+0	1	Henryk	Henryk	NNP	compound	4	PERSON	 (ROOT (NP (NP (NNP Henryk)	1
+0	2	Szeryng	Szeryng	NNP	compound	4	PERSON	 (NNP Szeryng)	1
+0	3	(22	(22	CD	nummod	4	NUMBER	 (CD (22)	1
+0	4	September	September	NNP	root	0	DATE	 (NNP September)	1
+0	5	1918	1918	CD	nummod	4	DATE	 (CD 1918))	1
+0	6	-	-	:	punct	4	O	 (: -)	2
+0	7	8	8	CD	nummod	8	DATE	 (S (NP (NP (NP (NP (CD 8)	2
+0	8	March	March	NNP	nsubj	123	DATE	 (NNP March)	2
+0	9	1988)	1988)	CD	nummod	8	DATE	 (CD 1988)))	2
+0	10	was	be	VBD	cop	12	O	 (VP (VBD was)	3
+0	11	a	a	DT	det	12	O	 (NP (NP (DT a)	3
+0	12	violin	violin	NN	acl	8	O	 (NN violin))	3
+0	13	virtuoso	virtuoso	JJ	amod	12	O	 (ADJP (JJ virtuoso)	3
+0	14	of	of	IN	case	18	O	 (PP (IN of)	3
+0	15	Polish	polish	JJ	amod	18	NATIONALITY	 (NP (ADJP (JJ Polish)	3
+0	16	and	and	CC	cc	15	O	 (CC and)	3
+0	17	Jewish	jewish	JJ	conj	15	RELIGION	 (JJ Jewish))	3
+0	18	heritage.	heritage.	NN	nmod	13	O	 (NN heritage.)))))	3
+0	19	He	he	PRP	nsubjpass	21	O	 (SBAR (S (NP (PRP He))	3
+0	20	was	be	VBD	auxpass	21	O	 (VP (VBD was)	3
+0	21	born	bear	VBN	dep	12	O	 (VP (VBN born)	3
+0	22	in	in	IN	case	26	O	 (PP (IN in)	3
+0	23	Zelazowa	Zelazowa	NNP	compound	26	LOCATION	 (NP (NNP Zelazowa)	3
+0	24	Wola,	Wola,	NNP	compound	26	O	 (NNP Wola,)	3
+0	25	Poland.	Poland.	NNP	compound	26	O	 (NNP Poland.)	3
+0	26	Henryk	Henryk	NNP	nmod	21	PERSON	 (NNP Henryk)))))))))	3
+0	27	started	start	VBD	acl	8	O	 (VP (VBD started)	3
+0	28	piano	piano	NN	compound	31	O	 (NP (NN piano)	3
+0	29	and	and	CC	cc	28	O	 (CC and)	3
+0	30	harmony	harmony	NN	conj	28	O	 (NN harmony)	3
+0	31	training	training	NN	dobj	27	O	 (NN training))	3
+0	32	with	with	IN	case	34	O	 (PP (IN with)	3
+0	33	his	he	PRP$	nmod:poss	34	O	 (NP (PRP$ his)	3
+0	34	mother	mother	NN	nmod	27	O	 (NN mother)))	3
+0	35	when	when	WRB	advmod	38	O	 (SBAR (WHADVP (WRB when))	4
+0	36	he	he	PRP	nsubj	38	O	 (S (NP (PRP he))	4
+0	37	was	be	VBD	cop	38	O	 (VP (VBD was)	4
+0	38	5,	5,	CD	advcl	27	NUMBER	 (NP (NP (CD 5,))	4
+0	39	and	and	CC	cc	38	O	 (CC and)	4
+0	40	at	at	IN	case	41	O	 (PP (IN at)	4
+0	41	age	age	NN	conj	38	O	 (NP (NN age)	4
+0	42	7	7	CD	nummod	41	NUMBER	 (CD 7)))))))))	4
+0	43	turned	turn	VBD	acl	8	O	 (VP (VBD turned)	4
+0	44	to	to	TO	case	48	O	 (PP (TO to)	4
+0	45	the	the	DT	det	48	O	 (NP (DT the)	4
+0	46	violin,	violin,	NN	compound	48	O	 (NN violin,)	4
+0	47	receiving	receive	VBG	amod	48	O	 (VBG receiving)	4
+0	48	instruction	instruction	NN	nmod	43	O	 (NN instruction)))	4
+0	49	from	from	IN	case	51	O	 (PP (IN from)	4
+0	50	Maurice	Maurice	NNP	compound	51	O	 (NP (NNP Maurice)	4
+0	51	Frenkel.	Frenkel.	NNP	nmod	43	O	 (NNP Frenkel.)))	4
+0	52	After	after	IN	case	53	O	 (PP (IN After)	4
+0	53	studies	study	NNS	nmod	43	O	 (NP (NP (NNS studies))	4
+0	54	with	with	IN	case	56	O	 (PP (IN with)	4
+0	55	Carl	Carl	NNP	compound	56	PERSON	 (NP (NP (NP (NNP Carl)	4
+0	56	Flesch	Flesch	NNP	nmod	53	PERSON	 (NNP Flesch))	4
+0	57	in	in	IN	case	58	O	 (PP (IN in)	4
+0	58	Berlin	Berlin	NNP	nmod	56	CITY	 (NP (NNP Berlin)	4
+0	59	(1929-32),	(1929-32),	CD	nummod	58	NUMBER	 (CD (1929-32),))))	4
+0	60	he	he	PRP	nsubj	61	O	 (SBAR (S (NP (PRP he))	4
+0	61	went	go	VBD	acl:relcl	56	O	 (VP (VBD went)	4
+0	62	to	to	TO	case	63	O	 (PP (TO to)	4
+0	63	Paris	Paris	NNP	nmod	61	CITY	 (NP (NNP Paris)))	4
+0	64	to	to	TO	mark	65	O	 (S (VP (TO to)	4
+0	65	continue	continue	VB	xcomp	61	O	 (VP (VB continue)	4
+0	66	his	he	PRP$	nmod:poss	67	O	 (NP (NP (NP (PRP$ his)	4
+0	67	training	training	NN	dobj	65	O	 (NN training))	4
+0	68	with	with	IN	mark	74	O	 (PP (IN with)	5
+0	69	Jacques	Jacques	NNP	compound	70	PERSON	 (S (NP (NP (NNP Jacques)	5
+0	70	Thibaud	Thibaud	NNP	nsubj	74	PERSON	 (NNP Thibaud))	5
+0	71	at	at	IN	case	73	O	 (PP (IN at)	5
+0	72	the	the	DT	det	73	O	 (NP (DT the)	5
+0	73	Conservatory,	conservatory,	NN	nmod	70	O	 (NN Conservatory,))))	5
+0	74	graduating	graduate	VBG	acl	67	O	 (VP (VBG graduating)	6
+0	75	with	with	IN	case	78	O	 (PP (IN with)	6
+0	76	a	a	DT	det	78	O	 (NP (DT a)	6
+0	77	premier	premier	NN	compound	78	TITLE	 (NN premier)	6
+0	78	prix	prix	NN	nmod	74	O	 (NN prix)))	6
+0	79	in	in	IN	case	80	O	 (PP (IN in)	6
+0	80	1937.	1937.	CD	nmod	74	DATE	 (NP (CD 1937.)))))))	6
+0	81	He	he	PRP	nsubj	82	O	 (SBAR (S (NP (PRP He))	7
+0	82	made	make	VBD	acl:relcl	67	O	 (VP (VBD made)	7
+0	83	his	he	PRP$	nmod:poss	85	O	 (NP (PRP$ his)	7
+0	84	solo	solo	NN	compound	85	O	 (NN solo)	7
+0	85	debut	debut	NN	dobj	82	O	 (NN debut))	7
+0	86	in	in	IN	case	87	O	 (PP (IN in)	7
+0	87	1933	1933	CD	nmod	82	DATE	 (NP (CD 1933)))	7
+0	88	playing	play	VBG	xcomp	82	O	 (S (VP (VBG playing)	8
+0	89	the	the	DT	det	92	O	 (NP (DT the)	8
+0	90	Brahms	Brahms	NNP	compound	92	O	 (NNP Brahms)	8
+0	91	Violin	Violin	NNP	compound	92	O	 (NNP Violin)	8
+0	92	Concerto.	Concerto.	NNP	dobj	88	O	 (NNP Concerto.))	8
+0	93	From	from	IN	case	94	O	 (PP (IN From)	8
+0	94	1933	1933	CD	nmod	88	DATE	 (NP (CD 1933)))	8
+0	95	to	to	TO	case	96	O	 (PP (TO to)	8
+0	96	1939	1939	CD	nmod	88	DATE	 (NP (NP (CD 1939))	8
+0	97	he	he	PRP	nsubj	98	O	 (SBAR (S (NP (PRP he))	9
+0	98	studied	study	VBD	acl:relcl	96	O	 (VP (VBD studied)	9
+0	99	composition	composition	NN	dobj	98	O	 (NP (NP (NN composition))	9
+0	100	in	in	IN	case	101	O	 (PP (IN in)	9
+0	101	Paris	Paris	NNP	nmod	99	CITY	 (NP (NNP Paris))))	9
+0	102	with	with	IN	case	104	O	 (SBAR (S (PP (PP (IN with)	9
+0	103	Nadia	Nadia	NNP	compound	104	O	 (NP (NNP Nadia)	9
+0	104	Boulanger,	Boulanger,	NNP	nmod	111	O	 (NNP Boulanger,)))	9
+0	105	and	and	CC	cc	104	O	 (CC and)	9
+0	106	during	during	IN	case	109	O	 (PP (IN during)	9
+0	107	World	World	NNP	compound	109	MISC	 (NP (NNP World)	9
+0	108	War	War	NNP	compound	109	CAUSE_OF_DEATH	 (NNP War)	9
+0	109	II	II	NNP	conj	104	MISC	 (NNP II))))	9
+0	110	he	he	PRP	nsubj	111	O	 (NP (PRP he))	9
+0	111	worked	work	VBD	dep	98	O	 (VP (VBD worked)	9
+0	112	as	as	IN	case	114	O	 (PP (IN as)	9
+0	113	an	a	DT	det	114	O	 (NP (NP (DT an)	9
+0	114	interpreter	interpreter	NN	nmod	111	TITLE	 (NN interpreter))	9
+0	115	for	for	IN	case	118	O	 (PP (IN for)	9
+0	116	the	the	DT	det	118	O	 (NP (DT the)	9
+0	117	Polish	polish	JJ	amod	118	NATIONALITY	 (JJ Polish)	9
+0	118	government	government	NN	nmod	114	O	 (NN government)))))	9
+0	119	in	in	IN	case	121	O	 (PP (IN in)	9
+0	120	exile	exile	NN	compound	121	O	 (NP (NN exile)	9
+0	121	(Szeryng	(szeryng	NN	nmod	111	O	 (NN (Szeryng)))))))))))))))))))))))))))))	9
+0	122	was	be	VBD	cop	123	O	 (VP (VP (VBD was)	9
+0	123	fluent	fluent	JJ	parataxis	4	O	 (ADJP (JJ fluent))	9
+0	124	in	in	IN	case	126	O	 (PP (IN in)	9
+0	125	seven	seven	CD	nummod	126	NUMBER	 (NP (CD seven)	9
+0	126	languages)	languages)	NN	nmod	123	O	 (NN languages)))))	9
+0	127	and	and	CC	cc	123	O	 (CC and)	9
+0	128	gave	give	VBD	conj	123	O	 (VP (VBD gave)	9
+0	129	concerts	concert	NNS	dobj	128	O	 (NP (NP (NNS concerts))	9
+0	130	for	for	IN	case	132	O	 (PP (IN for)	9
+0	131	Allied	Allied	NNP	compound	132	MISC	 (NP (NNP Allied)	9
+0	132	troops	troops	NNS	nmod	129	O	 (NNS troops))))	9
+0	133	all	all	DT	dep	136	O	 (PP (DT all)	9
+0	134	over	over	IN	case	136	O	 (IN over)	9
+0	135	the	the	DT	det	136	O	 (NP (NP (DT the)	9
+0	136	world.	world.	NNP	nmod	128	O	 (NNP world.))	9
+0	137	During	during	IN	case	138	O	 (PP (IN During)	10
+0	138	one	one	CD	nmod	136	NUMBER	 (NP (NP (CD one))	10
+0	139	of	of	IN	case	141	O	 (PP (IN of)	10
+0	140	these	these	DT	det	141	O	 (NP (DT these)	10
+0	141	concerts	concert	NNS	nmod	138	O	 (NNS concerts)))	10
+0	142	in	in	IN	mark	146	O	 (PP (IN in)	10
+0	143	Mexico	Mexico	NNP	compound	144	COUNTRY	 (S (NP (NNP Mexico)	10
+0	144	City	City	NNP	nsubj	146	LOCATION	 (NNP City))	10
+0	145	he	he	PRP	nsubj	146	O	 (NP (PRP he))	11
+0	146	received	receive	VBD	acl	138	O	 (VP (VBD received)	11
+0	147	an	a	DT	det	148	O	 (NP (DT an)	11
+0	148	offer	offer	NN	dobj	146	O	 (NN offer)	11
+0	149	to	to	TO	mark	150	O	 (S (VP (TO to)	12
+0	150	take	take	VB	acl	148	O	 (VP (VB take)	12
+0	151	over	over	RP	compound:prt	150	O	 (PRT (RP over))	12
+0	152	the	the	DT	det	154	O	 (NP (NP (DT the)	12
+0	153	string	string	NN	compound	154	O	 (NN string)	12
+0	154	department	department	NN	dobj	150	O	 (NN department))	12
+0	155	of	of	IN	case	157	O	 (PP (IN of)	12
+0	156	the	the	DT	det	157	O	 (NP (DT the)	12
+0	157	university	university	NN	nmod	154	O	 (NN university))))	12
+0	158	there.	there.	IN	mark	162	O	 (SBAR (IN there.)	13
+0	159	In	in	IN	case	160	O	 (S (PP (IN In)	13
+0	160	1946,	1946,	CD	nmod	162	NUMBER	 (NP (CD 1946,)))	13
+0	161	he	he	PRP	nsubj	162	O	 (NP (PRP he))	13
+0	162	became	become	VBD	advcl	150	O	 (VP (VBD became)	13
+0	163	a	a	DT	det	165	O	 (SBAR (S (NP (NP (DT a)	13
+0	164	naturalized	naturalized	JJ	amod	165	O	 (JJ naturalized)	13
+0	165	citizen	citizen	NN	nsubj	170	O	 (NN citizen))	13
+0	166	of	of	IN	case	168	O	 (PP (IN of)	13
+0	167	Mexico.	Mexico.	NNP	compound	168	O	 (NP (NNP Mexico.)	13
+0	168	Szeryng	Szeryng	NNP	nmod	165	O	 (NNP Szeryng))))	13
+0	169	subsequently	subsequently	RB	advmod	170	O	 (ADVP (RB subsequently))	13
+0	170	focused	focus	VBD	ccomp	162	O	 (VP (VP (VBD focused)	13
+0	171	on	on	IN	case	172	O	 (PP (IN on)	13
+0	172	teaching	teaching	NN	nmod	170	O	 (NP (NN teaching)))	13
+0	173	before	before	IN	mark	174	O	 (PP (IN before)	14
+0	174	resuming	resume	VBG	advcl	170	O	 (S (VP (VBG resuming)	14
+0	175	his	he	PRP$	nmod:poss	177	O	 (NP (PRP$ his)	14
+0	176	concert	concert	NN	compound	177	O	 (NN concert)	14
+0	177	career	career	NN	dobj	174	O	 (NN career))	14
+0	178	in	in	IN	case	179	O	 (PP (IN in)	14
+0	179	1954.	1954.	CD	nmod	174	DATE	 (NP (CD 1954.)))	14
+0	180	His	he	PRP$	nmod:poss	181	O	 (NP (PRP$ His)	14
+0	181	debut	debut	NN	dobj	174	O	 (NN debut))	14
+0	182	in	in	IN	mark	186	O	 (SBAR (IN in)	15
+0	183	New	New	NNP	compound	185	CITY	 (S (NP (NNP New)	15
+0	184	York	York	NNP	compound	185	CITY	 (NNP York)	15
+0	185	City	City	NNP	nsubj	186	CITY	 (NNP City))	15
+0	186	brought	bring	VBD	advcl	174	O	 (VP (VBD brought)	15
+0	187	him	he	PRP	iobj	186	O	 (NP (PRP him))	15
+0	188	great	great	JJ	amod	189	O	 (NP (JJ great)	15
+0	189	acclaim,	acclaim,	NN	dobj	186	O	 (NN acclaim,)))))))))	15
+0	190	and	and	CC	cc	170	O	 (CC and)	16
+0	191	he	he	PRP	nsubj	192	O	 (SBAR (S (NP (PRP he))	16
+0	192	toured	tour	VBD	ccomp	170	O	 (VP (VBD toured)	16
+0	193	widely	widely	RB	advmod	192	O	 (ADVP (RB widely))	16
+0	194	for	for	IN	case	196	O	 (SBAR (S (PP (IN for)	16
+0	195	the	the	DT	det	196	O	 (NP (NP (DT the)	16
+0	196	rest	rest	NN	nmod	205	O	 (NN rest))	16
+0	197	of	of	IN	case	199	O	 (PP (IN of)	16
+0	198	his	he	PRP$	nmod:poss	199	O	 (NP (PRP$ his)	16
+0	199	life.	life.	NN	nmod	196	O	 (NN life.)))))	16
+0	200	He	he	PRP	nsubj	205	O	 (NP (NP (PRP He))	17
+0	201	died	die	VBD	acl	200	O	 (VP (VBD died)	17
+0	202	in	in	IN	case	204	O	 (PP (IN in)	18
+0	203	Kassel.	Kassel.	NNP	compound	204	LOCATION	 (NP (NNP Kassel.)	18
+0	204	Szeryng	Szeryng	NNP	nmod	201	LOCATION	 (NNP Szeryng)))))	18
+0	205	made	make	VBD	ccomp	192	O	 (VP (VBD made)	18
+0	206	a	a	DT	det	207	O	 (S (NP (NP (DT a)	18
+0	207	number	number	NN	nsubj	239	O	 (NN number))	18
+0	208	of	of	IN	case	209	O	 (PP (IN of)	18
+0	209	recordings,	recordings,	NN	nmod	207	O	 (NP (NN recordings,))))	18
+0	210	including	include	VBG	dep	239	O	 (VBG including)	19
+0	211	two	two	CD	nsubj	239	NUMBER	 (NP (NP (NP (NP (CD two))	19
+0	212	of	of	IN	case	215	O	 (PP (IN of)	19
+0	213	the	the	DT	det	215	O	 (NP (DT the)	19
+0	214	complete	complete	JJ	amod	215	O	 (JJ complete)	19
+0	215	sonatas	sonata	NNS	nmod	211	O	 (NNS sonatas)	19
+0	216	and	and	CC	cc	215	O	 (CC and)	19
+0	217	partitas	partita	NNS	conj	215	O	 (NNS partitas))))	19
+0	218	for	for	IN	case	219	O	 (PP (IN for)	20
+0	219	violin	violin	NN	nmod	211	O	 (NP (NN violin)))	20
+0	220	by	by	IN	case	223	O	 (PP (IN by)	20
+0	221	Johann	Johann	NNP	compound	223	PERSON	 (NP (NP (NNP Johann)	20
+0	222	Sebastian	Sebastian	NNP	compound	223	PERSON	 (NNP Sebastian)	20
+0	223	Bach,	Bach,	NNP	nmod	211	PERSON	 (NNP Bach,))	20
+0	224	and	and	CC	cc	223	O	 (CC and)	20
+0	225	several	several	JJ	conj	223	O	 (NP (NP (JJ several))	20
+0	226	of	of	IN	case	227	O	 (PP (IN of)	20
+0	227	sonatas	sonata	NNS	nmod	225	O	 (NP (NP (NNS sonatas))	20
+0	228	of	of	IN	case	229	O	 (PP (IN of)	20
+0	229	Beethoven	Beethoven	NNP	nmod	227	PERSON	 (NP (NNP Beethoven)	20
+0	230	and	and	CC	cc	229	O	 (CC and)	20
+0	231	Brahms	Brahms	NNP	conj	229	PERSON	 (NNP Brahms)))))))))	20
+0	232	with	with	IN	case	236	O	 (PP (IN with)	20
+0	233	the	the	DT	det	236	O	 (NP (DT the)	20
+0	234	pianist	pianist	NN	compound	236	TITLE	 (NN pianist)	20
+0	235	Arthur	Arthur	NNP	compound	236	PERSON	 (NNP Arthur)	20
+0	236	Rubinstein.	Rubinstein.	NNP	nmod	211	O	 (NNP Rubinstein.))))	20
+0	237	He	he	PRP	nsubj	239	O	 (NP (PRP He))	20
+0	238	also	also	RB	advmod	239	O	 (ADVP (RB also))	20
+0	239	composed;	composed;	VBD	ccomp	205	O	 (VP (VBD composed;)	20
+0	240	his	he	PRP$	nmod:poss	241	O	 (SBAR (S (NP (PRP$ his)	20
+0	241	works	work	NNS	nsubj	242	O	 (NNS works))	20
+0	242	include	include	VBP	ccomp	239	O	 (VP (VBP include)	20
+0	243	a	a	DT	det	244	O	 (NP (NP (NP (DT a)	20
+0	244	number	number	NN	dobj	242	O	 (NN number))	20
+0	245	of	of	IN	case	247	O	 (PP (IN of)	21
+0	246	violin	violin	NN	compound	247	O	 (NP (NN violin)	21
+0	247	concertos	concerto	NNS	nmod	244	O	 (NNS concertos))))	21
+0	248	and	and	CC	cc	244	O	 (CC and)	21
+0	249	pieces	piece	NNS	conj	244	O	 (NP (NP (NNS pieces))	21
+0	250	of	of	IN	case	252	O	 (PP (IN of)	21
+0	251	chamber	chamber	NN	compound	252	O	 (NP (NP (NN chamber)	21
+0	252	music.	music.	NN	nmod	249	O	 (NN music.))	21
+0	253	He	he	PRP	nsubj	254	O	 (SBAR (S (NP (PRP He))	22
+0	254	owned	own	VBD	acl:relcl	252	O	 (VP (VBD owned)	22
+0	255	the	the	DT	det	259	O	 (SBAR (S (NP (NP (DT the)	22
+0	256	Del	Del	NNP	compound	259	STATE_OR_PROVINCE	 (NNP Del)	22
+0	257	Gesu	Gesu	NNP	compound	259	MISC	 (NNP Gesu)	22
+0	258	"Le	"Le	NNP	compound	259	O	 (NNP "Le)	22
+0	259	Duc",	Duc",	NNP	nsubj	288	O	 (NNP Duc",))	22
+0	260	the	the	DT	det	263	O	 (NP (NP (NP (DT the)	22
+0	261	Stradivarius	Stradivarius	NNP	compound	263	O	 (NNP Stradivarius)	22
+0	262	"King	"king	NN	compound	263	O	 (NN "King)	22
+0	263	David"	david"	NN	dep	259	O	 (NN David"))	22
+0	264	as	as	RB	cc	263	O	 (CONJP (RB as)	22
+0	265	well	well	RB	mwe	264	O	 (RB well)	22
+0	266	as	as	IN	mwe	264	O	 (IN as))	22
+0	267	the	the	DT	det	270	O	 (NP (NP (DT the)	22
+0	268	Messiah	Messiah	NNP	compound	270	TITLE	 (NNP Messiah)	22
+0	269	Strad	Strad	NNP	compound	270	O	 (NNP Strad)	22
+0	270	copy	copy	NN	conj	263	O	 (NN copy))	22
+0	271	by	by	IN	case	273	O	 (PP (IN by)	22
+0	272	Jean-Baptiste	Jean-Baptiste	NNP	compound	273	PERSON	 (NP (NNP Jean-Baptiste)	22
+0	273	Vuillaume	Vuillaume	NNP	nmod	270	PERSON	 (NNP Vuillaume)))))	23
+0	274	which	which	WDT	dobj	276	O	 (SBAR (WHNP (WDT which))	23
+0	275	he	he	PRP	nsubj	276	O	 (S (NP (PRP he))	23
+0	276	gave	give	VBD	acl:relcl	263	O	 (VP (VBD gave)	23
+0	277	to	to	TO	case	280	O	 (PP (TO to)	23
+0	278	Prince	Prince	NNP	compound	280	PERSON	 (NP (NP (NNP Prince)	23
+0	279	Rainier	Rainier	NNP	compound	280	PERSON	 (NNP Rainier)	23
+0	280	III	III	NNP	nmod	276	PERSON	 (NNP III))	23
+0	281	of	of	IN	case	282	O	 (PP (IN of)	23
+0	282	Monaco.	Monaco.	NNP	nmod	280	O	 (NP (NNP Monaco.)))))	23
+0	283	The	the	DT	det	285	O	 (NP (DT The)	23
+0	284	"Le	"le	NN	compound	285	O	 (NN "Le)	23
+0	285	Duc"	duc"	NN	dobj	276	O	 (NN Duc")))))))	23
+0	286	was	be	VBD	cop	288	O	 (VP (VBD was)	23
+0	287	the	the	DT	det	288	O	 (NP (NP (DT the)	23
+0	288	instrument	instrument	NN	ccomp	254	O	 (NN instrument))	23
+0	289	on	on	IN	case	290	O	 (SBAR (WHPP (IN on)	24
+0	290	which	which	WDT	nmod	292	O	 (WHNP (WDT which)))	24
+0	291	he	he	PRP	nsubj	292	O	 (S (NP (PRP he))	24
+0	292	performed	perform	VBD	acl:relcl	288	O	 (VP (VP (VBD performed))	24
+0	293	and	and	CC	cc	292	O	 (CC and)	24
+0	294	recorded	record	VBD	conj	292	O	 (VP (VBD recorded)	24
+0	295	mostly,	mostly,	JJS	xcomp	294	O	 (ADJP (JJS mostly,))	25
+0	296	while	while	IN	mark	303	O	 (SBAR (IN while)	26
+0	297	the	the	DT	det	301	O	 (S (NP (DT the)	26
+0	298	latter	latter	JJ	amod	301	O	 (JJ latter)	26
+0	299	("King	("king	NN	compound	301	O	 (NN ("King)	26
+0	300	David"	david"	NN	compound	301	O	 (NN David")	26
+0	301	Strad)	strad)	NN	nsubjpass	303	O	 (NN Strad)))	26
+0	302	was	be	VBD	auxpass	303	O	 (VP (VBD was)	26
+0	303	donated	donate	VBN	advcl	294	O	 (VP (VBN donated)	26
+0	304	to	to	TO	case	306	O	 (PP (TO to)	26
+0	305	the	the	DT	det	306	O	 (NP (NP (DT the)	26
+0	306	State	state	NN	nmod	303	O	 (NN State))	26
+0	307	of	of	IN	case	308	O	 (PP (IN of)	26
+0	308	Israel.	Israel.	NNP	nmod	306	O	 (NP (NNP Israel.)))))))))))))))))))))))))))))))))))))))))))))))))))))))))	26
+
+ParentedTree('NN-same_unit', [ParentedTree('NS-elaboration', [ParentedTree('EDU', ['1']), ParentedTree('EDU', ['2'])]), ParentedTree('NS-circumstance', [ParentedTree('EDU', ['3']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['4']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['5']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['6']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['7']), ParentedTree('SN-attribution', [ParentedTree('EDU', ['8']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['9']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['10']), ParentedTree('NS-purpose', [ParentedTree('EDU', ['11']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['12']), ParentedTree('NS-temporal', [ParentedTree('EDU', ['13']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['14']), ParentedTree('NN-list', [ParentedTree('EDU', ['15']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['16']), ParentedTree('NN-list', [ParentedTree('EDU', ['17']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['18']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['19']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['20']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['21']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['22']), ParentedTree('NS-elaboration', [ParentedTree('EDU', ['23']), ParentedTree('SN-attribution', [ParentedTree('EDU', ['24']), ParentedTree('NN-list', [ParentedTree('EDU', ['25']), ParentedTree('EDU', ['26'])])])])])])])])])])])])])])])])])])])])])])])])])
