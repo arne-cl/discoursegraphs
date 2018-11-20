@@ -32,7 +32,6 @@ class DPLPRSTTree(object):
         self.parsetree = self.dplpstr2dplptree(parsetree_str)
         self.edus = self.extract_edus(merge_file_str)
 
-        import pudb; pudb.set_trace()
         self.add_edus()
         tree = self.dplptree2dgparentedtree()
         self.tree = word_wrap_tree(tree, width=word_wrap)
@@ -43,7 +42,7 @@ class DPLPRSTTree(object):
         with open(input_filepath, 'r') as input_file:
             input_file_str = input_file.read()
             merge_file_str, parsetree_str = input_file_str.split('ParentedTree', 1)
-            return merge_file_str, parsetree_str
+            return merge_file_str, 'ParentedTree' + parsetree_str
 
     @staticmethod
     def dplpstr2dplptree(parse_tree_str):
