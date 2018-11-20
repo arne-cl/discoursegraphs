@@ -23,16 +23,26 @@ DPLP_REL_RE = re.compile(r"^(N|S)(N|S)-(.*)$")
 class DPLPRSTTree(object):
     """A DPLPRSTTree is a DGParentedTree representation (Rhetorical Structure tree)
     parsed from the DPLP's parser output"""
-    def __init__(self, parsetree_filepath, merge_filepath, word_wrap=0, debug=False):
+    def __init__(self, dplp_filepath, word_wrap=0, debug=False):
         self.debug = debug
 
-        with open(parsetree_filepath, 'r') as parsetree_file:
-            parsetree_str = parsetree_file.read()
-            self.parsetree = self.dplpstr2dplptree(parsetree_str)
-            self.edus = self.extract_edus(merge_filepath)
-            self.add_edus()
-            tree = self.dplptree2dgparentedtree()
-            self.tree = word_wrap_tree(tree, width=word_wrap)
+        merge_file_str, parsetree_str = self.split_input(dplp_filepath)
+        
+        # FIXME: dplpstr2dplptree output is no longer a tree
+        self.parsetree = self.dplpstr2dplptree(parsetree_str)
+        self.edus = self.extract_edus(merge_file_str)
+
+        self.add_edus()
+        tree = self.dplptree2dgparentedtree()
+        self.tree = word_wrap_tree(tree, width=word_wrap)
+
+    def split_input(self, input_filepath):
+        """Splits the input file into the 'merge file' (which contains
+        the EDUs) and the 'parsetree file'."""
+        with open(input_filepath, 'r') as input_file:
+            input_file_str = input_file.read()
+            merge_file_str, parsetree_str = input_file_str.split('ParentedTree', 1)
+            return merge_file_str, 'ParentedTree' + parsetree_str
 
     @staticmethod
     def dplpstr2dplptree(parse_tree_str):
@@ -54,15 +64,14 @@ class DPLPRSTTree(object):
 
 
     @staticmethod
-    def extract_edus(merge_filepath):
+    def extract_edus(merge_file_str):
         """Extract EDUs from DPLPs .merge output files.
 
         Returns
         -------
         edus : dict from EDU IDs (int) to words (list(str))
         """
-        with open(merge_filepath, 'r') as merge_file:
-            lines = merge_file.readlines()
+        lines = merge_file_str.splitlines()
 
         edus = defaultdict(list)
         for line in lines:

@@ -16,9 +16,9 @@ Basic tests for parsing DPLP's output format for Rhetorical Structure Theory.
 
 
 def test_read_dplp1():
-    parsetree_file = os.path.join(dg.DATA_ROOT_DIR, 'dplp-short.parsetree')
-    merge_file = os.path.join(dg.DATA_ROOT_DIR, 'dplp-short.merge')
-    input_tree = dg.read_dplp(parsetree_file, merge_file)
+    #~ import pudb; pudb.set_trace()
+    input_file = os.path.join(dg.DATA_ROOT_DIR, 'short.dplp')
+    input_tree = dg.read_dplp(input_file)
 
     tempfile = NamedTemporaryFile()
     dg.write_rs3(input_tree, tempfile.name)
@@ -28,9 +28,8 @@ def test_read_dplp1():
 
 
 def test_read_dplp2():
-    parsetree_file = os.path.join(dg.DATA_ROOT_DIR, 'dplp-long.parsetree')
-    merge_file = os.path.join(dg.DATA_ROOT_DIR, 'dplp-long.merge')
-    input_tree = dg.read_dplp(parsetree_file, merge_file)
+    input_file = os.path.join(dg.DATA_ROOT_DIR, 'long.dplp')
+    input_tree = dg.read_dplp(input_file)
 
     tempfile = NamedTemporaryFile()
     dg.write_rs3(input_tree, tempfile.name)
