@@ -73,40 +73,67 @@ def dis2tree(dis_tree, wrap_tree=False):
     else:
         children = dis_tree[2:]
 
-    child_types = get_child_types(children)    
-    if len(child_types) == 1: # this is a multinuc relation
-        assert NUC in child_types, "child_types: {}".format(child_types)
-        assert len(child_types[NUC]) > 1, "len: {}".format(len(child_types[NUC]))
+    child_types = get_child_types(children)
+    # this is a paratactic relation (i.e. it consists of nucleii only)
+    if len(child_types) == 1:
+        assert NUC in child_types, \
+            "A paratactic relation must only include nucleii, not {}.".format(child_types)
+        assert len(child_types[NUC]) > 1, \
+            "A paratactic relation needs two or more nucleii, not {}.".format(len(child_types[NUC]))
         
         subtrees = [dis2tree(children[child_id], wrap_tree=True) for child_id in child_types[NUC]]
         
         # all subtrees of a multinuc have the same relation, so we can just read it from the first one
         reltype = get_relation_type(children[0])      
-        
-    else: # this is a nucleus-satellite relation
-        assert len(child_types) == 2, "child_types: {}".format(child_types)
-        assert NUC in child_types and SAT in child_types, "child_types: {}".format(child_types)
-        assert len(child_types[NUC]) == 1 and len(child_types[SAT]) == 1, \
-            "child_types: {}".format(child_types)
-        
-        nuc_child_id = child_types[NUC][0]
-        nuc_subtree = dis2tree(children[nuc_child_id], wrap_tree=True)
 
-        sat_child_id = child_types[SAT][0]
-        sat_child = children[sat_child_id]
-        sat_subtree = dis2tree(sat_child, wrap_tree=True)
+    # this is a hypotactic relation (1 nucleus, 1 satellite) or a nucleus
+    # in multiple relations with different satellites.
+    else:
+        assert len(child_types) == 2, \
+            "A hypotactic relation must only include nucleus and satellite(s), not {}.".format(child_types)
+        assert NUC in child_types and SAT in child_types, \
+            "A hypotactic relation must include a nucleus and satellite(s). Got: {}.".format(child_types)
 
-        # determine order of subtrees
-        if nuc_child_id < sat_child_id:
-            subtrees = [nuc_subtree, sat_subtree]
+        # this is a hypotactic relation (1 nucleus, 1 satellite)
+        if is_mononuc_and_monosat(child_types):        
+            nuc_child_id = child_types[NUC][0]
+            nuc_subtree = dis2tree(children[nuc_child_id], wrap_tree=True)
+
+            sat_child_id = child_types[SAT][0]
+            sat_child = children[sat_child_id]
+            sat_subtree = dis2tree(sat_child, wrap_tree=True)
+
+            # determine order of subtrees
+            if nuc_child_id < sat_child_id:
+                subtrees = [nuc_subtree, sat_subtree]
+            else:
+                subtrees = [sat_subtree, nuc_subtree]
+            
+            # the relation type is only stored in the satellite
+            reltype = get_relation_type(sat_child)
+
+        # FIXME: implement multiple satellites w/ same relation
+        # TODO: fail on multiple satellites w/ different relation
+        # TODO:
         else:
-            subtrees = [sat_subtree, nuc_subtree]
-        
-        # the relation type is only stored in the satellite
-        reltype = get_relation_type(sat_child)
+            assert has_multiple_satellites(child_types), \
+            "Unexpected combination of child types: {}".format()
 
     rst_tree = t(reltype, subtrees)
     return get_wrapped_tree(dis_tree, rst_tree, wrap_tree=wrap_tree)
+
+def is_mononuc_and_monosat(child_types):
+    """Return True, iff the given relation is a normal hypotactic relation,
+    i.e. it consists of one nucleus and one satellite only.
+    """
+    return len(child_types) == 2 and len(child_types[NUC]) == 1 and len(child_types[SAT]) == 1
+
+def has_multiple_satellites(child_types):
+    """Return True, iff the given relation is a hypotactic relation
+    between one nucleus and multiple satellites or if one nucleus is in
+    different relationships with several satellites.
+    """
+    return len(child_types[SAT]) > 1
 
 
 def get_wrapped_tree(dis_tree, rst_tree, wrap_tree=False):
