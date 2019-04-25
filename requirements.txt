@@ -18,3 +18,4 @@ Unidecode==0.4.19
 
 # for testing
 pytest==3.5.1
+more-itertools==5.0.0 # version 6.0.0 is Python3-only

@@ -20,4 +20,5 @@ ADD LICENSE Makefile NEWS.rst README.rst requirements.txt setup.py ./
 RUN pip2 install pygraphviz==1.3.1 \
     --install-option="--include-path=/usr/include/graphviz" \
     --install-option="--library-path=/usr/lib/graphviz/" && \
+    pip2 install -U pip && \
     pip2 install -r requirements.txt
