@@ -6,7 +6,17 @@
 News
 ====
 
+0.4.0 (2019-04-25)
+------------------
+
+*Release data: 25-April-2019*
+
+* almost three years of additions/fixes (mostly RST-related importers/exporters,
+  e.g. URML, dis, rs3, HILDA, DPLP, Heilman and Sagae (2015))
+
+
 0.3.2 (2016-05-30)
+------------------
 
 *Release data: 30-May-2016*
 
