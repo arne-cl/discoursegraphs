@@ -1079,7 +1079,7 @@ def test_complete_pcc_no_span_nodes():
 
 
 def test_fix_one_edu_span():
-    """A span consisting of only one EDU is pared correctly."""
+    """A span consisting of only one EDU is parsed correctly."""
     produced = example2tree('one-edu-span.rs3', rs3tree_dir=RS3TREE_DIR)
     expected = t(
         'preparation', [
