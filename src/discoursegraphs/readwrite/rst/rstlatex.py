@@ -119,7 +119,7 @@ def make_multisat(nucsat_tuples):
     return result + '\n\t'.join(result_segments)
 
 
-def rsttree2rstlatex(tree):
+def rsttree2rstlatex(tree, indent_level=0):
     node_type = get_node_type(tree)
     if node_type == 'relation':
         relname = tree.label()
@@ -132,32 +132,43 @@ def rsttree2rstlatex(tree):
         assert unexpected_types == set(), \
             "Observed types ({}) contain unexpected types ({})".format(observed_types, unexpected_types)
         
-        subtree_strings = [rsttree2rstlatex(grandchild)
+        subtree_strings = [rsttree2rstlatex(grandchild, indent_level=indent_level+1)
                            for child in tree
                            for grandchild in child]
 
         if observed_types == set('N'):  # relation only consists of nucleii
-            return make_multinuc(relname=relname, nucleii=subtree_strings)
+            return indent_tab(make_multinuc(relname=relname, nucleii=subtree_strings), indent_level)
+
         elif relname == MULTISAT_RELNAME:  # multiple relations sharing the same nucleus
             relations = [grandchild for child in tree for grandchild in child]
             relnames = [rel.label() for rel in relations]
             nuctypes_per_relation = [[elem.label() for elem in relation] for relation in relations]
             subtree_strings_per_relation = [[rsttree2rstlatex(elem[0]) for elem in relation] for relation in relations]
             nucsat_tuples = zip(relnames, nuctypes_per_relation, subtree_strings_per_relation)
-            return make_multisat(nucsat_tuples)
+            return indent_tab(make_multisat(nucsat_tuples), indent_level)
         
         else: # a "normal" relation between one nucleus and one satellite
             assert len(child_node_types) == 2, "A nuc/sat relationship must consist of two elements"
-            return make_nucsat(relname, child_node_types, subtree_strings)
+            return indent_tab(make_nucsat(relname, child_node_types, subtree_strings), indent_level)
 
     elif node_type == 'edu':
         return " ".join(tree.split())
 
     elif node_type in ('N', 'S'):  # a single segment not in any relation
-        return string.Template("\rstsegment{$content}").substitute(content=tree[0])
+        return indent_tab(string.Template("\rstsegment{$content}").substitute(content=tree[0]), indent_level)
 
     else:
         raise ValueError("Can't handle this node: {}".format(tree.label())) 
+
+
+def indent(text, amount, ch=' '):
+    """Indents a string by the given amount of characters."""
+    padding = amount * ch
+    return ''.join(padding+line for line in text.splitlines(True))
+
+def indent_tab(text, number):
+    """Indents a string by the given number of tabs (one tab = 8 spaces)."""
+    return indent(text, number, '\t')
 
 
 def write_rstlatex(tree, output_file=None):
