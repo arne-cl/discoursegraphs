@@ -6,6 +6,13 @@
 News
 ====
 
+0.4.1 (2019-04-27)
+------------------
+
+*Release data: 27-April-2019*
+
+* added exporter for RST trees in Latex
+
 0.4.0 (2019-04-25)
 ------------------
 
