@@ -42,17 +42,28 @@ class RSTLatexFileWriter(object):
         return self.rstlatextree
 
 
+def is_nltktreelike(obj):
+    """Returns true, iff the given object behaves like an nltk.Tree.
+
+    This is a "duck-typing" workaround as most RST tree classes do not
+    inherit from nltk.Tree but rather embed it.
+    """
+    return hasattr(obj, 'label') and callable(obj.label)
+
+
 def get_node_type(tree):
     """Returns the type of the root node of the given RST tree
     (one of 'N', 'S', 'relation' or 'edu'.)
     """
-    if isinstance(tree, (RSTTree, nltk.tree.Tree)):
+    if is_nltktreelike(tree):
         if tree.label() in ('N', 'S'):
             return tree.label()
         else:
             return 'relation'
+
     elif isinstance(tree, basestring):
         return 'edu'
+
     else:
         raise ValueError("Unknown tree/node type: {}".format(type(tree)))
 
