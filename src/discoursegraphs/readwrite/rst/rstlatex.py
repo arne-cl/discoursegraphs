@@ -36,7 +36,7 @@ class RSTLatexFileWriter(object):
 
         if output_filepath is not None:
             with codecs.open(output_filepath, 'w', 'utf-8') as outfile:
-                outfile.write(self.rstlatextree)
+                outfile.write(self.rstlatextree + '\n')
 
     def __str__(self):
         return self.rstlatextree

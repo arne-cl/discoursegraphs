@@ -31,7 +31,7 @@ def test_writetofile():
     dg.write_rstlatex(sat_before_nuc, tempfile.name)
     
     with open(tempfile.name, 'r') as rstlatex_file:
-        assert rstlatex_file.read() == u'\\dirrel\n\t{circumstance}{sat first}\n\t{}{nuc second}'
+        assert rstlatex_file.read() == u'\\dirrel\n\t{circumstance}{sat first}\n\t{}{nuc second}\n'
 
 
 def test_nucsat():
