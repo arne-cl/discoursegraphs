@@ -8,12 +8,30 @@
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 from builtins import *
+from tempfile import NamedTemporaryFile
 
 import pytest
 
 import discoursegraphs as dg
 from discoursegraphs.readwrite.tree import t
 from discoursegraphs.readwrite.rst.rstlatex import MULTISAT_RELNAME
+
+
+def test_writetofile():
+    """A single nucleus-satellite relation is converted into rst.sty format
+    and written to a file.
+    """
+    sat_before_nuc = \
+    t('circumstance', [
+            ('S', ['sat first']),
+            ('N', ['nuc second'])
+    ])
+    
+    tempfile = NamedTemporaryFile()
+    dg.write_rstlatex(sat_before_nuc, tempfile.name)
+    
+    with open(tempfile.name, 'r') as rstlatex_file:
+        assert rstlatex_file.read() == u'\\dirrel\n\t{circumstance}{sat first}\n\t{}{nuc second}'
 
 
 def test_nucsat():

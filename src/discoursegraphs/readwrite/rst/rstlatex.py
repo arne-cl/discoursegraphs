@@ -11,6 +11,7 @@ This module contains code to generate figures of RST trees in Latex
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 from builtins import *
+import codecs
 import string
 
 import nltk
@@ -35,7 +36,7 @@ class RSTLatexFileWriter(object):
 
         if output_filepath is not None:
             with codecs.open(output_filepath, 'w', 'utf-8') as outfile:
-                outfile.write(self.to_dis_format())
+                outfile.write(self.rstlatextree)
 
     def __str__(self):
         return self.rstlatextree
