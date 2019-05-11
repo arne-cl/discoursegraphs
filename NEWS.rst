@@ -6,6 +6,13 @@
 News
 ====
 
+0.4.4 (2019-05-11)
+------------------
+
+*Release data: 11-May-2019*
+
+* fixed rstlatex formatting / inheritance bug
+
 0.4.3 (2019-05-10)
 ------------------
 
