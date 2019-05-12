@@ -13,6 +13,7 @@ from __future__ import (absolute_import, division,
 from builtins import *
 import codecs
 import string
+import re
 
 import nltk
 
@@ -26,7 +27,8 @@ NUC_TEMPLATE = string.Template("""{}{$nucleus}""")
 SAT_TEMPLATE = string.Template("""{$relation}{$satellite}""")
 
 MULTINUC_TEMPLATE = string.Template("""\multirel{$relation}$nucleus_segments""")
-MULTINUC_ELEMENT_TEMPLATE = string.Template("""{\\rstsegment{$nucleus}}""")
+
+RSTLATEX_TREE_RE = re.compile("\\\(dirrel|multirel)")
 
 
 class RSTLatexFileWriter(object):
@@ -68,6 +70,16 @@ def get_node_type(tree):
         raise ValueError("Unknown tree/node type: {}".format(type(tree)))
 
 
+def is_edu_segment(rstlatex_string):
+    """Returns true, iff the given string does not contain an RST subtree."""
+    return RSTLATEX_TREE_RE.search(rstlatex_string) is None
+
+
+def wrap_edu_segment(edu_segment):
+    """Wraps the string content of an EDU in RST Latex markup."""
+    return RSTSEGMENT_TEMPLATE.substitute(segment=edu_segment)
+
+
 def make_nucsat(relname, nuc_types, elements):
     """Creates a rst.sty Latex string representation of a standard RST relation
     (one nucleus, one satellite).
@@ -79,10 +91,14 @@ def make_nucsat(relname, nuc_types, elements):
  
     result = "\dirrel"
     for i, nuc_type in enumerate(nuc_types):
+        element = elements[i]
+        if is_edu_segment(element):
+            element = wrap_edu_segment(element)
+
         if nuc_type == 'N':
-            result += '\n\t' + NUC_TEMPLATE.substitute(nucleus=elements[i])    
+            result += '\n\t' + NUC_TEMPLATE.substitute(nucleus=element)
         else:
-            result += '\n\t' + SAT_TEMPLATE.substitute(satellite=elements[i], relation=relname)
+            result += '\n\t' + SAT_TEMPLATE.substitute(satellite=element, relation=relname)
     return result
 
 
@@ -90,14 +106,18 @@ def make_multinuc(relname, nucleii):
     """Creates a rst.sty Latex string representation of a multi-nuclear RST relation."""
     nuc_strings = []
     for nucleus in nucleii:
-        nuc_strings.append( MULTINUC_ELEMENT_TEMPLATE.substitute(nucleus=nucleus) )
+        if is_edu_segment(nucleus):
+            nucleus = wrap_edu_segment(nucleus)
+
+        nuc_strings.append(nucleus)
     nucleii_string = "\n\t" + "\n\t".join(nuc_strings)
     return MULTINUC_TEMPLATE.substitute(relation=relname, nucleus_segments=nucleii_string)
 
 
 def make_multisat(nucsat_tuples):
     """Creates a rst.sty Latex string representation of a multi-satellite RST subtree
-    (i.e. a set of nucleus-satellite relations that share the same nucleus.
+    (i.e. merge a set of nucleus-satellite relations that share the same nucleus
+    into one subtree).
     """
     nucsat_tuples = [tup for tup in nucsat_tuples]  # unpack the iterable, so we can check its length
     assert len(nucsat_tuples) > 1, \
@@ -109,13 +129,19 @@ def make_multisat(nucsat_tuples):
     relname, nuc_types, elements = first_relation
     first_nucleus_pos = current_nucleus_pos = nuc_types.index('N')
     result_segments = []
-    
+
+    # add children (nucleus and satellites) to resulting (sub)tree
     for i, nuc_type in enumerate(nuc_types):
+        element = elements[i]
+        if is_edu_segment(element):
+            element = wrap_edu_segment(element)
+
         if nuc_type == 'N':
-            result_segments.append(NUC_TEMPLATE.substitute(nucleus=elements[i]))
+            result_segments.append(NUC_TEMPLATE.substitute(nucleus=element))
         else:
-            result_segments.append(SAT_TEMPLATE.substitute(satellite=elements[i], relation=relname))
-    
+            result_segments.append(SAT_TEMPLATE.substitute(satellite=element, relation=relname))
+
+    # reorder children
     for (relname, nuc_types, elements) in remaining_relations:
         for i, nuc_type in enumerate(nuc_types):
             if nuc_type == 'N':  # all relations share the same nucleus, so we don't need to reprocess it.
