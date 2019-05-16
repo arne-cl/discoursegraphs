@@ -109,7 +109,7 @@ def make_multinuc(relname, nucleii):
         if is_edu_segment(nucleus):
             nucleus = wrap_edu_segment(nucleus)
 
-        nuc_strings.append(nucleus)
+        nuc_strings.append('{' + nucleus + '}')
     nucleii_string = "\n\t" + "\n\t".join(nuc_strings)
     return MULTINUC_TEMPLATE.substitute(relation=relname, nucleus_segments=nucleii_string)
 
@@ -130,7 +130,7 @@ def make_multisat(nucsat_tuples):
     first_nucleus_pos = current_nucleus_pos = nuc_types.index('N')
     result_segments = []
 
-    # add children (nucleus and satellites) to resulting (sub)tree
+    # add elements (nucleus and satellite) from first relation to resulting (sub)tree
     for i, nuc_type in enumerate(nuc_types):
         element = elements[i]
         if is_edu_segment(element):
@@ -141,13 +141,17 @@ def make_multisat(nucsat_tuples):
         else:
             result_segments.append(SAT_TEMPLATE.substitute(satellite=element, relation=relname))
 
-    # reorder children
+    # reorder elements of the remaining relation and add them to the resulting (sub)tree
     for (relname, nuc_types, elements) in remaining_relations:
         for i, nuc_type in enumerate(nuc_types):
             if nuc_type == 'N':  # all relations share the same nucleus, so we don't need to reprocess it.
                 continue
             else:
-                result_segment = SAT_TEMPLATE.substitute(satellite=elements[i], relation=relname)
+                element = elements[i]
+                if is_edu_segment(element):
+                    element = wrap_edu_segment(element)
+
+                result_segment = SAT_TEMPLATE.substitute(satellite=element, relation=relname)
                 if i < first_nucleus_pos:  # satellite comes before the nucleus
                     result_segments.insert(current_nucleus_pos, result_segment)
                     current_nucleus_pos += 1

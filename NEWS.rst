@@ -6,6 +6,13 @@
 News
 ====
 
+0.4.5 (2019-05-16)
+------------------
+
+*Release data: 12-May-2019*
+
+* fixed rstlatex nested tree generation
+
 0.4.4 (2019-05-11)
 ------------------
 
