@@ -38,4 +38,4 @@ from discoursegraphs.readwrite.rst.dis.codra import read_codra
 from discoursegraphs.readwrite.rst.urml import URMLDocumentGraph, read_urml
 from discoursegraphs.readwrite.salt.saltxmi import SaltDocument, SaltXMIGraph
 from discoursegraphs.readwrite.tiger import TigerDocumentGraph, read_tiger
-from discoursegraphs.readwrite.tree import t, tree2bracket
+from discoursegraphs.readwrite.tree import t, tree2bracket, write_svgtree

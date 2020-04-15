@@ -280,3 +280,16 @@ def word_wrap_tree(parented_tree, width=0):
 def is_leaf(elem):
     """Returns True, iff the given tree node is a leaf node."""
     return isinstance(elem, basestring)
+
+
+def write_svgtree(tree, output_file):
+    """convert an nltk.tree into an SVG file using svgling."""
+    # We're not importing svgling globally because it monkey-patches
+    # nltk's tree drawing mechanism, i.e. all trees in Jupyter will
+    # look different when importing svgling.
+    import svgling
+    svgling.disable_nltk_png()
+
+    tree_layout = svgling.draw_tree(tree)
+    drawing = tree_layout.get_svg()
+    drawing.saveas(output_file)
