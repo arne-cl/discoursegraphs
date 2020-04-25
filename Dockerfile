@@ -17,8 +17,8 @@ ADD LICENSE Makefile NEWS.rst README.rst requirements.txt setup.py ./
 
 # on current Ubuntu systems you will need to install pygraphviz manually,
 # cf. http://stackoverflow.com/questions/32885486/pygraphviz-importerror-undefined-symbol-agundirected
-RUN pip2 install pygraphviz==1.3.1 \
-    --install-option="--include-path=/usr/include/graphviz" \
-    --install-option="--library-path=/usr/lib/graphviz/" && \
-    pip2 install -U pip && \
+RUN pip install setuptools==44.1.0 && \
+    pip2 install pygraphviz==1.3.1 \
+      --install-option="--include-path=/usr/include/graphviz" \
+      --install-option="--library-path=/usr/lib/graphviz/" && \
     pip2 install -r requirements.txt
