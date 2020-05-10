@@ -6,6 +6,12 @@
 News
 ====
 
+0.4.9 (2020-05-10)
+------------------
+
+*Release date: 10-May-2020*
+
+* added option to write_svgtree() to return SVG image as a string
 
 0.4.8 (2020-04-25)
 ------------------
