@@ -8,6 +8,7 @@ trees.
 """
 
 from collections import defaultdict, deque
+import StringIO
 import textwrap
 
 from nltk.tree import Tree, ParentedTree
@@ -282,7 +283,7 @@ def is_leaf(elem):
     return isinstance(elem, basestring)
 
 
-def write_svgtree(tree, output_file):
+def write_svgtree(tree, output_file=None):
     """convert an nltk.tree into an SVG file using svgling."""
     # We're not importing svgling globally because it monkey-patches
     # nltk's tree drawing mechanism, i.e. all trees in Jupyter will
@@ -292,4 +293,11 @@ def write_svgtree(tree, output_file):
 
     tree_layout = svgling.draw_tree(tree)
     drawing = tree_layout.get_svg()
-    drawing.saveas(output_file)
+    
+    if output_file is None:  # return string representation of SVG image
+        f = StringIO.StringIO()
+        drawing.write(f)
+        return f.getvalue()
+    else:
+        drawing.saveas(output_file)
+

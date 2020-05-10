@@ -39,7 +39,7 @@ text0_str = """
 </text>
 """
 
-EXPECTED_DOT_TREE = """<?xml version="1.0" encoding="utf-8" ?>
+EXPECTED_SVG_TREE = """<?xml version="1.0" encoding="utf-8" ?>
 <svg baseProfile="full" height="72px" preserveAspectRatio="xMidYMid meet" style="font-family: times, serif; font-weight:normal; font-style: normal; font-size: 16px;" version="1.1" viewBox="0,0,80.0,72.0" width="80px" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink"><defs /><svg width="100%" x="0" y="0em"><defs /><text text-anchor="middle" x="50%" y="1em">foo</text></svg><svg width="50%" x="0%" y="3em"><defs /><svg width="100%" x="0" y="0em"><defs /><text text-anchor="middle" x="50%" y="1em">bar</text></svg></svg><line stroke="black" x1="50%" x2="25%" y1="1.2em" y2="3em" /><svg width="50%" x="50%" y="3em"><defs /><svg width="100%" x="0" y="0em"><defs /><text text-anchor="middle" x="50%" y="1em">baz</text></svg></svg><line stroke="black" x1="50%" x2="75%" y1="1.2em" y2="3em" /></svg>"""
 
 
@@ -206,11 +206,15 @@ def test_debug_root_label():
 
 
 def test_write_svgtree():
-    temp_file = NamedTemporaryFile()
-    temp_file.close()
-
+    """A ParentedTree can be converted into an SVG image using svgling."""
     tree = DGParentedTree("foo", ["bar", "baz"])
+
+    # write SVG to file
+    temp_file = NamedTemporaryFile()
+    temp_file.close()    
     dg.write_svgtree(tree, temp_file.name)
     with open(temp_file.name, 'r') as svg_file:
-        assert EXPECTED_DOT_TREE == svg_file.read()
+        assert EXPECTED_SVG_TREE == svg_file.read()
 
+    # return SVG as string
+    assert EXPECTED_SVG_TREE == dg.write_svgtree(tree)
