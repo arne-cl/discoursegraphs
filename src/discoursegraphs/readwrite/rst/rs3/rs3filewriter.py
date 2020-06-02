@@ -43,6 +43,37 @@ def get_node_type(dgtree):
 
 
 class RS3FileWriter(object):
+    """Convert a DGParentedTree representation of an RST tree into an .rs3 file"""
+    # There's no consensus on the set of RST relations, so I chose to include
+    # those that are used by default in RSTTool and rstWeb.
+    default_relations = {
+        'Antithesis': 'rst',
+        'Background': 'rst',
+        'Cause': 'rst',
+        'Circumstance': 'rst',
+        'Concession': 'rst',
+        'Condition': 'rst',
+        'Conjunction': 'multinuc',
+        'Contrast': 'multinuc',
+        'Disjunction': 'multinuc',
+        'Elaboration': 'rst',
+        'Enablement': 'rst',
+        'Evaluation': 'rst',
+        'Evidence': 'rst',
+        'Interpretation': 'rst',
+        'Joint': 'multinuc',
+        'Justify': 'rst',
+        'Motivation': 'rst',
+        'Otherwise': 'rst',
+        'Preparation': 'rst',
+        'Purpose': 'rst',
+        'Restatement': 'rst',
+        'Result': 'rst',
+        'Sequence': 'multinuc',
+        'Solutionhood': 'rst',
+        'Summary': 'rst'
+    }
+
     def __init__(self, dgtree, debug=True, output_filepath=None):
         # dgtree is an RSTTree or DisTree (and contains a DGParentedTree)
         if hasattr(dgtree, 'tree') and isinstance(dgtree.tree, DGParentedTree):
@@ -166,13 +197,21 @@ class RS3FileWriter(object):
         tree.append(body)
         return tree
 
-    def gen_relations(self):
+    def gen_relations(self, include_default_relations=True):
         """Create the <relations> etree element of an RS3 file.
         This represents all relation types (both 'rst' and 'multinuc').
 
         Example relation:
             <rel name="circumstance" type="rst" />
+
+        If `include_default_relations` is `True`, always include the set
+        of RST relations commonly included in RSTTool/rstWeb. If set to
+        `False`, only include those relations that are actually used in
+        the input file.
         """
+        if include_default_relations:
+            self.relations.update(self.default_relations)
+
         relations_elem = E('relations')
         for relname in sorted(self.relations):
             relations_elem.append(
