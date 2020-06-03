@@ -210,7 +210,9 @@ class RS3FileWriter(object):
         the input file.
         """
         if include_default_relations:
-            self.relations.update(self.default_relations)
+            # the relations in the input file always overrule the defaults
+            self.default_relations.update(self.relations)
+            self.relations = self.default_relations
 
         relations_elem = E('relations')
         for relname in sorted(self.relations):
