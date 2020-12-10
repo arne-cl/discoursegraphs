@@ -1,0 +1,12 @@
+<rst>
+	<header>
+		<relations>
+			<rel name="joint" type="multinuc" />
+		</relations>
+	</header>
+	<body>
+		<segment id="0" parent="2" relname="joint">foo</segment>
+		<segment id="1" parent="2" relname="joint">bar</segment>
+		<group id="2" type="span"/>
+	</body>
+</rst>
