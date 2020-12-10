@@ -444,6 +444,23 @@ def test_pcc_3367():
     assert expected == produced.tree
 
 
+def test_isanlp_tree():
+    """
+    This is a weird edge case produced by the isanlp_rst parser,
+    basically a multinuc relation in a <group ... type="span"/>
+    instead of a <group ... type="multinuc" />.
+    RSTTool accepts this, we should too.
+    """
+    produced = example2tree("isanlp_rst1.rs3")
+    expected = t("joint", [
+        ("N", ['foo']),
+        ("N", ['bar'])
+    ])
+
+    assert produced.edu_strings == produced.tree.leaves() == ['foo', 'bar']
+    assert expected == produced.tree
+
+
 def test_segments_only_trees():
     """Files without a single root must get a virtual one."""
     # minimal case: file without any segments

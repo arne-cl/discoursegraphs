@@ -231,19 +231,32 @@ class RSTTree(object):
                     return self.dt(start_node=child_id)
 
                 elif len(self.child_dict[elem_id]) == 2:
-                    # this elem is the N of an N-S relation (child: S), but is also
-                    # a span over another relation (child: N)
-                    children = {}
-                    for child_id in self.child_dict[elem_id]:
-                        children[self.elem_dict[child_id]['nuclearity']] = child_id
+                    child_nuclearities = set([self.elem_dict[child_id]['nuclearity']
+                                              for child_id in self.child_dict[elem_id]])
+                    
+                    if child_nuclearities == {'satellite', 'nucleus'}:
+                        # this elem is the N of an N-S relation (child: S), but is also
+                        # a span over another relation (child: N)
+                        children = {}
+                        for child_id in self.child_dict[elem_id]:
+                            children[self.elem_dict[child_id]['nuclearity']] = child_id
 
-                    sat_id = children['satellite']
-                    sat_subtree = self.dt(start_node=sat_id)
+                        sat_id = children['satellite']
+                        sat_subtree = self.dt(start_node=sat_id)
 
-                    nuc_subtree = self.dt(start_node=children['nucleus'])
-                    nuc_tree = n_wrap(nuc_subtree, debug=self.debug, root_id=elem_id)
+                        nuc_subtree = self.dt(start_node=children['nucleus'])
+                        nuc_tree = n_wrap(nuc_subtree, debug=self.debug, root_id=elem_id)
 
-                    return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
+                        return self.sorted_nucsat_tree(nuc_tree, sat_subtree)
+
+                    else:  # child_nuclearities == {'nucleus'}
+                        # This is a weird edge case produced by the isanlp_rst parser,
+                        # basically a multinuc relation in a <group ... type="span"/>
+                        # instead of a <group ... type="multinuc" />.
+                        # RSTTool accepts this, we should too.
+                        subtrees = [self.dt(start_node=child_id)
+                                    for child_id in self.child_dict[elem_id]]
+                        return self.sorted_nucsat_tree(*subtrees)
 
                 elif len(self.child_dict[elem_id]) > 2:
                     children = defaultdict(list)
