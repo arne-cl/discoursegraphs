@@ -15,6 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag discoursegraphs:$(date +%s)
+      run: docker build . --file Dockerfile --tag discoursegraphs
     - name: run pytest in Docker
-      run: docker run --entrypoint=pytest discoursegraphs:$(date +%s)
+      run: docker run --entrypoint=pytest discoursegraphs
