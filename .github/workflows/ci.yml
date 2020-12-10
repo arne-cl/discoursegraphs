@@ -17,4 +17,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag discoursegraphs:$(date +%s)
     - name: run pytest in Docker
-      run: docker run --entrypoint=pytest discoursegraphs
+      run: docker run --entrypoint=pytest discoursegraphs:$(date +%s)
