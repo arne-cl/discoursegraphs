@@ -6,6 +6,19 @@
 News
 ====
 
+0.4.11 (2020-12-10)
+
+*Release date: 10-December-2020*
+
+* fix rs3 parser for files produced by isanlp_rst
+
+0.4.10 (2020-06-03)
+-------------------
+
+*Release date: 06-June-2020*
+
+* added standard RST relations to every rs3 file
+
 0.4.9 (2020-05-10)
 ------------------
 
