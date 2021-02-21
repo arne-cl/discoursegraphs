@@ -30,6 +30,7 @@ from discoursegraphs.readwrite.rst.rs3.rs3filewriter import RS3FileWriter, write
 from discoursegraphs.readwrite.rst.rstlatex import RSTLatexFileWriter, write_rstlatex
 from discoursegraphs.readwrite.rst.hilda import HILDARSTTree, read_hilda
 from discoursegraphs.readwrite.rst.heilman_sagae_2015 import HS2015RSTTree, read_hs2015tree
+from discoursegraphs.readwrite.rst.stagedp import StageDPRSTTree, read_stagedp
 from discoursegraphs.readwrite.rst.dis.disgraph import read_dis
 from discoursegraphs.readwrite.rst.dis.distree import read_distree
 from discoursegraphs.readwrite.rst.dis.disfilewriter import DisFileWriter, write_dis

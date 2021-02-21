@@ -27,7 +27,7 @@ from discoursegraphs.readwrite import (
     write_neo4j, write_geoff, write_paula,
     read_ptb, read_mrg,
     read_rst, read_rs3, read_rs3tree, write_rs3, write_rstlatex, write_svgtree,
-    read_dis, read_distree, write_dis, read_tiger, read_urml)
+    read_dis, read_distree, write_dis, read_stagedp, read_tiger, read_urml)
 from discoursegraphs.readwrite.dot import print_dot
 from discoursegraphs.statistics import info
 from discoursegraphs.util import xmlprint, make_labels_explicit, find_files
