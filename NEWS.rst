@@ -6,7 +6,15 @@
 News
 ====
 
+0.4.12 (2021-02-22)
+-------------------
+
+*Release date: 22-February-2021*
+
+* added support for StageDP RST parser
+
 0.4.11 (2020-12-10)
+-------------------
 
 *Release date: 10-December-2020*
 
