@@ -1,0 +1,5 @@
+0	1	good	good	JJ	amod	2	O	 (ROOT (NP (NP (JJ good)	1
+0	2	food	food	NN	root	0	O	 (NN food))	1
+0	3	.	.	.	punct	2	O	 (. .)))	1
+
+ParentedTree('EDU', ['1'])
