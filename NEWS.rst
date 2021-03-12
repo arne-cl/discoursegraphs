@@ -6,6 +6,13 @@
 News
 ====
 
+0.4.13 (2021-03-12)
+-------------------
+
+*Release date: 12-March-2021*
+
+* fix for parsing DPLP trees with only one EDU
+
 0.4.12 (2021-02-22)
 -------------------
 
