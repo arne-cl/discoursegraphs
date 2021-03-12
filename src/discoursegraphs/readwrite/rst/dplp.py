@@ -88,7 +88,12 @@ class DPLPRSTTree(object):
             edu_id = int(self.parsetree[leaf_pos])
             edu_tokens = self.edus[edu_id]
             parent_pos = leaf_pos[:-1]
-            self.parsetree[parent_pos] = u" ".join(edu_tokens)
+            try:
+                self.parsetree[parent_pos] = u" ".join(edu_tokens)
+            except IndexError:
+                assert len(leaf_positions) == 1  # tree has only one EDU
+                self.parsetree.set_label('N')  # change tree root from 'EDU' to 'N'
+                self.parsetree[leaf_pos] = u" ".join(edu_tokens)
 
     def dplptree2dgparentedtree(self):
         """Convert the tree from DPLP's format into a conventional binary tree,
@@ -96,8 +101,13 @@ class DPLPRSTTree(object):
         """
         def transform(dplp_tree):
             """Transform a DPLP parse tree into a more conventional parse tree."""
-            if isinstance(dplp_tree, basestring) or not hasattr(dplp_tree, 'label'):
+            if isinstance(dplp_tree, basestring):
                 return dplp_tree
+            if not hasattr(dplp_tree, 'label'):
+                return dplp_tree
+            if len(dplp_tree) == 1:  # tree only consists of one EDU
+                return dplp_tree
+
             assert len(dplp_tree) == 2, "We can only handle binary trees."
 
             match = DPLP_REL_RE.match(dplp_tree.label())
