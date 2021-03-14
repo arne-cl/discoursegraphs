@@ -16,7 +16,6 @@ Basic tests for parsing DPLP's output format for Rhetorical Structure Theory.
 
 
 def test_read_dplp_short():
-    #~ import pudb; pudb.set_trace()
     input_file = os.path.join(dg.DATA_ROOT_DIR, 'short.dplp')
     input_tree = dg.read_dplp(input_file)
 
@@ -27,9 +26,8 @@ def test_read_dplp_short():
     assert input_tree.tree == produced_output_tree.tree
 
 
-def test_read_dplp_too_short():
-    # ~ import pudb; pudb.set_trace()
-    input_file = os.path.join(dg.DATA_ROOT_DIR, 'too-short.dplp')
+def test_read_dplp_one_edu():
+    input_file = os.path.join(dg.DATA_ROOT_DIR, 'one-edu.dplp')
     input_tree = dg.read_dplp(input_file)
 
     tempfile = NamedTemporaryFile()
