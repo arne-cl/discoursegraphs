@@ -11,7 +11,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 NEWS = open(os.path.join(here, 'NEWS.rst')).read()
 
-version = '0.4.13'
+version = '0.4.14'
 
 install_requires = [
     # List your project dependencies here.

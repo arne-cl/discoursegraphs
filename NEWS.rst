@@ -6,6 +6,13 @@
 News
 ====
 
+0.4.14 (2021-03-14)
+-------------------
+
+*Release date: 14-March-2021*
+
+* minor: renamed fixture for clarity
+
 0.4.13 (2021-03-12)
 -------------------
 
