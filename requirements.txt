@@ -1,7 +1,7 @@
 -e . # install this package using the setup.py in this directory
 
 brewer2mpl==1.4.1
-lxml==3.6.0
+lxml==4.6.3
 networkx==1.11
 nltk==3.2.5
 pydot2==1.0.33
