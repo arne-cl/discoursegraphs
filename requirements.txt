@@ -3,7 +3,7 @@
 brewer2mpl==1.4.1
 lxml==4.6.3
 networkx==1.11
-nltk==3.2.5
+nltk==3.4.5
 pydot2==1.0.33
 gvmagic==0.4
 
