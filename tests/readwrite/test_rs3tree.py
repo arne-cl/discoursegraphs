@@ -7,14 +7,10 @@
 import logging
 import os
 import re
-
-from lxml import etree
-from nltk.tree import ParentedTree
-import pytest
-
+from tempfile import NamedTemporaryFile
 
 from discoursegraphs.readwrite.tree import p, t, debug_root_label
-from discoursegraphs.readwrite.rst.rs3 import extract_relationtypes, RSTTree
+from discoursegraphs.readwrite.rst.rs3 import extract_relationtypes, RS3FileWriter, RSTTree
 from discoursegraphs.readwrite.rst.rs3.rs3tree import n, s, TooManyChildrenError, VIRTUAL_ROOT
 import discoursegraphs as dg
 
@@ -1114,3 +1110,32 @@ def test_fix_one_edu_span():
         '13', '14', '15', '16']
     assert expected == produced.tree
 
+
+def test_fix_rs3filewriter_newlines_in_edus():
+    """An RST tree that contains newlines in its EDUs can be converted into
+    an rs3 file just like a tree without newlines."""
+
+    t_good = t('Temporal', [
+        ('N', ['focused on teaching']),
+        ('S', ['before resuming career'])
+    ])
+
+    t_bad = t('Temporal', [
+        ('N', ['Szeryng\nsubsequently\nfocused on\nteaching']),
+        ('S', ['before resuming\nhis concert\ncareer in 1954\n.'])
+    ])
+
+    tempfile = NamedTemporaryFile()
+    RS3FileWriter(t_good, output_filepath=tempfile.name)
+    produced_good_output_tree = RSTTree(tempfile.name)
+
+    tempfile = NamedTemporaryFile()
+    RS3FileWriter(t_bad, output_filepath=tempfile.name)
+    produced_bad_output_tree = RSTTree(tempfile.name)
+
+    import pudb; pudb.set_trace()
+
+    assert expected_output_tree.edu_strings == \
+        produced_output_tree.edu_strings == \
+        produced_output_tree.tree.leaves() == [edu_string]
+    assert input_tree == expected_output_tree.tree == produced_output_tree.tree
