@@ -23,3 +23,10 @@ reinstall: uninstall clean install
 # runs py.test with coverage.py and creates annoted HTML reports in htmlcov/
 coverage:
 	py.test --cov=discoursegraphs --cov-report html tests/
+
+docker-build:
+	docker build -t discoursegraphs .
+
+docker-test:
+	docker run --entrypoint=pytest discoursegraphs
+
