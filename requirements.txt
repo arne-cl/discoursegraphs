@@ -21,7 +21,7 @@ pytest==3.5.1
 more-itertools==5.0.0 # version 6.0.0 is Python3-only
 
 # for Python 2/3 compatibility
-future==0.17.1
+future==0.18.3
 enum34==1.1.6
 
 git+git://github.com/arne-cl/svgling-python2.7@master#egg=svgling
