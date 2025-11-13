@@ -33,7 +33,8 @@ def test_pcc():
             # cyclic graphs must become acyclic once we remove the secedges
             bad_graph = deepcopy(docgraph)
             secedges = dg.select_edges_by(bad_graph, 'tiger:secedge')
-            bad_graph.remove_edges_from(secedges)
+            # Convert generator to list to avoid RuntimeError during graph modification
+            bad_graph.remove_edges_from(list(secedges))
             assert nx.is_directed_acyclic_graph(docgraph)
 
 
