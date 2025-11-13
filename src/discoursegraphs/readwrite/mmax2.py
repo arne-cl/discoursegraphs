@@ -62,18 +62,21 @@ class MMAXProject(object):
         path_vars = ['basedata', 'scheme', 'style', 'style', 'customization',
                      'markable']
         for path_var in path_vars:
-            specific_path = tree.find('//{}_path'.format(path_var)).text
+            # Fixed: Add dot prefix for proper XPath search from root
+            specific_path = tree.find('.//{}_path'.format(path_var)).text
             paths[path_var] = specific_path if specific_path else project_path
         paths['project_path'] = project_path
 
         annotations = {}
-        for level in tree.iterfind('//level'):
+        # Fixed: Add dot prefix for proper XPath search from root
+        for level in tree.iterfind('.//level'):
             annotations[level.attrib['name']] = {
                 'schemefile': level.attrib['schemefile'],
                 'customization_file': level.attrib['customization_file'],
                 'file_extension': level.text[1:]}
 
-        stylesheet = tree.find('//stylesheet').text
+        # Fixed: Add dot prefix for proper XPath search from root
+        stylesheet = tree.find('.//stylesheet').text
         return paths, annotations, stylesheet
 
 
@@ -242,7 +245,8 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         """
         return os.path.join(self.mmax_project.paths['project_path'],
                             self.mmax_project.paths['basedata'],
-                            etree.parse(mmax_base_file).find('//words').text)
+                            # Fixed: Add dot prefix for proper XPath search from root
+                            etree.parse(mmax_base_file).find('.//words').text)
 
     def add_token_layer(self, words_file, connected):
         """
@@ -255,7 +259,8 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
             Make the graph connected, i.e. add an edge from root to each
             token.
         """
-        for word in etree.parse(words_file).iterfind('//word'):
+        # Fixed: Add dot prefix for proper XPath search from root
+        for word in etree.parse(words_file).iterfind('.//word'):
             token_node_id = word.attrib['id']
             self.tokens.append(token_node_id)
             token_str = ensure_unicode(word.text)

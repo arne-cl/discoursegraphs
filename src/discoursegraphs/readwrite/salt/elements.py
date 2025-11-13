@@ -133,7 +133,7 @@ def get_elements(tree, tag_name):
     tag_name : str
         the name of an XML tag, e.g. 'nodes', 'edges', 'labels'
     """
-    return tree.findall("//{0}".format(tag_name))
+    return tree.findall(".//{0}".format(tag_name))
 
 
 def get_subelements(element, tag_name):

@@ -77,9 +77,11 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
         # <!ELEMENT utterance (#PCDATA|token|lemma|pos)*>
         """
         self._add_dominance_relation(self.root, 'intro')
-        self._add_token_span_to_document(tree.find('/intro'))
+        # Fixed: Add dot prefix for proper XPath search from root
+        self._add_token_span_to_document(tree.find('./intro'))
 
-        for turn in tree.iterfind('/turn'):
+        # Fixed: Add dot prefix for proper XPath search from root
+        for turn in tree.iterfind('./turn'):
             turn_id = 'turn_{}'.format(turn.attrib['nrgen'])
             self._add_dominance_relation(self.root, turn_id)
             self.turns.append(turn_id)
@@ -94,7 +96,8 @@ class DecourDocumentGraph(DiscourseDocumentGraph):
                     self._add_dominance_relation(turn_id, utter_id)
                     self._add_utterance_to_document(utter)
 
-        conclu = tree.find('/conclu')
+        # Fixed: Add dot prefix for proper XPath search from root
+        conclu = tree.find('./conclu')
         if conclu is not None:
             self._add_dominance_relation(self.root, 'conclu')
             self._add_token_span_to_document(conclu)

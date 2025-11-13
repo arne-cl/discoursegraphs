@@ -417,7 +417,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
             '''
             return float(token_element.attrib['time'])
 
-        timeline = tree.find('//common-timeline')
+        timeline = tree.find('.//common-timeline')
         return (tok.attrib['id']
                 for tok in sorted((tli for tli in timeline.iterchildren()),
                                   key=tok2time))
