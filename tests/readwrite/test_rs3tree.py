@@ -211,7 +211,7 @@ def test_no_span_nodes():
 
 def generate_pcc_test_case(filepath, error):
     basename = os.path.basename(filepath)
-    doc_id_regex = re.compile('^.*maz-(\d+)\..*')
+    doc_id_regex = re.compile(r'^.*maz-(\d+)\..*')
     doc_id = doc_id_regex.search(basename).groups()[0]
     result = (
         "@pytest.mark.xfail\n"
