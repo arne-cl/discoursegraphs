@@ -91,7 +91,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
         self.root = root if root else self.ns+':root_node'
         self.add_node(self.root, layers={self.ns})
         # metadata shall be stored in the root node's dictionary
-        self.node[self.root]['metadata'] = defaultdict(lambda: defaultdict(dict))
+        self._node[self.root]['metadata'] = defaultdict(lambda: defaultdict(dict))
         self.sentences = []
         self.tokens = []
 
@@ -108,8 +108,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
 
         for token_id, token_str in self.get_tokens():
             offset = onset + len(token_str)
-            self.node[token_id]['{0}:{1}'.format(offset_ns, 'onset')] = onset
-            self.node[token_id]['{0}:{1}'.format(offset_ns, 'offset')] = offset
+            self.nodes[token_id]['{0}:{1}'.format(offset_ns, 'onset')] = onset
+            self.nodes[token_id]['{0}:{1}'.format(offset_ns, 'offset')] = offset
             onset = offset + 1
 
     def get_offsets(self, token_node_id=None, offset_ns=None):
@@ -145,8 +145,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
             if token_node_id is not None:
                 assert istoken(self, token_node_id), \
                     "'{}' is not a token node.".format(token_node_id)
-                onset = self.node[token_node_id]['{0}:{1}'.format(offset_ns, 'onset')]
-                offset = self.node[token_node_id]['{0}:{1}'.format(offset_ns, 'offset')]
+                onset = self.nodes[token_node_id]['{0}:{1}'.format(offset_ns, 'onset')]
+                offset = self.nodes[token_node_id]['{0}:{1}'.format(offset_ns, 'offset')]
                 return (onset, offset)
             else:  # return offsets for all tokens in the document
                 return self._get_all_offsets(offset_ns)
@@ -176,8 +176,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
             they occur in the document.
         """
         for token_id, _token_str in self.get_tokens():
-            onset = self.node[token_id]['{0}:{1}'.format(offset_ns, 'onset')]
-            offset = self.node[token_id]['{0}:{1}'.format(offset_ns, 'offset')]
+            onset = self.nodes[token_id]['{0}:{1}'.format(offset_ns, 'onset')]
+            offset = self.nodes[token_id]['{0}:{1}'.format(offset_ns, 'offset')]
             yield (token_id, onset, offset)
 
     def get_phrases(self, ns=None, layer='syntax', cat_key='cat', cat_val='NP'):
@@ -186,7 +186,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
             ns = self.ns
 
         for node_id in select_nodes_by_layer(self, '{0}:{1}'.format(ns, layer)):
-            if self.node[node_id][self.ns+':'+cat_key] == cat_val:
+            if self.nodes[node_id][self.ns+':'+cat_key] == cat_val:
                 yield node_id
 
     def add_node(self, n, layers=None, attr_dict=None, **attr):
@@ -257,20 +257,21 @@ class DiscourseDocumentGraph(MultiDiGraph):
             attr_dict.update(attr)
 
         # if there's no node with this ID in the graph, yet
-        if n not in self.succ:
-            self.succ[n] = {}
-            self.pred[n] = {}
-            self.node[n] = attr_dict
+        if n not in self._succ:
+            self._succ[n] = self.adjlist_dict_factory()
+            self._pred[n] = self.adjlist_dict_factory()
+            self._node[n] = self.node_dict_factory()
+            self._node[n].update(attr_dict)
         else:  # update attr even if node already exists
             # if a node exists, its attributes will be updated, except
             # for the layers attribute. the value of 'layers' will
             # be the union of the existing layers set and the new one.
-            existing_layers = self.node[n]['layers']
+            existing_layers = self._node[n]['layers']
             all_layers = existing_layers.union(layers)
-            attrs_without_layers = {k: v for (k, v) in attr_dict.items()
+            attrs_without_layers = {k: v for (k, v) in list(attr_dict.items())
                                     if k != 'layers'}
-            self.node[n].update(attrs_without_layers)
-            self.node[n].update({'layers': all_layers})
+            self._node[n].update(attrs_without_layers)
+            self._node[n].update({'layers': all_layers})
 
     def add_nodes_from(self, nodes, **attr):
         """Add multiple nodes.
@@ -319,9 +320,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
         """
         additional_attribs = attr  # will be added to each node
         for n in nodes:
-            try:  # check, if n is a node_id or a (node_id, attrib dict) tuple
-                newnode = n not in self.succ  # is node in the graph, yet?
-            except TypeError:  # n is a (node_id, attribute dict) tuple
+            # Check if n is a (node_id, attrib dict) tuple
+            if isinstance(n, tuple) and len(n) == 2:
                 node_id, ndict = n
 
                 if not 'layers' in ndict:
@@ -333,33 +333,43 @@ class DiscourseDocumentGraph(MultiDiGraph):
                 assert all((isinstance(layer, str) for layer in layers)), \
                     "All elements of the 'layers' set must be strings."
 
-                if node_id not in self.succ:  # node doesn't exist, yet
-                    self.succ[node_id] = {}
-                    self.pred[node_id] = {}
+                if node_id not in self._succ:  # node doesn't exist, yet
+                    self._succ[node_id] = self.adjlist_dict_factory()
+                    self._pred[node_id] = self.adjlist_dict_factory()
+                    self._node[node_id] = self.node_dict_factory()
                     newdict = additional_attribs.copy()
                     newdict.update(ndict)  # all given attribs incl. layers
-                    self.node[node_id] = newdict
+                    self._node[node_id].update(newdict)
                 else:  # node already exists
-                    existing_layers = self.node[node_id]['layers']
+                    existing_layers = self.nodes[node_id]['layers']
                     all_layers = existing_layers.union(layers)
 
-                    self.node[node_id].update(ndict)
-                    self.node[node_id].update(additional_attribs)
-                    self.node[node_id].update({'layers': all_layers})
-                continue  # process next node
-
-            # newnode check didn't raise an exception
-            if newnode:  # n is a node_id and it's not in the graph, yet
-                self.succ[n] = {}
-                self.pred[n] = {}
-                self.node[n] = attr.copy()
-                # since the node isn't represented as a
-                # (node_id, attribute dict) tuple, we don't know which layers
-                # it is part of. Therefore, we'll add the namespace of the
-                # graph as the node layer
-                self.node[n].update({'layers': set([self.ns])})
-            else:  # n is a node_id and it's already in the graph
-                self.node[n].update(attr)
+                    self.nodes[node_id].update(ndict)
+                    self.nodes[node_id].update(additional_attribs)
+                    self.nodes[node_id].update({'layers': all_layers})
+            else:  # n is just a node_id
+                if n not in self._succ:  # n is not in the graph yet
+                    self._succ[n] = self.adjlist_dict_factory()
+                    self._pred[n] = self.adjlist_dict_factory()
+                    self._node[n] = self.node_dict_factory()
+                    self._node[n].update(attr.copy())
+                    # since the node isn't represented as a
+                    # (node_id, attribute dict) tuple, we don't know which layers
+                    # it is part of. Therefore, we'll add the namespace of the
+                    # graph as the node layer
+                    self._node[n].update({'layers': set([self.ns])})
+                else:  # n is a node_id and it's already in the graph
+                    # Merge layers instead of overwriting them
+                    if 'layers' in attr:
+                        existing_layers = self.nodes[n]['layers']
+                        new_layers = attr['layers']
+                        all_layers = existing_layers.union(new_layers)
+                        attrs_without_layers = {k: v for (k, v) in list(attr.items())
+                                                if k != 'layers'}
+                        self.nodes[n].update(attrs_without_layers)
+                        self.nodes[n].update({'layers': all_layers})
+                    else:
+                        self.nodes[n].update(attr)
 
     def add_edge(self, u, v, layers=None, key=None, attr_dict=None, **attr):
         """Add an edge between u and v.
@@ -423,7 +433,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
         [(1, 2, {'layers': {'generic'}}),
          (1, 2, {'layers': {'tokens'}, 'weight': 0.7})]
 
-        >>> d.edge[1][2]
+        >>> d.edges[1][2]
         {0: {'layers': {'generic'}}, 1: {'layers': {'tokens'}, 'weight': 0.7}}
 
         >>> d.add_edge(1, 2, layers={'tokens'}, key=1, weight=1.0)
@@ -455,11 +465,11 @@ class DiscourseDocumentGraph(MultiDiGraph):
                 raise AttributeError("The attr_dict argument must be "
                                      "a dictionary: ".format(e))
         for node in (u, v):  # u = source, v = target
-            if node not in self.nodes_iter():
+            if node not in self.nodes():
                 self.add_node(node, layers={self.ns})
 
-        if v in self.succ[u]:  # if there's already an edge from u to v
-            keydict = self.adj[u][v]
+        if v in self._succ[u]:  # if there's already an edge from u to v
+            keydict = self._adj[u][v]
             if key is None:  # creating additional edge
                 # find a unique integer key
                 # other methods might be better here?
@@ -481,8 +491,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
             datadict = {}
             datadict.update(attr_dict)  # includes layers
             keydict = {key: datadict}
-            self.succ[u][v] = keydict
-            self.pred[v][u] = keydict
+            self._succ[u][v] = keydict
+            self._pred[v][u] = keydict
 
     def add_edges_from(self, ebunch, attr_dict=None, **attr):
         """Add all the edges in ebunch.
@@ -603,7 +613,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
             existing_layers = datadict.get('layers', set())
             datadict.update(attr_dict)
             datadict.update(dd)
-            updated_attrs = {k: v for (k, v) in datadict.items()
+            updated_attrs = {k: v for (k, v) in list(datadict.items())
                              if k != 'layers'}
 
             all_layers = existing_layers.union(new_layers)
@@ -629,15 +639,15 @@ class DiscourseDocumentGraph(MultiDiGraph):
             source_id, target_id = element
             # this class is based on a multi-digraph, so we'll have to iterate
             # over all edges between the two nodes (even if there's just one)
-            edges = self.edge[source_id][target_id]
+            edges = self._adj[source_id][target_id]
             for edge in edges:
                 existing_layers = edges[edge]['layers']
                 existing_layers.add(layer)
                 edges[edge]['layers'] = existing_layers
         if isinstance(element, (str, int)): # node
-            existing_layers = self.node[element]['layers']
+            existing_layers = self.nodes[element]['layers']
             existing_layers.add(layer)
-            self.node[element]['layers'] = existing_layers
+            self.nodes[element]['layers'] = existing_layers
 
 
     def get_token(self, token_node_id, token_attrib='token'):
@@ -657,7 +667,7 @@ class DiscourseDocumentGraph(MultiDiGraph):
         token : unicode
             the token string
         """
-        return self.node[token_node_id][self.ns+':'+token_attrib]
+        return self.nodes[token_node_id][self.ns+':'+token_attrib]
 
     def get_tokens(self, token_attrib='token', token_strings_only=False):
         """
@@ -676,12 +686,19 @@ class DiscourseDocumentGraph(MultiDiGraph):
             a generator of (token node ID, token string) tuples if
             token_strings_only==False, a generator of token strings otherwise
         """
+        # Build the full attribute name
+        full_attrib = self.ns + ':' + token_attrib
+
         if token_strings_only:
             for token_id in self.tokens:
-                yield self.get_token(token_id, token_attrib)
+                # Skip tokens that don't have the required attribute
+                if full_attrib in self.nodes[token_id]:
+                    yield self.get_token(token_id, token_attrib)
         else:
             for token_id in self.tokens:
-                yield (token_id, self.get_token(token_id, token_attrib))
+                # Skip tokens that don't have the required attribute
+                if full_attrib in self.nodes[token_id]:
+                    yield (token_id, self.get_token(token_id, token_attrib))
 
     def merge_graphs(self, other_docgraph, verbose=False):
         """
@@ -705,8 +722,8 @@ class DiscourseDocumentGraph(MultiDiGraph):
         # copy token node attributes to the current namespace
         for node_id, node_attrs in other_docgraph.nodes(data=True):
             if istoken(other_docgraph, node_id) and \
-                self.ns+':token' not in self.node[node_id]:
-                    self.node[node_id].update({self.ns+':token': other_docgraph.get_token(node_id)})
+                self.ns+':token' not in self.nodes[node_id]:
+                    self.nodes[node_id].update({self.ns+':token': other_docgraph.get_token(node_id)})
         self.add_edges_from(other_docgraph.edges(data=True))
 
         # workaround for issues #89 and #96
@@ -729,9 +746,9 @@ class DiscourseDocumentGraph(MultiDiGraph):
         one. Finally, remove the root node of the other graph from this one.
         """
         # copy metadata from other graph, cf. #136
-        if 'metadata' in other_docgraph.node[other_docgraph.root]:
-            other_meta = other_docgraph.node[other_docgraph.root]['metadata']
-            self.node[self.root]['metadata'].update(other_meta)
+        if 'metadata' in other_docgraph.nodes[other_docgraph.root]:
+            other_meta = other_docgraph.nodes[other_docgraph.root]['metadata']
+            self.nodes[self.root]['metadata'].update(other_meta)
 
         assert not other_docgraph.in_edges(other_docgraph.root), \
             "root node in graph '{}' must not have any ingoing edges".format(
@@ -780,7 +797,7 @@ def rename_tokens(docgraph_with_old_names, docgraph_with_new_names, verbose=Fals
         docgraph_with_new_names.renamed_nodes = old2new
 
     relabel_nodes(docgraph_with_old_names, old2new, copy=False)
-    new_token_ids = old2new.values()
+    new_token_ids = list(old2new.values())
 
     # new_token_ids could be empty (if docgraph_with_new_names is still empty)
     if new_token_ids:
@@ -821,14 +838,14 @@ def create_token_mapping(docgraph_with_old_names, docgraph_with_new_names,
 
     old2new = {}
     for i, (new_tok_id, new_tok) in enumerate(new_token_gen):
-        old_tok_id, old_tok = old_token_gen.next()
+        old_tok_id, old_tok = next(old_token_gen)
         if new_tok != old_tok:  # token mismatch
             if verbose:
-                raise ValueError(u"Tokenization mismatch:\n{0}{1}".format(
+                raise ValueError("Tokenization mismatch:\n{0}{1}".format(
                     kwic_string(docgraph_with_old_names, i),
                     kwic_string(docgraph_with_new_names, i)))
             raise ValueError(
-                u"Tokenization mismatch: {0} ({1}) vs. {2} ({3})\n"
+                "Tokenization mismatch: {0} ({1}) vs. {2} ({3})\n"
                 "\t{4} != {5}".format(
                     docgraph_with_new_names.name, docgraph_with_new_names.ns,
                     docgraph_with_old_names.name, docgraph_with_old_names.ns,
@@ -914,7 +931,7 @@ def get_node_annotation_layers(docgraph):
         graph
     """
     all_layers = set()
-    for node_id, node_attribs in docgraph.nodes_iter(data=True):
+    for node_id, node_attribs in docgraph.nodes(data=True):
         for layer in node_attribs['layers']:
             all_layers.add(layer)
     return all_layers
@@ -932,7 +949,7 @@ def get_edge_annotation_layers(docgraph):
         graph
     """
     all_layers = set()
-    for source_id, target_id, edge_attribs in docgraph.edges_iter(data=True):
+    for source_id, target_id, edge_attribs in docgraph.edges(data=True):
         for layer in edge_attribs['layers']:
             all_layers.add(layer)
     return all_layers
@@ -952,8 +969,8 @@ def get_span_offsets(docgraph, node_id):
         span = get_span(docgraph, node_id)
         # workaround for issue #138
         # TODO: when #138 is fixed, just take the first onset / last offset
-        onsets, offsets = zip(*[docgraph.get_offsets(tok_node)
-                                for tok_node in span])
+        onsets, offsets = list(zip(*[docgraph.get_offsets(tok_node)
+                                for tok_node in span]))
         return (min(onsets), max(offsets))
     except KeyError as _:
         raise KeyError("Node '{}' doesn't span any tokens.".format(node_id))
@@ -976,10 +993,10 @@ def get_span(docgraph, node_id, debug=False):
             "Maximum recursion depth may be exceeded.").format(node_id,
                                                                    docgraph))
     span = []
-    if docgraph.ns+':token' in docgraph.node[node_id]:
+    if docgraph.ns+':token' in docgraph.nodes[node_id]:
         span.append(node_id)
 
-    for src_id, target_id, edge_attribs in docgraph.out_edges_iter(node_id,
+    for src_id, target_id, edge_attribs in docgraph.out_edges(node_id,
                                                                 data=True):
         if src_id == target_id:
             continue  # ignore self-loops
@@ -996,10 +1013,10 @@ def get_text(docgraph, node_id=None):
     document
     """
     if node_id:
-        tokens = (docgraph.node[node_id][docgraph.ns+':token']
+        tokens = (docgraph.nodes[node_id][docgraph.ns+':token']
                   for node_id in get_span(docgraph, node_id))
     else:
-        tokens = (docgraph.node[token_id][docgraph.ns+':token']
+        tokens = (docgraph.nodes[token_id][docgraph.ns+':token']
                   for token_id in docgraph.tokens)
     return ' '.join(tokens)
 
@@ -1009,7 +1026,7 @@ def tokens2text(docgraph, token_ids):
     given a list of token node IDs, returns a their string representation
     (concatenated token strings).
     """
-    return ' '.join(docgraph.node[token_id][docgraph.ns+':token']
+    return ' '.join(docgraph.nodes[token_id][docgraph.ns+':token']
                     for token_id in token_ids)
 
 
@@ -1027,17 +1044,17 @@ def istoken(docgraph, node_id, namespace=None):
     """
     if namespace is None:
         namespace = docgraph.ns
-    return namespace+':token' in docgraph.node[node_id]
+    return namespace+':token' in docgraph.nodes[node_id]
 
 
 def is_continuous(docgraph, dominating_node):
     """return True, if the tokens dominated by the given node are all adjacent"""
     first_onset, last_offset = get_span_offsets(docgraph, dominating_node)
-    span_range = xrange(first_onset, last_offset+1)
+    span_range = range(first_onset, last_offset+1)
 
     token_offsets = (docgraph.get_offsets(tok)
                      for tok in get_span(docgraph, dominating_node))
-    char_positions = set(itertools.chain.from_iterable(xrange(on, off+1)
+    char_positions = set(itertools.chain.from_iterable(range(on, off+1)
                          for on, off in token_offsets))
     for item in span_range:
         if item not in char_positions:
@@ -1067,23 +1084,23 @@ def select_neighbors_by_layer(docgraph, node, layer, data=False):
         that are present in the given layer. If data is True,
         a generator of (node ID, node attrib dict) tuples.
     """
-    for node_id in docgraph.neighbors_iter(node):
-        node_layers = docgraph.node[node_id]['layers']
-        if isinstance(layer, (str, unicode)):
+    for node_id in docgraph.neighbors(node):
+        node_layers = docgraph.nodes[node_id]['layers']
+        if isinstance(layer, str):
             condition = layer in node_layers
         else:  # ``layer`` is a list/set/dict of layers
             condition = any(l in node_layers for l in layer)
 
         if condition:
-            yield (node_id, docgraph.node[node_id]) if data else (node_id)
+            yield (node_id, docgraph.nodes[node_id]) if data else (node_id)
 
 
 def select_neighbors_by_edge_attribute(docgraph, source,
                                        attribute=None, value=None, data=False):
     """Get all neighbors with the given edge attribute value(s)."""
     assert isinstance(docgraph, MultiGraph)
-    for neighbor_id in docgraph.neighbors_iter(source):
-        edges = docgraph[source][neighbor_id].values()
+    for neighbor_id in docgraph.neighbors(source):
+        edges = list(docgraph[source][neighbor_id].values())
 
         if attribute is None:
             has_attrib = True # don't filter neighbors
@@ -1093,7 +1110,7 @@ def select_neighbors_by_edge_attribute(docgraph, source,
         if has_attrib:
             if value is None:
                 has_value = True
-            elif isinstance(value, basestring):
+            elif isinstance(value, str):
                 has_value = any(edge.get(attribute) == value
                                 for edge in edges)
             else:  # ``value`` is a list/set/dict of values
@@ -1103,7 +1120,7 @@ def select_neighbors_by_edge_attribute(docgraph, source,
 
             if has_value:
                 if data:
-                    yield (neighbor_id, docgraph.node[neighbor_id])
+                    yield (neighbor_id, docgraph.nodes[neighbor_id])
                 else:
                     yield neighbor_id
 
@@ -1129,10 +1146,10 @@ def select_nodes_by_layer(docgraph, layer=None, data=False):
         the given layer. If data is True, a generator of (node ID, node attrib
         dict) tuples.
     """
-    for node_id, node_attribs in docgraph.nodes_iter(data=True):
+    for node_id, node_attribs in docgraph.nodes(data=True):
         if layer is None:
             condition = True # don't filter nodes
-        elif isinstance(layer, (str, unicode)):
+        elif isinstance(layer, str):
             condition = layer in node_attribs['layers']
         else:  # ``layer`` is a list/set/dict of layers
             condition = any(l in node_attribs['layers'] for l in layer)
@@ -1167,7 +1184,7 @@ def select_nodes_by_attribute(docgraph, attribute=None, value=None, data=False):
         the given attribute. If data is True, a generator of (node ID,
         node attrib dict) tuples.
     """
-    for node_id, node_attribs in docgraph.nodes_iter(data=True):
+    for node_id, node_attribs in docgraph.nodes(data=True):
         if attribute is None:
             has_attrib = True # don't filter nodes
         else:
@@ -1176,7 +1193,7 @@ def select_nodes_by_attribute(docgraph, attribute=None, value=None, data=False):
         if has_attrib:
             if value is None:
                 has_value = True
-            elif isinstance(value, basestring):
+            elif isinstance(value, str):
                 has_value = node_attribs.get(attribute) == value
             else:  # ``value`` is a list/set/dict of values
                 has_value = any(node_attribs.get(attribute) == v for v in value)
@@ -1229,7 +1246,7 @@ def select_edges_by_attribute(docgraph, attribute=None, value=None, data=False):
         attrib_key_eval = "'{}' in edge_attribs".format(attribute)
 
         if value is not None:
-            if isinstance(value, basestring):
+            if isinstance(value, str):
                 attrib_val_eval = \
                     "edge_attribs['{0}'] == '{1}'".format(attribute, value)
                 return select_edges(
@@ -1251,7 +1268,7 @@ def select_edges_by_attribute(docgraph, attribute=None, value=None, data=False):
             return select_edges(docgraph, data=data, conditions=[attrib_key_eval])
 
     else:  # don't filter edges at all
-        return docgraph.edges_iter(data=data)
+        return docgraph.edges(data=data)
 
 
 def select_edges_by(docgraph, layer=None, edge_type=None, data=False):
@@ -1292,7 +1309,7 @@ def select_edges_by(docgraph, layer=None, edge_type=None, data=False):
             return select_edges(docgraph, data=data,
                                 conditions=[edge_type_eval])
         else:  # neither layer, nor edge type is filtered
-            return docgraph.edges_iter(data=data)
+            return docgraph.edges(data=data)
 
 
 def __walk_chain(rel_dict, src_id):
@@ -1346,7 +1363,7 @@ def get_pointing_chains(docgraph, layer=None):
         rel_dict[src_id].add(target_id)
 
     all_chains = [__walk_chain(rel_dict, src_id)
-                  for src_id in rel_dict.iterkeys()]
+                  for src_id in rel_dict.keys()]
 
     # don't return partial chains, i.e. instead of returning [a,b], [b,c] and
     # [a,b,c,d], just return [a,b,c,d]

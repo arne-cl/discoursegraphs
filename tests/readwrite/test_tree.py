@@ -134,54 +134,54 @@ class TestTree(object):
         ns = ddg.ns
 
         ddg.add_node(5)
-        assert node2bracket(ddg, node_id=5) == u'()'
+        assert node2bracket(ddg, node_id=5) == '()'
         #~ import pudb; pudb.set_trace()
-        assert node2bracket(ddg, node_id=5, child_str='()') == u'(())'
+        assert node2bracket(ddg, node_id=5, child_str='()') == '(())'
 
         ddg.add_node(4, attr_dict={'label': 'S'})
-        assert node2bracket(ddg, node_id=4) == u'(S)'
-        assert node2bracket(ddg, node_id=4, child_str='') == u'(S)'
-        assert node2bracket(ddg, node_id=4, child_str='(NP Ernst)') == u'(S (NP Ernst))'
+        assert node2bracket(ddg, node_id=4) == '(S)'
+        assert node2bracket(ddg, node_id=4, child_str='') == '(S)'
+        assert node2bracket(ddg, node_id=4, child_str='(NP Ernst)') == '(S (NP Ernst))'
 
         ddg.add_node(3, attr_dict={ns+':token': 'Horst'})
-        assert node2bracket(ddg, node_id=3) == u'(Horst)'
-        assert node2bracket(ddg, node_id=3, child_str='()') == u'(Horst ())'
+        assert node2bracket(ddg, node_id=3) == '(Horst)'
+        assert node2bracket(ddg, node_id=3, child_str='()') == '(Horst ())'
 
         ddg.add_node(2, attr_dict={ns+':token': 'Horst', ns+':pos': 'N'})
-        assert node2bracket(ddg, node_id=2) == u'(N Horst)'
-        assert node2bracket(ddg, node_id=2, child_str='(N Schneider)') == u'(N Horst (N Schneider))'
+        assert node2bracket(ddg, node_id=2) == '(N Horst)'
+        assert node2bracket(ddg, node_id=2, child_str='(N Schneider)') == '(N Horst (N Schneider))'
 
         # if node is a token and has a label attribute, the output contains
         # the token attrib, not the label
         ddg.add_node(1, attr_dict={
-            ns+':token': u'Björn', ns+':pos': 'NE', 'label': u'Horst'})
-        assert node2bracket(ddg, node_id=1) == u'(NE Björn)'
-        assert node2bracket(ddg, node_id=1, child_str='(N Schneider)') == u'(NE Björn (N Schneider))'
+            ns+':token': 'Björn', ns+':pos': 'NE', 'label': 'Horst'})
+        assert node2bracket(ddg, node_id=1) == '(NE Björn)'
+        assert node2bracket(ddg, node_id=1, child_str='(N Schneider)') == '(NE Björn (N Schneider))'
 
         ddg.add_node(6, attr_dict={
-            ns+':token': u'Björn', 'label': u'Horst'})
-        assert node2bracket(ddg, node_id=6) == u'(Björn)'
-        assert node2bracket(ddg, node_id=6, child_str='(Schneider)') == u'(Björn (Schneider))'
+            ns+':token': 'Björn', 'label': 'Horst'})
+        assert node2bracket(ddg, node_id=6) == '(Björn)'
+        assert node2bracket(ddg, node_id=6, child_str='(Schneider)') == '(Björn (Schneider))'
 
     def test_tree2bracket(self):
         """A (part of a) docgraph can be converted into PTB-style bracket notation."""
         tree_str = tree2bracket(self.docgraph, 's1')
-        expected_str = (u'((SIMPX (LK (VXFIN (VVFIN Verschlampte))) '
+        expected_str = ('((SIMPX (LK (VXFIN (VVFIN Verschlampte))) '
                          '(MF (NX (ART die) (NN AFD)) (NX (NN Spendengeld)))) '
                          '($. ?))')
 
         assert tree_str == expected_str
 
         root_str = tree2bracket(self.docgraph, self.docgraph.root)
-        assert root_str == u"({})".format(expected_str)
+        assert root_str == "({})".format(expected_str)
 
         root_str = tree2bracket(self.docgraph)
-        assert root_str == u"({})".format(expected_str)
+        assert root_str == "({})".format(expected_str)
 
         subgraph_successors = sorted_bfs_successors(self.docgraph, 's1_502')
         subtree_str = tree2bracket(self.docgraph, root='s1_502',
                                    successors=subgraph_successors)
-        assert subtree_str == u"(NX (ART die) (NN AFD))"
+        assert subtree_str == "(NX (ART die) (NN AFD))"
 
 
 def test_t():

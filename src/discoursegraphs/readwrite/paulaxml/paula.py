@@ -127,7 +127,7 @@ class PaulaDocument(object):
         """
 
         node_id_map = {node: ensure_xpointer_compatibility(node)
-                       for node in self.dg.nodes_iter()}
+                       for node in self.dg.nodes()}
 
         old_token_ids = self.dg.tokens
         # replace document graph with node relabeled version
@@ -274,7 +274,7 @@ class PaulaDocument(object):
         for token_id in self.dg.tokens:
             mfeat = E('multiFeat',
                       {XLINKHREF: '#{0}'.format(token_id)})
-            token_dict = self.dg.node[token_id]
+            token_dict = self.dg.nodes[token_id]
             for feature in token_dict:
                 # TODO: highly inefficient! refactor!1!!
                 if feature not in IGNORED_TOKEN_ATTRIBS \
@@ -338,7 +338,7 @@ class PaulaDocument(object):
             struct = E('struct',
                        {'id': str(source_id)})
             if self.human_readable:
-                struct.append(Comment(self.dg.node[source_id].get('label')))
+                struct.append(Comment(self.dg.nodes[source_id].get('label')))
 
             for target_id in dominance_dict[source_id]:
                 if istoken(self.dg, target_id):
@@ -355,7 +355,7 @@ class PaulaDocument(object):
                 struct.append(rel)
                 if self.human_readable:
                     struct.append(
-                        Comment(self.dg.node[target_id].get('label')))
+                        Comment(self.dg.nodes[target_id].get('label')))
             slist.append(struct)
         tree.append(slist)
         self.files[paula_id] = tree
@@ -383,7 +383,7 @@ class PaulaDocument(object):
             if not istoken(self.dg, node_id):
                 mfeat = E('multiFeat',
                           {XLINKHREF: '#{0}'.format(node_id)})
-                node_dict = self.dg.node[node_id]
+                node_dict = self.dg.nodes[node_id]
                 for attr in node_dict:
                     if attr not in IGNORED_NODE_ATTRIBS:
                         mfeat.append(
@@ -433,9 +433,9 @@ class PaulaDocument(object):
                                         'value': edge_attrs[edge_attr]}))
 
                 if self.human_readable:  # adds edge label as a <!--comment-->
-                    source_label = self.dg.node[source_id].get('label')
-                    target_label = self.dg.node[target_id].get('label')
-                    mfeat.append(Comment(u'{0} - {1}'.format(source_label,
+                    source_label = self.dg.nodes[source_id].get('label')
+                    target_label = self.dg.nodes[target_id].get('label')
+                    mfeat.append(Comment('{0} - {1}'.format(source_label,
                                                            target_label)))
                 mflist.append(mfeat)
 
@@ -479,9 +479,9 @@ class PaulaDocument(object):
 
                 # adds source/target node labels as a <!-- comment -->
                 if self.human_readable:
-                    source_label = self.dg.node[source_id].get('label')
-                    target_label = self.dg.node[target_id].get('label')
-                    rel.append(Comment(u'{0} - {1}'.format(source_label,
+                    source_label = self.dg.nodes[source_id].get('label')
+                    target_label = self.dg.nodes[target_id].get('label')
+                    rel.append(Comment('{0} - {1}'.format(source_label,
                                                          target_label)))
                 rlist.append(rel)
         tree.append(rlist)
@@ -526,9 +526,9 @@ class PaulaDocument(object):
                                         'value': edge_attrs[edge_attr]}))
 
                 if self.human_readable:  # adds edge label as a <!--comment-->
-                    source_label = self.dg.node[source_id].get('label')
-                    target_label = self.dg.node[target_id].get('label')
-                    mfeat.append(Comment(u'{0} - {1}'.format(source_label,
+                    source_label = self.dg.nodes[source_id].get('label')
+                    target_label = self.dg.nodes[target_id].get('label')
+                    mfeat.append(Comment('{0} - {1}'.format(source_label,
                                                            target_label)))
                 mflist.append(mfeat)
 
@@ -632,7 +632,7 @@ def write_paula(docgraph, output_root_dir, human_readable=False):
     if not os.path.isdir(document_dir):
         create_dir(document_dir)
     for paula_id in paula_document.files:
-        with open(os.path.join(document_dir, paula_id+'.xml'), 'w') as outfile:
+        with open(os.path.join(document_dir, paula_id+'.xml'), 'wb') as outfile:
             outfile.write(
                 paula_etree_to_string(paula_document.files[paula_id],
                                       paula_document.file2dtd[paula_id]))

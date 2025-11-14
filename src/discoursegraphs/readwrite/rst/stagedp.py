@@ -85,7 +85,7 @@ class StageDPRSTTree(RSTBaseTree):
                 like the offer .                they were found 
                                                      dead .
             """
-            if isinstance(stagedp_tree, basestring) or not hasattr(stagedp_tree, 'label'):
+            if isinstance(stagedp_tree, str) or not hasattr(stagedp_tree, 'label'):
                 return stagedp_tree
 
             if len(stagedp_tree) == 1:

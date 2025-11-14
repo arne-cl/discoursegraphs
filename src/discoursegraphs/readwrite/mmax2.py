@@ -164,10 +164,10 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
         # annotation layers are parsed
         sentence_root_nodes, token_nodes = self.get_sentences_and_token_nodes()
         sentence_token_tuples = sort_sentences_by_token_order(sentence_root_nodes, token_nodes)
-        self.sentences, token_nodes = zip(*sentence_token_tuples)
+        self.sentences, token_nodes = list(zip(*sentence_token_tuples))
         # add the list of tokens in a sentence to the sentence root node
         for sent_root_id, sent_token_node_ids in sentence_token_tuples:
-            self.node[sent_root_id]['tokens'] = sent_token_node_ids
+            self.nodes[sent_root_id]['tokens'] = sent_token_node_ids
 
     def get_sentences_and_token_nodes(self):
         """
@@ -227,7 +227,7 @@ class MMAXDocumentGraph(DiscourseDocumentGraph):
 
     def get_token_nodes_from_sentence(self, sentence_root_node):
         """returns a list of token node IDs belonging to the given sentence"""
-        return spanstring2tokens(self, self.node[sentence_root_node][self.ns+':span'])
+        return spanstring2tokens(self, self.nodes[sentence_root_node][self.ns+':span'])
 
     @staticmethod
     def get_file_id(mmax_base_file):
@@ -414,7 +414,7 @@ def spanstring2text(docgraph, span_string):
     that contains the tokens itself.
     """
     token_node_ids = spanstring2tokens(docgraph, span_string)
-    return u' '.join(docgraph.node[tok_node_id][docgraph.ns+':token']
+    return ' '.join(docgraph.nodes[tok_node_id][docgraph.ns+':token']
                      for tok_node_id in token_node_ids)
 
 
@@ -445,7 +445,7 @@ def sort_sentences_by_token_order(sentence_root_nodes, token_nodes):
         """
         return natural_sort_key(sentence_token_tuple[1][0])
 
-    sentence_token_tuples = zip(sentence_root_nodes, token_nodes)
+    sentence_token_tuples = list(zip(sentence_root_nodes, token_nodes))
     return sorted(sentence_token_tuples, key=sentence_sort_key)
 
 
@@ -473,7 +473,7 @@ def get_potential_markables(docgraph):
             # if an NP is embedded into a PP, only print the PP
             pp_parent = False
             for source, target in docgraph.in_edges(node_id):
-                parent_node = docgraph.node[source]
+                parent_node = docgraph.nodes[source]
                 if 'tiger:cat' in parent_node and parent_node['tiger:cat'] == 'PP':
                     potential_markables.append(source) # add parent PP phrase
                     pp_parent = True

@@ -78,7 +78,7 @@ class SaltNode(SaltElement):
 
         if self.features:
             ret_str += "\nfeatures:\n"
-            for key, value in self.features.items():
+            for key, value in list(self.features.items()):
                 ret_str += "\t{0}: {1}\n".format(key, value)
 
         if hasattr(self, 'dominates'):

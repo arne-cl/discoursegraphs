@@ -158,8 +158,8 @@ def make_rel2par(nuc_or_sat_subtree):
 
 def make_edu(edu_string):
     tokens = edu_string.split()
-    tokens[0] = u'_!' + tokens[0]
-    tokens[-1] = tokens[-1] + u'_!'
+    tokens[0] = '_!' + tokens[0]
+    tokens[-1] = tokens[-1] + '_!'
     return t('text', tokens)
 
 
@@ -199,7 +199,7 @@ def convert_label(label):
 
 def join_lines(matchobj):
     edu_multiline_str = matchobj.group(0)
-    ed_oneline_str = u' '.join(line.strip()
+    ed_oneline_str = ' '.join(line.strip()
                                for line in edu_multiline_str.splitlines())
     return re.sub('\n', '', ed_oneline_str)
 

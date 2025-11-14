@@ -45,15 +45,15 @@ def test_traverse_dependencies_up():
     
     # example sentence: Chomsky is a major figure in analytical philosophy ...
     # ROOT: is --PRD--> figure --LOC--> in 
-    assert cdg.get_token('s1_t8') == u'philosophy'
+    assert cdg.get_token('s1_t8') == 'philosophy'
     assert list(traverse_dependencies_up(cdg, 's1_t8')) == \
-        [u'in', u'figure', u'be']
+        ['in', 'figure', 'be']
     assert list(traverse_dependencies_up(
-        cdg, 's1_t8', node_attr='token')) == [u'in', u'figure', u'is']
+        cdg, 's1_t8', node_attr='token')) == ['in', 'figure', 'is']
     assert list(traverse_dependencies_up(
-        cdg, 's1_t8', node_attr='pos')) == [u'IN', u'NN', u'VBZ']
+        cdg, 's1_t8', node_attr='pos')) == ['IN', 'NN', 'VBZ']
     assert list(traverse_dependencies_up(
-        cdg, 's1_t8', node_attr='deprel')) == [u'LOC', u'PRD', u'ROOT']
+        cdg, 's1_t8', node_attr='deprel')) == ['LOC', 'PRD', 'ROOT']
 
 
 def test_write_conll():

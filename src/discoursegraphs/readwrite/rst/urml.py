@@ -97,11 +97,11 @@ class URMLCorpus(object):
     def __iter__(self):
         return iter(self.document_iter(self.__context))
 
-    def next(self):
+    def __next__(self):
         """convenience method to get the next element of this iterable"""
         # to build an iterable, __iter__() would be sufficient,
         # but adding a next() method is quite common
-        return self.__iter__().next()
+        return next(self.__iter__())
 
     def document_iter(self, context):
         """
@@ -206,8 +206,8 @@ class URMLDocumentGraph(DiscourseDocumentGraph):
 
         # the nodes representing EDUs (elementary discourse units)
         # will be stored here (to keep them even after merging graphs)
-        if self.ns+':edus' not in self.node[self.root]['metadata']:
-            self.node[self.root]['metadata'][self.ns+':edus'] = self.edus
+        if self.ns+':edus' not in self.nodes[self.root]['metadata']:
+            self.nodes[self.root]['metadata'][self.ns+':edus'] = self.edus
 
     def __urml2graph(self, document_elem):
         """
@@ -241,7 +241,7 @@ class URMLDocumentGraph(DiscourseDocumentGraph):
         root_id = nx.algorithms.dag_longest_path(self)[0]
         self.root = root_id
         # copy metadata from old root node
-        self.node[root_id]['metadata'] = self.node[old_root_id]['metadata']
+        self.nodes[root_id]['metadata'] = self.nodes[old_root_id]['metadata']
         # finally, remove the old root node
         self.remove_node(old_root_id)
 

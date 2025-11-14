@@ -13,7 +13,7 @@ segment 2, 3 and 4 etc.
 
 TODO: merge self.segments into self.edus
 """
-from __future__ import print_function
+
 from collections import defaultdict
 import os
 import sys
@@ -112,8 +112,8 @@ class RSTGraph(DiscourseDocumentGraph):
 
         # the nodes representing EDUs (elementary discourse units)
         # will be stored here (to keep them even after merging graphs)
-        if self.ns+':edus' not in self.node[self.root]['metadata']:
-            self.node[self.root]['metadata'][self.ns+':edus'] = self.edus
+        if self.ns+':edus' not in self.nodes[self.root]['metadata']:
+            self.nodes[self.root]['metadata'][self.ns+':edus'] = self.edus
 
     def __rst2graph(self, rs3_xml_tree):
         """
@@ -204,9 +204,9 @@ class RSTGraph(DiscourseDocumentGraph):
             else: # segment_type == 'span'
                 # if the group already has a segment type, we won't overwrite
                 # it, since 'span' is not very informative
-                if not self.ns+':segment_type' in self.node[group_id]:
+                if not self.ns+':segment_type' in self.nodes[group_id]:
                     group_attrs[self.ns+':segment_type'] = segment_type
-            self.node[group_id].update(group_attrs,
+            self.nodes[group_id].update(group_attrs,
                                        layers={self.ns, self.ns+':group'})
 
         if 'parent' not in group.attrib:  # mark group as RST root node
@@ -220,9 +220,9 @@ class RSTGraph(DiscourseDocumentGraph):
             # root segment type: always span
             root_attrs = {'layers': {self.ns, self.ns+':root'},
                           self.ns+':segment_type': 'span'}
-            self.node[group_id].update(root_attrs)
+            self.nodes[group_id].update(root_attrs)
             # copy metadata from old root node
-            self.node[group_id]['metadata'] = self.node[old_root_id]['metadata']
+            self.nodes[group_id]['metadata'] = self.nodes[old_root_id]['metadata']
             # finally, remove the old root node
             self.remove_node(old_root_id)
         else:  # the group node is dominated by another group or segment
@@ -250,7 +250,7 @@ class RSTGraph(DiscourseDocumentGraph):
             self.add_node(parent_id, layers={self.ns}, attr_dict=parent_attrs)
         else:
             if segment_type != 'span':
-                self.node[parent_id].update(parent_attrs)
+                self.nodes[parent_id].update(parent_attrs)
 
         if segment_type == 'span':
             edge_type = EdgeTypes.spanning_relation
@@ -323,7 +323,7 @@ class RSTGraph(DiscourseDocumentGraph):
         to ``self.tokens``.
         """
         for seg_node_id in self.segments:
-            segment_toks = self.node[seg_node_id][self.ns+':text'].split()
+            segment_toks = self.nodes[seg_node_id][self.ns+':text'].split()
             for i, tok in enumerate(segment_toks):
                 tok_node_id = '{0}:{1}_{2}'.format(self.ns, seg_node_id, i)
                 self.add_node(tok_node_id, layers={self.ns, self.ns+':token'},
@@ -363,7 +363,7 @@ def get_edus(rst_graph, namespace='rst'):
         a list of node IDs of RST segments (EDUs) in the order they occur
         in the RS3 file
     """
-    return rst_graph.node[rst_graph.root]['metadata'][namespace+':edus']
+    return rst_graph.nodes[rst_graph.root]['metadata'][namespace+':edus']
 
 
 def get_rst_relation_root_nodes(docgraph, data=True, rst_namespace='rst'):
@@ -390,7 +390,7 @@ def get_rst_relation_root_nodes(docgraph, data=True, rst_namespace='rst'):
         relation spans).
     """
     rel_attr = rst_namespace+':rel_name'
-    for node_id, node_attrs in docgraph.nodes_iter(data=True):
+    for node_id, node_attrs in docgraph.nodes(data=True):
         if rel_attr in node_attrs and node_attrs[rel_attr] != 'span':
             yield (node_id, node_attrs[rel_attr], get_span(docgraph, node_id)) \
                 if data else (node_id)
@@ -503,7 +503,7 @@ def get_rst_spans(rst_graph):
     for dom_node in rst_relations:
         if 'multinuc' in rst_relations[dom_node]:
             nuc_count = 1
-            multinuc_start, multinuc_end = sys.maxint, 0
+            multinuc_start, multinuc_end = sys.maxsize, 0
             multinuc_spans = rst_relations[dom_node]['multinuc']
             multinuc_rel_id = "{0}-{1}".format(
                 dom_node, '-'.join(target for target, _rel, _toks in multinuc_spans))

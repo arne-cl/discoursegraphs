@@ -113,7 +113,7 @@ def get_annotations(element):
     returns a dictionary of all the annotation features of an element,
     e.g. tiger.pos = ART or coref.type = anaphoric.
     """
-    from labels import get_annotation
+    from .labels import get_annotation
     annotations = {}
     for label in element.getchildren():
         if get_xsi_type(label) == 'saltCore:SAnnotation':
@@ -207,5 +207,5 @@ def element_statistics(tree, element_type):
     stats = defaultdict(int)
     for i, element in enumerate(elements):
         stats[get_xsi_type(element)] += 1
-    for (etype, count) in stats.items():
-        print "{0}: {1}".format(etype, count)
+    for (etype, count) in list(stats.items()):
+        print("{0}: {1}".format(etype, count))

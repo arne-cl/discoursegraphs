@@ -33,5 +33,5 @@ def test_unquote_from_pydot():
     """test string (de-)escaping for/from pydot."""
     unquoted = 'We are all "special" snowflakes.'
     quoted = dg.readwrite.dot.quote_for_pydot(unquoted)
-    assert quoted == u'"We are all \\"special\\" snowflakes."'
+    assert quoted == '"We are all \\"special\\" snowflakes."'
     assert unquoted == dg.readwrite.dot.unquote_from_pydot(quoted)

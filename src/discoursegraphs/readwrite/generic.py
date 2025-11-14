@@ -76,11 +76,11 @@ def layerset2list(discoursegraph):
     discoursegraph : DiscourseDocumentGraph
     """
     for node_id in discoursegraph:
-        discoursegraph.node[node_id]['layers'] = \
-            list(discoursegraph.node[node_id]['layers'])
-    for (from_id, to_id) in discoursegraph.edges_iter():
+        discoursegraph.nodes[node_id]['layers'] = \
+            list(discoursegraph.nodes[node_id]['layers'])
+    for (from_id, to_id) in discoursegraph.edges():
         # there might be multiple edges between 2 nodes
-        edge_dict = discoursegraph.edge[from_id][to_id]
+        edge_dict = discoursegraph._adj[from_id][to_id]
         for edge_id in edge_dict:
             edge_dict[edge_id]['layers'] = \
                 list(edge_dict[edge_id]['layers'])
@@ -96,11 +96,11 @@ def layerset2str(discoursegraph):
     discoursegraph : DiscourseDocumentGraph
     """
     for node_id in discoursegraph:
-        discoursegraph.node[node_id]['layers'] = \
-            str(discoursegraph.node[node_id]['layers'])
-    for (from_id, to_id) in discoursegraph.edges_iter():
+        discoursegraph.nodes[node_id]['layers'] = \
+            str(discoursegraph.nodes[node_id]['layers'])
+    for (from_id, to_id) in discoursegraph.edges():
         # there might be multiple edges between 2 nodes
-        edge_dict = discoursegraph.edge[from_id][to_id]
+        edge_dict = discoursegraph._adj[from_id][to_id]
         for edge_id in edge_dict:
             edge_dict[edge_id]['layers'] = \
                 str(edge_dict[edge_id]['layers'])
@@ -120,13 +120,13 @@ def attriblist2str(discoursegraph):
     discoursegraph : DiscourseDocumentGraph
     """
     for node_id in discoursegraph:
-        node_dict = discoursegraph.node[node_id]
+        node_dict = discoursegraph.nodes[node_id]
         for attrib in node_dict:
             if isinstance(node_dict[attrib], list):
                 node_dict[attrib] = str(node_dict[attrib])
-    for (from_id, to_id) in discoursegraph.edges_iter():
+    for (from_id, to_id) in discoursegraph.edges():
         # there might be multiple edges between 2 nodes
-        edge_dict = discoursegraph.edge[from_id][to_id]
+        edge_dict = discoursegraph._adj[from_id][to_id]
         for edge_id in edge_dict:
             for attrib in edge_dict[edge_id]:
                 if isinstance(edge_dict[edge_id][attrib], list):
@@ -140,17 +140,17 @@ def remove_root_metadata(docgraph):
     this is necessary for some exporters, as the attribute may contain
     (nested) dictionaries.
     """
-    docgraph.node[docgraph.root].pop('metadata', None)
+    docgraph.nodes[docgraph.root].pop('metadata', None)
     # delete metadata from the generic root node (which probably only exists
     # when we merge graphs on the command line, cf. issue #89
-    if 'discoursegraph:root_node' in docgraph.node:
-        docgraph.node['discoursegraph:root_node'].pop('metadata', None)
+    if 'discoursegraph:root_node' in docgraph.nodes:
+        docgraph.nodes['discoursegraph:root_node'].pop('metadata', None)
     # delete the metadata from all former root nodes which have been merged
     # into this graph
     if hasattr(docgraph, 'merged_rootnodes'):
         for merged_rootnode in docgraph.merged_rootnodes:
             try:  # some of these nodes may not exist any longer
-                docgraph.node[merged_rootnode].pop('metadata', None)
+                docgraph.nodes[merged_rootnode].pop('metadata', None)
             except KeyError as e:
                 pass
 

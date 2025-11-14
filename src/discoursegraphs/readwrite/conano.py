@@ -112,8 +112,8 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
                     self._add_token(token, element_node_id)
             else:
                 element_text = sanitize_string(element.text)
-                self.node[element_node_id].update(
-                    {'label': u"{0}: {1}...".format(element_node_id,
+                self.nodes[element_node_id].update(
+                    {'label': "{0}: {1}...".format(element_node_id,
                                                    element_text[:20])})
 
 
@@ -126,8 +126,8 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
                     self._add_token(token, parent_node)
             else:
                 tail_text = sanitize_string(element.tail)
-                self.node[parent_node].update(
-                    {'label': u"{0}: {1}...".format(parent_node,
+                self.nodes[parent_node].update(
+                    {'label': "{0}: {1}...".format(parent_node,
                                                     tail_text[:20])})
 
 
@@ -153,7 +153,7 @@ class ConanoDocumentGraph(DiscourseDocumentGraph):
         conano_plaintext = etree.tostring(tree, encoding='utf8', method='text')
         token_str_list = conano_plaintext.split()
         for i, plain_token in enumerate(token_str_list):
-            graph_token = self.node[self.tokens[i]][self.ns+':token']
+            graph_token = self.nodes[self.tokens[i]][self.ns+':token']
             if ensure_unicode(plain_token) != graph_token:
                 sys.stderr.write(
                     "Conano tokenizations don't match: {0} vs. {1} "

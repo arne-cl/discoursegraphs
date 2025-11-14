@@ -25,9 +25,10 @@ def add_node_ids_as_labels(discoursegraph):
     ----------
     discoursegraph : DiscourseDocumentGraph
     """
-    for node_id, properties in discoursegraph.nodes_iter(data=True):
-        if 'label' not in properties and isinstance(node_id, (str, unicode)):
-            discoursegraph.node[node_id]['label'] = ensure_utf8(node_id)
+    for node_id, properties in discoursegraph.nodes(data=True):
+        if 'label' not in properties and isinstance(node_id, str):
+            # In Python 3, strings are already unicode, no need to encode
+            discoursegraph.nodes[node_id]['label'] = node_id
 
 
 def convert_to_geoff(discoursegraph):
@@ -57,7 +58,12 @@ def write_geoff(discoursegraph, output_file):
         with open(output_file, 'w') as outfile:
             outfile.write(convert_to_geoff(discoursegraph))
     else:  # output_file is a file object
-        output_file.write(convert_to_geoff(discoursegraph))
+        geoff_str = convert_to_geoff(discoursegraph)
+        # Check if file is opened in binary mode
+        if 'b' in output_file.mode:
+            output_file.write(geoff_str.encode('utf-8'))
+        else:
+            output_file.write(geoff_str)
 
 
 # alias for write_geoff(): convert document graph into a Geoff file

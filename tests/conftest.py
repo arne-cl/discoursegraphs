@@ -1,7 +1,8 @@
-
+import pytest
 from discoursegraphs.corpora import pcc
 
 
-def pytest_namespace():
+@pytest.fixture(scope='session')
+def maz_1423():
     """these objects/variables are available to all tests in the test suite"""
-    return {'maz_1423': pcc['maz-1423']}
+    return pcc['maz-1423']

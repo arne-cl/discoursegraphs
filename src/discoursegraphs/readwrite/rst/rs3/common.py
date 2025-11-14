@@ -7,7 +7,7 @@ This module contains helper functions to deal with .rs3 files that are
 used by several rs3-related modules.
 """
 
-from __future__ import absolute_import, division, print_function
+
 import codecs
 
 

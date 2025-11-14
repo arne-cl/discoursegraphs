@@ -22,7 +22,7 @@ def test_graph2geoff_digraph():
 (0)-[:LINK_TO {"debug": false}]->(1)
 (0)-[:LINK_TO]->(2)"""
     graph = nx.balanced_tree(2, 1, create_using=nx.DiGraph())
-    graph.node[2]['debug'] = 'test"'
+    graph.nodes[2]['debug'] = 'test"'
     graph[0][1]['debug'] = False
     assert graph2geoff(graph, 'LINK_TO') == result
 
@@ -36,7 +36,7 @@ def test_graph2geoff_graph():
 (0)-[:LINK_TO]->(2)
 (2)-[:LINK_TO]->(0)"""
     graph = nx.balanced_tree(2, 1)
-    graph.node[2]['debug'] = 'test"'
+    graph.nodes[2]['debug'] = 'test"'
     graph[0][1]['debug'] = False
     assert graph2geoff(graph, 'LINK_TO') == result
 
@@ -52,7 +52,7 @@ def test_graph2geoff_digraph_fail():
     today = datetime.date(2012, 1, 1)
 
     graph = nx.balanced_tree(2, 1, create_using=nx.DiGraph())
-    graph.node[2]['debug'] = 'test"'
+    graph.nodes[2]['debug'] = 'test"'
     graph[0][1]['debug'] = today
 
     with pytest.raises(TypeError) as excinfo:
@@ -67,7 +67,7 @@ def test_graph2geoff_digraph_custom():
 (0)-[:LINK_TO {"debug": "2012-01-01"}]->(1)
 (0)-[:LINK_TO]->(2)"""
     graph = nx.balanced_tree(2, 1, create_using=nx.DiGraph())
-    graph.node[2]['debug'] = 'test"'
+    graph.nodes[2]['debug'] = 'test"'
     graph[0][1]['debug'] = today
 
     data = graph2geoff(graph, 'LINK_TO', DateEncoder())

@@ -9,7 +9,12 @@ __version__ = '0.4.14'
 # flake8: noqa
 
 import os
-from networkx import write_gpickle
+try:
+    from networkx import write_gpickle
+except ImportError:
+    # write_gpickle was removed in networkx 3.x
+    # Users can use standard pickle instead: pickle.dump(graph, file)
+    write_gpickle = None
 
 from discoursegraphs.discoursegraph import (
     DiscourseDocumentGraph, EdgeTypes, create_token_mapping,

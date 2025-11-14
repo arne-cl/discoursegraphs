@@ -97,13 +97,13 @@ def merging_cli(debug=False):
     elif args.output_format == 'brackets':
         dg.write_brackets(discourse_docgraph, args.output_file)
     elif args.output_format == 'pickle':
-        import cPickle as pickle
+        import pickle as pickle
         with open(args.output_file, 'wb') as pickle_file:
             pickle.dump(discourse_docgraph, pickle_file)
     elif args.output_format in ('geoff', 'neo4j'):
         from discoursegraphs.readwrite.neo4j import write_geoff
         write_geoff(discourse_docgraph, args.output_file)
-        print ''  # this is just cosmetic for stdout
+        print('')  # this is just cosmetic for stdout
     elif args.output_format == 'gexf':
         dg.write_gexf(discourse_docgraph, args.output_file)
     elif args.output_format == 'graphml':
@@ -125,7 +125,7 @@ def merging_cli(debug=False):
             "Unsupported output format: {}".format(args.output_format))
 
     if debug:
-        print "Merged successfully: ", args.tiger_file
+        print("Merged successfully: ", args.tiger_file)
 
 if __name__ == '__main__':
     merging_cli(debug=True)

@@ -41,9 +41,13 @@ TODOs
 """
 
 import os
+import io
 import re
+import io
 import sys
+import io
 import codecs
+import io
 from collections import defaultdict, namedtuple
 
 from discoursegraphs import (DiscourseDocumentGraph, get_pointing_chains,
@@ -250,7 +254,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         self.add_node(token_id, layers={self.ns, self.ns+':token'},
                       attr_dict=feats, sent_pos=int(sent_id[1:]))
         self.tokens.append(token_id)
-        self.node[sent_id]['tokens'].append(token_id)
+        self.nodes[sent_id]['tokens'].append(token_id)
         return token_id
 
     def __add_dependency(self, word_instance, sent_id):
@@ -267,7 +271,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
         else:
             source_id = '{0}_t{1}'.format(sent_id, head)
             # TODO: fix issue #39, so we don't have to add nodes explicitly
-            if source_id not in self.node:
+            if source_id not in self:
                 self.add_node(source_id, layers={self.ns})
 
         target_id = '{0}_t{1}'.format(sent_id, word_instance.word_id)
@@ -279,7 +283,7 @@ class ConllDocumentGraph(DiscourseDocumentGraph):
                           label=deprel,
                           edge_type=EdgeTypes.dominance_relation)
         except AssertionError:
-            print "source: {0}, target: {1}".format(source_id, target_id)
+            print("source: {0}, target: {1}".format(source_id, target_id))
 
     def __add_morph_features(self, token_dict, feature_string,
                              feature_format='unknown'):
@@ -410,7 +414,7 @@ class Conll2009File(object):
         conll_str = '#begin document (__); __\n'
         for sentence_id in dg.sentences:
             # every sentence in a CoNLL file starts with index 1!
-            for i, tok_id in enumerate(dg.node[sentence_id]['tokens'], 1):
+            for i, tok_id in enumerate(dg.nodes[sentence_id]['tokens'], 1):
                 if tok_id in self.tok2markables:
                     coreferences = []
                     markable_ids = self.tok2markables[tok_id]
@@ -484,10 +488,10 @@ def traverse_dependencies_up(docgraph, node_id, node_attr=None):
     along the way.
     """
     # there's only one, but we're in a multidigraph
-    source, target = docgraph.in_edges(node_id)[0]
+    source, target = list(docgraph.in_edges(node_id))[0]
     traverse_attr = node_attr if node_attr else docgraph.lemma_attr
 
-    attrib_value = docgraph.node[source].get(traverse_attr)
+    attrib_value = docgraph.nodes[source].get(traverse_attr)
     if attrib_value:
         yield attrib_value
 
@@ -512,7 +516,7 @@ def write_conll(docgraph, output_file, coreference_layer=None,
     conll_file = Conll2009File(docgraph,
                                coreference_layer=coreference_layer,
                                markable_layer=markable_layer)
-    assert isinstance(output_file, (str, file))
+    assert isinstance(output_file, (str, io.IOBase))
     if isinstance(output_file, str):
         path_to_file = os.path.dirname(output_file)
         if not os.path.isdir(path_to_file):
@@ -524,7 +528,7 @@ def write_conll(docgraph, output_file, coreference_layer=None,
 
 if __name__ == "__main__":
     import argparse
-    import cPickle as pickle
+    import pickle as pickle
 
     parser = argparse.ArgumentParser()
     parser.add_argument('input_file',

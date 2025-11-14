@@ -103,16 +103,26 @@ def graph2geoff(graph, edge_rel_name, encoder=None):
     if encoder is None:
         encoder = json.JSONEncoder()
     is_digraph = isinstance(graph, nx.DiGraph)
+    is_multigraph = isinstance(graph, (nx.MultiGraph, nx.MultiDiGraph))
 
     lines = []
     lapp = lines.append
     for node_name, properties in graph.nodes(data=True):
         lapp(node2geoff(node_name, properties, encoder))
 
-    for from_node, to_node, properties in graph.edges(data=True):
-        lapp(edge2geoff(from_node, to_node, properties, edge_rel_name, encoder))
-        if not is_digraph:
-            lapp(edge2geoff(to_node, from_node, properties, edge_rel_name,
-                          encoder))
+    if is_multigraph:
+        # MultiGraphs return (u, v, key, data)
+        for from_node, to_node, key, properties in graph.edges(data=True, keys=True):
+            lapp(edge2geoff(from_node, to_node, properties, edge_rel_name, encoder))
+            if not is_digraph:
+                lapp(edge2geoff(to_node, from_node, properties, edge_rel_name,
+                              encoder))
+    else:
+        # Regular graphs return (u, v, data)
+        for from_node, to_node, properties in graph.edges(data=True):
+            lapp(edge2geoff(from_node, to_node, properties, edge_rel_name, encoder))
+            if not is_digraph:
+                lapp(edge2geoff(to_node, from_node, properties, edge_rel_name,
+                              encoder))
 
     return '\n'.join(lines)

@@ -93,12 +93,15 @@ def natural_sort_key(s):
 
 def ensure_unicode(str_or_unicode):
     """
-    tests, if the input is ``str`` or ``unicode``. if it is ``str``, it
-    will be decoded from ``UTF-8`` to unicode.
+    tests, if the input is ``bytes`` or ``str``. if it is ``bytes``, it
+    will be decoded from ``UTF-8`` to unicode (str).
+
+    In Python 3, str is unicode by default. This function handles both
+    str and bytes input.
     """
-    if isinstance(str_or_unicode, str):
+    if isinstance(str_or_unicode, bytes):
         return str_or_unicode.decode('utf-8')
-    elif isinstance(str_or_unicode, unicode):
+    elif isinstance(str_or_unicode, str):
         return str_or_unicode
     else:
         raise ValueError("Input '{0}' should be a string or unicode, "
@@ -108,13 +111,14 @@ def ensure_unicode(str_or_unicode):
 
 def ensure_utf8(str_or_unicode):
     """
-    tests, if the input is ``str`` or ``unicode``. if it is ``unicode``,
-    it will be encoded from ``unicode`` to ``utf-8``. otherwise, the
-    input string is returned.
+    tests, if the input is ``str`` or ``bytes``. if it is ``str`` (unicode),
+    it will be encoded to ``utf-8`` bytes. If it's already bytes, return as-is.
+
+    In Python 3, str is unicode by default.
     """
-    if isinstance(str_or_unicode, str):
+    if isinstance(str_or_unicode, bytes):
         return str_or_unicode
-    elif isinstance(str_or_unicode, unicode):
+    elif isinstance(str_or_unicode, str):
         return str_or_unicode.encode('utf-8')
     else:
         raise ValueError(
@@ -124,16 +128,19 @@ def ensure_utf8(str_or_unicode):
 
 def ensure_ascii(str_or_unicode):
     """
-    tests, if the input is ``str`` or ``unicode``. if it is ``unicode``,
-    it will be encoded from ``unicode`` to 7-bit ``latin-1``.
-    otherwise, the input string is converted from ``utf-8`` to 7-bit
-    ``latin-1``. 7-bit latin-1 doesn't even contain umlauts, but
-    XML/HTML-style escape sequences (e.g. ``ä`` becomes ``&auml;``).
+    tests, if the input is ``bytes`` or ``str`` (unicode). if it is ``str``,
+    it will be encoded to 7-bit ASCII with XML character references.
+    If it's bytes, it will be decoded from UTF-8 first, then encoded to ASCII.
+
+    7-bit ASCII doesn't contain umlauts, but uses XML/HTML-style escape
+    sequences (e.g. ``ä`` becomes ``&#228;``).
+
+    In Python 3, str is unicode by default.
     """
-    if isinstance(str_or_unicode, str):
+    if isinstance(str_or_unicode, bytes):
         return str_or_unicode.decode('utf-8').encode('ascii',
                                                      'xmlcharrefreplace')
-    elif isinstance(str_or_unicode, unicode):
+    elif isinstance(str_or_unicode, str):
         return str_or_unicode.encode('ascii', 'xmlcharrefreplace')
     else:
         raise ValueError(
@@ -158,9 +165,9 @@ def ensure_xpointer_compatibility(node_id):
         int IDs are returned verbatim, str/unicode IDs are
         returned with ':' replaced by '_'
     """
-    assert isinstance(node_id, (int, str, unicode)),\
+    assert isinstance(node_id, (int, str)),\
         "node ID must be an int, str or unicode, not".format(type(node_id))
-    if isinstance(node_id, (str, unicode)):
+    if isinstance(node_id, str):
         return FORBIDDEN_XPOINTER_RE.sub('_', node_id)
     else:
         return node_id
@@ -189,7 +196,7 @@ def add_prefix(dict_like, prefix):
         except Exception as e:
             raise ValueError("{0}\nCan't convert container to dict: "
                              "{1}".format(e, dict_like))
-    return {prefix + k: v for (k, v) in dict_like.items()}
+    return {prefix + k: v for (k, v) in list(dict_like.items())}
 
 
 def create_dir(path):
@@ -254,12 +261,12 @@ def sanitize_string(string_or_unicode):
     """
     remove leading/trailing whitespace and always return unicode.
     """
-    if isinstance(string_or_unicode, unicode):
+    if isinstance(string_or_unicode, str):
         return string_or_unicode.strip()
     elif isinstance(string_or_unicode, str):
         return string_or_unicode.decode('utf-8').strip()
     else:  # e.g. if input is None
-        return u''
+        return ''
 
 
 def xmlprint(element):
@@ -269,10 +276,10 @@ def xmlprint(element):
     thereof, e.g. a node, edge, layer etc.)
     """
     if isinstance(element, (etree._Element, etree._ElementTree)):
-        print etree.tostring(element, pretty_print=True)
+        print(etree.tostring(element, pretty_print=True))
     else:
         if hasattr(element, 'xml'):
-            print etree.tostring(element.xml, pretty_print=True)
+            print(etree.tostring(element.xml, pretty_print=True))
 
 
 def make_labels_explicit(docgraph):
@@ -293,20 +300,20 @@ def make_labels_explicit(docgraph):
     """
     def make_nodelabels_explicit(docgraph):
         for node_id, node_attribs in docgraph.nodes(data=True):
-            if 'label' in docgraph.node[node_id]:
-                docgraph.node[node_id]['label'] =  \
-                    u"{0}_{1}".format(node_attribs['label'], node_id)
+            if 'label' in docgraph.nodes[node_id]:
+                docgraph.nodes[node_id]['label'] =  \
+                    "{0}_{1}".format(node_attribs['label'], node_id)
         return docgraph
 
     def make_edgelabels_explicit(docgraph):
         for from_id, to_id, edge_attribs in docgraph.edges(data=True):
-            for edge_num in docgraph.edge[from_id][to_id]:
-                if 'label' in docgraph.edge[from_id][to_id][edge_num]:
-                    docgraph.edge[from_id][to_id][edge_num]['label'] = \
-                        u"{0}_{1}".format(edge_attribs['label'],
+            for edge_num in docgraph.edges[from_id][to_id]:
+                if 'label' in docgraph.edges[from_id][to_id][edge_num]:
+                    docgraph.edges[from_id][to_id][edge_num]['label'] = \
+                        "{0}_{1}".format(edge_attribs['label'],
                                           edge_attribs['edge_type'])
                 else:
-                    docgraph.edge[from_id][to_id][edge_num]['label'] = \
+                    docgraph.edges[from_id][to_id][edge_num]['label'] = \
                         edge_attribs['edge_type']
         return docgraph
     return make_edgelabels_explicit(make_nodelabels_explicit(docgraph))
@@ -334,7 +341,7 @@ def plot_attribute_distribution(docgraph, elements, attribute,
     if isinstance(elements, GeneratorType):
         elements = list(elements)
 
-    if isinstance(elements[0], (str, unicode, int)):
+    if isinstance(elements[0], (str, int)):
         element_type = 'node'
     elif isinstance(elements[0], tuple):
         element_type = 'edge'
@@ -345,7 +352,7 @@ def plot_attribute_distribution(docgraph, elements, attribute,
         # count all nodes with the given attribute
         for element in elements:
             try:
-                value_counts[docgraph.node[element][attribute]] += 1
+                value_counts[docgraph.nodes[element][attribute]] += 1
             except KeyError:
                 if not ignore_missing:
                     value_counts['NOT_PRESENT'] += 1
@@ -354,13 +361,13 @@ def plot_attribute_distribution(docgraph, elements, attribute,
         for element in elements:
             source, target = element
             try:
-                for edge in docgraph.edge[source][target]: # multidigraph
-                    value_counts[docgraph.edge[source][target][edge][attribute]] += 1
+                for edge in docgraph.edges[source][target]: # multidigraph
+                    value_counts[docgraph.edges[source][target][edge][attribute]] += 1
             except KeyError:
                 if not ignore_missing:
                     value_counts['NOT_PRESENT'] += 1
 
-    sorted_value_counts = sorted(value_counts.iteritems(), key=itemgetter(1),
+    sorted_value_counts = sorted(iter(value_counts.items()), key=itemgetter(1),
                                  reverse=True)
 
     # generate plot

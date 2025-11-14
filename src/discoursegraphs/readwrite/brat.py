@@ -19,7 +19,7 @@ import discoursegraphs as dg
 from discoursegraphs.readwrite.mmax2 import spanstring2text, spanstring2tokens
 
 
-ANNOTATION_CONF = u"""
+ANNOTATION_CONF = """
 [entities]
 
 Markable
@@ -62,7 +62,7 @@ def brat_output(docgraph, layer=None, show_relations=True):
     else:
         namespace = docgraph.ns
 
-    ret_str = u''
+    ret_str = ''
     pointing_chains = dg.get_pointing_chains(docgraph, layer=layer)
 
     # a token can be part of 1+ markable(s)
@@ -72,7 +72,7 @@ def brat_output(docgraph, layer=None, show_relations=True):
 
     for pointing_chain in pointing_chains:
         for markable in sorted(pointing_chain, key=dg.util.natural_sort_key):
-            span_tokens = spanstring2tokens(docgraph, docgraph.node[markable][namespace+':span'])
+            span_tokens = spanstring2tokens(docgraph, docgraph.nodes[markable][namespace+':span'])
             span_text = dg.tokens2text(docgraph, span_tokens)
             first_token2markables[span_tokens[0]].append(markable)
             markable_dict[markable] = (markable_index, span_text, len(span_text))
@@ -84,7 +84,7 @@ def brat_output(docgraph, layer=None, show_relations=True):
         if token_id in first_token2markables:
             for markable in first_token2markables[token_id]:
                 mark_index, mark_text, mark_len = markable_dict[markable]
-                ret_str += u"T{0}\tMarkable {1} {2}\t{3}\n".format(
+                ret_str += "T{0}\tMarkable {1} {2}\t{3}\n".format(
                     mark_index, onset, onset+mark_len, mark_text)
         onset += tok_len+1
 
@@ -92,10 +92,10 @@ def brat_output(docgraph, layer=None, show_relations=True):
         relation = 1
         for pointing_chain in pointing_chains:
             last_to_first_mention = sorted(pointing_chain, key=dg.util.natural_sort_key, reverse=True)
-            for i in xrange(0, len(pointing_chain)-1):
+            for i in range(0, len(pointing_chain)-1):
                 chain_element = markable_dict[last_to_first_mention[i]][0]
                 prev_chain_element = markable_dict[last_to_first_mention[i+1]][0]
-                ret_str += u"R{0}\tCoreference Arg1:T{1} Arg2:T{2}\n".format(
+                ret_str += "R{0}\tCoreference Arg1:T{1} Arg2:T{2}\n".format(
                     relation, chain_element, prev_chain_element)
                 relation += 1
     return ret_str
@@ -109,18 +109,18 @@ def create_visual_conf(docgraph, pointing_chains):
     num_of_entities = len(pointing_chains)
     mapsize = max(3, min(12, num_of_entities)) # 3 <= mapsize <= 12
     colormap = brewer2mpl.get_map(name='Paired', map_type='Qualitative', number=mapsize)
-    colors = range(mapsize) * int(math.ceil(num_of_entities / float(mapsize)))
+    colors = list(range(mapsize)) * int(math.ceil(num_of_entities / float(mapsize)))
     # recycle colors if we need more than 12
     endless_color_cycle = itertools.cycle(colors)
 
-    ret_str = u'[drawing]\n\n'
+    ret_str = '[drawing]\n\n'
     for chain in pointing_chains:
-        background_color = colormap.hex_colors[endless_color_cycle.next()]
+        background_color = colormap.hex_colors[next(endless_color_cycle)]
         for markable in chain:
-            span_tokens = spanstring2tokens(docgraph, docgraph.node[markable][docgraph.ns+':span'])
+            span_tokens = spanstring2tokens(docgraph, docgraph.nodes[markable][docgraph.ns+':span'])
             span_text = dg.tokens2text(docgraph, span_tokens)
             ascii_markable = unidecode(span_text)
-            ret_str += u'{0}\tbgColor:{1}\n'.format(ascii_markable,
+            ret_str += '{0}\tbgColor:{1}\n'.format(ascii_markable,
                                                   background_color)
     ret_str += '\n[labels]'
     return ret_str

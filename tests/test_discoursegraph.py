@@ -34,12 +34,12 @@ def add_tokens(docgraph, tokens):
 
 class TestDiscourseDocumentGraph(object):
     """create and manipulate document graphs"""
-    def setup(self):
+    def setup_method(self):
         """create an empty DiscourseDocumentGraph"""
         self.docgraph = dg.DiscourseDocumentGraph()
         assert isinstance(self.docgraph, dg.DiscourseDocumentGraph)
         assert self.docgraph.name == ''
-        assert self.docgraph.nodes() == ['discoursegraph:root_node']
+        assert list(self.docgraph.nodes()) == ['discoursegraph:root_node']
 
     @staticmethod
     def test_docgraph_name_namespace():
@@ -49,39 +49,39 @@ class TestDiscourseDocumentGraph(object):
         ddg = dg.DiscourseDocumentGraph(name=name, namespace=ns)
         assert isinstance(ddg, dg.DiscourseDocumentGraph)
         assert ddg.name == name
-        assert ddg.nodes() == ['{}:root_node'.format(ns)]
+        assert list(ddg.nodes()) == ['{}:root_node'.format(ns)]
 
     def test_add_node(self):
         """add nodes to the graph, with and without layers"""
         # add node without any additional attributes / layers
         self.docgraph.add_node(1)
-        assert len(self.docgraph.node) == 2
-        assert self.docgraph.node[1] == {'layers': {'discoursegraph'}}
+        assert len(self.docgraph. nodes) == 2
+        assert self.docgraph.nodes[1] == {'layers': {'discoursegraph'}}
 
         # add nodes with additional layer(s)
         self.docgraph.add_node(2, layers={'foo'})
-        assert len(self.docgraph.node) == 3
-        assert self.docgraph.node[2] == {'layers': {'foo'}}
+        assert len(self.docgraph. nodes) == 3
+        assert self.docgraph.nodes[2] == {'layers': {'foo'}}
 
         self.docgraph.add_node(3, layers={'foo', 'bar'})
-        assert len(self.docgraph.node) == 4
-        assert self.docgraph.node[3] == {'layers': {'foo', 'bar'}}
+        assert len(self.docgraph. nodes) == 4
+        assert self.docgraph.nodes[3] == {'layers': {'foo', 'bar'}}
 
         self.docgraph.add_node(4, layers={self.docgraph.ns, 'foo', 'bar'})
-        assert len(self.docgraph.node) == 5
-        assert self.docgraph.node[4] == \
+        assert len(self.docgraph. nodes) == 5
+        assert self.docgraph.nodes[4] == \
             {'layers': {'discoursegraph', 'foo', 'bar'}}
 
         # re-add an already existing node with different layer(s)
         # this will simply add the new layers to the existing set
         self.docgraph.add_node(4, layers={'bla'})
-        assert len(self.docgraph.node) == 5
-        assert self.docgraph.node[4] == \
+        assert len(self.docgraph. nodes) == 5
+        assert self.docgraph.nodes[4] == \
             {'layers': {'discoursegraph', 'foo', 'bar', 'bla'}}
 
         self.docgraph.add_node(4, layers={'xyz', 'abc'})
-        assert len(self.docgraph.node) == 5
-        assert self.docgraph.node[4] == \
+        assert len(self.docgraph. nodes) == 5
+        assert self.docgraph.nodes[4] == \
             {'layers': {'discoursegraph', 'foo', 'bar', 'bla', 'xyz', 'abc'}}
 
         # try to add node with bad layers
@@ -99,33 +99,33 @@ class TestDiscourseDocumentGraph(object):
         """add nodes to the graph, with and without attributes"""
         # add node without attributes
         self.docgraph.add_node(1, attr_dict=None)
-        assert len(self.docgraph.node) == 2
-        assert self.docgraph.node[1] == {'layers': {'discoursegraph'}}
+        assert len(self.docgraph. nodes) == 2
+        assert self.docgraph.nodes[1] == {'layers': {'discoursegraph'}}
 
         # add node with attributes
         self.docgraph.add_node(2, attr_dict={'cat': 'NP'})
-        assert len(self.docgraph.node) == 3
-        assert self.docgraph.node[2] == \
+        assert len(self.docgraph. nodes) == 3
+        assert self.docgraph.nodes[2] == \
             {'layers': {'discoursegraph'},
              'cat': 'NP'}
 
         self.docgraph.add_node(3, attr_dict={'cat': 'NP', 'lemma': 'dog'})
-        assert len(self.docgraph.node) == 4
-        assert self.docgraph.node[3] == \
+        assert len(self.docgraph. nodes) == 4
+        assert self.docgraph.nodes[3] == \
             {'layers': {'discoursegraph'},
              'cat': 'NP', 'lemma': 'dog'}
 
         # overwrite attribute of existing node
         self.docgraph.add_node(2, attr_dict={'cat': 'N'})
-        assert len(self.docgraph.node) == 4
-        assert self.docgraph.node[2] == \
+        assert len(self.docgraph. nodes) == 4
+        assert self.docgraph.nodes[2] == \
             {'layers': {'discoursegraph'},
              'cat': 'N'}
 
         # overwrite attribute of existing node add additional attrib
         self.docgraph.add_node(2, attr_dict={'cat': 'NP', 'score': 0.5})
-        assert len(self.docgraph.node) == 4
-        assert self.docgraph.node[2] == \
+        assert len(self.docgraph. nodes) == 4
+        assert self.docgraph.nodes[2] == \
             {'layers': {'discoursegraph'},
              'cat': 'NP', 'score': 0.5}
 
@@ -143,32 +143,33 @@ class TestDiscourseDocumentGraph(object):
 
     def test_add_nodes_from(self):
         """add multiple nodes at once"""
-        assert len(self.docgraph.node) == 1  # the root node is already present
+        assert len(self.docgraph. nodes) == 1  # the root node is already present
 
         # add nodes without layers / attributes
-        self.docgraph.add_nodes_from(range(5))
-        assert len(self.docgraph.node) == 6
+        self.docgraph.add_nodes_from(list(range(5)))
+        assert len(self.docgraph. nodes) == 6
 
         for node_id in range(5):
-            assert self.docgraph.node[node_id] == {'layers': {'discoursegraph'}}
+            assert self.docgraph.nodes[node_id] == {'layers': {'discoursegraph'}}
 
         # re-add nodes with an additional layer
         self.docgraph.add_nodes_from([(0, {'layers':{'foo'}}), (1, {'layers':{'bar'}})])
-        assert self.docgraph.node[0] == \
+        assert self.docgraph.nodes[0] == \
                 {'layers': {'discoursegraph', 'foo'}}
-        assert self.docgraph.node[1] == \
+        assert self.docgraph.nodes[1] == \
                 {'layers': {'discoursegraph', 'bar'}}
 
-    @pytest.mark.xfail
     def test_add_nodes_from_fail(self):
         """this is an implementation error. layers should never be overwritten,
-        only appended."""
+        only appended.
+
+        Fixed: add_nodes_from now merges layers instead of overwriting them."""
         self.docgraph.add_nodes_from((0,1))
         # re-add nodes with an additional layer
         self.docgraph.add_nodes_from((0,1), layers={'foo'})
 
         for node_id in (0,1):
-            assert self.docgraph.node[node_id] == \
+            assert self.docgraph.nodes[node_id] == \
                 {'layers': {'discoursegraph', 'foo'}}
 
     def test_add_edge(self):
@@ -176,26 +177,26 @@ class TestDiscourseDocumentGraph(object):
             [(1, {'layers':{'token'}, 'word':'hello'}),
              (2, {'layers':{'token'}, 'word':'world'})])
 
-        assert self.docgraph.edges(data=True) == []
+        assert list(self.docgraph.edges(data=True)) == []
 
         # in a multi-digraph, we can have multiple edges between nodes
         self.docgraph.add_edge(1, 2, layers={'generic'})
         self.docgraph.add_edge(1, 2, layers={'tokens'}, weight=0.7)
 
-        assert self.docgraph.edges(data=True) == \
+        assert list(self.docgraph.edges(data=True)) == \
             [(1, 2, {'layers': {'generic'}}),
              (1, 2, {'layers': {'tokens'}, 'weight': 0.7})]
 
         # there are two edges between the nodes 1 and 2
         # this will update only the 'weight' attribute of the second one (key=1)
         self.docgraph.add_edge(1, 2, layers={'tokens'}, key=1, weight=1.0)
-        assert self.docgraph.edges(data=True) == \
+        assert list(self.docgraph.edges(data=True)) == \
             [(1, 2, {'layers': {'generic'}}),
              (1, 2, {'layers': {'tokens'}, 'weight': 1.0})]
 
         # add an additional layer to the second multiedge
         self.docgraph.add_edge(1, 2, layers={'foo'}, key=1)
-        assert self.docgraph.edges(data=True) == \
+        assert list(self.docgraph.edges(data=True)) == \
             [(1, 2, {'layers': {'generic'}}),
              (1, 2, {'layers': {'foo', 'tokens'}, 'weight': 1.0})]
 
@@ -209,14 +210,14 @@ class TestDiscourseDocumentGraph(object):
         self.docgraph.add_edges_from(
             [(1, 2, {'layers': {'int'}, 'weight': 23}),
              (1, 2, {'layers': {'int'}, 'weight': 42})])
-        assert self.docgraph.edges(data=True) == \
+        assert list(self.docgraph.edges(data=True)) == \
             [(1, 2, {'layers': {'int'}, 'weight': 23}),
              (1, 2, {'layers': {'int'}, 'weight': 42})]
 
         # update the first edge (key=0), overwrite its 'weigth'
         # the 'layers' value is not overwritten, but appended
         self.docgraph.add_edges_from([(1, 2, 0, {'layers':{'number'}, 'weight':66})])
-        assert self.docgraph.edges(data=True) == \
+        assert list(self.docgraph.edges(data=True)) == \
             [(1, 2, {'layers': {'int', 'number'}, 'weight': 66}),
              (1, 2, {'layers': {'int'}, 'weight': 42})]
 
@@ -254,7 +255,7 @@ class TestDiscourseDocumentGraph(object):
         """add a layer to existing nodes or edges"""
         self.docgraph.add_node(1)
         self.docgraph.add_layer(1, 'fake')
-        assert self.docgraph.node[1] == {'layers': {'discoursegraph', 'fake'}}
+        assert self.docgraph.nodes[1] == {'layers': {'discoursegraph', 'fake'}}
 
         self.docgraph.add_edge(1, 2)
         self.docgraph.add_layer((1, 2), 'fake')
@@ -279,9 +280,9 @@ class TestDiscourseDocumentGraph(object):
 
         # adding the offsets again (with the default namespace) must not
         # change anything
-        nodes_dict = deepcopy(self.docgraph.node)
+        nodes_dict = deepcopy(dict(self.docgraph.nodes(data=True)))
         self.docgraph.add_offsets()
-        assert self.docgraph.node == nodes_dict
+        assert dict(self.docgraph.nodes(data=True)) == nodes_dict
 
     @staticmethod
     def test_get_phrases():
@@ -684,7 +685,7 @@ def test_get_span_offsets():
 
     with pytest.raises(KeyError) as excinfo:
         offsets = dg.get_span_offsets(sg1, 'foo')
-    assert "doesn't span any tokens" in excinfo.value.message
+    assert "doesn't span any tokens" in str(excinfo.value)
 
 
 def test_multiedge_keyincrement():
@@ -697,22 +698,22 @@ def test_multiedge_keyincrement():
     # add an edge with a key. keys are used in multigraphs to distinguish
     # between multiple edges between the same nodes
     dg1.add_edge('a', 'b', layers={'love'}, key=1)
-    assert len(dg1.edge['a']['b']) == 1
+    assert len(dg1._adj['a']['b']) == 1
     # add another edge between the same nodes.
     # keys should auto-increment, especially if the key is already in use
     dg1.add_edge('a', 'b', layers={'hate'})
-    assert len(dg1.edge['a']['b']) == 2
-    assert 'love' in dg1.edge['a']['b'][1]['layers']
-    assert 'hate' in dg1.edge['a']['b'][2]['layers']
+    assert len(dg1._adj['a']['b']) == 2
+    assert 'love' in dg1._adj['a']['b'][1]['layers']
+    assert 'hate' in dg1._adj['a']['b'][2]['layers']
 
     # the method add_edges_from should show the same behaviour
     dg2 = dg.DiscourseDocumentGraph()
     dg2.add_edges_from([('a', 'b', 1, {'layers': {'love'}})])
-    assert len(dg2.edge['a']['b']) == 1
+    assert len(dg2._adj['a']['b']) == 1
     dg2.add_edges_from([('a', 'b', {'layers': {'hate'}})])
-    assert len(dg2.edge['a']['b']) == 2
-    assert 'love' in dg2.edge['a']['b'][1]['layers']
-    assert 'hate' in dg2.edge['a']['b'][2]['layers']
+    assert len(dg2._adj['a']['b']) == 2
+    assert 'love' in dg2._adj['a']['b'][1]['layers']
+    assert 'hate' in dg2._adj['a']['b'][2]['layers']
 
 
 def test_select_neighbors_by_layer():

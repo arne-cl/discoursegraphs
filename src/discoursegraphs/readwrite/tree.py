@@ -8,7 +8,7 @@ trees.
 """
 
 from collections import defaultdict, deque
-import StringIO
+import io
 import textwrap
 
 from nltk.tree import Tree, ParentedTree
@@ -60,7 +60,7 @@ def t(root, children=None, debug=False, root_id=None):
             return root
         return root.__class__(root, children, root_id)
 
-    elif isinstance(root, basestring):
+    elif isinstance(root, str):
         root = debug_root_label(root, debug, root_id)
 
         # Beware: (DGParented)Tree is a subclass of list!
@@ -76,12 +76,12 @@ def t(root, children=None, debug=False, root_id=None):
                     child_trees.extend(child)
                 elif isinstance(child, tuple):
                     child_trees.append(t(*child))
-                elif isinstance(child, basestring):
+                elif isinstance(child, str):
                     child_trees.append(child)
                 else:
                     raise NotImplementedError
 
-        elif isinstance(children, basestring):
+        elif isinstance(children, str):
             # this tree does only have one child, a leaf node
             # TODO: this is a workaround for the following problem:
             # Tree('foo', [Tree('bar', [])]) != Tree('foo', ['bar'])
@@ -144,12 +144,12 @@ def horizontal_positions(docgraph, sentence_root=None):
     """return map: node ID -> first token index (int) it covers"""
     # calculate positions for the whole graph
     root_cond = (sentence_root is None) or (sentence_root == docgraph.root)
-    if root_cond or ('tokens' not in docgraph.node[sentence_root]):
+    if root_cond or ('tokens' not in docgraph.nodes[sentence_root]):
         sentence_root = docgraph.root
         token_nodes = docgraph.tokens
         path = {}
     else:  # calculate positions only for the given sentence subgraph
-        token_nodes = docgraph.node[sentence_root]['tokens']
+        token_nodes = docgraph.nodes[sentence_root]['tokens']
         path = {sentence_root: 0}
 
     for i, token_node in enumerate(token_nodes):
@@ -231,17 +231,17 @@ def sorted_bfs_successors(G, source=None):
 
 def node2bracket(docgraph, node_id, child_str=''):
     """convert a docgraph node into a PTB-style string."""
-    node_attrs = docgraph.node[node_id]
+    node_attrs = docgraph.nodes[node_id]
     if istoken(docgraph, node_id):
         pos_str = node_attrs.get(docgraph.ns+':pos', '')
         token_str = node_attrs[docgraph.ns+':token']
-        return u"({pos}{space1}{token}{space2}{child})".format(
+        return "({pos}{space1}{token}{space2}{child})".format(
             pos=pos_str, space1=bool(pos_str)*' ', token=token_str,
             space2=bool(child_str)*' ', child=child_str)
 
     #else: node is not a token
     label_str = node_attrs.get('label', '')
-    return u"({label}{space}{child})".format(
+    return "({label}{space}{child})".format(
         label=label_str, space=bool(label_str and child_str)*' ',
         child=child_str)
 
@@ -258,7 +258,7 @@ def tree2bracket(docgraph, root=None, successors=None):
         successors = sorted_bfs_successors(docgraph, root)
 
     if root in successors:
-        embed_str = u" ".join(tree2bracket(docgraph, child, successors)
+        embed_str = " ".join(tree2bracket(docgraph, child, successors)
                               for child in successors[root])
         return node2bracket(docgraph, root, embed_str)
     return node2bracket(docgraph, root)
@@ -280,7 +280,7 @@ def word_wrap_tree(parented_tree, width=0):
 
 def is_leaf(elem):
     """Returns True, iff the given tree node is a leaf node."""
-    return isinstance(elem, basestring)
+    return isinstance(elem, str)
 
 
 def write_svgtree(tree, output_file=None):
@@ -295,7 +295,7 @@ def write_svgtree(tree, output_file=None):
     drawing = tree_layout.get_svg()
     
     if output_file is None:  # return string representation of SVG image
-        f = StringIO.StringIO()
+        f = io.StringIO()
         drawing.write(f)
         return f.getvalue()
     else:

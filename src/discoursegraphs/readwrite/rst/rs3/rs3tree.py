@@ -484,7 +484,7 @@ def get_rs3_data(rs3_file, word_wrap=0):
 
 def normalize_edu_string(edu_string):
     """Remove superfluous whitespace from an EDU and return it."""
-    return u' '.join(edu_string.strip().split())
+    return ' '.join(edu_string.strip().split())
 
 
 def n(children):

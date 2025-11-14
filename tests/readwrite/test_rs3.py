@@ -141,7 +141,7 @@ def test_rs3filewriter_onesegmenttree_umlauts():
     """A DGParentedTree with only one segment with umlauts is correctly
     converted into an RS3 file and back.
     """
-    edu_string = u"Über sein östliches Äußeres"
+    edu_string = "Über sein östliches Äußeres"
     input_tree = t("N", [edu_string])
     expected_output_tree = example2tree('only-one-segment-with-umlauts.rs3')
 

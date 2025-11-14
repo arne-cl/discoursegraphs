@@ -190,34 +190,34 @@ class TestFreqtTree(object):
 
     def test_node2freqt(self):
         """A node can be converted into a FREQT string."""
-        assert u'(I)' == node2freqt(self.docgraph, 'token1', child_str='',
+        assert '(I)' == node2freqt(self.docgraph, 'token1', child_str='',
                                     include_pos=False)
-        assert u'(PRON(I))' == node2freqt(self.docgraph, 'token1', child_str='',
+        assert '(PRON(I))' == node2freqt(self.docgraph, 'token1', child_str='',
                                           include_pos=True)
 
-        assert u'(NP)' == node2freqt(self.docgraph, 'NP1', child_str='',
+        assert '(NP)' == node2freqt(self.docgraph, 'NP1', child_str='',
                                     include_pos=False)
-        assert u'(NP(PRON(I)))' == node2freqt(
+        assert '(NP(PRON(I)))' == node2freqt(
             self.docgraph, 'NP1', child_str='(PRON(I))', include_pos=False)
-        assert u'(NP)' == node2freqt(self.docgraph, 'NP1', child_str='',
+        assert '(NP)' == node2freqt(self.docgraph, 'NP1', child_str='',
                                     include_pos=True)
-        assert u'(NP(PRON(I)))' == node2freqt(
+        assert '(NP(PRON(I)))' == node2freqt(
             self.docgraph, 'NP1', child_str='(PRON(I))', include_pos=True)
 
         # the root node has no label attribute. here, the node ID is used
         # instead
-        assert u'(TEXT)' == node2freqt(self.docgraph, 'TEXT', child_str='',
+        assert '(TEXT)' == node2freqt(self.docgraph, 'TEXT', child_str='',
                                        include_pos=False)
-        assert u'(TEXT)' == node2freqt(self.docgraph, 'TEXT', child_str='',
+        assert '(TEXT)' == node2freqt(self.docgraph, 'TEXT', child_str='',
                                        include_pos=True)
 
     def test_docgraph2freqt(self):
         """A docgraph can be converted into a FREQT string, with/out POS tags."""
-        expected = u'(S(NP(I))(VP(saw)(NP(a)(girl))(PP(with)(NP(a)(telescope))))(.))'
+        expected = '(S(NP(I))(VP(saw)(NP(a)(girl))(PP(with)(NP(a)(telescope))))(.))'
         freqt_str = docgraph2freqt(self.docgraph, root='S', include_pos=False)
         assert freqt_str == expected
 
-        expected_with_pos = (u'(S(NP(PRON(I)))(VP(VVFIN(saw))(NP(DET(a))'
+        expected_with_pos = ('(S(NP(PRON(I)))(VP(VVFIN(saw))(NP(DET(a))'
                               '(N(girl)))(PP(PREP(with))(NP(DET(a))'
                               '(N(telescope)))))(PUNCT(.)))')
         freqt_pos_str = docgraph2freqt(self.docgraph, root='S', include_pos=True)
@@ -269,25 +269,25 @@ class TestFreqtTree(object):
         docgraph.tokens = ['token'+str(tok_id) for tok_id in range(1, 5)]
 
         # generate FREQT string without POS; don't escape brackets
-        freqtstr_nopos_noescape = u"(ROOT(S(NP(I))(VP(am)(ADJP((un)certain)))(.)))"
+        freqtstr_nopos_noescape = "(ROOT(S(NP(I))(VP(am)(ADJP((un)certain)))(.)))"
         assert freqtstr_nopos_noescape == docgraph2freqt(
             docgraph, docgraph.root, include_pos=False,
             escape_func=lambda x: x)
 
         # generate FREQT string without POS; escape brackets
-        freqtstr_nopos_escape = u"(ROOT(S(NP(I))(VP(am)(ADJP(-LRB-un-RRB-certain)))(.)))"
+        freqtstr_nopos_escape = "(ROOT(S(NP(I))(VP(am)(ADJP(-LRB-un-RRB-certain)))(.)))"
         assert freqtstr_nopos_escape == docgraph2freqt(
             docgraph, docgraph.root, include_pos=False,
             escape_func=FREQT_ESCAPE_FUNC)
 
         # generate FREQT string with POS; don't escape brackets
-        freqtstr_pos_noescape = u"(ROOT(S(NP(PRP(I)))(VP(VBP(am))(ADJP(JJ((un)certain))))($((.))))"
+        freqtstr_pos_noescape = "(ROOT(S(NP(PRP(I)))(VP(VBP(am))(ADJP(JJ((un)certain))))($((.))))"
         assert freqtstr_pos_noescape == docgraph2freqt(
             docgraph, docgraph.root, include_pos=True,
             escape_func=lambda x: x)
 
         # generate FREQT string with POS; escape brackets
-        freqtstr_pos_escape = u"(ROOT(S(NP(PRP(I)))(VP(VBP(am))(ADJP(JJ(-LRB-un-RRB-certain))))($-LRB-(.))))"
+        freqtstr_pos_escape = "(ROOT(S(NP(PRP(I)))(VP(VBP(am))(ADJP(JJ(-LRB-un-RRB-certain))))($-LRB-(.))))"
         assert freqtstr_pos_escape == docgraph2freqt(
             docgraph, docgraph.root, include_pos=True,
             escape_func=FREQT_ESCAPE_FUNC)
@@ -295,8 +295,8 @@ class TestFreqtTree(object):
 
 def test_write_freqt():
     """convert an ExportXML file into a FREQT str (with/out POS tags)"""
-    edg = dg.read_exportxml(
-        os.path.join(dg.DATA_ROOT_DIR, 'exportxml-example.xml')).next()
+    edg = next(dg.read_exportxml(
+        os.path.join(dg.DATA_ROOT_DIR, 'exportxml-example.xml')))
     temp_file = NamedTemporaryFile(delete=False)
     temp_file.close()
     write_freqt(edg, temp_file.name, include_pos=False)
@@ -357,7 +357,7 @@ def test_docgraph2freqt_ptb_escapes():
     ptb_str = ("(S (NP (PRP It)) (VP (VBZ is) (ADJP (PRN (-LRB- -LRB-) "
                "(ADVP (RB almost)) (-RRB- -RRB-)) (JJ perfect))) (. .))")
     pdg = dg.read_ptb.fromstring(ptb_str)
-    assert dg.get_text(pdg) == u"It is ( almost ) perfect ."
+    assert dg.get_text(pdg) == "It is ( almost ) perfect ."
 
     expected_freqt_str_pos = "(S(NP(PRP(It)))(VP(VBZ(is))(ADJP(PRN(-LRB-(-LRB-))(ADVP(RB(almost)))(-RRB-(-RRB-)))(JJ(perfect))))(.(.)))"
     freqt_str_pos = docgraph2freqt(pdg, include_pos=True)

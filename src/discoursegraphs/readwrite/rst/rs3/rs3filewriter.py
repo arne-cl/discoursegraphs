@@ -4,7 +4,7 @@
 
 """This module converts `DGParentedTree`s into .rs3 files."""
 
-from __future__ import absolute_import, division, print_function
+
 import codecs
 from collections import defaultdict, OrderedDict
 
@@ -90,7 +90,7 @@ class RS3FileWriter(object):
             print(etree.tostring(self.etree, pretty_print=True))
 
         if output_filepath is not None:
-            with open(output_filepath, 'w') as outfile:
+            with open(output_filepath, 'wb') as outfile:
                 outfile.write(etree.tostring(
                     self.etree, encoding='UTF-8', xml_declaration=True, pretty_print=True))
 

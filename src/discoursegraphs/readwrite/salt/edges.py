@@ -67,7 +67,7 @@ class SaltEdge(SaltElement):
             'target': "//@nodes.{}".format(self.target),
             'layers': layers_attrib_val}
         # an edge might belong to one or more layers
-        non_empty_attribs = {key: val for (key, val) in attribs.items()
+        non_empty_attribs = {key: val for (key, val) in list(attribs.items())
                              if val is not None}
 
         E = ElementMaker()

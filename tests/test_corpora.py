@@ -27,7 +27,8 @@ def test_pcc():
         # We can't guarantee that all graphs are acyclic, because of secedges
         # in TigerSentenceGraphs, but there must be no self loops.
         if nx.is_directed_acyclic_graph(docgraph):
-            for src, target in docgraph.edges_iter():
+            # NetworkX 3.x: edges_iter() removed, use edges()
+            for src, target in docgraph.edges():
                 assert src != target
 
             # cyclic graphs must become acyclic once we remove the secedges

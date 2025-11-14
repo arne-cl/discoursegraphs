@@ -136,10 +136,10 @@ class ExportXMLCorpus(object):
     def __iter__(self):
         return iter(self.text_iter(self.__context))
 
-    def next(self):
+    def __next__(self):
         # to build an iterable, __iter__() would be sufficient,
         # but adding a next() method is quite common
-        return self.__iter__().next()
+        return next(self.__iter__())
 
     def text_iter(self, context):
         """
@@ -206,8 +206,8 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             return
 
         if isinstance(text_element, str):
-            _event, text_element = etree.iterparse(
-                text_element, events=('end',), tag='text', recover=True).next()
+            _event, text_element = next(etree.iterparse(
+                text_element, events=('end',), tag='text', recover=True))
 
         self.name = name if name else text_id
 
@@ -267,8 +267,8 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         word_node_id = self.get_element_id(connective)
         # add a key 'connective' to the token with add rel1/rel2 attributes as a dict and
         # add the token to the namespace:connective layer
-        connective_attribs = {key: val for (key, val) in connective.attrib.items() if key != 'konn'}
-        word_node = self.node[word_node_id]
+        connective_attribs = {key: val for (key, val) in list(connective.attrib.items()) if key != 'konn'}
+        word_node = self.nodes[word_node_id]
         word_node['layers'].add(self.ns+':connective')
         word_node.update({'connective': connective_attribs})
 
@@ -309,7 +309,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             arg2_id = discrel.attrib['arg2']
             reltype = discrel.attrib['relation']
             discrel_attribs = self.element_attribs_to_dict(discrel)
-            self.node[arg1_id].update(discrel_attribs)
+            self.nodes[arg1_id].update(discrel_attribs)
             self.add_layer(arg1_id, self.ns+':discourse')
             self.add_layer(arg1_id, self.ns+':relation')
             self.add_edge(arg1_id, arg2_id,
@@ -350,7 +350,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             self.add_edge(edu_id, word_id, layers={self.ns, self.ns+':edu'},
                           edge_type=dg.EdgeTypes.spanning_relation)
 
-        self.node[edu_id]['tokens'] = edu_token_ids
+        self.nodes[edu_id]['tokens'] = edu_token_ids
 
     def add_edurange(self, edurange):
         """
@@ -488,7 +488,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             parent_node_id = self.get_parent_id(relation)
             reltype = relation.attrib['type']
             # add relation type information to parent node
-            self.node[parent_node_id].update({'relation': reltype})
+            self.nodes[parent_node_id].update({'relation': reltype})
             self.add_layer(parent_node_id, self.ns+':'+reltype)
             if 'target' in relation.attrib:
                 # if the relation has no target, it is either 'expletive' or
@@ -554,7 +554,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             for descendant in sentence.iterdescendants('word'):
                 sentence_token_ids.append(self.get_element_id(descendant))
 
-        self.node[sent_root_id]['tokens'] = sentence_token_ids
+        self.nodes[sent_root_id]['tokens'] = sentence_token_ids
 
     def add_splitrelation(self, splitrelation):
         """
@@ -628,7 +628,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             topic_tokens.append(word_id)
             self.add_edge(topic_id, word_id, layers={self.ns, self.ns+':topic'},
                           edge_type=dg.EdgeTypes.spanning_relation)
-        self.node[topic_id]['tokens'] = topic_tokens
+        self.nodes[topic_id]['tokens'] = topic_tokens
 
     def add_word(self, word):
         """
@@ -646,7 +646,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
             # might be embedded in weird elements. If this is the case,
             # attach it directly to the closest <node> or <sentence> node
             try:
-                parent = word.iterancestors(tag=('node', 'sentence')).next()
+                parent = next(word.iterancestors(tag=('node', 'sentence')))
                 parent_id = self.get_element_id(parent)
             except StopIteration as e:
                 # there's at least one weird edge case, where a <word> is
@@ -671,7 +671,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
         leaving out the xml:id attribute. Each key will be prepended by graph's
         namespace.
         """
-        return {self.ns+':'+key: val for (key, val) in element.attrib.items()
+        return {self.ns+':'+key: val for (key, val) in list(element.attrib.items())
                 if key != add_ns('id')}
 
     @staticmethod
@@ -701,7 +701,7 @@ class ExportXMLDocumentGraph(DiscourseDocumentGraph):
     def get_sentence_id(self, element):
         """returns the ID of the sentence the given element belongs to."""
         try:
-            sentence_elem = element.iterancestors('sentence').next()
+            sentence_elem = next(element.iterancestors('sentence'))
         except StopIteration as e:
             warnings.warn("<{}> element is not a descendant of a <sentence> "
                           "We'll try to extract the sentence ID from the "

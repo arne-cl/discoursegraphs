@@ -28,11 +28,15 @@ def test_read_dis1_graph():
     assert isinstance(disdg1, RSTLispDocumentGraph)
 
 
-@pytest.mark.xfail
+@pytest.mark.xfail(reason="Graph parser doesn't support two satellites in one relation")
 def test_read_dis2_graph():
     """NotImplementedError: I don't know how to combine two satellites.
 
-    Don't worry, DisRSTTree can parse this."""
+    The DIS graph parser (RSTLispDocumentGraph) doesn't support RST structures
+    with two satellites in a single relation. This is a known limitation.
+
+    Note: The tree parser (DisRSTTree) CAN parse this file successfully.
+    Use dg.read_distree() for files with this structure."""
     disdg1 = dg.read_dis(os.path.join(dg.DATA_ROOT_DIR, 'rst-example2.dis'))
     assert isinstance(disdg1, RSTLispDocumentGraph)
 

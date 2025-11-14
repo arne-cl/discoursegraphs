@@ -100,9 +100,10 @@ def _relabel_inplace(G, mapping):
         # labels sets overlap
         # can we topological sort and still do the relabeling?
         D = nx.DiGraph(list(mapping.items()))
-        D.remove_edges_from(D.selfloop_edges())
+        # NetworkX 3.x: selfloop_edges() removed, use nx.selfloop_edges()
+        D.remove_edges_from(nx.selfloop_edges(D))
         try:
-            nodes = nx.topological_sort(D)
+            nodes = list(nx.topological_sort(D))
         except nx.NetworkXUnfeasible:
             raise nx.NetworkXUnfeasible('The node label sets are overlapping '
                                         'and no ordering can resolve the '
@@ -120,11 +121,22 @@ def _relabel_inplace(G, mapping):
             new = mapping[old]
         except KeyError:
             continue
-        try:
-            layers = G.node[old]['layers']
-            G.add_node(new, layers, attr_dict=G.node[old])
-        except KeyError:
+
+        # Check if node exists
+        if old not in G.nodes:
             raise KeyError("Node {0} is not in the graph".format(old))
+
+        # Get node attributes
+        node_attrs = G.nodes[old]
+
+        # Check if this is a DiscourseDocumentGraph (has 'layers') or plain NetworkX graph
+        if 'layers' in node_attrs:
+            # DiscourseDocumentGraph with layers attribute
+            layers = node_attrs['layers']
+            G.add_node(new, layers, attr_dict=node_attrs)
+        else:
+            # Plain NetworkX graph without layers attribute
+            G.add_node(new, **node_attrs)
         if multigraph:
             new_edges = [(new, old == target and new or target, key, data)
                          for (_, target, key, data)
@@ -139,7 +151,9 @@ def _relabel_inplace(G, mapping):
             if directed:
                 new_edges += [(old == source and new or source, new, data)
                               for (source, _, data) in G.in_edges(old, data=True)]
-        G.remove_node(old)
+        # Only remove old node if it's different from new node
+        if old != new:
+            G.remove_node(old)
         G.add_edges_from(new_edges)
     return G
 
@@ -182,26 +196,30 @@ def convert_node_labels_to_integers(G, first_label=0, ordering="default",
     """
     N = G.number_of_nodes() + first_label
     if ordering == "default":
-        mapping = dict(zip(G.nodes(), range(first_label, N)))
+        mapping = dict(list(zip(G.nodes(), list(range(first_label, N)))))
     elif ordering == "sorted":
-        nlist = G.nodes()
-        nlist.sort()
-        mapping = dict(zip(nlist, range(first_label, N)))
+        # NetworkX 3.x: G.nodes() returns a view, convert to list first
+        nlist = sorted(G.nodes())
+        mapping = dict(list(zip(nlist, list(range(first_label, N)))))
     elif ordering == "increasing degree":
-        dv_pairs = [(d, n) for (n, d) in G.degree_iter()]
+        # NetworkX 3.x: degree_iter() removed, use degree()
+        dv_pairs = [(d, n) for (n, d) in G.degree()]
         dv_pairs.sort()  # in-place sort from lowest to highest degree
-        mapping = dict(zip([n for d, n in dv_pairs], range(first_label, N)))
+        mapping = dict(list(zip([n for d, n in dv_pairs], list(range(first_label, N)))))
     elif ordering == "decreasing degree":
-        dv_pairs = [(d, n) for (n, d) in G.degree_iter()]
+        # NetworkX 3.x: degree_iter() removed, use degree()
+        dv_pairs = [(d, n) for (n, d) in G.degree()]
         dv_pairs.sort()  # in-place sort from lowest to highest degree
         dv_pairs.reverse()
-        mapping = dict(zip([n for d, n in dv_pairs], range(first_label, N)))
+        mapping = dict(list(zip([n for d, n in dv_pairs], list(range(first_label, N)))))
     else:
         raise nx.NetworkXError('Unknown node ordering: {0}'.format(ordering))
     H = relabel_nodes(G, mapping)
     H.name = "(" + G.name + ")_with_int_labels"
     # create node attribute with the old label
     if label_attribute is not None:
-        nx.set_node_attributes(H, label_attribute,
-                               dict((v, k) for k, v in mapping.items()))
+        # NetworkX 3.x: set_node_attributes(G, values, name) - arguments were swapped
+        nx.set_node_attributes(H,
+                               dict((v, k) for k, v in list(mapping.items())),
+                               label_attribute)
     return H

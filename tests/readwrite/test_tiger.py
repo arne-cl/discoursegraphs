@@ -153,27 +153,27 @@ def test_tiger_sentence_spans():
         's389_1', 's389_2', 's389_3', 's389_4', 's389_5', 's389_6', 's389_7',
         's389_8', 's389_9', 's389_10', 's389_11']
     assert get_text(tsg, 's389_503') == \
-        u"Was man nicht durch Augenschein nachprüfen kann , ist manipulierbar ."
+        "Was man nicht durch Augenschein nachprüfen kann , ist manipulierbar ."
     assert dg.is_continuous(tsg, 's389_503')
 
     # a subordinated ('SB') clause
     assert get_span(tsg, 's389_502') == [
         's389_1', 's389_2', 's389_3', 's389_4', 's389_5', 's389_6', 's389_7']
     assert get_text(tsg, 's389_502') == \
-        u"Was man nicht durch Augenschein nachprüfen kann"
+        "Was man nicht durch Augenschein nachprüfen kann"
     assert dg.is_continuous(tsg, 's389_502')
 
     # a discontinuously annotated VP ('OC', i.e. a clausal object)
     assert get_span(tsg, 's389_501') == [
         's389_1', 's389_4', 's389_5', 's389_6']
     assert get_text(tsg, 's389_501') == \
-        u"Was durch Augenschein nachprüfen"
+        "Was durch Augenschein nachprüfen"
     assert not dg.is_continuous(tsg, 's389_501')
 
     # a PP modifier ('MO')
     assert get_span(tsg, 's389_500') == ['s389_4', 's389_5']
     assert get_text(tsg, 's389_500') == \
-        u"durch Augenschein"
+        "durch Augenschein"
     assert dg.is_continuous(tsg, 's389_500')
 
 
@@ -193,7 +193,7 @@ def test_tiger_sentence_with_secedge_spans():
         's367_14', 's367_15', 's367_16', 's367_17', 's367_18', 's367_19',
         's367_20']
     assert get_text(tsg_secedge, 's367_508') == \
-        u"Es kann nicht sein , dass die Basis gewissermaßen die Moral pachtet und ihn die realpolitische Schmutzarbeit machen lässt ."
+        "Es kann nicht sein , dass die Basis gewissermaßen die Moral pachtet und ihn die realpolitische Schmutzarbeit machen lässt ."
     assert dg.is_continuous(tsg_secedge, 's367_508')
 
     # discontinuous NP
@@ -202,7 +202,7 @@ def test_tiger_sentence_with_secedge_spans():
         's367_12', 's367_13', 's367_14', 's367_15', 's367_16', 's367_17',
         's367_18', 's367_19']
     assert get_text(tsg_secedge, 's367_507') == \
-        u"Es dass die Basis gewissermaßen die Moral pachtet und ihn die realpolitische Schmutzarbeit machen lässt"
+        "Es dass die Basis gewissermaßen die Moral pachtet und ihn die realpolitische Schmutzarbeit machen lässt"
     assert not dg.is_continuous(tsg_secedge, 's367_507')
 
     # a coordinated sentence ('CS')
@@ -211,7 +211,7 @@ def test_tiger_sentence_with_secedge_spans():
         's367_12', 's367_13', 's367_14', 's367_15', 's367_16', 's367_17',
         's367_18', 's367_19']
     assert get_text(tsg_secedge, 's367_506') == \
-        u"dass die Basis gewissermaßen die Moral pachtet und ihn die realpolitische Schmutzarbeit machen lässt"
+        "dass die Basis gewissermaßen die Moral pachtet und ihn die realpolitische Schmutzarbeit machen lässt"
     assert dg.is_continuous(tsg_secedge, 's367_506')
 
     # a conjunct sentence ('CJ') with an ingoing secondary edge
@@ -219,35 +219,35 @@ def test_tiger_sentence_with_secedge_spans():
         's367_6', 's367_7', 's367_8', 's367_9', 's367_10', 's367_11',
         's367_12']
     assert get_text(tsg_secedge, 's367_503') == \
-        u"dass die Basis gewissermaßen die Moral pachtet"
+        "dass die Basis gewissermaßen die Moral pachtet"
     assert dg.is_continuous(tsg_secedge, 's367_503')
 
     assert get_span(tsg_secedge, 's367_500') == ['s367_7', 's367_8']
-    assert get_text(tsg_secedge, 's367_500') == u"die Basis"
+    assert get_text(tsg_secedge, 's367_500') == "die Basis"
     assert dg.is_continuous(tsg_secedge, 's367_500')
 
     assert get_span(tsg_secedge, 's367_501') == ['s367_10', 's367_11']
-    assert get_text(tsg_secedge, 's367_501') == u"die Moral"
+    assert get_text(tsg_secedge, 's367_501') == "die Moral"
     assert dg.is_continuous(tsg_secedge, 's367_501')
 
     # a conjunct sentence ('CJ') with an ingoing secondary edge
     assert get_span(tsg_secedge, 's367_505') == [
         's367_14', 's367_15', 's367_16', 's367_17', 's367_18', 's367_19']
     assert get_text(tsg_secedge, 's367_505') == \
-        u"ihn die realpolitische Schmutzarbeit machen lässt"
+        "ihn die realpolitische Schmutzarbeit machen lässt"
     assert dg.is_continuous(tsg_secedge, 's367_505')
 
     # a clausal object ('OC') VP
     assert get_span(tsg_secedge, 's367_504') == [
         's367_15', 's367_16', 's367_17', 's367_18']
     assert get_text(tsg_secedge, 's367_504') == \
-        u"die realpolitische Schmutzarbeit machen"
+        "die realpolitische Schmutzarbeit machen"
     assert dg.is_continuous(tsg_secedge, 's367_504')
 
     assert get_span(tsg_secedge, 's367_502') == [
         's367_15', 's367_16', 's367_17']
     assert get_text(tsg_secedge, 's367_502') == \
-        u"die realpolitische Schmutzarbeit"
+        "die realpolitische Schmutzarbeit"
     assert dg.is_continuous(tsg_secedge, 's367_502')
 
 
@@ -266,6 +266,6 @@ def test_fix_148():
     for tiger_doc in ('maz-00002.xml', 'maz-10374.xml'):
         tiger_fpath = os.path.join(pcc.path, 'syntax', tiger_doc)
         tdg = dg.read_tiger(tiger_fpath)
-        assert all('tiger:syntax' in tdg.node[node_id]['layers']
+        assert all('tiger:syntax' in tdg.nodes[node_id]['layers']
                    for node_id in dg.select_nodes_by_layer(
                        tdg, 'tiger:sentence:root'))

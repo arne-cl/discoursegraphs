@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
-from cStringIO import StringIO
+from io import StringIO
 import os
 import sys
 

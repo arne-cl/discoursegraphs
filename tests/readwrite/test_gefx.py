@@ -4,7 +4,6 @@
 
 from tempfile import NamedTemporaryFile
 
-from pytest import maz_1423  # global fixture
 import discoursegraphs as dg
 
 """
@@ -12,7 +11,7 @@ Basic tests for the gexf output format.
 """
 
 
-def test_write_gexf():
+def test_write_gexf(maz_1423):
     """convert a PCC document into a gexf file."""
     temp_file = NamedTemporaryFile()
     temp_file.close()

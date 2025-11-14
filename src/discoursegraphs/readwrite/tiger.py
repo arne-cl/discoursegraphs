@@ -30,13 +30,13 @@ class TigerDocumentGraph(DiscourseDocumentGraph):
 
         tdg = TigerDocumentGraph('/path/to/tiger.file')
         for token_id in tdg.tokens:
-            print tdg.node[token_id]['tiger:word']
+            print tdg.nodes[token_id]['tiger:word']
 
     If you want to access the tokens of a specific sentence, use::
 
         tdg = TigerDocumentGraph('/path/to/tiger.file')
         # print all tokens of the second sentence
-        for token_id in tdg.node[tdg.sentences[1]]['tokens']:
+        for token_id in tdg.nodes[tdg.sentences[1]]['tokens']:
             print tdg.get_token(token_id)
 
     Attributes
@@ -217,7 +217,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
         # add sorted list of all token node IDs to sentence root node
         # to make queries simpler/faster
         sorted_token_ids = sorted(token_ids, key=natural_sort_key)
-        self.node[self.root].update({'tokens': sorted_token_ids})
+        self.nodes[self.root].update({'tokens': sorted_token_ids})
         self.tokens = sorted_token_ids
 
         # add nonterminals (syntax categories) to graph
@@ -227,7 +227,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
             nt_feats['label'] = nt_feats[self.ns+':cat']
             # root node already exists, but doesn't have a cat value
             if from_id in self:
-                self.node[from_id].update(nt_feats)
+                self.nodes[from_id].update(nt_feats)
             else:
                 self.add_node(from_id, layers={self.ns, self.ns+':syntax'},
                               attr_dict=nt_feats)
@@ -240,7 +240,7 @@ class TigerSentenceGraph(DiscourseDocumentGraph):
                 edge_attribs = add_prefix(edge.attrib, self.ns+':')
 
                 # add a spanning relation from a syntax cat to a token
-                if self.ns+':token' in self.node[to_id]['layers']:
+                if self.ns+':token' in self.nodes[to_id]['layers']:
                     edge_type = EdgeTypes.spanning_relation
                 else:  # add a dominance relation between two syntax categories
                     edge_type = EdgeTypes.dominance_relation
@@ -306,7 +306,7 @@ def _get_terminals_and_nonterminals(sentence_graph):
     """
     terminals = set()
     nonterminals = set()
-    for node_id in sentence_graph.nodes_iter():
+    for node_id in sentence_graph.nodes():
         if sentence_graph.out_degree(node_id) > 0:
             # all nonterminals (incl. root)
             nonterminals.add(node_id)
@@ -336,7 +336,7 @@ def get_unconnected_nodes(sentence_graph):
     unconnected_node_ids : list of str
         a list of node IDs of unconnected nodes
     """
-    return [node for node in sentence_graph.nodes_iter()
+    return [node for node in sentence_graph.nodes()
             if sentence_graph.degree(node) == 0 and
             sentence_graph.number_of_nodes() > 1]
 
@@ -363,7 +363,7 @@ def get_subordinate_clauses(tiger_docgraph):
 
     subord_clause_nodes = []
     for src_id, target_id in subord_clause_rels:
-        src_cat = tiger_docgraph.node[src_id].get('tiger:cat')
+        src_cat = tiger_docgraph.nodes[src_id].get('tiger:cat')
         if src_cat == 'S' and not dg.istoken(tiger_docgraph, target_id):
             subord_clause_nodes.append(target_id)
     return subord_clause_nodes

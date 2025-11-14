@@ -78,7 +78,7 @@ class HILDARSTTree(RSTBaseTree):
                   Although they            they accepted
                 did n't like it ,           the offer .
             """
-            if isinstance(hilda_tree, basestring) or not hasattr(hilda_tree, 'label'):
+            if isinstance(hilda_tree, str) or not hasattr(hilda_tree, 'label'):
                 return hilda_tree
             assert len(hilda_tree) == 2, "We can only handle binary trees."
 

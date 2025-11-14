@@ -95,7 +95,7 @@ class SaltLayer(SaltElement):
             '{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
             'nodes': nodes_attrib_val, 'edges': edges_attrib_val}
         # a layer might have no nodes or edges attributed to it
-        non_empty_attribs = {key: val for (key, val) in attribs.items()
+        non_empty_attribs = {key: val for (key, val) in list(attribs.items())
                              if val is not None}
 
         E = ElementMaker()

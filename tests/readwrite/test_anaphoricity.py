@@ -26,13 +26,23 @@ def test_read_anaphoricity():
     assert len(das_annos) == 6
 
 
-@pytest.mark.xfail
+@pytest.mark.xfail(reason="merge_graphs deletes root_node when merging same namespace")
 def test_merge_anaphoricity_graphs():
-    """merging of two graphs with the same namespace doesn't work
+    """Merging anaphoricity graphs with the same namespace doesn't work.
 
-    I tried fixing this by making rename_tokens() work on a copy of the
-    input graph, but that didn't help.
-    """
+    Bug: When merging two anaphoricity graphs, the 'anaphoricity:root_node'
+    from the first graph gets deleted, reducing node count from 209 to 208.
+
+    Root cause: merge_graphs() doesn't properly handle special nodes (like
+    root_node) that exist in both graphs with the same node ID.
+
+    The merge should either:
+    1. Preserve both root nodes with renamed IDs, or
+    2. Merge root node attributes, or
+    3. Require graphs to have different namespaces
+
+    Note: The test author tried making rename_tokens() work on a copy but
+    that didn't resolve the issue. The problem is deeper in merge_graphs()."""
     das_adg = dg.read_anaphoricity(
         os.path.join(dg.DATA_ROOT_DIR, 'maz-17706-das.anaphoricity'))
     assert isinstance(das_adg, AnaphoraDocumentGraph)
@@ -57,9 +67,10 @@ def test_merge_anaphoricity_graphs():
     assert len(das_adg) == len(es_adg) == 209
 
 
-@pytest.mark.xfail
 def test_write_anaphoricity():
-    """output file contains '/a?' annotations instead of '/a' annotations"""
+    """output file contains '/a?' annotations instead of '/a' annotations
+
+    Fixed: gen_anaphoricity_str now checks certainty attribute value, not name"""
     input_path = os.path.join(dg.DATA_ROOT_DIR, 'maz-17706-das.anaphoricity')
     das_adg = dg.read_anaphoricity(
         os.path.join(dg.DATA_ROOT_DIR, 'maz-17706-das.anaphoricity'))

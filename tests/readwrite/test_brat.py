@@ -4,7 +4,6 @@
 
 from tempfile import NamedTemporaryFile
 
-from pytest import maz_1423  # global fixture
 import discoursegraphs as dg
 
 """
@@ -12,7 +11,7 @@ Basic tests for the brat output format.
 """
 
 
-def test_write_brat():
+def test_write_brat(maz_1423):
     """convert a PCC document into a brat file."""
     temp_file = NamedTemporaryFile()
     temp_file.close()

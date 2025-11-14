@@ -82,7 +82,7 @@ class SaltLabel(object):
             '{{{pre}}}type'.format(pre=NAMESPACES['xsi']): self.xsi_type,
             'namespace': self.namespace, 'name': self.name,
             'value': self.hexvalue, 'valueString': self.value}
-        non_empty_attribs = {key: val for (key, val) in attribs.items()
+        non_empty_attribs = {key: val for (key, val) in list(attribs.items())
                              if val is not None}
         E = ElementMaker()
         return E('labels', non_empty_attribs)

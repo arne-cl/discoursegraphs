@@ -65,7 +65,7 @@ class DisFile(object):
 def get_edu_text(text_subtree):
     """return the text of the given EDU subtree, with '_!'-delimiters removed."""
     assert text_subtree.label() == 'text', "text_subtree: {}".format(text_subtree)
-    edu_str = u' '.join(word for word in text_subtree.leaves())
+    edu_str = ' '.join(word for word in text_subtree.leaves())
     return re.sub('_!(.*?)_!', '\g<1>', edu_str)
 
 

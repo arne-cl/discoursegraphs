@@ -22,7 +22,7 @@ PTB_BRACKET_ESCAPE = {'(': r'-LRB-',
                        '{': r'-LCB-',
                        '}': r'-RCB-'}
 PTB_BRACKET_UNESCAPE = {val:key for (key, val)
-                                in PTB_BRACKET_ESCAPE.items()}
+                                in list(PTB_BRACKET_ESCAPE.items())}
 
 class PTBDocumentGraph(dg.DiscourseDocumentGraph):
     """
@@ -102,7 +102,8 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
                   ignore_traces=True):
         """create a PTBDocumentGraph from a string containing PTB parses."""
         temp = tempfile.NamedTemporaryFile(delete=False)
-        temp.write(ptb_string)
+        # In Python 3, NamedTemporaryFile opens in binary mode, so encode string to bytes
+        temp.write(ptb_string.encode('utf-8'))
         temp.close()
         ptb_docgraph = cls(ptb_filepath=temp.name, namespace=namespace,
                            precedence=precedence, ignore_traces=ignore_traces)
@@ -129,13 +130,14 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
         def get_nodelabel(node):
             if isinstance(node, nltk.tree.Tree):
                 return node.label()
-            elif isinstance(node, unicode):
-                return node.encode('utf-8')
+            elif isinstance(node, str):
+                # In Python 3, strings are already unicode, no need to encode
+                return node
             else:
                 raise ValueError("Unexpected node type: {0}, {1}".format(type(node), node))
 
         root_node_id = self._node_id
-        self.node[root_node_id]['label'] = get_nodelabel(tree)
+        self.nodes[root_node_id]['label'] = get_nodelabel(tree)
 
         for subtree in tree:
             self._node_id += 1
@@ -164,11 +166,11 @@ class PTBDocumentGraph(dg.DiscourseDocumentGraph):
                 # in NLTK Trees, even a leaf node (with its POS tag) is
                 # represented as a Tree (an iterator over a single unicode
                 # string), e.g. ``Tree('NNS', ['prices'])``
-                pos_tag = self.node[parent_node_id]['label']
+                pos_tag = self.nodes[parent_node_id]['label']
                 token_attrs = {
                     'label': node_label, self.ns+':token': node_label,
                     self.ns+':pos': pos_tag}
-                self.node[parent_node_id].update(token_attrs)
+                self.nodes[parent_node_id].update(token_attrs)
                 self.tokens.append(parent_node_id)
 
             if isinstance(subtree, nltk.tree.Tree):

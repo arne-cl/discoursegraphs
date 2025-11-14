@@ -21,19 +21,19 @@ FREQT_ESCAPE_FUNC = create_multiple_replace_func(FREQT_BRACKET_ESCAPE)
 def node2freqt(docgraph, node_id, child_str='', include_pos=False,
                escape_func=FREQT_ESCAPE_FUNC):
     """convert a docgraph node into a FREQT string."""
-    node_attrs = docgraph.node[node_id]
+    node_attrs = docgraph.nodes[node_id]
     if istoken(docgraph, node_id):
         token_str = escape_func(node_attrs[docgraph.ns+':token'])
         if include_pos:
             pos_str = escape_func(node_attrs.get(docgraph.ns+':pos', ''))
-            return u"({pos}({token}){child})".format(
+            return "({pos}({token}){child})".format(
                 pos=pos_str, token=token_str, child=child_str)
         else:
-            return u"({token}{child})".format(token=token_str, child=child_str)
+            return "({token}{child})".format(token=token_str, child=child_str)
 
     else:  # node is not a token
         label_str=escape_func(node_attrs.get('label', node_id))
-        return u"({label}{child})".format(label=label_str, child=child_str)
+        return "({label}{child})".format(label=label_str, child=child_str)
 
 
 def sentence2freqt(docgraph, root, successors=None, include_pos=False,
@@ -43,7 +43,7 @@ def sentence2freqt(docgraph, root, successors=None, include_pos=False,
         successors = sorted_bfs_successors(docgraph, root)
 
     if root in successors:  # root node has children / subgraphs
-        embed_str = u"".join(sentence2freqt(docgraph, child, successors,
+        embed_str = "".join(sentence2freqt(docgraph, child, successors,
                                             include_pos=include_pos,
                                             escape_func=escape_func)
                              for child in successors[root])
@@ -59,7 +59,7 @@ def docgraph2freqt(docgraph, root=None, include_pos=False,
                    escape_func=FREQT_ESCAPE_FUNC):
     """convert a docgraph into a FREQT string."""
     if root is None:
-        return u"\n".join(
+        return "\n".join(
             sentence2freqt(docgraph, sentence, include_pos=include_pos,
                            escape_func=escape_func)
             for sentence in docgraph.sentences)

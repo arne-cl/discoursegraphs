@@ -102,7 +102,7 @@ class RSTLispDocumentGraph(DiscourseDocumentGraph):
                 edu_text = get_edu_text(dis_tree[-1])
                 self.add_node(node_id, attr_dict={
                     self.ns+':text': edu_text,
-                    'label': u'{0}: {1}'.format(node_id, edu_text[:20])})
+                    'label': '{0}: {1}'.format(node_id, edu_text[:20])})
                 if self.tokenized:
                     edu_tokens = edu_text.split()
                     for i, token in enumerate(edu_tokens):

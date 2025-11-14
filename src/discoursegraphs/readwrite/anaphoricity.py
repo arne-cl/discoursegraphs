@@ -31,7 +31,7 @@ ANNOTATION_TYPES = {'n': 'nominal',
                     'r': 'relative',
                     'p': 'pleonastic'}
 
-ANNOTATIONS = {val: key for key, val in ANNOTATION_TYPES.items()}
+ANNOTATIONS = {val: key for key, val in list(ANNOTATION_TYPES.items())}
 
 class AnaphoraDocumentGraph(DiscourseDocumentGraph):
 
@@ -132,7 +132,7 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
                     self.ns+':annotation': anno_type,
                     self.ns+':certainty': certainty,
                     self.ns+':token': unicode_token,
-                    'label': u"{0}_{1}".format(unicode_token, anno_type)})
+                    'label': "{0}_{1}".format(unicode_token, anno_type)})
         else:  # token is not annotated
             self.add_node(
                 token_id,
@@ -147,18 +147,20 @@ class AnaphoraDocumentGraph(DiscourseDocumentGraph):
 
 def gen_anaphoricity_str(docgraph, anaphora='es'):
     assert anaphora in ('das', 'es')
-    ret_str = u''
+    ret_str = ''
     annotated_token_ids = [tok_id for tok_id in dg.select_nodes_by_layer(docgraph, docgraph.ns+':annotated')
                            if docgraph.get_token(tok_id).lower() == anaphora]
     for token_id in docgraph.tokens:
         if token_id in annotated_token_ids:
-            certainty_str = '' if docgraph.ns+':certainty' == '1.0' else '?'
-            ret_str += u'{0}/{1}{2} '.format(
+            # Check the certainty attribute value, not the attribute name
+            certainty = docgraph.nodes[token_id].get(docgraph.ns+':certainty', '')
+            certainty_str = '' if certainty == '1.0' else '?'
+            ret_str += '{0}/{1}{2} '.format(
                 docgraph.get_token(token_id),
-                ANNOTATIONS[docgraph.node[token_id][docgraph.ns+':annotation']],
+                ANNOTATIONS[docgraph.nodes[token_id][docgraph.ns+':annotation']],
                 certainty_str)
         else:
-            ret_str += u'{} '.format(docgraph.get_token(token_id))
+            ret_str += '{} '.format(docgraph.get_token(token_id))
     return ret_str
 
 

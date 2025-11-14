@@ -11,6 +11,7 @@ between the spans (e.g. coreference chains).
 
 import os
 import codecs
+import io
 import itertools
 from collections import defaultdict
 
@@ -53,9 +54,9 @@ def gen_bracket_mappings(docgraph, layer=None):
     opening = defaultdict(list)
     closing = defaultdict(list)
     for markable in markables:
-        if namespace+':span' in docgraph.node[markable]:
+        if namespace+':span' in docgraph.nodes[markable]:
             span_tokens = spanstring2tokens(
-                docgraph, docgraph.node[markable][namespace+':span'])
+                docgraph, docgraph.nodes[markable][namespace+':span'])
             opening[span_tokens[0]].append(markable)
             closing[span_tokens[-1]].append(markable)
     return opening, closing, markable2chain
@@ -65,7 +66,7 @@ def gen_closing_string(closing_dict, markable2chain, token_id, stack):
     num_of_closing_brackets = len(closing_dict[token_id])
     closing_markable_ids = [stack.pop()
                             for i in range(num_of_closing_brackets)]
-    return u''.join(u']_{{{}}}'.format(markable2chain[closing_id])
+    return ''.join(']_{{{}}}'.format(markable2chain[closing_id])
                                    for closing_id in closing_markable_ids)
 
 
@@ -97,29 +98,29 @@ def gen_bracketed_output(docgraph, layer='mmax'):
     '''
     opening, closing, markable2chain = gen_bracket_mappings(docgraph, layer=layer)
 
-    ret_str = u''
+    ret_str = ''
     stack = []
     for token_id in docgraph.tokens:
         token_str = docgraph.get_token(token_id)
         if token_id in opening:
             num_of_opening_brackets = len(opening[token_id])
             stack.extend(opening[token_id])
-            opening_str = u'[' * num_of_opening_brackets
+            opening_str = '[' * num_of_opening_brackets
 
             if token_id in closing:
                 # token is both the first and last element of 1+ markables
                 closing_str = gen_closing_string(closing, markable2chain,
                                                  token_id, stack)
-                ret_str += u'{0}{1}{2} '.format(opening_str, token_str,
+                ret_str += '{0}{1}{2} '.format(opening_str, token_str,
                                                 closing_str)
             else: # token is the first element of 1+ markables
-                ret_str += u'{0}{1} '.format(opening_str, token_str)
+                ret_str += '{0}{1} '.format(opening_str, token_str)
         elif token_id in closing:
             closing_str = gen_closing_string(closing, markable2chain,
                                              token_id, stack)
-            ret_str += u'{0}{1} '.format(token_str, closing_str)
+            ret_str += '{0}{1} '.format(token_str, closing_str)
         else:
-            ret_str += u'{} '.format(token_str)
+            ret_str += '{} '.format(token_str)
     return ret_str
 
 
@@ -137,7 +138,7 @@ def write_brackets(docgraph, output_file, layer='mmax'):
         syntax trees with secondary edges.)
     """
     bracketed_str = gen_bracketed_output(docgraph, layer=layer)
-    assert isinstance(output_file, (str, file))
+    assert isinstance(output_file, (str, io.IOBase))
     if isinstance(output_file, str):
         path_to_file = os.path.dirname(output_file)
         if not os.path.isdir(path_to_file):

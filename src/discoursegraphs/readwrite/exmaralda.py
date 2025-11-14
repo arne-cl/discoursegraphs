@@ -9,7 +9,9 @@ and vice versa.
 """
 
 import os
+import io
 import sys
+import io
 from collections import defaultdict
 from lxml import etree
 from lxml.builder import ElementMaker
@@ -61,7 +63,7 @@ class ExmaraldaFile(object):
         output_filepath : str
             relative or absolute path to the Exmaralda file to be created
         """
-        with open(output_filepath, 'w') as out_file:
+        with open(output_filepath, 'wb') as out_file:
             out_file.write(self.__str__())
 
     def __create_document_header(self):
@@ -105,7 +107,7 @@ class ExmaraldaFile(object):
         timeline = E('common-timeline')
 
         # for n tokens we need to create n+1 timeline indices
-        for i in xrange(len(docgraph.tokens)+1):
+        for i in range(len(docgraph.tokens)+1):
             idx = str(i)
             # example: <tli id="T0" time="0"/>
             timeline.append(E('tli', {'id': 'T'+idx, 'time': idx}))
@@ -149,7 +151,7 @@ class ExmaraldaFile(object):
             span_node_ids = get_span(docgraph, node_id)
             if span_node_ids:
                 start_id, end_id = self.__span2event(span_node_ids)
-                event_label = docgraph.node[node_id].get('label', '')
+                event_label = docgraph.nodes[node_id].get('label', '')
                 event = self.E('event',
                                {'start': "T{}".format(start_id),
                                 'end': "T{}".format(end_id)},
@@ -219,14 +221,14 @@ class ExmaraldaFile(object):
 
         token_attribs = defaultdict(lambda: defaultdict(str))
         for token_node_id in docgraph.tokens:
-            for attrib in docgraph.node[token_node_id]:
+            for attrib in docgraph.nodes[token_node_id]:
                 is_boring_attrib = attrib in ('layers', 'label')
                 is_boring_cat = attrib.split(':')[-1] in ('token',
                                                           'id', 'word',
                                                           'morph', 'lemma')
                 if not is_boring_attrib and not is_boring_cat:
                     token_attribs[attrib][token_node_id] = \
-                        docgraph.node[token_node_id][attrib]
+                        docgraph.nodes[token_node_id][attrib]
 
         for i, (_tok_id, token_str) in enumerate(docgraph.get_tokens()):
             # example: <event start="T0" end="T1">Zum</event>
@@ -351,7 +353,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
                        event.attrib['end'])) == 1, \
                 "Events in the token tier must not span more than one token."
             token_id = event.attrib['start']
-            self.node[token_id][self.ns+':token'] = event.text
+            self.nodes[token_id][self.ns+':token'] = event.text
 
     def is_token_annotation_tier(self, tier):
         """
@@ -371,7 +373,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
         for i, event in enumerate(tier.iter('event')):
             anno_key = '{0}:{1}'.format(self.ns, tier.attrib['category'])
             anno_val = event.text if event.text else ''
-            self.node[event.attrib['start']][anno_key] = anno_val
+            self.nodes[event.attrib['start']][anno_key] = anno_val
 
     def __add_span_tier(self, tier):
         """
@@ -445,7 +447,7 @@ class ExmaraldaDocumentGraph(DiscourseDocumentGraph):
         >>> gen_token_range('T1', 'T5')
         ['T1', 'T2', 'T3', 'T4']
         """
-        index_range = range(self.tokenid2index(start_id), self.tokenid2index(stop_id))
+        index_range = list(range(self.tokenid2index(start_id), self.tokenid2index(stop_id)))
         return ["T{}".format(index) for index in index_range]
 
 
@@ -486,7 +488,7 @@ def write_exb(docgraph, output_file):
     writes it to the given file (or file path).
     """
     exmaralda_file = ExmaraldaFile(docgraph)
-    assert isinstance(output_file, (str, file))
+    assert isinstance(output_file, (str, io.IOBase))
     if isinstance(output_file, str):
         path_to_file = os.path.dirname(output_file)
         if not os.path.isdir(path_to_file):
@@ -502,7 +504,7 @@ write_exmaralda = write_exb
 
 if __name__ == "__main__":
     import argparse
-    import cPickle as pickle
+    import pickle as pickle
 
     parser = argparse.ArgumentParser()
     parser.add_argument('input_file',

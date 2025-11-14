@@ -78,10 +78,12 @@ class SaltXMIGraph(nx.DiGraph):
         self.doc_id = get_doc_id(self.tree)
         for i, node_element in enumerate(get_elements(self.tree, 'nodes')):
             node = create_class_instance(node_element, i, self.doc_id)
-            self.add_node(i, node.__dict__)
+            # NetworkX 3.x: unpack dict as keyword arguments
+            self.add_node(i, **node.__dict__)
         for i, edge_element in enumerate(get_elements(self.tree, 'edges')):
             edge = create_class_instance(edge_element, i, self.doc_id)
-            self.add_edge(edge.source, edge.target, edge.__dict__)
+            # NetworkX 3.x: unpack dict as keyword arguments
+            self.add_edge(edge.source, edge.target, **edge.__dict__)
 
 
 class SaltDocument(object):
@@ -403,8 +405,8 @@ def tree_statistics(tree):
     tag_counter = defaultdict(int)
     for element in all_elements:
         tag_counter[element.tag] += 1
-    for (tag, counts) in tag_counter.items():
-        print "{0}: {1}".format(tag, counts)
+    for (tag, counts) in list(tag_counter.items()):
+        print("{0}: {1}".format(tag, counts))
 
 
 def abslistdir(directory):

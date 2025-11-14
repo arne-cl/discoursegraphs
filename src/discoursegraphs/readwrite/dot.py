@@ -25,7 +25,7 @@ def quote_for_pydot(string):
     if isinstance(string, int):
         string = str(string)
     escaped_str = QUOTE_RE.sub(r'\\"', string)
-    return u'"{}"'.format(escaped_str)
+    return '"{}"'.format(escaped_str)
 
 
 def unquote_from_pydot(string):
@@ -73,8 +73,8 @@ def preprocess_for_pydot(docgraph):
     stripped_graph = nx.MultiDiGraph()
     stripped_graph.name = docgraph.name
 
-    nodes = _preprocess_nodes_for_pydot(docgraph.nodes_iter(data=True))
-    edges = _preprocess_edges_for_pydot(docgraph.edges_iter(data=True))
+    nodes = _preprocess_nodes_for_pydot(docgraph.nodes(data=True))
+    edges = _preprocess_edges_for_pydot(docgraph.edges(data=True))
 
     stripped_graph.add_nodes_from(nodes)
     stripped_graph.add_edges_from(edges)

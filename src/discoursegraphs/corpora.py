@@ -16,7 +16,10 @@ Attribution-NonCommercial-ShareAlike license.
     Evaluation Conference (LREC), Reykjavik.
 """
 
-from collections import Sequence
+try:
+    from collections.abc import Sequence
+except ImportError:
+    from collections import Sequence
 
 import fnmatch
 from itertools import chain
@@ -72,7 +75,7 @@ class PCC(Sequence):
             # 'tokenization': (self.tokenization, dg.read_tokenized),
         }
 
-        list_of_dir_contents = (files for (files, _) in self.layers.values())
+        list_of_dir_contents = (files for (files, _) in list(self.layers.values()))
         self._all_files = list(chain.from_iterable(list_of_dir_contents))
 
     @property
@@ -134,7 +137,7 @@ class PCC(Sequence):
         returns a list of all files (from all available annotation layers)
         with the given document ID.
         """
-        assert isinstance(document_id, basestring), \
+        assert isinstance(document_id, str), \
             "The document ID must be given as a string, e.g. 'maz-1423'"
         return list(dg.find_files(self._all_files, '*{}.*'.format(document_id)))
 

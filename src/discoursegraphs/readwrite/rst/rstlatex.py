@@ -63,7 +63,7 @@ def get_node_type(tree):
         else:
             return 'relation'
 
-    elif isinstance(tree, basestring):
+    elif isinstance(tree, str):
         return 'edu'
 
     else:
@@ -186,7 +186,7 @@ def rsttree2rstlatex(tree, indent_level=0):
             relnames = [rel.label() for rel in relations]
             nuctypes_per_relation = [[elem.label() for elem in relation] for relation in relations]
             subtree_strings_per_relation = [[rsttree2rstlatex(elem[0]) for elem in relation] for relation in relations]
-            nucsat_tuples = zip(relnames, nuctypes_per_relation, subtree_strings_per_relation)
+            nucsat_tuples = list(zip(relnames, nuctypes_per_relation, subtree_strings_per_relation))
             return indent_tab(make_multisat(nucsat_tuples), indent_level)
         
         else: # a "normal" relation between one nucleus and one satellite
