@@ -11,7 +11,7 @@ from lxml.builder import ElementMaker
 from discoursegraphs.readwrite.salt.elements import SaltElement
 from discoursegraphs.readwrite.salt.util import NAMESPACES
 
-DIGITS = re.compile('\d+')
+DIGITS = re.compile(r'\d+')
 
 
 class SaltLayer(SaltElement):

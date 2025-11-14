@@ -66,7 +66,7 @@ def get_edu_text(text_subtree):
     """return the text of the given EDU subtree, with '_!'-delimiters removed."""
     assert text_subtree.label() == 'text', "text_subtree: {}".format(text_subtree)
     edu_str = ' '.join(word for word in text_subtree.leaves())
-    return re.sub('_!(.*?)_!', '\g<1>', edu_str)
+    return re.sub('_!(.*?)_!', r'\g<1>', edu_str)
 
 
 def get_tree_type(tree):
@@ -164,7 +164,7 @@ def convert_parens_in_rst_tree_str(rst_tree_str):
     def replace_brackets(matchobj):
         edu = matchobj.group(0)
         for (br, br_repl) in DIS_ESCAPES:
-            edu = re.sub("\{}".format(br), br_repl, edu)
+            edu = re.sub(r"\{}".format(br), br_repl, edu)
         return edu
 
     return re.sub('_!(.*?)_!', replace_brackets, rst_tree_str)

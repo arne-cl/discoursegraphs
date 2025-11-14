@@ -26,9 +26,9 @@ RSTSEGMENT_TEMPLATE = string.Template("""\\rstsegment{$segment}""") # \rstsegmen
 NUC_TEMPLATE = string.Template("""{}{$nucleus}""")
 SAT_TEMPLATE = string.Template("""{$relation}{$satellite}""")
 
-MULTINUC_TEMPLATE = string.Template("""\multirel{$relation}$nucleus_segments""")
+MULTINUC_TEMPLATE = string.Template(r"""\multirel{$relation}$nucleus_segments""")
 
-RSTLATEX_TREE_RE = re.compile("\\\(dirrel|multirel)")
+RSTLATEX_TREE_RE = re.compile(r"\\(dirrel|multirel)")
 
 
 class RSTLatexFileWriter(object):
@@ -88,8 +88,8 @@ def make_nucsat(relname, nuc_types, elements):
         "A nucsat relation must have two elements."
     assert set(nuc_types) == set(['N', 'S']), \
         "A nucsat relation must consist of one nucleus and one satellite."
- 
-    result = "\dirrel"
+
+    result = r"\dirrel"
     for i, nuc_type in enumerate(nuc_types):
         element = elements[i]
         if is_edu_segment(element):
@@ -123,7 +123,7 @@ def make_multisat(nucsat_tuples):
     assert len(nucsat_tuples) > 1, \
         "A multisat relation bundle must contain more than one relation"
 
-    result = "\dirrel\n\t"
+    result = r"\dirrel" + "\n\t"
     first_relation, remaining_relations = nucsat_tuples[0], nucsat_tuples[1:]
     
     relname, nuc_types, elements = first_relation

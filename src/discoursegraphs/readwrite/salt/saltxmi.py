@@ -87,7 +87,7 @@ class SaltXMIGraph(nx.DiGraph):
 
 
 class SaltDocument(object):
-    """
+    r"""
     represents the relevant parts of a SaltXML file as a class (with lists
     of ``SaltNode``\s, ``SaltEdge``\s and ``SaltLayer``\s.
 
@@ -381,7 +381,7 @@ def get_doc_id(element_tree):
 
 
 def subtype_ids(elements, subtype):
-    """
+    r"""
     returns the ids of all elements of a list that have a certain type,
     e.g. show all the nodes that are ``TokenNode``\s.
     """

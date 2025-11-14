@@ -30,7 +30,7 @@ import re
 import discoursegraphs as dg
 
 PCC_DIRNAME = 'potsdam-commentary-corpus-2.0.0'
-PCC_DOCID_RE = re.compile('^.*(maz-\d+)\..*')
+PCC_DOCID_RE = re.compile(r'^.*(maz-\d+)\..*')
 
 TUEBADZ_PATH = os.path.expanduser(
     '~/corpora/tuebadz-8.0/tuebadz-8.0-mit-NE+Anaphern+Diskurs.exml.xml')

@@ -24,7 +24,7 @@ from discoursegraphs.readwrite.generic import generic_converter_cli
 #
 # Examples: 'Das/a', 'es/p?'
 ANNOTATED_ANAPHORA_REGEX = re.compile(
-    '(?P<token>([Dd]a|[Ee])s)/(?P<annotation>[anpr])(?P<uncertain>\??)')
+    r'(?P<token>([Dd]a|[Ee])s)/(?P<annotation>[anpr])(?P<uncertain>\??)')
 
 ANNOTATION_TYPES = {'n': 'nominal',
                     'a': 'abstract',

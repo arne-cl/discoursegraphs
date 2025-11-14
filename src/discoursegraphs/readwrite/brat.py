@@ -13,7 +13,7 @@ import math
 import itertools
 from collections import defaultdict
 
-import brewer2mpl
+from palettable.colorbrewer import qualitative
 from unidecode import unidecode
 import discoursegraphs as dg
 from discoursegraphs.readwrite.mmax2 import spanstring2text, spanstring2tokens
@@ -108,7 +108,7 @@ def create_visual_conf(docgraph, pointing_chains):
     """
     num_of_entities = len(pointing_chains)
     mapsize = max(3, min(12, num_of_entities)) # 3 <= mapsize <= 12
-    colormap = brewer2mpl.get_map(name='Paired', map_type='Qualitative', number=mapsize)
+    colormap = getattr(qualitative, f'Paired_{mapsize}')
     colors = list(range(mapsize)) * int(math.ceil(num_of_entities / float(mapsize)))
     # recycle colors if we need more than 12
     endless_color_cycle = itertools.cycle(colors)

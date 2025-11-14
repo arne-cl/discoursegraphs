@@ -60,7 +60,7 @@ from discoursegraphs.util import add_prefix
 
 
 # example node ID: 's_1_n_506' -> sentence 1, node 506
-NODE_ID_REGEX = re.compile('s_(\d+)_n_(\d+)')
+NODE_ID_REGEX = re.compile(r's_(\d+)_n_(\d+)')
 
 
 class ExportXMLCorpus(object):
