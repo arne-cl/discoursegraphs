@@ -639,14 +639,16 @@ def test_get_span():
 
     # the debug parameter should 'raise' a warning (since the graph is
     # cyclic), but the result must be the same)
-    assert dg.get_span(sg1, 'S', debug=True) == [0, 1, 3, 4, 5, 6]
+    with pytest.warns(UserWarning, match="Can't reliably extract span"):
+        assert dg.get_span(sg1, 'S', debug=True) == [0, 1, 3, 4, 5, 6]
 
     # get_span() must be robust against self-loops
     sg1.add_edge('SBAR', 'SBAR', layers={sg1.ns+':selfloop'},
                  edge_type=dg.EdgeTypes.dominance_relation)
     assert dg.get_span(sg1, 'S') == [0, 1, 3, 4, 5, 6]
     assert dg.get_span(sg1, 'SBAR') == [3, 4, 5, 6]
-    assert dg.get_span(sg1, 'SBAR', debug=True) == [3, 4, 5, 6]
+    with pytest.warns(UserWarning, match="Can't reliably extract span"):
+        assert dg.get_span(sg1, 'SBAR', debug=True) == [3, 4, 5, 6]
 
     # get_span() won't be able to recover from a dominance relation
     # (non self)-loop

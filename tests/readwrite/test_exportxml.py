@@ -263,21 +263,22 @@ text_22_stats = ['Name: text_22',
 def test_read_exportxml():
     """An ExportXML file can be parsed with the expected node/edge attributes."""
     exportxml_filepath = os.path.join(dg.DATA_ROOT_DIR, 'exportxml-example.xml')
-    exportxml_corpus = dg.read_exportxml(exportxml_filepath)
-    assert isinstance(exportxml_corpus, dg.readwrite.exportxml.ExportXMLCorpus)
-    assert len(exportxml_corpus) == 3
 
-    docgraph_stats = []
-    for docgraph in exportxml_corpus:
-        assert isinstance(docgraph, dg.readwrite.exportxml.ExportXMLDocumentGraph)
+    with dg.read_exportxml(exportxml_filepath) as exportxml_corpus:
+        assert isinstance(exportxml_corpus, dg.readwrite.exportxml.ExportXMLCorpus)
+        assert len(exportxml_corpus) == 3
 
-        with Capturing() as output:
-            dg.info(docgraph)
-        docgraph_stats.append(output)
+        docgraph_stats = []
+        for docgraph in exportxml_corpus:
+            assert isinstance(docgraph, dg.readwrite.exportxml.ExportXMLDocumentGraph)
 
-    assert docgraph_stats == [text_0_stats, text_9_stats, text_22_stats]
+            with Capturing() as output:
+                dg.info(docgraph)
+            docgraph_stats.append(output)
 
-    exportxml_corpus_debug = dg.read_exportxml(exportxml_filepath, debug=True)
-    text_elem = next(exportxml_corpus_debug)
-    assert isinstance(text_elem, lxml.etree._Element)
-    assert text_elem.tag == 'text'
+        assert docgraph_stats == [text_0_stats, text_9_stats, text_22_stats]
+
+    with dg.read_exportxml(exportxml_filepath, debug=True) as exportxml_corpus_debug:
+        text_elem = next(exportxml_corpus_debug)
+        assert isinstance(text_elem, lxml.etree._Element)
+        assert text_elem.tag == 'text'

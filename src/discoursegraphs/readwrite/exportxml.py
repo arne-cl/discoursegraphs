@@ -97,6 +97,7 @@ class ExportXMLCorpus(object):
         self.debug = debug
 
         self.__context = None
+        self.__file_handle = None
         self._reset_corpus_iterator()
 
     def _reset_corpus_iterator(self):
@@ -109,7 +110,12 @@ class ExportXMLCorpus(object):
         Once you have iterated over all documents, call this method again
         if you want to iterate over them again.
         """
-        self.__context = etree.iterparse(self.exportxml_file, events=('end',),
+        # Close any existing file handle before opening a new one
+        if self.__file_handle is not None:
+            self.__file_handle.close()
+
+        self.__file_handle = open(self.exportxml_file, 'rb')
+        self.__context = etree.iterparse(self.__file_handle, events=('end',),
                                          tag='text', recover=True)
 
     def __len__(self):
@@ -140,6 +146,26 @@ class ExportXMLCorpus(object):
         # to build an iterable, __iter__() would be sufficient,
         # but adding a next() method is quite common
         return next(self.__iter__())
+
+    def close(self):
+        """Close the underlying file handle."""
+        if self.__file_handle is not None:
+            self.__file_handle.close()
+            self.__file_handle = None
+            self.__context = None
+
+    def __enter__(self):
+        """Context manager entry."""
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Context manager exit - close the file."""
+        self.close()
+        return False
+
+    def __del__(self):
+        """Destructor - ensure file is closed."""
+        self.close()
 
     def text_iter(self, context):
         """

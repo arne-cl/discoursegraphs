@@ -3,7 +3,7 @@
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
 import os
-import pkgutil
+import importlib.util
 from tempfile import NamedTemporaryFile, mkdtemp
 
 import pytest
@@ -14,7 +14,7 @@ import discoursegraphs as dg
 MAZ_DOCGRAPH = dg.corpora.pcc['maz-14813']
 
 
-@pytest.mark.skipif(pkgutil.find_loader("pygraphviz") == None,
+@pytest.mark.skipif(importlib.util.find_spec("pygraphviz") is None,
                     reason="requires pygraphviz")
 # pygraphviz may be hard to install on Ubuntu
 # http://stackoverflow.com/questions/32885486/pygraphviz-importerror-undefined-symbol-agundirected

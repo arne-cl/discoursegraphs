@@ -295,8 +295,9 @@ class TestFreqtTree(object):
 
 def test_write_freqt():
     """convert an ExportXML file into a FREQT str (with/out POS tags)"""
-    edg = next(dg.read_exportxml(
-        os.path.join(dg.DATA_ROOT_DIR, 'exportxml-example.xml')))
+    with dg.read_exportxml(os.path.join(dg.DATA_ROOT_DIR, 'exportxml-example.xml')) as corpus:
+        edg = next(corpus)
+
     temp_file = NamedTemporaryFile(delete=False)
     temp_file.close()
     write_freqt(edg, temp_file.name, include_pos=False)
